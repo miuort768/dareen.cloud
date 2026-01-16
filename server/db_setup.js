@@ -3,15 +3,11 @@ const { open } = require('sqlite');
 const fs = require('fs');
 const path = require('path');
 
+const { getDb } = require('./utils/db');
+
 async function setupDatabase() {
-    // Open the database
-    const db = await open({
-        filename: path.join(__dirname, 'database.sqlite'),
-        driver: sqlite3.Database
-    });
-
-
-    console.log('Connected to SQLite database.');
+    // Use the centralized DB instance
+    const db = await getDb();
 
     console.log('Creating tables...');
     // 1. Create Tables
