@@ -1,0 +1,12 @@
+# نموذج سريع لإصلاح الأخطاء المتبقية
+# سأستخدم أوامر shell لاستبدال المسارات
+
+# هذه الملفات تحتاج تحديث:
+# -PerformanceSummary.tsx
+# - SessionAnalysis.tsx
+# - RenewalAlerts.tsx
+# - TasksAndRequests.tsx
+# - dashboardService.ts (patch method)
+# - StudentInvoices.tsx (InvoicePreviewModal)
+# - Attendance service (type imports)
+# - Students/Teachers hooks (type imports)

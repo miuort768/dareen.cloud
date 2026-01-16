@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# Handle API requests (forward to Node.js server)
+# Note: Hostinger's Node.js setup usually maps a port. 
+# If you are using OpenLiteSpeed as a reverse proxy, you might need this:
+# RewriteRule ^api/(.*)$ http://127.0.0.1:3001/api/$1 [P,L]

@@ -1,0 +1,120 @@
+
+C:\Users\Fannan\Desktop\new-kk\src\components\layout\Layout.tsx
+  14:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Fannan\Desktop\new-kk\src\components\layout\Layout.tsx:14:9
+  12 |
+  13 |     useEffect(() => {
+> 14 |         setIsNavigating(true);
+     |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |         const timer = setTimeout(() => setIsNavigating(false), 300);
+  16 |         return () => clearTimeout(timer);
+  17 |     }, [location.pathname]);  react-hooks/set-state-in-effect
+
+C:\Users\Fannan\Desktop\new-kk\src\components\layout\Sidebar.tsx
+  20:5  error  'MessageCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Fannan\Desktop\new-kk\src\components\ui\QuickSearch.tsx
+   11:11  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+   24:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+   25:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+   26:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+   78:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Fannan\Desktop\new-kk\src\components\ui\QuickSearch.tsx:78:13
+  76 |     useEffect(() => {
+  77 |         if (!query.trim()) {
+> 78 |             setResults(pages);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  79 |             return;
+  80 |         }
+  81 |  react-hooks/set-state-in-effect
+  105:8   warning  React Hook useEffect has a missing dependency: 'pages'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/exhaustive-deps
+  202:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+C:\Users\Fannan\Desktop\new-kk\src\components\ui\SecureAttendanceModal.tsx
+  27:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Fannan\Desktop\new-kk\src\components\ui\SecureAttendanceModal.tsx:27:13
+  25 |     useEffect(() => {
+  26 |         if (isOpen) {
+> 27 |             setPassword('');
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  28 |             setStatus('completed');
+  29 |             setError('');
+  30 |         }  react-hooks/set-state-in-effect
+
+C:\Users\Fannan\Desktop\new-kk\src\context\AppContext.tsx
+  285:10  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Fannan\Desktop\new-kk\src\pages\Attendance.tsx
+   53:86  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+   55:92  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+   79:38  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+   80:46  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+   94:8   warning  React Hook useEffect has a missing dependency: 'fetchSessions'. Either include it or remove the dependency array                                      react-hooks/exhaustive-deps
+  122:8   warning  React Hook useEffect has missing dependencies: 'currentUser?.role' and 'currentUser.teacherName'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  163:64  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+  189:18  error    'error' is defined but never used                                                                                                                     @typescript-eslint/no-unused-vars
+  194:98  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+  206:18  error    'error' is defined but never used                                                                                                                     @typescript-eslint/no-unused-vars
+  719:71  error    Unexpected any. Specify a different type                                                                                                              @typescript-eslint/no-explicit-any
+
+C:\Users\Fannan\Desktop\new-kk\src\pages\Dashboard.tsx
+    90:12  error    'activeUsersCount' is assigned a value but never used                                                                                                                                          @typescript-eslint/no-unused-vars
+   139:31  error    React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?     react-hooks/rules-of-hooks
+   159:47  error    React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?     react-hooks/rules-of-hooks
+   160:43  error    React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?     react-hooks/rules-of-hooks
+   160:52  error    Unexpected any. Specify a different type                                                                                                                                                       @typescript-eslint/no-explicit-any
+   161:57  error    React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?     react-hooks/rules-of-hooks
+   162:35  error    React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?     react-hooks/rules-of-hooks
+   164:5   error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+   172:32  error    React Hook "useCallback" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+   242:54  error    Unexpected any. Specify a different type                                                                                                                                                       @typescript-eslint/no-explicit-any
+   333:8   warning  React Hook useCallback has an unnecessary dependency: 'showNotification'. Either exclude it or remove the dependency array                                                                     react-hooks/exhaustive-deps
+   335:5   error    React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  1010:40  error    Unexpected any. Specify a different type                                                                                                                                                       @typescript-eslint/no-explicit-any
+  1015:94  error    Unexpected any. Specify a different type                                                                                                                                                       @typescript-eslint/no-explicit-any
+
+C:\Users\Fannan\Desktop\new-kk\src\pages\Students.tsx
+  190:9   warning  Unused eslint-disable directive (no problems were reported from 'prefer-const')
+  453:36  error    Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  457:43  error    Unexpected any. Specify a different type                                         @typescript-eslint/no-explicit-any
+  470:26  error    'err' is defined but never used                                                  @typescript-eslint/no-unused-vars
+
+C:\Users\Fannan\Desktop\new-kk\src\pages\TeacherInvoices.tsx
+  227:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  247:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Fannan\Desktop\new-kk\src\pages\Teachers.tsx
+    98:86  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   102:92  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   280:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   283:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   297:26  error  'err' is defined but never used           @typescript-eslint/no-unused-vars
+   315:22  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   355:18  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   374:18  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   432:18  error  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  1253:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 52 problems (47 errors, 5 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

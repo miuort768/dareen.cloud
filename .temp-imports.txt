@@ -1,0 +1,30 @@
+// Bulk URL replacements done! Now adding imports manually in key files.
+
+// Teachers.tsx - Line 8
+import { API_BASE_URL } from '../config/api';
+
+// TeacherInvoices.tsx - Line 11  
+import { API_BASE_URL } from '../config/api';
+
+// Students.tsx - Already has it in config/api imports
+
+// StudentInvoices.tsx - Line 11
+import { API_BASE_URL } from '../config/api';
+
+// Schedule.tsx - Line 8
+import { API_BASE_URL } from '../config/api';
+
+// Reports.tsx - Line 10
+import { API_BASE_URL } from '../config/api';
+
+// Finance.tsx - Line 11
+import { API_BASE_URL } from '../config/api';
+
+// Appointments.tsx - Line 10
+import { API_BASE_URL } from '../config/api';
+
+// NotificationDropdown.tsx - Line 3
+import { API_BASE_URL } from '../config/api';
+
+// QuickSearch.tsx - Line 3
+import { API_BASE_URL } from '../config/api';

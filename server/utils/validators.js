@@ -1,0 +1,97 @@
+const { z } = require('zod');
+
+// Shared basic schemas
+const idSchema = z.string().or(z.number()); // IDs can be string or auto-inc number (though mostly UUID strings in this app)
+const phoneSchema = z.string().min(10, "Phone number too short").optional().or(z.literal(''));
+
+// --- Student Schemas ---
+const createStudentSchema = z.object({
+    name: z.string().min(2, "Name is required (min 2 chars)").trim(),
+    grade: z.string().optional().or(z.literal('')),
+    groupName: z.string().optional().or(z.literal('')),
+    parentPhone: z.string().optional().or(z.literal('')),
+    sessionPrice: z.number().or(z.string().transform(val => Number(val))).optional(),
+    balance: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
+    // Enrollments usually handled separately or as an array, but basic student creation might arguably include them. 
+    // In our current modify logic, we sometimes pass enrollments array, usually empty on create.
+    enrollments: z.array(z.any()).optional()
+});
+
+const updateStudentSchema = createStudentSchema.partial().extend({
+    // Add specific fields for update if any
+});
+
+// --- Teacher Schemas ---
+const createTeacherSchema = z.object({
+    name: z.string().min(2, "Name is required").trim(),
+    phone: z.string().optional().or(z.literal('')),
+    subject: z.string().optional().or(z.literal('')),
+    price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
+    percentage: z.number().or(z.string().transform(val => Number(val))).optional(),
+    color: z.string().optional()
+});
+
+// --- Parent Schemas ---
+const createParentSchema = z.object({
+    name: z.string().min(2, "Name is required").trim(),
+    phone: z.string().min(1, "Phone is required").trim(), // Parents MUST have a phone as ID often relies on it or it's unique
+    email: z.string().email().optional().or(z.literal('')),
+    studentCount: z.number().optional()
+});
+
+// --- Session Schemas ---
+const createSessionSchema = z.object({
+    id: z.string().optional(), // Often generated on client or server
+    studentId: idSchema,
+    studentName: z.string().min(1, "Student Name is required"),
+    teacherName: z.string().min(1, "Teacher Name is required"),
+    subject: z.string().optional(),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
+    day: z.string().optional(),
+    time: z.string().optional(),
+    price: z.number().or(z.string().transform(val => Number(val))).default(0),
+    status: z.enum(['scheduled', 'completed', 'cancelled', 'pending']).default('scheduled')
+});
+
+const updateSessionSchema = createSessionSchema.partial();
+
+// --- Invoice Schemas ---
+// Student Invoice
+const createStudentInvoiceSchema = z.object({
+    id: z.string().optional(),
+    studentId: idSchema.optional(),
+    studentName: z.string().min(1, "Student Name is required"),
+    amount: z.number().or(z.string().transform(val => Number(val))),
+    description: z.string().optional(),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
+    dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional(),
+    status: z.enum(['pending', 'paid', 'overdue', 'partially_paid']).default('pending'),
+    paymentMethod: z.string().optional(),
+    notes: z.string().optional()
+});
+
+// Teacher Invoice
+const createTeacherInvoiceSchema = z.object({
+    id: z.string().optional(),
+    teacherId: idSchema.optional(),
+    teacher: z.string().min(1, "Teacher Name is required"),
+    specialization: z.string().optional(),
+    amount: z.number().or(z.string().transform(val => Number(val))),
+    status: z.enum(['pending', 'paid', 'reviewed']).default('pending'),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
+    paymentMethod: z.string().optional(),
+    personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
+});
+
+module.exports = {
+    createStudentSchema,
+    updateStudentSchema,
+    createTeacherSchema,
+    createParentSchema,
+    createSessionSchema,
+    updateSessionSchema,
+    createStudentInvoiceSchema,
+    updateStudentInvoiceSchema: createStudentInvoiceSchema.partial(),
+    createTeacherInvoiceSchema,
+    updateTeacherInvoiceSchema: createTeacherInvoiceSchema.partial()
+};

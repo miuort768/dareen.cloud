@@ -1,0 +1,113 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const logger = require('../utils/logger');
+const { authMiddleware, checkRole } = require('../middleware/auth');
+
+// Using req.db from middleware
+
+
+// 1. Get all teachers
+router.get('/', async (req, res) => {
+    try {
+        const teachers = await req.db.all('SELECT id, name, phone1, phone2, subject, price, email, username FROM teachers ORDER BY name ASC');
+        res.json(teachers);
+    } catch (err) {
+        logger.error('Error fetching teachers', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// 2. Add teacher
+router.post('/', async (req, res) => {
+    const { id, name, phone1, phone2, subject, price, email, username, password } = req.body;
+    const newId = id || `t_${Math.random().toString(36).substr(2, 7)}`;
+
+    try {
+        if (!name) {
+            return res.status(400).json({ error: 'Name is required' });
+        }
+
+        // Handle empty strings as NULL for UNIQUE constraint
+        const dbUsername = username && username.trim() !== '' ? username.trim() : null;
+        const dbPassword = password && password.trim() !== '' ? await bcrypt.hash(password, 10) : null;
+
+        await req.db.run(
+            `INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [newId, name, phone1, phone2, subject, price || 0, email, dbUsername, dbPassword]
+        );
+
+        const newTeacher = await req.db.get(
+            'SELECT id, name, phone1, phone2, subject, price, email, username FROM teachers WHERE id = ?',
+            [newId]
+        );
+        res.status(201).json(newTeacher);
+    } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: teachers.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+        }
+        logger.error('Error adding teacher', err, { teacher: name });
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+// 3. Update teacher
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, phone1, phone2, subject, price, email, username, password } = req.body;
+    try {
+        const dbUsername = username && username.trim() !== '' ? username.trim() : null;
+
+        // Fetch current teacher to get existing password if not provided
+        const currentTeacher = await req.db.get('SELECT password FROM teachers WHERE id = ?', [id]);
+
+        let dbPassword = currentTeacher ? currentTeacher.password : null;
+        if (password && password.trim() !== '') {
+            if (password.startsWith('$2b$')) {
+                dbPassword = password;
+            } else {
+                dbPassword = await bcrypt.hash(password, 10);
+            }
+        }
+
+        await req.db.run(
+            `UPDATE teachers SET name = ?, phone1 = ?, phone2 = ?, subject = ?, price = ?, email = ?, username = ?, password = ? WHERE id = ?`,
+            [name, phone1, phone2, subject, price || 0, email, dbUsername, dbPassword, id]
+        );
+        const updated = await req.db.get('SELECT id, name, phone1, phone2, subject, price, email, username FROM teachers WHERE id = ?', [id]);
+        res.json(updated);
+    } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: teachers.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+        }
+        logger.error('Error updating teacher', err, { id });
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+// 4. Delete teacher
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await req.db.run('DELETE FROM teachers WHERE id = ?', [id]);
+        res.json({ message: 'Deleted' });
+    } catch (err) {
+        logger.error('Error deleting teacher', err, { id });
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// 5. Delete all teachers (admin only)
+router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+    try {
+        await req.db.run('DELETE FROM teachers');
+        res.json({ message: 'All teachers deleted' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+module.exports = { teacherRouter: router };
+

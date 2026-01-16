@@ -1,0 +1,110 @@
+const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+const rateLimit = require('express-rate-limit');
+
+const router = express.Router();
+const logger = require('../utils/logger');
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' }
+});
+
+router.post('/login', loginLimiter, async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
+
+    try {
+        let userData = await req.db.get(
+            'SELECT * FROM users WHERE username = ?',
+            [username]
+        );
+        let role = 'admin';
+        let teacherName = null;
+
+        if (!userData) {
+            userData = await req.db.get(
+                'SELECT * FROM teachers WHERE username = ?',
+                [username]
+            );
+            role = 'teacher';
+            if (userData) teacherName = userData.name;
+        }
+
+        if (!userData) {
+            logger.warn(`Login failed: User '${username}' not found`);
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        let isValidPassword = false;
+        if (userData.password.startsWith('$2b$')) {
+            isValidPassword = await bcrypt.compare(password, userData.password);
+        } else {
+            isValidPassword = password === userData.password;
+        }
+
+        if (!isValidPassword) {
+            logger.warn(`Login failed: Invalid password for user '${username}'`);
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign(
+            {
+                id: userData.id,
+                username: userData.username,
+                role: role,
+                teacherName: teacherName,
+                permissions: userData.permissions ? (typeof userData.permissions === 'string' ? JSON.parse(userData.permissions) : userData.permissions) : []
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        );
+
+        const { password: _, ...finalUserData } = userData;
+        logger.info(`User logged in: ${username} (${role})`);
+
+        res.json({
+            token,
+            user: {
+                ...finalUserData,
+                role: role,
+                teacherName: role === 'teacher' ? finalUserData.name : null,
+                permissions: role === 'admin'
+                    ? (finalUserData.permissions ? (typeof finalUserData.permissions === 'string' ? JSON.parse(finalUserData.permissions) : finalUserData.permissions) : ['*'])
+                    : ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks']
+            }
+        });
+    } catch (error) {
+        logger.error('Login error', error, { username });
+        res.status(500).json({ error: 'Server error during authentication' });
+    }
+});
+
+/**
+ * POST /auth/verify
+ * Verify if token is still valid
+ */
+router.post('/verify', async (req, res) => {
+    const { token } = req.body;
+
+    if (!token) {
+        return res.status(400).json({ error: 'Token is required' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ valid: true, user: decoded });
+    } catch (error) {
+        res.json({ valid: false });
+    }
+});
+
+module.exports = { authRouter: router };
+

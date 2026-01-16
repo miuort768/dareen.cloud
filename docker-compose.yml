@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - VITE_API_URL=/api
+    container_name: darin-app
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - app_data:/app/data
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - DB_PATH=/app/data/database.sqlite
+      - JWT_SECRET=your_secret_here
+      - FRONTEND_URL=*
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  app_data:
