@@ -17,7 +17,7 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-    const [academyName, setAcademyNameState] = useState('معهد دارين');
+    const [academyName, setAcademyNameState] = useState('منصة دارين');
     const [adminPhone, setAdminPhoneState] = useState('01152001250');
     const [themeColor, setThemeColorState] = useState(() => localStorage.getItem('app_theme_color') || 'indigo');
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
