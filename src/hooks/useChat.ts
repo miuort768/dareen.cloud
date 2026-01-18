@@ -18,21 +18,7 @@ export const useChat = (userId?: string) => {
             queryClient.setQueryData(['messages', message.conversationId], (old: ChatMessage[] = []) => {
                 // If message already exists by ID, do nothing
                 if (old.find(m => m.id === message.id)) return old;
-
-                // Remove any temporary message that corresponds to this one
-                // We assume optimistic messages have IDs starting with 'temp-'
-                const filtered = old.filter(m => {
-                    // Filter out strict temp duplicates if we could match them (e.g. by content/sender/timestamp)
-                    // For now, simpler approach: if the mutation success handled the ID swap, we just ensure no ID dupes.
-                    // But if socket arrives BEFORE mutation success, we might have both.
-                    // Let's filter out any temp message from the SAME sender with SAME content if it's recent? 
-                    // No, that's risky. 
-                    // Best bet: Trust the server. Query Invalidation is safer, but flash-prone.
-                    // Let's just append. UseChat deduplication via ID is the first line of defense.
-                    return true;
-                });
-
-                return [...filtered, message];
+                return [...old, message];
             });
 
             // Update conversations list (last message)
@@ -129,10 +115,19 @@ export const useChat = (userId?: string) => {
             return { previousMessages, tempId };
         },
         onSuccess: (data: ChatMessage, _variables, context) => {
-            // Replace the temporary message with the real one
+            // Check if the real message already exists (from socket)
+            // If it does, we just need to remove the temp message
+            // If not, we replace the temp message with the real one
             if (context?.tempId) {
                 queryClient.setQueryData(['messages', data.conversationId], (old: ChatMessage[] = []) => {
-                    return old.map(msg => msg.id === context.tempId ? data : msg);
+                    const realExists = old.find(m => m.id === data.id);
+                    if (realExists) {
+                        // Real message arrived via socket already -> Remove temp
+                        return old.filter(m => m.id !== context.tempId);
+                    } else {
+                        // Real message not here yet -> Swap temp with real
+                        return old.map(msg => msg.id === context.tempId ? data : msg);
+                    }
                 });
             }
         },
