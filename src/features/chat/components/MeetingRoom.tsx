@@ -55,12 +55,18 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         setIsConnecting(true);
         try {
             let stream = localStream;
+
+            // Try to get stream, but don't block if failed (Auditor Mode)
             if (!stream) {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: { echoCancellation: true, noiseSuppression: true }
-                });
-                setLocalStream(stream);
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: { echoCancellation: true, noiseSuppression: true }
+                    });
+                    setLocalStream(stream);
+                } catch (err) {
+                    console.warn("Joining as listener only (no media)", err);
+                }
             }
 
             const initPeer = async () => {
@@ -79,22 +85,30 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     });
 
                     peer.on('call', (call) => {
-                        if (stream) {
-                            call.answer(stream);
-                            const meta = (call as any).metadata || {};
-                            if (meta.role === 'host') setHosts(prev => new Set(prev).add(call.peer));
-                            call.on('stream', (rs) => setRemoteStreams(prev => ({ ...prev, [call.peer]: rs })));
-                        }
+                        // Answer call even if no stream (Receive Only)
+                        call.answer(stream || undefined);
+                        const meta = (call as any).metadata || {};
+                        if (meta.role === 'host') setHosts(prev => new Set(prev).add(call.peer));
+                        call.on('stream', (rs) => setRemoteStreams(prev => ({ ...prev, [call.peer]: rs })));
                     });
 
                     socket.on('peer_ready', ({ peerId, userId, role }) => {
-                        if (userId !== currentUser.id && stream) {
-                            const call = peer.call(peerId, stream, {
-                                metadata: { role: isHost ? 'host' : 'student', name: currentUser.name }
-                            });
-                            if (role === 'host') setHosts(prev => new Set(prev).add(peerId));
-                            call.on('stream', (rs) => setRemoteStreams(prev => ({ ...prev, [peerId]: rs })));
-                            callsRef.current[peerId] = call;
+                        if (userId !== currentUser.id) {
+                            // Call if we have a stream, OR if we are host calling a student
+                            // Actually, in mesh, everyone calls. If I have no stream, I might not need to call?
+                            // PeerJS supports calling with no stream? No, .call requires stream usually.
+                            // If I am listener, I wait for calls. I don't initiate usually unless I have data.
+                            // But usually mesh: A calls B.
+                            // If I have no stream, I can't .call(peerId, stream).
+                            // So I only answer.
+                            if (stream) {
+                                const call = peer.call(peerId, stream, {
+                                    metadata: { role: isHost ? 'host' : 'student', name: currentUser.name }
+                                });
+                                if (role === 'host') setHosts(prev => new Set(prev).add(peerId));
+                                call.on('stream', (rs) => setRemoteStreams(prev => ({ ...prev, [peerId]: rs })));
+                                callsRef.current[peerId] = call;
+                            }
                         }
                     });
 
@@ -113,10 +127,10 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             await initPeer();
             setHasJoined(true);
         } catch (err) {
-            console.error("Failed to get media stream on join", err);
-            alert("يرجى السماح بالوصول إلى الكاميرا والميكروفون للانضمام.");
-        } finally {
+            console.error("Join process incomplete", err);
             setIsConnecting(false);
+        } finally {
+            if (hasJoined) setIsConnecting(false);
         }
     };
 
