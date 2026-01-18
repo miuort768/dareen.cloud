@@ -91,7 +91,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             !isChatOnly && "pb-[80px] lg:pb-0" // Space for mobile bottom nav (exactly 80px)
         )}>
             {/* Chat Header */}
-            <div className="h-16 lg:h-20 shrink-0 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl sticky top-0 z-40 transition-all shadow-sm px-4">
+            <div className="h-16 lg:h-20 shrink-0 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-white dark:bg-gray-950 sticky top-0 z-50 shadow-sm px-4">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
