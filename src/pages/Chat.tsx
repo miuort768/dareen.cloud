@@ -206,7 +206,12 @@ export const Chat = () => {
     };
 
     return (
-        <div className="flex h-[calc(100vh-64px)] overflow-hidden lg:h-screen lg:py-4 lg:px-4 lg:gap-4 bg-gray-50/50 dark:bg-gray-950/50">
+        <div className={cn(
+            "flex overflow-hidden bg-gray-50/50 dark:bg-gray-950/50",
+            currentUser?.role === 'chat_user'
+                ? "h-screen h-[100dvh]"
+                : "h-[calc(100vh-64px)] lg:h-screen lg:py-4 lg:px-4 lg:gap-4"
+        )}>
             <ChatSidebar
                 conversations={conversations}
                 selectedConv={selectedConv}
