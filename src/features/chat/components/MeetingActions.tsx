@@ -36,7 +36,7 @@ export const MeetingActions: React.FC<MeetingActionsProps> = ({
             <button
                 onClick={handleAction}
                 className={cn(
-                    "relative flex items-center gap-2 px-4 py-2.5 lg:px-6 text-white font-black text-[11px] uppercase tracking-[0.15em] transition-all active:scale-95 shadow-2xl rounded-xl overflow-hidden group border-none outline-none",
+                    "relative flex items-center gap-2 px-3 py-2 lg:px-6 lg:py-2.5 text-white font-black text-[10px] lg:text-[11px] uppercase tracking-wider transition-all active:scale-95 shadow-xl rounded-md lg:rounded-xl overflow-hidden group border-none outline-none",
                     isTeacherOrAdmin
                         ? "bg-gradient-to-br from-primary-600 to-primary-800 hover:from-primary-500 hover:to-primary-700 shadow-primary-600/30"
                         : isMeetingActive
@@ -48,12 +48,12 @@ export const MeetingActions: React.FC<MeetingActionsProps> = ({
                 {/* Visual indicator for active meeting */}
                 {(isMeetingActive || isTeacherOrAdmin) && (
                     <span className={cn(
-                        "w-2 h-2 rounded-full absolute top-2 right-2",
+                        "w-1.5 h-1.5 rounded-full absolute top-1 right-1",
                         isMeetingActive ? "bg-white animate-pulse" : "bg-primary-300 opacity-50"
                     )} />
                 )}
 
-                <Video size={18} className={cn("transition-transform group-hover:scale-110", isMeetingActive && "animate-pulse")} />
+                <Video size={16} className={cn("transition-transform lg:size-5 group-hover:scale-110", isMeetingActive && "animate-pulse")} />
 
                 <span className="hidden lg:inline relative z-10">
                     {isTeacherOrAdmin

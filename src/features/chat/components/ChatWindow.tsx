@@ -99,16 +99,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     >
                         <ChevronRight size={24} />
                     </button>
-                    <div className="relative shrink-0">
+                    <div className="relative shrink-0 hidden lg:block">
                         <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-2xl flex items-center justify-center font-black text-base lg:text-lg shadow-lg">
                             {selectedConv.displayName?.charAt(0)}
                         </div>
                         <div className="absolute -bottom-0.5 -left-0.5 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
                     </div>
-                    <div className="min-w-0">
-                        <h2 className="font-black text-gray-900 dark:text-white leading-tight truncate text-sm lg:text-base">{selectedConv.displayName}</h2>
+                    <div className="min-w-0 flex-1">
+                        <h2 className="font-black text-gray-900 dark:text-white leading-tight truncate text-xs lg:text-base max-w-[150px] lg:max-w-none">{selectedConv.displayName}</h2>
                         <div className="flex items-center gap-1.5">
-                            <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase">متصل الآن</p>
+                            <p className="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold uppercase">متصل</p>
                         </div>
                     </div>
                 </div>

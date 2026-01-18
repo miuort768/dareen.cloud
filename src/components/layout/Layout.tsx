@@ -39,7 +39,7 @@ export const Layout = () => {
                 {!isChatOnly && <Header />}
                 <main className={cn(
                     "flex-1 overflow-y-auto custom-scrollbar",
-                    isChatOnly ? "p-0" : "p-4 pt-0 lg:p-8 pb-24 lg:pb-8"
+                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "p-4 pt-0 lg:p-8 pb-24 lg:pb-8"
                 )}>
                     <div key={location.pathname} className={cn(
                         "animate-in fade-in duration-500 ease-out h-full",
