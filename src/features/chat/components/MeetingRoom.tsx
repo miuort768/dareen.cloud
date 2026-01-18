@@ -319,13 +319,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             </div>
 
             {!isFloating && (
-                <div className="h-28 bg-black/90 backdrop-blur-2xl border-t border-white/5 flex items-center justify-between px-8 lg:px-16">
-                    <div className="flex items-center gap-5">
-                        <button onClick={toggleMute} className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all shadow-lg border", isMuted ? "bg-rose-600 border-rose-500 text-white" : "bg-white/5 border-white/5 hover:bg-white/10 text-white")}>{isMuted ? <MicOff size={24} /> : <Mic size={24} />}</button>
-                        <button onClick={toggleVideo} className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all shadow-lg border", isVideoOff ? "bg-rose-600 border-rose-500 text-white" : "bg-white/5 border-white/5 hover:bg-white/10 text-white")}>{isVideoOff ? <VideoOff size={24} /> : <Video size={24} />}</button>
+                <div className="h-24 lg:h-28 bg-black/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-between px-4 lg:px-16 pb-4 lg:pb-0 safe-area-pb absolute bottom-0 left-0 right-0 z-[600]">
+                    <div className="flex items-center gap-3 lg:gap-5">
+                        <button onClick={toggleMute} className={cn("w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center transition-all shadow-lg border", isMuted ? "bg-rose-600 border-rose-500 text-white" : "bg-white/10 border-white/5 hover:bg-white/20 text-white")}>{isMuted ? <MicOff size={20} className="lg:w-6 lg:h-6" /> : <Mic size={20} className="lg:w-6 lg:h-6" />}</button>
+                        <button onClick={toggleVideo} className={cn("w-12 h-12 lg:w-14 lg:h-14 rounded-2xl flex items-center justify-center transition-all shadow-lg border", isVideoOff ? "bg-rose-600 border-rose-500 text-white" : "bg-white/10 border-white/5 hover:bg-white/20 text-white")}>{isVideoOff ? <VideoOff size={20} className="lg:w-6 lg:h-6" /> : <Video size={20} className="lg:w-6 lg:h-6" />}</button>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         {isHost && (
                             <button
                                 onClick={handleScreenShare}
@@ -339,8 +339,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                                 {isScreenSharing ? 'إيقاف المشاركة' : 'مشاركة الشاشة'}
                             </button>
                         )}
-                        <button onClick={handleCloseFull} className="px-8 lg:px-12 py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-rose-600/40 text-xs lg:text-sm active:scale-95 uppercase tracking-widest">
-                            {isHost ? 'إنهاء الحصة' : 'مغادرة الحصة'}
+                        <button onClick={handleCloseFull} className="px-6 lg:px-12 py-3 lg:py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl transition-all shadow-2xl shadow-rose-600/40 text-xs lg:text-sm active:scale-95 uppercase tracking-widest whitespace-nowrap">
+                            {isHost ? 'إنهاء الحصة' : 'مغادرة'}
                         </button>
                     </div>
                 </div>
