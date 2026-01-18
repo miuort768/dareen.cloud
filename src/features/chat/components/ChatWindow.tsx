@@ -88,9 +88,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }, [messages]);
 
     return (
-        <div className="flex-1 flex flex-col bg-white dark:bg-gray-950 pb-16 lg:pb-0">
+        <div className="flex-1 flex flex-col bg-white dark:bg-gray-950 pb-20 lg:pb-0 overflow-hidden">
             {/* Chat Header */}
-            <div className="p-4 lg:p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-30">
+            <div className="p-4 lg:p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl sticky top-0 z-40 transition-all shadow-sm">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => setSelectedConv(null)}
@@ -203,7 +203,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 bg-gray-50/30 dark:bg-gray-950/30 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 bg-gray-50/30 dark:bg-gray-950/30 custom-scrollbar overscroll-contain">
                 {messages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
                     const showTime = idx === 0 ||
