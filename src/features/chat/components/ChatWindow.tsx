@@ -95,7 +95,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
-                        className="lg:hidden p-1 -mr-1 text-gray-400 hover:text-primary-600 transition-colors"
+                        className="lg:hidden p-3 -mr-2 text-gray-500 hover:text-primary-600 transition-colors active:scale-95"
+                        title="رجوع"
                     >
                         <ChevronRight size={24} />
                     </button>
@@ -195,9 +196,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         isMe ? "text-primary-100" : "text-gray-400"
                                     )}>
                                         <span className="text-[10px] font-black truncate max-w-[120px]">{msg.senderName}</span>
-                                        <span className="text-[10px] font-bold opacity-70">{format(new Date(msg.timestamp), 'HH:mm', { locale: ar })}</span>
+                                        <span className="text-[9px] font-bold opacity-70">{format(new Date(msg.timestamp), 'HH:mm', { locale: ar })}</span>
                                     </div>
-                                    <p className="text-[13px] font-bold leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                                    <p className="text-[11px] lg:text-[13px] font-bold leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                                 </div>
                             </div>
                         </div>

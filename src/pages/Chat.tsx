@@ -79,6 +79,16 @@ export const Chat = () => {
         }
     }, [availableUsers, conversations, searchParams, currentUser, location.state]);
 
+    // Keep selectedConv in sync with conversations updates (e.g. name changes, last message)
+    useEffect(() => {
+        if (selectedConv) {
+            const updatedConv = conversations.find(c => c.id === selectedConv.id);
+            if (updatedConv && (updatedConv.displayName !== selectedConv.displayName || updatedConv.lastMessageTime !== selectedConv.lastMessageTime)) {
+                setSelectedConv(updatedConv);
+            }
+        }
+    }, [conversations, selectedConv]);
+
     // HANDLERS
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
