@@ -68,11 +68,13 @@ async function startServer() {
 
         app.use(dbMiddleware);
 
+        app.set('trust proxy', 1);
+
         // Security: Rate Limiting
         const rateLimit = require('express-rate-limit');
         const limiter = rateLimit({
             windowMs: 15 * 60 * 1000, // 15 minutes
-            max: process.env.NODE_ENV === 'development' ? 100000 : 5000,
+            max: process.env.NODE_ENV === 'development' ? 100000 : 50000, // Increased for production
             message: { error: 'Too many requests, please try again later.' }
         });
         app.use('/api/', limiter);
