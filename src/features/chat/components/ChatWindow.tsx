@@ -188,7 +188,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 <div className={cn(
                                     "px-3 py-2 rounded-2xl relative",
                                     isMe
-                                        ? "bg-gradient-to-br from-primary-600 to-indigo-700 text-white rounded-tr-none shadow-sm"
+                                        ? "bg-primary-600 text-white rounded-tr-none shadow-sm"
                                         : "bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 rounded-tl-none border border-gray-100 dark:border-gray-800"
                                 )}>
                                     <div className={cn(
