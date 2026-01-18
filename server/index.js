@@ -18,6 +18,7 @@ const { notificationRouter } = require('./routes/notifications');
 const { systemRouter } = require('./routes/system');
 const financeRouter = require('./routes/finance');
 const tasksRouter = require('./routes/tasks');
+const chatRouter = require('./routes/chat');
 
 
 
@@ -71,7 +72,7 @@ async function startServer() {
         const rateLimit = require('express-rate-limit');
         const limiter = rateLimit({
             windowMs: 15 * 60 * 1000, // 15 minutes
-            max: 500, // limit each IP to 500 requests per windowMs
+            max: process.env.NODE_ENV === 'development' ? 100000 : 5000,
             message: { error: 'Too many requests, please try again later.' }
         });
         app.use('/api/', limiter);
@@ -81,24 +82,32 @@ async function startServer() {
         // Setup API Routes
         const apiRouter = express.Router();
 
+        const { authMiddleware, checkRole } = require('./middleware/auth');
+
         apiRouter.use('/auth', authRouter);
+
+        // Apply authentication to ALL other API routes
+        apiRouter.use(authMiddleware);
+
         apiRouter.use('/students', studentRouter);
         apiRouter.use('/teachers', teacherRouter);
         apiRouter.use('/parents', parentRouter);
         apiRouter.use('/sessions', sessionRouter);
         apiRouter.use('/notifications', notificationRouter);
-        apiRouter.use('/system', systemRouter);
-        apiRouter.use('/finance', financeRouter);
+        apiRouter.use('/system', checkRole(['admin']), systemRouter);
+        apiRouter.use('/finance', checkRole(['admin']), financeRouter);
         apiRouter.use('/tasks', tasksRouter);
+        apiRouter.use('/chat', chatRouter);
 
 
         // Compatibility middleware for invoices inside API
-        apiRouter.use('/studentInvoices', (req, res, next) => {
-            req.url = '/student' + req.url;
+        apiRouter.use('/studentInvoices', checkRole(['admin']), (req, res, next) => {
+            if (req.url === '' || req.url === '/') req.url = '/student';
             invoiceRouter(req, res, next);
         });
-        apiRouter.use('/invoices', (req, res, next) => {
-            req.url = '/teacher' + req.url;
+        apiRouter.use('/invoices', checkRole(['admin']), (req, res, next) => {
+            // Default to teacher invoices if base path is called
+            if (req.url === '' || req.url === '/') req.url = '/teacher';
             invoiceRouter(req, res, next);
         });
 
@@ -119,13 +128,59 @@ async function startServer() {
             res.status(500).json({ error: 'Internal Server Error', details: err.message });
         });
 
-        // The "catchall" handler: for any request that doesn't
-        // match one above, send back React's index.html file.
+        // The "catchall" handler
         app.get(/(.*)/, (req, res) => {
             res.sendFile(path.join(__dirname, '../dist/index.html'));
         });
 
-        app.listen(PORT, () => {
+        const http = require('http');
+        const { Server } = require('socket.io');
+        const server = http.createServer(app);
+        const io = new Server(server, {
+            cors: {
+                origin: "*",
+                methods: ["GET", "POST"]
+            }
+        });
+
+        // Make io accessible to routers
+        app.set('socketio', io);
+
+        io.on('connection', (socket) => {
+            console.log('User connected:', socket.id);
+
+            socket.on('join_conversation', (conversationId) => {
+                socket.join(conversationId);
+                console.log(`User ${socket.id} joined conversation ${conversationId}`);
+            });
+
+            socket.on('leave_conversation', (conversationId) => {
+                socket.leave(conversationId);
+                console.log(`User ${socket.id} left conversation ${conversationId}`);
+            });
+
+            socket.on('peer_ready', (data) => {
+                const { conversationId } = data;
+                socket.to(conversationId).emit('peer_ready', data);
+                console.log(`Peer ready in ${conversationId}:`, data.peerId);
+            });
+
+            socket.on('meeting_started', (conversationId) => {
+                socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: true });
+                console.log(`Meeting started in ${conversationId}`);
+            });
+
+            socket.on('meeting_ended', (conversationId) => {
+                socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: false });
+                console.log(`Meeting ended in ${conversationId}`);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('User disconnected');
+            });
+        });
+
+        server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
         });
     } catch (err) {

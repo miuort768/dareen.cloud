@@ -1,7 +1,7 @@
 {
   "name": "darin-institute-management",
   "version": "2.0.0",
-  "description": "نظام إدارة شامل لمعهد دارين للتعليم والتدريب",
+  "description": "نظام إدارة شامل لدارين لتعليم و التدريب",
   "author": "Darin Institute",
   "license": "MIT",
   "engines": {
@@ -22,15 +22,19 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.0.0",
+    "@types/peerjs": "^0.0.30",
     "clsx": "^2.1.0",
     "concurrently": "^8.2.2",
     "date-fns": "^3.3.1",
     "json-server": "^0.17.4",
     "lucide-react": "^0.344.0",
+    "peerjs": "^1.5.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.12.2",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "tailwind-merge": "^2.2.1"

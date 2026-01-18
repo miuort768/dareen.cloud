@@ -4,7 +4,7 @@ import {
     AlertCircle, ListTodo, Clock, X
 } from 'lucide-react';
 import { StatsCard } from '../shared/components/StatsCard';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 interface Task {
     id: string;
@@ -20,11 +20,8 @@ export const Tasks = () => {
 
     const fetchTasks = async () => {
         try {
-            const res = await fetch(`${API_BASE_URL}/tasks`);
-            if (res.ok) {
-                const data = await res.json();
-                setTasks(data);
-            }
+            const data = await api.get<Task[]>('/tasks');
+            setTasks(data);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -50,22 +47,15 @@ export const Tasks = () => {
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${API_BASE_URL}/tasks`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newTask)
+            const addedTask = await api.post<Task>('/tasks', newTask);
+            setTasks([addedTask, ...tasks]);
+            setNewTask({
+                title: '',
+                description: '',
+                priority: 'medium',
+                dueDate: new Date().toISOString().split('T')[0]
             });
-            if (res.ok) {
-                const addedTask = await res.json();
-                setTasks([addedTask, ...tasks]);
-                setNewTask({
-                    title: '',
-                    description: '',
-                    priority: 'medium',
-                    dueDate: new Date().toISOString().split('T')[0]
-                });
-                setShowAddForm(false);
-            }
+            setShowAddForm(false);
         } catch (error) {
             console.error("Error adding task:", error);
         }
@@ -77,14 +67,8 @@ export const Tasks = () => {
 
         const newStatus = task.status === 'pending' ? 'completed' : 'pending';
         try {
-            const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus })
-            });
-            if (res.ok) {
-                setTasks(tasks.map(t => t.id === id ? { ...t, status: newStatus } : t));
-            }
+            await api.patch(`/tasks/${id}`, { status: newStatus });
+            setTasks(tasks.map(t => t.id === id ? { ...t, status: newStatus } : t));
         } catch (error) {
             console.error("Error toggling task:", error);
         }
@@ -93,12 +77,8 @@ export const Tasks = () => {
     const deleteTask = async (id: string) => {
         if (!window.confirm('هل أنت متأكد من حذف هذه المهمة؟')) return;
         try {
-            const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
-                method: 'DELETE'
-            });
-            if (res.ok) {
-                setTasks(tasks.filter(t => t.id !== id));
-            }
+            await api.delete(`/tasks/${id}`);
+            setTasks(tasks.filter(t => t.id !== id));
         } catch (error) {
             console.error("Error deleting task:", error);
         }
@@ -107,24 +87,47 @@ export const Tasks = () => {
     const completedTasks = tasks.filter(t => t.status === 'completed');
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
-                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                            <ListTodo size={32} className="text-white" />
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
+
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
+
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <ListTodo size={36} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-black text-white mb-2 tracking-tight">إدارة المهام والطلبات</h1>
-                            <p className="text-white/80 text-xs font-bold uppercase tracking-widest">تنظيم العمليات الإدارية والمتابعة</p>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">إدارة المهام والطلبات</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <Clock size={14} className="text-white" />
+                                تنظيم العمليات الإدارية والمتابعة اليومية
+                            </p>
                         </div>
                     </div>
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="bg-white text-primary-600 px-6 py-3 font-black text-sm hover:bg-white/95 transition-all shadow-lg active:scale-95 flex items-center gap-2 rounded-none"
+                        className="bg-white text-primary-700 px-8 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
                     >
-                        <Plus size={18} />
-                        إضافة مهمة جديدة
+                        <Plus size={20} />
+                        <span>إضافة مهمة جديدة</span>
                     </button>
                 </div>
             </div>
@@ -152,7 +155,7 @@ export const Tasks = () => {
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-1">
                                         <h4 className="font-black text-gray-900">{task.title}</h4>
-                                        <span className={`text - [9px] font - black px - 2 py - 0.5 uppercase ${task.priority === 'high' ? 'bg-red-100 text-red-600' :
+                                        <span className={`text-[9px] font-black px-2 py-0.5 uppercase ${task.priority === 'high' ? 'bg-red-100 text-red-600' :
                                             task.priority === 'medium' ? 'bg-amber-100 text-amber-600' :
                                                 'bg-blue-100 text-blue-600'
                                             } `}>
@@ -221,7 +224,7 @@ export const Tasks = () => {
                         <div className="h-2 bg-gray-100 mb-6 overflow-hidden">
                             <div
                                 className="h-full bg-primary-600 transition-all duration-1000"
-                                style={{ width: `${tasks.length > 0 ? (completedTasks.length / tasks.length) * 100 : 0}% ` }}
+                                style={{ width: `${tasks.length > 0 ? (completedTasks.length / tasks.length) * 100 : 0}%` }}
                             ></div>
                         </div>
                     </div>

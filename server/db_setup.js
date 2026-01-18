@@ -164,6 +164,42 @@ async function setupDatabase() {
             id TEXT PRIMARY KEY
         );
 
+        CREATE TABLE IF NOT EXISTS conversations (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            isGroup INTEGER DEFAULT 0,
+            createdBy TEXT,
+            createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS conversation_members (
+            conversationId TEXT NOT NULL,
+            userId TEXT NOT NULL,
+            PRIMARY KEY (conversationId, userId),
+            FOREIGN KEY(conversationId) REFERENCES conversations(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS messages (
+            id TEXT PRIMARY KEY,
+            conversationId TEXT NOT NULL,
+            senderId TEXT NOT NULL,
+            senderName TEXT NOT NULL,
+            content TEXT NOT NULL,
+            timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(conversationId) REFERENCES conversations(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS chat_profiles (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            avatar TEXT,
+            status TEXT DEFAULT 'offline',
+            lastSeen TEXT,
+            createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         -- Tables created above
     `);
 
@@ -204,6 +240,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('student_invoices', 'dueDate', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'paymentMethod', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'notes', 'TEXT');
+    await addColumnIfNotExists('notifications', 'conversationId', 'TEXT');
 
     // Create remaining indices
     const indices = [
@@ -215,7 +252,9 @@ async function setupDatabase() {
         'CREATE INDEX IF NOT EXISTS idx_teacher_invoices_teacher ON teacher_invoices(teacherId)',
         'CREATE INDEX IF NOT EXISTS idx_parents_phone ON parents(phone)',
         'CREATE INDEX IF NOT EXISTS idx_students_name ON students(name)',
-        'CREATE INDEX IF NOT EXISTS idx_student_invoices_status ON student_invoices(status)'
+        'CREATE INDEX IF NOT EXISTS idx_student_invoices_status ON student_invoices(status)',
+        'CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversationId)',
+        'CREATE INDEX IF NOT EXISTS idx_conversation_members_user ON conversation_members(userId)'
     ];
 
     for (const idx of indices) {
@@ -369,9 +408,11 @@ async function setupDatabase() {
     const usersCount = await db.get('SELECT count(*) as count FROM users');
     if (usersCount.count === 0) {
         console.log('Seeding default admin user...');
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash('admin', 10);
         await db.run(
             'INSERT INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)',
-            ['admin_1', 'الشيخ خوارزمي', 'admin', 'admin', 'admin', JSON.stringify(['*'])]
+            ['admin_1', 'الشيخ خوارزمي', 'admin', hashedPassword, 'admin', JSON.stringify(['*'])]
         );
     }
 

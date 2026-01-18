@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 // Cache objects to store data between hook instances
 let studentsCache: any[] | null = null;
@@ -22,24 +22,20 @@ export const useSharedData = () => {
 
         try {
             setLoading(true);
-            const [stuRes, teachRes, parentRes] = await Promise.all([
-                fetch(`${API_BASE_URL}/students`),
-                fetch(`${API_BASE_URL}/teachers`),
-                fetch(`${API_BASE_URL}/parents`)
+            const [stuData, teachData, parentData] = await Promise.all([
+                api.get<any>('/students'),
+                api.get<any[]>('/teachers'),
+                api.get<any[]>('/parents')
             ]);
 
-            const stuData = await stuRes.json();
-            const teachData = await teachRes.json();
-            const parentData = await parentRes.json();
-
-            studentsCache = Array.isArray(stuData) ? stuData : [];
-            teachersCache = Array.isArray(teachData) ? teachData : [];
-            parentsCache = Array.isArray(parentData) ? parentData : [];
+            studentsCache = (Array.isArray(stuData) ? stuData : stuData.data) || [];
+            teachersCache = (Array.isArray(teachData) ? teachData : (teachData as any).data) || [];
+            parentsCache = (Array.isArray(parentData) ? parentData : (parentData as any).data) || [];
             lastFetchTime = now;
 
-            setStudents(studentsCache);
-            setTeachers(teachersCache);
-            setParents(parentsCache);
+            setStudents(studentsCache || []);
+            setTeachers(teachersCache || []);
+            setParents(parentsCache || []);
         } catch (error) {
             console.error("Shared data fetch failed", error);
         } finally {

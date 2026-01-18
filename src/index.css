@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
 /* Tailwind Directives - The following @tailwind rules are standard for Tailwind CSS v3.
    Ignore "Unknown at rule" warnings from generic CSS linters as they are handled by PostCSS. */
 @tailwind base;
@@ -301,6 +303,58 @@
     /* Buttons */
     .btn-responsive {
       @apply w-full justify-center py-4 !important;
+    }
+  }
+
+  /* Print Styles */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+
+    #printable-schedule,
+    #printable-schedule * {
+      visibility: visible;
+    }
+
+    #printable-schedule {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      overflow: visible !important;
+      transform: scale(0.60);
+      /* Scale down to 60% */
+      transform-origin: top center;
+      /* Anchor to top center */
+      width: 166%;
+      /* Compensate width for scale (100 / 0.60) */
+    }
+
+    /* Compact table for print */
+    #printable-schedule table th,
+    #printable-schedule table td {
+      padding: 2px !important;
+      /* Minimal padding */
+      font-size: 10px !important;
+      /* Smaller text */
+      height: auto !important;
+      /* Allow height to shrink */
+    }
+
+    #printable-schedule table td>div {
+      min-height: 40px !important;
+      /* Smaller cell min-height */
+    }
+
+    /* Ensure table fits on page landscape mostly */
+    @page {
+      size: landscape;
+      margin: 1cm;
     }
   }
 }

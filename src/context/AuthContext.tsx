@@ -1,10 +1,11 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 import type { User } from '../types/auth';
 
 interface AuthContextType {
     currentUser: User | null;
     isAuthenticated: boolean;
+    isLoading: boolean;
     login: (username: string, password?: string) => Promise<boolean>;
     logout: () => void;
     updateCurrentUser: (updates: Partial<User>) => Promise<void>;
@@ -20,6 +21,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(() =>
         localStorage.getItem('app_isAuthenticated') === 'true'
     );
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            const token = localStorage.getItem('auth_token');
+            if (!token) {
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                // Use api.post which will handle the token verification
+                const data = await api.post<{ valid: boolean, user: User }>('/auth/verify', { token });
+
+                if (data.valid) {
+                    setIsAuthenticated(true);
+                    if (data.user) {
+                        setCurrentUser(data.user);
+                    }
+                } else {
+                    logout();
+                }
+            } catch (error) {
+                console.error("Token verification failed:", error);
+                // On error, we might want to logout if it's a 401, but api utility handles 401
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        verifyToken();
+    }, []);
 
     useEffect(() => {
         if (currentUser) {
@@ -33,27 +66,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (username: string, password?: string) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-
-            if (!response.ok) {
-                if (response.status === 401) {
-                    return false; // Invalid credentials
-                }
-                throw new Error(`Server error: ${response.status}`);
-            }
-
-            const { token, user: loggedInUser } = await response.json();
+            const { token, user: loggedInUser } = await api.post<{ token: string, user: User }>('/auth/login', { username, password });
             localStorage.setItem('auth_token', token);
             setCurrentUser(loggedInUser);
             setIsAuthenticated(true);
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error("Authentication failed:", error);
-            throw error; // Re-throw to be caught by UI
+            if (error.message?.includes('Invalid credentials') || error.message?.includes('401')) {
+                return false;
+            }
+            throw error;
         }
     };
 
@@ -67,21 +90,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const updateCurrentUser = async (updates: Partial<User>) => {
         if (!currentUser) return;
         const updated = { ...currentUser, ...updates };
-        setCurrentUser(updated);
 
         try {
-            await fetch(`${API_BASE_URL}/system/users/${currentUser.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updated)
-            });
+            await api.put(`/system/users/${currentUser.id}`, updated);
+            setCurrentUser(updated);
         } catch (e) {
             console.error("Error updating user:", e);
+            throw e;
         }
     };
 
     return (
-        <AuthContext.Provider value={{ currentUser, isAuthenticated, login, logout, updateCurrentUser }}>
+        <AuthContext.Provider value={{ currentUser, isAuthenticated, isLoading, login, logout, updateCurrentUser }}>
             {children}
         </AuthContext.Provider>
     );

@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { AppProvider, useApp } from './context/AppContext';
 import { Loader2 } from 'lucide-react';
@@ -19,6 +19,7 @@ const Reports = lazy(() => import('./pages/Reports').then(m => ({ default: m.Rep
 const TeacherInvoices = lazy(() => import('./pages/TeacherInvoices').then(m => ({ default: m.TeacherInvoices })));
 const StudentInvoices = lazy(() => import('./pages/StudentInvoices').then(m => ({ default: m.StudentInvoices })));
 const Tasks = lazy(() => import('./pages/Tasks').then(m => ({ default: m.Tasks })));
+const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
 
 // Loading component
 const PageLoader = () => (
@@ -33,6 +34,14 @@ const PageLoader = () => (
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
   const { isAuthenticated, currentUser } = useApp();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isAuthenticated && currentUser?.role === 'chat_user' && !location.pathname.includes('chat')) {
+      navigate('/chat', { replace: true });
+    }
+  }, [isAuthenticated, currentUser, location, navigate]);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -48,6 +57,15 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   return children;
 };
 
+// Specialized component to handle root path redirection
+const RootRedirect = () => {
+  const { currentUser } = useApp();
+  if (currentUser?.role === 'chat_user') {
+    return <Navigate to="/chat" replace />;
+  }
+  return <Dashboard />;
+};
+
 function AppContent() {
   return (
     <Suspense fallback={<PageLoader />}>
@@ -59,7 +77,7 @@ function AppContent() {
             <Layout />
           </ProtectedRoute>
         }>
-          <Route index element={<Dashboard />} />
+          <Route index element={<RootRedirect />} />
           <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
           <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
           <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
@@ -72,6 +90,7 @@ function AppContent() {
           <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
           <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
           <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
+          <Route path="chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
       </Routes>
     </Suspense>

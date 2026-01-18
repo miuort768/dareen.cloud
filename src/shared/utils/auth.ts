@@ -1,17 +1,14 @@
-import { API_BASE_URL } from '../../config/api';
+import { api } from '../../lib/api';
 
 export const authUtils = {
     login: async (credentials: any) => {
-        const response = await fetch(`${API_BASE_URL}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials),
-        });
-        return response.json();
+        return api.post('/login', credentials);
     },
 
     logout: () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('app_isAuthenticated');
         window.location.href = '/login';
     },
 

@@ -48,6 +48,7 @@ export const useTeachers = () => {
         teachers: teachersQuery.data || [],
         isLoading: teachersQuery.isLoading,
         createTeacher: createMutation.mutate,
+        createTeacherAsync: createMutation.mutateAsync,
         updateTeacher: updateMutation.mutate,
         deleteTeacher: deleteMutation.mutate
     };

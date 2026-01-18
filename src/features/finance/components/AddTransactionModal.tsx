@@ -70,6 +70,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
                             <input
                                 type="number"
                                 required
+                                step="any"
                                 value={newTransaction.amount}
                                 onChange={e => setNewTransaction({ ...newTransaction, amount: e.target.value })}
                                 className="w-full px-3 py-2 border rounded-none text-sm focus:border-primary-500 outline-none dark:bg-gray-800 dark:border-gray-700"

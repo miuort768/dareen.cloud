@@ -13,27 +13,30 @@ interface TransactionsLogProps {
 export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, totalCount, onDeleteAll }) => {
     return (
         <div className="bg-white border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-800">
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between dark:border-gray-800">
+            <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between dark:border-gray-800">
                 <div>
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <CreditCard size={20} className="text-gray-400" />
-                        سجل المعاملات المالية
+                    <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <CreditCard size={18} className="text-gray-400 md:w-5 md:h-5" />
+                        سجل المعاملات
                     </h2>
                 </div>
-                <div className="flex items-center gap-3">
-                    <span className="text-xs font-bold bg-gray-100 px-3 py-1 text-gray-600 dark:bg-gray-800 dark:text-gray-300 rounded-none">
-                        عدد المعاملات: {totalCount}
+                <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-[10px] md:text-xs font-bold bg-gray-100 px-2 md:px-3 py-1 text-gray-600 dark:bg-gray-800 dark:text-gray-300 rounded-none">
+                        {totalCount} معاملة
                     </span>
                     <button
                         onClick={onDeleteAll}
-                        className="text-[10px] font-black bg-red-50 text-red-600 px-3 py-1 hover:bg-red-100 transition-all flex items-center gap-1.5 rounded-none"
+                        className="text-[10px] font-black bg-red-50 text-red-600 px-2 md:px-3 py-1 hover:bg-red-100 transition-all flex items-center gap-1.5 rounded-none"
                     >
                         <Trash2 size={12} />
-                        حذف الكل
+                        <span className="hidden md:inline">حذف الكل</span>
+                        <span className="md:hidden">حذف</span>
                     </button>
                 </div>
             </div>
-            <div className="overflow-x-auto">
+
+            {/* Desktop View */}
+            <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-right">
                     <thead className="bg-primary-600 text-white dark:bg-primary-900">
                         <tr>
@@ -108,6 +111,65 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile View (Cards) */}
+            <div className="md:hidden">
+                {transactions.length > 0 ? (
+                    <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                        {transactions.slice(0, 5).map((tx) => (
+                            <div key={tx.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center gap-3">
+                                        {tx.type === 'income' ? (
+                                            <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center dark:bg-emerald-900/30">
+                                                <ArrowUpRight size={20} />
+                                            </div>
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center dark:bg-red-900/30">
+                                                <ArrowDownRight size={20} />
+                                            </div>
+                                        )}
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-sm ${tx.type === 'income'
+                                                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
+                                                    : 'bg-red-100 text-red-700 dark:bg-red-900/30'
+                                                    }`}>
+                                                    {tx.category}
+                                                </span>
+                                                <span className="text-[10px] text-gray-400 font-mono" dir="ltr">
+                                                    {new Date(tx.date).toLocaleDateString('ar-EG')}
+                                                </span>
+                                            </div>
+                                            <h3 className="font-bold text-sm text-gray-900 dark:text-white truncate max-w-[180px]">
+                                                {tx.description || '-'}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div className="text-left">
+                                        <span className={`text-base font-black font-mono block ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
+                                            }`} dir="ltr">
+                                            {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
+                                        </span>
+                                        <div className="mt-1 flex justify-end">
+                                            {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
+                                            {tx.status === 'pending' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600"><Clock size={10} /> معلق</span>}
+                                            {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-400"><X size={10} /> ملغي</span>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="py-12 text-center">
+                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mx-auto mb-3">
+                            <DollarSign size={24} />
+                        </div>
+                        <p className="text-gray-500 font-bold text-sm">لا توجد معاملات</p>
+                    </div>
+                )}
             </div>
         </div>
     );

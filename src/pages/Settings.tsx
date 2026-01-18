@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 import { cn } from '../lib/utils';
 import {
     Save, User, Building2, Lock, Download, Upload, Database, Check,
@@ -196,8 +196,7 @@ export const Settings = () => {
     const handleExport = async () => {
         try {
             // Fetch complete backup from server
-            const response = await fetch(`${API_BASE_URL}/system/backup`);
-            const backupData = await response.json();
+            const backupData = await api.get<any>('/system/backup');
 
             // Add settings data
             const completeBackup = {
@@ -242,17 +241,7 @@ export const Settings = () => {
 
                 // Restore database data if available
                 if (backupData.data) {
-                    const response = await fetch(`${API_BASE_URL}/system/restore`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ data: backupData.data })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to restore database');
-                    }
-
-                    const result = await response.json();
+                    const result = await api.post<any>('/system/restore', { data: backupData.data });
                     console.log('Database restored:', result);
                 }
 
@@ -300,11 +289,7 @@ export const Settings = () => {
     const handleSystemReset = async () => {
         setResetLoading(true);
         try {
-            const response = await fetch(`${API_BASE_URL}/system/system-reset`, {
-                method: 'POST'
-            });
-
-            if (!response.ok) throw new Error('Reset failed');
+            await api.post('/system/system-reset', {});
 
             // Clear Session Data
             localStorage.removeItem('auth_token');
@@ -342,25 +327,48 @@ export const Settings = () => {
     }
 
     return (
-        <div className="space-y-6 pb-12">
-            {/* Enhanced Header - Dynamic Color */}
-            <div className="bg-primary-600 p-6 shadow-lg transition-colors duration-500">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-3 mb-1">
-                            <div className="p-2 bg-white/10 backdrop-blur-sm rounded-none">
-                                <SettingsIcon size={28} />
-                            </div>
-                            الإعدادات
-                        </h1>
-                        <p className="text-white text-sm">إدارة إعدادات النظام والحساب</p>
+        <div className="space-y-6 pb-32">
+            {/* Premium Geometric Header */}
+            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
+
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
+
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <SettingsIcon size={36} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">إعدادات النظام</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <Database size={14} className="text-white" />
+                                إدارة تفضيلات الحساب وصلاحيات المستخدمين والبيانات
+                            </p>
+                        </div>
                     </div>
                     <button
                         onClick={handleSave}
-                        className="bg-white text-primary-600 px-6 py-2.5 rounded-none flex items-center gap-2 hover:bg-white/90 active:bg-white/80 transition-all font-bold shadow-lg transform hover:-translate-y-0.5"
+                        className="bg-white text-primary-700 px-8 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
                     >
-                        <Save size={18} />
-                        <span>حفظ جميع التغييرات</span>
+                        <Save size={20} />
+                        <span>حفظ الإعدادات</span>
                     </button>
                 </div>
             </div>

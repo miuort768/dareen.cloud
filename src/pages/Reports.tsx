@@ -28,7 +28,7 @@ export const Reports = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             <ReportsHeader onExport={() => window.print()} />
 
             <ReportsStatsGrid
@@ -54,13 +54,13 @@ export const Reports = () => {
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as any)}
-                            className={`px-4 py-2 rounded-none font-bold text-sm transition-all whitespace-nowrap ${state.activeReport === tab.id
-                                    ? 'bg-purple-600 text-white shadow-md'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-none font-bold text-[10px] md:text-sm transition-all whitespace-nowrap ${state.activeReport === tab.id
+                                ? 'bg-purple-600 text-white shadow-md'
+                                : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                                 }`}
                         >
-                            <div className="flex items-center gap-2">
-                                <tab.icon size={16} />
+                            <div className="flex items-center gap-1.5 md:gap-2">
+                                <tab.icon size={14} className="hidden md:block md:w-4 md:h-4" />
                                 <span>{tab.label}</span>
                             </div>
                         </button>

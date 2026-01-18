@@ -116,7 +116,7 @@ export const useFinance = () => {
 
         const automatedExpenses = invoices
             .filter(inv => inv.status === 'مدفوعة')
-            .reduce((sum, inv) => sum + (Number(inv.amount) || 0) + (Number(inv.personalExpenses) || 0), 0);
+            .reduce((sum, inv) => sum + ((Number(inv.amount) || 0) - (Number(inv.personalExpenses) || 0)), 0);
 
         const manualExpenses = manualTransactions
             .filter(t => t.type === 'expense')
@@ -126,7 +126,7 @@ export const useFinance = () => {
 
         const monthExpenses = invoices
             .filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
-            .reduce((sum, inv) => sum + (Number(inv.amount) || 0) + (Number(inv.personalExpenses) || 0), 0) +
+            .reduce((sum, inv) => sum + ((Number(inv.amount) || 0) - (Number(inv.personalExpenses) || 0)), 0) +
             manualTransactions
                 .filter(t => t.type === 'expense' && t.date.startsWith(currentMonth))
                 .reduce((sum, t) => sum + t.amount, 0);

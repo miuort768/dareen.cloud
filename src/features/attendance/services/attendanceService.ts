@@ -1,44 +1,26 @@
-import { API_BASE_URL } from '../../../config/api';
+import { api } from '../../../lib/api';
 import type { Session, Student } from '../types';
 
 export const attendanceService = {
     getSessions: async (): Promise<Session[]> => {
-        const res = await fetch(`${API_BASE_URL}/sessions`);
-        if (!res.ok) throw new Error('Failed to fetch sessions');
-        return res.json();
+        const data = await api.get<any>('/sessions');
+        return data.data || data; // Handle paginated response
     },
 
     getStudents: async (): Promise<Student[]> => {
-        const res = await fetch(`${API_BASE_URL}/students`);
-        if (!res.ok) throw new Error('Failed to fetch students');
-        return res.json();
+        const data = await api.get<any>('/students');
+        return data.data || data;
     },
 
     updateSessionStatus: async (id: string, status: Session['status']): Promise<void> => {
-        const res = await fetch(`${API_BASE_URL}/sessions/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status })
-        });
-        if (!res.ok) throw new Error('Failed to update session status');
+        await api.patch(`/sessions/${id}`, { status });
     },
 
     createSession: async (session: Omit<Session, 'id'>): Promise<Session> => {
-        const res = await fetch(`${API_BASE_URL}/sessions`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(session)
-        });
-        if (!res.ok) throw new Error('Failed to create session');
-        return res.json();
+        return api.post<Session>('/sessions', session);
     },
 
     updateStudent: async (student: Student): Promise<void> => {
-        const res = await fetch(`${API_BASE_URL}/students/${student.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(student)
-        });
-        if (!res.ok) throw new Error('Failed to update student');
+        await api.put(`/students/${student.id}`, student);
     }
 };

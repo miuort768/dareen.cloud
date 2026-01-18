@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Calendar, CheckCircle2, Clock, Edit, Trash2, TrendingUp } from 'lucide-react';
+import { BookOpen, Calendar, CheckCircle2, Clock, Edit, Trash2, TrendingUp, XCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 
@@ -9,7 +9,8 @@ interface TeacherStudentCardProps {
     actualSessionsUsed: number;
     onUpdateSchedule: (student: Student, enrollmentIndex: number, newSchedule: ScheduleSlot[]) => void;
     onLogAttendance: (student: Student, enrollment: Enrollment) => void;
-    onViewHistory: (studentId: string, studentName: string) => void;
+    onViewHistory: (studentId: string, studentName: string, grade: string, subject: string, curriculum?: string) => void;
+    onDeleteSlot: (student: Student, enrollment: Enrollment, index: number) => void;
     logDate: string;
     onDateChange: (date: string) => void;
 }
@@ -21,12 +22,26 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     onUpdateSchedule,
     onLogAttendance,
     onViewHistory,
+    onDeleteSlot,
     logDate,
     onDateChange
 }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'مساءً' });
     const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
+
+    const getGradeDisplay = (grade: string) => {
+        const mapping: Record<string, string> = {
+            'الأول': '1', 'الثاني': '2', 'الثالث': '3', 'الرابع': '4', 'الخامس': '5', 'السادس': '6',
+            'سابع': '7', 'ثامن': '8', 'تاسع': '9', 'عاشر': '10'
+        };
+        const numMatch = grade.match(/\d+/);
+        if (numMatch) return numMatch[0];
+        for (const [key, val] of Object.entries(mapping)) {
+            if (grade.includes(key)) return val;
+        }
+        return grade.charAt(0);
+    };
 
     const attendancePercent = en.sessionsTotal > 0 ? (actualSessionsUsed / en.sessionsTotal) * 100 : 0;
 
@@ -44,26 +59,27 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     const handleDeleteSlot = (index: number) => {
-        if (confirm('هل أنت متأكد من حذف هذا الموعد؟')) {
-            const newSch = en.schedule.filter((_, i) => i !== index);
-            const enIndex = student.enrollments.indexOf(en);
-            onUpdateSchedule(student, enIndex, newSch);
-        }
+        onDeleteSlot(student, en, index);
     };
 
     return (
-        <div className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-900/50 transition-all duration-300 flex flex-col group overflow-hidden rounded-xl">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-indigo-500 opacity-60 group-hover:opacity-100 transition-opacity"></div>
+        <div className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-900/50 transition-all duration-300 flex flex-col group overflow-hidden rounded-none">
 
             <div className="p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-5 pb-4 border-b border-gray-50 dark:border-gray-700/50">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-400 font-black text-lg rounded-full">
-                            {student.name.charAt(0)}
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-primary-600 dark:bg-primary-500 flex items-center justify-center text-white font-black text-xl rounded-none shadow-lg shadow-primary-500/20">
+                            {getGradeDisplay(student.grade)}
                         </div>
                         <div>
-                            <h4 className="font-black text-gray-900 dark:text-white leading-tight">{student.name}</h4>
-                            <span className="text-[10px] font-black text-primary-600 dark:text-primary-400 bg-primary-50/50 dark:bg-primary-900/20 px-2 py-0.5 rounded-sm">
+                            <div className="flex items-center gap-2 mb-1">
+                                <h4 className="font-black text-gray-900 dark:text-white text-lg leading-tight">{student.name}</h4>
+                                <span className="text-[9px] font-black bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 px-2 py-0.5 rounded-none uppercase tracking-tighter">
+                                    {student.grade}
+                                </span>
+                            </div>
+                            <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-1">
+                                <BookOpen size={10} className="text-primary-500" />
                                 {en.subject}
                             </span>
                         </div>
@@ -77,19 +93,28 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     </div>
                 </div>
 
-                <div className="mb-6 space-y-2">
-                    <div className="flex justify-between items-end text-[10px] font-black">
-                        <span className="text-gray-400 uppercase tracking-widest">تغطية المنهج</span>
-                        <span className="text-primary-600 dark:text-primary-400">{actualSessionsUsed} من {en.sessionsTotal}</span>
+                <div className="mb-2 p-0 space-y-2 rounded-none">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                            <TrendingUp size={14} className="text-primary-500" />
+                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">تغطية المنهج</span>
+                        </div>
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-lg font-black text-primary-600 dark:text-primary-400">{actualSessionsUsed}</span>
+                            <span className="text-[10px] font-bold text-gray-400">/ {en.sessionsTotal} حصص</span>
+                        </div>
                     </div>
-                    <div className="h-2 bg-gray-50 dark:bg-gray-700 overflow-hidden shadow-inner flex rounded-full">
+                    <div className="h-2.5 bg-gray-200 dark:bg-gray-700 overflow-hidden rounded-none shadow-inner relative">
+                        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'linear-gradient(45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent)', backgroundSize: '10px 10px' }}></div>
                         <div
                             className={cn(
-                                "h-full transition-all duration-1000 ease-out shadow-lg rounded-full",
-                                attendancePercent > 80 ? "bg-emerald-500" : attendancePercent > 40 ? "bg-primary-500" : "bg-amber-500"
+                                "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
+                                attendancePercent > 80 ? "bg-emerald-500" : attendancePercent > 40 ? "bg-primary-600" : "bg-amber-500"
                             )}
                             style={{ width: `${Math.min(100, attendancePercent)}%` }}
-                        ></div>
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -105,25 +130,47 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 setEditSlotIndex(null);
                                 setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' });
                             }}
-                            className="text-[9px] font-black underline decoration-primary-300 hover:text-primary-600 transition-colors"
+                            type="button"
+                            className={cn(
+                                "flex items-center gap-1.5 px-3 py-1 rounded-none text-[10px] font-black transition-all border",
+                                isEditing
+                                    ? "bg-rose-50 text-rose-600 border-rose-200 hover:bg-rose-100 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800"
+                                    : "bg-primary-50 text-primary-600 border-primary-200 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800"
+                            )}
                         >
-                            {isEditing ? 'إلغاء' : 'تعديل الجدول'}
+                            {isEditing ? (
+                                <>
+                                    <XCircle size={12} />
+                                    <span>إلغاء</span>
+                                </>
+                            ) : (
+                                <>
+                                    <Edit size={12} />
+                                    <span>تعديل الجدول</span>
+                                </>
+                            )}
                         </button>
                     </div>
 
-                    <div className="flex flex-wrap gap-1">
+                    <div className={cn(
+                        "transition-all duration-300",
+                        isEditing ? "grid grid-cols-2 gap-2" : "flex flex-wrap gap-1"
+                    )}>
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="group/slot relative border border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 px-2 py-1 flex items-center gap-1 rounded">
+                            <div key={i} className={cn(
+                                "group/slot relative border border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 px-2 py-1 flex items-center gap-1 rounded transition-all",
+                                isEditing ? "w-full justify-center py-1.5" : ""
+                            )}>
                                 <span className="text-[9px] font-bold text-gray-700 dark:text-gray-300">{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
-                                    <div className="flex gap-1 ms-1 ps-1 border-s border-gray-200 dark:border-gray-700">
-                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} className="text-blue-500 hover:text-blue-700"><Edit size={8} /></button>
-                                        <button onClick={() => handleDeleteSlot(i)} className="text-red-500 hover:text-red-700"><Trash2 size={8} /></button>
+                                    <div className="flex gap-2 ms-2 ps-2 border-s border-gray-200 dark:border-gray-700">
+                                        <button type="button" onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} className="text-blue-600 hover:text-blue-700 transition-colors p-1 hover:bg-blue-50 dark:hover:bg-blue-900/20"><Edit size={16} /></button>
+                                        <button type="button" onClick={() => handleDeleteSlot(i)} className="text-rose-600 hover:text-rose-700 transition-colors p-1 hover:bg-rose-50 dark:hover:bg-rose-900/20"><Trash2 size={16} /></button>
                                     </div>
                                 )}
                             </div>
                         )) : (
-                            <p className="text-[9px] text-gray-400 italic">لم يتم تحديد مواعيد أسبوعية بعد</p>
+                            <p className={cn("text-[9px] text-gray-400 italic", isEditing ? "col-span-2 text-center" : "")}>لم يتم تحديد مواعيد أسبوعية بعد</p>
                         )}
                     </div>
 
@@ -149,10 +196,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <button onClick={handleSaveSlot} className="flex-1 bg-primary-600 text-white text-[10px] font-black py-2.5 hover:bg-primary-700 shadow-md rounded">
+                                <button onClick={handleSaveSlot} className="flex-1 bg-primary-600 text-white text-[10px] font-black py-2.5 hover:bg-primary-700 shadow-lg shadow-primary-500/20 rounded-none transition-all active:scale-[0.98]">
                                     {editSlotIndex !== null ? 'حفظ التعديل' : 'إضافة للجداول'}
                                 </button>
-                                <button onClick={() => { setEditSlotIndex(null); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); }} className="px-3 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] font-black rounded">إلغاء</button>
+                                <button onClick={() => { setEditSlotIndex(null); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); }} className="px-4 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] font-black rounded-none hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">إلغاء</button>
                             </div>
                         </div>
                     )}
@@ -164,8 +211,8 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <Calendar size={12} className="text-emerald-500" />
                             تسجيل الحضور السريع
                         </h5>
-                        <button onClick={() => onViewHistory(student.id, student.name)} className="text-[9px] font-black text-primary-600 flex items-center gap-1 hover:underline">
-                            <BookOpen size={10} /> عرض السجل بالكامل
+                        <button onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)} className="text-[10px] font-black text-primary-600 bg-primary-50 dark:bg-primary-900/30 px-2.5 py-1 rounded-none border border-primary-200 dark:border-primary-800 flex items-center gap-1.5 hover:bg-primary-100 transition-colors">
+                            <BookOpen size={12} /> عرض السجل بالكامل
                         </button>
                     </div>
 
@@ -173,7 +220,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         <div className="relative flex-1">
                             <input type="date" value={logDate} onChange={(e) => onDateChange(e.target.value)} className="w-full text-[10px] p-2.5 bg-gray-50 dark:bg-gray-900 border-none ring-1 ring-gray-100 dark:ring-gray-700 focus:ring-primary-500 transition-all dark:text-white rounded" />
                         </div>
-                        <button onClick={() => onLogAttendance(student, en)} className="bg-emerald-600 text-white px-5 text-[10px] font-black hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/10 active:scale-95 rounded-lg">
+                        <button onClick={() => onLogAttendance(student, en)} className="bg-emerald-600 text-white px-5 text-[10px] font-black hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/10 active:scale-95 rounded-none">
                             <CheckCircle2 size={14} /> تسجيل الحضور
                         </button>
                     </div>

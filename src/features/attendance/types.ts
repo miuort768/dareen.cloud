@@ -33,6 +33,7 @@ export interface Student extends Omit<GlobalStudent, 'enrollments'> {
     id: string;
     name: string;
     grade: string;
+    curriculum?: string;
     enrollments: Enrollment[];
 }
 

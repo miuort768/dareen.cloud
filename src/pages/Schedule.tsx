@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 interface Teacher {
     id: string;
@@ -104,35 +104,31 @@ export const Schedule = () => {
         teacherName: currentUser?.teacherName || '',
         subject: ''
     });
+    const [mobileActiveDay, setMobileActiveDay] = useState<string>('السبت');
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
+        if (DAYS_OF_WEEK.includes(today)) {
+            setMobileActiveDay(today);
+        }
+    }, []);
 
     // Fetch Students Data
     const fetchData = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`${API_BASE_URL}/students`);
-            setStudents(await res.json());
+            const data = await api.get<any>('/students');
+            setStudents(Array.isArray(data) ? data : (data.data || []));
         } catch (error) {
             console.error("Error fetching data", error);
+            setStudents([]);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const res = await fetch(`${API_BASE_URL}/students`);
-                const data = await res.json();
-                setStudents(Array.isArray(data) ? data : []);
-            } catch (error) {
-                console.error("Error fetching data", error);
-                setStudents([]);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
     }, []);
 
@@ -158,10 +154,8 @@ export const Schedule = () => {
                 });
             } else {
                 // If not, we might need more info (subject, etc.)
-                // For simplicity in "Quick Add", let's assume we find the teacher's subject
-                const res = await fetch(`${API_BASE_URL}/teachers`);
-                const teachers = await res.json();
-                const teacherObj = teachers.find((t: Teacher) => t.name === teacher);
+                const teachers = await api.get<Teacher[]>('/teachers');
+                const teacherObj = (Array.isArray(teachers) ? teachers : (teachers as any).data || []).find((t: Teacher) => t.name === teacher);
 
                 updatedStudent.enrollments.push({
                     teacher: teacher,
@@ -177,11 +171,7 @@ export const Schedule = () => {
                 });
             }
 
-            await fetch(`${API_BASE_URL}/students/${student.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedStudent)
-            });
+            await api.put(`/students/${student.id}`, updatedStudent);
 
             setShowAddModal(false);
             fetchData();
@@ -203,11 +193,7 @@ export const Schedule = () => {
                     slot => !(slot.day === day && slot.hour === hour && slot.period === period)
                 );
 
-                await fetch(`${API_BASE_URL}/students/${student.id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatedStudent)
-                });
+                await api.put(`/students/${student.id}`, updatedStudent);
 
                 setShowDetails(false);
                 setShowSlotModal(false);
@@ -287,27 +273,56 @@ export const Schedule = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             {/* Page Header */}
-            <div className="relative bg-primary-600 p-8 shadow-xl text-white overflow-hidden border-b-4 border-primary-500">
-                <div className="relative flex items-center justify-between flex-wrap gap-4">
-                    <div>
-                        <h1 className="text-3xl font-black mb-2 flex items-center gap-3">
-                            <Calendar size={32} />
-                            الجدول الأسبوعي العام
-                        </h1>
-                        <p className="opacity-80 font-bold">متابعة مواعيد الحصص لجميع الطلاب والمعلمات</p>
+            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
+
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
+
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <Calendar size={36} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">الجدول الأسبوعي العام</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <Clock size={14} className="text-white" />
+                                متابعة مواعيد الحصص لجميع الطلاب والمعلمات
+                            </p>
+                        </div>
                     </div>
-                    <div className="flex gap-4">
-                        <button onClick={() => window.print()} className="bg-white/10 backdrop-blur-md px-6 py-3 border border-white/20 hover:bg-white/20 transition-all font-black text-sm flex items-center gap-2">
-                            <Download size={18} /> طباعة الجدول
+                    <div className="flex items-center gap-4 flex-wrap no-print">
+                        <button
+                            onClick={() => window.print()}
+                            className="hidden md:flex bg-white text-primary-700 px-6 py-3 rounded-none items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
+                        >
+                            <Download size={20} />
+                            <span>طباعة الجدول</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard title="إجمالي الجلسات" value={totalSessions} icon={Calendar} color="blue" />
                 <StatsCard title="الطلاب المجدولين" value={uniqueStudents} icon={GraduationCap} color="emerald" />
                 <StatsCard title="المواد النشطة" value={activeSubjects} icon={BookOpen} color="purple" />
@@ -330,7 +345,7 @@ export const Schedule = () => {
                     </div>
                 </div>
 
-                <div className="w-48 space-y-2">
+                <div className="w-48 space-y-2 hidden md:block">
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">تصفية باليوم</label>
                     <select
                         value={filterDay}
@@ -357,17 +372,107 @@ export const Schedule = () => {
                 )}
             </div>
 
-            {/* Schedule Table */}
-            <div className="bg-white border border-gray-200 overflow-x-auto dark:bg-gray-900 dark:border-gray-800 shadow-xl">
+            {/* Mobile View */}
+            <div className="md:hidden space-y-6">
+                {/* Mobile Day Tabs */}
+                <div className="flex flex-wrap gap-2 justify-center pb-2">
+                    {DAYS_OF_WEEK.map(day => (
+                        <button
+                            key={day}
+                            onClick={() => setMobileActiveDay(day)}
+                            className={cn(
+                                "px-4 py-2 rounded-lg text-xs font-black transition-all shadow-sm border flex-grow basis-[30%] sm:basis-auto text-center shrink-0",
+                                mobileActiveDay === day
+                                    ? "bg-indigo-600 text-white border-indigo-600 shadow-indigo-500/30 shadow-md ring-2 ring-indigo-200 ring-offset-1 dark:ring-indigo-900 dark:ring-offset-gray-900"
+                                    : "bg-white text-gray-500 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                            )}
+                        >
+                            {day}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Mobile Schedule List */}
+                <div className="space-y-4">
+                    {TIME_SLOTS.map(slot => {
+                        const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
+                        return (
+                            <div key={`${slot.hour}-${slot.period}`} className="bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 font-black text-xs">
+                                        {slot.label}
+                                    </div>
+                                    <div className="h-px bg-gray-100 flex-1 dark:bg-gray-800"></div>
+                                </div>
+
+                                {events.length > 0 ? (
+                                    <div className="grid gap-3">
+                                        {events.map(event => {
+                                            const colors = getTeacherColors(event.teacherName);
+                                            return (
+                                                <div
+                                                    key={event.id}
+                                                    onClick={() => {
+                                                        setSelectedEvent(event);
+                                                        setShowDetails(true);
+                                                    }}
+                                                    className={cn(
+                                                        "relative overflow-hidden p-4 rounded-xl border transition-all active:scale-[0.98]",
+                                                        "bg-gradient-to-br",
+                                                        colors.gradient
+                                                    )}
+                                                >
+                                                    <div className={cn("absolute top-0 right-0 w-1.5 h-full", colors.accent)}></div>
+                                                    <div className="flex justify-between items-start gap-3">
+                                                        <div>
+                                                            <h4 className="font-black text-gray-900 dark:text-white mb-1">{event.studentName}</h4>
+                                                            <p className="text-xs font-bold opacity-80 mb-2">{event.subject} • {event.studentGrade}</p>
+                                                            <div className="flex items-center gap-2 text-[10px] font-black opacity-60 bg-white/50 w-fit px-2 py-1 rounded-full">
+                                                                <User size={12} />
+                                                                {event.teacherName}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <button
+                                        onClick={() => {
+                                            setEnrollData({
+                                                ...enrollData,
+                                                day: mobileActiveDay,
+                                                hour: String(slot.hour),
+                                                period: slot.period
+                                            });
+                                            setShowAddModal(true);
+                                        }}
+                                        className="w-full py-4 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center gap-2 text-gray-400 hover:text-primary-600 hover:border-primary-300 hover:bg-primary-50/50 transition-all dark:border-gray-800 dark:hover:border-gray-700"
+                                    >
+                                        <div className="w-6 h-6 rounded-full border-2 border-current flex items-center justify-center">
+                                            <span className="text-xl leading-none font-light mb-0.5">+</span>
+                                        </div>
+                                        <span className="text-sm font-bold">إضافة حصة</span>
+                                    </button>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Desktop Schedule Table */}
+            <div id="printable-schedule" className="hidden md:block bg-white border border-gray-200 overflow-x-auto dark:bg-gray-900 dark:border-gray-800 shadow-xl">
                 <table className="w-full border-collapse">
                     <thead>
                         <tr>
-                            <th className="bg-slate-50 border border-gray-100 p-4 w-28 text-sm font-black text-slate-500 uppercase dark:bg-slate-900 dark:border-gray-800">
+                            <th className="bg-slate-50 border border-gray-100 p-2 md:p-4 w-16 md:w-28 text-[10px] md:text-sm font-black text-slate-500 uppercase dark:bg-slate-900 dark:border-gray-800">
                                 الوقت
                             </th>
                             {DAYS_OF_WEEK.map(day => (
                                 <th key={day} className={cn(
-                                    "bg-slate-50 border border-gray-100 p-4 text-sm font-black uppercase dark:bg-slate-900 dark:border-gray-800",
+                                    "bg-slate-50 border border-gray-100 p-2 md:p-4 text-[10px] md:text-sm font-black uppercase dark:bg-slate-900 dark:border-gray-800",
                                     new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day ? "text-primary-600 bg-primary-50/50" : "text-slate-700 dark:text-gray-300"
                                 )}>
                                     {day}
@@ -378,7 +483,7 @@ export const Schedule = () => {
                     <tbody>
                         {TIME_SLOTS.map((slot) => (
                             <tr key={`${slot.hour}-${slot.period}`}>
-                                <td className="border border-gray-50 p-4 text-center font-black text-xs text-slate-400 dark:border-gray-800">
+                                <td className="border border-gray-50 p-2 md:p-4 text-center font-black text-[9px] md:text-xs text-slate-400 dark:border-gray-800">
                                     {slot.label}
                                 </td>
                                 {DAYS_OF_WEEK.map(day => {
@@ -552,12 +657,10 @@ export const Schedule = () => {
                                             onClick={() => {
                                                 setSelectedEvent(event);
                                                 setShowDetails(true);
-                                                // We keep the slot modal open behind or close it? 
-                                                // User might want to go back. Let's keep it but handle layering.
                                             }}
                                             className={cn(
                                                 "p-4 border-r-4 transition-all hover:translate-x-1 cursor-pointer shadow-sm relative overflow-hidden group",
-                                                colors.gradient.replace('from-', 'bg-').split(' ')[0] // Simple background
+                                                colors.gradient.replace('from-', 'bg-').split(' ')[0]
                                             )}
                                         >
                                             <div className={cn("absolute top-0 right-0 w-1.5 h-full", colors.accent)}></div>

@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Lock, User } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { Lock, User, Phone, Crown, Eye, EyeOff } from 'lucide-react';
+import { useApp, useSettings } from '../context/AppContext';
 
 export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isPasswordFocused, setIsPasswordFocused] = useState(false); // State for eye animation
     const [error, setError] = useState('');
-    const { login, academyName } = useApp();
+    const { login } = useApp();
+    const { adminPhone } = useSettings();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
+        // ... existing logic ...
         e.preventDefault();
         setError('');
 
         try {
-            if (await login(username, password)) {
-                navigate('/');
+            const success = await login(username, password);
+            if (success) {
+                // Get fresh user data from localStorage since state might not have updated yet
+                const savedUser = JSON.parse(localStorage.getItem('app_current_user') || '{}');
+                if (savedUser.role === 'chat_user') {
+                    navigate('/chat', { replace: true });
+                } else {
+                    navigate('/', { replace: true });
+                }
             } else {
                 setError('اسم المستخدم أو كلمة المرور غير صحيحة');
             }
@@ -33,13 +44,78 @@ export const Login = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4" dir="rtl">
-            <div className="w-full max-w-md p-8">
+            <div className="w-full max-w-md p-6 sm:p-8">
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 shadow-lg shadow-primary-600/30">
-                        <GraduationCap size={40} />
+                    {/* Interactive Logo Container */}
+                    <div className="w-28 h-28 bg-primary-600 rounded-none flex items-center justify-center text-white mx-auto -mt-12 mb-6 relative shadow-xl shadow-primary-600/20 overflow-visible">
+
+                        {/* The Crown - Moved Closer */}
+                        <Crown className="absolute -top-9 -left-4 text-amber-400 drop-shadow-2xl transform -rotate-12 z-30" size={60} strokeWidth={2} fill="#fbbf24" />
+
+                        {/* The Glasses Container */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-2 z-20 w-48">
+
+                            {/* Left Lens */}
+                            <div className="relative w-16 h-16 bg-white rounded-[1.5rem] border-[6px] border-gray-900 overflow-hidden shadow-2xl ring-2 ring-black/5">
+                                {/* Eye Internal */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50">
+                                    <div className={`w-5 h-5 bg-gray-900 rounded-full transition-all duration-300 ${isPasswordFocused ? 'translate-y-8 scale-90' : 'scale-100'} relative shadow-sm`}>
+                                        <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
+                                    </div>
+                                </div>
+                                {/* Eyelid */}
+                                <div className={`absolute top-0 left-0 w-full bg-primary-600 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border-b-[4px] border-gray-900 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                            </div>
+
+                            {/* Bridge & Nose Group */}
+                            <div className="flex flex-col items-center -mt-3 relative z-0">
+                                {/* Bridge */}
+                                <div className="w-5 h-3 bg-gray-900 rounded-md shadow-md"></div>
+                                {/* Cute Nose */}
+                                <div className="w-4 h-3 bg-amber-400 rounded-b-xl shadow-sm mt-1"></div>
+                            </div>
+
+                            {/* Right Lens */}
+                            <div className="relative w-16 h-16 bg-white rounded-[1.5rem] border-[6px] border-gray-900 overflow-hidden shadow-2xl ring-2 ring-black/5">
+                                {/* Eye Internal */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50">
+                                    <div className={`w-5 h-5 bg-gray-900 rounded-full transition-all duration-300 ${isPasswordFocused ? 'translate-y-8 scale-90' : 'scale-100'} relative shadow-sm`}>
+                                        <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full opacity-90"></div>
+                                    </div>
+                                </div>
+                                {/* Eyelid */}
+                                <div className={`absolute top-0 left-0 w-full bg-primary-600 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border-b-[4px] border-gray-900 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
+                            </div>
+
+                        </div>
+
+                        {/* The Smile - Reactive SVG */}
+                        <svg className="absolute bottom-3 left-1/2 -translate-x-1/2 overflow-visible transition-all duration-300 ease-out" width="40" height="20" viewBox="0 0 40 20">
+                            {isPasswordFocused ? (
+                                <path
+                                    d="M 10 10 L 30 10"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="5"
+                                    strokeLinecap="round"
+                                    className="drop-shadow-sm"
+                                />
+                            ) : (
+                                <path
+                                    d="M 5 5 Q 20 22 35 5"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="5"
+                                    strokeLinecap="round"
+                                    className="drop-shadow-sm"
+                                />
+                            )}
+                        </svg>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">{academyName}</h1>
-                    <p className="text-gray-500 mt-2">لتعليم والتدريب</p>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-normal text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black drop-shadow-sm" style={{ fontFamily: 'Aref Ruqaa, serif' }}>دارين للتعليم والتدريب</h1>
+                    <p className="mt-2 text-xl sm:text-2xl md:text-3xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 drop-shadow-sm" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                        Mr. Ahmed Abdullah
+                    </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -69,13 +145,22 @@ export const Login = () => {
                         <div className="relative">
                             <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-white border border-gray-200 rounded-xl py-3 pr-10 pl-4 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm"
+                                onFocus={() => setIsPasswordFocused(true)} // Close eyes
+                                onBlur={() => setIsPasswordFocused(false)} // Open eyes
+                                className="w-full bg-white border border-gray-200 rounded-xl py-3 pr-10 pl-10 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-sm"
                                 placeholder="كلمة المرور"
                                 required
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600 transition-colors"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
                     </div>
 
@@ -86,6 +171,18 @@ export const Login = () => {
                         تسجيل الدخول
                     </button>
                 </form>
+
+                <div className="mt-8 pt-6 border-t border-gray-100">
+                    <a
+                        href={`https://wa.me/2${adminPhone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full bg-green-50 text-green-600 font-bold py-3 rounded-xl hover:bg-green-100 transition-colors border border-green-200"
+                    >
+                        <Phone size={20} />
+                        <span>تواصل مع الدعم الفني</span>
+                    </a>
+                </div>
             </div>
         </div>
     );

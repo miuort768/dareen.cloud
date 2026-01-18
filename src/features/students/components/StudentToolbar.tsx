@@ -23,21 +23,21 @@ export const StudentToolbar = ({ searchTerm, onSearchChange, onPrint, onExport, 
                 />
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 no-print">
-                <button onClick={onPrint} className="bg-white text-gray-700 border border-gray-200 px-4 py-2.5 font-bold hover:bg-gray-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
-                    <Printer size={18} className="text-primary-600" />
+            <div className="flex items-center justify-center gap-2 no-print overflow-x-auto pb-1 md:pb-0 w-full md:w-auto">
+                <button onClick={onPrint} className="bg-white text-gray-700 border border-gray-200 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 flex items-center gap-1.5 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 whitespace-nowrap">
+                    <Printer size={14} className="text-primary-600" />
                     <span>طباعة</span>
                 </button>
-                <button onClick={onExport} className="bg-white text-gray-700 border border-gray-200 px-4 py-2.5 font-bold hover:bg-gray-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
-                    <Download size={18} className="text-emerald-600" />
+                <button onClick={onExport} className="bg-white text-gray-700 border border-gray-200 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 flex items-center gap-1.5 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 whitespace-nowrap">
+                    <Download size={14} className="text-emerald-600" />
                     <span>تصدير</span>
                 </button>
-                <button onClick={onImport} className="bg-white text-gray-700 border border-gray-200 px-4 py-2.5 font-bold hover:bg-gray-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
-                    <Upload size={18} className="text-blue-600" />
+                <button onClick={onImport} className="bg-white text-gray-700 border border-gray-200 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 flex items-center gap-1.5 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 whitespace-nowrap">
+                    <Upload size={14} className="text-blue-600" />
                     <span>استيراد</span>
                 </button>
-                <button onClick={onDeleteAll} className="bg-white text-red-600 border border-red-100 px-4 py-2.5 font-bold hover:bg-red-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-900 dark:border-red-900/30">
-                    <Trash2 size={18} />
+                <button onClick={onDeleteAll} className="bg-white text-red-600 border border-red-100 px-3 py-1.5 text-xs font-bold hover:bg-red-50 flex items-center gap-1.5 rounded-none shadow-sm transition-all dark:bg-gray-900 dark:border-red-900/30 whitespace-nowrap">
+                    <Trash2 size={14} />
                     <span>حذف الكل</span>
                 </button>
             </div>

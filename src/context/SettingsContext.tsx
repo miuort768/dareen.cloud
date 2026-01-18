@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 interface SettingsContextType {
     academyName: string;
@@ -17,7 +17,7 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-    const [academyName, setAcademyNameState] = useState('منصة دارين');
+    const [academyName, setAcademyNameState] = useState('دارين لتعليم و التدريب');
     const [adminPhone, setAdminPhoneState] = useState('01152001250');
     const [themeColor, setThemeColorState] = useState(() => localStorage.getItem('app_theme_color') || 'indigo');
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
@@ -26,28 +26,28 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const res = await fetch(`${API_BASE_URL}/system/settings`);
-                if (res.ok) {
-                    const settings = await res.json();
+                const settings = await api.get<any>('/system/settings');
+                if (settings) {
                     if (settings.academy_name) setAcademyNameState(settings.academy_name);
                     if (settings.admin_phone) setAdminPhoneState(settings.admin_phone);
                     if (settings.theme_color) setThemeColorState(settings.theme_color);
                     if (settings.notifications_enabled) setNotificationsEnabledState(settings.notifications_enabled === 'true');
                     if (settings.auto_backup) setAutoBackupState(settings.auto_backup === 'true');
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error("Error fetching settings:", e);
+            }
         };
         fetchSettings();
     }, []);
 
     const updateSetting = async (key: string, value: string) => {
         try {
-            await fetch(`${API_BASE_URL}/system/settings`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key, value })
-            });
-        } catch (e) { console.error(e); }
+            await api.post('/system/settings', { key, value });
+        } catch (e) {
+            console.error("Error updating setting:", e);
+            throw e;
+        }
     };
 
     const setAcademyName = async (name: string) => {

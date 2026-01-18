@@ -1,4 +1,5 @@
-import { X, Bell, CheckCircle2, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { X, Bell, CheckCircle2, Trash2, MessageCircle } from 'lucide-react';
 import type { Teacher, Session } from '../types';
 
 interface TeacherDetailsProps {
@@ -24,6 +25,7 @@ export const TeacherDetails = ({
     onSendNotification,
     isTeacherView
 }: TeacherDetailsProps) => {
+    const navigate = useNavigate();
     // Filter students enrolled with this teacher
     const enrolledStudents = students.filter(s =>
         s.enrollments?.some((e: any) => e.teacher === teacher.name)
@@ -34,6 +36,8 @@ export const TeacherDetails = ({
         .filter(s => s.teacherName === teacher.name)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 20);
+
+
 
     return (
         <div className="bg-white border border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-800 h-fit sticky top-6 animate-in slide-in-from-left-4">
@@ -51,13 +55,22 @@ export const TeacherDetails = ({
                 </div>
                 <div className="flex items-center gap-2">
                     {!isTeacherView && (
-                        <button
-                            onClick={() => onSendNotification(teacher)}
-                            className="p-2 text-primary-600 hover:bg-primary-50 rounded-full transition-colors"
-                            title="إرسال تنبيه"
-                        >
-                            <Bell size={18} />
-                        </button>
+                        <>
+                            <button
+                                onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })}
+                                className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-full transition-colors"
+                                title="مراسلة المعلمة"
+                            >
+                                <MessageCircle size={18} />
+                            </button>
+                            <button
+                                onClick={() => onSendNotification(teacher)}
+                                className="p-2 text-primary-600 hover:bg-primary-50 rounded-full transition-colors"
+                                title="إرسال تنبيه"
+                            >
+                                <Bell size={18} />
+                            </button>
+                        </>
                     )}
                     <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 rounded-full">
                         <X size={20} />

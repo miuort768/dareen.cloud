@@ -45,7 +45,7 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             <DashboardHeader
                 isTeacher={isTeacher}
                 currentUser={currentUser}

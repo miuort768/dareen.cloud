@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 import type {
     Stats, Session, Student, Enrollment,
     TeacherInvoice, StudentInvoice, LowBalanceStudent, MonthData, Task
@@ -38,22 +38,13 @@ export const useDashboardData = (currentUser: User | null) => {
     const fetchDashboardData = useCallback(async () => {
         try {
             setLoading(true);
-            const [studentsRes, teachersRes, parentsRes, sessionsRes, invoicesRes, studentInvoicesRes] = await Promise.all([
-                fetch(`${API_BASE_URL}/students`),
-                fetch(`${API_BASE_URL}/teachers`),
-                fetch(`${API_BASE_URL}/parents`),
-                fetch(`${API_BASE_URL}/sessions`),
-                fetch(`${API_BASE_URL}/invoices`),
-                fetch(`${API_BASE_URL}/studentInvoices`),
-            ]);
-
             const [rawStudents, rawTeachers, rawParents, rawSessions, rawInvoices, rawStudentInvoices] = await Promise.all([
-                studentsRes.json().catch(() => []),
-                teachersRes.json().catch(() => []),
-                parentsRes.json().catch(() => []),
-                sessionsRes.json().catch(() => []),
-                invoicesRes.json().catch(() => []),
-                studentInvoicesRes.json().catch(() => []),
+                api.get<any[]>('/students'),
+                api.get<any[]>('/teachers'),
+                api.get<any[]>('/parents'),
+                api.get<any[]>('/sessions'),
+                api.get<any[]>('/invoices'),
+                api.get<any[]>('/studentInvoices'),
             ]);
 
             const students = Array.isArray(rawStudents) ? rawStudents : [];
@@ -247,16 +238,13 @@ export const useDashboardData = (currentUser: User | null) => {
             setLowBalanceStudents(lowBalance);
             setMonthlyData(chartData);
 
-            // Fetch tasks from localStorage
+            // Fetch tasks from api
             try {
-                const savedTasks = localStorage.getItem('school_tasks');
-                if (savedTasks) {
-                    const parsed = JSON.parse(savedTasks);
-                    const pendingTasks = (Array.isArray(parsed) ? parsed : []).filter((t: any) => t.status === 'pending');
-                    setTasks(pendingTasks);
-                }
+                const tasksData = await api.get<any[]>('/tasks');
+                const pendingTasks = (Array.isArray(tasksData) ? tasksData : []).filter((t: any) => t.status === 'pending');
+                setTasks(pendingTasks);
             } catch (e) {
-                console.error("Error parsing tasks:", e);
+                console.error("Error fetching tasks:", e);
             }
 
         } catch (error) {
@@ -274,11 +262,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
     const updateSessionStatus = async (id: string, newStatus: 'scheduled' | 'completed' | 'cancelled') => {
         try {
-            await fetch(`${API_BASE_URL}/sessions/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus })
-            });
+            await api.patch(`/sessions/${id}`, { status: newStatus });
             fetchDashboardData();
         } catch (error) {
             console.error("Error updating status", error);
@@ -297,5 +281,3 @@ export const useDashboardData = (currentUser: User | null) => {
         updateSessionStatus
     };
 };
-
-

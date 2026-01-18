@@ -18,11 +18,12 @@ const validate = (schema) => (req, res, next) => {
         next();
     } catch (error) {
         if (error instanceof z.ZodError) {
-            logger.warn('Validation Error', { path: req.path, errors: error.errors });
+            const errors = error.errors || [];
+            logger.warn('Validation Error', { path: req.path, errors });
             return res.status(400).json({
                 error: 'Validation Error',
-                details: error.errors.map(e => ({
-                    field: e.path.join('.'),
+                details: errors.map(e => ({
+                    field: e.path ? e.path.join('.') : '',
                     message: e.message
                 }))
             });

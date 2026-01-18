@@ -32,7 +32,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden">
+            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
                 <div className={cn(
                     "h-1.5 w-full",
                     isDestructive ? "bg-red-600" : "bg-primary-600"
@@ -60,7 +60,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             {title}
                         </h3>
 
-                        <p className="text-gray-500 dark:text-gray-400 font-bold text-sm leading-relaxed mb-8">
+                        <p className="text-gray-500 dark:text-gray-400 font-bold text-sm leading-relaxed mb-8 whitespace-pre-line text-right">
                             {message}
                         </p>
 

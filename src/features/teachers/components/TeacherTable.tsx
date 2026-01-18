@@ -1,4 +1,4 @@
-import { Edit, Trash2, GraduationCap } from 'lucide-react';
+import { Edit, Trash2, GraduationCap, MessageCircle } from 'lucide-react';
 import type { Teacher } from '../types';
 
 interface TeacherTableProps {
@@ -62,12 +62,24 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, selectedId,
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); onEdit(teacher); }}
                                                     className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                                                    title="تعديل"
                                                 >
                                                     <Edit size={16} />
                                                 </button>
                                                 <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        window.location.hash = `#/chat?userId=${teacher.id}`;
+                                                    }}
+                                                    className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                                                    title="مراسلة"
+                                                >
+                                                    <MessageCircle size={16} />
+                                                </button>
+                                                <button
                                                     onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }}
                                                     className="p-1.5 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                                    title="حذف"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 import type { User } from '../types/auth';
 
 interface UserContextType {
@@ -7,6 +7,7 @@ interface UserContextType {
     addUser: (user: Omit<User, 'id' | 'avatar'>) => Promise<void>;
     editUser: (id: string, updates: Partial<User>) => Promise<void>;
     deleteUser: (id: string) => Promise<void>;
+    refreshUsers: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -16,9 +17,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
     const fetchUsers = async () => {
         try {
-            const res = await fetch(`${API_BASE_URL}/system/users`);
-            if (res.ok) setUsers(await res.json());
-        } catch (e) { console.error("Error fetching users:", e); }
+            const data = await api.get<User[]>('/system/users');
+            setUsers(data);
+        } catch (e) {
+            console.error("Error fetching users:", e);
+        }
     };
 
     useEffect(() => {
@@ -27,14 +30,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
     const addUser = async (newUser: Omit<User, 'id' | 'avatar'>) => {
         try {
-            const id = crypto.randomUUID();
-            await fetch(`${API_BASE_URL}/system/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...newUser, id })
-            });
+            const id = `user_${Date.now()}`;
+            await api.post('/system/users', { ...newUser, id });
             await fetchUsers();
-        } catch (e) { console.error("Error adding user:", e); }
+        } catch (e) {
+            console.error("Error adding user:", e);
+            throw e;
+        }
     };
 
     const editUser = async (id: string, updates: Partial<User>) => {
@@ -42,26 +44,26 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             const userToUpdate = users.find(u => u.id === id);
             if (!userToUpdate) return;
             const updated = { ...userToUpdate, ...updates };
-            await fetch(`${API_BASE_URL}/system/users/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updated)
-            });
+            await api.put(`/system/users/${id}`, updated);
             await fetchUsers();
-        } catch (e) { console.error("Error editing user:", e); }
+        } catch (e) {
+            console.error("Error editing user:", e);
+            throw e;
+        }
     };
 
     const deleteUser = async (id: string) => {
         try {
-            await fetch(`${API_BASE_URL}/system/users/${id}`, {
-                method: 'DELETE'
-            });
+            await api.delete(`/system/users/${id}`);
             setUsers(prev => prev.filter(u => u.id !== id));
-        } catch (e) { console.error("Error deleting user:", e); }
+        } catch (e) {
+            console.error("Error deleting user:", e);
+            throw e;
+        }
     };
 
     return (
-        <UserContext.Provider value={{ users, addUser, editUser, deleteUser }}>
+        <UserContext.Provider value={{ users, addUser, editUser, deleteUser, refreshUsers: fetchUsers }}>
             {children}
         </UserContext.Provider>
     );

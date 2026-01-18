@@ -106,9 +106,9 @@ export const AcademicReport = ({
 
             {/* Student Progress Table */}
             <div className="bg-white border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-800">
-                <div className="p-6 border-b border-gray-100 dark:border-gray-800">
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <Activity size={20} className="text-purple-600" />
+                <div className="p-4 md:p-6 border-b border-gray-100 dark:border-gray-800">
+                    <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <Activity size={18} className="text-purple-600 md:w-5 md:h-5" />
                         تقرير تقدم الطلاب
                     </h2>
                 </div>
@@ -124,7 +124,9 @@ export const AcademicReport = ({
                         />
                     </div>
                 </div>
-                <div className="overflow-x-auto">
+
+                {/* Desktop View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right">
                         <thead className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-gray-800 dark:to-gray-800 text-xs font-bold text-gray-700 dark:text-gray-300">
                             <tr>
@@ -158,6 +160,55 @@ export const AcademicReport = ({
                             )) : <tr><td colSpan={6} className="px-6 py-12 text-center text-gray-500">لا توجد نتائج</td></tr>}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile View (Cards) */}
+                <div className="md:hidden">
+                    {filteredStudentProgress.length > 0 ? (
+                        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                            {filteredStudentProgress.map((student) => (
+                                <div key={student.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h3 className="font-black text-sm text-gray-900 dark:text-white mb-1">{student.name}</h3>
+                                            <span className="inline-block px-2 py-0.5 bg-blue-500/10 text-blue-700 dark:text-blue-400 text-[10px] font-black uppercase rounded-sm border border-blue-500/20">
+                                                {student.grade}
+                                            </span>
+                                        </div>
+                                        <div className="text-left">
+                                            <div className="text-xs text-gray-500 mb-1">نسبة التقدم</div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-16 bg-gray-200 h-2 rounded-full overflow-hidden dark:bg-gray-700">
+                                                    <div className={`h-full rounded-full ${student.progress >= 80 ? 'bg-emerald-600' : student.progress >= 50 ? 'bg-amber-500' : 'bg-rose-500'}`} style={{ width: `${student.progress}%` }}></div>
+                                                </div>
+                                                <span className="text-xs font-bold text-gray-600 dark:text-gray-400">{student.progress}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-3 gap-2 text-xs">
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none text-center">
+                                            <div className="text-[10px] text-gray-500 mb-0.5">الاشتراكات</div>
+                                            <div className="font-bold text-gray-900 dark:text-white">{student.totalEnrollments}</div>
+                                        </div>
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none text-center">
+                                            <div className="text-[10px] text-gray-500 mb-0.5">المتوقعة</div>
+                                            <div className="font-bold text-gray-900 dark:text-white">{student.totalSessions}</div>
+                                        </div>
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none text-center">
+                                            <div className="text-[10px] text-gray-500 mb-0.5">المستخدمة</div>
+                                            <div className="font-bold text-emerald-600">{student.usedSessions}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="py-12 text-center">
+                            <Activity size={32} className="mx-auto mb-3 text-gray-300" />
+                            <p className="text-gray-500 font-bold text-sm">لا توجد نتائج</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

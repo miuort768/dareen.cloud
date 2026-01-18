@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useStudents } from '../features/students/hooks/useStudents';
 import { useTeachers } from '../features/teachers/hooks/useTeachers';
 import { useApp } from '../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 // Shared Components
 import { Skeleton } from '../shared/components/Skeleton';
@@ -39,6 +39,7 @@ export const Students = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [isDeletingAll, setIsDeletingAll] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const loading = loadingStudents || loadingTeachers;
 
@@ -72,19 +73,15 @@ export const Students = () => {
             // 2. Create the sessions in DB
             const teacher = teachers.find(t => t.name === enrollData.teacher);
             const sessionPromises = sessionDates.map(date =>
-                fetch(`${API_BASE_URL}/sessions`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        studentId: selectedStudent.id,
-                        studentName: selectedStudent.name,
-                        teacherName: enrollData.teacher,
-                        subject: enrollData.subject,
-                        date: date.toISOString().split('T')[0],
-                        time: '12:00 م', // Default
-                        status: 'pending',
-                        price: teacher?.price || 0
-                    })
+                api.post('/sessions', {
+                    studentId: selectedStudent.id,
+                    studentName: selectedStudent.name,
+                    teacherName: enrollData.teacher,
+                    subject: enrollData.subject,
+                    date: date.toISOString().split('T')[0],
+                    time: '12:00 م', // Default
+                    status: 'pending',
+                    price: teacher?.price || 0
                 })
             );
             await Promise.all(sessionPromises);
@@ -122,19 +119,15 @@ export const Students = () => {
             const teacher = teachers.find(t => t.name === enrollment.teacher);
 
             const sessionPromises = sessionDates.map(date =>
-                fetch(`${API_BASE_URL}/sessions`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        studentId: selectedStudent.id,
-                        studentName: selectedStudent.name,
-                        teacherName: enrollment.teacher,
-                        subject: enrollment.subject,
-                        date: date.toISOString().split('T')[0],
-                        time: '12:00 م',
-                        status: 'pending',
-                        price: teacher?.price || 0
-                    })
+                api.post('/sessions', {
+                    studentId: selectedStudent.id,
+                    studentName: selectedStudent.name,
+                    teacherName: enrollment.teacher,
+                    subject: enrollment.subject,
+                    date: date.toISOString().split('T')[0],
+                    time: '12:00 م',
+                    status: 'pending',
+                    price: teacher?.price || 0
                 })
             );
             await Promise.all(sessionPromises);
@@ -155,6 +148,102 @@ export const Students = () => {
         }
     };
 
+    const handleExport = () => {
+        try {
+            const dataStr = JSON.stringify(students, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `students_export_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showNotification('تم تصدير البيانات بنجاح', 'success');
+        } catch (error) {
+            showNotification('فشل تصدير البيانات', 'error');
+        }
+    };
+
+    const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            try {
+                const content = event.target?.result as string;
+                let parsedData: any[] = [];
+
+                if (file.name.endsWith('.json')) {
+                    const json = JSON.parse(content);
+                    parsedData = Array.isArray(json) ? json : (json.data || json.students || []);
+                } else if (file.name.endsWith('.csv')) {
+                    // Simple CSV parsing
+                    const lines = content.split('\n');
+                    const headers = lines[0].split(',').map(h => h.trim());
+                    parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
+                        const values = line.split(',').map(v => v.trim());
+                        const obj: any = {};
+                        headers.forEach((header, i) => {
+                            obj[header] = values[i];
+                        });
+                        return obj;
+                    });
+                }
+
+                if (parsedData.length === 0) {
+                    showNotification('لم يتم العثور على بيانات صالحة للاستيراد', 'error');
+                    return;
+                }
+
+                showNotification(`جاري استيراد ${parsedData.length} طالب...`, 'info');
+
+                let success = 0;
+                for (const item of parsedData) {
+                    try {
+                        // Map CSV/Generic fields to Student fields if necessary
+                        const studentData = {
+                            name: item.name || item.Name || item['الاسم'] || '',
+                            grade: item.grade || item.Grade || item['الصف'] || '',
+                            parentPhone: item.parentPhone || item.ParentPhone || item['رقم ولي الأمر'] || '',
+                            studentPhone: item.studentPhone || item.StudentPhone || item['رقم الطالب'] || '',
+                            curriculum: item.curriculum || item['المنهج'] || '',
+                            notes: item.notes || item['ملاحظات'] || '',
+                            sessionPrice: Number(item.sessionPrice || item['سعر الحصة'] || 0),
+                            enrollments: item.enrollments || []
+                        };
+
+                        if (studentData.name) {
+                            await createStudent(studentData as Omit<Student, 'id'>);
+                            success++;
+                        }
+                    } catch (err) {
+                        console.error('Import error for item:', item, err);
+                    }
+                }
+
+                showNotification(`تم استيراد ${success} طالب بنجاح`, 'success');
+                queryClient.invalidateQueries({ queryKey: ['students'] });
+            } catch (error) {
+                console.error('Import process error:', error);
+                showNotification('حدث خطأ أثناء قراءة الملف', 'error');
+            }
+        };
+
+        if (file.name.endsWith('.json')) {
+            reader.readAsText(file);
+        } else if (file.name.endsWith('.csv')) {
+            reader.readAsText(file, 'UTF-8');
+        } else {
+            showNotification('صيغة الملف غير مدعومة. يرجى استخدام JSON أو CSV', 'error');
+        }
+
+        // Reset input
+        e.target.value = '';
+    };
+
     if (loading) {
         return (
             <div className="space-y-6">
@@ -168,7 +257,7 @@ export const Students = () => {
     }
 
     return (
-        <div className="space-y-6 pb-20">
+        <div className="space-y-6 pb-32">
             <StudentHeader
                 count={students.length}
                 showAddForm={showAddForm}
@@ -179,9 +268,17 @@ export const Students = () => {
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
                 onPrint={() => window.print()}
-                onExport={() => showNotification('جاري التصدير...', 'info')}
-                onImport={() => showNotification('جاري الاستيراد...', 'info')}
+                onExport={handleExport}
+                onImport={() => fileInputRef.current?.click()}
                 onDeleteAll={() => setIsDeletingAll(true)}
+            />
+
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json,.csv"
+                onChange={handleImportFile}
+                className="hidden"
             />
 
             {showAddForm && (

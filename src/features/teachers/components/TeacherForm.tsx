@@ -13,7 +13,6 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
         name: '',
         phone1: '',
         phone2: '',
-        email: '',
         subject: '',
         price: '',
         username: '',
@@ -27,7 +26,6 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 name: initialData.name,
                 phone1: initialData.phone1,
                 phone2: initialData.phone2 || '',
-                email: initialData.email || '',
                 subject: initialData.subject,
                 price: String(initialData.price),
                 username: initialData.username || '',
@@ -98,16 +96,6 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                         type="tel"
                         value={formData.phone2}
                         onChange={e => setFormData({ ...formData, phone2: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        dir="ltr"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">البريد الإلكتروني (اختياري)</label>
-                    <input
-                        type="email"
-                        value={formData.email}
-                        onChange={e => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         dir="ltr"
                     />

@@ -28,7 +28,7 @@ export const Parents = () => {
     const isEdit = !!state.editId;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             <ParentsHeader
                 totalParents={state.totalParents}
                 totalLinkedStudents={state.totalLinkedStudents}

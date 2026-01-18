@@ -4,7 +4,7 @@ export interface User {
     username: string;
     password?: string;
     avatar?: string;
-    role?: 'admin' | 'teacher';
+    role?: 'admin' | 'teacher' | 'chat_user';
     teacherName?: string;
     permissions?: string[];
 }

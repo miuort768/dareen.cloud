@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle } from 'lucide-react';
-import { API_BASE_URL } from '../../../config/api';
+import { api } from '../../../lib/api';
 import { Skeleton } from '../../../shared/components/Skeleton';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
@@ -11,9 +11,12 @@ interface AttendanceHistoryModalProps {
     studentName: string;
     studentId: string;
     teacherName: string;
+    studentGrade?: string;
+    studentSubject?: string;
+    studentCurriculum?: string;
 }
 
-export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName }: AttendanceHistoryModalProps) => {
+export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum }: AttendanceHistoryModalProps) => {
     const [history, setHistory] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -26,8 +29,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const fetchHistory = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_BASE_URL}/sessions`);
-            const data = await res.json();
+            const data = await api.get<Session[]>('/sessions');
             const sessions = Array.isArray(data) ? data : [];
 
             // Filter by student and teacher
@@ -56,7 +58,26 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             <Clock size={24} className="text-primary-600" />
                             سجل حضور الطالب
                         </h3>
-                        <p className="text-sm font-bold text-gray-500 mt-1">{studentName}</p>
+                        <div className="mt-2 text-right">
+                            <p className="text-lg font-black text-gray-800 dark:text-gray-100">{studentName}</p>
+                            <div className="flex flex-wrap gap-2 mt-1">
+                                {studentGrade && (
+                                    <span className="text-[10px] bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-0.5 rounded border border-primary-100 dark:border-primary-800 font-bold">
+                                        الصف {studentGrade}
+                                    </span>
+                                )}
+                                {studentCurriculum && (
+                                    <span className="text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800 font-bold">
+                                        {studentCurriculum}
+                                    </span>
+                                )}
+                                {studentSubject && (
+                                    <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded border border-gray-200 dark:border-gray-700 font-bold">
+                                        منهج {studentSubject}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
                     </div>
                     <button
                         onClick={onClose}

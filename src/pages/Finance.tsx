@@ -28,30 +28,53 @@ export const Finance = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             {/* Header */}
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500">
-                <div className="relative flex items-center justify-between flex-wrap gap-4">
-                    <div>
-                        <h1 className="text-2xl font-bold text-white mb-1 flex items-center gap-2">
-                            <div className="p-2 bg-white/10 backdrop-blur-sm rounded-none">
-                                <DollarSign size={24} />
-                            </div>
-                            المالية والحسابات
-                        </h1>
-                        <p className="text-white text-sm">نظرة شاملة على الأداء المالي والتدفقات النقدية</p>
+            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
+
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
+
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <DollarSign size={36} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">المالية والحسابات</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <TrendingUp size={14} className="text-white" />
+                                نظرة شاملة على الأداء المالي والتدفقات النقدية
+                            </p>
+                        </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex items-center gap-4 flex-wrap no-print">
                         <button
                             onClick={() => actions.setShowAddModal(true)}
-                            className="bg-white text-primary-600 px-4 py-2 rounded-none flex items-center gap-2 hover:bg-white/90 active:bg-white/80 transition-all font-bold shadow-lg"
+                            className="bg-white text-primary-600 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-lg transform hover:-translate-y-1 active:translate-y-0 h-14"
                         >
-                            <TrendingUp size={18} />
+                            <TrendingUp size={20} />
                             <span>تسجيل معاملة</span>
                         </button>
-                        <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-none min-w-[120px]">
-                            <p className="text-white text-xs text-center">هامش الربح</p>
-                            <p className="text-white text-2xl font-bold text-center" dir="ltr">{state.profitMargin}%</p>
+                        <div className="bg-primary-900/40 backdrop-blur-md border border-white/20 px-6 py-2 rounded-none min-w-[140px] text-white">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-1">هامش الربح</p>
+                            <p className="text-2xl font-black" dir="ltr">{state.profitMargin}%</p>
                         </div>
                     </div>
                 </div>

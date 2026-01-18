@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2 } from 'lucide-react';
-import { API_BASE_URL } from '../../config/api';
+import { api } from '../../lib/api';
 
 interface Notification {
     id: string;
@@ -10,10 +11,12 @@ interface Notification {
     message: string;
     time: string;
     read: boolean;
+    conversationId?: string;
 }
 
 export const NotificationDropdown = () => {
     const { notificationsEnabled, currentUser, showNotification } = useApp();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const lastNotifIdRef = useRef<string | null>(null);
@@ -24,22 +27,24 @@ export const NotificationDropdown = () => {
 
         const fetchNotifications = async () => {
             try {
-                const res = await fetch(`${API_BASE_URL}/notifications?receiverId=${currentUser.id}`);
-                const data: Notification[] = await res.json();
+                const data = await api.get<Notification[]>(`/notifications?receiverId=${currentUser.id}`);
 
-                // Detect NEW unread notifications to show toast
-                if (data.length > 0) {
-                    const latestNotif = data[0];
-                    if (!latestNotif.read && latestNotif.id !== lastNotifIdRef.current) {
-                        // Only show toast if it's actually new and unread
-                        if (lastNotifIdRef.current !== null) {
-                            showNotification(`إشعار جديد: ${latestNotif.title}`, 'info');
+                if (Array.isArray(data)) {
+                    // Detect NEW unread notifications to show toast
+                    if (data.length > 0) {
+                        const latestNotif = data[0];
+                        if (!latestNotif.read && latestNotif.id !== lastNotifIdRef.current) {
+                            // Only show toast if it's actually new and unread
+                            if (lastNotifIdRef.current !== null) {
+                                showNotification(`إشعار جديد: ${latestNotif.title}`, 'info');
+                            }
+                            lastNotifIdRef.current = latestNotif.id;
                         }
-                        lastNotifIdRef.current = latestNotif.id;
                     }
+                    setNotifications(data);
+                } else {
+                    setNotifications([]);
                 }
-
-                setNotifications(data);
             } catch (err) {
                 console.error('Failed to fetch notifications:', err);
             }
@@ -71,15 +76,11 @@ export const NotificationDropdown = () => {
         };
     }, [isOpen]);
 
-    const unreadCount = notifications.filter(n => !n.read).length;
+    const unreadCount = Array.isArray(notifications) ? notifications.filter(n => !n.read).length : 0;
 
     const markAsRead = async (id: string) => {
         try {
-            await fetch(`${API_BASE_URL}/notifications/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ read: true })
-            });
+            await api.put(`/notifications/${id}`, { read: true });
             setNotifications(prev =>
                 prev.map(n => n.id === id ? { ...n, read: true } : n)
             );
@@ -89,9 +90,7 @@ export const NotificationDropdown = () => {
     };
 
     const markAllAsRead = async () => {
-        // Simple implementation: loop and mark or add endpoint (we add endpoint usually)
-        // For now, let's just update local state if no bulk endpoint, but I added DELETE bulk, I should have added PUT bulk.
-        // Let's just update local for now or assume sequential if small number.
+        if (!Array.isArray(notifications)) return;
         for (const n of notifications.filter(n => !n.read)) {
             markAsRead(n.id);
         }
@@ -99,7 +98,7 @@ export const NotificationDropdown = () => {
 
     const deleteNotification = async (id: string) => {
         try {
-            await fetch(`${API_BASE_URL}/notifications/${id}`, { method: 'DELETE' });
+            await api.delete(`/notifications/${id}`);
             setNotifications(prev => prev.filter(n => n.id !== id));
         } catch (err) {
             console.error('Failed to delete notification:', err);
@@ -108,7 +107,7 @@ export const NotificationDropdown = () => {
 
     const clearAll = async () => {
         try {
-            await fetch(`${API_BASE_URL}/notifications?receiverId=${currentUser?.id}`, { method: 'DELETE' });
+            await api.delete(`/notifications?receiverId=${currentUser?.id}`);
             setNotifications([]);
         } catch (err) {
             console.error('Failed to clear notifications:', err);
@@ -164,7 +163,7 @@ export const NotificationDropdown = () => {
                                     تحديد الكل كمقروء
                                 </button>
                             )}
-                            {notifications.length > 0 && (
+                            {Array.isArray(notifications) && notifications.length > 0 && (
                                 <button
                                     onClick={clearAll}
                                     className="text-xs text-red-600 hover:text-red-700 font-bold dark:text-red-400"
@@ -183,13 +182,19 @@ export const NotificationDropdown = () => {
                                 <p className="text-sm font-bold text-gray-900 dark:text-white mb-1">الإشعارات معطلة</p>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">يمكنك تفعيلها من صفحة الإعدادات</p>
                             </div>
-                        ) : notifications.length > 0 ? (
+                        ) : (Array.isArray(notifications) && notifications.length > 0) ? (
                             notifications.map(notification => (
                                 <div
                                     key={notification.id}
                                     className={`p-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer ${!notification.read ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''
                                         }`}
-                                    onClick={() => markAsRead(notification.id)}
+                                    onClick={() => {
+                                        markAsRead(notification.id);
+                                        if (notification.conversationId) {
+                                            navigate(`/chat?conversationId=${notification.conversationId}`);
+                                            setIsOpen(false);
+                                        }
+                                    }}
                                 >
                                     <div className="flex items-start gap-3">
                                         <div className="flex-shrink-0 mt-0.5">

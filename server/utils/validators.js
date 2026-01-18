@@ -75,11 +75,11 @@ const createTeacherInvoiceSchema = z.object({
     id: z.string().optional(),
     teacherId: idSchema.optional(),
     teacher: z.string().min(1, "Teacher Name is required"),
-    specialization: z.string().optional(),
+    specialization: z.string().optional().or(z.literal('')),
     amount: z.number().or(z.string().transform(val => Number(val))),
-    status: z.enum(['pending', 'paid', 'reviewed']).default('pending'),
+    status: z.enum(['pending', 'paid', 'reviewed', 'مدفوعة', 'قيد المعالجة', 'متأخرة', 'غير مدفوعة']).default('pending'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
-    paymentMethod: z.string().optional(),
+    paymentMethod: z.string().optional().or(z.literal('')),
     personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
 });
 

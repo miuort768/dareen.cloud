@@ -9,13 +9,24 @@ const { getStudentEnrollments, withTransaction } = require('../utils/dbHelper');
 // 1. Backup data
 router.get('/backup', async (req, res) => {
     try {
-        const [students, teachers, parents, sessions, teacherInvoices, studentInvoices] = await Promise.all([
+        const [
+            students, teachers, parents, sessions, teacherInvoices,
+            studentInvoices, manualTransactions, fixedExpenses,
+            tasks, completedSessions, dismissedNotifications, systemSettings, users
+        ] = await Promise.all([
             req.db.all('SELECT * FROM students'),
             req.db.all('SELECT * FROM teachers'),
             req.db.all('SELECT * FROM parents'),
             req.db.all('SELECT * FROM sessions'),
             req.db.all('SELECT * FROM teacher_invoices'),
-            req.db.all('SELECT * FROM student_invoices')
+            req.db.all('SELECT * FROM student_invoices'),
+            req.db.all('SELECT * FROM manual_transactions'),
+            req.db.all('SELECT * FROM fixed_expenses'),
+            req.db.all('SELECT * FROM tasks'),
+            req.db.all('SELECT * FROM completed_sessions'),
+            req.db.all('SELECT * FROM dismissed_notifications'),
+            req.db.all('SELECT * FROM system_settings'),
+            req.db.all('SELECT id, name, username, password, role, permissions FROM users')
         ]);
 
         const studentsWithEnrollments = await Promise.all(students.map(async (s) => {
@@ -32,7 +43,14 @@ router.get('/backup', async (req, res) => {
                 parents,
                 sessions,
                 invoices: teacherInvoices,
-                studentInvoices
+                studentInvoices,
+                manualTransactions,
+                fixedExpenses,
+                tasks,
+                completedSessions,
+                dismissedNotifications,
+                systemSettings,
+                users
             }
         };
 
@@ -57,6 +75,14 @@ router.post('/restore', async (req, res) => {
             await tx.run('DELETE FROM teacher_invoices');
             await tx.run('DELETE FROM student_invoices');
             await tx.run('DELETE FROM notifications');
+            await tx.run('DELETE FROM tasks');
+            await tx.run('DELETE FROM manual_transactions');
+            await tx.run('DELETE FROM fixed_expenses');
+            await tx.run('DELETE FROM completed_sessions');
+            await tx.run('DELETE FROM dismissed_notifications');
+            await tx.run('DELETE FROM system_settings');
+            // We keep the primary 'admin' to avoid locking out, but clear others if they're about to be replaced
+            await tx.run("DELETE FROM users WHERE username != 'admin'");
 
             if (data.students) {
                 for (const s of data.students) {
@@ -104,6 +130,54 @@ router.post('/restore', async (req, res) => {
                         [i.id, i.studentId, i.studentName, i.amount, i.description, i.date, i.dueDate, i.status, i.paymentMethod || '', i.notes || '']);
                 }
             }
+
+            if (data.manualTransactions) {
+                for (const t of data.manualTransactions) {
+                    await tx.run(`INSERT INTO manual_transactions (id, type, category, amount, date, description, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                        [t.id, t.type, t.category, t.amount, t.date, t.description, t.status]);
+                }
+            }
+
+            if (data.fixedExpenses) {
+                for (const e of data.fixedExpenses) {
+                    await tx.run(`INSERT INTO fixed_expenses (id, name, amount, is_active) VALUES (?, ?, ?, ?)`,
+                        [e.id, e.name, e.amount, e.is_active]);
+                }
+            }
+
+            if (data.tasks) {
+                for (const t of data.tasks) {
+                    await tx.run(`INSERT INTO tasks (id, title, description, status, priority, dueDate) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [t.id, t.title, t.description, t.status, t.priority, t.dueDate]);
+                }
+            }
+
+            if (data.completedSessions) {
+                for (const s of data.completedSessions) {
+                    await tx.run(`INSERT INTO completed_sessions (id) VALUES (?)`, [s.id]);
+                }
+            }
+
+            if (data.dismissedNotifications) {
+                for (const n of data.dismissedNotifications) {
+                    await tx.run(`INSERT INTO dismissed_notifications (id) VALUES (?)`, [n.id]);
+                }
+            }
+
+            if (data.systemSettings) {
+                for (const s of data.systemSettings) {
+                    await tx.run(`INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)`, [s.key, s.value]);
+                }
+            }
+
+            if (data.users) {
+                for (const u of data.users) {
+                    // Skip if user is 'admin' to avoid locking out
+                    if (u.username === 'admin') continue;
+                    await tx.run(`INSERT OR REPLACE INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions)]);
+                }
+            }
         });
 
         res.json({ message: 'Restore successful' });
@@ -141,7 +215,7 @@ router.post('/system-reset', async (req, res) => {
 
             // Re-seed default settings
             const defaultSettings = [
-                { key: 'academy_name', value: 'معهد دارين' },
+                { key: 'academy_name', value: 'دارين لتعليم و التدريب' },
                 { key: 'admin_phone', value: '01152001250' },
                 { key: 'theme_color', value: 'indigo' },
                 { key: 'notifications_enabled', value: 'true' }

@@ -7,10 +7,10 @@ import {
 import { cn } from '../lib/utils';
 import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
-import { API_BASE_URL } from '../config/api';
 import { useApp } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
+import { api } from '../lib/api';
 
 interface StudentInvoice {
     id: string;
@@ -80,16 +80,14 @@ export const StudentInvoices = () => {
         setLoading(true);
         try {
             console.log('Fetching invoices...');
-            const [invRes, stuRes] = await Promise.all([
-                fetch(`${API_BASE_URL}/studentInvoices`),
-                fetch(`${API_BASE_URL}/students`)
+            const [invoicesData, studentsData] = await Promise.all([
+                api.get<StudentInvoice[]>('/studentInvoices'),
+                api.get<Student[]>('/students')
             ]);
-            const invoicesData = await invRes.json().catch(() => []);
-            const studentsData = await stuRes.json().catch(() => []);
 
             console.log('Invoices fetched:', invoicesData);
-            setInvoices(Array.isArray(invoicesData) ? invoicesData : []);
-            setStudents(Array.isArray(studentsData) ? studentsData : []);
+            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as any).data || []);
+            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as any).data || []);
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
@@ -189,17 +187,9 @@ export const StudentInvoices = () => {
 
         try {
             if (editingId) {
-                await fetch(`${API_BASE_URL}/studentInvoices/${editingId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...invoiceData, id: editingId })
-                });
+                await api.put(`/studentInvoices/${editingId}`, { ...invoiceData, id: editingId });
             } else {
-                await fetch(`${API_BASE_URL}/studentInvoices`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(invoiceData)
-                });
+                await api.post('/studentInvoices', invoiceData);
             }
             fetchData();
             handleCancel();
@@ -213,11 +203,7 @@ export const StudentInvoices = () => {
     const toggleStatus = async (invoice: StudentInvoice) => {
         const newStatus = invoice.status === 'paid' ? 'pending' : 'paid';
         try {
-            await fetch(`${API_BASE_URL}/studentInvoices/${invoice.id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: newStatus })
-            });
+            await api.patch(`/studentInvoices/${invoice.id}`, { status: newStatus });
             fetchData();
             showNotification('تم تحديث حالة الفاتورة', 'success');
         } catch (error) {
@@ -229,15 +215,12 @@ export const StudentInvoices = () => {
     const confirmDelete = async () => {
         if (!deletingId) return;
         try {
-            const res = await fetch(`${API_BASE_URL}/studentInvoices/${deletingId}`, { method: 'DELETE' });
-            if (res.ok) {
-                fetchData();
-                showNotification('تم حذف الفاتورة بنجاح', 'success');
-            } else {
-                showNotification('فشل في حذف الفاتورة', 'error');
-            }
-        } catch (error) {
+            await api.delete(`/studentInvoices/${deletingId}`);
+            fetchData();
+            showNotification('تم حذف الفاتورة بنجاح', 'success');
+        } catch (error: any) {
             console.error('Error deleting invoice:', error);
+            showNotification(error.message || 'فشل في حذف الفاتورة', 'error');
         } finally {
             setDeletingId(null);
         }
@@ -249,7 +232,7 @@ export const StudentInvoices = () => {
             try {
                 setLoading(true);
                 const deletePromises = invoices.map(inv =>
-                    fetch(`${API_BASE_URL}/studentInvoices/${inv.id}`, { method: 'DELETE' })
+                    api.delete(`/studentInvoices/${inv.id}`)
                 );
                 await Promise.all(deletePromises);
                 fetchData();
@@ -271,8 +254,7 @@ export const StudentInvoices = () => {
         try {
             setLoading(true);
             // 1. Fetch all students (if not already fetched)
-            const stuRes = await fetch(`${API_BASE_URL}/students`);
-            const studentsList = await stuRes.json();
+            const studentsList = await api.get<any[]>('/students');
 
             // 2. Identify missing students in current invoices (by name for simplicity or ID)
             const currentStudentIds = new Set(invoices.map(inv => inv.studentId));
@@ -300,20 +282,16 @@ export const StudentInvoices = () => {
                             const subjects = s.enrollments?.map((e: any) => e.subject).join(' + ') || '';
                             const totalAmount = s.enrollments?.reduce((sum: number, e: any) => sum + (e.price || 0), 0) || 0;
 
-                            return fetch(`${API_BASE_URL}/studentInvoices`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    studentId: s.id,
-                                    studentName: s.name,
-                                    amount: totalAmount,
-                                    description: subjects ? `رسوم: ${subjects}` : 'رسوم شهرية',
-                                    date: new Date().toLocaleDateString('en-CA'),
-                                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
-                                    status: 'pending',
-                                    paymentMethod: 'نقدي',
-                                    notes: 'استيراد تلقائي'
-                                })
+                            return api.post('/studentInvoices', {
+                                studentId: s.id,
+                                studentName: s.name,
+                                amount: totalAmount,
+                                description: subjects ? `رسوم: ${subjects}` : 'رسوم شهرية',
+                                date: new Date().toLocaleDateString('en-CA'),
+                                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
+                                status: 'pending',
+                                paymentMethod: 'نقدي',
+                                notes: 'استيراد تلقائي'
                             });
                         });
 
@@ -358,19 +336,38 @@ export const StudentInvoices = () => {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-32">
             {/* Premium Geometric Header */}
             <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
-                <div className="relative flex items-center justify-between flex-wrap gap-6">
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
+
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
+
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
                     <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner relative group">
-                            <div className="absolute inset-0 bg-white/10 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-                            <FileText size={36} className="text-white relative z-10" />
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <FileText size={36} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-black text-white mb-1 tracking-tight uppercase">فواتير الطلاب</h1>
-                            <p className="text-amber-300 text-sm font-black flex items-center gap-2">
-                                <TrendingUp size={14} className="text-amber-400" />
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">فواتير الطلاب</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <TrendingUp size={14} className="text-white" />
                                 إدارة الرسوم الدراسية والمدفوعات
                             </p>
                         </div>
@@ -379,14 +376,14 @@ export const StudentInvoices = () => {
                     <div className="flex items-center gap-4 flex-wrap no-print">
                         <button
                             onClick={handleImportStudents}
-                            className="bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-primary-900/60 transition-all font-black shadow-lg"
+                            className="bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-primary-900/60 transition-all font-black shadow-lg h-14"
                         >
                             <UserPlus size={20} />
                             <span>استيراد الكل</span>
                         </button>
                         <button
                             onClick={handlePrint}
-                            className="bg-white text-primary-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0"
+                            className="bg-white text-primary-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
                         >
                             <Printer size={20} />
                             <span>تصدير التقرير</span>
@@ -396,7 +393,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
                 <StatsCard
                     title="إجمالي التحصيلات"
                     value={totalRevenue.toLocaleString() + ' ج.م'}
@@ -612,9 +609,10 @@ export const StudentInvoices = () => {
             )}
 
             {/* Table */}
-            <div className="table-container">
-                <div className="overflow-x-auto">
-                    <table className="premium-table">
+            <div className="bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+                {/* Desktop View */}
+                <div className="hidden md:block overflow-x-auto">
+                    <table className="premium-table w-full">
                         <thead>
                             <tr>
                                 <th className="text-center">اسم الطالب</th>
@@ -725,6 +723,103 @@ export const StudentInvoices = () => {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile View (Cards) */}
+                <div className="md:hidden">
+                    {filteredInvoices.length === 0 ? (
+                        <div className="py-20 text-center text-gray-400">
+                            <FileText size={48} className="mx-auto mb-4 text-gray-200" />
+                            <h3 className="font-bold text-base text-gray-900 dark:text-white mb-2">
+                                {searchTerm ? 'لا توجد نتائج للبحث' : 'لا توجد فواتير مسجلة'}
+                            </h3>
+                            <p className="text-xs font-bold">استخدم النموذج أعلاه لإصدار فاتورة جديدة</p>
+                        </div>
+                    ) : (
+                        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                            {filteredInvoices.map(inv => (
+                                <div
+                                    key={inv.id}
+                                    className={cn(
+                                        "p-4 transition-colors",
+                                        editingId === inv.id ? 'bg-amber-50 dark:bg-amber-900/10' : 'bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                                    )}
+                                >
+                                    <div className="flex items-start justify-between mb-3">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-10 h-10 bg-primary-100 text-primary-700 flex items-center justify-center font-black text-sm dark:bg-primary-900/40 dark:text-primary-300 shadow-sm border border-primary-100 dark:border-primary-800 shrink-0">
+                                                {(inv.studentName || '?').charAt(0)}
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-sm text-gray-900 dark:text-white">{inv.studentName || 'اسم غير معروف'}</h3>
+                                                <p className="text-[10px] text-gray-500 italic">{inv.description}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-left">
+                                            <div className="font-black text-base text-slate-900 dark:text-white">{inv.amount.toLocaleString()} <span className="text-xs text-slate-400">ج.م</span></div>
+                                            <button
+                                                onClick={() => toggleStatus(inv)}
+                                                className={cn(
+                                                    "inline-flex items-center px-2 py-0.5 font-black text-[9px] uppercase border transition-all mt-1",
+                                                    inv.status === 'paid'
+                                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400'
+                                                        : inv.status === 'pending'
+                                                            ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400'
+                                                            : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/20 dark:text-rose-400'
+                                                )}
+                                            >
+                                                {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
+                                            <div className="text-[10px] text-gray-500 mb-0.5">تاريخ الإصدار</div>
+                                            <div className="font-mono font-bold text-gray-900 dark:text-white" dir="ltr">
+                                                {new Date(inv.date).toLocaleDateString('ar-EG')}
+                                            </div>
+                                        </div>
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
+                                            <div className="text-[10px] text-gray-500 mb-0.5">تاريخ الاستحقاق</div>
+                                            <div className="font-mono font-bold text-gray-900 dark:text-white" dir="ltr">
+                                                {new Date(inv.dueDate).toLocaleDateString('ar-EG')}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
+                                        <span className="text-[10px] font-bold text-gray-500">
+                                            {inv.paymentMethod || '-'}
+                                        </span>
+                                        <div className="flex gap-1">
+                                            <button
+                                                onClick={() => setPreviewInvoice(inv)}
+                                                className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center"
+                                                title="معاينة"
+                                            >
+                                                <Printer size={14} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleEdit(inv)}
+                                                className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center"
+                                                title="تعديل"
+                                            >
+                                                <Edit size={14} />
+                                            </button>
+                                            <button
+                                                onClick={() => setDeletingId(inv.id)}
+                                                className="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"
+                                                title="حذف"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
             {/* Preview Modal */}

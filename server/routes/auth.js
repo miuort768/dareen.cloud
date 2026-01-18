@@ -34,8 +34,21 @@ router.post('/login', loginLimiter, async (req, res) => {
                 'SELECT * FROM teachers WHERE username = ?',
                 [username]
             );
-            role = 'teacher';
-            if (userData) teacherName = userData.name;
+            if (userData) {
+                role = 'teacher';
+                teacherName = userData.name;
+            }
+        }
+
+        // Try Chat Profiles
+        if (!userData) {
+            userData = await req.db.get(
+                'SELECT * FROM chat_profiles WHERE username = ?',
+                [username]
+            );
+            if (userData) {
+                role = 'chat_user';
+            }
         }
 
         if (!userData) {
@@ -78,7 +91,9 @@ router.post('/login', loginLimiter, async (req, res) => {
                 teacherName: role === 'teacher' ? finalUserData.name : null,
                 permissions: role === 'admin'
                     ? (finalUserData.permissions ? (typeof finalUserData.permissions === 'string' ? JSON.parse(finalUserData.permissions) : finalUserData.permissions) : ['*'])
-                    : ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks']
+                    : (role === 'teacher'
+                        ? ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat']
+                        : ['chat']) // Chat users only see chat
             }
         });
     } catch (error) {
@@ -100,7 +115,29 @@ router.post('/verify', async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({ valid: true, user: decoded });
+
+        // Fetch fresh user data from DB
+        let userData = null;
+        if (decoded.role === 'admin') {
+            userData = await req.db.get('SELECT id, name, username, role, permissions FROM users WHERE id = ?', [decoded.id]);
+        } else if (decoded.role === 'teacher') {
+            userData = await req.db.get('SELECT id, name, username FROM teachers WHERE id = ?', [decoded.id]);
+            if (userData) userData.role = 'teacher';
+        } else if (decoded.role === 'chat_user') {
+            userData = await req.db.get('SELECT id, name, username FROM chat_profiles WHERE id = ?', [decoded.id]);
+            if (userData) userData.role = 'chat_user';
+        }
+
+        if (!userData) {
+            return res.json({ valid: true, user: decoded }); // Fallback to token data
+        }
+
+        // Parse permissions if string
+        if (userData.permissions && typeof userData.permissions === 'string') {
+            userData.permissions = JSON.parse(userData.permissions);
+        }
+
+        res.json({ valid: true, user: userData });
     } catch (error) {
         res.json({ valid: false });
     }

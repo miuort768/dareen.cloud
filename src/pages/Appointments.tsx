@@ -3,7 +3,7 @@ import { Calendar, Clock, Search, User, GraduationCap, BookOpen, Filter, X, Chec
 import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
-import { API_BASE_URL } from '../config/api';
+import { api } from '../lib/api';
 
 // Interfaces
 interface Student {
@@ -59,24 +59,17 @@ export const Appointments = () => {
     useEffect(() => {
         const checkAndReset = async () => {
             try {
-                const settingsRes = await fetch(`${API_BASE_URL}/system/settings`);
-                const settings = await settingsRes.json();
-                const lastResetDate = settings.last_appointment_reset;
+                const settings = await api.get<any>('/system/settings');
+                const lastResetDate = settings?.last_appointment_reset;
                 const todayStr = new Date().toDateString();
 
                 if (lastResetDate !== todayStr) {
-                    await fetch(`${API_BASE_URL}/system/completed-sessions/reset`, { method: 'DELETE' });
+                    await api.delete('/system/completed-sessions/reset');
                     setCompletedSessionIds([]);
-                    await fetch(`${API_BASE_URL}/system/settings`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ key: 'last_appointment_reset', value: todayStr })
-                    });
+                    await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
                 } else {
-                    const sessionsRes = await fetch(`${API_BASE_URL}/system/completed-sessions`);
-                    if (sessionsRes.ok) {
-                        setCompletedSessionIds(await sessionsRes.json());
-                    }
+                    const sessions = await api.get<string[]>('/system/completed-sessions');
+                    setCompletedSessionIds(sessions || []);
                 }
             } catch (error) {
                 console.error("Error managing appointment reset:", error);
@@ -89,15 +82,8 @@ export const Appointments = () => {
     const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
-            const res = await fetch(`${API_BASE_URL}/system/completed-sessions`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
-
-            if (res.ok) {
-                setCompletedSessionIds(prev => [...prev, id]);
-            }
+            await api.post('/system/completed-sessions', { id });
+            setCompletedSessionIds(prev => [...prev, id]);
         } catch (error) {
             console.error("Error completing session:", error);
         }
@@ -107,8 +93,8 @@ export const Appointments = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_BASE_URL}/students`);
-            setStudents(await res.json());
+            const data = await api.get<any>('/students');
+            setStudents(Array.isArray(data) ? data : (data.data || []));
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
@@ -204,31 +190,46 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="space-y-6">
-            {/* Page Header with Geometric Decorations */}
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
+        <div className="space-y-6 pb-32">
+            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none mb-6">
+                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
+                {/* Major Glows & Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
 
+                {/* Central Geometric elements */}
+                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
 
-                <div className="relative flex items-center justify-between flex-wrap gap-6">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                            <Calendar size={32} className="text-white" />
+                {/* Large Structural Shapes */}
+                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
+                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
+
+                {/* Large Geometric Outlines */}
+                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
+
+                {/* Pattern Layer */}
+                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
+                            <Calendar size={36} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-black text-white mb-2 tracking-tight">المواعيد والجدول الأسبوعي</h1>
-                            <div className="flex items-center gap-2 bg-black/20 backdrop-blur-sm px-3 py-1 border border-white/10 w-fit">
-                                <Clock size={14} className="text-indigo-300" />
-                                <p className="text-white text-xs font-bold leading-none shadow-sm">
-                                    عرض وإدارة جميع المواعيد المجدولة لشريك النجاح لدينا
-                                </p>
-                            </div>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">المواعيد والجدول الأسبوعي</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <Clock size={14} className="text-white" />
+                                عرض وإدارة جميع المواعيد المجدولة لشركاء النجاح
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2 md:gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <StatsCard
                     title="إجمالي المواعيد"
                     value={totalAppointments}

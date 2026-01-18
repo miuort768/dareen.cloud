@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import type { DashboardTask as Task, LowBalanceStudent } from '../types';
-import { API_BASE_URL } from '../../../config/api';
+import { api } from '../../../lib/api';
 
 interface ImportantNotificationsProps {
     tasks: Task[];
@@ -43,9 +43,9 @@ export const ImportantNotifications = ({
     useEffect(() => {
         const fetchDismissed = async () => {
             try {
-                const res = await fetch(`${API_BASE_URL}/system/dismissed-notifications`);
-                if (res.ok) {
-                    setDismissedIds(await res.json());
+                const data = await api.get<string[]>('/system/dismissed-notifications');
+                if (Array.isArray(data)) {
+                    setDismissedIds(data);
                 }
             } catch (e) {
                 console.error('Failed to fetch dismissed notifications', e);
@@ -56,11 +56,7 @@ export const ImportantNotifications = ({
 
     const handleDismiss = async (id: string) => {
         try {
-            await fetch(`${API_BASE_URL}/system/dismissed-notifications`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
+            await api.post('/system/dismissed-notifications', { id });
             setDismissedIds(prev => [...prev, id]);
         } catch (e) {
             console.error('Failed to dismiss notification', e);
@@ -69,7 +65,7 @@ export const ImportantNotifications = ({
 
     // Combine notifications
     const notifications: NotificationItem[] = [
-        ...lowBalanceStudents.map(s => ({
+        ...(Array.isArray(lowBalanceStudents) ? lowBalanceStudents.map(s => ({
             id: `lb - ${s.id} -${s.subject} `,
             type: 'low_balance',
             title: `رصيد منخفض: ${s.studentName} `,
@@ -79,8 +75,8 @@ export const ImportantNotifications = ({
             actionLabel: 'تذكير واتساب',
             icon: Phone,
             color: 'rose'
-        })),
-        ...tasks.filter(t => t.priority === 'high').map(t => ({
+        })) : []),
+        ...(Array.isArray(tasks) ? tasks.filter(t => t.priority === 'high').map(t => ({
             id: `task - ${t.id} `,
             type: 'task',
             title: `مهمة عاجلة: ${t.title} `,
@@ -90,10 +86,12 @@ export const ImportantNotifications = ({
             actionLabel: 'عرض المهام',
             icon: ListTodo,
             color: 'amber'
-        }))
-    ].sort((a, _) => (a.priority === 'high' ? -1 : 1));
+        })) : [])
+    ].sort((a, _) => (a.priority === 'high' ? -1 : 1)) as NotificationItem[];
 
-    const visibleNotifications = notifications.filter(n => !dismissedIds.includes(n.id));
+    const visibleNotifications = Array.isArray(notifications)
+        ? notifications.filter(n => !dismissedIds.includes(n.id))
+        : [];
 
     return (
         <div className="bg-white border border-primary-200 dark:bg-gray-900 dark:border-gray-800 shadow-xl overflow-hidden relative group h-full">

@@ -7,14 +7,15 @@ const getStudentEnrollments = async (db, studentId) => {
     const query = `
         SELECT 
             e.*,
-            (SELECT COUNT(*) 
-             FROM sessions s 
-             WHERE s.studentId = e.studentId 
-             AND s.subject = e.subject 
-             AND s.teacherName = e.teacher
-             AND s.status = 'completed') as dynamicSessionsUsed
+            COUNT(s.id) as dynamicSessionsUsed
         FROM enrollments e 
+        LEFT JOIN sessions s ON 
+            s.studentId = e.studentId 
+            AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
+            AND (s.teacherName = e.teacher OR s.teacherId = e.teacherId)
+            AND s.status = 'completed'
         WHERE e.studentId = ?
+        GROUP BY e.id
     `;
 
     const enrollments = await db.all(query, [studentId]);
@@ -59,18 +60,19 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
 
         const students = await db.all(studentsSql, params);
 
-        // Fetch ALL enrollments with their computed session counts in ONE go
+        // Fetch ALL enrollments with their computed session counts in ONE go using a JOIN
         const enrollments = await db.all(`
             SELECT 
                 e.*,
-                (SELECT COUNT(*) 
-                 FROM sessions s 
-                 WHERE s.studentId = e.studentId 
-                 AND s.subject = e.subject 
-                 AND s.teacherName = e.teacher
-                 AND s.status = 'completed') as dynamicSessionsUsed
+                COUNT(s.id) as dynamicSessionsUsed
             FROM enrollments e
+            LEFT JOIN sessions s ON 
+                s.studentId = e.studentId 
+                AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
+                AND (s.teacherName = e.teacher OR s.teacherId = e.teacherId)
+                AND s.status = 'completed'
             ${studentIds ? `WHERE e.studentId IN (${studentIds.map(() => '?').join(',')})` : ''}
+            GROUP BY e.id
         `, params);
 
         const enrollmentMap = enrollments.reduce((acc, e) => {
