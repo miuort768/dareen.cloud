@@ -72,7 +72,7 @@ export const Teachers = () => {
 
     // Stats calculations
     const uniqueSubjects = new Set(teachers.map(t => t.subject)).size;
-    const averagePrice = teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + t.price, 0) / teachers.length) : 0;
+    const averagePrice = teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + Number(t.price), 0) / teachers.length) : 0;
     const totalStudentsCount = new Set(students.flatMap(s =>
         (s.enrollments || []).map((e: any) => ({ student: s.id, teacher: e.teacher }))
     ).filter(e => teachers.some(t => t.name === e.teacher)).map(e => e.student)).size;

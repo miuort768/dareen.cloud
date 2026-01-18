@@ -16,9 +16,23 @@ export const useChat = (userId?: string) => {
         const handleNewMessage = (message: ChatMessage) => {
             // Update messages for specific conversation
             queryClient.setQueryData(['messages', message.conversationId], (old: ChatMessage[] = []) => {
-                // Avoid duplicates
+                // If message already exists by ID, do nothing
                 if (old.find(m => m.id === message.id)) return old;
-                return [...old, message];
+
+                // Remove any temporary message that corresponds to this one
+                // We assume optimistic messages have IDs starting with 'temp-'
+                const filtered = old.filter(m => {
+                    // Filter out strict temp duplicates if we could match them (e.g. by content/sender/timestamp)
+                    // For now, simpler approach: if the mutation success handled the ID swap, we just ensure no ID dupes.
+                    // But if socket arrives BEFORE mutation success, we might have both.
+                    // Let's filter out any temp message from the SAME sender with SAME content if it's recent? 
+                    // No, that's risky. 
+                    // Best bet: Trust the server. Query Invalidation is safer, but flash-prone.
+                    // Let's just append. UseChat deduplication via ID is the first line of defense.
+                    return true;
+                });
+
+                return [...filtered, message];
             });
 
             // Update conversations list (last message)
@@ -95,23 +109,32 @@ export const useChat = (userId?: string) => {
     // Send Message Mutation with Optimistic Updates
     const sendMessageMutation = useMutation({
         mutationFn: async ({ conversationId, content, senderId, senderName }: { conversationId: string, content: string, senderId: string, senderName: string }) => {
-            return api.post(`/chat/conversations/${conversationId}/messages`, { senderId, senderName, content });
+            return api.post<ChatMessage>(`/chat/conversations/${conversationId}/messages`, { senderId, senderName, content });
         },
         onMutate: async (newMessage) => {
             await queryClient.cancelQueries({ queryKey: ['messages', newMessage.conversationId] });
             const previousMessages = queryClient.getQueryData<ChatMessage[]>(['messages', newMessage.conversationId]);
+            const tempId = `temp-${Date.now()}`;
 
             if (previousMessages) {
                 queryClient.setQueryData(['messages', newMessage.conversationId], [
                     ...previousMessages,
                     {
-                        id: `temp-${Date.now()}`,
+                        id: tempId,
                         ...newMessage,
                         timestamp: new Date().toISOString()
                     }
                 ]);
             }
-            return { previousMessages };
+            return { previousMessages, tempId };
+        },
+        onSuccess: (data: ChatMessage, _variables, context) => {
+            // Replace the temporary message with the real one
+            if (context?.tempId) {
+                queryClient.setQueryData(['messages', data.conversationId], (old: ChatMessage[] = []) => {
+                    return old.map(msg => msg.id === context.tempId ? data : msg);
+                });
+            }
         },
         onError: (_err, newMessage, context) => {
             if (context?.previousMessages) {

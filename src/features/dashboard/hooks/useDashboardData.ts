@@ -16,6 +16,7 @@ export const useDashboardData = (currentUser: User | null) => {
             { queryKey: ['sessions'], queryFn: () => api.get<Session[]>('/sessions'), staleTime: 1 * 60 * 1000 },
             { queryKey: ['teacherInvoices'], queryFn: () => api.get<TeacherInvoice[]>('/invoices/teacher'), staleTime: 5 * 60 * 1000 },
             { queryKey: ['studentInvoices'], queryFn: () => api.get<StudentInvoice[]>('/invoices/student'), staleTime: 5 * 60 * 1000 },
+            { queryKey: ['tasks'], queryFn: () => api.get<DashboardTask[]>('/tasks'), staleTime: 1 * 60 * 1000 },
         ]
     });
 
@@ -25,7 +26,8 @@ export const useDashboardData = (currentUser: User | null) => {
         parentsQuery,
         sessionsQuery,
         teacherInvoicesQuery,
-        studentInvoicesQuery
+        studentInvoicesQuery,
+        tasksQuery // Added
     ] = results;
 
     const isLoading = results.some(r => r.isLoading);
@@ -158,15 +160,10 @@ export const useDashboardData = (currentUser: User | null) => {
 
         // 7. Tasks
         let loadedTasks: DashboardTask[] = [];
-        try {
-            const savedTasks = localStorage.getItem('school_tasks');
-            if (savedTasks) {
-                const parsed = JSON.parse(savedTasks);
-                if (Array.isArray(parsed)) {
-                    loadedTasks = parsed.filter((t: DashboardTask) => t.status === 'pending');
-                }
-            }
-        } catch (e) { console.error('Error loading tasks', e); }
+        if (tasksQuery.data) {
+            const allTasks = tasksQuery.data as DashboardTask[];
+            loadedTasks = allTasks.filter(t => t.status === 'pending');
+        }
 
         const stats: DashboardStats = {
             studentsCount: filteredStudents.length,
@@ -196,7 +193,7 @@ export const useDashboardData = (currentUser: User | null) => {
             lowBalanceStudents: lowBalance,
             tasks: loadedTasks
         };
-    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data]);
+    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data]);
 
     return {
         stats: processedData?.stats || {
