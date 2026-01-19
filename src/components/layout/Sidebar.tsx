@@ -29,7 +29,7 @@ export const Sidebar = () => {
         return saved !== null ? saved === 'true' : true;
     });
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { academyName, logout, currentUser } = useApp();
+    const { academyName, logout, currentUser, isLoading } = useApp();
     const navigate = useNavigate();
 
     // Persist collapsed state
@@ -71,9 +71,39 @@ export const Sidebar = () => {
         return currentUser.permissions.includes(item.id);
     });
 
-    // Don't render sidebar if user is not loaded yet (prevents flash of empty sidebar)
-    if (!currentUser) {
-        return null;
+    // Show loading state instead of hiding sidebar completely
+    if (isLoading || !currentUser) {
+        return (
+            <>
+                {/* Desktop Sidebar - Loading State */}
+                <div
+                    className={cn(
+                        "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-gray-900 dark:border-gray-800",
+                        collapsed ? "w-20" : "w-72"
+                    )}
+                >
+                    <div className={cn(
+                        "h-16 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
+                        collapsed ? "justify-center px-0" : "justify-between px-6"
+                    )}>
+                        <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
+                            <div className="w-10 h-10 bg-primary-600 rounded-none flex items-center justify-center text-white shrink-0">
+                                <GraduationCap size={24} />
+                            </div>
+                            <span className={cn(
+                                "font-bold text-xl text-gray-800 transition-all duration-300 dark:text-gray-100",
+                                collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
+                            )}>
+                                {academyName}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="flex-1 flex items-center justify-center">
+                        <div className="w-8 h-8 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
+                    </div>
+                </div>
+            </>
+        );
     }
 
     return (
