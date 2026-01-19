@@ -107,7 +107,7 @@ export const Sidebar = () => {
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
                     {filteredNavigation.map((item) => (
                         <NavLink
-                            key={item.href}
+                            key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
                                 "flex items-center gap-3 px-3 py-2 rounded-none transition-all duration-200 group relative",
@@ -180,7 +180,7 @@ export const Sidebar = () => {
                     ...(filteredNavigation.find(item => item.id === 'chat' && !filteredNavigation.slice(0, 4).find(i => i.id === 'chat')) ? [filteredNavigation.find(item => item.id === 'chat')!] : [])
                 ].map((item) => (
                     <NavLink
-                        key={item.href}
+                        key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
                             "flex flex-col items-center justify-center flex-1 h-full transition-all duration-500 relative",
@@ -252,7 +252,7 @@ export const Sidebar = () => {
                         <div className="grid grid-cols-1 gap-1">
                             {filteredNavigation.map((item) => (
                                 <NavLink
-                                    key={item.href}
+                                    key={`menu-${item.href}-${item.id}`}
                                     to={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={({ isActive }) => cn(
