@@ -68,14 +68,30 @@ router.post('/login', loginLimiter, async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+        // Fix: If logged in as a System User (from 'users' table) but role is 'teacher',
+        // try to find the linked Teacher entity to get the correct ID for data filtering.
+        let tokenPayload = {
+            id: userData.id,
+            username: userData.username,
+            role: role,
+            teacherName: teacherName,
+            permissions: userData.permissions ? (typeof userData.permissions === 'string' ? JSON.parse(userData.permissions) : userData.permissions) : []
+        };
+
+        if (role === 'teacher' && !teacherName) {
+            // User found in 'users' table, not 'teachers'. Let's see if we can link them.
+            const linkedTeacher = await req.db.get('SELECT * FROM teachers WHERE username = ?', [username]);
+            if (linkedTeacher) {
+                // Found a matching teacher! Use their ID so the frontend shows their data.
+                tokenPayload.id = linkedTeacher.id;
+                tokenPayload.teacherName = linkedTeacher.name;
+                teacherName = linkedTeacher.name; // Update for response
+                // We keep the permissions from the System User if they exist, or defaults
+            }
+        }
+
         const token = jwt.sign(
-            {
-                id: userData.id,
-                username: userData.username,
-                role: role,
-                teacherName: teacherName,
-                permissions: userData.permissions ? (typeof userData.permissions === 'string' ? JSON.parse(userData.permissions) : userData.permissions) : []
-            },
+            tokenPayload,
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
         );
@@ -87,8 +103,9 @@ router.post('/login', loginLimiter, async (req, res) => {
             token,
             user: {
                 ...finalUserData,
+                id: tokenPayload.id, // Ensure frontend gets the "effective" ID
                 role: role,
-                teacherName: role === 'teacher' ? finalUserData.name : null,
+                teacherName: teacherName || (role === 'teacher' ? finalUserData.name : null),
                 permissions: role === 'admin'
                     ? (finalUserData.permissions ? (typeof finalUserData.permissions === 'string' ? JSON.parse(finalUserData.permissions) : finalUserData.permissions) : ['*'])
                     : (role === 'teacher'
