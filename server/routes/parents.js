@@ -20,7 +20,8 @@ router.get('/', async (req, res) => {
 // 2. Add parent
 router.post('/', async (req, res) => {
     const { id, name, phone, email } = req.body;
-    const newId = id || Math.random().toString(36).substr(2, 4);
+    const { v4: uuidv4 } = require('uuid');
+    const newId = id || uuidv4();
     try {
         await req.db.run(
             `INSERT INTO parents (id, name, phone, email) VALUES (?, ?, ?, ?)`,

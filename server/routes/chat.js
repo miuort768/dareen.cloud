@@ -116,6 +116,13 @@ router.delete('/conversations/:id', async (req, res) => {
 // 7. Get Messages
 router.get('/conversations/:id/messages', async (req, res) => {
     try {
+        // IDOR Check: Ensure user is member
+        const userId = req.user.id; // From authMiddleware
+        const membership = await req.db.get('SELECT userId FROM conversation_members WHERE conversationId = ? AND userId = ?', [req.params.id, userId]);
+        if (!membership && req.user.role !== 'admin') { // Admins might need access to everything
+            return ResponseHandler.error(res, 'Unauthorized to view this conversation', 403);
+        }
+
         const messages = await req.chatService.getMessages(req.params.id);
         ResponseHandler.success(res, messages);
     } catch (err) {

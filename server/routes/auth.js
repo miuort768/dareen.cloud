@@ -9,9 +9,9 @@ const router = express.Router();
 const logger = require('../utils/logger');
 
 const loginLimiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minute
+    windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // Relaxed for troubleshooting
-    message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد دقيقة' }
+    message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' }
 });
 
 router.post('/login', loginLimiter, async (req, res) => {
@@ -146,7 +146,7 @@ router.post('/verify', async (req, res) => {
         }
 
         if (!userData) {
-            return res.json({ valid: true, user: decoded }); // Fallback to token data
+            return res.json({ valid: false });
         }
 
         // Parse permissions if string

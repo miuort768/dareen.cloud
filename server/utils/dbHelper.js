@@ -12,7 +12,11 @@ const getStudentEnrollments = async (db, studentId) => {
         LEFT JOIN sessions s ON 
             s.studentId = e.studentId 
             AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
-            AND (s.teacherName = e.teacher OR s.teacherId = e.teacherId)
+            AND (
+                (s.teacherId IS NOT NULL AND e.teacherId IS NOT NULL AND s.teacherId = e.teacherId)
+                OR 
+                ((s.teacherId IS NULL OR e.teacherId IS NULL) AND s.teacherName = e.teacher)
+            )
             AND s.status = 'completed'
         WHERE e.studentId = ?
         GROUP BY e.id
@@ -69,7 +73,11 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
             LEFT JOIN sessions s ON 
                 s.studentId = e.studentId 
                 AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
-                AND (s.teacherName = e.teacher OR s.teacherId = e.teacherId)
+                AND (
+                    (s.teacherId IS NOT NULL AND e.teacherId IS NOT NULL AND s.teacherId = e.teacherId)
+                    OR 
+                    ((s.teacherId IS NULL OR e.teacherId IS NULL) AND s.teacherName = e.teacher)
+                )
                 AND s.status = 'completed'
             ${studentIds ? `WHERE e.studentId IN (${studentIds.map(() => '?').join(',')})` : ''}
             GROUP BY e.id

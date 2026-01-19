@@ -23,7 +23,10 @@ export const NotificationDropdown = () => {
 
     // Fetch notifications from server
     useEffect(() => {
-        if (!currentUser) return;
+        if (!currentUser) {
+            setNotifications([]);
+            return;
+        }
 
         const fetchNotifications = async () => {
             try {

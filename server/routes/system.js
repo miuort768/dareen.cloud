@@ -90,8 +90,8 @@ router.post('/restore', async (req, res) => {
                         [s.id, s.name, s.grade, s.parentPhone, s.studentPhone || '', s.curriculum || '', s.notes || '', s.sessionPrice || 0]);
                     if (s.enrollments) {
                         for (const e of s.enrollments) {
-                            await tx.run(`INSERT INTO enrollments (studentId, teacher, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                                [s.id, e.teacher, e.subject, e.curr || '', e.sessionsTotal || 0, e.sessionsUsed || 0, JSON.stringify(e.schedule || [])]);
+                            await tx.run(`INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                                [s.id, e.teacher, e.teacherId || null, e.subject, e.curr || '', e.sessionsTotal || 0, e.sessionsUsed || 0, JSON.stringify(e.schedule || [])]);
                         }
                     }
                 }
@@ -99,8 +99,8 @@ router.post('/restore', async (req, res) => {
 
             if (data.teachers) {
                 for (const t of data.teachers) {
-                    await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.name, t.phone1, t.phone2 || '', t.subject, t.price || 0]);
+                    await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [t.id, t.name, t.phone1, t.phone2 || '', t.subject, t.price || 0, t.email || '', t.username || null, t.password || null]);
                 }
             }
 
@@ -112,15 +112,15 @@ router.post('/restore', async (req, res) => {
 
             if (data.sessions) {
                 for (const s of data.sessions) {
-                    await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherName, subject, date, day, time, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [s.id, s.studentId, s.studentName, s.teacherName, s.subject, s.date, s.day || '', s.time, s.price || 0, s.status]);
+                    await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [s.id, s.studentId, s.studentName, s.teacherId || null, s.teacherName, s.subject, s.date, s.day || '', s.time, s.price || 0, s.status]);
                 }
             }
 
             if (data.invoices) {
                 for (const i of data.invoices) {
-                    await tx.run(`INSERT INTO teacher_invoices (id, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [i.id, i.teacher, i.specialization, i.amount, i.paymentMethod, i.status, i.personalExpenses || 0, i.date]);
+                    await tx.run(`INSERT INTO teacher_invoices (id, teacherId, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [i.id, i.teacherId || null, i.teacher, i.specialization, i.amount, i.paymentMethod, i.status, i.personalExpenses || 0, i.date]);
                 }
             }
 
@@ -284,9 +284,11 @@ router.get('/users', async (req, res) => {
 router.post('/users', async (req, res) => {
     const { id, name, username, password, role, permissions } = req.body;
     try {
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash(password, 10);
         await req.db.run(
             'INSERT INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)',
-            [id || require('uuid').v4(), name, username, password, role || 'admin', JSON.stringify(permissions || [])]
+            [id || require('uuid').v4(), name, username, hashedPassword, role || 'admin', JSON.stringify(permissions || [])]
         );
         res.status(201).json({ success: true });
     } catch (err) {
@@ -298,10 +300,12 @@ router.put('/users/:id', async (req, res) => {
     const { id } = req.params;
     const { name, username, password, role, permissions } = req.body;
     try {
-        if (password) {
+        if (password && password.trim() !== '') {
+            const bcrypt = require('bcrypt');
+            const hashedPassword = await bcrypt.hash(password, 10);
             await req.db.run(
                 'UPDATE users SET name = ?, username = ?, password = ?, role = ?, permissions = ? WHERE id = ?',
-                [name, username, password, role, JSON.stringify(permissions), id]
+                [name, username, hashedPassword, role, JSON.stringify(permissions), id]
             );
         } else {
             await req.db.run(

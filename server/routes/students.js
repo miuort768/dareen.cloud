@@ -68,9 +68,16 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
+                    let finalTeacherId = e.teacherId || null;
+                    // Fallback: Try to find teacher ID by name if missing
+                    if (!finalTeacherId && e.teacher) {
+                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE name = ?', [e.teacher]);
+                        if (teacherRecord) finalTeacherId = teacherRecord.id;
+                    }
+
                     await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                        [newId, e.teacher, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
+                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [newId, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
                     );
                 }
             }
@@ -102,9 +109,15 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
+                    let finalTeacherId = e.teacherId || null;
+                    if (!finalTeacherId && e.teacher) {
+                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE name = ?', [e.teacher]);
+                        if (teacherRecord) finalTeacherId = teacherRecord.id;
+                    }
+
                     await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                        [id, e.teacher, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
+                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
                     );
                 }
             }

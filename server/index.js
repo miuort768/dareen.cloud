@@ -104,12 +104,23 @@ async function startServer() {
 
         // Compatibility middleware for invoices inside API
         apiRouter.use('/studentInvoices', checkRole(['admin']), (req, res, next) => {
-            if (req.url === '' || req.url === '/') req.url = '/student';
+            if (req.url === '' || req.url === '/') {
+                req.url = '/student';
+            } else {
+                req.url = '/student' + req.url;
+            }
             invoiceRouter(req, res, next);
         });
+
         apiRouter.use('/invoices', checkRole(['admin']), (req, res, next) => {
-            // Default to teacher invoices if base path is called
-            if (req.url === '' || req.url === '/') req.url = '/teacher';
+            if (req.url === '' || req.url === '/') {
+                req.url = '/teacher';
+            } else if (req.url.startsWith('/teacher') || req.url.startsWith('/student')) {
+                // If the user already put /teacher or /student (e.g. /invoices/student), leave it
+            } else {
+                // otherwise default to teacher
+                req.url = '/teacher' + req.url;
+            }
             invoiceRouter(req, res, next);
         });
 

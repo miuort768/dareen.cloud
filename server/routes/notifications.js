@@ -32,7 +32,8 @@ router.get('/', async (req, res) => {
 // 2. Add notification
 router.post('/', async (req, res) => {
     const body = req.body;
-    const id = body.id || Math.random().toString(36).substr(2, 4);
+    const { v4: uuidv4 } = require('uuid');
+    const id = body.id || uuidv4();
     try {
         await req.db.run(
             `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,

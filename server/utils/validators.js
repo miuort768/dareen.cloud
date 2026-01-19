@@ -59,13 +59,13 @@ const updateSessionSchema = createSessionSchema.partial();
 // Student Invoice
 const createStudentInvoiceSchema = z.object({
     id: z.string().optional(),
-    studentId: idSchema.optional(),
+    studentId: idSchema,
     studentName: z.string().min(1, "Student Name is required"),
     amount: z.number().or(z.string().transform(val => Number(val))),
     description: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional(),
-    status: z.enum(['pending', 'paid', 'overdue', 'partially_paid']).default('pending'),
+    status: z.enum(['pending', 'paid', 'overdue', 'partially_paid', 'unpaid']).default('pending'),
     paymentMethod: z.string().optional(),
     notes: z.string().optional()
 });
@@ -77,7 +77,7 @@ const createTeacherInvoiceSchema = z.object({
     teacher: z.string().min(1, "Teacher Name is required"),
     specialization: z.string().optional().or(z.literal('')),
     amount: z.number().or(z.string().transform(val => Number(val))),
-    status: z.enum(['pending', 'paid', 'reviewed', 'مدفوعة', 'قيد المعالجة', 'متأخرة', 'غير مدفوعة']).default('pending'),
+    status: z.enum(['pending', 'paid', 'reviewed', 'مدفوعة', 'قيد المعالجة', 'متأخرة', 'غير مدفوعة', 'unpaid']).default('pending'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     paymentMethod: z.string().optional().or(z.literal('')),
     personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()

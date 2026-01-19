@@ -142,11 +142,14 @@ router.get('/student', async (req, res) => {
 
 router.post('/student', validate(createStudentInvoiceSchema), async (req, res) => {
     const body = req.body;
+    if (!body.studentId) {
+        return res.status(400).json({ error: 'Student ID is required' });
+    }
     const id = body.id || `inv_s_${Math.random().toString(36).substr(2, 7)}`;
     try {
         await req.db.run(
             `INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, body.studentId || 'unknown', body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes]
+            [id, body.studentId, body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes]
         );
         const newItem = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
         res.status(201).json(newItem);
@@ -177,6 +180,9 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
 router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
+    if (!status) {
+        return res.status(400).json({ error: 'Status is required' });
+    }
     try {
         const result = await req.db.run(`UPDATE student_invoices SET status = ? WHERE id = ?`, [status, id]);
         if (result.changes === 0) return res.status(404).json({ error: 'Invoice not found' });
