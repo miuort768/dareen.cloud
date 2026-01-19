@@ -26,11 +26,11 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="text-right">
                         <p className="text-[10px] font-black text-gray-400 uppercase mb-1">الحصص المتوقعة</p>
-                        <p className="text-xl font-black text-gray-900 dark:text-white tracking-tighter">{stats.totalSessions}</p>
+                        <p className="text-xl font-black text-gray-900 dark:text-white tracking-tighter">{stats.monthTotalSessions}</p>
                     </div>
                     <div className="text-right border-r border-gray-100 dark:border-gray-800 pr-4">
                         <p className="text-[10px] font-black text-gray-400 uppercase mb-1">المكتملة</p>
-                        <p className="text-xl font-black text-emerald-600 tracking-tighter">{stats.completedSessions}</p>
+                        <p className="text-xl font-black text-emerald-600 tracking-tighter">{stats.monthCompletedSessions}</p>
                     </div>
                 </div>
                 <div className="h-40 w-full" dir="ltr">

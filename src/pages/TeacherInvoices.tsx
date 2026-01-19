@@ -23,15 +23,10 @@ interface TeacherInvoicesHeaderProps {
     stats: InvoiceStats;
     handlePrint: () => void;
     toggleForm: () => void;
-    showForm: boolean;
-    handleDeleteAll: () => void;
-    handleImportTeachers: () => void;
 }
 
 // Sub-component for the header section
-const TeacherInvoicesHeader = ({
-    stats, handlePrint, toggleForm, showForm, handleDeleteAll, handleImportTeachers
-}: TeacherInvoicesHeaderProps) => {
+const TeacherInvoicesHeader = ({ stats }: TeacherInvoicesHeaderProps) => {
     return (
         <div className="relative bg-indigo-600 p-8 shadow-xl overflow-hidden border-b-4 border-indigo-400 rounded-none mb-6">
             {/* Background Geometric Enhancement - Richer & Larger Shapes */}
@@ -73,38 +68,6 @@ const TeacherInvoicesHeader = ({
                         <p className="text-[10px] font-black uppercase tracking-widest text-indigo-200/60 mb-1">Total Payroll</p>
                         <p className="text-2xl font-black">{stats.totalAmount.toLocaleString()} ج.م</p>
                     </div>
-                    <button
-                        onClick={handlePrint}
-                        className="bg-white text-indigo-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-indigo-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
-                        aria-label="طباعة التقارير"
-                    >
-                        <Printer size={20} />
-                        <span>طباعة التقارير</span>
-                    </button>
-                    <button
-                        onClick={toggleForm}
-                        className="bg-white text-indigo-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-indigo-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
-                        aria-label={showForm ? "إلغاء إضافة فاتورة" : "إضافة فاتورة جديدة"}
-                    >
-                        {showForm ? <X size={20} /> : <Plus size={20} />}
-                        <span>{showForm ? 'إلغاء' : 'إضافة فاتورة'}</span>
-                    </button>
-                    <button
-                        onClick={handleImportTeachers}
-                        className="bg-white text-indigo-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-indigo-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
-                        aria-label="استيراد المعلمات"
-                    >
-                        <UserPlus size={20} />
-                        <span>استيراد المعلمات</span>
-                    </button>
-                    <button
-                        onClick={handleDeleteAll}
-                        className="bg-red-600 text-white px-6 py-3 rounded-none flex items-center gap-3 hover:bg-red-700 active:bg-red-800 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
-                        aria-label="حذف جميع الفواتير"
-                    >
-                        <Trash2 size={20} />
-                        <span>حذف الكل</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -479,45 +442,72 @@ export const TeacherInvoices = () => {
 
     return (
         <div className="space-y-6 pb-32">
-            <TeacherInvoicesHeader
-                stats={stats}
-                handlePrint={handlePrint}
-                toggleForm={toggleForm}
-                showForm={showForm}
-                handleDeleteAll={handleDeleteAll}
-                handleImportTeachers={handleImportTeachers}
-            />
+            <TeacherInvoicesHeader stats={stats} />
 
             <TeacherInvoicesStats stats={stats} />
 
             {/* Action Bar */}
-            <div className="bg-white p-6 border border-slate-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800 flex flex-wrap gap-5 items-center">
-                <div className="relative flex-1 min-w-[280px]">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                    <input
-                        type="text"
-                        placeholder="بحث باسم المعلمة..."
-                        className="w-full pl-6 pr-12 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500 text-sm font-bold rounded-none focus:bg-white transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        aria-label="البحث باسم المعلمة"
-                    />
+            <div className="bg-white p-6 border border-slate-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800 flex flex-wrap gap-5 items-center justify-between">
+                <div className="flex-1 flex gap-5 items-center flex-wrap">
+                    <div className="relative flex-1 min-w-[280px]">
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="بحث باسم المعلمة..."
+                            className="w-full pl-6 pr-12 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500 text-sm font-bold rounded-none focus:bg-white transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            aria-label="البحث باسم المعلمة"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-wrap no-print">
+                        <select
+                            value={filterStatus}
+                            onChange={e => setFilterStatus(e.target.value)}
+                            className="px-6 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500 text-sm font-black rounded-none transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white min-w-[160px]"
+                            aria-label="تصفية حسب الحالة"
+                        >
+                            <option value="all">جميع الحالات</option>
+                            {Object.values(INVOICE_STATUS).map(status => (
+                                <option key={status} value={status}>{status}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-3 flex-wrap no-print">
-                    <select
-                        value={filterStatus}
-                        onChange={e => setFilterStatus(e.target.value)}
-                        className="px-6 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-indigo-500 text-sm font-black rounded-none transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white min-w-[160px]"
-                        aria-label="تصفية حسب الحالة"
+                <div className="flex items-center gap-3 no-print">
+                    <button
+                        onClick={handlePrint}
+                        className="bg-white text-indigo-700 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-50 border border-indigo-100 transition-all font-bold shadow-sm"
+                        title="طباعة"
                     >
-                        <option value="all">جميع الحالات</option>
-                        {Object.values(INVOICE_STATUS).map(status => (
-                            <option key={status} value={status}>{status}</option>
-                        ))}
-                    </select>
+                        <Printer size={18} />
+                    </button>
+                    <button
+                        onClick={toggleForm}
+                        className="bg-primary-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-primary-700 active:bg-primary-800 transition-all font-black shadow-lg hover:shadow-primary-500/30"
+                    >
+                        {showForm ? <X size={18} /> : <Plus size={18} />}
+                        <span>{showForm ? 'إلغاء' : 'إضافة'}</span>
+                    </button>
+                    <button
+                        onClick={handleImportTeachers}
+                        className="bg-indigo-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-700 active:bg-indigo-800 transition-all font-black shadow-lg hover:shadow-indigo-500/30"
+                    >
+                        <UserPlus size={18} />
+                        <span>استيراد</span>
+                    </button>
+                    <button
+                        onClick={handleDeleteAll}
+                        className="bg-rose-50 text-rose-600 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-rose-100 border border-rose-100 transition-all font-bold"
+                        title="حذف الكل"
+                    >
+                        <Trash2 size={18} />
+                    </button>
                 </div>
             </div>
+
 
             {/* Add/Edit Form */}
             {showForm && (
