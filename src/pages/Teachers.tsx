@@ -5,7 +5,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 
 // Shared Components
-import { Skeleton } from '../shared/components/Skeleton';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { SendNotificationModal } from '../shared/components/SendNotificationModal';
@@ -268,10 +267,21 @@ export const Teachers = () => {
 
     if (loading) {
         return (
-            <div className="space-y-6">
-                <Skeleton className="h-48 rounded-none" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-32 rounded-2xl" />)}
+            <div className="space-y-6 pb-32">
+                <PageHeader
+                    title="إدارة المعلمات"
+                    subtitle="تنظيم وإدارة بيانات الكادر التعليمي"
+                    icon={GraduationCap}
+                    stats={[
+                        { label: 'إجمالي المعلمات', value: 0 }
+                    ]}
+                    color="indigo"
+                />
+                <div className="flex items-center justify-center py-12">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-gray-500 dark:text-gray-400 font-bold">جاري تحميل بيانات المعلمات...</p>
+                    </div>
                 </div>
             </div>
         );
