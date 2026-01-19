@@ -68,23 +68,25 @@ export const Students = () => {
 
         try {
             // 1. Generate sessions
-            const sessionDates = generateSessionDates(enrollData.schedule, enrollData.totalSessions);
+            const sessionInfos = generateSessionDates(enrollData.schedule, enrollData.totalSessions);
 
             // 2. Create the sessions in DB
             const teacher = teachers.find(t => t.name === enrollData.teacher);
-            const sessionPromises = sessionDates.map(date =>
-                api.post('/sessions', {
+
+            // Create sessions sequentially to avoid SQLITE_BUSY errors
+            for (const info of sessionInfos) {
+                await api.post('/sessions', {
                     studentId: selectedStudent.id,
                     studentName: selectedStudent.name,
                     teacherName: enrollData.teacher,
                     subject: enrollData.subject,
-                    date: date.toISOString().split('T')[0],
-                    time: '12:00 م', // Default
+                    date: info.date.toISOString().split('T')[0],
+                    day: info.slot.day,
+                    time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
                     status: 'pending',
                     price: teacher?.price || 0
-                })
-            );
-            await Promise.all(sessionPromises);
+                });
+            }
 
             // 3. Update student with new enrollment
             const newEnrollment: Enrollment = {
@@ -106,6 +108,7 @@ export const Students = () => {
             queryClient.invalidateQueries({ queryKey: ['students'] });
             showNotification('تم إضافة الاشتراك والجلسات بنجاح', 'success');
         } catch (error) {
+            console.error('Error adding enrollment:', error);
             showNotification('فشل إضافة الاشتراك', 'error');
         }
     };
@@ -115,22 +118,23 @@ export const Students = () => {
         const enrollment = selectedStudent.enrollments[index];
 
         try {
-            const sessionDates = generateSessionDates(enrollment.schedule, amount);
+            const sessionInfos = generateSessionDates(enrollment.schedule, amount);
             const teacher = teachers.find(t => t.name === enrollment.teacher);
 
-            const sessionPromises = sessionDates.map(date =>
-                api.post('/sessions', {
+            // Create sessions sequentially
+            for (const info of sessionInfos) {
+                await api.post('/sessions', {
                     studentId: selectedStudent.id,
                     studentName: selectedStudent.name,
                     teacherName: enrollment.teacher,
                     subject: enrollment.subject,
-                    date: date.toISOString().split('T')[0],
-                    time: '12:00 م',
+                    date: info.date.toISOString().split('T')[0],
+                    day: info.slot.day,
+                    time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
                     status: 'pending',
                     price: teacher?.price || 0
-                })
-            );
-            await Promise.all(sessionPromises);
+                });
+            }
 
             const updatedEnrollments = [...selectedStudent.enrollments];
             updatedEnrollments[index] = {
@@ -143,7 +147,8 @@ export const Students = () => {
             setSelectedStudent(updatedStudent);
             queryClient.invalidateQueries({ queryKey: ['students'] });
             showNotification(`تم إضافة ${amount} حصص بنجاح`, 'success');
-        } catch {
+        } catch (error) {
+            console.error('Error adding sessions:', error);
             showNotification('فشل إضافة الحصص', 'error');
         }
     };
