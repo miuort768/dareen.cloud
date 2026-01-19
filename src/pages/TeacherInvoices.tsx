@@ -21,8 +21,6 @@ import {
 
 interface TeacherInvoicesHeaderProps {
     stats: InvoiceStats;
-    handlePrint: () => void;
-    toggleForm: () => void;
 }
 
 // Sub-component for the header section
