@@ -182,7 +182,7 @@ export const useDashboardData = (currentUser: User | null) => {
             totalEnrollments: filteredStudents.reduce((sum, s) => sum + (isTeacher ? (s.enrollments?.filter(e => e.teacher === teacherName).length || 0) : (s.enrollments?.length || 0)), 0),
             monthRevenue: monthRevenueValue,
             monthExpenses: monthExpensesValue,
-            monthNetProfit: isTeacher ? monthRevenueValue : (monthRevenueValue - monthExpensesValue),
+            monthNetProfit: isTeacher ? sessionsExpensesValue : (monthRevenueValue - monthExpensesValue),
             todaySessions: todayScheduledCount,
             completedSessions: filteredSessions.filter(s => s.status === 'completed').length,
             cancelledSessions: filteredSessions.filter(s => s.status === 'cancelled').length,
