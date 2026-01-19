@@ -34,5 +34,6 @@ export interface Session {
     date: string;
     time: string;
     status: 'completed' | 'cancelled' | 'scheduled';
-    price: number;
+    price?: number;
+    teacherPrice?: number;
 }

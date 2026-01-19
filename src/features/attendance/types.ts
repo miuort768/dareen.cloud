@@ -17,7 +17,8 @@ export interface Session {
     status: 'scheduled' | 'completed' | 'cancelled';
     day: string;
     date: string;
-    price: number;
+    price?: number;
+    teacherPrice?: number;
 }
 
 export interface Enrollment {
