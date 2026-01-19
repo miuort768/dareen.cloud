@@ -27,6 +27,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const verifyToken = async () => {
             const token = localStorage.getItem('auth_token');
             if (!token) {
+                // If we thought we were authenticated but have no token, fix the state
+                if (localStorage.getItem('app_isAuthenticated') === 'true') {
+                    localStorage.removeItem('app_isAuthenticated');
+                    localStorage.removeItem('app_current_user');
+                    setIsAuthenticated(false);
+                    setCurrentUser(null);
+                }
                 setIsLoading(false);
                 return;
             }
