@@ -103,11 +103,15 @@ export const useDashboardData = (currentUser: User | null) => {
         const monthRevenueValue = monthCompletedSessions.reduce((sum, s) => sum + getSessionRevenue(s), 0);
 
         // Expenses Calculation:
-        // IMPORTANT: Previous logic used '/invoices' which was mapped to teacherInvoices. 
-        // We must ensure we are summing correct invoice types.
-        const monthExpensesValue = teacherInvoices
+        // We now sum both manual invoices AND the 'teacherPrice' from completed sessions
+        // to get a true picture of total costs/payroll.
+        const sessionsExpensesValue = monthCompletedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+
+        const manualExpensesValue = teacherInvoices
             .filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+
+        const monthExpensesValue = isTeacher ? manualExpensesValue : (sessionsExpensesValue + manualExpensesValue);
 
         const attendanceRateValue = filteredSessions.length > 0
             ? Math.round((filteredSessions.filter(s => s.status === 'completed').length / filteredSessions.length) * 100)
@@ -123,7 +127,9 @@ export const useDashboardData = (currentUser: User | null) => {
         const chartData: DashboardMonthData[] = last6Months.map(month => {
             const mSessions = filteredSessions.filter(s => s.date?.startsWith(month));
             const rev = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionRevenue(s), 0);
-            const exp = teacherInvoices.filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(month)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+            const sessExp = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+            const manualExp = teacherInvoices.filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(month)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+            const exp = isTeacher ? manualExp : (sessExp + manualExp);
             return {
                 month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
                 revenue: rev,

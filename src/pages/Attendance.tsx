@@ -64,7 +64,7 @@ export const Attendance = () => {
             date: logDate,
             time: '12:00 م',
             status: status,
-            price: enrollment.price || 0,
+            // price: enrollment.price || 0, // Backend will fetch student's default price if not provided
             day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' })
         });
 

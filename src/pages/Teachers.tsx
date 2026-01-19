@@ -123,7 +123,8 @@ export const Teachers = () => {
                 date: logDate,
                 time: '12:00 م',
                 status,
-                price: selectedTeacher.price
+                // price: '', // Leave empty to let backend fetch student's default price
+                teacherPrice: selectedTeacher.price // Explicitly set what the teacher should get
             });
             showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
             queryClient.invalidateQueries({ queryKey: ['students'] });
