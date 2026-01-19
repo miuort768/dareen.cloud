@@ -84,19 +84,23 @@ export const useDashboardData = (currentUser: User | null) => {
 
         const todaySessionsList = filteredSessions.filter(s => s.date === today);
 
-        // 4. Financials
-        const getSessionEffectivePrice = (s: Session) => {
+        // 4. Financials (Revenue from students only)
+        const getSessionRevenue = (s: Session) => {
+            // Priority: 1. Price stored in the session record
             if (Number(s.price) > 0) return Number(s.price);
+
+            // Priority: 2. Default price in student's profile
             const stu = students.find(st => st.id === s.studentId);
             if (Number(stu?.sessionPrice) > 0) return Number(stu?.sessionPrice);
-            const tea = teachers.find(t => t.name === s.teacherName);
-            return Number(tea?.price) || 0;
+
+            // If neither, return 0 (never fallback to teacher cost)
+            return 0;
         };
 
         const monthSessions = filteredSessions.filter(s => s.date?.startsWith(currentMonth));
         const monthCompletedSessions = monthSessions.filter(s => s.status === 'completed');
 
-        const monthRevenueValue = monthCompletedSessions.reduce((sum, s) => sum + getSessionEffectivePrice(s), 0);
+        const monthRevenueValue = monthCompletedSessions.reduce((sum, s) => sum + getSessionRevenue(s), 0);
 
         // Expenses Calculation:
         // IMPORTANT: Previous logic used '/invoices' which was mapped to teacherInvoices. 
@@ -118,7 +122,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
         const chartData: DashboardMonthData[] = last6Months.map(month => {
             const mSessions = filteredSessions.filter(s => s.date?.startsWith(month));
-            const rev = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionEffectivePrice(s), 0);
+            const rev = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionRevenue(s), 0);
             const exp = teacherInvoices.filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(month)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
             return {
                 month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
