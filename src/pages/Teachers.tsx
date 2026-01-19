@@ -116,6 +116,11 @@ export const Teachers = () => {
         if (!secureModalData || !selectedTeacher || !logDate) return;
         const { student, enrollment } = secureModalData;
         try {
+            // Determine price: Use Student's specific session price if set (>0), otherwise fallback to Teacher's price
+            const sessionPrice = Number(student.sessionPrice) > 0
+                ? Number(student.sessionPrice)
+                : Number(selectedTeacher.price);
+
             await api.post('/sessions', {
                 studentId: student.id,
                 studentName: student.name,
@@ -124,7 +129,7 @@ export const Teachers = () => {
                 date: logDate,
                 time: '12:00 م',
                 status,
-                price: selectedTeacher.price
+                price: sessionPrice
             });
             showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
             queryClient.invalidateQueries({ queryKey: ['students'] });
