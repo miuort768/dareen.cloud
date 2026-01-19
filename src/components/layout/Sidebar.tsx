@@ -71,6 +71,11 @@ export const Sidebar = () => {
         return currentUser.permissions.includes(item.id);
     });
 
+    // Don't render sidebar if user is not loaded yet (prevents flash of empty sidebar)
+    if (!currentUser) {
+        return null;
+    }
+
     return (
         <>
             {/* Desktop Sidebar - Hidden on Mobile */}
