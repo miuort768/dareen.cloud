@@ -118,7 +118,11 @@ export const Sidebar = () => {
                             )}
                             title={collapsed ? item.name : ''}
                         >
-                            <item.icon size={18} className={cn("shrink-0", collapsed ? "w-[22px] h-[22px]" : "w-[18px] h-[18px]")} />
+                            <item.icon
+                                size={collapsed ? 22 : 18}
+                                className="shrink-0"
+                                strokeWidth={2}
+                            />
                             <span className={cn(
                                 "whitespace-nowrap transition-all duration-300",
                                 collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
@@ -190,7 +194,11 @@ export const Sidebar = () => {
                                 "p-3 rounded-none transition-all duration-300",
                                 isActive ? "bg-primary-50 dark:bg-primary-900/40" : ""
                             )}>
-                                <item.icon size={28} className={cn("transition-transform duration-300", isActive && "scale-110")} />
+                                <item.icon
+                                    size={28}
+                                    strokeWidth={2}
+                                    className={cn("transition-transform duration-300", isActive && "scale-110")}
+                                />
                             </div>
                         )}
                     </NavLink>
