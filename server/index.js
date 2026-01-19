@@ -124,8 +124,8 @@ async function startServer() {
             invoiceRouter(req, res, next);
         });
 
-        // Compatibility for /users inside API
-        apiRouter.use('/users', (req, res, next) => {
+        // Compatibility for /users inside API (Admin only)
+        apiRouter.use('/users', checkRole(['admin']), (req, res, next) => {
             req.url = '/users' + req.url;
             systemRouter(req, res, next);
         });

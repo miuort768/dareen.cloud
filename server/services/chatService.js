@@ -20,29 +20,46 @@ class ChatService {
     }
 
     async getConversations(userId) {
+        // Fetch conversations and their members in a slightly more optimized way
         const convs = await this.db.all(`
             SELECT c.*, 
             (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
-            (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime
+            (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
+            GROUP_CONCAT(cm.userId) as memberIds
             FROM conversations c
             JOIN conversation_members cm ON c.id = cm.conversationId
-            WHERE cm.userId = ?
+            WHERE c.id IN (SELECT conversationId FROM conversation_members WHERE userId = ?)
+            GROUP BY c.id
             ORDER BY lastMessageTime DESC
         `, userId);
 
         return await Promise.all(convs.map(async (c) => {
-            const members = await this.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', c.id);
+            const memberList = (c.memberIds || '').split(',');
             let displayName = c.name;
-            if (!c.isGroup && members.length === 2) {
-                const otherUserId = members.find(m => m.userId !== userId)?.userId;
+
+            if (!c.isGroup && memberList.length === 2) {
+                const otherUserId = memberList.find(m => m !== userId);
                 if (otherUserId) {
-                    let otherUser = await this.db.get('SELECT name FROM chat_profiles WHERE id = ?', otherUserId)
-                        || await this.db.get('SELECT name FROM users WHERE id = ?', otherUserId)
-                        || await this.db.get('SELECT name FROM teachers WHERE id = ?', otherUserId);
-                    if (otherUser) displayName = otherUser.name;
+                    // Try different tables for name
+                    const nameResult = await this.db.get(`
+                        SELECT name FROM (
+                            SELECT name FROM chat_profiles WHERE id = ?
+                            UNION ALL
+                            SELECT name FROM users WHERE id = ?
+                            UNION ALL
+                            SELECT name FROM teachers WHERE id = ?
+                        ) LIMIT 1
+                    `, [otherUserId, otherUserId, otherUserId]);
+
+                    if (nameResult) displayName = nameResult.name;
                 }
             }
-            return { ...c, displayName, members: members.map(m => m.userId) };
+            return {
+                ...c,
+                displayName,
+                members: memberList,
+                isGroup: !!c.isGroup
+            };
         }));
     }
 

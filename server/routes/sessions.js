@@ -57,9 +57,30 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
+            // Fetch Prices
+            let studentPrice = body.price || 0;
+            let teacherPrice = 0;
+
+            // 1. Try to get student's default price if not provided
+            if (!studentPrice && body.studentId) {
+                const student = await tx.get('SELECT sessionPrice FROM students WHERE id = ?', [body.studentId]);
+                if (student) studentPrice = student.sessionPrice;
+            }
+
+            // 2. Always fetch teacher's current price for cost tracking
+            if (body.teacherId || body.teacherName) {
+                const teacher = await tx.get(
+                    'SELECT price FROM teachers WHERE id = ? OR name = ?',
+                    [body.teacherId || null, body.teacherName]
+                );
+                if (teacher) {
+                    teacherPrice = teacher.price;
+                }
+            }
+
             await tx.run(
-                `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id, body.studentId, body.studentName, body.teacherId || null, body.teacherName, body.subject, body.date, body.day, body.time, body.price, body.status]
+                `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [id, body.studentId, body.studentName, body.teacherId || null, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status]
             );
 
             if (body.status === 'completed') {

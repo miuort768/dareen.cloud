@@ -139,8 +139,10 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        await req.db.run('DELETE FROM enrollments WHERE studentId = ?', [id]);
-        await req.db.run('DELETE FROM students WHERE id = ?', [id]);
+        await withTransaction(req.db, async (tx) => {
+            await tx.run('DELETE FROM enrollments WHERE studentId = ?', [id]);
+            await tx.run('DELETE FROM students WHERE id = ?', [id]);
+        });
         res.json({ message: 'Deleted successfully' });
     } catch (err) {
         logger.error('Error deleting student', err, { id });
@@ -151,8 +153,10 @@ router.delete('/:id', async (req, res) => {
 // 5. Delete all students (admin only)
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
-        await req.db.run('DELETE FROM enrollments');
-        await req.db.run('DELETE FROM students');
+        await withTransaction(req.db, async (tx) => {
+            await tx.run('DELETE FROM enrollments');
+            await tx.run('DELETE FROM students');
+        });
         res.json({ message: 'All students and enrollments deleted' });
     } catch (err) {
         logger.error('Error deleting all students', err);

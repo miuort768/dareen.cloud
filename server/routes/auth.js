@@ -139,7 +139,10 @@ router.post('/verify', async (req, res) => {
             userData = await req.db.get('SELECT id, name, username, role, permissions FROM users WHERE id = ?', [decoded.id]);
         } else if (decoded.role === 'teacher') {
             userData = await req.db.get('SELECT id, name, username FROM teachers WHERE id = ?', [decoded.id]);
-            if (userData) userData.role = 'teacher';
+            if (userData) {
+                userData.role = 'teacher';
+                userData.teacherName = userData.name; // Crucial for data filtering
+            }
         } else if (decoded.role === 'chat_user') {
             userData = await req.db.get('SELECT id, name, username FROM chat_profiles WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'chat_user';
@@ -147,6 +150,17 @@ router.post('/verify', async (req, res) => {
 
         if (!userData) {
             return res.json({ valid: false });
+        }
+
+        // Add role-based default permissions if not present (crucial for teachers/chat users on reload)
+        if (!userData.permissions || (Array.isArray(userData.permissions) && userData.permissions.length === 0)) {
+            if (userData.role === 'admin') {
+                userData.permissions = ['*'];
+            } else if (userData.role === 'teacher') {
+                userData.permissions = ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat'];
+            } else if (userData.role === 'chat_user') {
+                userData.permissions = ['chat'];
+            }
         }
 
         // Parse permissions if string

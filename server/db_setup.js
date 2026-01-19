@@ -240,6 +240,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('student_invoices', 'dueDate', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'paymentMethod', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'notes', 'TEXT');
+    await addColumnIfNotExists('sessions', 'teacherPrice', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('notifications', 'conversationId', 'TEXT');
 
     // Create remaining indices
