@@ -207,8 +207,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 });
 
                 peer.on('call', (call) => {
+                    console.log("Incoming call from:", call.peer);
                     call.answer(stream || undefined);
-
+                    callsRef.current[call.peer] = call; // Store incoming call reference
 
                     call.on('stream', (rs) => {
                         setRemoteStreams(prev => ({ ...prev, [call.peer]: rs }));
