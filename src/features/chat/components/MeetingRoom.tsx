@@ -321,43 +321,95 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const handleScreenShare = async () => {
         try {
             if (!isScreenSharing) {
+                console.log("Starting screen share...");
                 const screenStream = await navigator.mediaDevices.getDisplayMedia({
                     video: { cursor: "always" } as any,
                     audio: true
                 });
                 const videoTrack = screenStream.getVideoTracks()[0];
 
-                Object.values(callsRef.current).forEach(call => {
+                console.log("Screen stream obtained, track:", videoTrack);
+                console.log("Number of active calls:", Object.keys(callsRef.current).length);
+                console.log("Calls:", Object.keys(callsRef.current));
+
+                let successCount = 0;
+                let failCount = 0;
+
+                Object.entries(callsRef.current).forEach(([peerId, call]) => {
+                    console.log(`Processing call for peer: ${peerId}`);
                     const pc = (call as any).peerConnection;
                     if (pc) {
+                        console.log(`PeerConnection exists for ${peerId}`);
                         const sender = pc.getSenders().find((s: any) => s.track?.kind === 'video');
-                        if (sender) sender.replaceTrack(videoTrack);
+                        if (sender) {
+                            console.log(`Replacing video track for ${peerId}...`);
+                            sender.replaceTrack(videoTrack)
+                                .then(() => {
+                                    console.log(`✅ Successfully replaced track for ${peerId}`);
+                                    successCount++;
+                                })
+                                .catch((err: any) => {
+                                    console.error(`❌ Failed to replace track for ${peerId}:`, err);
+                                    failCount++;
+                                });
+                        } else {
+                            console.warn(`No video sender found for ${peerId}`);
+                            failCount++;
+                        }
+                    } else {
+                        console.warn(`No peer connection for ${peerId}`);
+                        failCount++;
                     }
                 });
+
+                console.log(`Screen share track replacement: ${successCount} succeeded, ${failCount} failed`);
 
                 if (localVideoRef.current) localVideoRef.current.srcObject = screenStream;
                 videoTrack.onended = () => stopScreenShare();
                 setIsScreenSharing(true);
 
+                // Notify all participants via socket
+                socket.emit('screen_share_status', {
+                    conversationId,
+                    isSharing: true,
+                    userId: currentUser.id
+                });
+
                 // Force video on for screen share
                 if (isVideoOff) toggleVideo();
 
-            } else { stopScreenShare(); }
-        } catch (err) { console.error("Screen share error", err); }
+            } else {
+                stopScreenShare();
+            }
+        } catch (err) {
+            console.error("Screen share error", err);
+        }
     };
 
     const stopScreenShare = () => {
+        console.log("Stopping screen share...");
         if (localStream && localVideoRef.current) {
             const vt = localStream.getVideoTracks()[0];
-            Object.values(callsRef.current).forEach(call => {
+            Object.entries(callsRef.current).forEach(([peerId, call]) => {
                 const pc = (call as any).peerConnection;
                 if (pc) {
                     const sender = pc.getSenders().find((s: any) => s.track?.kind === 'video');
-                    if (sender) sender.replaceTrack(vt);
+                    if (sender) {
+                        sender.replaceTrack(vt)
+                            .then(() => console.log(`✅ Reverted to camera for ${peerId}`))
+                            .catch((err: any) => console.error(`❌ Failed to revert for ${peerId}:`, err));
+                    }
                 }
             });
             localVideoRef.current.srcObject = localStream;
             setIsScreenSharing(false);
+
+            // Notify all participants via socket
+            socket.emit('screen_share_status', {
+                conversationId,
+                isSharing: false,
+                userId: currentUser.id
+            });
         }
     };
 
