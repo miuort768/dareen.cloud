@@ -200,7 +200,24 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         <span className="text-[10px] font-black truncate max-w-[120px]">{msg.senderName}</span>
                                         <span className="text-[9px] font-bold opacity-70">{format(new Date(msg.timestamp), 'HH:mm', { locale: ar })}</span>
                                     </div>
-                                    <p className="text-[11px] lg:text-[13px] font-bold leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                                    <p className="text-[11px] lg:text-[13px] font-bold leading-relaxed whitespace-pre-wrap" dir="auto">
+                                        {msg.content.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
+                                            part.match(/https?:\/\/[^\s]+/) ? (
+                                                <a
+                                                    key={i}
+                                                    href={part}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={cn(
+                                                        "underline break-all",
+                                                        isMe ? "text-white/90 hover:text-white" : "text-primary-600 hover:text-primary-700"
+                                                    )}
+                                                >
+                                                    {part}
+                                                </a>
+                                            ) : part
+                                        )}
+                                    </p>
                                 </div>
                             </div>
                         </div>
