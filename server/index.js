@@ -172,6 +172,9 @@ async function startServer() {
                 console.log(`User ${socket.id} left conversation ${conversationId}`);
             });
 
+            // Track active meetings
+            const activeMeetings = new Set();
+
             socket.on('peer_ready', (data) => {
                 const { conversationId, peerId } = data;
                 socket.data.conversationId = conversationId;
@@ -181,13 +184,20 @@ async function startServer() {
             });
 
             socket.on('meeting_started', (conversationId) => {
+                activeMeetings.add(conversationId);
                 socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: true });
                 console.log(`Meeting started in ${conversationId}`);
             });
 
             socket.on('meeting_ended', (conversationId) => {
+                activeMeetings.delete(conversationId);
                 socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: false });
                 console.log(`Meeting ended in ${conversationId}`);
+            });
+
+            socket.on('check_meeting_status', (conversationId) => {
+                const isActive = activeMeetings.has(conversationId);
+                socket.emit('meeting_status_changed', { conversationId, isActive });
             });
 
             socket.on('disconnect', () => {

@@ -54,7 +54,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         };
 
         socket.on('meeting_status_changed', handleStatusChange);
-        setIsMeetingActive(false);
+
+        // Check initial status from server (in case meeting already started)
+        socket.emit('check_meeting_status', selectedConv.id);
 
         return () => {
             socket.off('meeting_status_changed', handleStatusChange);
