@@ -191,10 +191,47 @@ async function startServer() {
             socket.on('disconnect', () => {
                 console.log('User disconnected');
             });
+
+            socket.on('media_status_change', (data) => {
+                // data: { conversationId, peerId, isMuted, isVideoOff }
+                socket.to(data.conversationId).emit('media_status_change', data);
+            });
+
+            socket.on('kick_user', (data) => {
+                // data: { conversationId, targetPeerId }
+                socket.to(data.conversationId).emit('kick_user', data);
+            });
         });
 
         server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
+        });
+
+        // Initialize PeerJS on a separate port (3005)
+        const peerApp = express();
+        const peerHttp = require('http').createServer(peerApp);
+        const { ExpressPeerServer } = require('peer');
+
+        peerApp.use(cors()); // Enable CORS for PeerJS
+
+        const peerServer = ExpressPeerServer(peerHttp, {
+            debug: true,
+            path: '/myapp',
+            allow_discovery: true
+        });
+
+        peerApp.use('/peerjs', peerServer);
+
+        peerHttp.listen(3005, () => {
+            console.log('PeerJS Server running on http://localhost:3005');
+        });
+
+        peerServer.on('connection', (client) => {
+            console.log('Peer connected:', client.getId());
+        });
+
+        peerServer.on('disconnect', (client) => {
+            console.log('Peer disconnected:', client.getId());
         });
     } catch (err) {
         console.error('Failed to start server:', err);

@@ -344,7 +344,7 @@ export const Appointments = () => {
                                                     </div>
                                                     <button
                                                         onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                        className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 text-xs font-black shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
+                                                        className="relative z-10 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 text-xs font-black shadow-lg shadow-emerald-500/20 active:scale-95 transition-all cursor-pointer"
                                                     >
                                                         تم الإنجاز
                                                     </button>
