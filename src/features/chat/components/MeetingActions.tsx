@@ -3,7 +3,7 @@ import { Video } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Conversation } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
-import { useApp } from '../../../context/AppContext';
+
 
 interface MeetingActionsProps {
     selectedConv: Conversation | null;
@@ -18,16 +18,12 @@ export const MeetingActions: React.FC<MeetingActionsProps> = ({
     onStartMeeting,
     isMeetingActive = false
 }) => {
-    const { showNotification } = useApp();
     if (!selectedConv) return null;
 
     const isTeacherOrAdmin = currentUser?.role === 'admin' || currentUser?.role === 'teacher';
 
     const handleAction = () => {
-        if (!isTeacherOrAdmin && !isMeetingActive) {
-            showNotification('لم تبدأ الحصة بعد، يرجى الانتظار حتى تقوم المعلمة ببث الاجتماع.', 'warning');
-            return;
-        }
+        // Allow entering waiting room at any time
         onStartMeeting();
     };
 
@@ -41,9 +37,9 @@ export const MeetingActions: React.FC<MeetingActionsProps> = ({
                         ? "bg-gradient-to-br from-primary-600 to-primary-800 hover:from-primary-500 hover:to-primary-700 shadow-primary-600/30"
                         : isMeetingActive
                             ? "bg-gradient-to-br from-rose-600 to-rose-800 hover:from-rose-500 hover:to-rose-700 shadow-rose-600/40 animate-pulse border-2 border-white/20"
-                            : "bg-gray-400 dark:bg-gray-800 opacity-60 grayscale cursor-not-allowed"
+                            : "bg-gray-600 hover:bg-gray-700 cursor-pointer" // Always clickable now
                 )}
-                title={isTeacherOrAdmin ? "بدء بث مباشر للحصة" : isMeetingActive ? "انضمام للبث المباشر" : "الحصة لم تبدأ بعد"}
+                title={isTeacherOrAdmin ? "بدء بث مباشر للحصة" : "انضمام للحصة"}
             >
                 {/* Visual indicator for active meeting */}
                 {(isMeetingActive || isTeacherOrAdmin) && (
@@ -60,7 +56,7 @@ export const MeetingActions: React.FC<MeetingActionsProps> = ({
                         ? "بدء الاجتماع"
                         : isMeetingActive
                             ? "الحصة بدأت - اضغط للدخول"
-                            : "الحصة لم تبدأ بعد"
+                            : "دخول لغرفة الانتظار"
                     }
                 </span>
 
