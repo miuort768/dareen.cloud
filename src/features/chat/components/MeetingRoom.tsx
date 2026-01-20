@@ -147,6 +147,29 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 alert("تم إخراجك من الاجتماع بواسطة المعلم.");
             }
         });
+
+        socket.on('user_left', (data: { peerId: string }) => {
+            console.log("User left:", data.peerId);
+
+            // Close the call properly
+            if (callsRef.current[data.peerId]) {
+                callsRef.current[data.peerId].close();
+                delete callsRef.current[data.peerId];
+            }
+
+            // Remove from UI
+            setRemoteStreams(prev => {
+                const newStreams = { ...prev };
+                delete newStreams[data.peerId];
+                return newStreams;
+            });
+
+            setRemoteStatus(prev => {
+                const newStatus = { ...prev };
+                delete newStatus[data.peerId];
+                return newStatus;
+            });
+        });
     }, [conversationId]);
 
 

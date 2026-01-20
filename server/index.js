@@ -173,9 +173,11 @@ async function startServer() {
             });
 
             socket.on('peer_ready', (data) => {
-                const { conversationId } = data;
+                const { conversationId, peerId } = data;
+                socket.data.conversationId = conversationId;
+                socket.data.peerId = peerId;
                 socket.to(conversationId).emit('peer_ready', data);
-                console.log(`Peer ready in ${conversationId}:`, data.peerId);
+                console.log(`Peer ready in ${conversationId}:`, peerId);
             });
 
             socket.on('meeting_started', (conversationId) => {
@@ -189,7 +191,11 @@ async function startServer() {
             });
 
             socket.on('disconnect', () => {
-                console.log('User disconnected');
+                console.log('User disconnected:', socket.id);
+                if (socket.data.conversationId && socket.data.peerId) {
+                    console.log(`User left conversation ${socket.data.conversationId}, PeerID: ${socket.data.peerId}`);
+                    socket.to(socket.data.conversationId).emit('user_left', { peerId: socket.data.peerId });
+                }
             });
 
             socket.on('media_status_change', (data) => {
