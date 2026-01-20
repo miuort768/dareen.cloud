@@ -209,28 +209,17 @@ async function startServer() {
             });
         });
 
-        server.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        });
-
-        // Initialize PeerJS on a separate port (3005)
-        const peerApp = express();
-        const peerHttp = require('http').createServer(peerApp);
+        // Initialize PeerJS attached to the main server
         const { ExpressPeerServer } = require('peer');
 
-        peerApp.use(cors()); // Enable CORS for PeerJS
-
-        const peerServer = ExpressPeerServer(peerHttp, {
+        const peerServer = ExpressPeerServer(server, {
             debug: true,
             path: '/myapp',
-            allow_discovery: true
+            allow_discovery: true,
+            proxied: true // Important for running behind Nginx
         });
 
-        peerApp.use('/peerjs', peerServer);
-
-        peerHttp.listen(3005, () => {
-            console.log('PeerJS Server running on http://localhost:3005');
-        });
+        app.use('/peerjs', peerServer);
 
         peerServer.on('connection', (client) => {
             console.log('Peer connected:', client.getId());
@@ -238,6 +227,11 @@ async function startServer() {
 
         peerServer.on('disconnect', (client) => {
             console.log('Peer disconnected:', client.getId());
+        });
+
+        server.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+            console.log(`PeerJS accessible at http://localhost:${PORT}/peerjs/myapp`);
         });
     } catch (err) {
         console.error('Failed to start server:', err);

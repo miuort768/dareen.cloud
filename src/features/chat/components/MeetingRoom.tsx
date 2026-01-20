@@ -193,12 +193,11 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
                 // Determine API URL for PeerServer (Assuming same host as frontend or specific API URL)
                 // In production, this should match your API_BASE_URL host
-                const isDev = window.location.hostname === 'localhost';
                 const peerConfig: any = {
-                    host: isDev ? 'localhost' : window.location.hostname,
-                    port: isDev ? 3005 : 443, // Changed port to 3005 for dev
+                    host: '/',
+                    port: (window.location.port && window.location.hostname === 'localhost') ? 3001 : 443,
                     path: '/peerjs/myapp',
-                    secure: !isDev, // True if https
+                    secure: window.location.protocol === 'https:',
                     config: {
                         iceServers: [
                             { urls: 'stun:stun.l.google.com:19302' },
