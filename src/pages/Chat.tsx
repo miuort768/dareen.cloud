@@ -88,6 +88,32 @@ export const Chat = () => {
             }
         }
     }, [conversations, selectedConv]);
+    // Mobile Back Button Handling
+    useEffect(() => {
+        // When opening a chat, add a hash to the URL to create a history entry
+        if (selectedConv) {
+            if (window.location.hash !== '#chat') {
+                window.history.pushState({ chatOpen: true }, '', '#chat');
+            }
+        } else {
+            // When closing chat (programmatically), clean up the hash if it exists
+            if (window.location.hash === '#chat') {
+                window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+        }
+    }, [selectedConv?.id]); // Only run when the specific conversation ID changes or becomes null
+
+    useEffect(() => {
+        const handlePopState = () => {
+            // If the user pressed back and removed the '#chat' hash, close the chat window
+            if (!window.location.hash.includes('chat') && selectedConv) {
+                setSelectedConv(null);
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, [selectedConv]);
 
     // HANDLERS
     const handleSendMessage = async (e: React.FormEvent) => {
