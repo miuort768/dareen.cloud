@@ -240,9 +240,31 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     call.answer(stream || undefined);
                     callsRef.current[call.peer] = call; // Store incoming call reference
 
+                    // Listen for the initial stream
                     call.on('stream', (rs) => {
+                        console.log("Received stream from:", call.peer);
                         setRemoteStreams(prev => ({ ...prev, [call.peer]: rs }));
                     });
+
+                    // **CRITICAL FIX**: Listen for track changes (e.g., screen share)
+                    // When the remote peer replaces a track, this event fires
+                    const pc = (call as any).peerConnection;
+                    if (pc) {
+                        pc.addEventListener('track', (event: RTCTrackEvent) => {
+                            console.log("🔄 Track changed for", call.peer, "- Kind:", event.track.kind);
+
+                            // Create a new MediaStream with the updated tracks
+                            const newStream = new MediaStream();
+                            pc.getReceivers().forEach((receiver: RTCRtpReceiver) => {
+                                if (receiver.track) {
+                                    newStream.addTrack(receiver.track);
+                                }
+                            });
+
+                            console.log("📺 Updated stream for", call.peer, "with tracks:", newStream.getTracks().map(t => t.kind));
+                            setRemoteStreams(prev => ({ ...prev, [call.peer]: newStream }));
+                        });
+                    }
                 });
 
                 peer.on('disconnected', () => {
@@ -256,8 +278,29 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                             metadata: { role: isHost ? 'host' : 'student', name: currentUser.name }
                         });
 
+                        call.on('stream', (rs) => {
+                            console.log("Received stream from:", peerId);
+                            setRemoteStreams(prev => ({ ...prev, [peerId]: rs }));
+                        });
 
-                        call.on('stream', (rs) => setRemoteStreams(prev => ({ ...prev, [peerId]: rs })));
+                        // **CRITICAL FIX**: Listen for track changes on outgoing calls too
+                        const pc = (call as any).peerConnection;
+                        if (pc) {
+                            pc.addEventListener('track', (event: RTCTrackEvent) => {
+                                console.log("🔄 Track changed for", peerId, "- Kind:", event.track.kind);
+
+                                const newStream = new MediaStream();
+                                pc.getReceivers().forEach((receiver: RTCRtpReceiver) => {
+                                    if (receiver.track) {
+                                        newStream.addTrack(receiver.track);
+                                    }
+                                });
+
+                                console.log("📺 Updated stream for", peerId, "with tracks:", newStream.getTracks().map(t => t.kind));
+                                setRemoteStreams(prev => ({ ...prev, [peerId]: newStream }));
+                            });
+                        }
+
                         callsRef.current[peerId] = call;
                     }
                 });
