@@ -219,6 +219,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         userName: currentUser.name
                     });
 
+                    // Vital: If I am the host, tell the server the meeting is LIVE.
+                    // This ensures that even after a server restart or page refresh,
+                    // the meeting status is restored and late joiners are notified.
+                    if (isHost) {
+                        socket.emit('meeting_started', conversationId);
+                    }
+
                     // Broadcast initial status
                     socket.emit('media_status_change', {
                         conversationId,
