@@ -22,7 +22,6 @@ export const PublicNavbar = () => {
                 <div className="flex justify-between items-center h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2">
-                        <Sparkles className="w-8 h-8 text-gold drop-shadow-md animate-pulse" />
                         <div className="flex flex-col items-start">
                             <h1 className="site-title text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-900">
                                 معهد دارين
