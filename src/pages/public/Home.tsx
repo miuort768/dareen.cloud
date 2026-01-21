@@ -86,7 +86,7 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-56 pb-4 md:pt-48 md:pb-8 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-4 md:pt-48 md:pb-8 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 

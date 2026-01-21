@@ -43,16 +43,16 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FDFCF8] flex items-center justify-center p-4 md:p-8 font-sans">
+        <div className="min-h-screen bg-[#FDFCF8] flex items-center justify-center p-2 sm:p-4 md:p-8 font-sans">
             <SEO
                 title="تسجيل الدخول"
                 description="تسجيل الدخول إلى لوحة تحكم معهد دارين - بوابة الطلاب والمعلمين والإدارة."
             />
 
-            <div className="w-full max-w-md p-6 sm:p-8">
-                <div className="text-center mb-8">
+            <div className="w-full max-w-md p-4 sm:p-6 md:p-8">
+                <div className="text-center mb-6 sm:mb-8">
                     {/* Interactive Logo Container */}
-                    <div className="w-28 h-28 bg-primary-600 rounded-none flex items-center justify-center text-white mx-auto -mt-12 mb-6 relative shadow-xl shadow-primary-600/20 overflow-visible">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 bg-primary-600 rounded-none flex items-center justify-center text-white mx-auto -mt-8 sm:-mt-12 mb-4 sm:mb-6 relative shadow-xl shadow-primary-600/20 overflow-visible">
 
                         {/* The Crown - Moved Closer */}
                         <Crown className="absolute -top-9 -left-4 text-amber-400 drop-shadow-2xl transform -rotate-12 z-30" size={60} strokeWidth={2} fill="#fbbf24" />
@@ -117,8 +117,8 @@ export const Login = () => {
                             )}
                         </svg>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-normal text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black drop-shadow-sm" style={{ fontFamily: 'Aref Ruqaa, serif' }}>دارين للتعليم والتدريب</h1>
-                    <p className="mt-2 text-xl sm:text-2xl md:text-3xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 drop-shadow-sm" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black drop-shadow-sm" style={{ fontFamily: 'Aref Ruqaa, serif' }}>دارين للتعليم والتدريب</h1>
+                    <p className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 drop-shadow-sm" style={{ fontFamily: 'Great Vibes, cursive' }}>
                         Mr. Ahmed Abdullah
                     </p>
                 </div>
