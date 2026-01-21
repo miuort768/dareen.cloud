@@ -16,8 +16,8 @@ export const About = () => {
             {/* Hero Section */}
             <section className="relative pt-4 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-[#FDFCF8]">
                 {/* Creative Background Elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
 
                 {/* Subtle Islamic Pattern with Mask */}
                 <div className="absolute inset-0 opacity-[0.02] islamic-pattern" style={{ maskImage: 'radial-gradient(circle at center, black, transparent 80%)' }}></div>

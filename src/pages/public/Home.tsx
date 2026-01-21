@@ -82,8 +82,8 @@ export const Home = () => {
             <PublicNavbar />
 
             {/* Blob Backgrounds */}
-            <div className="hero-blob bg-blue-600/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2"></div>
+            <div className="hero-blob bg-blue-600/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
             <section className="relative pt-4 md:pt-48 md:pb-8 overflow-hidden bg-[#FDFCF8]">
