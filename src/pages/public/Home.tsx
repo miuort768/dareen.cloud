@@ -104,7 +104,7 @@ export const Home = () => {
                                 </span>
                             </h1>
 
-                            <p className="text-sm sm:text-base lg:text-lg text-gray-500 leading-relaxed mb-8 max-w-xl mx-auto">
+                            <p className="text-xs sm:text-base lg:text-lg text-gray-500 leading-relaxed mb-8 max-w-xl mx-auto px-4">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
                             </p>
 
@@ -178,10 +178,10 @@ export const Home = () => {
             <section className="pt-8 pb-24 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-16 max-w-3xl mx-auto">
-                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-6 uppercase">
+                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-8 uppercase">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-6"></div>
+                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-8"></div>
                         <p className="text-gray-500 text-lg leading-relaxed">
                             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
                         </p>
@@ -197,7 +197,7 @@ export const Home = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">طرق تعليم مبتكرة</h3>
-                                    <p className="text-blue-50 text-lg leading-relaxed">
+                                    <p className="text-blue-50 text-sm md:text-lg leading-relaxed">
                                         طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
                                     </p>
                                 </div>
@@ -279,7 +279,7 @@ export const Home = () => {
                                 <span className="text-emerald-800 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
                             </div>
 
-                            <h2 className="text-2xl lg:text-3xl font-black mb-6 text-gray-900 leading-tight font-heading">
+                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-gray-900 leading-tight font-heading">
                                 رحلتك مع <span className="text-emerald-600 relative inline-block">
                                     كتاب الله
                                     <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -326,8 +326,8 @@ export const Home = () => {
                         </div>
 
                         {/* Visual Side (Geometric Diamonds) */}
-                        <div className="w-full lg:w-1/2 flex justify-center py-12 lg:py-0">
-                            <div className="relative w-[340px] h-[340px] md:w-[400px] md:h-[400px]">
+                        <div className="w-full lg:w-1/2 flex justify-center py-12 lg:py-0 overflow-visible">
+                            <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] scale-90 sm:scale-100">
 
                                 {/* Top Card - Flexible Times */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-44 bg-white rounded-3xl shadow-xl border border-gray-100 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
@@ -421,16 +421,16 @@ export const Home = () => {
 
                                 {/* Slider Controls with Dots */}
                                 <div className="flex justify-center flex-row-reverse gap-4 mt-8">
-                                    <button onClick={nextSlide} className="w-10 h-10 border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-                                        <ChevronRight size={20} className="rotate-180" />
+                                    <button onClick={nextSlide} className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors">
+                                        <ChevronRight size={24} className="rotate-180" />
                                     </button>
                                     <div className="flex items-center gap-1.5">
                                         {reviews.map((_, i) => (
                                             <div key={i} className={`h-1.5 transition-all ${i === currentIndex ? 'w-6 bg-blue-600' : 'w-2 bg-gray-200'}`}></div>
                                         ))}
                                     </div>
-                                    <button onClick={prevSlide} className="w-10 h-10 border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-                                        <LucideChevronLeft size={20} className="rotate-180" />
+                                    <button onClick={prevSlide} className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors">
+                                        <LucideChevronLeft size={24} className="rotate-180" />
                                     </button>
                                 </div>
                             </div>
