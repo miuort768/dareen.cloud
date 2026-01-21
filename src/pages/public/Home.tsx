@@ -175,7 +175,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-12 pb-16 bg-white relative overflow-hidden">
+            <section className="pt-16 pb-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
                         <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
@@ -240,7 +240,7 @@ export const Home = () => {
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>
                                     <h3 className="text-xl md:text-2xl font-black mb-4 font-heading text-white">نخبة من المعلمين المبدعين</h3>
-                                    <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
+                                    <p className="text-white/80 text-xs md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
                                         نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل.
                                     </p>
                                 </div>
@@ -248,7 +248,7 @@ export const Home = () => {
                                 <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
                                     <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-blue-500/30">
                                         <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                                        <div className="text-3xl font-black text-white">+50</div>
+                                        <div className="text-3xl font-black text-white">+70</div>
                                         <div className="text-xs text-gray-400 font-bold">معلم خبير</div>
                                     </div>
                                     <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-gold/30">
