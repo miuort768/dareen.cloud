@@ -189,30 +189,30 @@ export const Home = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {/* Feature 1 */}
-                        <div className="md:col-span-2 relative p-8 md:p-12 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-none shadow-2xl overflow-hidden group">
+                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-none shadow-2xl overflow-hidden group flex items-center gap-4">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-                            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8">
-                                <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                                    <Lightbulb className="w-10 h-10 text-white" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">طرق تعليم مبتكرة</h3>
-                                    <p className="text-blue-50 text-sm md:text-lg leading-relaxed">
-                                        طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
-                                    </p>
-                                </div>
+                            <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
+                                <Lightbulb className="w-6 h-6 text-white" />
+                            </div>
+                            <div className="relative z-10">
+                                <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
+                                <p className="text-xs text-blue-50 leading-relaxed">
+                                    طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
+                                </p>
                             </div>
                         </div>
 
                         {/* Feature 2 */}
-                        <div className="p-8 bg-gradient-to-br from-gold to-gold-hover rounded-none shadow-xl text-white group">
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center mb-6 border border-white/30 group-hover:rotate-12 transition-transform">
-                                <Heart className="w-8 h-8 text-white fill-white" />
+                        <div className="p-6 bg-gradient-to-br from-gold to-gold-hover rounded-none shadow-xl text-white group flex items-center gap-4">
+                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:rotate-12 transition-transform">
+                                <Heart className="w-6 h-6 text-white fill-white" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-4">بيئة آمنة ومحفزة</h3>
-                            <p className="text-white/90 leading-relaxed">
-                                بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة بحرية.
-                            </p>
+                            <div>
+                                <h3 className="text-base font-bold mb-1">بيئة آمنة ومحفزة</h3>
+                                <p className="text-xs text-white/90 leading-relaxed">
+                                    بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة بحرية.
+                                </p>
+                            </div>
                         </div>
 
                         {/* Feature 3 */}
