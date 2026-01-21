@@ -1,16 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '../../lib/api';
+import type { Student, Teacher, Parent } from '../../types';
 
-let studentsCache: any[] | null = null;
-let teachersCache: any[] | null = null;
-let parentsCache: any[] | null = null;
+let studentsCache: Student[] | null = null;
+let teachersCache: Teacher[] | null = null;
+let parentsCache: Parent[] | null = null;
 let lastFetchTime = 0;
 const CACHE_DURATION = 5 * 60 * 1000;
 
 export const useSharedData = () => {
-    const [students, setStudents] = useState<any[]>(studentsCache || []);
-    const [teachers, setTeachers] = useState<any[]>(teachersCache || []);
-    const [parents, setParents] = useState<any[]>(parentsCache || []);
+    const [students, setStudents] = useState<Student[]>(studentsCache || []);
+    const [teachers, setTeachers] = useState<Teacher[]>(teachersCache || []);
+    const [parents, setParents] = useState<Parent[]>(parentsCache || []);
     const [loading, setLoading] = useState(!studentsCache);
 
     const fetchData = useCallback(async (force = false) => {
@@ -22,9 +23,9 @@ export const useSharedData = () => {
         try {
             setLoading(true);
             const [stuData, teachData, parentData] = await Promise.all([
-                api.get<any[]>('/students'),
-                api.get<any[]>('/teachers'),
-                api.get<any[]>('/parents')
+                api.get<Student[]>('/students'),
+                api.get<Teacher[]>('/teachers'),
+                api.get<Parent[]>('/parents')
             ]);
 
             studentsCache = Array.isArray(stuData) ? stuData : [];

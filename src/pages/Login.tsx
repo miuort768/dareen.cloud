@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Lock, User, Phone, Crown, Eye, EyeOff } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Lock, User, Crown, Eye, EyeOff, ArrowRight, Headphones } from 'lucide-react';
 import { useApp, useSettings } from '../context/AppContext';
+import { SEO } from '../components/SEO';
 
 export const Login = () => {
     const [username, setUsername] = useState('');
@@ -14,7 +15,6 @@ export const Login = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        // ... existing logic ...
         e.preventDefault();
         setError('');
 
@@ -26,7 +26,7 @@ export const Login = () => {
                 if (savedUser.role === 'chat_user') {
                     navigate('/chat', { replace: true });
                 } else {
-                    navigate('/', { replace: true });
+                    navigate('/dashboard', { replace: true });
                 }
             } else {
                 setError('اسم المستخدم أو كلمة المرور غير صحيحة');
@@ -43,7 +43,12 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4" dir="rtl">
+        <div className="min-h-screen bg-[#FDFCF8] flex items-center justify-center p-4 md:p-8 font-sans">
+            <SEO
+                title="تسجيل الدخول"
+                description="تسجيل الدخول إلى لوحة تحكم معهد دارين - بوابة الطلاب والمعلمين والإدارة."
+            />
+
             <div className="w-full max-w-md p-6 sm:p-8">
                 <div className="text-center mb-8">
                     {/* Interactive Logo Container */}
@@ -172,16 +177,28 @@ export const Login = () => {
                     </button>
                 </form>
 
-                <div className="mt-8 pt-6 border-t border-gray-100">
+                <div className="mt-4">
+                    <Link
+                        to="/"
+                        className="flex items-center justify-center gap-2 text-blue-600 hover:text-blue-700 font-bold transition-all group py-2"
+                    >
+                        <span>العودة للرئيسية</span>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-gray-100">
                     <a
-                        href={`https://wa.me/2${adminPhone}`}
+                        href={`https://wa.me/${adminPhone}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full bg-green-50 text-green-600 font-bold py-3 rounded-xl hover:bg-green-100 transition-colors border border-green-200"
+                        className="flex items-center justify-center gap-4 w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-primary-600 transition-all group relative overflow-hidden"
                     >
-                        <Phone size={20} />
-                        <span>تواصل مع الدعم الفني</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Headphones className="relative z-10" size={20} />
+                        <span className="relative z-10">تواصل مع الدعم الفني</span>
                     </a>
+                    <p className="text-center text-gray-400 text-[10px] mt-3 font-medium uppercase tracking-widest">متاح على مدار الساعة للمساعدة</p>
                 </div>
             </div>
         </div>

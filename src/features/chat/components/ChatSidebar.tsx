@@ -20,6 +20,7 @@ interface ChatSidebarProps {
     view: 'chat' | 'management';
     logout: () => void;
     requestDesktopNotifications: () => Promise<boolean>;
+    typingUsers: { conversationId: string, userName: string }[];
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -35,7 +36,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setView,
     view,
     logout,
-    requestDesktopNotifications
+    requestDesktopNotifications,
+    typingUsers
 }) => {
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
         'Notification' in window && Notification.permission === 'granted'
@@ -161,32 +163,43 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate font-bold flex-1">
-                                        {conv.lastMessage || 'لا توجد رسائل بعد'}
+                                        {typingUsers.filter(u => u.conversationId === conv.id).length > 0 ? (
+                                            <span className="text-emerald-500 animate-pulse italic">يكتب الآن...</span>
+                                        ) : (
+                                            conv.lastMessage || 'لا توجد رسائل بعد'
+                                        )}
                                     </p>
-                                    {currentUser?.role === 'admin' && (
-                                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    openGroupSettings(conv);
-                                                }}
-                                                className="p-1.5 text-gray-400 hover:text-primary-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                                title="تعديل"
-                                            >
-                                                <Edit2 size={12} />
-                                            </button>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    confirmDeleteConversation(conv);
-                                                }}
-                                                className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                                title="حذف"
-                                            >
-                                                <Trash2 size={12} />
-                                            </button>
-                                        </div>
-                                    )}
+                                    <div className="flex items-center gap-2">
+                                        {conv.unreadCount !== undefined && conv.unreadCount > 0 && (
+                                            <div className="bg-emerald-500 text-white text-[10px] font-black min-w-[20px] h-5 rounded-full flex items-center justify-center px-1 shadow-sm animate-in zoom-in duration-300">
+                                                {conv.unreadCount > 99 ? '+99' : conv.unreadCount}
+                                            </div>
+                                        )}
+                                        {currentUser?.role === 'admin' && (
+                                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        openGroupSettings(conv);
+                                                    }}
+                                                    className="p-1.5 text-gray-400 hover:text-primary-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                                    title="تعديل"
+                                                >
+                                                    <Edit2 size={12} />
+                                                </button>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        confirmDeleteConversation(conv);
+                                                    }}
+                                                    className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                                    title="حذف"
+                                                >
+                                                    <Trash2 size={12} />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </button>

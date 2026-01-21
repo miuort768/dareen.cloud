@@ -21,14 +21,18 @@ export const useChat = (userId?: string) => {
                 return [...old, message];
             });
 
-            // Update conversations list (last message)
+            // Update conversations list (last message & unread count)
             queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
+
                 return old.map(conv => {
                     if (conv.id === message.conversationId) {
+                        const isCurrentlyActive = activeConvId === conv.id;
                         return {
                             ...conv,
                             lastMessage: message.content,
-                            lastMessageTime: message.timestamp
+                            lastMessageTime: message.timestamp,
+                            unreadCount: isCurrentlyActive ? 0 : (conv.unreadCount || 0) + 1
                         };
                     }
                     return conv;
@@ -215,6 +219,18 @@ export const useChat = (userId?: string) => {
         }
     });
 
+    // Mark as Read
+    const markAsReadMutation = useMutation({
+        mutationFn: async (id: string) => {
+            return api.post(`/chat/conversations/${id}/read`);
+        },
+        onSuccess: (_data, id) => {
+            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                return (old || []).map(conv => conv.id === id ? { ...conv, unreadCount: 0 } : conv);
+            });
+        }
+    });
+
     return {
         conversations,
         isLoadingConversations,
@@ -229,6 +245,7 @@ export const useChat = (userId?: string) => {
         deleteAllConversations: deleteAllConversationsMutation.mutateAsync,
         refetchConversations,
         typingUsers,
-        setTyping
+        setTyping,
+        markAsRead: markAsReadMutation.mutate
     };
 };

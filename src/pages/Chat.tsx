@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -11,7 +11,7 @@ import type { Conversation, ChatUser, ChatView, DeleteType } from '../types/chat
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatManagement } from '../features/chat/components/ChatManagement';
-import { ChatModals } from '../features/chat/components/ChatModals';
+import { ChatModals, type ProfileFormData } from '../features/chat/components/ChatModals';
 
 export const Chat = () => {
     const { currentUser, logout } = useApp();
@@ -31,7 +31,8 @@ export const Chat = () => {
         deleteConversation,
         deleteAllConversations,
         typingUsers,
-        setTyping
+        setTyping,
+        markAsRead
     } = useChat(currentUser?.id);
 
     // UI State
@@ -51,13 +52,140 @@ export const Chat = () => {
 
     const [showProfileForm, setShowProfileForm] = useState(false);
     const [editingProfile, setEditingProfile] = useState<ChatUser | null>(null);
-    const [profileData, setProfileData] = useState({ name: '', username: '', password: '' });
+    const [profileData, setProfileData] = useState<ProfileFormData>({ name: '', username: '' });
     const [isSavingProfile, setIsSavingProfile] = useState(false);
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [deleteType, setDeleteType] = useState<DeleteType | 'all_conversations'>('conversation');
-    const [itemToDelete, setItemToDelete] = useState<any>(null);
+    const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+
+    // HANDLERS
+    const handleSendMessage = useCallback(async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newMessage.trim() || !selectedConv || !currentUser) return;
+
+        sendMessage({
+            conversationId: selectedConv.id,
+            content: newMessage,
+            senderId: currentUser.id,
+            senderName: currentUser.name
+        });
+        setNewMessage('');
+    }, [newMessage, selectedConv, currentUser, sendMessage]);
+
+    const handleCreateDirectChat = useCallback(async (targetUserId: string) => {
+        try {
+            const newConv = await createDirectChat(targetUserId);
+            setSelectedConv(newConv);
+            setShowNewChatModal(false);
+        } catch (error) {
+            console.error("Error creating chat:", error);
+        }
+    }, [createDirectChat]);
+
+    const handleCreateConversation = useCallback(async () => {
+        if (!groupName.trim() || selectedUsers.length === 0) return;
+
+        try {
+            await saveGroup({
+                id: isEditingGroup ? selectedConv?.id : undefined,
+                name: groupName,
+                members: selectedUsers,
+                isGroup: true
+            });
+            setShowNewChatModal(false);
+            setGroupName('');
+            setSelectedUsers([]);
+            setIsCreatingGroup(false);
+            setIsEditingGroup(false);
+        } catch (error) {
+            console.error("Error saving conversation:", error);
+        }
+    }, [groupName, selectedUsers, isEditingGroup, selectedConv, saveGroup]);
+
+    const openGroupSettings = useCallback((conv?: Conversation) => {
+        const target = conv || selectedConv;
+        if (!target || !target.isGroup) return;
+        setGroupName(target.displayName || '');
+        setSelectedUsers(target.members.filter(id => id !== currentUser?.id));
+        setIsCreatingGroup(true);
+        setIsEditingGroup(true);
+        setShowNewChatModal(true);
+    }, [selectedConv, currentUser]);
+
+    const handleSaveProfile = useCallback(async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSavingProfile(true);
+
+        try {
+            if (editingProfile) {
+                await api.put(`/chat/profiles/${editingProfile.id}`, profileData);
+            } else {
+                await api.post('/chat/profiles', profileData);
+            }
+
+            setShowProfileForm(false);
+            setEditingProfile(null);
+            setProfileData({ name: '', username: '', password: '' });
+            window.location.reload();
+        } catch (error) {
+            console.error("Error saving profile:", error);
+        } finally {
+            setIsSavingProfile(false);
+        }
+    }, [editingProfile, profileData]);
+
+    const handleDeleteAction = useCallback(async () => {
+        if (!itemToDelete) return;
+        setIsDeleting(true);
+
+        try {
+            if (deleteType === 'conversation' && itemToDelete && 'id' in itemToDelete) {
+                await deleteConversation(itemToDelete.id);
+                if (selectedConv?.id === itemToDelete.id) setSelectedConv(null);
+            } else if (deleteType === 'all_conversations') {
+                await deleteAllConversations();
+                setSelectedConv(null);
+            } else if (itemToDelete && 'id' in itemToDelete) {
+                await api.delete(`/chat/profiles/${itemToDelete.id}`);
+                window.location.reload();
+            }
+            setShowDeleteConfirm(false);
+        } catch (error) {
+            console.error("Error deleting:", error);
+        } finally {
+            setIsDeleting(false);
+            setItemToDelete(null);
+        }
+    }, [itemToDelete, deleteType, deleteConversation, deleteAllConversations, selectedConv]);
+
+    const confirmDeleteConversation = useCallback((conv: Conversation) => {
+        setDeleteType('conversation');
+        setItemToDelete(conv);
+        setShowDeleteConfirm(true);
+    }, []);
+
+    const confirmDeleteProfile = useCallback((id: string) => {
+        const profile = profiles.find(p => p.id === id);
+        if (!profile) return;
+        setDeleteType('profile');
+        setItemToDelete(profile);
+        setShowDeleteConfirm(true);
+    }, [profiles]);
+
+    const confirmDeleteAllConversations = useCallback(() => {
+        setDeleteType('all_conversations');
+        setItemToDelete({ displayName: 'كافة المحادثات' });
+        setShowDeleteConfirm(true);
+    }, []);
+
+    const requestDesktopNotifications = useCallback(async () => {
+        if (!('Notification' in window)) return false;
+        if (Notification.permission === 'granted') return true;
+        const result = await Notification.requestPermission();
+        return result === 'granted';
+    }, []);
 
     // Fetch messages for selected conversation
     const { data: messages = [] } = useMessages(selectedConv?.id);
@@ -79,17 +207,23 @@ export const Chat = () => {
                 if (targetUser) handleCreateDirectChat(targetUserId);
             }
         }
-    }, [availableUsers, conversations, searchParams, currentUser, location.state]);
+    }, [availableUsers, conversations, searchParams, currentUser, location.state, handleCreateDirectChat]);
 
-    // Keep selectedConv in sync with conversations updates (e.g. name changes, last message)
+    // Keep selectedConv in sync and mark as read
     useEffect(() => {
         if (selectedConv) {
             const updatedConv = conversations.find(c => c.id === selectedConv.id);
-            if (updatedConv && (updatedConv.displayName !== selectedConv.displayName || updatedConv.lastMessageTime !== selectedConv.lastMessageTime)) {
-                setSelectedConv(updatedConv);
+            if (updatedConv) {
+                if (updatedConv.displayName !== selectedConv.displayName || updatedConv.lastMessageTime !== selectedConv.lastMessageTime) {
+                    setSelectedConv(updatedConv);
+                }
+                if (updatedConv.unreadCount && updatedConv.unreadCount > 0) {
+                    markAsRead(selectedConv.id);
+                }
             }
         }
-    }, [conversations, selectedConv]);
+    }, [conversations, selectedConv, markAsRead]);
+
     // Mobile Back Button Handling
     useEffect(() => {
         // When opening a chat, add a hash to the URL to create a history entry
@@ -117,132 +251,6 @@ export const Chat = () => {
         return () => window.removeEventListener('popstate', handlePopState);
     }, [selectedConv]);
 
-    // HANDLERS
-    const handleSendMessage = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newMessage.trim() || !selectedConv || !currentUser) return;
-
-        sendMessage({
-            conversationId: selectedConv.id,
-            content: newMessage,
-            senderId: currentUser.id,
-            senderName: currentUser.name
-        });
-        setNewMessage('');
-    };
-
-    const handleCreateDirectChat = async (targetUserId: string) => {
-        try {
-            const newConv = await createDirectChat(targetUserId);
-            setSelectedConv(newConv);
-            setShowNewChatModal(false);
-        } catch (error) {
-            console.error("Error creating chat:", error);
-        }
-    };
-
-    const handleCreateConversation = async () => {
-        if (!groupName.trim() || selectedUsers.length === 0) return;
-
-        try {
-            await saveGroup({
-                id: isEditingGroup ? selectedConv?.id : undefined,
-                name: groupName,
-                members: selectedUsers,
-                isGroup: true
-            });
-            setShowNewChatModal(false);
-            setGroupName('');
-            setSelectedUsers([]);
-            setIsCreatingGroup(false);
-            setIsEditingGroup(false);
-        } catch (error) {
-            console.error("Error saving conversation:", error);
-        }
-    };
-
-    const openGroupSettings = (conv?: Conversation) => {
-        const target = conv || selectedConv;
-        if (!target || !target.isGroup) return;
-        setGroupName(target.displayName || '');
-        setSelectedUsers(target.members.filter(id => id !== currentUser?.id));
-        setIsCreatingGroup(true);
-        setIsEditingGroup(true);
-        setShowNewChatModal(true);
-    };
-
-    const handleSaveProfile = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSavingProfile(true);
-
-        try {
-            if (editingProfile) {
-                await api.put(`/chat/profiles/${editingProfile.id}`, profileData);
-            } else {
-                await api.post('/chat/profiles', profileData);
-            }
-
-            setShowProfileForm(false);
-            setEditingProfile(null);
-            setProfileData({ name: '', username: '', password: '' });
-            window.location.reload();
-        } catch (error) {
-            console.error("Error saving profile:", error);
-        } finally {
-            setIsSavingProfile(false);
-        }
-    };
-
-    const handleDeleteAction = async () => {
-        if (!itemToDelete) return;
-        setIsDeleting(true);
-
-        try {
-            if (deleteType === 'conversation') {
-                await deleteConversation(itemToDelete.id);
-                if (selectedConv?.id === itemToDelete.id) setSelectedConv(null);
-            } else if (deleteType === 'all_conversations') {
-                await deleteAllConversations();
-                setSelectedConv(null);
-            } else {
-                await api.delete(`/chat/profiles/${itemToDelete.id}`);
-                window.location.reload();
-            }
-            setShowDeleteConfirm(false);
-        } catch (error) {
-            console.error("Error deleting:", error);
-        } finally {
-            setIsDeleting(false);
-            setItemToDelete(null);
-        }
-    };
-
-    const confirmDeleteConversation = (conv: Conversation) => {
-        setDeleteType('conversation');
-        setItemToDelete(conv);
-        setShowDeleteConfirm(true);
-    };
-
-    const confirmDeleteProfile = (id: string) => {
-        const profile = profiles.find(p => p.id === id);
-        setDeleteType('profile');
-        setItemToDelete(profile);
-        setShowDeleteConfirm(true);
-    };
-
-    const confirmDeleteAllConversations = () => {
-        setDeleteType('all_conversations');
-        setItemToDelete({ displayName: 'كافة المحادثات' });
-        setShowDeleteConfirm(true);
-    };
-
-    const requestDesktopNotifications = async () => {
-        if (!('Notification' in window)) return false;
-        if (Notification.permission === 'granted') return true;
-        const result = await Notification.requestPermission();
-        return result === 'granted';
-    };
-
     return (
         <div className={cn(
             "flex overflow-hidden bg-gray-50/50 dark:bg-gray-950/50",
@@ -264,28 +272,31 @@ export const Chat = () => {
                 view={view}
                 logout={logout}
                 requestDesktopNotifications={requestDesktopNotifications}
+                typingUsers={typingUsers}
             />
 
             {view === 'chat' ? (
                 selectedConv ? (
-                    <ChatWindow
-                        selectedConv={selectedConv}
-                        messages={messages}
-                        newMessage={newMessage}
-                        setNewMessage={setNewMessage}
-                        handleSendMessage={handleSendMessage}
-                        sendMessage={sendMessage}
-                        isSending={isSending}
-                        currentUser={currentUser}
-                        setSelectedConv={setSelectedConv}
-                        openGroupSettings={() => openGroupSettings()}
-                        confirmDeleteConversation={confirmDeleteConversation}
-                        showMoreMenu={showMoreMenu}
-                        setShowMoreMenu={setShowMoreMenu}
-                        menuRef={menuRef}
-                        typingUsers={typingUsers}
-                        setTyping={setTyping}
-                    />
+                    <div className="flex-1 flex overflow-hidden" data-active-conv-id={selectedConv.id}>
+                        <ChatWindow
+                            selectedConv={selectedConv}
+                            messages={messages}
+                            newMessage={newMessage}
+                            setNewMessage={setNewMessage}
+                            handleSendMessage={handleSendMessage}
+                            sendMessage={sendMessage}
+                            isSending={isSending}
+                            currentUser={currentUser}
+                            setSelectedConv={setSelectedConv}
+                            openGroupSettings={() => openGroupSettings()}
+                            confirmDeleteConversation={confirmDeleteConversation}
+                            showMoreMenu={showMoreMenu}
+                            setShowMoreMenu={setShowMoreMenu}
+                            menuRef={menuRef}
+                            typingUsers={typingUsers}
+                            setTyping={setTyping}
+                        />
+                    </div>
                 ) : (
                     <div className="hidden lg:flex flex-1 flex-col items-center justify-center text-center p-12 bg-white/30 dark:bg-gray-950/30 backdrop-blur-md border border-white dark:border-gray-900 rounded-none shadow-sm">
                         <div className="w-32 h-32 bg-primary-600/10 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400 rounded-none flex items-center justify-center mb-8 relative">

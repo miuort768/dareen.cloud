@@ -1,7 +1,13 @@
 import React from 'react';
 import { X, Users as UsersIcon, ChevronRight, UserPlus, Key, Trash2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { ChatUser, DeleteType } from '../../../types/chat.types';
+import type { ChatUser, DeleteType, Conversation } from '../../../types/chat.types';
+
+export interface ProfileFormData {
+    name: string;
+    username: string;
+    password?: string;
+}
 
 interface ChatModalsProps {
     showNewChatModal: boolean;
@@ -22,16 +28,16 @@ interface ChatModalsProps {
     showProfileForm: boolean;
     setShowProfileForm: (val: boolean) => void;
     editingProfile: ChatUser | null;
-    profileData: any;
-    setProfileData: (val: any) => void;
+    profileData: ProfileFormData;
+    setProfileData: (val: ProfileFormData) => void;
     isSavingProfile: boolean;
     handleSaveProfile: (e: React.FormEvent) => void;
 
     showDeleteConfirm: boolean;
     setShowDeleteConfirm: (val: boolean) => void;
     deleteType: DeleteType;
-    itemToDelete: any;
-    setItemToDelete: (val: any) => void;
+    itemToDelete: Conversation | ChatUser | { displayName: string } | null;
+    setItemToDelete: (val: Conversation | ChatUser | { displayName: string } | null) => void;
     isDeleting: boolean;
     handleDeleteAction: () => void;
 }
@@ -251,9 +257,9 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                             <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">هل أنت متأكد؟</h3>
                             <p className="text-gray-500 dark:text-gray-400 font-bold text-base leading-relaxed mb-10 px-4">
-                                {deleteType === 'conversation' ? (
+                                {deleteType === 'conversation' && itemToDelete && 'id' in itemToDelete ? (
                                     <>
-                                        سيتم حذف <span className="text-rose-600 dark:text-rose-400 font-black">{itemToDelete?.isGroup ? 'المجموعة' : 'المحادثة'}</span> ({itemToDelete?.displayName}) نهائياً مع كافة الرسائل والسجلات.
+                                        سيتم حذف <span className="text-rose-600 dark:text-rose-400 font-black">{(itemToDelete as Conversation).isGroup ? 'المجموعة' : 'المحادثة'}</span> ({(itemToDelete as Conversation).displayName}) نهائياً مع كافة الرسائل والسجلات.
                                     </>
                                 ) : deleteType === 'all_conversations' ? (
                                     <>
@@ -261,7 +267,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     </>
                                 ) : (
                                     <>
-                                        سيتم حذف حساب المستخدم <span className="text-rose-600 dark:text-rose-400 font-black">{itemToDelete?.name}</span> نهائياً. لن يتمكن من تسجيل الدخول أو المشاركة في الدردشة.
+                                        سيتم حذف حساب المستخدم <span className="text-rose-600 dark:text-rose-400 font-black">{(itemToDelete as ChatUser).name}</span> نهائياً. لن يتمكن من تسجيل الدخول أو المشاركة في الدردشة.
                                     </>
                                 )}
                                 <br />

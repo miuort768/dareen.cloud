@@ -12,6 +12,7 @@ export const Header = () => {
     const getPageTitle = (path: string) => {
         switch (path) {
             case '/':
+            case '/dashboard':
                 return { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب.' };
             case '/students':
                 return { title: 'إدارة الطلاب', subtitle: 'قائمة بجميع الطلاب المسجلين وحالاتهم.' };

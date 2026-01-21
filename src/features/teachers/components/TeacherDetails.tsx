@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { X, Bell, CheckCircle2, Trash2, MessageCircle } from 'lucide-react';
 import type { Teacher, Session } from '../types';
+import type { Student, Enrollment } from '../../../types';
 
 interface TeacherDetailsProps {
     teacher: Teacher;
     onClose: () => void;
-    students: any[]; // To be typed properly later
+    students: Student[];
     sessions: Session[];
-    onLogAttendance: (student: any, enrollment: any) => void;
-    onUnenroll: (student: any, teacherName: string) => void;
+    onLogAttendance: (student: Student, enrollment: Enrollment) => void;
+    onUnenroll: (student: Student, teacherName: string) => void;
     onDeleteSession: (sessionId: string) => void;
     onSendNotification: (teacher: Teacher) => void;
     isTeacherView: boolean;
@@ -28,7 +29,7 @@ export const TeacherDetails = ({
     const navigate = useNavigate();
     // Filter students enrolled with this teacher
     const enrolledStudents = students.filter(s =>
-        s.enrollments?.some((e: any) => e.teacher === teacher.name)
+        s.enrollments?.some((e: Enrollment) => e.teacher === teacher.name)
     );
 
     // Filter sessions for this teacher
@@ -98,7 +99,7 @@ export const TeacherDetails = ({
                     </h4>
                     <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
                         {enrolledStudents.map(student => {
-                            const enrollment = student.enrollments.find((e: any) => e.teacher === teacher.name);
+                            const enrollment = student.enrollments.find((e: Enrollment) => e.teacher === teacher.name)!;
                             return (
                                 <div key={student.id} className="group bg-white border border-gray-100 p-3 rounded-lg dark:bg-gray-900 dark:border-gray-800 hover:border-primary-200 transition-all">
                                     <div className="flex justify-between items-start">

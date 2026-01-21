@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
+import type { MediaConnection } from 'peerjs';
 import { Video, VideoOff, Mic, MicOff, Maximize2, Minimize, X, UserX, Monitor, MonitorOff } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { socketService } from '../../../lib/socket';
@@ -47,7 +48,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const previewVideoRef = useRef<HTMLVideoElement>(null);
     const peerRef = useRef<Peer | null>(null);
-    const callsRef = useRef<{ [key: string]: any }>({});
+    const callsRef = useRef<{ [key: string]: MediaConnection }>({});
     const socket = socketService.getSocket();
 
     const isHost = currentUser?.role === 'admin' || currentUser?.role === 'teacher';
@@ -265,7 +266,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
                     // **CRITICAL FIX**: Listen for track changes (e.g., screen share)
                     // When the remote peer replaces a track, this event fires
-                    const pc = (call as any).peerConnection;
+                    const pc = (call as any).peerConnection as RTCPeerConnection;
                     if (pc) {
                         pc.addEventListener('track', (event: RTCTrackEvent) => {
                             console.log("🔄 Track changed for", call.peer, "- Kind:", event.track.kind);
@@ -307,7 +308,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         });
 
                         // **CRITICAL FIX**: Listen for track changes on outgoing calls too
-                        const pc = (call as any).peerConnection;
+                        const pc = (call as any).peerConnection as RTCPeerConnection;
                         if (pc) {
                             pc.addEventListener('track', (event: RTCTrackEvent) => {
                                 console.log("🔄 Track changed for", peerId, "- Kind:", event.track.kind);
@@ -403,7 +404,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
                 Object.entries(callsRef.current).forEach(([peerId, call]) => {
                     console.log(`Processing call for peer: ${peerId}`);
-                    const pc = (call as any).peerConnection;
+                    const pc = (call as any).peerConnection as RTCPeerConnection;
                     if (pc) {
                         console.log(`PeerConnection exists for ${peerId}`);
                         const sender = pc.getSenders().find((s: any) => s.track?.kind === 'video');
@@ -457,7 +458,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         if (localStream && localVideoRef.current) {
             const vt = localStream.getVideoTracks()[0];
             Object.entries(callsRef.current).forEach(([peerId, call]) => {
-                const pc = (call as any).peerConnection;
+                const pc = (call as any).peerConnection as RTCPeerConnection;
                 if (pc) {
                     const sender = pc.getSenders().find((s: any) => s.track?.kind === 'video');
                     if (sender) {

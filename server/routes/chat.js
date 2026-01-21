@@ -185,4 +185,15 @@ router.post('/conversations/:id/messages', async (req, res) => {
     }
 });
 
+// 9. Mark as Read
+router.post('/conversations/:id/read', async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const result = await req.chatService.markAsRead(req.params.id, userId);
+        ResponseHandler.success(res, result);
+    } catch (err) {
+        ResponseHandler.error(res, err.message, 500, err);
+    }
+});
+
 module.exports = router;

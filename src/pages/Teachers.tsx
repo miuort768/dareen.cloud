@@ -19,7 +19,7 @@ import { TeacherTable } from '../features/teachers/components/TeacherTable';
 import { TeacherDetails } from '../features/teachers/components/TeacherDetails';
 
 // Types
-import type { Teacher, Session } from '../features/teachers/types';
+import type { Teacher, Session, Student, Enrollment } from '../types';
 
 export const Teachers = () => {
     const queryClient = useQueryClient();
@@ -36,10 +36,10 @@ export const Teachers = () => {
     } = useTeachers();
 
     // Fetch Other Data (Students, Sessions) 
-    const { data: studentsData = [], isLoading: loadingStudents } = useQuery<any[]>({
+    const { data: studentsData = [], isLoading: loadingStudents } = useQuery<Student[]>({
         queryKey: ['students'],
         queryFn: async () => {
-            const data = await api.get<any>('/students');
+            const data = await api.get<{ data: Student[] } | Student[]>('/students');
             return Array.isArray(data) ? data : (data.data || []);
         }
     });
@@ -64,7 +64,7 @@ export const Teachers = () => {
     const [showDetails, setShowDetails] = useState(false);
     const [editId, setEditId] = useState<string | null>(null);
     const [logDate] = useState(new Date().toISOString().split('T')[0]);
-    const [secureModalData, setSecureModalData] = useState<{ student: any, enrollment: any } | null>(null);
+    const [secureModalData, setSecureModalData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
     const [deletingTeacherId, setDeletingTeacherId] = useState<string | null>(null);
     const [notifyingTeacher, setNotifyingTeacher] = useState<Teacher | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -73,11 +73,11 @@ export const Teachers = () => {
     const uniqueSubjects = new Set(teachers.map(t => t.subject)).size;
     const averagePrice = teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + Number(t.price), 0) / teachers.length) : 0;
     const totalStudentsCount = new Set(students.flatMap(s =>
-        (s.enrollments || []).map((e: any) => ({ student: s.id, teacher: e.teacher }))
+        (s.enrollments || []).map((e: Enrollment) => ({ student: s.id, teacher: e.teacher }))
     ).filter(e => teachers.some(t => t.name === e.teacher)).map(e => e.student)).size;
 
     const studentCounts = teachers.reduce((acc, t) => {
-        acc[t.name] = students.filter(s => s.enrollments?.some((e: any) => e.teacher === t.name)).length;
+        acc[t.name] = students.filter(s => s.enrollments?.some((e: Enrollment) => e.teacher === t.name)).length;
         return acc;
     }, {} as Record<string, number>);
 
@@ -192,7 +192,7 @@ export const Teachers = () => {
                     const headers = lines[0].split(',').map(h => h.trim());
                     parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
                         const values = line.split(',').map(v => v.trim());
-                        const obj: any = {};
+                        const obj: Record<string, string> = {};
                         headers.forEach((header, i) => {
                             obj[header] = values[i];
                         });
@@ -256,8 +256,8 @@ export const Teachers = () => {
     };
 
     const unenrollMutation = useMutation({
-        mutationFn: async ({ student, teacherName }: { student: any, teacherName: string }) => {
-            const updatedEnrollments = student.enrollments.filter((en: any) => en.teacher !== teacherName);
+        mutationFn: async ({ student, teacherName }: { student: Student, teacherName: string }) => {
+            const updatedEnrollments = student.enrollments.filter((en: Enrollment) => en.teacher !== teacherName);
             await api.put(`/students/${student.id}`, { ...student, enrollments: updatedEnrollments });
         },
         onSuccess: () => {

@@ -21,7 +21,15 @@ import { generateSessionDates } from '../features/students/utils/sessionUtils';
 import { sendWhatsAppReminder } from '../shared/utils/reminders';
 
 // Types
-import type { Student, Enrollment } from '../features/students/types';
+import type { Student, Enrollment, ScheduleSlot } from '../features/students/types';
+
+interface EnrollmentFormData {
+    teacher: string;
+    subject: string;
+    curr: string;
+    totalSessions: number;
+    schedule: ScheduleSlot[];
+}
 
 export const Students = () => {
     const queryClient = useQueryClient();
@@ -63,7 +71,7 @@ export const Students = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleAddEnrollment = async (enrollData: any) => {
+    const handleAddEnrollment = async (enrollData: EnrollmentFormData) => {
         if (!selectedStudent) return;
 
         try {
@@ -190,7 +198,7 @@ export const Students = () => {
                     const headers = lines[0].split(',').map(h => h.trim());
                     parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
                         const values = line.split(',').map(v => v.trim());
-                        const obj: any = {};
+                        const obj: Record<string, string> = {};
                         headers.forEach((header, i) => {
                             obj[header] = values[i];
                         });

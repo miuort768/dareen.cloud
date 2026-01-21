@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Cairo', 'sans-serif'],
+        heading: ['Tajawal', 'sans-serif'],
       },
       colors: {
         primary: {
@@ -25,6 +26,21 @@ module.exports = {
           900: 'rgb(var(--color-primary) / 0.55)',
           950: 'rgb(var(--color-primary) / 0.4)',
         },
+        gold: {
+          DEFAULT: '#D4AF37',
+          light: '#FDFCF8',
+          hover: '#B45309',
+        },
+        premium: {
+          blue: '#1E40AF',
+          indigo: '#312E81',
+          gold: '#D4AF37',
+        }
+      },
+      boxShadow: {
+        'gold': '0 10px 30px -10px rgba(212, 175, 55, 0.3)',
+        'gold-hover': '0 20px 40px -10px rgba(212, 175, 55, 0.4)',
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.05)',
       }
     },
   },

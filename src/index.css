@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
 /* Tailwind Directives - The following @tailwind rules are standard for Tailwind CSS v3.
    Ignore "Unknown at rule" warnings from generic CSS linters as they are handled by PostCSS. */
 @tailwind base;
@@ -357,4 +358,120 @@
       margin: 1cm;
     }
   }
+}
+
+/* --- Landing Page Premium Styles --- */
+.hero-blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: 0;
+  animation: moveBlob 10s infinite alternate;
+}
+
+@keyframes moveBlob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+}
+
+.stat-card-glass {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.1);
+}
+
+.glass-widget {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), inset 0 0 20px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-widget:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 15px rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.islamic-pattern {
+  background-color: #FDFCF8;
+  background-image: radial-gradient(#D4AF37 0.5px, transparent 0.5px), radial-gradient(#D4AF37 0.5px, #FDFCF8 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.logo-glass {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05), inset 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: all 0.5s ease;
+}
+
+.mesh-gradient-card {
+  background: radial-gradient(at 0% 0%, rgba(212, 175, 55, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(180, 83, 9, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(212, 175, 55, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(180, 83, 9, 0.05) 0px, transparent 50%), #ffffff;
+}
+
+@keyframes holoFlow {
+  0% {
+    background-position: 200% 0%;
+  }
+
+  100% {
+    background-position: -200% 0%;
+  }
+}
+
+.holographic-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, transparent 0%, rgba(212, 175, 55, 0.05) 45%, rgba(212, 175, 55, 0.2) 50%, rgba(212, 175, 55, 0.05) 55%, transparent 100%);
+  background-size: 200% 200%;
+  transition: 0.5s;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.group:hover .holographic-glow {
+  opacity: 1;
+  animation: holoFlow 2s infinite linear;
+}
+
+.sparkle-text::after {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  left: -15px;
+  font-size: 14px;
+  animation: sparklePulse 2s infinite;
+}
+
+@keyframes sparklePulse {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2) rotate(20deg);
+    opacity: 1;
+  }
+}
+
+.clip-hexagon {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }

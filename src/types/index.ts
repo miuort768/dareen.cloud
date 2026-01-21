@@ -22,9 +22,9 @@ export interface Student {
     name: string;
     grade: string;
     parentPhone: string;
-    studentPhone: string;
-    curriculum: string;
-    notes: string;
+    studentPhone?: string;
+    curriculum?: string;
+    notes?: string;
     sessionPrice: number;
     enrollments: Enrollment[];
 }
@@ -33,11 +33,12 @@ export interface Teacher {
     id: string;
     name: string;
     phone1: string;
-    phone2: string;
+    phone2?: string;
     subject: string;
     price: number;
-    email: string;
-    username: string;
+    email?: string;
+    username?: string;
+    password?: string;
 }
 
 export interface Parent {

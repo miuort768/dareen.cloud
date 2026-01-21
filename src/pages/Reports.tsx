@@ -7,6 +7,8 @@ import { AcademicReport } from '../features/reports/components/AcademicReport';
 import { AttendanceReport } from '../features/reports/components/AttendanceReport';
 import { FinancialReport } from '../features/reports/components/FinancialReport';
 
+import type { ReportType } from '../features/reports/types';
+
 export const Reports = () => {
     const { state, actions, filtered } = useReports();
 
@@ -53,7 +55,7 @@ export const Reports = () => {
                     ].map((tab) => (
                         <button
                             key={tab.id}
-                            onClick={() => actions.setActiveReport(tab.id as any)}
+                            onClick={() => actions.setActiveReport(tab.id as ReportType)}
                             className={`px-2 py-1.5 md:px-4 md:py-2 rounded-none font-bold text-[10px] md:text-sm transition-all whitespace-nowrap ${state.activeReport === tab.id
                                 ? 'bg-purple-600 text-white shadow-md'
                                 : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'

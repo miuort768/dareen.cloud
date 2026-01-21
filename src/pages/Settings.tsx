@@ -431,14 +431,14 @@ export const Settings = () => {
                             </div>
                             <div>
                                 <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
-                                    رقم هاتف مدير النظام (لاستقبال تنبيهات المعلمين)
+                                    رقم الواتساب (مع كود الدولة - مثال: 201152001250)
                                 </label>
                                 <input
                                     type="text"
                                     value={localAdminPhone}
                                     onChange={(e) => setLocalAdminPhone(e.target.value)}
                                     className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                    placeholder="01xxxxxxxxx"
+                                    placeholder="201xxxxxxxxx"
                                     dir="ltr"
                                 />
                             </div>

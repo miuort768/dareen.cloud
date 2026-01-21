@@ -6,6 +6,7 @@ import type {
 } from '../types/dashboard';
 
 import type { User } from '../types/auth';
+import type { Teacher } from '../types/index';
 
 export const useDashboardData = (currentUser: User | null) => {
     const [stats, setStats] = useState<Stats>({
@@ -39,12 +40,12 @@ export const useDashboardData = (currentUser: User | null) => {
         try {
             setLoading(true);
             const [rawStudents, rawTeachers, rawParents, rawSessions, rawInvoices, rawStudentInvoices] = await Promise.all([
-                api.get<any[]>('/students'),
-                api.get<any[]>('/teachers'),
+                api.get<Student[]>('/students'),
+                api.get<Teacher[]>('/teachers'),
                 api.get<any[]>('/parents'),
-                api.get<any[]>('/sessions'),
-                api.get<any[]>('/invoices'),
-                api.get<any[]>('/studentInvoices'),
+                api.get<Session[]>('/sessions'),
+                api.get<TeacherInvoice[]>('/invoices'),
+                api.get<StudentInvoice[]>('/studentInvoices'),
             ]);
 
             const students = Array.isArray(rawStudents) ? rawStudents : [];
@@ -121,7 +122,7 @@ export const useDashboardData = (currentUser: User | null) => {
                 const studentPrice = Number(student?.sessionPrice) || 0;
                 if (studentPrice > 0) return studentPrice;
 
-                const teacher = teachers.find((t: any) => t.name === s.teacherName);
+                const teacher = teachers.find((t: Teacher) => t.name === s.teacherName);
                 return Number(teacher?.price) || 0;
             };
 
@@ -231,7 +232,7 @@ export const useDashboardData = (currentUser: User | null) => {
                             session.subject === en?.subject &&
                             session.status === 'completed'
                     ).length;
-                    return sum + (actualUsed * ((en as any)?.price || (s as any).sessionPrice || 0));
+                    return sum + (actualUsed * (en?.price || s.sessionPrice || 0));
                 }, 0)) : (monthRevenueValue - monthExpensesValue)
             });
 
@@ -240,8 +241,8 @@ export const useDashboardData = (currentUser: User | null) => {
 
             // Fetch tasks from api
             try {
-                const tasksData = await api.get<any[]>('/tasks');
-                const pendingTasks = (Array.isArray(tasksData) ? tasksData : []).filter((t: any) => t.status === 'pending');
+                const tasksData = await api.get<Task[]>('/tasks');
+                const pendingTasks = (Array.isArray(tasksData) ? tasksData : []).filter((t: Task) => t.status === 'pending');
                 setTasks(pendingTasks);
             } catch (e) {
                 console.error("Error fetching tasks:", e);

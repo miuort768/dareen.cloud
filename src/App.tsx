@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { AppProvider, useApp } from './context/AppContext';
 import { Loader2 } from 'lucide-react';
@@ -20,6 +20,9 @@ const TeacherInvoices = lazy(() => import('./pages/TeacherInvoices').then(m => (
 const StudentInvoices = lazy(() => import('./pages/StudentInvoices').then(m => ({ default: m.StudentInvoices })));
 const Tasks = lazy(() => import('./pages/Tasks').then(m => ({ default: m.Tasks })));
 const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
+const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
+const TermsOfService = lazy(() => import('./pages/public/TermsOfService').then(m => ({ default: m.TermsOfService })));
+
 
 // Loading component
 const PageLoader = () => (
@@ -57,8 +60,13 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   return children;
 };
 
-// Specialized component to handle root path redirection
-const RootRedirect = () => {
+// Public Pages
+const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
+const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
+const Courses = lazy(() => import('./pages/public/Courses').then(m => ({ default: m.Courses })));
+
+// Specialized component to handle dashboard redirect after login
+const DashboardRedirect = () => {
   const { currentUser } = useApp();
   if (currentUser?.role === 'chat_user') {
     return <Navigate to="/chat" replace />;
@@ -70,14 +78,21 @@ function AppContent() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
         <Route path="/login" element={<Login />} />
 
+        {/* Protected Dashboard/App Routes */}
         <Route path="/" element={
           <ProtectedRoute>
             <Layout />
           </ProtectedRoute>
         }>
-          <Route index element={<RootRedirect />} />
+          <Route path="dashboard" element={<DashboardRedirect />} />
           <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
           <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
           <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
@@ -92,6 +107,9 @@ function AppContent() {
           <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
           <Route path="chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
+
+        {/* Catch all redirect to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );
@@ -100,9 +118,9 @@ function AppContent() {
 function App() {
   return (
     <AppProvider>
-      <HashRouter>
+      <BrowserRouter>
         <AppContent />
-      </HashRouter>
+      </BrowserRouter>
     </AppProvider>
   );
 }

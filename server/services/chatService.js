@@ -25,13 +25,14 @@ class ChatService {
             SELECT c.*, 
             (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
             (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
+            (SELECT COUNT(*) FROM notifications WHERE conversationId = c.id AND receiverId = ? AND read = 0) as unreadCount,
             GROUP_CONCAT(cm.userId) as memberIds
             FROM conversations c
             JOIN conversation_members cm ON c.id = cm.conversationId
             WHERE c.id IN (SELECT conversationId FROM conversation_members WHERE userId = ?)
             GROUP BY c.id
             ORDER BY lastMessageTime DESC
-        `, userId);
+        `, [userId, userId]);
 
         return await Promise.all(convs.map(async (c) => {
             const memberList = (c.memberIds || '').split(',');
@@ -58,7 +59,8 @@ class ChatService {
                 ...c,
                 displayName,
                 members: memberList,
-                isGroup: !!c.isGroup
+                isGroup: !!c.isGroup,
+                unreadCount: c.unreadCount || 0
             };
         }));
     }
@@ -225,6 +227,14 @@ class ChatService {
                 }
             }
         }
+    }
+
+    async markAsRead(conversationId, userId) {
+        await this.db.run(
+            'UPDATE notifications SET read = 1 WHERE conversationId = ? AND receiverId = ?',
+            [conversationId, userId]
+        );
+        return { success: true };
     }
 
 }
