@@ -129,7 +129,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
     // 3. Socket Listeners for Controls
     useEffect(() => {
-        socket.on('media_status_change', (data: { conversationId: string, peerId: string, isMuted?: boolean, isVideoOff?: boolean }) => {
+        const onMediaStatusChange = (data: { conversationId: string, peerId: string, isMuted?: boolean, isVideoOff?: boolean }) => {
             if (data.conversationId !== conversationId) return;
             setRemoteStatus(prev => ({
                 ...prev,
@@ -138,39 +138,56 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     isVideoOff: data.isVideoOff ?? prev[data.peerId]?.isVideoOff ?? false
                 }
             }));
-        });
+        };
 
-        socket.on('kick_user', (data: { conversationId: string, targetPeerId: string }) => {
+        const onKickUser = (data: { conversationId: string, targetPeerId: string }) => {
             if (data.conversationId === conversationId && peerRef.current?.id === data.targetPeerId) {
-                // I have been kicked
                 handleCloseFull();
                 alert("تم إخراجك من الاجتماع بواسطة المعلم.");
             }
-        });
+        };
 
-        socket.on('user_left', (data: { peerId: string }) => {
+        const onUserLeft = (data: { peerId: string }) => {
             console.log("User left:", data.peerId);
-
-            // Close the call properly
             if (callsRef.current[data.peerId]) {
                 callsRef.current[data.peerId].close();
                 delete callsRef.current[data.peerId];
             }
-
-            // Remove from UI
             setRemoteStreams(prev => {
                 const newStreams = { ...prev };
                 delete newStreams[data.peerId];
                 return newStreams;
             });
-
             setRemoteStatus(prev => {
                 const newStatus = { ...prev };
                 delete newStatus[data.peerId];
                 return newStatus;
             });
-        });
-    }, [conversationId]);
+        };
+
+        const onRequestStatus = (_data: { requesterPeerId: string }) => {
+            if (peerRef.current?.id) {
+                socket.emit('media_status_change', {
+                    conversationId,
+                    peerId: peerRef.current.id,
+                    isMuted,
+                    isVideoOff
+                });
+            }
+        };
+
+        socket.on('media_status_change', onMediaStatusChange);
+        socket.on('kick_user', onKickUser);
+        socket.on('user_left', onUserLeft);
+        socket.on('request_current_status', onRequestStatus);
+
+        return () => {
+            socket.off('media_status_change', onMediaStatusChange);
+            socket.off('kick_user', onKickUser);
+            socket.off('user_left', onUserLeft);
+            socket.off('request_current_status', onRequestStatus);
+        };
+    }, [conversationId, socket, isMuted, isVideoOff]);
 
 
     // 4. Join Logic
@@ -273,10 +290,16 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 });
 
                 socket.on('peer_ready', ({ peerId, userId }) => {
-                    if (userId !== currentUser.id && stream) {
-                        const call = peer.call(peerId, stream, {
+                    if (userId !== currentUser.id) {
+                        // Determine which stream to send: camera or current screen
+                        const streamToSend = (isScreenSharing && localVideoRef.current?.srcObject instanceof MediaStream)
+                            ? localVideoRef.current.srcObject
+                            : (localStream || undefined);
+
+                        const call = peer.call(peerId, streamToSend as MediaStream, {
                             metadata: { role: isHost ? 'host' : 'student', name: currentUser.name }
                         });
+
 
                         call.on('stream', (rs) => {
                             console.log("Received stream from:", peerId);

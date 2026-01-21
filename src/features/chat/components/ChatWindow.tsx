@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Send, Smile, Share2, MoreVertical, Edit2, Trash2, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -6,8 +6,8 @@ import { cn } from '../../../lib/utils';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 import { MeetingActions } from './MeetingActions';
-import { socketService } from '../../../lib/socket';
 import { useMeeting } from '../../../context/MeetingContext';
+import { socketService } from '../../../lib/socket';
 
 interface ChatWindowProps {
     selectedConv: Conversation;
@@ -24,6 +24,8 @@ interface ChatWindowProps {
     showMoreMenu: boolean;
     setShowMoreMenu: (val: boolean) => void;
     menuRef: React.RefObject<HTMLDivElement>;
+    typingUsers: { conversationId: string, userName: string }[];
+    setTyping: (convId: string, isTyping: boolean, userName: string) => void;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -40,28 +42,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     confirmDeleteConversation,
     showMoreMenu,
     setShowMoreMenu,
-    menuRef
+    menuRef,
+    typingUsers,
+    setTyping
 }) => {
     const { startMeeting } = useMeeting();
-    const [isMeetingActive, setIsMeetingActive] = useState(false);
-    const socket = useRef(socketService.getSocket()).current;
-
+    const socket = socketService.getSocket();
     useEffect(() => {
-        const handleStatusChange = ({ conversationId, isActive }: { conversationId: string, isActive: boolean }) => {
-            if (conversationId === selectedConv.id) {
-                setIsMeetingActive(isActive);
-            }
-        };
-
-        socket.on('meeting_status_changed', handleStatusChange);
-
-        // Check initial status from server (in case meeting already started)
+        // Emit check to trigger a status broadcast from server if a meeting is live
         socket.emit('check_meeting_status', selectedConv.id);
-
-        return () => {
-            socket.off('meeting_status_changed', handleStatusChange);
-        };
     }, [selectedConv.id, socket]);
+
+    // Use the status from the object which is updated by useChat hook
+    const isMeetingActive = !!selectedConv.isMeetingActive;
 
     const handleStartMeetingLocal = () => {
         if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'teacher')) {
@@ -226,6 +219,22 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 <div ref={messagesEndRef} />
             </div>
 
+            {/* Typing Indicator */}
+            {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 0 && (
+                <div className="px-5 py-1 text-[10px] font-bold text-gray-400 italic flex items-center gap-1">
+                    <div className="flex gap-1">
+                        <span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></span>
+                    </div>
+                    {typingUsers
+                        .filter(u => u.conversationId === selectedConv.id)
+                        .map(u => u.userName)
+                        .join(', ')} {' '}
+                    {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 1 ? 'يكتبون الآن...' : 'يكتب الآن...'}
+                </div>
+            )}
+
             {/* Input Area */}
             <div className="p-3 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 shrink-0">
                 <form
@@ -241,7 +250,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     <input
                         type="text"
                         value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
+                        onChange={(e) => {
+                            setNewMessage(e.target.value);
+                            if (currentUser) {
+                                setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
+                            }
+                        }}
+                        onBlur={() => {
+                            if (currentUser) {
+                                setTyping(selectedConv.id, false, currentUser.name);
+                            }
+                        }}
                         placeholder="اكتب رسالتك..."
                         className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-bold py-2 px-1 dark:text-white"
                         disabled={isSending}

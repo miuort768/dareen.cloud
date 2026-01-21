@@ -9,9 +9,11 @@ class SocketService {
 
     connect() {
         if (!this.socket) {
+            const token = localStorage.getItem('token');
             this.socket = io(SOCKET_URL, {
                 transports: ['websocket'],
-                autoConnect: true
+                autoConnect: true,
+                auth: { token }
             });
 
             this.socket.on('connect', () => {

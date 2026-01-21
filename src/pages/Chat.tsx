@@ -30,6 +30,8 @@ export const Chat = () => {
         saveGroup,
         deleteConversation,
         deleteAllConversations,
+        typingUsers,
+        setTyping
     } = useChat(currentUser?.id);
 
     // UI State
@@ -281,6 +283,8 @@ export const Chat = () => {
                         showMoreMenu={showMoreMenu}
                         setShowMoreMenu={setShowMoreMenu}
                         menuRef={menuRef}
+                        typingUsers={typingUsers}
+                        setTyping={setTyping}
                     />
                 ) : (
                     <div className="hidden lg:flex flex-1 flex-col items-center justify-center text-center p-12 bg-white/30 dark:bg-gray-950/30 backdrop-blur-md border border-white dark:border-gray-900 rounded-none shadow-sm">

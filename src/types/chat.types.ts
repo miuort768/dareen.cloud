@@ -15,6 +15,7 @@ export interface Conversation {
     lastMessage: string | null;
     lastMessageTime: string | null;
     members: string[];
+    isMeetingActive?: boolean;
 }
 
 export interface ChatUser {

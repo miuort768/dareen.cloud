@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
@@ -36,12 +36,43 @@ export const useChat = (userId?: string) => {
             });
         };
 
+        const handleMeetingStatus = ({ conversationId, isActive }: { conversationId: string, isActive: boolean }) => {
+            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                return old.map(conv => {
+                    if (conv.id === conversationId) {
+                        return { ...conv, isMeetingActive: isActive };
+                    }
+                    return conv;
+                });
+            });
+        };
+
+        const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
+            if (msgConvId !== 'global') {
+                setTypingUsers(prev => {
+                    const others = prev.filter(u => u.conversationId !== msgConvId || u.userName !== userName);
+                    if (isTyping) return [...others, { conversationId: msgConvId, userName }];
+                    return others;
+                });
+            }
+        };
+
         socket.on('new_message', handleNewMessage);
+        socket.on('meeting_status_changed', handleMeetingStatus);
+        socket.on('typing', handleTyping);
 
         return () => {
             socket.off('new_message', handleNewMessage);
+            socket.off('meeting_status_changed', handleMeetingStatus);
+            socket.off('typing', handleTyping);
         };
     }, [userId, queryClient]);
+
+    const [typingUsers, setTypingUsers] = useState<{ conversationId: string, userName: string }[]>([]);
+
+    const setTyping = (conversationId: string, isTyping: boolean, userName: string) => {
+        socketService.getSocket().emit('typing', { conversationId, userId, userName, isTyping });
+    };
 
     // Fetch conversations
     const { data: conversations = [], isLoading: isLoadingConversations, refetch: refetchConversations } = useQuery<Conversation[]>({
@@ -196,6 +227,8 @@ export const useChat = (userId?: string) => {
         saveGroup: saveGroupMutation.mutateAsync,
         deleteConversation: deleteConversationMutation.mutateAsync,
         deleteAllConversations: deleteAllConversationsMutation.mutateAsync,
-        refetchConversations
+        refetchConversations,
+        typingUsers,
+        setTyping
     };
 };

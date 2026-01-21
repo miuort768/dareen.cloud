@@ -159,8 +159,27 @@ async function startServer() {
         // Make io accessible to routers
         app.set('socketio', io);
 
+        // Track active meetings - Global Scope
+        app.set('activeMeetings', new Set());
+
+        const jwt = require('jsonwebtoken');
+
+        // Socket.io Middleware for Authentication
+        io.use((socket, next) => {
+            const token = socket.handshake.auth.token;
+            if (!token) return next(new Error('Authentication error'));
+
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                socket.data.user = decoded;
+                next();
+            } catch (err) {
+                next(new Error('Authentication error'));
+            }
+        });
+
         io.on('connection', (socket) => {
-            console.log('User connected:', socket.id);
+            console.log('User connected:', socket.id, 'User:', socket.data.user?.name);
 
             socket.on('join_conversation', (conversationId) => {
                 socket.join(conversationId);
@@ -172,32 +191,39 @@ async function startServer() {
                 console.log(`User ${socket.id} left conversation ${conversationId}`);
             });
 
-            // Track active meetings
-            const activeMeetings = new Set();
+            const activeMeetings = app.get('activeMeetings');
 
             socket.on('peer_ready', (data) => {
                 const { conversationId, peerId } = data;
                 socket.data.conversationId = conversationId;
                 socket.data.peerId = peerId;
                 socket.to(conversationId).emit('peer_ready', data);
+
+                // Request current status from others for the new joiner
+                socket.to(conversationId).emit('request_current_status', { requesterPeerId: peerId });
                 console.log(`Peer ready in ${conversationId}:`, peerId);
             });
 
             socket.on('meeting_started', (conversationId) => {
                 activeMeetings.add(conversationId);
-                socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: true });
+                io.emit('meeting_status_changed', { conversationId, isActive: true });
                 console.log(`Meeting started in ${conversationId}`);
             });
 
             socket.on('meeting_ended', (conversationId) => {
                 activeMeetings.delete(conversationId);
-                socket.to(conversationId).emit('meeting_status_changed', { conversationId, isActive: false });
+                io.emit('meeting_status_changed', { conversationId, isActive: false });
                 console.log(`Meeting ended in ${conversationId}`);
             });
 
             socket.on('check_meeting_status', (conversationId) => {
                 const isActive = activeMeetings.has(conversationId);
                 socket.emit('meeting_status_changed', { conversationId, isActive });
+            });
+
+            socket.on('typing', (data) => {
+                // data: { conversationId, userId, userName, isTyping }
+                socket.to(data.conversationId).emit('typing', data);
             });
 
             socket.on('disconnect', () => {
@@ -215,7 +241,10 @@ async function startServer() {
 
             socket.on('kick_user', (data) => {
                 // data: { conversationId, targetPeerId }
-                socket.to(data.conversationId).emit('kick_user', data);
+                // SECURITY: ensure only host can kick
+                if (socket.data.user.role === 'admin' || socket.data.user.role === 'teacher') {
+                    socket.to(data.conversationId).emit('kick_user', data);
+                }
             });
         });
 
