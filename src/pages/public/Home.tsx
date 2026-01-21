@@ -263,14 +263,14 @@ export const Home = () => {
 
 
             {/* Quran Memorization Section */}
-            <section className="py-12 relative overflow-hidden bg-[#FDFCF8]">
+            <section className="pt-12 pb-6 relative overflow-hidden bg-[#FDFCF8]">
                 {/* Subtle Islamic Pattern Background */}
                 <div className="absolute inset-0 opacity-[0.03]"
                     style={{ backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
                 </div>
 
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 justify-center max-w-6xl mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 justify-center max-w-6xl mx-auto">
 
                         {/* Content Side */}
                         <div className="w-full lg:w-1/2 text-center">
@@ -326,7 +326,7 @@ export const Home = () => {
                         </div>
 
                         {/* Visual Side (Geometric Diamonds) */}
-                        <div className="w-full lg:w-1/2 flex justify-center py-12 lg:py-0 overflow-visible">
+                        <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0 overflow-visible">
                             <div className="relative w-[310px] h-[310px] md:w-[400px] md:h-[400px] scale-90 sm:scale-100">
 
                                 {/* Top Card - Flexible Times */}
