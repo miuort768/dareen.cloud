@@ -9,9 +9,9 @@ echo "🚀 بدء عملية التحديث والنشر..."
 echo "📥 سحب الكود الجديد من GitHub..."
 git pull origin main
 
-# 2. بناء وتشغيل الحاويات باستخدام Docker Compose
+# 2. بناء وتشغيل الحاويات باستخدام Docker Compose (V2)
 echo "🏗️ بناء وتشغيل الحاويات..."
-docker-compose up -d --build
+docker compose up -d --build
 
 # 3. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
 echo "🧹 تنظيف الملفات غير المستخدمة..."
