@@ -74,7 +74,7 @@ export const Home = () => {
     const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative select-none">
+        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative select-none overflow-x-hidden">
             <SEO
                 title="الرئيسية"
                 description="معهد دارين وأكاديمية دارين للتعليم والتدريب - الخيار الأول للتعليم عن بعد في الكويت والخليج. دروس خصوصية لجميع المراحل، تحفيظ قرآن، ولغات."
