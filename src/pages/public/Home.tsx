@@ -175,9 +175,9 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-20 pb-24 bg-white relative overflow-hidden">
+            <section className="pt-12 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 max-w-3xl mx-auto">
+                    <div className="text-center mb-10 max-w-3xl mx-auto">
                         <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-8 uppercase leading-normal py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
@@ -263,7 +263,7 @@ export const Home = () => {
 
 
             {/* Quran Memorization Section */}
-            <section className="py-20 relative overflow-hidden bg-[#FDFCF8]">
+            <section className="py-12 relative overflow-hidden bg-[#FDFCF8]">
                 {/* Subtle Islamic Pattern Background */}
                 <div className="absolute inset-0 opacity-[0.03]"
                     style={{ backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
@@ -327,7 +327,7 @@ export const Home = () => {
 
                         {/* Visual Side (Geometric Diamonds) */}
                         <div className="w-full lg:w-1/2 flex justify-center py-12 lg:py-0 overflow-visible">
-                            <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] scale-90 sm:scale-100">
+                            <div className="relative w-[310px] h-[310px] md:w-[400px] md:h-[400px] scale-90 sm:scale-100">
 
                                 {/* Top Card - Flexible Times */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 md:w-44 md:h-44 bg-white rounded-3xl shadow-xl border border-gray-100 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
@@ -383,9 +383,9 @@ export const Home = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-20 bg-white relative overflow-hidden">
+            <section className="py-12 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-10">
                         <h2 className="text-3xl lg:text-4xl font-black text-gray-900 uppercase">
                             آراء <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">أولياء الأمور</span>
                         </h2>
