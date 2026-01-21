@@ -178,7 +178,7 @@ export const Home = () => {
             <section className="pt-12 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
-                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-8 uppercase leading-normal py-2">
+                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-8"></div>
@@ -216,14 +216,16 @@ export const Home = () => {
                         </div>
 
                         {/* Feature 3 */}
-                        <div className="p-8 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-xl transition-all group">
-                            <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-none flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                <CheckCircle className="w-8 h-8" />
+                        <div className="p-6 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-xl transition-all group flex items-center gap-4">
+                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-none flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                <CheckCircle className="w-6 h-6" />
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-4">نتائج مضمونة</h3>
-                            <p className="text-gray-500 leading-relaxed">
-                                متابعة دقيقة وتقارير دورية لضمان تحقيق أفضل النتائج التعليمية.
-                            </p>
+                            <div className="text-right">
+                                <h3 className="text-base font-bold text-gray-900 mb-1">نتائج مضمونة</h3>
+                                <p className="text-xs text-gray-500 leading-relaxed">
+                                    متابعة دقيقة وتقارير دورية لضمان تحقيق أفضل النتائج التعليمية.
+                                </p>
+                            </div>
                         </div>
 
                         {/* Feature 4 */}
