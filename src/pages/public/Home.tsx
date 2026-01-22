@@ -175,13 +175,13 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+            <section className="pt-16 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-10 max-w-3xl mx-auto">
+                    <div className="text-center mb-6 max-w-3xl mx-auto">
                         <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-8"></div>
+                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-500 text-lg leading-relaxed">
                             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
                         </p>
@@ -235,7 +235,7 @@ export const Home = () => {
 
                             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-10">
                                 <div className="flex-1 text-center lg:text-right">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-6 border border-white/10 mx-auto lg:mx-0">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-4 border border-white/10 mx-auto lg:mx-0">
                                         <Award size={16} className="text-gold" />
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>

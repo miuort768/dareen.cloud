@@ -21,7 +21,7 @@ const COURSES = [
     { id: 3, category: 'kuwait', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '2.1k', icon: '🇰🇼', color: 'blue', price: 'سنوي', image: kuwaitImg },
     { id: 4, category: 'qatar', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '1.4k', icon: '🇶🇦', color: 'maroon', price: 'فصلي', image: qatarImg },
     { id: 5, category: 'oman', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '1.3k', icon: '🇴🇲', color: 'green', price: 'فصلي', image: omanImg },
-    { id: 6, category: 'jordan', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'سنوي', image: jordanImg },
+    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'سنوي', image: jordanImg },
     { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '1.8k', icon: '🇬🇧', color: 'indigo', price: 'مستويات', image: englishImg },
     { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '1.6k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: qudratImg },
 ];
@@ -31,7 +31,6 @@ const CATEGORIES = [
     { label: 'التأسيس', value: 'foundation', icon: GraduationCap },
     { label: 'القرآن الكريم', value: 'quran', icon: BookOpen },
     { label: 'مناهج الخليج', value: 'gulf', icon: Globe },
-    { label: 'المنهج الأردني', value: 'jordan', icon: Target },
     { label: 'اللغات', value: 'english', icon: Languages },
     { label: 'القدرات', value: 'skills', icon: Target },
 ];
@@ -43,7 +42,7 @@ export const Courses = () => {
 
     const filteredCourses = COURSES.filter(course => {
         const matchesCategory = activeCategory === 'all' ||
-            (activeCategory === 'gulf' ? ['kuwait', 'qatar', 'oman'].includes(course.category) : course.category === activeCategory);
+            (activeCategory === 'gulf' ? ['kuwait', 'qatar', 'oman', 'gulf'].includes(course.category) : course.category === activeCategory);
         const matchesSearch = course.title.includes(searchQuery) || course.desc.includes(searchQuery);
         return matchesCategory && matchesSearch;
     });
