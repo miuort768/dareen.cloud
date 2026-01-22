@@ -64,11 +64,11 @@ export const Appointments = () => {
                 const todayStr = new Date().toDateString();
 
                 if (lastResetDate !== todayStr) {
-                    await api.delete('/system/completed-sessions/reset');
+                    await api.delete('/appointments/completed-sessions/reset');
                     setCompletedSessionIds([]);
                     await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
                 } else {
-                    const sessions = await api.get<string[]>('/system/completed-sessions');
+                    const sessions = await api.get<string[]>('/appointments/completed-sessions');
                     setCompletedSessionIds(sessions || []);
                 }
             } catch (error) {
@@ -82,7 +82,7 @@ export const Appointments = () => {
     const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         try {
-            await api.post('/system/completed-sessions', { id });
+            await api.post('/appointments/completed-sessions', { id });
             setCompletedSessionIds(prev => [...prev, id]);
         } catch (error) {
             console.error("Error completing session:", error);

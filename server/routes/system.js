@@ -329,35 +329,6 @@ router.delete('/users/:id', async (req, res) => {
     }
 });
 
-// 6. Completed Sessions Routes
-router.get('/completed-sessions', async (req, res) => {
-    try {
-        const sessions = await req.db.all('SELECT id FROM completed_sessions');
-        res.json(sessions.map(s => s.id));
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-router.post('/completed-sessions', async (req, res) => {
-    const { id } = req.body;
-    try {
-        await req.db.run('INSERT OR IGNORE INTO completed_sessions (id) VALUES (?)', id);
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-router.delete('/completed-sessions/reset', async (req, res) => {
-    try {
-        await req.db.run('DELETE FROM completed_sessions');
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
 // 7. Dismissed Notifications Routes
 router.get('/dismissed-notifications', async (req, res) => {
     try {

@@ -18,6 +18,7 @@ const { notificationRouter } = require('./routes/notifications');
 const { systemRouter } = require('./routes/system');
 const financeRouter = require('./routes/finance');
 const tasksRouter = require('./routes/tasks');
+const appointmentsRouter = require('./routes/appointments');
 const chatRouter = require('./routes/chat');
 
 
@@ -100,6 +101,7 @@ async function startServer() {
         apiRouter.use('/system', checkRole(['admin']), systemRouter);
         apiRouter.use('/finance', checkRole(['admin']), financeRouter);
         apiRouter.use('/tasks', tasksRouter);
+        apiRouter.use('/appointments', appointmentsRouter);
         apiRouter.use('/chat', chatRouter);
 
 

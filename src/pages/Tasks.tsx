@@ -187,12 +187,14 @@ export const Tasks = () => {
                                 المهام المكتملة
                             </h3>
                             {completedTasks.map(task => (
-                                <div key={task.id} className="bg-gray-50/50 border-r-4 border-emerald-500 p-4 flex items-center gap-5 opacity-60 rounded-none">
-                                    <CheckCircle2 size={24} className="text-emerald-500" />
+                                <div key={task.id} className="bg-gray-50/50 border-r-4 border-emerald-500 p-4 flex items-center gap-5 opacity-60 rounded-none group transition-all hover:opacity-100">
+                                    <button onClick={() => toggleTask(task.id)} className="text-emerald-500 hover:text-gray-400 transition-colors">
+                                        <CheckCircle2 size={24} />
+                                    </button>
                                     <div className="flex-1">
                                         <h4 className="font-bold text-gray-900 line-through text-sm">{task.title}</h4>
                                     </div>
-                                    <button onClick={() => deleteTask(task.id)} className="p-2 text-gray-400 hover:text-red-500">
+                                    <button onClick={() => deleteTask(task.id)} className="opacity-0 group-hover:opacity-100 p-2 text-gray-400 hover:text-red-500 transition-all">
                                         <Trash2 size={16} />
                                     </button>
                                 </div>
