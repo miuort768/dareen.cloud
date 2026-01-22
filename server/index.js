@@ -198,7 +198,7 @@ async function startServer() {
                 const { conversationId, peerId } = data;
                 socket.data.conversationId = conversationId;
                 socket.data.peerId = peerId;
-                socket.to(conversationId).emit('peer_ready', data);
+                socket.to(conversationId).emit('peer_ready', { ...data, socketId: socket.id });
 
                 // Request current status from others for the new joiner
                 socket.to(conversationId).emit('request_current_status', { requesterPeerId: peerId });

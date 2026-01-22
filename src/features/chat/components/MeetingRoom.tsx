@@ -67,8 +67,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         socket.on('peer_ready', (data) => {
             if (data.userId !== currentUser.id) {
                 setParticipantsCount(prev => prev + 1);
-                if (isHost && isScreenSharing) {
-                    initiateCall(socket.id!); // Host calls anyone who joins
+                if (isHost && isScreenSharing && data.socketId) {
+                    initiateCall(data.socketId); // Call the newly joined student
                 }
             }
         });
