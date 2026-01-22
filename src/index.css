@@ -280,10 +280,7 @@
   /* --- Mobile Optimization (Phone Only) --- */
   @media (max-width: 768px) {
 
-    /* Main Content adjustments */
-    main {
-      @apply px-3 py-4 !important;
-    }
+
 
     /* Transform Table to Cards on Mobile */
     .premium-table,
@@ -322,10 +319,7 @@
       display: none;
     }
 
-    /* Spacing & Layout */
-    .grid {
-      @apply gap-4 !important;
-    }
+
 
     .stats-grid {
       @apply grid-cols-2 !important;

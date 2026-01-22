@@ -86,7 +86,7 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-48 pb-16 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-32 pb-16 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
@@ -187,7 +187,7 @@ export const Home = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
                         {/* Feature 1 */}
                         <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-none shadow-2xl overflow-hidden group flex items-center gap-4">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
