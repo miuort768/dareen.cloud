@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, Monitor, MonitorOff, Play, Loader2, Users, Shield } from 'lucide-react';
+import { X, Monitor, MonitorOff, Play, Users, Shield } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { socketService } from '../../../lib/socket';
 import type { User } from '../../../types/auth';
