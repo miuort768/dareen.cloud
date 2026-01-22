@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
 import type { MediaConnection } from 'peerjs';
-import { X, Monitor, MonitorOff, Play, Loader2, AlertCircle } from 'lucide-react';
+import { X, Monitor, MonitorOff, Play, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { socketService } from '../../../lib/socket';
 import type { User } from '../../../types/auth';
@@ -18,6 +18,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const [isScreenSharing, setIsScreenSharing] = useState(false);
     const [activeStream, setActiveStream] = useState<MediaStream | null>(null);
     const [connectionStatus, setConnectionStatus] = useState<'idle' | 'connecting' | 'connected' | 'error'>('idle');
+    const [retryCount, setRetryCount] = useState(0);
 
     const peerRef = useRef<Peer | null>(null);
     const callsRef = useRef<{ [key: string]: MediaConnection }>({});
@@ -37,32 +38,57 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         };
     }, []);
 
-    // Effect to bind stream to video element
     useEffect(() => {
         if (videoRef.current && activeStream) {
+            console.log("Binding stream to video element...");
             videoRef.current.srcObject = activeStream;
-            videoRef.current.play().catch(e => console.warn("Autoplay block:", e));
+            videoRef.current.play().catch(e => {
+                console.error("Play failed:", e);
+                // Fallback: Try with muted if autoplay is blocked
+                if (videoRef.current) {
+                    videoRef.current.muted = true;
+                    videoRef.current.play();
+                }
+            });
         }
     }, [activeStream]);
 
     const handleJoin = async () => {
         setIsConnecting(true);
         setConnectionStatus('connecting');
+
         try {
-            const isLocal = window.location.hostname === 'localhost';
+            const hostname = window.location.hostname;
+            const currentPort = window.location.port;
+
+            // DYNAMIC PORT LOGIC:
+            // If we're on 3005, backend is 3001
+            // If we're on domain (no port or 443), backend is 443/peerjs
+            let peerPort: number;
+            if (currentPort === '3005' || currentPort === '5173') {
+                peerPort = 3001;
+            } else if (!currentPort || currentPort === '443') {
+                peerPort = 443;
+            } else {
+                peerPort = 3001; // Default fallback for other dev ports
+            }
+
             const peerConfig = {
-                host: window.location.hostname,
-                port: isLocal ? 3001 : 443,
+                host: hostname,
+                port: peerPort,
                 path: '/peerjs/myapp',
-                secure: window.location.protocol === 'https:' || !isLocal,
+                secure: window.location.protocol === 'https:' || peerPort === 443,
                 config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
             };
+
+            console.log("Connecting to PeerJS with config:", peerConfig);
 
             const peerId = `${currentUser.id}_${Date.now()}`;
             const peer = new Peer(peerId, peerConfig);
             peerRef.current = peer;
 
             peer.on('open', (id) => {
+                console.log("Peer connected with ID:", id);
                 setConnectionStatus('connected');
                 socket.emit('peer_ready', {
                     conversationId,
@@ -80,13 +106,15 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             });
 
             peer.on('error', (err) => {
-                console.error("PeerJS Error:", err);
+                console.error("PeerJS Connection Error:", err.type, err.message);
                 setConnectionStatus('error');
             });
 
             peer.on('call', (call) => {
+                console.log("Incoming call detected...");
                 call.answer();
                 call.on('stream', (rs) => {
+                    console.log("Remote stream arrived!");
                     setActiveStream(rs);
                 });
             });
@@ -105,21 +133,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 }
             });
 
-            socket.on('request_current_status', () => {
-                if (peerRef.current?.id) {
-                    socket.emit('peer_ready', {
-                        conversationId,
-                        peerId: peerRef.current.id,
-                        userId: currentUser.id,
-                        role: isHost ? 'host' : 'student',
-                        userName: currentUser.name
-                    });
-                }
-            });
-
             setHasJoined(true);
         } catch (err) {
-            console.error(err);
+            console.error("Initialization failed:", err);
             setConnectionStatus('error');
         } finally {
             setIsConnecting(false);
@@ -129,7 +145,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const handleScreenShare = async () => {
         try {
             if (!isScreenSharing) {
-                // Fixed TS error with 'as any'
                 const stream = await navigator.mediaDevices.getDisplayMedia({
                     video: { cursor: "always" } as any,
                     audio: true
@@ -156,10 +171,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         setActiveStream(null);
         setIsScreenSharing(false);
         socket.emit('screen_share_status', { conversationId, isSharing: false, peerId: peerRef.current?.id });
-
         Object.values(callsRef.current).forEach(call => call.close());
         callsRef.current = {};
     };
+
+    // Auto-request retry mechanism for students
+    useEffect(() => {
+        if (hasJoined && !isHost && !activeStream) {
+            const timer = setInterval(() => {
+                console.log("Retrying screen request...");
+                socket.emit('request_screen_share_status', { conversationId, requesterPeerId: peerRef.current?.id });
+                setRetryCount(prev => prev + 1);
+            }, 5000);
+            return () => clearInterval(timer);
+        }
+    }, [hasJoined, isHost, activeStream]);
 
     if (!hasJoined) {
         return (
@@ -173,7 +199,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     <button onClick={handleJoin} disabled={isConnecting} className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-2xl transition-all shadow-lg shadow-primary-900/40">
                         {isConnecting ? <Loader2 className="animate-spin mx-auto" /> : "انضمام الآن"}
                     </button>
-                    <button onClick={onClose} className="mt-4 text-gray-500 hover:text-white transition-colors">إلغاء</button>
+                    <button onClick={onClose} className="mt-4 text-gray-500 hover:text-white transition-colors text-sm uppercase font-bold tracking-widest">إغلاق</button>
                 </div>
             </div>
         );
@@ -184,39 +210,38 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             <div className="h-14 flex items-center justify-between px-6 bg-black/50 border-b border-white/5">
                 <div className="flex items-center gap-3">
                     <div className={cn("w-2 h-2 rounded-full", activeStream ? "bg-emerald-500 animate-pulse" : "bg-rose-500")} />
-                    <span className="text-white font-bold text-xs tracking-widest uppercase italic">Live Broadcast</span>
-                    <span className="text-[10px] text-gray-500 font-mono hidden md:inline">{currentUser.name} ({isHost ? 'Host' : 'Student'})</span>
+                    <span className="text-white font-black text-[10px] tracking-tighter uppercase italic">Live Broadcast</span>
                 </div>
                 {connectionStatus === 'error' && (
                     <div className="flex items-center gap-2 text-rose-500 text-[10px] font-bold">
-                        <AlertCircle size={14} /> خطأ في الاتصال
+                        <AlertCircle size={14} /> خطأ في الاتصال - حاول التنشيط
                     </div>
                 )}
-                <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors"><X size={20} /></button>
+                <div className="flex gap-4">
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="p-2 text-gray-500 hover:text-white flex items-center gap-1 text-[10px] font-bold"
+                    >
+                        <RefreshCw size={14} /> تحديث الاتصال
+                    </button>
+                    <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors"><X size={20} /></button>
+                </div>
             </div>
 
-            <div className="flex-1 relative flex items-center justify-center p-4 lg:p-8">
+            <div className="flex-1 relative flex items-center justify-center p-4 lg:p-6">
                 {!activeStream ? (
                     <div className="text-center space-y-6 max-w-sm">
-                        <div className="relative mx-auto w-24 h-24">
-                            <Monitor size={96} className="text-gray-900 absolute inset-0" />
+                        <div className="relative mx-auto w-20 h-20">
+                            <Monitor size={80} className="text-gray-900 absolute inset-0 opacity-20" />
                             <Loader2 size={32} className="text-primary-600 animate-spin absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-white">في انتظار شاشة المعلمة</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed">بمجرد بدء المعلمة لمشاركة الشرح، سيظهر لك الفيديو هنا تلقائياً</p>
+                            <h3 className="text-2xl font-black text-white">في انتظار البث</h3>
+                            <p className="text-gray-500 text-xs leading-relaxed">جاري محاولة التقاط شاشة المعلمة (محاولة #{retryCount})</p>
                         </div>
-                        {!isHost && (
-                            <button
-                                onClick={() => socket.emit('request_screen_share_status', { conversationId, requesterPeerId: peerRef.current?.id })}
-                                className="text-primary-500 text-xs font-bold hover:underline"
-                            >
-                                طلب البث يدوياً
-                            </button>
-                        )}
                     </div>
                 ) : (
-                    <div className="w-full h-full bg-black rounded-[2.5rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,0.7)] border border-white/5 relative group">
+                    <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 relative group">
                         <video
                             ref={videoRef}
                             autoPlay
@@ -235,7 +260,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             </div>
 
             {isHost && (
-                <div className="h-28 bg-black/80 backdrop-blur-2xl border-t border-white/10 flex items-center justify-center gap-6">
+                <div className="h-28 bg-black/80 backdrop-blur-3xl border-t border-white/10 flex items-center justify-center gap-6">
                     <button
                         onClick={handleScreenShare}
                         className={cn(
@@ -244,7 +269,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         )}
                     >
                         {isScreenSharing ? <MonitorOff size={32} /> : <Monitor size={32} className="group-hover:scale-110 transition-transform" />}
-                        <span className="text-xl">{isScreenSharing ? "إيقاف البث الآن" : "بدء مشاركة الشاشة للطالب"}</span>
+                        <span className="text-xl">{isScreenSharing ? "إيقاف البث" : "بدء مشاركة الشاشة للطالب"}</span>
                     </button>
                 </div>
             )}
