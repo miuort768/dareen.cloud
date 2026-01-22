@@ -16,6 +16,8 @@ interface RemoteStatus {
     isMuted: boolean;
     isVideoOff: boolean;
     isScreenSharing?: boolean;
+    role?: 'host' | 'student';
+    userName?: string;
 }
 
 export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, currentUser, onClose }) => {
@@ -149,9 +151,10 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 [data.peerId]: {
                     ...prev[data.peerId],
                     isScreenSharing: data.isSharing,
-                    // valid fallback if status entry doesn't exist yet
                     isMuted: prev[data.peerId]?.isMuted ?? false,
-                    isVideoOff: prev[data.peerId]?.isVideoOff ?? false
+                    isVideoOff: prev[data.peerId]?.isVideoOff ?? false,
+                    role: prev[data.peerId]?.role,
+                    userName: prev[data.peerId]?.userName
                 }
             }));
         };
@@ -249,20 +252,23 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             const initPeer = async () => {
                 const peerId = `${currentUser.id}_${conversationId}_${Math.floor(Math.random() * 1000)}`;
 
-                // Determine API URL for PeerServer (Assuming same host as frontend or specific API URL)
-                // In production, this should match your API_BASE_URL host
+                // Determine API URL for PeerServer smartly
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                // If we are on a custom port (like 3005), the backend is likely on 3001
+                const peerPort = isLocal ? 3001 : (window.location.port ? parseInt(window.location.port) - 4 : 443);
+
                 const peerConfig: any = {
                     host: '/',
-                    port: (window.location.port && window.location.hostname === 'localhost') ? 3001 : 443,
+                    port: peerPort === 3001 ? 3001 : 443, // Standardize: either dev port or SSL port
                     path: '/peerjs/myapp',
-                    secure: window.location.protocol === 'https:',
+                    secure: window.location.protocol === 'https:' || !isLocal,
                     config: {
                         iceServers: [
                             { urls: 'stun:stun.l.google.com:19302' },
                             { urls: 'stun:global.stun.twilio.com:3478' }
                         ]
                     },
-                    debug: 3
+                    debug: 1
                 };
 
                 const peer = new Peer(peerId, peerConfig);
@@ -309,6 +315,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     call.on('stream', (rs) => {
                         console.log("Received stream from:", call.peer);
                         setRemoteStreams(prev => ({ ...prev, [call.peer]: rs }));
+
+                        // Extract role from metadata if available
+                        const metadata = call.metadata;
+                        if (metadata) {
+                            setRemoteStatus(prev => ({
+                                ...prev,
+                                [call.peer]: {
+                                    ...prev[call.peer],
+                                    role: metadata.role,
+                                    userName: metadata.name,
+                                    isMuted: prev[call.peer]?.isMuted ?? false,
+                                    isVideoOff: prev[call.peer]?.isVideoOff ?? false
+                                }
+                            }));
+                        }
                     });
 
                     // **CRITICAL FIX**: Listen for track changes (e.g., screen share)
@@ -352,6 +373,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         call.on('stream', (rs) => {
                             console.log("Received stream from:", peerId);
                             setRemoteStreams(prev => ({ ...prev, [peerId]: rs }));
+
+                            // For outgoing calls, role should be in metadata too
+                            const metadata = call.metadata;
+                            if (metadata) {
+                                setRemoteStatus(prev => ({
+                                    ...prev,
+                                    [peerId]: {
+                                        ...prev[peerId],
+                                        role: metadata.role,
+                                        userName: metadata.name,
+                                        isMuted: prev[peerId]?.isMuted ?? false,
+                                        isVideoOff: prev[peerId]?.isVideoOff ?? false
+                                    }
+                                }));
+                            }
                         });
 
                         // **CRITICAL FIX**: Listen for track changes on outgoing calls too
@@ -529,6 +565,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         }
     };
 
+    // 5. Local Video Sync (Crucial fix for "seeing self" issue)
+    useEffect(() => {
+        if (localVideoRef.current && localStream) {
+            localVideoRef.current.srcObject = localStream;
+        }
+    }, [localStream, hasJoined]);
+
     // Drag Logic (Unchanged generally, compacted)
     const handleDragStart = (cx: number, cy: number) => {
         if (!isFloating) return;
@@ -677,21 +720,29 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             {/* Video Grid */}
             <div className={cn("flex-1 bg-[#050505] p-4 flex items-center justify-center overflow-hidden", isFloating ? "p-0" : "")}>
                 {/* Student View: Teacher Video Large + Own Video Small */}
+                {/* Student View: Teacher Video Large + Own Video Small */}
                 {!isHost && Object.keys(remoteStreams).length > 0 ? (
                     <div className="relative w-full h-full flex items-center justify-center">
-                        {/* Teacher's Video (Large, Centered) */}
-                        {Object.entries(remoteStreams).map(([peerId, stream]) => {
-                            const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
+                        {/* Identify Teacher/Host Stream */}
+                        {(() => {
+                            // Try to find the host stream among remote streams
+                            const hostEntry = Object.entries(remoteStatus).find(([_, status]) => status.role === 'host');
+                            const teacherPeerId = hostEntry ? hostEntry[0] : Object.keys(remoteStreams)[0];
+                            const teacherStream = remoteStreams[teacherPeerId];
+                            const status = remoteStatus[teacherPeerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
+
+                            if (!teacherStream) return <div className="text-white">جاري انتظار المعلمة...</div>;
+
                             return (
-                                <div key={peerId} className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                                    <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
+                                <div className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                                    <VideoPlayer stream={teacherStream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
                                     <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-xl text-white text-sm font-bold border border-white/20 flex items-center gap-2 shadow-lg">
                                         المعلمة
                                         {status.isMuted && <MicOff size={14} className="text-rose-400" />}
                                     </div>
                                 </div>
                             );
-                        })}
+                        })()}
 
                         {/* Student's Own Video (Small PiP) */}
                         <div className="absolute bottom-4 left-4 w-48 aspect-video bg-[#111] rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl">
@@ -715,7 +766,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                             <video ref={localVideoRef} autoPlay muted playsInline className={cn("w-full h-full object-cover scale-x-[-1]", isVideoOff && "hidden")} />
                             {isVideoOff && <div className="absolute inset-0 flex items-center justify-center bg-[#151515]"><UserX size={48} className="text-gray-700" /></div>}
                             <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
-                                You {isHost && "(Host)"}
+                                {isHost ? "المعلمة (أنت)" : "أنت"}
                                 {isMuted && <MicOff size={12} className="text-rose-500" />}
                             </div>
                         </div>
