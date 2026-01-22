@@ -17,7 +17,7 @@ export const PublicNavbar = () => {
     const isActive = (path: string) => location.pathname === path;
 
     return (
-        <header className="relative md:fixed top-0 md:top-6 left-0 right-0 z-50 mx-0 md:mx-auto max-w-full md:max-w-[90%] transition-all duration-300">
+        <header className="fixed top-0 md:top-6 left-0 right-0 z-50 mx-0 md:mx-auto max-w-full md:max-w-[90%] transition-all duration-300">
             <nav className="bg-white/80 backdrop-blur-xl shadow-glass rounded-none md:rounded-[2rem] border-b md:border border-white/60 px-6 py-3">
                 <div className="flex justify-between items-center h-14">
                     {/* Logo */}

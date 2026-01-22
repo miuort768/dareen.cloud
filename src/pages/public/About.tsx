@@ -14,7 +14,7 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-4 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden bg-[#FDFCF8]">
                 {/* Creative Background Elements */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
@@ -28,8 +28,8 @@ export const About = () => {
                         <span className="text-xs font-black tracking-[0.2em] uppercase">معهد دارين | أصالة ومعاصرة</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-8 font-heading">
-                        <span className="block mb-6 md:mb-10">عن معهد دارين</span>
+                    <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 font-heading">
+                        <span className="block mb-2 md:mb-3">عن معهد دارين</span>
                         <span className="block text-2xl md:text-4xl text-gray-600 font-bold">
                             | حكاية <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-hover to-gold drop-shadow-sm">شغف تعليمي</span> تجاوزت الحدود
                         </span>

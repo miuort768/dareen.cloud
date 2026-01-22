@@ -130,7 +130,7 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
@@ -272,7 +272,7 @@ export const Sidebar = () => {
                         </button>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto custom-scrollbar pt-1 pb-4 px-1">
+                    <div className="flex-1 overflow-y-auto no-scrollbar pt-1 pb-4 px-1">
                         <div className="grid grid-cols-1 gap-1">
                             {filteredNavigation.map((item) => (
                                 <NavLink

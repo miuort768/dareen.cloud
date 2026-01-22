@@ -15,6 +15,7 @@ interface MeetingRoomProps {
 interface RemoteStatus {
     isMuted: boolean;
     isVideoOff: boolean;
+    isScreenSharing?: boolean;
 }
 
 export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, currentUser, onClose }) => {
@@ -141,6 +142,20 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             }));
         };
 
+        const onScreenShareStatus = (data: { conversationId: string, peerId: string, isSharing: boolean }) => {
+            if (data.conversationId !== conversationId) return;
+            setRemoteStatus(prev => ({
+                ...prev,
+                [data.peerId]: {
+                    ...prev[data.peerId],
+                    isScreenSharing: data.isSharing,
+                    // valid fallback if status entry doesn't exist yet
+                    isMuted: prev[data.peerId]?.isMuted ?? false,
+                    isVideoOff: prev[data.peerId]?.isVideoOff ?? false
+                }
+            }));
+        };
+
         const onKickUser = (data: { conversationId: string, targetPeerId: string }) => {
             if (data.conversationId === conversationId && peerRef.current?.id === data.targetPeerId) {
                 handleCloseFull();
@@ -178,12 +193,14 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         };
 
         socket.on('media_status_change', onMediaStatusChange);
+        socket.on('screen_share_status', onScreenShareStatus);
         socket.on('kick_user', onKickUser);
         socket.on('user_left', onUserLeft);
         socket.on('request_current_status', onRequestStatus);
 
         return () => {
             socket.off('media_status_change', onMediaStatusChange);
+            socket.off('screen_share_status', onScreenShareStatus);
             socket.off('kick_user', onKickUser);
             socket.off('user_left', onUserLeft);
             socket.off('request_current_status', onRequestStatus);
@@ -439,7 +456,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 socket.emit('screen_share_status', {
                     conversationId,
                     isSharing: true,
-                    userId: currentUser.id
+                    userId: currentUser.id,
+                    peerId: peerRef.current?.id
                 });
 
                 // Force video on for screen share
@@ -475,7 +493,8 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             socket.emit('screen_share_status', {
                 conversationId,
                 isSharing: false,
-                userId: currentUser.id
+                userId: currentUser.id,
+                peerId: peerRef.current?.id
             });
         }
     };
@@ -644,10 +663,10 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
                     {/* Remote Users */}
                     {Object.entries(remoteStreams).map(([peerId, stream]) => {
-                        const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false };
+                        const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
                         return (
                             <div key={peerId} className="relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 group shadow-2xl">
-                                <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} />
+                                <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
 
                                 <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
                                     Student
@@ -713,7 +732,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 };
 
 // Robust Video Player to prevent "Black Screen" issues
-const VideoPlayer = ({ stream, isVideoOff }: { stream: MediaStream, isVideoOff: boolean }) => {
+const VideoPlayer = ({ stream, isVideoOff, isScreenSharing }: { stream: MediaStream, isVideoOff: boolean, isScreenSharing?: boolean }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -762,7 +781,12 @@ const VideoPlayer = ({ stream, isVideoOff }: { stream: MediaStream, isVideoOff: 
                 ref={videoRef}
                 autoPlay
                 playsInline
-                className={cn("w-full h-full object-cover transition-opacity duration-500", isLoading ? "opacity-0" : "opacity-100", isVideoOff && "hidden")}
+                className={cn(
+                    "w-full h-full transition-opacity duration-500",
+                    isScreenSharing ? "object-contain bg-black" : "object-cover",
+                    isLoading ? "opacity-0" : "opacity-100",
+                    isVideoOff && "hidden"
+                )}
             />
 
             {isVideoOff && (

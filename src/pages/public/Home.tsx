@@ -86,12 +86,12 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-4 md:pt-48 md:pb-8 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-16 md:pt-20 md:pb-6 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
                         {/* Text Content */}
-                        <div className="lg:w-1/2 text-center z-10">
+                        <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-3 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
@@ -104,7 +104,7 @@ export const Home = () => {
                                 </span>
                             </h1>
 
-                            <p className="text-[11px] sm:text-base lg:text-lg text-gray-500 leading-relaxed mb-8 max-w-[320px] sm:max-w-xl mx-auto px-2">
+                            <p className="text-[10px] sm:text-xs md:text-xs lg:text-sm text-gray-500 leading-normal mb-8 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
                             </p>
 
@@ -156,7 +156,7 @@ export const Home = () => {
                         </div>
 
                         {/* Image Side */}
-                        <div className="hidden lg:flex lg:w-1/2 justify-center z-10 relative">
+                        <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
                             <div className="relative w-full max-w-[500px] aspect-[4/5]">
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-gold/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
@@ -175,7 +175,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-16 pb-8 bg-white relative overflow-hidden">
+            <section className="pt-24 pb-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
                         <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
