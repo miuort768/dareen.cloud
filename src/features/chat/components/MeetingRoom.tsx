@@ -50,7 +50,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         setConnectionStatus('connecting');
         try {
             const isLocal = window.location.hostname === 'localhost';
-            // IMPORTANT: On Hostinger, external port is 443, path is /peerjs/myapp
             const peerConfig = {
                 host: window.location.hostname,
                 port: isLocal ? 3001 : 443,
@@ -76,7 +75,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 if (isHost) {
                     socket.emit('meeting_started', conversationId);
                 } else {
-                    // Student: Ask if there is a screen share right now
                     socket.emit('request_screen_share_status', { conversationId, requesterPeerId: id });
                 }
             });
@@ -86,20 +84,15 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 setConnectionStatus('error');
             });
 
-            // Student: Receive broadcast
             peer.on('call', (call) => {
-                console.log("Receiving broadcast call...");
-                call.answer(); // Students respond with empty stream
+                call.answer();
                 call.on('stream', (rs) => {
-                    console.log("Stream received!");
                     setActiveStream(rs);
                 });
             });
 
-            // Host Logic: Send stream to anyone who joins or requests it
             socket.on('peer_ready', (data) => {
                 if (isHost && isScreenSharing && screenStreamRef.current && data.peerId !== peer.id) {
-                    console.log("New student joined, sending screen stream to:", data.peerId);
                     const call = peer.call(data.peerId, screenStreamRef.current);
                     callsRef.current[data.peerId] = call;
                 }
@@ -107,14 +100,12 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
             socket.on('request_screen_share_status', (data) => {
                 if (isHost && isScreenSharing && screenStreamRef.current && data.requesterPeerId) {
-                    console.log("Student requested screen, calling back:", data.requesterPeerId);
                     const call = peer.call(data.requesterPeerId, screenStreamRef.current);
                     callsRef.current[data.requesterPeerId] = call;
                 }
             });
 
             socket.on('request_current_status', () => {
-                // Re-broadcast presence if requested
                 if (peerRef.current?.id) {
                     socket.emit('peer_ready', {
                         conversationId,
@@ -138,18 +129,16 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const handleScreenShare = async () => {
         try {
             if (!isScreenSharing) {
+                // Fixed TS error with 'as any'
                 const stream = await navigator.mediaDevices.getDisplayMedia({
-                    video: { cursor: "always" },
+                    video: { cursor: "always" } as any,
                     audio: true
                 });
                 screenStreamRef.current = stream;
                 setActiveStream(stream);
                 setIsScreenSharing(true);
 
-                // Tell the server we are sharing
                 socket.emit('screen_share_status', { conversationId, isSharing: true, peerId: peerRef.current?.id });
-
-                // Call all participants who are already in the room
                 socket.emit('request_current_status', { conversationId });
 
                 stream.getVideoTracks()[0].onended = () => stopScreenShare();
@@ -168,7 +157,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         setIsScreenSharing(false);
         socket.emit('screen_share_status', { conversationId, isSharing: false, peerId: peerRef.current?.id });
 
-        // Clean up calls
         Object.values(callsRef.current).forEach(call => call.close());
         callsRef.current = {};
     };
@@ -193,7 +181,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
     return (
         <div className="fixed inset-0 z-[500] bg-[#050505] flex flex-col overflow-hidden">
-            {/* Header */}
             <div className="h-14 flex items-center justify-between px-6 bg-black/50 border-b border-white/5">
                 <div className="flex items-center gap-3">
                     <div className={cn("w-2 h-2 rounded-full", activeStream ? "bg-emerald-500 animate-pulse" : "bg-rose-500")} />
@@ -208,7 +195,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors"><X size={20} /></button>
             </div>
 
-            {/* Content Area */}
             <div className="flex-1 relative flex items-center justify-center p-4 lg:p-8">
                 {!activeStream ? (
                     <div className="text-center space-y-6 max-w-sm">
@@ -218,14 +204,14 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         </div>
                         <div className="space-y-2">
                             <h3 className="text-2xl font-black text-white">في انتظار شاشة المعلمة</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed">بمجرد بدء المعلمة لمشاركة الشرح، سيظهر لك الفيديو هنا تلقائياً دون الحاجة لتحديث الصفحة</p>
+                            <p className="text-gray-500 text-sm leading-relaxed">بمجرد بدء المعلمة لمشاركة الشرح، سيظهر لك الفيديو هنا تلقائياً</p>
                         </div>
                         {!isHost && (
                             <button
                                 onClick={() => socket.emit('request_screen_share_status', { conversationId, requesterPeerId: peerRef.current?.id })}
                                 className="text-primary-500 text-xs font-bold hover:underline"
                             >
-                                هل بدأت المعلمة؟ اطلب البث يدوياً
+                                طلب البث يدوياً
                             </button>
                         )}
                     </div>
@@ -235,7 +221,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                             ref={videoRef}
                             autoPlay
                             playsInline
-                            muted={isHost} // Host must be muted to avoid echo
+                            muted={isHost}
                             className="w-full h-full object-contain"
                         />
                         <div className="absolute top-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -248,7 +234,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 )}
             </div>
 
-            {/* Footer Control (Host Only) */}
             {isHost && (
                 <div className="h-28 bg-black/80 backdrop-blur-2xl border-t border-white/10 flex items-center justify-center gap-6">
                     <button
