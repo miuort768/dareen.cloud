@@ -240,6 +240,19 @@ async function startServer() {
                 socket.to(data.conversationId).emit('media_status_change', data);
             });
 
+            socket.on('screen_share_status', (data) => {
+                // data: { conversationId, peerId, isSharing }
+                socket.to(data.conversationId).emit('screen_share_status', data);
+                console.log(`Screen share status in ${data.conversationId}: ${data.isSharing ? 'Started' : 'Stopped'}`);
+            });
+
+            socket.on('request_screen_share_status', (data) => {
+                // data: { conversationId, requesterPeerId }
+                // Broadcast to all peers in the conversation to respond with their screen share status
+                socket.to(data.conversationId).emit('request_screen_share_status', data);
+                console.log(`Screen share status requested in ${data.conversationId} by ${data.requesterPeerId}`);
+            });
+
             socket.on('kick_user', (data) => {
                 // data: { conversationId, targetPeerId }
                 // SECURITY: ensure only host can kick

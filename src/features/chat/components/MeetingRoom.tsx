@@ -189,6 +189,27 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                     isMuted,
                     isVideoOff
                 });
+
+                // NEW: Also send screen share status
+                if (isScreenSharing) {
+                    socket.emit('screen_share_status', {
+                        conversationId,
+                        peerId: peerRef.current.id,
+                        isSharing: true
+                    });
+                }
+            }
+        };
+
+        const onRequestScreenShareStatus = (_data: { conversationId: string, requesterPeerId: string }) => {
+            if (_data.conversationId !== conversationId) return;
+            // If I'm currently sharing my screen, notify the requester
+            if (peerRef.current?.id && isScreenSharing) {
+                socket.emit('screen_share_status', {
+                    conversationId,
+                    peerId: peerRef.current.id,
+                    isSharing: true
+                });
             }
         };
 
@@ -197,6 +218,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         socket.on('kick_user', onKickUser);
         socket.on('user_left', onUserLeft);
         socket.on('request_current_status', onRequestStatus);
+        socket.on('request_screen_share_status', onRequestScreenShareStatus);
 
         return () => {
             socket.off('media_status_change', onMediaStatusChange);
@@ -204,8 +226,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             socket.off('kick_user', onKickUser);
             socket.off('user_left', onUserLeft);
             socket.off('request_current_status', onRequestStatus);
+            socket.off('request_screen_share_status', onRequestScreenShareStatus);
         };
-    }, [conversationId, socket, isMuted, isVideoOff]);
+    }, [conversationId, socket, isMuted, isVideoOff, isScreenSharing]);
 
 
     // 4. Join Logic
@@ -267,6 +290,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         peerId: id,
                         isMuted,
                         isVideoOff
+                    });
+
+                    // NEW: Request current screen share status from all peers
+                    // This is CRITICAL for late joiners to see ongoing screen shares
+                    socket.emit('request_screen_share_status', {
+                        conversationId,
+                        requesterPeerId: id
                     });
                 });
 
