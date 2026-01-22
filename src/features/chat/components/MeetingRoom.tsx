@@ -129,13 +129,24 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             setParticipants(prev => prev.filter(p => p.socketId !== data.socketId));
         });
 
-        // طلب البث إذا كان موجوداً بالفعل عند انضمام طالب جديد
+        // طلب البث وإعادة المحاولة التلقائية
         if (!isHost) {
             const interval = setInterval(() => {
-                if (!remoteStream) {
+                if (connectionStatus !== 'connected') {
+                    console.log("Student: Requesting stream status...");
                     socket.emit('request_screen_share_status', { conversationId });
-                } else {
-                    clearInterval(interval);
+                }
+            }, 3000);
+            return () => clearInterval(interval);
+        } else {
+            // المعلمة: إذا بدأت البث، نرسل إشارة دورية لكل الطلاب غير المتصلين
+            const interval = setInterval(() => {
+                if (isBroadcasting) {
+                    participants.forEach(p => {
+                        if (!peersRef.current[p.socketId] || peersRef.current[p.socketId].connectionState !== 'connected') {
+                            initiateCall(p.socketId);
+                        }
+                    });
                 }
             }, 5000);
             return () => clearInterval(interval);

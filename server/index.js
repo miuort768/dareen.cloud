@@ -242,8 +242,14 @@ async function startServer() {
 
             // WebRTC Signaling (Internal for the platform)
             socket.on('signal', (data) => {
+                // data: { to, signal, conversationId }
                 if (data.to) {
                     socket.to(data.to).emit('signal', {
+                        from: socket.id,
+                        signal: data.signal
+                    });
+                } else if (data.conversationId) {
+                    socket.to(data.conversationId).emit('signal', {
                         from: socket.id,
                         signal: data.signal
                     });
