@@ -5,8 +5,6 @@ import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
-import { MeetingActions } from './MeetingActions';
-import { useMeeting } from '../../../context/MeetingContext';
 import { socketService } from '../../../lib/socket';
 
 interface ChatWindowProps {
@@ -46,28 +44,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     typingUsers,
     setTyping
 }) => {
-    const { startMeeting } = useMeeting();
     const socket = socketService.getSocket();
-    useEffect(() => {
-        // Emit check to trigger a status broadcast from server if a meeting is live
-        socket.emit('check_meeting_status', selectedConv.id);
-    }, [selectedConv.id, socket]);
-
-    // Use the status from the object which is updated by useChat hook
-    const isMeetingActive = !!selectedConv.isMeetingActive;
-
-    const handleStartMeetingLocal = () => {
-        if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'teacher')) {
-            sendMessage({
-                conversationId: selectedConv.id,
-                content: "🎥 بدأت الحصة الآن، اضغط على زر الكاميرا بالأعلى للانضمام إلى البث المباشر.",
-                senderId: currentUser.id,
-                senderName: currentUser.name
-            });
-            socket.emit('meeting_started', selectedConv.id);
-        }
-        startMeeting(selectedConv.id);
-    };
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
@@ -114,12 +91,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 <div className="flex items-center gap-1 relative" ref={menuRef}>
-                    <MeetingActions
-                        selectedConv={selectedConv}
-                        currentUser={currentUser}
-                        onStartMeeting={handleStartMeetingLocal}
-                        isMeetingActive={isMeetingActive}
-                    />
 
                     <button
                         onClick={() => setShowMoreMenu(!showMoreMenu)}

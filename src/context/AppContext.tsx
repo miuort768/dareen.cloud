@@ -3,7 +3,6 @@ import { ToastContainer, type ToastProps } from '../components/ui/Toast';
 import { AuthProvider } from './AuthContext';
 import { SettingsProvider } from './SettingsContext';
 import { UserProvider } from './UserContext';
-import { MeetingProvider } from './MeetingContext';
 import { sendNativeNotification, requestNotificationPermission } from '../lib/notificationUtils';
 
 interface AppContextType {
@@ -51,10 +50,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             <AuthProvider>
                 <SettingsProvider>
                     <UserProvider>
-                        <MeetingProvider>
-                            {children}
-                            <ToastContainer toasts={toasts} onClose={removeToast} />
-                        </MeetingProvider>
+                        {children}
+                        <ToastContainer toasts={toasts} onClose={removeToast} />
                     </UserProvider>
                 </SettingsProvider>
             </AuthProvider>

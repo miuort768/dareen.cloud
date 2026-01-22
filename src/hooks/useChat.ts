@@ -40,17 +40,6 @@ export const useChat = (userId?: string) => {
             });
         };
 
-        const handleMeetingStatus = ({ conversationId, isActive }: { conversationId: string, isActive: boolean }) => {
-            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
-                return old.map(conv => {
-                    if (conv.id === conversationId) {
-                        return { ...conv, isMeetingActive: isActive };
-                    }
-                    return conv;
-                });
-            });
-        };
-
         const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
             if (msgConvId !== 'global') {
                 setTypingUsers(prev => {
@@ -62,12 +51,10 @@ export const useChat = (userId?: string) => {
         };
 
         socket.on('new_message', handleNewMessage);
-        socket.on('meeting_status_changed', handleMeetingStatus);
         socket.on('typing', handleTyping);
 
         return () => {
             socket.off('new_message', handleNewMessage);
-            socket.off('meeting_status_changed', handleMeetingStatus);
             socket.off('typing', handleTyping);
         };
     }, [userId, queryClient]);

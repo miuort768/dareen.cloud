@@ -160,9 +160,6 @@ async function startServer() {
         // Make io accessible to routers
         app.set('socketio', io);
 
-        // Track active meetings - Global Scope
-        app.set('activeMeetings', new Set());
-
         const jwt = require('jsonwebtoken');
 
         // Socket.io Middleware for Authentication
@@ -192,115 +189,15 @@ async function startServer() {
                 console.log(`User ${socket.id} left conversation ${conversationId}`);
             });
 
-            const activeMeetings = app.get('activeMeetings');
-
-            socket.on('peer_ready', (data) => {
-                const { conversationId, peerId } = data;
-                socket.data.conversationId = conversationId;
-                socket.data.peerId = peerId;
-                socket.to(conversationId).emit('peer_ready', { ...data, socketId: socket.id });
-
-                // Request current status from others for the new joiner
-                socket.to(conversationId).emit('request_current_status', { requesterPeerId: peerId });
-                console.log(`Peer ready in ${conversationId}:`, peerId);
-            });
-
-            socket.on('meeting_started', (conversationId) => {
-                activeMeetings.add(conversationId);
-                io.emit('meeting_status_changed', { conversationId, isActive: true });
-                console.log(`Meeting started in ${conversationId}`);
-            });
-
-            socket.on('meeting_ended', (conversationId) => {
-                activeMeetings.delete(conversationId);
-                io.emit('meeting_status_changed', { conversationId, isActive: false });
-                console.log(`Meeting ended in ${conversationId}`);
-            });
-
-            socket.on('check_meeting_status', (conversationId) => {
-                const isActive = activeMeetings.has(conversationId);
-                socket.emit('meeting_status_changed', { conversationId, isActive });
-            });
-
             socket.on('typing', (data) => {
                 // data: { conversationId, userId, userName, isTyping }
                 socket.to(data.conversationId).emit('typing', data);
             });
 
-            socket.on('disconnect', () => {
-                console.log('User disconnected:', socket.id);
-                if (socket.data.conversationId && socket.data.peerId) {
-                    console.log(`User left conversation ${socket.data.conversationId}, PeerID: ${socket.data.peerId}`);
-                    socket.to(socket.data.conversationId).emit('user_left', { peerId: socket.data.peerId });
-                }
-            });
-
-            socket.on('media_status_change', (data) => {
-                // data: { conversationId, peerId, isMuted, isVideoOff }
-                socket.to(data.conversationId).emit('media_status_change', data);
-            });
-
-            // WebRTC Signaling (Internal for the platform)
-            socket.on('signal', (data) => {
-                // data: { to, signal, conversationId }
-                if (data.to) {
-                    socket.to(data.to).emit('signal', {
-                        from: socket.id,
-                        signal: data.signal
-                    });
-                } else if (data.conversationId) {
-                    socket.to(data.conversationId).emit('signal', {
-                        from: socket.id,
-                        signal: data.signal
-                    });
-                }
-            });
-
-            socket.on('screen_share_status', (data) => {
-                // data: { conversationId, peerId, isSharing }
-                socket.to(data.conversationId).emit('screen_share_status', data);
-                console.log(`Screen share status in ${data.conversationId}: ${data.isSharing ? 'Started' : 'Stopped'}`);
-            });
-
-            socket.on('request_screen_share_status', (data) => {
-                // data: { conversationId, requesterPeerId }
-                // Broadcast to all peers in the conversation to respond with their screen share status
-                socket.to(data.conversationId).emit('request_screen_share_status', data);
-                console.log(`Screen share status requested in ${data.conversationId} by ${data.requesterPeerId}`);
-            });
-
-            socket.on('kick_user', (data) => {
-                // data: { conversationId, targetPeerId }
-                // SECURITY: ensure only host can kick
-                if (socket.data.user.role === 'admin' || socket.data.user.role === 'teacher') {
-                    socket.to(data.conversationId).emit('kick_user', data);
-                }
-            });
-        });
-
-        // Initialize PeerJS attached to the main server
-        const { ExpressPeerServer } = require('peer');
-
-        const peerServer = ExpressPeerServer(server, {
-            debug: true,
-            path: '/myapp',
-            allow_discovery: true,
-            proxied: true // Important for running behind Nginx
-        });
-
-        app.use('/peerjs', peerServer);
-
-        peerServer.on('connection', (client) => {
-            console.log('Peer connected:', client.getId());
-        });
-
-        peerServer.on('disconnect', (client) => {
-            console.log('Peer disconnected:', client.getId());
         });
 
         server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
-            console.log(`PeerJS accessible at http://localhost:${PORT}/peerjs/myapp`);
         });
     } catch (err) {
         console.error('Failed to start server:', err);
