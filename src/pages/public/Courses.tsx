@@ -30,7 +30,8 @@ const CATEGORIES = [
     { label: 'الكل', value: 'all', icon: LayoutGrid },
     { label: 'التأسيس', value: 'foundation', icon: GraduationCap },
     { label: 'القرآن الكريم', value: 'quran', icon: BookOpen },
-    { label: 'مناهج الخليج', value: 'kuwait', icon: Globe },
+    { label: 'مناهج الخليج', value: 'gulf', icon: Globe },
+    { label: 'المنهج الأردني', value: 'jordan', icon: Target },
     { label: 'اللغات', value: 'english', icon: Languages },
     { label: 'القدرات', value: 'skills', icon: Target },
 ];
@@ -41,7 +42,8 @@ export const Courses = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const filteredCourses = COURSES.filter(course => {
-        const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
+        const matchesCategory = activeCategory === 'all' ||
+            (activeCategory === 'gulf' ? ['kuwait', 'qatar', 'oman'].includes(course.category) : course.category === activeCategory);
         const matchesSearch = course.title.includes(searchQuery) || course.desc.includes(searchQuery);
         return matchesCategory && matchesSearch;
     });
@@ -54,7 +56,7 @@ export const Courses = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-48 md:pt-32 pb-24 relative overflow-hidden">
+            <main className="flex-grow pt-40 md:pt-32 pb-24 relative overflow-hidden">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px] -translate-x-1/2 pointer-events-none hidden md:block"></div>
@@ -87,7 +89,7 @@ export const Courses = () => {
                                     placeholder="ابحث عن دورة، منهج، أو مهارة معينة..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full px-8 py-5 rounded-none bg-white border border-gray-100 shadow-xl shadow-gray-100/50 focus:border-gold outline-none transition-all text-lg pr-14 placeholder:text-gray-300"
+                                    className="w-full px-8 py-5 rounded-none bg-white border border-gray-100 shadow-xl shadow-gray-100/50 focus:border-gold outline-none transition-all text-lg pr-14 placeholder:text-gray-400"
                                 />
                                 <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-300 w-6 h-6 group-focus-within:text-gold transition-colors" />
                             </div>
@@ -98,7 +100,7 @@ export const Courses = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4 mt-12 px-2 md:px-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-4 mt-12 px-2 md:px-4">
                             {CATEGORIES.map((cat) => (
                                 <button
                                     key={cat.value}
@@ -146,7 +148,7 @@ export const Courses = () => {
                                     <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none bg-gradient-to-br from-gold to-transparent"></div>
 
                                     <div className="relative mb-6">
-                                        <h3 className={`text-lg font-black font-heading leading-tight min-h-[2.5rem] flex items-start gap-2 transition-all duration-300 ${course.id === 1 ? 'text-transparent bg-clip-text bg-gradient-to-r from-gold via-blue-600 to-gold drop-shadow-sm whitespace-nowrap' : 'text-gray-900 group-hover:text-gold'}`}>
+                                        <h3 className={`text-lg font-black font-heading leading-tight min-h-[3rem] flex items-start gap-2 transition-all duration-300 ${course.id === 1 ? 'text-transparent bg-clip-text bg-gradient-to-r from-gold via-blue-600 to-gold' : 'text-gray-900 group-hover:text-gold'}`}>
                                             {course.title}
                                         </h3>
                                         <div className={`absolute -bottom-2 right-0 h-[3px] rounded-full bg-gradient-to-l from-gold to-transparent transition-all duration-700 ${course.id === 1 ? 'w-24' : 'w-0 group-hover:w-16'}`}></div>
