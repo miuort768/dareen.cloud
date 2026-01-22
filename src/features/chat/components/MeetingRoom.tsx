@@ -646,49 +646,79 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
 
             {/* Video Grid */}
             <div className={cn("flex-1 bg-[#050505] p-4 flex items-center justify-center overflow-hidden", isFloating ? "p-0" : "")}>
-                <div className={cn("grid gap-4 w-full h-full",
-                    Object.keys(remoteStreams).length === 0 ? "grid-cols-1" :
-                        Object.keys(remoteStreams).length === 1 ? "grid-cols-2" :
-                            "grid-cols-2 md:grid-cols-3"
-                )}>
-                    {/* Local User */}
-                    <div className="relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 group">
-                        <video ref={localVideoRef} autoPlay muted playsInline className={cn("w-full h-full object-cover scale-x-[-1]", isVideoOff && "hidden")} />
-                        {isVideoOff && <div className="absolute inset-0 flex items-center justify-center bg-[#151515]"><UserX size={48} className="text-gray-700" /></div>}
-                        <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
-                            You {isHost && "(Host)"}
-                            {isMuted && <MicOff size={12} className="text-rose-500" />}
+                {/* Student View: Teacher Video Large + Own Video Small */}
+                {!isHost && Object.keys(remoteStreams).length > 0 ? (
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        {/* Teacher's Video (Large, Centered) */}
+                        {Object.entries(remoteStreams).map(([peerId, stream]) => {
+                            const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
+                            return (
+                                <div key={peerId} className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                                    <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
+                                    <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-4 py-2 rounded-xl text-white text-sm font-bold border border-white/20 flex items-center gap-2 shadow-lg">
+                                        المعلمة
+                                        {status.isMuted && <MicOff size={14} className="text-rose-400" />}
+                                    </div>
+                                </div>
+                            );
+                        })}
+
+                        {/* Student's Own Video (Small PiP) */}
+                        <div className="absolute bottom-4 left-4 w-48 aspect-video bg-[#111] rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl">
+                            <video ref={localVideoRef} autoPlay muted playsInline className={cn("w-full h-full object-cover scale-x-[-1]", isVideoOff && "hidden")} />
+                            {isVideoOff && <div className="absolute inset-0 flex items-center justify-center bg-[#151515]"><UserX size={24} className="text-gray-700" /></div>}
+                            <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md px-2 py-1 rounded text-white text-[10px] font-bold border border-white/20">
+                                أنت
+                                {isMuted && <MicOff size={10} className="inline text-rose-400 ml-1" />}
+                            </div>
                         </div>
                     </div>
-
-                    {/* Remote Users */}
-                    {Object.entries(remoteStreams).map(([peerId, stream]) => {
-                        const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
-                        return (
-                            <div key={peerId} className="relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 group shadow-2xl">
-                                <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
-
-                                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
-                                    Student
-                                    {status.isMuted && <MicOff size={12} className="text-rose-500" />}
-                                </div>
-
-                                {/* Host Controls Overlay */}
-                                {isHost && !isFloating && (
-                                    <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button
-                                            onClick={() => handleKickUser(peerId)}
-                                            className="p-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 shadow-lg"
-                                            title="إخراج من الاجتماع"
-                                        >
-                                            <UserX size={16} />
-                                        </button>
-                                    </div>
-                                )}
+                ) : (
+                    /* Host/Teacher View: Grid Layout */
+                    <div className={cn("grid gap-4 w-full h-full",
+                        Object.keys(remoteStreams).length === 0 ? "grid-cols-1" :
+                            Object.keys(remoteStreams).length === 1 ? "grid-cols-2" :
+                                "grid-cols-2 md:grid-cols-3"
+                    )}>
+                        {/* Local User */}
+                        <div className="relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 group">
+                            <video ref={localVideoRef} autoPlay muted playsInline className={cn("w-full h-full object-cover scale-x-[-1]", isVideoOff && "hidden")} />
+                            {isVideoOff && <div className="absolute inset-0 flex items-center justify-center bg-[#151515]"><UserX size={48} className="text-gray-700" /></div>}
+                            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
+                                You {isHost && "(Host)"}
+                                {isMuted && <MicOff size={12} className="text-rose-500" />}
                             </div>
-                        );
-                    })}
-                </div>
+                        </div>
+
+                        {/* Remote Users */}
+                        {Object.entries(remoteStreams).map(([peerId, stream]) => {
+                            const status = remoteStatus[peerId] || { isMuted: false, isVideoOff: false, isScreenSharing: false };
+                            return (
+                                <div key={peerId} className="relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 group shadow-2xl">
+                                    <VideoPlayer stream={stream} isVideoOff={status.isVideoOff} isScreenSharing={status.isScreenSharing} />
+
+                                    <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg text-white text-xs font-bold border border-white/10 flex items-center gap-2">
+                                        Student
+                                        {status.isMuted && <MicOff size={12} className="text-rose-500" />}
+                                    </div>
+
+                                    {/* Host Controls Overlay */}
+                                    {isHost && !isFloating && (
+                                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button
+                                                onClick={() => handleKickUser(peerId)}
+                                                className="p-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 shadow-lg"
+                                                title="إخراج من الاجتماع"
+                                            >
+                                                <UserX size={16} />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
 
             {/* Bottom Controls (Full only) */}
