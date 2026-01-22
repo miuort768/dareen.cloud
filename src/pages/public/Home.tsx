@@ -86,19 +86,19 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-16 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-48 pb-16 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
                         {/* Text Content */}
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-1 mx-auto">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-1 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
                             <h1 className="text-2xl sm:text-3xl lg:text-5xl font-heading font-black text-gray-900 leading-tight mb-3">
-                                <span className="hidden md:block mb-2">معهد دارين</span>
+                                <span className="block mb-2">معهد دارين</span>
                                 <span className="block text-xl sm:text-2xl lg:text-4xl">
                                     | <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">أكاديمية دارين لتعليم والتدريب</span>
                                 </span>

@@ -54,7 +54,7 @@ export const Courses = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-32 md:pt-32 pb-24 relative overflow-hidden">
+            <main className="flex-grow pt-48 md:pt-32 pb-24 relative overflow-hidden">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-1/3 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px] -translate-x-1/2 pointer-events-none hidden md:block"></div>
@@ -63,12 +63,12 @@ export const Courses = () => {
 
                     {/* Header */}
                     <div className="text-center mb-10">
-                        <div className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-none mb-6 animate-fade-in group hover:border-gold transition-colors">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-none mb-6 animate-fade-in group hover:border-gold transition-colors">
                             <Sparkles size={14} className="text-gold" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">هيا لنتعلم معاً</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-gray-900 mb-2">
-                            <span className="hidden md:block mb-2 md:mb-3">دورات معهد دارين</span>
+                            <span className="block mb-2 md:mb-3">دورات معهد دارين</span>
                             <span className="block text-2xl md:text-4xl lg:text-5xl text-gray-600 font-bold">
                                 | مستقبل طفلك <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-hover">يبدأ بدورة</span>
                             </span>
