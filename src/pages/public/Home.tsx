@@ -92,7 +92,7 @@ export const Home = () => {
 
                         {/* Text Content */}
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-3 mx-auto">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-1 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
@@ -178,7 +178,7 @@ export const Home = () => {
             <section className="pt-24 pb-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
-                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
+                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2 translate-y-[2px]">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-8"></div>
