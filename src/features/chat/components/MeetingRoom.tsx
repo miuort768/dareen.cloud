@@ -163,7 +163,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                         onClick={handleJoin}
                         className="w-full py-5 bg-primary-600 hover:bg-primary-500 text-white font-black text-xl rounded-2xl transition-all shadow-xl shadow-primary-900/40 active:scale-95 flex items-center justify-center gap-3"
                     >
-                        <ctrl94>Play fill="currentColor" size={20} /> انضمام الآن
+                        <Play fill="currentColor" size={20} /> انضمام الآن
                     </button>
 
                     <button onClick={onClose} className="mt-6 text-gray-500 hover:text-white font-bold text-xs uppercase tracking-widest transition-colors">إغلاق</button>
