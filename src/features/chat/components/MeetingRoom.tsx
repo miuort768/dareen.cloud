@@ -157,7 +157,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         };
 
         pc.onconnectionstatechange = () => {
-            if (pc.connectionState === 'stable') setConnectionStatus('stable');
+            if (pc.connectionState === 'connected') setConnectionStatus('stable');
             if (pc.connectionState === 'failed') setConnectionStatus('failed');
         };
 
