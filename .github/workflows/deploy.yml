@@ -1,4 +1,4 @@
-name: Deploy to Hostinger VPS
+name: Deploy to Hostinger
 
 on:
   push:
@@ -9,14 +9,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploying via SSH
+      - name: Deploy to Hostinger VPS
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          port: 22
           script: |
-            cd ~/dareen.cloud
+            # Navigate to project directory (Change this to your actual path)
+            cd /home/${{ secrets.HOSTINGER_USER }}/darin-app || cd ~/darin-app
+            
+            # Pull latest changes
             git pull origin main
+            
+            # Rebuild and restart containers
+            docker-compose down
             docker-compose up -d --build
-            docker system prune -f
+            
+            # Clean up unused images
+            docker image prune -f
