@@ -86,7 +86,7 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-28 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-28 pb-16 md:pt-32 md:pb-6 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
@@ -175,10 +175,10 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-24 pb-8 bg-white relative overflow-hidden">
+            <section className="pt-32 pb-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
-                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2 translate-y-[2px]">
+                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-8"></div>
