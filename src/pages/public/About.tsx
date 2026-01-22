@@ -31,7 +31,7 @@ export const About = () => {
                     <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 font-heading">
                         <span className="block mb-2 md:mb-3">عن معهد دارين</span>
                         <span className="block text-2xl md:text-4xl text-gray-600 font-bold">
-                            | حكاية <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-hover to-gold drop-shadow-sm">شغف تعليمي</span> تجاوزت الحدود
+                            | حكاية <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-hover to-gold">شغف تعليمي</span> تجاوزت الحدود
                         </span>
                     </h1>
 

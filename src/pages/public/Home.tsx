@@ -104,7 +104,7 @@ export const Home = () => {
                                 </span>
                             </h1>
 
-                            <p className="text-[10px] sm:text-xs md:text-xs lg:text-sm text-gray-500 leading-normal mb-8 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter">
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-8 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
                             </p>
 
@@ -175,7 +175,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-32 pb-8 bg-white relative overflow-hidden">
+            <section className="pt-32 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-10 max-w-3xl mx-auto">
                         <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
