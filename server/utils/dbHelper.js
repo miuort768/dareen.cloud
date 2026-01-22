@@ -3,31 +3,17 @@
  */
 
 const getStudentEnrollments = async (db, studentId) => {
-    // Get enrollments with dynamically calculated sessionsUsed from sessions table
+    // HIGH PERFORMANCE: Reading pre-calculated sessionsUsed column
+    // The sessions route ensures this remains accurate via atomic updates.
     const query = `
-        SELECT 
-            e.*,
-            COUNT(s.id) as dynamicSessionsUsed
-        FROM enrollments e 
-        LEFT JOIN sessions s ON 
-            s.studentId = e.studentId 
-            AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
-            AND (
-                (s.teacherId IS NOT NULL AND e.teacherId IS NOT NULL AND s.teacherId = e.teacherId)
-                OR 
-                ((s.teacherId IS NULL OR e.teacherId IS NULL) AND s.teacherName = e.teacher)
-            )
-            AND s.status = 'completed'
+        SELECT e.* FROM enrollments e 
         WHERE e.studentId = ?
-        GROUP BY e.id
     `;
 
     const enrollments = await db.all(query, [studentId]);
 
     return enrollments.map(e => ({
         ...e,
-        // Override the stored sessionsUsed with the actual count from sessions table
-        sessionsUsed: e.dynamicSessionsUsed !== null ? e.dynamicSessionsUsed : e.sessionsUsed,
         schedule: JSON.parse(e.schedule || '[]')
     }));
 };
@@ -64,29 +50,17 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
 
         const students = await db.all(studentsSql, params);
 
-        // Fetch ALL enrollments with their computed session counts in ONE go using a JOIN
-        const enrollments = await db.all(`
-            SELECT 
-                e.*,
-                COUNT(s.id) as dynamicSessionsUsed
-            FROM enrollments e
-            LEFT JOIN sessions s ON 
-                s.studentId = e.studentId 
-                AND (s.subject = e.subject OR (s.subject IS NULL AND e.subject IS NULL))
-                AND (
-                    (s.teacherId IS NOT NULL AND e.teacherId IS NOT NULL AND s.teacherId = e.teacherId)
-                    OR 
-                    ((s.teacherId IS NULL OR e.teacherId IS NULL) AND s.teacherName = e.teacher)
-                )
-                AND s.status = 'completed'
-            ${studentIds ? `WHERE e.studentId IN (${studentIds.map(() => '?').join(',')})` : ''}
-            GROUP BY e.id
-        `, params);
+        // HIGH PERFORMANCE: Simple SELECT instead of expensive aggregate JOIN
+        let enrollmentsSql = 'SELECT * FROM enrollments';
+        if (studentIds) {
+            enrollmentsSql += ` WHERE studentId IN (${studentIds.map(() => '?').join(',')})`;
+        }
+
+        const enrollments = await db.all(enrollmentsSql, params);
 
         const enrollmentMap = enrollments.reduce((acc, e) => {
             const formatted = {
                 ...e,
-                sessionsUsed: e.dynamicSessionsUsed !== null ? e.dynamicSessionsUsed : e.sessionsUsed,
                 schedule: JSON.parse(e.schedule || '[]')
             };
             if (!acc[e.studentId]) acc[e.studentId] = [];
@@ -99,7 +73,7 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
             enrollments: enrollmentMap[s.id] || []
         }));
     } catch (err) {
-        logger.error('Failed to get students with enrollments', err);
+        logger.error('Failed to get students with enrollments (Optimized)', err);
         throw err;
     }
 };

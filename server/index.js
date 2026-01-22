@@ -4,8 +4,10 @@ const express = require('express');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const cors = require('cors');
+const compression = require('compression');
 
 const dbMiddleware = require('./middleware/db');
+const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 
 // Route Imports
 const { authRouter } = require('./routes/auth');
@@ -28,7 +30,8 @@ const { getDb } = require('./utils/db');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// Global Compression (Lightning Fast Responses)
+app.use(compression());
 app.use(cors({
     origin: function (origin, callback) {
         const allowedOrigins = [
@@ -57,7 +60,29 @@ app.use(cors({
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
-app.use(express.json());
+
+// Deep Security Headers
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    next();
+});
+
+// Performance Monitoring Middleware
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        if (duration > 500) {
+            console.warn(`[PERF WARNING] Slow request: ${req.method} ${req.path} took ${duration}ms`);
+        }
+    });
+    next();
+});
+
+app.use(express.json({ limit: '1mb' }));
 
 async function startServer() {
     try {
@@ -92,6 +117,10 @@ async function startServer() {
 
         // Apply authentication to ALL other API routes
         apiRouter.use(authMiddleware);
+
+        // Deep Sanitization & Auditing for Authenticated Requests
+        apiRouter.use(sanitizeInput);
+        apiRouter.use(activityAuditor);
 
         apiRouter.use('/students', studentRouter);
         apiRouter.use('/teachers', teacherRouter);
@@ -133,8 +162,11 @@ async function startServer() {
             systemRouter(req, res, next);
         });
 
-        // Serve static files from the React app
-        app.use(express.static(path.join(__dirname, '../dist')));
+        // Serve static files from the React app with long-term caching
+        app.use(express.static(path.join(__dirname, '../dist'), {
+            maxAge: '7d', // Cache images/assets for 7 days
+            index: false
+        }));
 
         app.use('/api', apiRouter);
 
@@ -198,9 +230,30 @@ async function startServer() {
 
         });
 
-        server.listen(PORT, () => {
+        const serverInstance = server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
         });
+
+        // Graceful Shutdown
+        const shutdown = async (signal) => {
+            console.log(`${signal} received. Shutting down gracefully...`);
+            serverInstance.close(async () => {
+                console.log('HTTP server closed.');
+                try {
+                    const db = await getDb();
+                    await db.close();
+                    console.log('Database connection closed.');
+                    process.exit(0);
+                } catch (err) {
+                    console.error('Error during database closure:', err);
+                    process.exit(1);
+                }
+            });
+        };
+
+        process.on('SIGTERM', () => shutdown('SIGTERM'));
+        process.on('SIGINT', () => shutdown('SIGINT'));
+
     } catch (err) {
         console.error('Failed to start server:', err);
         process.exit(1);
