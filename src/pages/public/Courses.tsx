@@ -7,23 +7,16 @@ import { SEO } from '../../components/SEO';
 
 // Import course images
 import foundationImg from '../../assets/courses/foundation.png';
-import quranImg from '../../assets/courses/quran.png';
-import kuwaitImg from '../../assets/courses/kuwait.png';
-import qatarImg from '../../assets/courses/qatar.png';
-import omanImg from '../../assets/courses/oman.png';
-import jordanImg from '../../assets/courses/jordan.png';
-import englishImg from '../../assets/courses/english.png';
-import qudratImg from '../../assets/courses/qudrat.png';
 
 const COURSES = [
     { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '2.5k', icon: '💎', color: 'gold', price: 'الأكثر طلباً', image: foundationImg },
-    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '4.2k', icon: '📿', color: 'emerald', price: 'متاح الآن', image: quranImg },
-    { id: 3, category: 'kuwait', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '2.1k', icon: '🇰🇼', color: 'blue', price: 'سنوي', image: kuwaitImg },
-    { id: 4, category: 'qatar', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '1.4k', icon: '🇶🇦', color: 'maroon', price: 'فصلي', image: qatarImg },
-    { id: 5, category: 'oman', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '1.3k', icon: '🇴🇲', color: 'green', price: 'فصلي', image: omanImg },
-    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'سنوي', image: jordanImg },
-    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '1.8k', icon: '🇬🇧', color: 'indigo', price: 'مستويات', image: englishImg },
-    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '1.6k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: qudratImg },
+    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '4.2k', icon: '📿', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 3, category: 'kuwait', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '2.1k', icon: '🇰🇼', color: 'blue', price: 'سنوي', image: foundationImg },
+    { id: 4, category: 'qatar', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '1.4k', icon: '🇶🇦', color: 'maroon', price: 'فصلي', image: foundationImg },
+    { id: 5, category: 'oman', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '1.3k', icon: '🇴🇲', color: 'green', price: 'فصلي', image: foundationImg },
+    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'سنوي', image: foundationImg },
+    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '1.8k', icon: '🇬🇧', color: 'indigo', price: 'مستويات', image: foundationImg },
+    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '1.6k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: foundationImg },
 ];
 
 const CATEGORIES = [
@@ -126,11 +119,11 @@ export const Courses = () => {
                                 {/* Course Header (Image Background) */}
                                 <div className="h-40 relative overflow-hidden">
                                     {/* Image Background */}
-                                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                                    <div className="absolute inset-0">
                                         <img
                                             src={course.image}
                                             alt={course.title}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-contain bg-gray-50/50 transition-transform duration-700 group-hover:scale-110"
                                         />
                                     </div>
 
