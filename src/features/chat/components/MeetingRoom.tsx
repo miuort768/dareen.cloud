@@ -15,7 +15,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
     const [isBroadcasting, setIsBroadcasting] = useState(false);
     const [participants, setParticipants] = useState<{ socketId: string, name: string }[]>([]);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
-    const [connectionStatus, setConnectionStatus] = useState<'idle' | 'connecting' | 'stable' | 'failed'>('idle');
+    const [connectionStatus, setConnectionStatus] = useState<'idle' | 'connecting' | 'connected' | 'failed'>('idle');
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
@@ -157,7 +157,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
         };
 
         pc.onconnectionstatechange = () => {
-            if (pc.connectionState === 'connected') setConnectionStatus('stable');
+            if ((pc.connectionState as string) === 'connected') setConnectionStatus('connected');
             if (pc.connectionState === 'failed') setConnectionStatus('failed');
         };
 
@@ -165,7 +165,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
             console.log("Stream received from host!");
             if (!isHost) {
                 setRemoteStream(e.streams[0]);
-                setConnectionStatus('stable');
+                setConnectionStatus('connected');
             }
         };
 
@@ -267,7 +267,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({ conversationId, curren
                 </div>
 
                 <div className="flex items-center gap-4">
-                    {connectionStatus === 'stable' && <div className="flex items-center gap-1.5 text-emerald-500 text-[10px] font-bold bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20"><SignalHigh size={12} /> اتصال مستقر</div>}
+                    {connectionStatus === 'connected' && <div className="flex items-center gap-1.5 text-emerald-500 text-[10px] font-bold bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20"><SignalHigh size={12} /> اتصال مستقر</div>}
                     {connectionStatus === 'connecting' && <div className="flex items-center gap-1.5 text-yellow-500 text-[10px] font-bold bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20"><Loader2 size={12} className="animate-spin" /> جاري الربط...</div>}
                     <button onClick={onClose} className="p-2 text-gray-500 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all"><X size={20} /></button>
                 </div>
