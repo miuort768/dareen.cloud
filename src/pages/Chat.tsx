@@ -284,7 +284,6 @@ export const Chat = () => {
                             newMessage={newMessage}
                             setNewMessage={setNewMessage}
                             handleSendMessage={handleSendMessage}
-                            sendMessage={sendMessage}
                             isSending={isSending}
                             currentUser={currentUser}
                             setSelectedConv={setSelectedConv}
