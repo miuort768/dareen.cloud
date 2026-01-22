@@ -59,22 +59,24 @@ router.put('/:id', async (req, res) => {
     try {
         const dbUsername = username && username.trim() !== '' ? username.trim() : null;
 
-        // Fetch current teacher to get existing password if not provided
-        const currentTeacher = await req.db.get('SELECT password FROM teachers WHERE id = ?', [id]);
+        // Build dynamic update to avoid touching password if not changed
+        const updateFields = { name, phone1, phone2, subject, price: price || 0, email, username: dbUsername };
+        const keys = Object.keys(updateFields);
+        const setClause = keys.map(k => `${k} = ?`).join(', ');
+        const values = keys.map(k => updateFields[k]);
 
-        let dbPassword = currentTeacher ? currentTeacher.password : null;
-        if (password && password.trim() !== '') {
-            if (password.startsWith('$2b$')) {
-                dbPassword = password;
-            } else {
-                dbPassword = await bcrypt.hash(password, 10);
-            }
+        if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
+            const dbPassword = await bcrypt.hash(password, 10);
+            await req.db.run(
+                `UPDATE teachers SET ${setClause}, password = ? WHERE id = ?`,
+                [...values, dbPassword, id]
+            );
+        } else {
+            await req.db.run(
+                `UPDATE teachers SET ${setClause} WHERE id = ?`,
+                [...values, id]
+            );
         }
-
-        await req.db.run(
-            `UPDATE teachers SET name = ?, phone1 = ?, phone2 = ?, subject = ?, price = ?, email = ?, username = ?, password = ? WHERE id = ?`,
-            [name, phone1, phone2, subject, price || 0, email, dbUsername, dbPassword, id]
-        );
         const updated = await req.db.get('SELECT id, name, phone1, phone2, subject, price, email, username FROM teachers WHERE id = ?', [id]);
         res.json(updated);
     } catch (err) {

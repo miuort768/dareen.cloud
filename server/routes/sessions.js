@@ -118,23 +118,31 @@ router.patch('/:id', validate(updateSessionSchema), async (req, res) => {
             if (!oldSession) throw new Error('Session not found');
 
             await tx.run(`UPDATE sessions SET ${setClause} WHERE id = ?`, [...values, id]);
+            const newSession = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
 
-            if (updates.status && updates.status !== oldSession.status) {
-                if (updates.status === 'completed') {
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                        [oldSession.studentId, oldSession.teacherName, oldSession.teacherId || null, oldSession.subject]
-                    );
-                } else if (oldSession.status === 'completed') {
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed - 1 
-                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                        [oldSession.studentId, oldSession.teacherName, oldSession.teacherId || null, oldSession.subject]
-                    );
-                }
+            // Handle sessionsUsed counting logic
+            const wasCompleted = oldSession.status === 'completed';
+            const isCompleted = newSession.status === 'completed';
+
+            // 1. If it was completed, decrement the OLD bucket
+            if (wasCompleted) {
+                await tx.run(
+                    `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
+                     WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
+                    [oldSession.studentId, oldSession.teacherName, oldSession.teacherId || null, oldSession.subject]
+                );
             }
-            return tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+
+            // 2. If it is NOW completed, increment the NEW bucket
+            if (isCompleted) {
+                await tx.run(
+                    `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
+                     WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
+                    [newSession.studentId, newSession.teacherName, newSession.teacherId || null, newSession.subject]
+                );
+            }
+
+            return newSession;
         });
 
         res.json(updated);

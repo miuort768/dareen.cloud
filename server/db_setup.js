@@ -255,7 +255,9 @@ async function setupDatabase() {
         'CREATE INDEX IF NOT EXISTS idx_students_name ON students(name)',
         'CREATE INDEX IF NOT EXISTS idx_student_invoices_status ON student_invoices(status)',
         'CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversationId)',
-        'CREATE INDEX IF NOT EXISTS idx_conversation_members_user ON conversation_members(userId)'
+        'CREATE INDEX IF NOT EXISTS idx_conversation_members_user ON conversation_members(userId)',
+        'CREATE INDEX IF NOT EXISTS idx_sessions_sync ON sessions(studentId, teacherName, subject, status)',
+        'CREATE INDEX IF NOT EXISTS idx_enrollments_sync ON enrollments(studentId, teacher, subject)'
     ];
 
     for (const idx of indices) {

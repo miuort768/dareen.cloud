@@ -16,10 +16,17 @@ async function getDb() {
             driver: sqlite3.Database
         });
 
-        // Enable foreign key support in SQLite
+        // 1. Enable foreign key support
         await dbInstance.get('PRAGMA foreign_keys = ON');
 
-        console.log('Connected to SQLite database (Centralized)');
+        // 2. Enable WAL mode (Write-Ahead Logging) for better concurrency
+        // This allows multiple readers and one writer without blocking each other.
+        await dbInstance.get('PRAGMA journal_mode = WAL');
+
+        // 3. Set a busy timeout to wait for locks to release instead of failing immediately
+        await dbInstance.run('PRAGMA busy_timeout = 5000');
+
+        console.log('Connected to SQLite database (Production Optimized)');
     }
     return dbInstance;
 }
