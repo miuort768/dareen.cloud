@@ -240,6 +240,16 @@ async function startServer() {
                 socket.to(data.conversationId).emit('media_status_change', data);
             });
 
+            // WebRTC Signaling (Internal for the platform)
+            socket.on('signal', (data) => {
+                if (data.to) {
+                    socket.to(data.to).emit('signal', {
+                        from: socket.id,
+                        signal: data.signal
+                    });
+                }
+            });
+
             socket.on('screen_share_status', (data) => {
                 // data: { conversationId, peerId, isSharing }
                 socket.to(data.conversationId).emit('screen_share_status', data);
