@@ -5,7 +5,6 @@ import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
-import { socketService } from '../../../lib/socket';
 
 interface ChatWindowProps {
     selectedConv: Conversation;
@@ -13,7 +12,6 @@ interface ChatWindowProps {
     newMessage: string;
     setNewMessage: (val: string) => void;
     handleSendMessage: (e: React.FormEvent) => void;
-    sendMessage: (p: { conversationId: string, content: string, senderId: string, senderName: string }) => void;
     isSending: boolean;
     currentUser: User | null;
     setSelectedConv: (val: Conversation | null) => void;
@@ -32,7 +30,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     newMessage,
     setNewMessage,
     handleSendMessage,
-    sendMessage,
     isSending,
     currentUser,
     setSelectedConv,
@@ -44,8 +41,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     typingUsers,
     setTyping
 }) => {
-    const socket = socketService.getSocket();
-
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

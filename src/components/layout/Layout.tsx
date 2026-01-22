@@ -4,7 +4,6 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
-import { GlobalMeeting } from '../../features/chat/components/GlobalMeeting';
 
 export const Layout = () => {
     const location = useLocation();
@@ -13,9 +12,6 @@ export const Layout = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex font-sans dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 relative" dir="rtl">
-            {/* Global Video Call Portal */}
-            <GlobalMeeting />
-
             {/* Sidebar - Hidden for chat users */}
             {!isChatOnly && <Sidebar />}
 
