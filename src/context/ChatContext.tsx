@@ -130,16 +130,6 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
         };
 
-        const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
-            if (msgConvId !== 'global') {
-                setTypingUsers(prev => {
-                    const others = prev.filter(u => u.conversationId !== msgConvId || u.userName !== userName);
-                    if (isTyping) return [...others, { conversationId: msgConvId, userName }];
-                    return others;
-                });
-            }
-        };
-
         const handleNewConversation = (conv: Conversation) => {
             console.log('🆕 Global Socket: New conversation created:', conv);
             queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
