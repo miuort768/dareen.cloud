@@ -141,7 +141,7 @@ export const About = () => {
                             القيم التي <span className="text-blue-600">تُحدد هويتنا</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gold mx-auto rounded-full mb-8"></div>
-                        <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium">
+                        <p className="text-gray-500 max-w-5xl mx-auto text-sm md:text-lg leading-relaxed font-medium">
                             نحن لا نؤمن بالصدفة في النجاح، بل نؤمن بأن الالتزام بهذه القيم هو ما يصنع الفرق الحقيقي في حياة طلابنا.
                         </p>
                     </div>
