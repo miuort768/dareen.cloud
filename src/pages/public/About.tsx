@@ -62,7 +62,7 @@ export const About = () => {
             </section>
 
             {/* Our Story & Impact */}
-            <section className="py-20 md:py-24 relative overflow-hidden bg-white">
+            <section className="py-6 md:py-8 relative overflow-hidden bg-white">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
 
@@ -132,7 +132,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-20 md:py-24 bg-[#F8F9FC] relative overflow-hidden">
+            <section className="py-6 md:py-8 bg-[#F8F9FC] relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -199,7 +199,7 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action */}
-            <section className="py-16 md:py-24 bg-white relative">
+            <section className="py-5 md:py-8 bg-white relative">
                 <div className="container mx-auto px-4">
                     <div className="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-none p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl group">
                         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
