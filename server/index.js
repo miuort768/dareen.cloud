@@ -201,7 +201,7 @@ async function startServer() {
 
         // Socket.io Middleware for Authentication
         io.use((socket, next) => {
-            const token = socket.handshake.auth.token;
+            const token = socket.handshake.auth.token || socket.handshake.query.token;
             if (!token) return next(new Error('Authentication error'));
 
             try {
@@ -214,36 +214,41 @@ async function startServer() {
         });
 
         io.on('connection', (socket) => {
-            const userId = socket.data.user?.id;
-            console.log('User connected:', socket.id, 'User:', socket.data.user?.name);
+            const user = socket.data.user;
+            const userId = user?.id;
+
+            console.log(`🔌 Socket Connected: ${socket.id} (User: ${user?.name || 'Anonymous'}, ID: ${userId})`);
 
             if (userId) {
-                socket.join(`user_${userId}`);
-                console.log(`User ${userId} joined their personal room user_${userId}`);
+                const userRoom = `user_${userId}`;
+                socket.join(userRoom);
+                console.log(`   ✅ Joined Personal Room: ${userRoom}`);
             }
 
             socket.on('join_conversation', (conversationId) => {
                 socket.join(conversationId);
-                console.log(`User ${socket.id} joined conversation ${conversationId}`);
+                console.log(`   👥 User ${userId} joined room: ${conversationId}`);
             });
 
             socket.on('leave_conversation', (conversationId) => {
                 socket.leave(conversationId);
-                console.log(`User ${socket.id} left conversation ${conversationId}`);
+                console.log(`   🚶 User ${userId} left room: ${conversationId}`);
+            });
+
+            socket.on('disconnect', (reason) => {
+                console.log(`🔌 Socket Disconnected: ${socket.id} (Reason: ${reason})`);
             });
 
             socket.on('join_personal_room', (id) => {
                 if (id === userId) {
                     socket.join(`user_${id}`);
-                    console.log(`User ${socket.id} joined personal room user_${id} via explicit join`);
+                    console.log(`   🔄 Re-joined Personal Room: user_${id}`);
                 }
             });
 
             socket.on('typing', (data) => {
-                // data: { conversationId, userId, userName, isTyping }
                 socket.to(data.conversationId).emit('typing', data);
             });
-
         });
 
         const serverInstance = server.listen(PORT, () => {

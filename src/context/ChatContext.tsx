@@ -28,38 +28,53 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         if (!isAuthenticated || !currentUser) {
             socketService.disconnect();
+            setIsConnected(false);
             return;
         }
 
         const socket = socketService.getSocket();
         if (!socket) return;
 
-        setIsConnected(socket.connected);
+        // Ensure currentUserId is a string for consistent cache keys
+        const currentUserId = String(currentUser.id);
 
-        const onConnect = () => setIsConnected(true);
-        const onDisconnect = () => setIsConnected(false);
+        const onConnect = () => {
+            console.log('✅ Chat Socket connected');
+            setIsConnected(true);
+        };
+        const onDisconnect = () => {
+            console.log('❌ Chat Socket disconnected');
+            setIsConnected(false);
+        };
+        const onConnectError = (err: any) => {
+            console.error('⚠️ Chat Socket connection error:', err);
+            setIsConnected(false);
+        };
 
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
+        socket.on('connect_error', onConnectError);
+
+        // Update initial state
+        setIsConnected(socket.connected);
 
         const handleNewMessage = (message: ChatMessage) => {
             console.log('📬 Global Socket: New message received:', message);
 
-            // 1. Update messages list if it exists in cache
-            queryClient.setQueryData(['messages', message.conversationId], (old: ChatMessage[] = []) => {
-                if (!Array.isArray(old)) return [message];
-                if (old.find(m => m.id === message.id)) return old;
-                return [...old, message];
+            // 1. Update messages list cache
+            queryClient.setQueryData(['messages', message.conversationId], (old: any) => {
+                const messages = Array.isArray(old) ? old : [];
+                if (messages.find((m: any) => m.id === message.id)) return messages;
+                return [...messages, message];
             });
 
-            // 2. Update conversations list
-            queryClient.setQueryData(['conversations', currentUser.id], (old: Conversation[] = []) => {
-                if (!Array.isArray(old)) return [];
-
+            // 2. Update conversations list cache
+            queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
+                const conversations = Array.isArray(old) ? old : [];
                 const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
                 const isCurrentlyActive = activeConvId === message.conversationId;
 
-                const updated = old.map(conv => {
+                const updated = conversations.map((conv: any) => {
                     if (conv.id === message.conversationId) {
                         return {
                             ...conv,
@@ -71,17 +86,17 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     return conv;
                 });
 
-                // If conversation doesn't exist in list yet (new chat), we might need to refetch or manually add
-                // For now, let's just re-sort
-                return [...updated].sort((a, b) => {
+                // Re-sort: Latest message first
+                return [...updated].sort((a: any, b: any) => {
                     const timeA = new Date(a.lastMessageTime || 0).getTime();
                     const timeB = new Date(b.lastMessageTime || 0).getTime();
                     return timeB - timeA;
                 });
             });
 
-            // 3. Update total unread count across all conversations
-            // This is better derived from the updated conversations list
+            // 3. Fallback: Invalidate to ensure freshness
+            queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
+            queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
         };
 
         const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
@@ -96,11 +111,12 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const handleNewConversation = (conv: Conversation) => {
             console.log('🆕 Global Socket: New conversation created:', conv);
-            queryClient.setQueryData(['conversations', currentUser.id], (old: Conversation[] = []) => {
-                if (!Array.isArray(old)) return [conv];
-                if (old.find(c => c.id === conv.id)) return old;
-                return [conv, ...old];
+            queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
+                const conversations = Array.isArray(old) ? old : [];
+                if (conversations.find((c: any) => c.id === conv.id)) return conversations;
+                return [conv, ...conversations];
             });
+            queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
         socket.on('new_message', handleNewMessage);
@@ -110,6 +126,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return () => {
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
+            socket.off('connect_error', onConnectError);
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
             socket.off('new_conversation', handleNewConversation);
@@ -119,14 +136,14 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Derived State: Total Unread Count
     useEffect(() => {
         if (!isAuthenticated || !currentUser) return;
+        const currentUserId = String(currentUser.id);
 
-        // Listen to conversation cache changes to update global badge
-        const conversations = queryClient.getQueryData<Conversation[]>(['conversations', currentUser.id]);
+        const conversations = queryClient.getQueryData<Conversation[]>(['conversations', currentUserId]);
         if (conversations) {
             const total = conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0);
             setTotalUnreadCount(total);
         }
-    }, [isAuthenticated, currentUser, queryClient]);
+    }, [isAuthenticated, currentUser, queryClient, isConnected]);
 
     return (
         <ChatContext.Provider value={{ typingUsers, setTyping, totalUnreadCount, isConnected }}>

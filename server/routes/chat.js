@@ -198,15 +198,17 @@ router.post('/conversations/:id/messages', async (req, res) => {
         // Emit Socket Event
         const io = req.app.get('socketio');
         if (io) {
-            // Fetch all members to emit to their personal rooms
             const members = await req.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', conversationId);
 
-            // 1. Emit to the conversation room (for those currently viewing the chat)
+            console.log(`📡 Broadcasting message to conversation ${conversationId} (${members.length} members)`);
+
+            // 1. Send to the conversation room
             io.to(conversationId).emit('new_message', newMessage);
 
-            // 2. Emit to each member's personal room (for sidebar/global updates)
+            // 2. Send to individual user rooms for sidebar updates
             for (const member of members) {
                 if (member.userId !== senderId) {
+                    console.log(`   -> Sending to user room: user_${member.userId}`);
                     io.to(`user_${member.userId}`).emit('new_message', newMessage);
                 }
             }

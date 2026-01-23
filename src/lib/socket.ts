@@ -12,14 +12,16 @@ class SocketService {
         if (!token) return null;
 
         if (!this.socket) {
-            // Simplified relative connection for proxy compatibility
-            this.socket = io({
+            const origin = window.location.origin;
+            this.socket = io(origin, {
                 path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
                 auth: { token: token },
+                query: { token: token }, // Redundant but safer for some proxies
                 reconnection: true,
-                timeout: 20000
+                reconnectionAttempts: Infinity,
+                timeout: 30000
             });
 
             this.socket.on('connect', () => {
