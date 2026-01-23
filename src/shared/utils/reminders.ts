@@ -39,7 +39,7 @@ export const generateWhatsAppLink = ({
 import type { Student, Enrollment } from '../../features/students/types';
 import type { LowBalanceStudent } from '../../types/dashboard';
 
-export const sendWhatsAppReminder = (arg1: Student | LowBalanceStudent, arg2?: Enrollment) => {
+export const sendWhatsAppReminder = (arg1: Student | LowBalanceStudent, arg2?: Enrollment, adminPhoneOverride?: string) => {
     if (arg2) {
         // Handle Student, Enrollment
         const student = arg1 as Student;
@@ -51,7 +51,7 @@ export const sendWhatsAppReminder = (arg1: Student | LowBalanceStudent, arg2?: E
             remainingSessions: enrollment.sessionsTotal - enrollment.sessionsUsed,
             parentPhone: student.parentPhone,
             isAdmin: true,
-            adminPhone: '01000000000'
+            adminPhone: adminPhoneOverride || '01152001250'
         });
         window.open(link, '_blank');
     } else {
@@ -64,7 +64,7 @@ export const sendWhatsAppReminder = (arg1: Student | LowBalanceStudent, arg2?: E
             remainingSessions: item.remainingSessions,
             parentPhone: item.parentPhone,
             isAdmin: true,
-            adminPhone: '01000000000'
+            adminPhone: adminPhoneOverride || '01152001250'
         });
         window.open(link, '_blank');
     }

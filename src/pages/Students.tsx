@@ -33,7 +33,7 @@ interface EnrollmentFormData {
 
 export const Students = () => {
     const queryClient = useQueryClient();
-    const { showNotification, currentUser } = useApp();
+    const { showNotification, currentUser, adminPhone } = useApp();
     const isTeacher = currentUser?.role === 'teacher';
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -327,7 +327,7 @@ export const Students = () => {
                         }}
                         onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
                         onAddSessions={handleAddSessionsToEnrollment}
-                        onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en)}
+                        onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
                     />
                 )}
             </div>

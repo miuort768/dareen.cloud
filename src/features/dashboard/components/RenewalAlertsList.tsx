@@ -2,6 +2,7 @@ import { Bell, Phone } from 'lucide-react';
 import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
+import { useApp } from '../../../context/AppContext';
 
 interface RenewalAlertsListProps {
     stats: Stats;
@@ -9,6 +10,7 @@ interface RenewalAlertsListProps {
 }
 
 export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsListProps) => {
+    const { adminPhone } = useApp();
     return (
         <div className="bg-white border border-rose-200 dark:bg-rose-950/20 dark:border-rose-900/30 overflow-hidden shadow-xl relative group h-full flex flex-col">
             <div className="absolute top-0 right-0 w-1.5 h-full bg-rose-600 group-hover:w-2 transition-all"></div>
@@ -71,7 +73,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
                                             <button
-                                                onClick={() => sendWhatsAppReminder(item)}
+                                                onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
                                                 className="bg-emerald-600 text-white px-4 py-1.5 text-[10px] font-black uppercase hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-600/20 transition-all active:scale-95 flex items-center gap-2 group/btn"
                                             >
                                                 إرسال تذكير
@@ -107,7 +109,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                                 </span>
                             </div>
                             <button
-                                onClick={() => sendWhatsAppReminder(item)}
+                                onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
                                 className="w-full bg-emerald-600 text-white py-2.5 text-[10px] font-black uppercase flex items-center justify-center gap-2 active:scale-95 transition-transform"
                             >
                                 إرسال تذكير عبر واتساب

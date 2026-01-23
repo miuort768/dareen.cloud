@@ -5,6 +5,7 @@ import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import type { DashboardTask as Task, LowBalanceStudent } from '../types';
 import { api } from '../../../lib/api';
+import { useApp } from '../../../context/AppContext';
 
 interface ImportantNotificationsProps {
     tasks: Task[];
@@ -38,6 +39,7 @@ export const ImportantNotifications = ({
     tasks,
     lowBalanceStudents,
 }: ImportantNotificationsProps) => {
+    const { adminPhone } = useApp();
     const [dismissedIds, setDismissedIds] = useState<string[]>([]);
 
     useEffect(() => {
@@ -71,7 +73,7 @@ export const ImportantNotifications = ({
             title: `رصيد منخفض: ${s.studentName} `,
             description: `المتبقي ${s.remainingSessions} حِصص في مادة ${s.subject} `,
             priority: (s.remainingSessions === 0 ? 'high' : 'medium') as 'high' | 'medium',
-            action: () => sendWhatsAppReminder(s),
+            action: () => sendWhatsAppReminder(s, undefined, adminPhone),
             actionLabel: 'تذكير واتساب',
             icon: Phone,
             color: 'rose'
