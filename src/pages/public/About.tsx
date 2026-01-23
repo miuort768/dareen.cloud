@@ -13,7 +13,7 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#FDFCF8]">
                 {/* Creative Background Elements */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
