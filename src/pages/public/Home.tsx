@@ -177,9 +177,9 @@ export const Home = () => {
             {/* Why Choose Us */}
             <section className="pt-16 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-6 max-w-3xl mx-auto">
-                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
-                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
+                    <div className="text-center mb-10 md:mb-16 max-w-3xl mx-auto">
+                        <h2 className="text-3xl lg:text-6xl font-heading font-black text-gray-900 mb-3 uppercase leading-tight">
+                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-800">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-500 text-lg leading-relaxed">
@@ -189,41 +189,41 @@ export const Home = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
                         {/* Feature 1 */}
-                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-none shadow-2xl overflow-hidden group flex items-center gap-4">
+                        <div className="md:col-span-2 relative p-8 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 rounded-none shadow-2xl overflow-hidden group flex items-center gap-6 border border-white/10">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-                            <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
-                                <Lightbulb className="w-6 h-6 text-white" />
+                            <div className="relative z-10 w-14 h-14 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-all duration-500">
+                                <Lightbulb className="w-8 h-8 text-white" />
                             </div>
-                            <div className="relative z-10">
-                                <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
-                                <p className="text-xs text-blue-50 leading-relaxed">
-                                    طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
+                            <div className="relative z-10 text-right">
+                                <h3 className="text-xl font-bold text-white mb-2">طرق تعليم مبتكرة</h3>
+                                <p className="text-sm text-blue-50/90 leading-relaxed font-medium">
+                                    طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك بأحدث الوسائل العالمية.
                                 </p>
                             </div>
                         </div>
 
                         {/* Feature 2 */}
-                        <div className="p-6 bg-gradient-to-br from-gold to-gold-hover rounded-none shadow-xl text-white group flex items-center gap-4">
-                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:rotate-12 transition-transform">
-                                <Heart className="w-6 h-6 text-white fill-white" />
+                        <div className="p-8 bg-gradient-to-br from-gold to-gold-hover rounded-none shadow-xl text-white group flex items-center gap-6 border border-white/20">
+                            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:rotate-12 transition-all duration-500">
+                                <Heart className="w-8 h-8 text-white fill-white" />
                             </div>
-                            <div>
-                                <h3 className="text-base font-bold mb-1">بيئة آمنة ومحفزة</h3>
-                                <p className="text-xs text-white/90 leading-relaxed">
-                                    بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة بحرية.
+                            <div className="text-right">
+                                <h3 className="text-xl font-bold mb-2">بيئة آمنة ومحفزة</h3>
+                                <p className="text-sm text-white/90 leading-relaxed font-medium">
+                                    بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة.
                                 </p>
                             </div>
                         </div>
 
                         {/* Feature 3 */}
-                        <div className="p-6 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-xl transition-all group flex items-center gap-4">
-                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-none flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                <CheckCircle className="w-6 h-6" />
+                        <div className="p-8 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-2xl transition-all duration-500 group flex items-center gap-6">
+                            <div className="w-14 h-14 bg-blue-50 text-blue-700 rounded-none flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                <CheckCircle className="w-8 h-8" />
                             </div>
                             <div className="text-right">
-                                <h3 className="text-base font-bold text-gray-900 mb-1">نتائج مضمونة</h3>
-                                <p className="text-xs text-gray-500 leading-relaxed">
-                                    متابعة دقيقة وتقارير دورية لضمان تحقيق أفضل النتائج التعليمية.
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">نتائج مضمونة</h3>
+                                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                                    متابعة دقيقة وتقارير دورية تضمن التفوق والنجاح المستمر.
                                 </p>
                             </div>
                         </div>
@@ -234,14 +234,14 @@ export const Home = () => {
                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
                             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-10">
-                                <div className="flex-1 text-center lg:text-right">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-4 border border-white/10 mx-auto lg:mx-0">
-                                        <Award size={16} className="text-gold" />
-                                        <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
+                                <div className="flex-1 text-right">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-6 border border-white/10 mx-0">
+                                        <Award size={18} className="text-gold" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">التميز التعليمي</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-black mb-4 font-heading text-white">بيئة تعليمية متطورة</h3>
-                                    <p className="text-white/80 text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-                                        نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.
+                                    <h3 className="text-2xl md:text-4xl font-black mb-4 font-heading text-white">بيئة تعليمية متطورة</h3>
+                                    <p className="text-white/80 text-base md:text-xl leading-relaxed max-w-xl mx-0 font-medium">
+                                        نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية المعتمدة عالمياً.
                                     </p>
                                 </div>
 
