@@ -13,7 +13,7 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Magical Hero Section */}
-            <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-32 pb-16 md:pt-40 md:pb-32 overflow-hidden bg-[#FDFCF8]">
                 {/* Magical Background Elements */}
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none animate-pulse"></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none animate-pulse"></div>
@@ -67,7 +67,7 @@ export const About = () => {
             </section>
 
             {/* Our Story & Impact with Floating Magic */}
-            <section className="py-32 relative overflow-hidden bg-white">
+            <section className="py-20 md:py-32 relative overflow-hidden bg-white">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 max-w-7xl mx-auto">
 
@@ -117,7 +117,7 @@ export const About = () => {
                             </p>
 
                             <div className="grid grid-cols-1 gap-6">
-                                <div className="group flex items-start gap-6 p-8 bg-white rounded-[2rem] hover:bg-gray-50 transition-all duration-500 border border-gray-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5 items-center">
+                                <div className="group flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-[2rem] hover:bg-gray-50 transition-all duration-500 border border-gray-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5">
                                     <div className="w-16 h-16 bg-blue-50 rounded-2xl shadow-sm flex items-center justify-center text-blue-600 shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                                         <Zap size={32} />
                                     </div>
@@ -126,7 +126,7 @@ export const About = () => {
                                         <p className="text-base text-gray-500 font-medium">ريادة التحول الرقمي في التعليم العربي بمعايير عالمية.</p>
                                     </div>
                                 </div>
-                                <div className="group flex items-start gap-6 p-8 bg-white rounded-[2rem] hover:bg-gray-50 transition-all duration-500 border border-gray-100 hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5 items-center">
+                                <div className="group flex flex-col md:flex-row items-center gap-6 p-8 bg-white rounded-[2rem] hover:bg-gray-50 transition-all duration-500 border border-gray-100 hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5">
                                     <div className="w-16 h-16 bg-amber-50 rounded-2xl shadow-sm flex items-center justify-center text-gold shrink-0 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
                                         <BookOpen size={32} />
                                     </div>
@@ -142,7 +142,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced Magic */}
-            <section className="py-32 bg-[#F8F9FC] relative overflow-hidden">
+            <section className="py-20 md:py-32 bg-[#F8F9FC] relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -156,20 +156,20 @@ export const About = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
                         {[
-                            { icon: Shield, title: "الأمانة", color: "blue", desc: "نلتزم بأعلى معايير النزاهة في التعامل والتعليم كشريك موثوق لمستقبل أبنائكم." },
-                            { icon: Lightbulb, title: "الابتكار", color: "gold", desc: "نبتكر دائماً في طرق التدريس لنجعل العلم تجربة مشوقة ومحفزة للذهن." },
-                            { icon: Award, title: "التميز", color: "emerald", desc: "نضع الجودة نصب أعيننا في كل تفاصيل البرامج التعليمية التي نقدمها." },
-                            { icon: Compass, title: "بناء الجيل", color: "indigo", desc: "هدفنا الأسمى هو تكوين شخصية الطالب ليكون عضواً فعالاً ومبدعاً في مجتمعه." }
+                            { icon: Shield, title: "الأمانة", color: "blue", desc: "نلتزم بأعلى معايير النزاهة في التعامل كشريك موثوق لمستقبل أبنائكم." },
+                            { icon: Lightbulb, title: "الابتكار", color: "gold", desc: "نبتكر دائماً في طرق التدريس لنجعل العلم تجربة مشوقة ومحفزة." },
+                            { icon: Award, title: "التميز", color: "emerald", desc: "نضع الجودة نصب أعيننا في كل تفاصيل البرامج التعليمية." },
+                            { icon: Compass, title: "بناء الجيل", color: "indigo", desc: "هدفنا الأسمى هو تكوين شخصية الطالب ليكون عضواً فعالاً ومبدعاً." }
                         ].map((v, i) => (
-                            <div key={i} className="group bg-white p-10 rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-2xl transition-all duration-700 border border-gray-50 flex flex-col items-center text-center hover:-translate-y-4">
-                                <div className={`w-24 h-24 bg-${v.color === 'gold' ? 'amber' : v.color}-50 text-${v.color === 'gold' ? 'gold' : v.color}-600 rounded-[2.5rem] flex items-center justify-center mb-10 group-hover:bg-${v.color === 'gold' ? 'gold' : v.color}-600 group-hover:text-white transition-all duration-700 shadow-sm relative overflow-hidden`}>
-                                    <v.icon size={44} className="relative z-10" />
+                            <div key={i} className="group bg-white p-5 md:p-10 rounded-2xl md:rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-2xl transition-all duration-700 border border-gray-50 flex flex-col items-center text-center hover:-translate-y-4">
+                                <div className={`w-12 h-12 md:w-24 md:h-24 bg-${v.color === 'gold' ? 'amber' : v.color}-50 text-${v.color === 'gold' ? 'gold' : v.color}-600 rounded-xl md:rounded-[2.5rem] flex items-center justify-center mb-4 md:mb-10 group-hover:bg-${v.color === 'gold' ? 'gold' : v.color}-600 group-hover:text-white transition-all duration-700 shadow-sm relative overflow-hidden`}>
+                                    <v.icon size={24} className="md:w-[44px] md:h-[44px] relative z-10" />
                                     <div className={`absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-700`}></div>
                                 </div>
-                                <h3 className="text-2xl font-black text-gray-900 mb-6 font-heading">{v.title}</h3>
-                                <p className="text-gray-500 text-base leading-relaxed font-medium">
+                                <h3 className="text-sm md:text-2xl font-black text-gray-900 mb-2 md:mb-6 font-heading leading-tight">{v.title}</h3>
+                                <p className="text-[10px] md:text-base text-gray-500 leading-relaxed font-medium line-clamp-3 md:line-clamp-none">
                                     {v.desc}
                                 </p>
                             </div>
@@ -179,9 +179,9 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Magical Glow */}
-            <section className="py-32 bg-white relative">
+            <section className="py-20 md:py-32 bg-white relative">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="bg-gray-950 rounded-[4rem] p-12 md:p-24 text-center text-white relative overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.15)] group">
+                    <div className="bg-gray-950 rounded-none p-12 md:p-24 text-center text-white relative overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.15)] group">
                         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-900/40 via-transparent to-indigo-900/40 opacity-50"></div>
                         <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:scale-150 transition-transform duration-1000"></div>
                         <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-gold/10 rounded-full blur-[100px] group-hover:scale-150 transition-transform duration-1000"></div>

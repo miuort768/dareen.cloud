@@ -59,7 +59,7 @@ export const InstallPWA = () => {
             {/* Pulsing Bell Trigger */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-6 lg:bottom-6 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow hover:scale-110 transition-all duration-500"
+                className="fixed bottom-4 lg:bottom-5 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow hover:scale-110 transition-all duration-500"
                 title="تثبيت المنصة"
             >
                 <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20"></div>
