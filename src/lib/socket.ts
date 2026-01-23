@@ -12,17 +12,13 @@ class SocketService {
         if (!token) return null;
 
         if (!this.socket) {
-            // Use explicit origin and path for VPS deployments
-            const origin = window.location.origin;
-            this.socket = io(origin, {
+            // Simplified relative connection for proxy compatibility
+            this.socket = io({
                 path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
-                auth: { token },
+                auth: { token: token },
                 reconnection: true,
-                reconnectionAttempts: Infinity,
-                reconnectionDelay: 1000,
-                reconnectionDelayMax: 5000,
                 timeout: 20000
             });
 
