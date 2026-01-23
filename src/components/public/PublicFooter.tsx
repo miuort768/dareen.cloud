@@ -119,11 +119,20 @@ export const PublicFooter = () => {
                 </div>
 
                 {/* Bottom */}
-                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-gray-500 text-sm text-center">
-                        &copy; {new Date().getFullYear()} <span className="text-white font-medium">معهد دارين</span>. جميع الحقوق محفوظة.
-                    </p>
-                    <div className="flex items-center gap-6">
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="text-center md:text-right">
+                        <p className="text-gray-500 text-sm">
+                            &copy; {new Date().getFullYear()} <span className="text-white font-medium">معهد دارين</span>. جميع الحقوق محفوظة.
+                        </p>
+                    </div>
+
+                    <div className="text-center">
+                        <p className="text-gray-500 text-xs font-medium tracking-wide">
+                            تصميم وتطوير <span className="text-gold">مستر احمد عبدالله</span>
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-6 justify-center md:justify-end">
                         <Link to="/privacy" className="text-gray-500 hover:text-gold text-sm transition-colors">سياسة الخصوصية</Link>
                         <Link to="/terms" className="text-gray-500 hover:text-gold text-sm transition-colors">الشروط والأحكام</Link>
                     </div>
