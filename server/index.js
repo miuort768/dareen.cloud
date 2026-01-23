@@ -229,6 +229,13 @@ async function startServer() {
                 console.log(`User ${socket.id} left conversation ${conversationId}`);
             });
 
+            socket.on('join_personal_room', (id) => {
+                if (id === userId) {
+                    socket.join(`user_${id}`);
+                    console.log(`User ${socket.id} joined personal room user_${id} via explicit join`);
+                }
+            });
+
             socket.on('typing', (data) => {
                 // data: { conversationId, userId, userName, isTyping }
                 socket.to(data.conversationId).emit('typing', data);
