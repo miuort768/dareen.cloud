@@ -29,10 +29,11 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const fetchHistory = async () => {
         setLoading(true);
         try {
-            const data = await api.get<Session[]>('/sessions');
+            // Use server-side filtering for efficiency and accuracy
+            const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
             const sessions = Array.isArray(data) ? data : [];
 
-            // Filter by student and teacher
+            // Double check filter and sort
             const studentHistory = sessions.filter(s =>
                 s.studentId === studentId &&
                 s.teacherName === teacherName &&

@@ -15,19 +15,33 @@ router.get('/', async (req, res) => {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
+        const studentId = req.query.studentId;
+        const teacherId = req.query.teacherId;
+
+        let whereClauses = [];
+        let params = [];
+
+        if (q) {
+            whereClauses.push('(lower(studentName) LIKE ? OR lower(teacherName) LIKE ? OR subject LIKE ?)');
+            params.push(`%${q}%`, `%${q}%`, `%${q}%`);
+        }
+
+        if (studentId) {
+            whereClauses.push('studentId = ?');
+            params.push(studentId);
+        }
+
+        if (teacherId) {
+            whereClauses.push('teacherId = ?');
+            params.push(teacherId);
+        }
+
+        const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
-            let sql = 'SELECT * FROM sessions';
-            let countSql = 'SELECT COUNT(*) as total FROM sessions';
-            let params = [];
-
-            if (q) {
-                const searchClause = ' WHERE lower(studentName) LIKE ? OR lower(teacherName) LIKE ? OR subject LIKE ?';
-                sql += searchClause;
-                countSql += searchClause;
-                params.push(`%${q}%`, `%${q}%`, `%${q}%`);
-            }
+            let sql = `SELECT * FROM sessions${whereSql}`;
+            let countSql = `SELECT COUNT(*) as total FROM sessions${whereSql}`;
 
             sql += ' ORDER BY date DESC, time DESC LIMIT ? OFFSET ?';
             const sessions = await req.db.all(sql, [...params, limit, offset]);
@@ -41,7 +55,7 @@ router.get('/', async (req, res) => {
                 totalPages: Math.ceil(count.total / limit)
             });
         } else {
-            const sessions = await req.db.all('SELECT * FROM sessions ORDER BY date DESC, time DESC');
+            const sessions = await req.db.all(`SELECT * FROM sessions${whereSql} ORDER BY date DESC, time DESC`, params);
             res.json(sessions);
         }
     } catch (err) {

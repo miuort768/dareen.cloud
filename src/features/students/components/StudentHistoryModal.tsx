@@ -33,7 +33,11 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                 // Fetch sessions for this student
                 // Note: Assuming endpoint supports filter by studentId
                 const data = await api.get<Session[]>(`/sessions?studentId=${student.id}`);
-                setSessions(Array.isArray(data) ? data : []);
+                const sessionsData = Array.isArray(data) ? data : [];
+
+                // Only show sessions that the teacher has actually recorded (Status not pending/scheduled)
+                const recordedSessions = sessionsData.filter(s => s.status === 'completed' || s.status === 'cancelled' || s.status === 'absent');
+                setSessions(recordedSessions);
             } catch (error) {
                 console.error("Failed to fetch history", error);
             } finally {
@@ -91,11 +95,10 @@ export const StudentHistoryModal = ({ student, onClose }: StudentHistoryModalPro
                                             <td className="p-4">
                                                 <span className={cn(
                                                     "px-2 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest",
-                                                    session.status === 'completed' ? "bg-emerald-50 text-emerald-600" :
-                                                        session.status === 'absent' ? "bg-red-50 text-red-600" :
-                                                            "bg-amber-50 text-amber-600"
+                                                    session.status === 'completed' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
+                                                        "bg-rose-50 text-rose-600 border border-rose-100"
                                                 )}>
-                                                    {session.status === 'completed' ? 'حضور' : session.status === 'absent' ? 'غياب' : 'معلق'}
+                                                    {session.status === 'completed' ? 'حضور' : 'غياب'}
                                                 </span>
                                             </td>
                                         </tr>
