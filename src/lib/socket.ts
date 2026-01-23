@@ -8,12 +8,13 @@ class SocketService {
     private socket: Socket | null = null;
 
     connect() {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('auth_token');
         if (!token) return null;
 
         if (!this.socket) {
-            // In many VPS environments, using the same origin with a specific path is most reliable
-            this.socket = io({
+            // Use explicit origin and path for VPS deployments
+            const origin = window.location.origin;
+            this.socket = io(origin, {
                 path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
