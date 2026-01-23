@@ -1,8 +1,8 @@
 import { io, Socket } from 'socket.io-client';
-import { API_BASE_URL } from '../config/api';
 
 // In production, the URL might be different or dynamic
-const SOCKET_URL = API_BASE_URL.replace('/api', '');
+// Path is now handled relative to the origin for better proxy support
+// const SOCKET_URL = API_BASE_URL.replace('/api', '');
 
 class SocketService {
     private socket: Socket | null = null;
@@ -12,10 +12,17 @@ class SocketService {
         if (!token) return null;
 
         if (!this.socket) {
-            this.socket = io(SOCKET_URL, {
+            // In many VPS environments, using the same origin with a specific path is most reliable
+            this.socket = io({
+                path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
-                auth: { token }
+                auth: { token },
+                reconnection: true,
+                reconnectionAttempts: Infinity,
+                reconnectionDelay: 1000,
+                reconnectionDelayMax: 5000,
+                timeout: 20000
             });
 
             this.socket.on('connect', () => {

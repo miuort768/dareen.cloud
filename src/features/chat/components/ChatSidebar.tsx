@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, MessageCircle, Edit2, Trash2, Plus, LogOut, Bell, BellOff } from 'lucide-react';
+import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -39,6 +40,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     requestDesktopNotifications,
     typingUsers
 }) => {
+    const { isConnected } = useChatContext();
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
         'Notification' in window && Notification.permission === 'granted'
     );
@@ -57,7 +59,15 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h2 className="text-xl lg:text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">الدردشة</h2>
-                        <p className="text-[9px] lg:text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">مركز التواصل المباشر</p>
+                        <div className="flex items-center gap-1.5 mt-1">
+                            <div className={cn(
+                                "w-2 h-2 rounded-full",
+                                isConnected ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
+                            )}></div>
+                            <span className="text-[9px] lg:text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                                {isConnected ? 'متصل لحظياً' : 'جاري الاتصال...'}
+                            </span>
+                        </div>
                     </div>
                     <div className="flex items-center gap-2">
                         <button

@@ -8,6 +8,7 @@ interface ChatContextType {
     typingUsers: { conversationId: string; userName: string }[];
     setTyping: (conversationId: string, isTyping: boolean, userName: string) => void;
     totalUnreadCount: number;
+    isConnected: boolean;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -17,6 +18,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const queryClient = useQueryClient();
     const [typingUsers, setTypingUsers] = useState<{ conversationId: string; userName: string }[]>([]);
     const [totalUnreadCount, setTotalUnreadCount] = useState(0);
+    const [isConnected, setIsConnected] = useState(false);
 
     const setTyping = useCallback((conversationId: string, isTyping: boolean, userName: string) => {
         if (!isAuthenticated) return;
@@ -31,6 +33,14 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const socket = socketService.getSocket();
         if (!socket) return;
+
+        setIsConnected(socket.connected);
+
+        const onConnect = () => setIsConnected(true);
+        const onDisconnect = () => setIsConnected(false);
+
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
 
         const handleNewMessage = (message: ChatMessage) => {
             console.log('📬 Global Socket: New message received:', message);
@@ -98,6 +108,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         socket.on('new_conversation', handleNewConversation);
 
         return () => {
+            socket.off('connect', onConnect);
+            socket.off('disconnect', onDisconnect);
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
             socket.off('new_conversation', handleNewConversation);
@@ -117,7 +129,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [isAuthenticated, currentUser, queryClient]);
 
     return (
-        <ChatContext.Provider value={{ typingUsers, setTyping, totalUnreadCount }}>
+        <ChatContext.Provider value={{ typingUsers, setTyping, totalUnreadCount, isConnected }}>
             {children}
         </ChatContext.Provider>
     );
