@@ -75,8 +75,9 @@ export const Courses = () => {
                                 | مستقبل طفلك <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-hover">يبدأ بدورة</span>
                             </span>
                         </h1>
-                        <p className="text-base md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
-                            استكشف مسارات تعليمية مبتكرة تجمع بين <span className="text-gray-900 font-bold">الأصالة والتقنيات الحديثة</span> لتطوير مهارات طفلك وتفوقه الدراسي.
+                        <p className="text-sm md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed md:leading-relaxed font-medium px-4 md:px-0">
+                            <span className="md:inline block">استكشف مسارات تعليمية مبتكرة تجمع بين الأصالة والتقنيات الحديثة</span>{' '}
+                            <span className="md:inline block">لتطوير مهارات طفلك وتفوقه الدراسي.</span>
                         </p>
                     </div>
 
@@ -86,7 +87,7 @@ export const Courses = () => {
                             <div className="lg:col-span-3 relative group">
                                 <input
                                     type="text"
-                                    placeholder="ابحث عن دورة، منهج، أو مهارة معينة..."
+                                    placeholder="اكتب ما تريد البحث عنه..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="w-full px-8 py-5 rounded-none bg-white border border-gray-100 shadow-xl shadow-gray-100/50 focus:border-gold outline-none transition-all text-lg pr-14 placeholder:text-gray-400"
