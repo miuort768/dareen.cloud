@@ -67,21 +67,55 @@ router.get('/', async (req, res) => {
 // 2. Add session
 router.post('/', validate(createSessionSchema), async (req, res) => {
     const body = req.body;
-    const id = body.id || `sess_${Math.random().toString(36).substr(2, 7)}`;
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
-            // Fetch Prices
+            // Check for existing session for same student, teacher, subject and date to prevent duplicates
+            const existing = await tx.get(
+                'SELECT id, status FROM sessions WHERE studentId = ? AND (teacherName = ?) AND subject = ? AND date = ?',
+                [body.studentId, body.teacherName, body.subject, body.date]
+            );
+
+            if (existing) {
+                // If it exists and status is the same, just return it
+                if (existing.status === body.status) {
+                    return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
+                }
+
+                // If status is different, update the existing one instead of creating new
+                await tx.run(
+                    'UPDATE sessions SET status = ?, time = ?, day = ? WHERE id = ?',
+                    [body.status, body.time, body.day, existing.id]
+                );
+
+                // Handle sessionsUsed counting logic for update
+                if (existing.status !== 'completed' && body.status === 'completed') {
+                    await tx.run(
+                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
+                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
+                        [body.studentId, body.teacherName, body.teacherId || null, body.subject]
+                    );
+                } else if (existing.status === 'completed' && body.status !== 'completed') {
+                    await tx.run(
+                        `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
+                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
+                        [body.studentId, body.teacherName, body.teacherId || null, body.subject]
+                    );
+                }
+
+                return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
+            }
+
+            // If not existing, proceed with insert
+            const id = body.id || `sess_${Math.random().toString(36).substr(2, 7)}`;
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
 
-            // 1. Try to get student's default price if not provided
             if (!studentPrice && body.studentId) {
                 const student = await tx.get('SELECT sessionPrice FROM students WHERE id = ?', [body.studentId]);
                 if (student) studentPrice = student.sessionPrice;
             }
 
-            // 2. Always fetch teacher's current price for cost tracking
             if (body.teacherId || body.teacherName) {
                 const teacher = await tx.get(
                     'SELECT price FROM teachers WHERE id = ? OR name = ?',
