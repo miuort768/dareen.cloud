@@ -97,8 +97,8 @@ export const Home = () => {
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.3] mb-1">
-                                <span className="block mb-0.5">معهد دارين</span>
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.2] mb-1">
+                                <span className="block mb-0">معهد دارين</span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">
                                     للتعليم والتدريب عن بعد
                                 </span>
@@ -178,8 +178,8 @@ export const Home = () => {
             <section className="pt-16 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 max-w-3xl mx-auto">
-                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
-                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
+                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-[1.4] py-2">
+                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-500 text-lg leading-relaxed">
