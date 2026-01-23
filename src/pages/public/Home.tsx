@@ -74,7 +74,7 @@ export const Home = () => {
     const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative select-none overflow-x-hidden">
+        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative overflow-x-hidden">
             <SEO
                 title="الرئيسية"
                 description="معهد دارين وأكاديمية دارين للتعليم والتدريب - الخيار الأول للتعليم عن بعد في الكويت والخليج. دروس خصوصية لجميع المراحل، تحفيظ قرآن، ولغات."
@@ -97,10 +97,10 @@ export const Home = () => {
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
-                            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-heading font-black text-gray-900 leading-tight mb-3">
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-tight mb-3">
                                 <span className="block mb-2">معهد دارين</span>
-                                <span className="block text-xl sm:text-2xl lg:text-4xl">
-                                    | <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">أكاديمية دارين لتعليم والتدريب</span>
+                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">
+                                    للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
 
@@ -117,7 +117,7 @@ export const Home = () => {
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/${adminPhone}`}
+                                    href={`https://wa.me/2${adminPhone}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
@@ -178,7 +178,7 @@ export const Home = () => {
             <section className="pt-16 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 max-w-3xl mx-auto">
-                        <h2 className="text-3xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
+                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-normal py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
@@ -239,9 +239,9 @@ export const Home = () => {
                                         <Award size={16} className="text-gold" />
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-black mb-4 font-heading text-white">نخبة من المعلمين المبدعين</h3>
-                                    <p className="text-white/80 text-xs md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
-                                        نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل.
+                                    <h3 className="text-xl md:text-2xl font-black mb-4 font-heading text-white">بيئة تعليمية متطورة</h3>
+                                    <p className="text-white/80 text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
+                                        نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.
                                     </p>
                                 </div>
 
@@ -296,7 +296,7 @@ export const Home = () => {
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
                                 <a
-                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
+                                    href={`https://wa.me/2${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
