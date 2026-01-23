@@ -85,6 +85,7 @@ export const Settings = () => {
     const [showResetModal, setShowResetModal] = useState(false);
     const [resetLoading, setResetLoading] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
 
     // Scroll to form ref
     const formRef = useRef<HTMLDivElement>(null);
@@ -100,30 +101,51 @@ export const Settings = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    // Sync local states when context data is loaded
+    useEffect(() => {
+        if (academyName) setLocalAcademyName(academyName);
+        if (adminPhone) setLocalAdminPhone(adminPhone);
+        if (user) {
+            setLocalName(user.name);
+            setLocalUsername(user.username);
+        }
+    }, [academyName, adminPhone, user]);
+
     const showNotification = (message: string) => {
         setNotificationMessage(message);
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
     };
 
-    const handleSave = () => {
-        // Save Global Context Data
-        setAcademyName(localAcademyName);
-        setAdminPhone(localAdminPhone);
+    const handleSave = async () => {
+        setIsSaving(true);
+        try {
+            // Save Global Context Data
+            await Promise.all([
+                setAcademyName(localAcademyName),
+                setAdminPhone(localAdminPhone)
+            ]);
 
-        const updates: { name?: string; username: string; password?: string } = {
-            name: localName,
-            username: localUsername
-        };
+            const updates: { name?: string; username: string; password?: string } = {
+                username: localUsername,
+                name: localName
+            };
 
-        if (localPassword) {
-            updates.password = localPassword;
+            if (localPassword) {
+                updates.password = localPassword;
+            }
+
+            await updateUser(updates);
+
+            // Show notification
+            showNotification('تم حفظ الإعدادات العامة بنجاح!');
+        } catch (error) {
+            console.error('Save settings error:', error);
+            alert('حدث خطأ أثناء حفظ الإعدادات');
+        } finally {
+            setIsSaving(false);
+            setLocalPassword(''); // Clear password field after save
         }
-
-        updateUser(updates);
-
-        // Show notification
-        showNotification('تم حفظ الإعدادات العامة بنجاح!');
     };
 
     const handleTogglePermission = (id: string) => {
@@ -365,10 +387,18 @@ export const Settings = () => {
                     </div>
                     <button
                         onClick={handleSave}
-                        className="bg-white text-primary-700 px-8 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
+                        disabled={isSaving}
+                        className={cn(
+                            "bg-white text-primary-700 px-8 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14",
+                            isSaving && "opacity-70 cursor-not-allowed translate-y-0"
+                        )}
                     >
-                        <Save size={20} />
-                        <span>حفظ الإعدادات</span>
+                        {isSaving ? (
+                            <div className="w-5 h-5 border-2 border-primary-700 border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                            <Save size={20} />
+                        )}
+                        <span>{isSaving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}</span>
                     </button>
                 </div>
             </div>
