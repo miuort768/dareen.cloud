@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
+    GraduationCap,
     LayoutDashboard,
-    Sparkles,
     Users,
     Wallet,
     UserCheck,
@@ -45,7 +45,7 @@ export const Sidebar = () => {
     const navigation = [
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
-        { name: 'الطلاب', href: '/students', id: 'students', icon: Sparkles },
+        { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
         { name: 'المالية', href: '/finance', id: 'finance', icon: Wallet },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
@@ -87,7 +87,7 @@ export const Sidebar = () => {
                         collapsed ? "justify-center px-0" : "justify-between px-6"
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                            <Sparkles size={collapsed ? 32 : 28} className="text-gold shrink-0 animate-pulse" />
+                            <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0" />
                             <span className={cn(
                                 "font-bold text-xl text-gray-800 transition-all duration-300 dark:text-gray-100",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
@@ -119,7 +119,7 @@ export const Sidebar = () => {
                     collapsed ? "justify-center px-0" : "justify-between px-6"
                 )}>
                     <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <Sparkles size={collapsed ? 32 : 28} className="text-gold shrink-0 animate-pulse" />
+                        <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0" />
                         <span className={cn(
                             "font-bold text-xl text-gray-800 transition-all duration-300 dark:text-gray-100",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
@@ -258,7 +258,7 @@ export const Sidebar = () => {
 
                     <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100 dark:border-gray-800">
                         <div className="flex items-center gap-3">
-                            <Sparkles size={24} className="text-gold animate-pulse" />
+                            <GraduationCap size={24} className="text-gold" />
                             <div>
                                 <h2 className="text-base font-black text-gray-900 dark:text-white leading-tight">{academyName}</h2>
                                 <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">قائمة الوصول السريع</p>

@@ -55,8 +55,8 @@ export const NotificationDropdown = () => {
 
         fetchNotifications();
 
-        // Refresh every 15 seconds for a more real-time feel
-        const intervalId = setInterval(fetchNotifications, 15000);
+        // Refresh every 3 seconds for a more real-time feel
+        const intervalId = setInterval(fetchNotifications, 3000);
 
         return () => clearInterval(intervalId);
     }, [currentUser, showNotification]);

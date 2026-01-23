@@ -16,6 +16,8 @@ interface StudentDetailsProps {
     teachers: Teacher[];
 }
 
+import { StudentHistoryModal } from './StudentHistoryModal';
+
 export const StudentDetails = ({
     student,
     onClose,
@@ -27,6 +29,7 @@ export const StudentDetails = ({
     teachers
 }: StudentDetailsProps) => {
     const [addingSessionsIndex, setAddingSessionsIndex] = useState<number | null>(null);
+    const [showHistory, setShowHistory] = useState(false);
 
     return (
         <div className="bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 flex flex-col shadow-2xl overflow-hidden rounded-none animate-in slide-in-from-left-4 h-[700px]">
@@ -92,13 +95,20 @@ export const StudentDetails = ({
                                     <div className="flex items-center gap-2 pt-2">
                                         <button
                                             onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                            className={cn("px-2 py-1 border text-[8px] font-black transition-colors", addingSessionsIndex === i ? "bg-primary-600 text-white border-primary-600" : "border-primary-100 text-primary-600 hover:bg-primary-50")}
+                                            className={cn("px-2 py-1.5 border text-[9px] font-black transition-colors flex-1 text-center bg-gray-50", addingSessionsIndex === i ? "bg-primary-600 text-white border-primary-600" : "border-gray-200 text-gray-600 hover:bg-white")}
                                         >
                                             {addingSessionsIndex === i ? 'إغلاق' : 'إضافة حصص'}
                                         </button>
 
+                                        <button
+                                            onClick={() => setShowHistory(true)}
+                                            className="px-2 py-1.5 border border-primary-200 text-primary-700 bg-primary-50 text-[9px] font-black hover:bg-primary-100 transition-colors flex-1 text-center"
+                                        >
+                                            عرض السجل بالكامل
+                                        </button>
+
                                         {addingSessionsIndex === i && (
-                                            <div className="flex items-center gap-1 animate-in slide-in-from-right-2">
+                                            <div className="flex items-center gap-1 animate-in slide-in-from-right-2 absolute left-4 bg-white shadow-lg p-1 border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
                                                 {[2, 5, 8].map(num => (
                                                     <button
                                                         key={num}
@@ -118,9 +128,14 @@ export const StudentDetails = ({
                 </div>
 
                 <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
-
-
             </div>
+
+            {showHistory && (
+                <StudentHistoryModal
+                    student={student}
+                    onClose={() => setShowHistory(false)}
+                />
+            )}
         </div>
     );
 };

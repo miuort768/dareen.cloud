@@ -101,10 +101,56 @@ export const useParents = () => {
         const newParentsList: Omit<Parent, 'id'>[] = [];
         const seenPhones = new Set();
 
+        // Grade ranking map
+        const gradeRank: Record<string, number> = {
+            'تمهيدي': 0, 'روضة': 0, 'kg1': 0, 'kg2': 0,
+            'الأول': 1, 'الصف الأول': 1, '1': 1,
+            'الثاني': 2, 'الصف الثاني': 2, '2': 2,
+            'الثالث': 3, 'الصف الثالث': 3, '3': 3,
+            'الرابع': 4, 'الصف الرابع': 4, '4': 4,
+            'الخامس': 5, 'الصف الخامس': 5, '5': 5,
+            'السادس': 6, 'الصف السادس': 6, '6': 6,
+            'السابع': 7, 'الصف السابع': 7, '7': 7,
+            'الثامن': 8, 'الصف الثامن': 8, '8': 8,
+            'التاسع': 9, 'الصف التاسع': 9, '9': 9,
+            'العاشر': 10, 'الصف العاشر': 10, '10': 10,
+            'الحادي عشر': 11, 'الصف الحادي عشر': 11, '11': 11,
+            'الثاني عشر': 12, 'الصف الثاني عشر': 12, '12': 12, 'توجيهي': 12
+        };
+
+        const getGradeRank = (grade: string = '') => {
+            const normalized = grade.trim();
+            if (gradeRank[normalized] !== undefined) return gradeRank[normalized];
+            // Try to extract number
+            const match = normalized.match(/\d+/);
+            return match ? parseInt(match[0]) : -1;
+        };
+
+        // Group students by parent phone
+        const studentsByPhone: Record<string, typeof students> = {};
         for (const s of students) {
-            if (s.parentPhone && !existingPhones.has(s.parentPhone) && !seenPhones.has(s.parentPhone)) {
-                seenPhones.add(s.parentPhone);
-                newParentsList.push({ name: `ولي أمر ${s.name}`, phone: s.parentPhone, email: '' });
+            if (s.parentPhone && !existingPhones.has(s.parentPhone)) {
+                if (!studentsByPhone[s.parentPhone]) {
+                    studentsByPhone[s.parentPhone] = [];
+                }
+                studentsByPhone[s.parentPhone].push(s);
+            }
+        }
+
+        // Create parents from groups
+        for (const [phone, familyStudents] of Object.entries(studentsByPhone)) {
+            if (!seenPhones.has(phone)) {
+                seenPhones.add(phone);
+                // Find oldest student
+                const oldestStudent = familyStudents.reduce((prev, current) => {
+                    return getGradeRank(current.grade) > getGradeRank(prev.grade) ? current : prev;
+                });
+
+                newParentsList.push({
+                    name: `ولي أمر ${oldestStudent.name}`,
+                    phone: phone,
+                    email: ''
+                });
             }
         }
 
