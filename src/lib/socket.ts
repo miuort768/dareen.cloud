@@ -11,7 +11,7 @@ class SocketService {
         if (!this.socket) {
             const token = localStorage.getItem('token');
             this.socket = io(SOCKET_URL, {
-                transports: ['websocket'],
+                transports: ['polling', 'websocket'],
                 autoConnect: true,
                 auth: { token }
             });
