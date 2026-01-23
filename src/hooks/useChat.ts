@@ -16,16 +16,17 @@ export const useChat = (userId?: string) => {
         const handleNewMessage = (message: ChatMessage) => {
             // Update messages for specific conversation
             queryClient.setQueryData(['messages', message.conversationId], (old: ChatMessage[] = []) => {
-                // If message already exists by ID, do nothing
+                if (!Array.isArray(old)) return [message];
                 if (old.find(m => m.id === message.id)) return old;
                 return [...old, message];
             });
 
-            // Update conversations list (last message & unread count)
+            // Update conversations list (last message, unread count, and SORTING)
             queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                if (!Array.isArray(old)) return [];
                 const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
 
-                return old.map(conv => {
+                const updated = old.map(conv => {
                     if (conv.id === message.conversationId) {
                         const isCurrentlyActive = activeConvId === conv.id;
                         return {
@@ -36,6 +37,13 @@ export const useChat = (userId?: string) => {
                         };
                     }
                     return conv;
+                });
+
+                // Re-sort: Latest message time first
+                return [...updated].sort((a, b) => {
+                    const timeA = new Date(a.lastMessageTime || 0).getTime();
+                    const timeB = new Date(b.lastMessageTime || 0).getTime();
+                    return timeB - timeA;
                 });
             });
         };
@@ -50,12 +58,22 @@ export const useChat = (userId?: string) => {
             }
         };
 
+        const handleNewConversation = (conv: Conversation) => {
+            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                if (!Array.isArray(old)) return [conv];
+                if (old.find(c => c.id === conv.id)) return old;
+                return [conv, ...old];
+            });
+        };
+
         socket.on('new_message', handleNewMessage);
         socket.on('typing', handleTyping);
+        socket.on('new_conversation', handleNewConversation);
 
         return () => {
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
+            socket.off('new_conversation', handleNewConversation);
         };
     }, [userId, queryClient]);
 

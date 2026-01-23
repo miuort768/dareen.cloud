@@ -89,6 +89,15 @@ router.post('/conversations', async (req, res) => {
         }
 
         const result = await req.chatService.createConversation(body);
+
+        // Emit Socket Event for new conversation
+        const io = req.app.get('socketio');
+        if (io && result.members) {
+            for (const memberId of result.members) {
+                io.to(`user_${memberId}`).emit('new_conversation', result);
+            }
+        }
+
         ResponseHandler.success(res, result, 201);
     } catch (err) {
         ResponseHandler.error(res, err.message, 500, err);
@@ -176,7 +185,18 @@ router.post('/conversations/:id/messages', async (req, res) => {
         // Emit Socket Event
         const io = req.app.get('socketio');
         if (io) {
+            // Fetch all members to emit to their personal rooms
+            const members = await req.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', conversationId);
+
+            // 1. Emit to the conversation room (for those currently viewing the chat)
             io.to(conversationId).emit('new_message', newMessage);
+
+            // 2. Emit to each member's personal room (for sidebar/global updates)
+            for (const member of members) {
+                if (member.userId !== senderId) {
+                    io.to(`user_${member.userId}`).emit('new_message', newMessage);
+                }
+            }
         }
 
         ResponseHandler.success(res, newMessage);

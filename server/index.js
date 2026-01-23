@@ -211,7 +211,13 @@ async function startServer() {
         });
 
         io.on('connection', (socket) => {
+            const userId = socket.data.user?.id;
             console.log('User connected:', socket.id, 'User:', socket.data.user?.name);
+
+            if (userId) {
+                socket.join(`user_${userId}`);
+                console.log(`User ${userId} joined their personal room user_${userId}`);
+            }
 
             socket.on('join_conversation', (conversationId) => {
                 socket.join(conversationId);
