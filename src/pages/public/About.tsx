@@ -136,7 +136,7 @@ export const About = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 md:mb-24">
+                    <div className="text-center mb-8 md:mb-12">
                         <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 font-heading">
                             القيم التي <span className="text-blue-600">تُحدد هويتنا</span>
                         </h2>
