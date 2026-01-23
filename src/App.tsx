@@ -4,6 +4,7 @@ import { Layout } from './components/layout/Layout';
 import { AppProvider, useApp } from './context/AppContext';
 import { ChatProvider } from './context/ChatContext';
 import { Loader2 } from 'lucide-react';
+import { InstallPWA } from './components/InstallPWA';
 
 // Lazy load all pages for better performance
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
@@ -78,6 +79,7 @@ const DashboardRedirect = () => {
 function AppContent() {
   return (
     <Suspense fallback={<PageLoader />}>
+      <InstallPWA />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
