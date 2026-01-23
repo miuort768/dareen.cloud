@@ -11,6 +11,8 @@ import foundationImg from '../../assets/courses/foundation.png';
 const COURSES = [
     { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '2.5k', icon: '💎', color: 'gold', price: 'متاح الآن', image: foundationImg },
     { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '4.2k', icon: '📿', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '2.1k', icon: '📖', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '1.8k', icon: '📢', color: 'emerald', price: 'متاح الآن', image: foundationImg },
 
     // Gulf & Regional Curricula (Category All Set to 'gulf')
     { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '2.1k', icon: '🇰🇼', color: 'blue', price: 'متاح الآن', image: foundationImg },
