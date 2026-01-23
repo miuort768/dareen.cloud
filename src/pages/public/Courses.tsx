@@ -22,6 +22,8 @@ const COURSES = [
     { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'سنوي', image: foundationImg },
 
     { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '1.8k', icon: '🇬🇧', color: 'indigo', price: 'مستويات', image: foundationImg },
+    { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '2.0k', icon: '🇸🇦', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '1.2k', icon: '🇫🇷', color: 'blue', price: 'مستويات', image: foundationImg },
     { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '1.6k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: foundationImg },
 ];
 
