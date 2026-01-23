@@ -9,24 +9,24 @@ import { SEO } from '../../components/SEO';
 import foundationImg from '../../assets/courses/foundation.png';
 
 const COURSES = [
-    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '2.5k', icon: '💎', color: 'gold', price: 'متاح الآن', image: foundationImg },
-    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '4.2k', icon: '📿', color: 'emerald', price: 'متاح الآن', image: foundationImg },
-    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '2.1k', icon: '📖', color: 'emerald', price: 'متاح الآن', image: foundationImg },
-    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '1.8k', icon: '📢', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', icon: '💎', color: 'gold', price: 'متاح الآن', image: foundationImg },
+    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', icon: '📿', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', icon: '📖', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', icon: '📢', color: 'emerald', price: 'متاح الآن', image: foundationImg },
 
     // Gulf & Regional Curricula (Category All Set to 'gulf')
-    { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '2.1k', icon: '🇰🇼', color: 'blue', price: 'متاح الآن', image: foundationImg },
-    { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل لجميع مواد المنهج السعودي المطور لجميع المراحل الدراسية مع نخبة من الأساتذة.', students: '1.9k', icon: '🇸🇦', color: 'green', price: 'متاح الآن', image: foundationImg },
-    { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة، مع التركيز على نواتج التعلم المتطورة.', students: '1.5k', icon: '🇦🇪', color: 'red', price: 'متاح الآن', image: foundationImg },
-    { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '1.4k', icon: '🇶🇦', color: 'maroon', price: 'متاح الآن', image: foundationImg },
-    { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '1.3k', icon: '🇴🇲', color: 'green', price: 'متاح الآن', image: foundationImg },
-    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية لطلاب المنهج المصري المقيمين في الخارج بأسلوب مبسط يحاكي النظام التعليمي المصري.', students: '2.2k', icon: '🇪🇬', color: 'red', price: 'متاح الآن', image: foundationImg },
-    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '1.1k', icon: '🇯🇴', color: 'red', price: 'متاح الآن', image: foundationImg },
+    { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '4.5k', icon: '🇰🇼', color: 'blue', price: 'متاح الآن', image: foundationImg },
+    { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل لجميع مواد المنهج السعودي المطور لجميع المراحل الدراسية مع نخبة من الأساتذة.', students: '4.1k', icon: '🇸🇦', color: 'green', price: 'متاح الآن', image: foundationImg },
+    { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة، مع التركيز على نواتج التعلم المتطورة.', students: '3.2k', icon: '🇦🇪', color: 'red', price: 'متاح الآن', image: foundationImg },
+    { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '3.3k', icon: '🇶🇦', color: 'maroon', price: 'متاح الآن', image: foundationImg },
+    { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', icon: '🇴🇲', color: 'green', price: 'متاح الآن', image: foundationImg },
+    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية لطلاب المنهج المصري المقيمين في الخارج بأسلوب مبسط يحاكي النظام التعليمي المصري.', students: '4.8k', icon: '🇪🇬', color: 'red', price: 'متاح الآن', image: foundationImg },
+    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '2.8k', icon: '🇯🇴', color: 'red', price: 'متاح الآن', image: foundationImg },
 
-    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '1.8k', icon: '🇬🇧', color: 'indigo', price: 'متاح الآن', image: foundationImg },
-    { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '2.0k', icon: '🇸🇦', color: 'emerald', price: 'متاح الآن', image: foundationImg },
-    { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '1.2k', icon: '🇫🇷', color: 'blue', price: 'متاح الآن', image: foundationImg },
-    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '1.6k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: foundationImg },
+    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', icon: '🇬🇧', color: 'indigo', price: 'متاح الآن', image: foundationImg },
+    { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '4.2k', icon: '🇸🇦', color: 'emerald', price: 'متاح الآن', image: foundationImg },
+    { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '2.9k', icon: '🇫🇷', color: 'blue', price: 'متاح الآن', image: foundationImg },
+    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '3.5k', icon: '🎯', color: 'indigo', price: 'متاح الآن', image: foundationImg },
 ];
 
 const CATEGORIES = [
