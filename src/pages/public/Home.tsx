@@ -97,9 +97,9 @@ export const Home = () => {
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-tight mb-3">
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.5] mb-3">
                                 <span className="block mb-2">معهد دارين</span>
-                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">
+                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
