@@ -75,9 +75,9 @@ export const Courses = () => {
                                 | مستقبل طفلك <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-gold-hover">يبدأ بدورة</span>
                             </span>
                         </h1>
-                        <p className="text-sm md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed md:leading-relaxed font-medium px-4 md:px-0">
-                            <span className="md:inline block">استكشف مسارات تعليمية مبتكرة تجمع بين الأصالة والتقنيات الحديثة</span>{' '}
-                            <span className="md:inline block">لتطوير مهارات طفلك وتفوقه الدراسي.</span>
+                        <p className="text-[11px] md:text-xl text-gray-500 max-w-4xl mx-auto leading-relaxed md:leading-relaxed font-medium px-0 md:px-0">
+                            <span className="md:inline block whitespace-nowrap tracking-tighter sm:tracking-normal">استكشف مسارات تعليمية مبتكرة تجمع بين الأصالة والتقنيات الحديثة</span>
+                            <span className="md:inline block whitespace-nowrap tracking-tighter sm:tracking-normal">لتطوير مهارات طفلك وتفوقه الدراسي.</span>
                         </p>
                     </div>
 
