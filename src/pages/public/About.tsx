@@ -24,9 +24,9 @@ export const About = () => {
                         <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900">معهد دارين | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 mb-6 font-heading tracking-tight leading-[1.3] md:leading-tight">
+                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight">
                         نحن لا نُدرّس فقط،<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-900">نحن نبني مستقبلاً</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-900 py-1 inline-block">نحن نبني مستقبلاً</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
