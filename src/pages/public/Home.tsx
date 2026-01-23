@@ -97,14 +97,14 @@ export const Home = () => {
                                 <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.5] mb-3">
-                                <span className="block mb-2">معهد دارين</span>
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.3] mb-1">
+                                <span className="block mb-0.5">معهد دارين</span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
 
-                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-8 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
                             </p>
 
@@ -130,7 +130,7 @@ export const Home = () => {
                             </div>
 
                             {/* Trust Badges */}
-                            <div className="mt-12 pt-8 border-t border-gray-100 flex items-center justify-center gap-6">
+                            <div className="mt-6 pt-6 border-t border-gray-100 flex items-center justify-center gap-6">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map((i) => (
                                         <img
