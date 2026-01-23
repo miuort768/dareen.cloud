@@ -21,15 +21,19 @@ export const PublicNavbar = () => {
             <nav className="bg-white/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 px-4 md:px-6 py-2 md:py-3 relative">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
-                    <Link to="/" className="flex items-center gap-2.5 pr-2 group">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform duration-500">
-                            <GraduationCap size={22} strokeWidth={2.5} />
+                    <Link to="/" className="flex items-center gap-3 pr-2 group">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-blue-400 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                            <div className="relative w-11 h-11 bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-800 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                                <GraduationCap size={22} strokeWidth={2.5} className="relative z-10" />
+                                <Sparkles size={12} className="absolute -top-1 -right-1 text-gold fill-gold animate-pulse" />
+                            </div>
                         </div>
-                        <div className="flex flex-col items-start">
-                            <h1 className="site-title text-base md:text-xl font-black leading-none bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-indigo-900 tracking-tighter">
+                        <div className="flex flex-col items-start pt-0.5">
+                            <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-900 tracking-tighter">
                                 معهد دارين
                             </h1>
-                            <span className="text-[9px] md:text-[10px] text-blue-600/70 font-black uppercase tracking-widest mt-0.5">
+                            <span className="text-[8px] md:text-[10px] text-blue-600/80 font-black uppercase tracking-[0.1em] mt-1 bg-blue-50/50 px-1.5 py-0.5 rounded-md">
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
