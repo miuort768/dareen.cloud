@@ -58,8 +58,39 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Update initial state
         setIsConnected(socket.connected);
 
+        // Internal map to track timeouts for typing indicators
+        const typingTimeouts: Record<string, any> = {};
+
+        const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
+            if (msgConvId !== 'global') {
+                const key = `${msgConvId}_${userName}`;
+
+                // Clear existing timeout if any
+                if (typingTimeouts[key]) {
+                    clearTimeout(typingTimeouts[key]);
+                }
+
+                setTypingUsers(prev => {
+                    const others = prev.filter(u => u.conversationId !== msgConvId || u.userName !== userName);
+                    if (isTyping) return [...others, { conversationId: msgConvId, userName }];
+                    return others;
+                });
+
+                // Auto-clear after 4 seconds if no "stop typing" event is received
+                if (isTyping) {
+                    typingTimeouts[key] = setTimeout(() => {
+                        setTypingUsers(prev => prev.filter(u => u.conversationId !== msgConvId || u.userName !== userName));
+                        delete typingTimeouts[key];
+                    }, 4000);
+                }
+            }
+        };
+
         const handleNewMessage = (message: ChatMessage) => {
             console.log('📬 Global Socket: New message received:', message);
+
+            // Immediately clear typing status for the person who just sent a message
+            setTypingUsers(prev => prev.filter(u => u.conversationId !== message.conversationId || u.userName !== message.senderName));
 
             // 1. Update messages list cache
             queryClient.setQueryData(['messages', message.conversationId], (old: any) => {

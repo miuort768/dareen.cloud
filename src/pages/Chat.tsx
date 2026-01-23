@@ -71,6 +71,7 @@ export const Chat = () => {
             senderId: currentUser.id,
             senderName: currentUser.name
         });
+        setTyping(selectedConv.id, false, currentUser.name);
         setNewMessage('');
     }, [newMessage, selectedConv, currentUser, sendMessage]);
 
