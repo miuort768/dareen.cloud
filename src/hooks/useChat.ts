@@ -1,87 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
+import { useChatContext } from '../context/ChatContext';
 import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types';
 
 export const useChat = (userId?: string) => {
     const queryClient = useQueryClient();
-
-    // Socket listeners setup
-    useEffect(() => {
-        if (!userId) return;
-
-        const socket = socketService.getSocket();
-
-        const handleNewMessage = (message: ChatMessage) => {
-            // Update messages for specific conversation
-            queryClient.setQueryData(['messages', message.conversationId], (old: ChatMessage[] = []) => {
-                if (!Array.isArray(old)) return [message];
-                if (old.find(m => m.id === message.id)) return old;
-                return [...old, message];
-            });
-
-            // Update conversations list (last message, unread count, and SORTING)
-            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
-                if (!Array.isArray(old)) return [];
-                const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
-
-                const updated = old.map(conv => {
-                    if (conv.id === message.conversationId) {
-                        const isCurrentlyActive = activeConvId === conv.id;
-                        return {
-                            ...conv,
-                            lastMessage: message.content,
-                            lastMessageTime: message.timestamp,
-                            unreadCount: isCurrentlyActive ? 0 : (conv.unreadCount || 0) + 1
-                        };
-                    }
-                    return conv;
-                });
-
-                // Re-sort: Latest message time first
-                return [...updated].sort((a, b) => {
-                    const timeA = new Date(a.lastMessageTime || 0).getTime();
-                    const timeB = new Date(b.lastMessageTime || 0).getTime();
-                    return timeB - timeA;
-                });
-            });
-        };
-
-        const handleTyping = ({ conversationId: msgConvId, userName, isTyping }: { conversationId: string, userName: string, isTyping: boolean }) => {
-            if (msgConvId !== 'global') {
-                setTypingUsers(prev => {
-                    const others = prev.filter(u => u.conversationId !== msgConvId || u.userName !== userName);
-                    if (isTyping) return [...others, { conversationId: msgConvId, userName }];
-                    return others;
-                });
-            }
-        };
-
-        const handleNewConversation = (conv: Conversation) => {
-            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
-                if (!Array.isArray(old)) return [conv];
-                if (old.find(c => c.id === conv.id)) return old;
-                return [conv, ...old];
-            });
-        };
-
-        socket.on('new_message', handleNewMessage);
-        socket.on('typing', handleTyping);
-        socket.on('new_conversation', handleNewConversation);
-
-        return () => {
-            socket.off('new_message', handleNewMessage);
-            socket.off('typing', handleTyping);
-            socket.off('new_conversation', handleNewConversation);
-        };
-    }, [userId, queryClient]);
-
-    const [typingUsers, setTypingUsers] = useState<{ conversationId: string, userName: string }[]>([]);
-
-    const setTyping = (conversationId: string, isTyping: boolean, userName: string) => {
-        socketService.getSocket().emit('typing', { conversationId, userId, userName, isTyping });
-    };
+    const { typingUsers, setTyping, totalUnreadCount } = useChatContext();
 
     // Fetch conversations
     const { data: conversations = [], isLoading: isLoadingConversations, refetch: refetchConversations } = useQuery<Conversation[]>({
@@ -251,6 +177,7 @@ export const useChat = (userId?: string) => {
         refetchConversations,
         typingUsers,
         setTyping,
-        markAsRead: markAsReadMutation.mutate
+        markAsRead: markAsReadMutation.mutate,
+        totalUnreadCount
     };
 };

@@ -22,6 +22,7 @@ import {
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
+import { useChatContext } from '../../context/ChatContext';
 
 export const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(() => {
@@ -30,6 +31,7 @@ export const Sidebar = () => {
     });
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { academyName, logout, currentUser, isLoading } = useApp();
+    const { totalUnreadCount } = useChatContext();
     const navigate = useNavigate();
 
     // Persist collapsed state
@@ -155,6 +157,14 @@ export const Sidebar = () => {
                             )}>
                                 {item.name}
                             </span>
+                            {item.id === 'chat' && totalUnreadCount > 0 && (
+                                <span className={cn(
+                                    "absolute top-1 right-2 w-5 h-5 flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full animate-bounce-slow",
+                                    collapsed && "top-1 right-1"
+                                )}>
+                                    {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                </span>
+                            )}
                             {collapsed && (
                                 <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-gray-900 text-white text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 dark:bg-gray-800 dark:text-gray-200">
                                     {item.name}

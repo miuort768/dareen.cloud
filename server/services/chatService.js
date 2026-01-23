@@ -20,48 +20,34 @@ class ChatService {
     }
 
     async getConversations(userId) {
-        // Fetch conversations and their members in a slightly more optimized way
+        // Optimized single-query fetch for all conversations with display names
         const convs = await this.db.all(`
-            SELECT c.*, 
-            (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
-            (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
-            (SELECT COUNT(*) FROM notifications WHERE conversationId = c.id AND receiverId = ? AND read = 0) as unreadCount,
-            GROUP_CONCAT(cm.userId) as memberIds
+            SELECT 
+                c.*, 
+                CASE 
+                    WHEN c.isGroup = 1 THEN c.name 
+                    ELSE COALESCE(other_u.name, other_t.name, other_cp.name, 'Unknown User') 
+                END as displayName,
+                (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
+                (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
+                (SELECT COUNT(*) FROM notifications WHERE conversationId = c.id AND receiverId = ? AND read = 0) as unreadCount,
+                (SELECT GROUP_CONCAT(userId) FROM conversation_members WHERE conversationId = c.id) as memberIds
             FROM conversations c
-            JOIN conversation_members cm ON c.id = cm.conversationId
-            WHERE c.id IN (SELECT conversationId FROM conversation_members WHERE userId = ?)
+            JOIN conversation_members cm_me ON c.id = cm_me.conversationId AND cm_me.userId = ?
+            -- For private chats, find the other member
+            LEFT JOIN conversation_members cm_other ON c.id = cm_other.conversationId AND c.isGroup = 0 AND cm_other.userId != ?
+            LEFT JOIN users other_u ON cm_other.userId = other_u.id
+            LEFT JOIN teachers other_t ON cm_other.userId = other_t.id
+            LEFT JOIN chat_profiles other_cp ON cm_other.userId = other_cp.id
             GROUP BY c.id
             ORDER BY lastMessageTime DESC
-        `, [userId, userId]);
+        `, [userId, userId, userId]);
 
-        return await Promise.all(convs.map(async (c) => {
-            const memberList = (c.memberIds || '').split(',');
-            let displayName = c.name;
-
-            if (!c.isGroup && memberList.length === 2) {
-                const otherUserId = memberList.find(m => m !== userId);
-                if (otherUserId) {
-                    // Try different tables for name
-                    const nameResult = await this.db.get(`
-                        SELECT name FROM (
-                            SELECT name FROM chat_profiles WHERE id = ?
-                            UNION ALL
-                            SELECT name FROM users WHERE id = ?
-                            UNION ALL
-                            SELECT name FROM teachers WHERE id = ?
-                        ) LIMIT 1
-                    `, [otherUserId, otherUserId, otherUserId]);
-
-                    if (nameResult) displayName = nameResult.name;
-                }
-            }
-            return {
-                ...c,
-                displayName,
-                members: memberList,
-                isGroup: !!c.isGroup,
-                unreadCount: c.unreadCount || 0
-            };
+        return convs.map(c => ({
+            ...c,
+            members: (c.memberIds || '').split(','),
+            isGroup: !!c.isGroup,
+            unreadCount: c.unreadCount || 0
         }));
     }
 
@@ -76,9 +62,11 @@ class ChatService {
 
     async updateProfile(id, { name, username, password, avatar }) {
         if (password) {
+            const bcrypt = require('bcrypt');
+            const hashedPassword = await bcrypt.hash(password, 10);
             await this.db.run(
                 'UPDATE chat_profiles SET name = ?, username = ?, password = ?, avatar = ? WHERE id = ?',
-                [name, username, password, avatar, id]
+                [name, username, hashedPassword, avatar, id]
             );
         } else {
             await this.db.run(
@@ -96,9 +84,11 @@ class ChatService {
 
     async createProfile({ name, username, password, avatar }) {
         const id = uuidv4();
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash(password || '123456', 10);
         await this.db.run(
             'INSERT INTO chat_profiles (id, name, username, password, avatar) VALUES (?, ?, ?, ?, ?)',
-            [id, name, username, password, avatar || null]
+            [id, name, username, hashedPassword, avatar || null]
         );
         return { id, name, username, avatar };
     }

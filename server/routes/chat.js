@@ -167,7 +167,7 @@ router.get('/conversations/:id/messages', async (req, res) => {
 router.post('/conversations/:id/messages', async (req, res) => {
     try {
         const { id: conversationId } = req.params;
-        const { senderName, content } = req.body;
+        const { content } = req.body;
         const senderId = req.user.id; // SECURITY: Use ID from token
 
         // SECURITY: check membership
@@ -175,6 +175,19 @@ router.post('/conversations/:id/messages', async (req, res) => {
         if (!membership && req.user.role !== 'admin') {
             return ResponseHandler.error(res, 'Unauthorized to send messages to this conversation', 403);
         }
+
+        // SECURITY: Fetch the real sender name from DB (don't trust frontend)
+        const userProfile = await req.db.get(`
+            SELECT name FROM (
+                SELECT name FROM users WHERE id = ?
+                UNION ALL
+                SELECT name FROM teachers WHERE id = ?
+                UNION ALL
+                SELECT name FROM chat_profiles WHERE id = ?
+            ) LIMIT 1
+        `, [senderId, senderId, senderId]);
+
+        const senderName = userProfile ? userProfile.name : 'Unknown';
 
         // Save message
         const newMessage = await req.chatService.saveMessage(conversationId, { senderId, senderName, content });

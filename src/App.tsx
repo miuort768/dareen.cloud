@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { AppProvider, useApp } from './context/AppContext';
+import { ChatProvider } from './context/ChatContext';
 import { Loader2 } from 'lucide-react';
 
 // Lazy load all pages for better performance
@@ -118,9 +119,11 @@ function AppContent() {
 function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
-        <AppContent />
-      </BrowserRouter>
+      <ChatProvider>
+        <BrowserRouter>
+          <AppContent />
+        </BrowserRouter>
+      </ChatProvider>
     </AppProvider>
   );
 }
