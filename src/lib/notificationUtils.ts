@@ -20,21 +20,31 @@ export const requestNotificationPermission = async (): Promise<boolean> => {
     return false;
 };
 
-export const sendNativeNotification = (title: string, options?: NotificationOptions) => {
+export const sendNativeNotification = async (title: string, options?: NotificationOptions) => {
     if (!('Notification' in window) || Notification.permission !== 'granted') {
         return;
     }
 
     try {
         const defaultOptions: NotificationOptions = {
-            icon: '/logo.png', // Path to the app logo in public folder
+            icon: '/logo.png',
             badge: '/logo.png',
             silent: false,
+            vibrate: [200, 100, 200], // Mobile vibration pattern
             ...options
         };
 
-        const notification = new Notification(title, defaultOptions);
+        // Prefer Service Worker registration for better mobile/background support
+        if ('serviceWorker' in navigator) {
+            const registration = await navigator.serviceWorker.ready;
+            if (registration) {
+                await registration.showNotification(title, defaultOptions);
+                return;
+            }
+        }
 
+        // Fallback to standard Browser Notification
+        const notification = new Notification(title, defaultOptions);
         notification.onclick = () => {
             window.focus();
             notification.close();
