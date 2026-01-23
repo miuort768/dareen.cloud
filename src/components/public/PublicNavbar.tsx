@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, ChevronDown } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown, LogOut } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const PublicNavbar = () => {
