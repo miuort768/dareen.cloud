@@ -74,7 +74,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         <div className="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-[#f0f2f5] dark:border-[#202c33] rounded-full"></div>
                     </div>
                     <div className="min-w-0 flex-1">
-                        <h2 className="font-bold text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-sm lg:text-[16px]">{selectedConv.displayName}</h2>
+                        <h2 className="font-bold text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-xs lg:text-[16px]">{selectedConv.displayName}</h2>
                         <div className="flex items-center gap-1.5">
                             {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 0 ? (
                                 <p className="text-[11px] lg:text-[12px] text-emerald-600 dark:text-[#8696a0] font-medium italic animate-pulse">يكتب الآن...</p>

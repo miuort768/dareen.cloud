@@ -162,7 +162,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center justify-between mb-1">
-                                    <h3 className="font-black text-gray-900 dark:text-white truncate">{conv.displayName}</h3>
+                                    <h3 className="font-black text-gray-900 dark:text-white truncate text-sm lg:text-base">{conv.displayName}</h3>
                                     <div className="flex items-center gap-2">
                                         {conv.lastMessageTime && (
                                             <span className="text-[10px] text-gray-400 font-bold uppercase">
