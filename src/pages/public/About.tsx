@@ -1,118 +1,129 @@
-
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb } from 'lucide-react';
+import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 
 export const About = () => {
     return (
-        <div className="min-h-screen bg-white font-sans text-gray-800 relative select-none">
+        <div className="min-h-screen bg-white font-sans text-gray-800 relative overflow-x-hidden">
             <SEO
                 title="عن المعهد"
-                description="تعرف على معهد دارين وتاريخنا في التميز التعليمي. نهدف لبناء القدرات وتنمية المهارات عبر برامج تعليمية مبتكرة."
+                description="تعرف على معهد دارين وتاريخنا في التميز التعليمي. نهدف لبناء القدرات وتنمية المهارات عبر برامج تعليمية مبتكرة تجمع بين الأصالة والمعاصرة."
             />
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-32 pb-8 md:pt-32 md:pb-12 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden bg-[#FDFCF8]">
                 {/* Creative Background Elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
-
-                {/* Subtle Islamic Pattern with Mask */}
-                <div className="absolute inset-0 opacity-[0.02] islamic-pattern" style={{ maskImage: 'radial-gradient(circle at center, black, transparent 80%)' }}></div>
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-8 animate-fade-in group hover:border-gold transition-colors duration-500">
-                        <Sparkles size={14} className="text-gold group-hover:scale-125 transition-transform" />
-                        <span className="text-xs font-black tracking-[0.2em] uppercase">معهد دارين | أصالة ومعاصرة</span>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-100 rounded-full shadow-sm mb-8 animate-fade-in group hover:border-gold transition-all duration-500">
+                        <Sparkles size={16} className="text-gold group-hover:rotate-12 transition-transform" />
+                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900">معهد دارين | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 font-heading">
-                        <span className="block mb-2 md:mb-3">عن معهد دارين</span>
-                        <span className="block text-2xl md:text-4xl text-gray-600 font-bold">
-                            | حكاية <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-hover to-gold">شغف تعليمي</span> تجاوزت الحدود
-                        </span>
+                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 mb-6 font-heading tracking-tight">
+                        نحن لا نُدرّس فقط،<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-900">نحن نبني مستقبلاً</span>
                     </h1>
 
-                    <p className="text-base md:text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
-                        نحن لسنا مجرد منصة تعليمية، بل نحن عائلة تربوية تسعى لغرس القيم وبناء المهارات وتمكين الطلاب من الوصول إلى أقصى إمكاناتهم في بيئة محفزة للإبداع.
+                    <p className="text-sm md:text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
+                        في معهد دارين، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي لنخلق بيئة تعليمية لا تعرف الحدود.
                     </p>
 
-                    <div className="inline-flex items-center gap-12 px-10 py-4 group">
+                    <div className="flex flex-wrap justify-center gap-8 md:gap-16">
                         <div className="flex flex-col items-center">
-                            <span className="text-4xl md:text-5xl font-black text-gray-900 mb-1 group-hover:text-gold transition-colors">10+</span>
-                            <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">سنوات خبرة</span>
+                            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Award size={28} />
+                            </div>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900">10+</span>
+                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">سنوات تميز</span>
                         </div>
 
-                        <div className="w-px h-12 bg-gray-200"></div>
+                        <div className="flex flex-col items-center">
+                            <div className="w-14 h-14 bg-gold/10 rounded-2xl flex items-center justify-center text-gold mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Users size={28} />
+                            </div>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900">5k+</span>
+                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">طالب فخور</span>
+                        </div>
 
                         <div className="flex flex-col items-center">
-                            <span className="text-3xl md:text-5xl font-black text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">100%</span>
-                            <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">رضا تام</span>
+                            <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Heart size={28} />
+                            </div>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900">100%</span>
+                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">ثقة وتفاني</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Vision & Mission */}
+            {/* Our Story & Impact */}
             <section className="py-24 relative overflow-hidden bg-white">
-                {/* Subtle Geometric Element */}
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-[#FDFCF8] -skew-x-12 translate-x-1/2 pointer-events-none"></div>
-
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 max-w-6xl mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
 
-                        {/* Image - Kept EXACTLY as it was */}
-                        <div className="w-full lg:w-5/12">
-                            <div className="relative group max-w-sm mx-auto">
-                                <div className="absolute -inset-4 bg-gradient-to-r from-gold/20 to-gold-hover/20 clip-hexagon opacity-30 blur-2xl group-hover:scale-105 transition-transform duration-700"></div>
-                                <div className="relative w-full aspect-square overflow-hidden clip-hexagon shadow-2xl">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                                        alt="About"
-                                        className="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110"
-                                    />
+                        {/* Interactive Visual Side */}
+                        <div className="w-full lg:w-1/2 order-2 lg:order-1">
+                            <div className="relative">
+                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-600/10 to-gold/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
+                                <div className="relative grid grid-cols-2 gap-4">
+                                    <div className="pt-8 space-y-4">
+                                        <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
+                                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Collaborative learning" />
+                                        </div>
+                                        <div className="h-48 bg-gold rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
+                                            <Sparkles size={24} className="mb-4" />
+                                            <h4 className="font-black text-lg">إبداع مستمر</h4>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="h-48 bg-blue-700 rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
+                                            <Target size={24} className="mb-4" />
+                                            <h4 className="font-black text-lg">أهداف محققة</h4>
+                                        </div>
+                                        <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
+                                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Effective teaching" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Content - Enhanced Design */}
-                        <div className="w-full lg:w-7/12">
-                            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-gray-900 text-white rounded-none mb-6">
-                                <span className="text-xs font-black uppercase tracking-[0.2em]">قصة الشغف والنجاح</span>
+                        {/* Text Content */}
+                        <div className="w-full lg:w-1/2 order-1 lg:order-2 text-right">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-md mb-6">
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em]">تعرف عليـــنا</span>
                             </div>
-
-                            <h2 className="text-3xl md:text-5xl font-heading font-black text-gray-900 leading-[1.2] mb-8">
-                                رحلتنا في <span className="text-gold relative inline-block">
-                                    بناء العقول
-                                    <div className="absolute -bottom-2 right-0 w-2/3 h-1 bg-blue-600/20"></div>
-                                </span>
+                            <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-8 font-heading leading-tight">
+                                ريادة في التعليم،<br />
+                                <span className="text-gold">نهضة في الفكر</span>
                             </h2>
-
-                            <p className="text-gray-500 text-lg leading-relaxed font-medium mb-10 max-w-xl">
-                                تأسس معهد دارين انطلاقاً من إيماننا العميق بأن التعليم هو حجر الزاوية في بناء المجتمعات، حيث نسعى لغرس القيم وتنمية الشخصية قبل المعلومة.
+                            <p className="text-gray-600 text-base md:text-lg leading-relaxed font-medium mb-10 max-w-xl">
+                                بدأ معهد دارين كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                             </p>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                                {/* Vision Card */}
-                                <div className="p-8 bg-white border border-gray-100 rounded-none shadow-sm hover:border-gold hover:shadow-xl hover:shadow-gold/5 transition-all duration-500 group relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-0 bg-gold group-hover:h-full transition-all duration-500"></div>
-                                    <div className="w-14 h-14 bg-amber-50 text-gold flex items-center justify-center mb-6 group-hover:bg-gold group-hover:text-white transition-all duration-500 rounded-none transform group-hover:rotate-12">
-                                        <Zap className="w-7 h-7" strokeWidth={1.5} />
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors border border-gray-100">
+                                    <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-600 shrink-0">
+                                        <Zap size={24} />
                                     </div>
-                                    <h4 className="text-xl font-black text-gray-900 mb-3 font-heading">رسالة الابتكار</h4>
-                                    <p className="text-sm text-gray-400 leading-relaxed font-medium">نطمح لريادة التعليم الرقمي عبر دمج الأصالة بأحدث الأساليب العالمية.</p>
+                                    <div>
+                                        <h4 className="text-lg font-black text-gray-900 mb-1">رؤية الابتكار</h4>
+                                        <p className="text-sm text-gray-500 font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
+                                    </div>
                                 </div>
-
-                                {/* Mission Card */}
-                                <div className="p-8 bg-white border border-gray-100 rounded-none shadow-sm hover:border-blue-600 hover:shadow-xl hover:shadow-blue-600/5 transition-all duration-500 group relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-0 bg-blue-600 group-hover:h-full transition-all duration-500"></div>
-                                    <div className="w-14 h-14 bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 rounded-none transform group-hover:-rotate-12">
-                                        <BookOpen className="w-7 h-7" strokeWidth={1.5} />
+                                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors border border-gray-100">
+                                    <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-gold shrink-0">
+                                        <BookOpen size={24} />
                                     </div>
-                                    <h4 className="text-xl font-black text-gray-900 mb-3 font-heading">تعليم قيمي</h4>
-                                    <p className="text-sm text-gray-400 leading-relaxed font-medium">بناء جيل مُعتز بهويته، يمتلك مهارات القرن الحادي والعشرين بتمكن.</p>
+                                    <div>
+                                        <h4 className="text-lg font-black text-gray-900 mb-1">رسالة التمكين</h4>
+                                        <p className="text-sm text-gray-500 font-medium">تقديم تجربة تعليمية قيميّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -120,118 +131,86 @@ export const About = () => {
                 </div>
             </section>
 
-            {/* Core Values Section */}
-            <section className="py-24 bg-[#FDFDFD] relative overflow-hidden">
-                {/* Decorative Blobs (Hoopa Style) */}
-                <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-100 rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-                <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-gold/10 rounded-full blur-[100px] opacity-40 animate-pulse" style={{ animationDelay: '2s' }}></div>
+            {/* Core Values Section - Enhanced */}
+            <section className="py-24 bg-[#F8F9FC] relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 lg:mb-20">
-                        <div className="inline-flex items-center gap-2 px-4 py-1 bg-gray-900 text-white rounded-none mb-4 mx-auto">
-                            <Sparkles size={14} className="text-gold" />
-                            <span className="text-xs font-bold uppercase tracking-[0.2em]">هويتنا ومبادئنا</span>
-                        </div>
-                        <h2 className="text-4xl lg:text-6xl font-black text-gray-900 mb-6 font-heading">
-                            قيمنا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">الجوهرية</span>
+                    <div className="text-center mb-16 md:mb-24">
+                        <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 font-heading">
+                            القيم التي <span className="text-blue-600">تُحدد هويتنا</span>
                         </h2>
-                        <p className="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
-                            ليست مجرد شعارات، بل هي المنهج الذي نتبعه في كل لقاء تعليمي لنبني جيلاً واعياً ومبدعاً.
+                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full mb-8"></div>
+                        <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium">
+                            نحن لا نؤمن بالصدفة في النجاح، بل نؤمن بأن الالتزام بهذه القيم هو ما يصنع الفرق الحقيقي في حياة طلابنا.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                         {/* Value 1 */}
-                        <div className="group relative p-4 lg:p-8 bg-white border border-gray-100 rounded-none hover:border-blue-500 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
-                            {/* Holographic Mesh Background on Hover */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                                style={{ background: 'radial-gradient(at 0% 0%, #2563eb 0px, transparent 50%), radial-gradient(at 100% 100%, #d4af37 0px, transparent 50%)' }}>
+                        <div className="group bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50 flex flex-col items-center text-center">
+                            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all duration-700 shadow-sm relative">
+                                <Shield size={36} />
+                                <div className="absolute -inset-2 bg-blue-600/10 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-
-                            <div className="mb-4 lg:mb-8 relative">
-                                <div className="w-10 h-10 lg:w-16 lg:h-16 bg-gray-50 text-blue-600 flex items-center justify-center rounded-none group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 transform group-hover:rotate-[360deg]">
-                                    <Shield className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
-                                </div>
-                                <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-50 opacity-0 group-hover:opacity-100 transition-all"></div>
-                            </div>
-
-                            <h3 className="text-base lg:text-2xl font-black text-gray-900 mb-2 lg:mb-4 relative z-10 font-heading">الأمانة والنزاهة</h3>
-                            <p className="text-xs lg:text-base text-gray-400 lg:text-gray-500 leading-relaxed font-medium relative z-10">
-                                نغرس القيم الأخلاقية في نفوس طلابنا كبذرة أولى للنجاح، فالأخلاق هي أساس العلم الحقيقي.
+                            <h3 className="text-2xl font-black text-gray-900 mb-4 font-heading">الأمانة</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed font-medium">
+                                نلتزم بأعلى معايير النزاهة في التعامل والتعليم كشريك موثوق لمستقبل أبنائكم.
                             </p>
-
-                            <div className="mt-auto pt-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                <span className="text-[10px] font-bold text-blue-600 tracking-widest uppercase">Integrity</span>
-                                <div className="w-12 h-[1px] bg-blue-600"></div>
-                            </div>
                         </div>
 
                         {/* Value 2 */}
-                        <div className="group relative p-4 lg:p-8 bg-white border border-gray-100 rounded-none hover:border-gold transition-all duration-500 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                                style={{ background: 'radial-gradient(at 100% 0%, #d4af37 0px, transparent 50%), radial-gradient(at 0% 100%, #b45309 0px, transparent 50%)' }}>
+                        <div className="group bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50 flex flex-col items-center text-center">
+                            <div className="w-20 h-20 bg-amber-50 text-gold rounded-3xl flex items-center justify-center mb-8 group-hover:bg-gold group-hover:text-white transition-all duration-700 shadow-sm relative">
+                                <Lightbulb size={36} />
+                                <div className="absolute -inset-2 bg-gold/10 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-
-                            <div className="mb-4 lg:mb-8 relative">
-                                <div className="w-10 h-10 lg:w-16 lg:h-16 bg-gray-50 text-gold flex items-center justify-center rounded-none group-hover:bg-gold group-hover:text-white transition-all duration-500">
-                                    <Lightbulb className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <h3 className="text-base lg:text-2xl font-black text-gray-900 mb-2 lg:mb-4 relative z-10 font-heading">الابتكار التعليمي</h3>
-                            <p className="text-xs lg:text-base text-gray-400 lg:text-gray-500 leading-relaxed font-medium relative z-10">
-                                نستخدم أحدث التقنيات لنحول التعليم إلى تجربة ممتعة وتفاعلية تكسر حاجز الملل التقليدي.
+                            <h3 className="text-2xl font-black text-gray-900 mb-4 font-heading">الابتكار</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed font-medium">
+                                نبتكر دائماً في طرق التدريس لنجعل العلم تجربة مشوقة ومحفزة للذهن.
                             </p>
-
-                            <div className="mt-auto pt-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                <span className="text-[10px] font-bold text-gold tracking-widest uppercase">Innovation</span>
-                                <div className="w-12 h-[1px] bg-gold"></div>
-                            </div>
                         </div>
 
                         {/* Value 3 */}
-                        <div className="group relative p-4 lg:p-8 bg-white border border-gray-100 rounded-none hover:border-emerald-500 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                                style={{ background: 'radial-gradient(at 50% 50%, #10b981 0px, transparent 50%)' }}>
+                        <div className="group bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50 flex flex-col items-center text-center">
+                            <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-700 shadow-sm relative">
+                                <Award size={36} />
+                                <div className="absolute -inset-2 bg-emerald-600/10 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-
-                            <div className="mb-4 lg:mb-8 relative">
-                                <div className="w-10 h-10 lg:w-16 lg:h-16 bg-gray-50 text-emerald-600 flex items-center justify-center rounded-none group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500 scale-x-[-1]">
-                                    <Target className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <h3 className="text-base lg:text-2xl font-black text-gray-900 mb-2 lg:mb-4 relative z-10 font-heading">التميز والإتقان</h3>
-                            <p className="text-xs lg:text-base text-gray-400 lg:text-gray-500 leading-relaxed font-medium relative z-10">
-                                لا نرضى بأقل من أعلى معايير الجودة في كل حصة، فهدفنا هو وصول الطالب لمرحلة الإبداع.
+                            <h3 className="text-2xl font-black text-gray-900 mb-4 font-heading">التميز</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed font-medium">
+                                نضع الجودة نصب أعيننا في كل تفاصيل البرامج التعليمية التي نقدمها.
                             </p>
-
-                            <div className="mt-auto pt-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                <span className="text-[10px] font-bold text-emerald-600 tracking-widest uppercase">Excellence</span>
-                                <div className="w-12 h-[1px] bg-emerald-600"></div>
-                            </div>
                         </div>
 
                         {/* Value 4 */}
-                        <div className="group relative p-4 lg:p-8 bg-white border border-gray-100 rounded-none hover:border-indigo-600 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full overflow-hidden">
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                                style={{ background: 'radial-gradient(at 0% 100%, #4f46e5 0px, transparent 50%), radial-gradient(at 100% 0%, #312e81 0px, transparent 50%)' }}>
+                        <div className="group bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-50 flex flex-col items-center text-center">
+                            <div className="w-20 h-20 bg-indigo-50 text-indigo-700 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-indigo-700 group-hover:text-white transition-all duration-700 shadow-sm relative">
+                                <Compass size={36} />
+                                <div className="absolute -inset-2 bg-indigo-700/10 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-
-                            <div className="mb-4 lg:mb-8 relative">
-                                <div className="w-10 h-10 lg:w-16 lg:h-16 bg-gray-50 text-indigo-600 flex items-center justify-center rounded-none group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
-                                    <Compass className="w-5 h-5 lg:w-8 lg:h-8" strokeWidth={1.5} />
-                                </div>
-                            </div>
-
-                            <h3 className="text-base lg:text-2xl font-black text-gray-900 mb-2 lg:mb-4 relative z-10 font-heading">بناء الشخصية</h3>
-                            <p className="text-xs lg:text-base text-gray-400 lg:text-gray-500 leading-relaxed font-medium relative z-10">
-                                نركز على بناء إنسان مفكر ومستقل، يمتلك الثقة بالنفس والقدرة على مواجهة تحديات المستقبل.
+                            <h3 className="text-2xl font-black text-gray-900 mb-4 font-heading">بناء الجيل</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed font-medium">
+                                هدفنا الأسمى هو تكوين شخصية الطالب ليكون عضواً فعالاً ومبدعاً في مجتمعه.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                            <div className="mt-auto pt-8 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                <span className="text-[10px] font-bold text-indigo-600 tracking-widest uppercase">Growth</span>
-                                <div className="w-12 h-[1px] bg-indigo-600"></div>
+            {/* Final Call to Action - Just for About Page */}
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <div className="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <div className="relative z-10">
+                            <h2 className="text-3xl md:text-5xl font-black mb-8 font-heading">هل أنت مستعد لتكون جزءاً من حكايتنا؟</h2>
+                            <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-medium">
+                                انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز مع معهد دارين. مستقبلك المشرق يبدأ من هنا.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <a href="/courses" className="px-10 py-5 bg-gold hover:bg-gold-hover text-white font-black rounded-2xl shadow-lg transition-all transform hover:-translate-y-1">تصفح الدورات</a>
+                                <a href="/login" className="px-10 py-5 bg-white/10 hover:bg-white/20 text-white font-black rounded-2xl backdrop-blur-md transition-all">سجل دخولك الآن</a>
                             </div>
                         </div>
                     </div>
