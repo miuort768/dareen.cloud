@@ -204,7 +204,9 @@ export const About = () => {
                     <div className="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-none p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl group">
                         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-5xl font-black mb-8 font-heading">هل أنت مستعد لتكون جزءاً من حكايتنا؟</h2>
+                            <h2 className="text-xl md:text-5xl font-black mb-8 font-heading text-white leading-tight">
+                                هل أنت مستعد لتكون جزءاً من <span className="text-gold">حكايتنا؟</span>
+                            </h2>
                             <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-medium">
                                 انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز مع معهد دارين. مستقبلك المشرق يبدأ من هنا.
                             </p>
