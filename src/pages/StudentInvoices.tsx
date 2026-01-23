@@ -262,10 +262,13 @@ export const StudentInvoices = () => {
     const handleImportStudents = async () => {
         try {
             setLoading(true);
-            // 1. Fetch all students (if not already fetched)
-            const studentsList = await api.get<any[]>('/students');
+            // 1. Fetch data
+            const [studentsList, allSessions] = await Promise.all([
+                api.get<any[]>('/students'),
+                api.get<any[]>('/sessions')
+            ]);
 
-            // 2. Identify missing students in current invoices (by name for simplicity or ID)
+            // 2. Identify missing students in current invoices
             const currentStudentIds = new Set(invoices.map(inv => inv.studentId));
             const studentsToImport = studentsList.filter((s: any) => !currentStudentIds.has(s.id));
 
@@ -283,45 +286,37 @@ export const StudentInvoices = () => {
             setConfirmModal({
                 isOpen: true,
                 title: 'استيراد الطلاب',
-                message: `سيتم استيراد ${studentsToImport.length} طالب جديد وإصدار فواتير مبدئية لهم. هل تريد الاستمرار؟`,
+                message: `سيتم استيراد ${studentsToImport.length} طالب جديد وإصدار كشوفات حضور لهم بناءً على الحصص المسجلة. هل تريد الاستمرار؟`,
                 onConfirm: async () => {
                     setConfirmModal(prev => ({ ...prev, isOpen: false }));
                     try {
                         setLoading(true);
                         const importPromises = studentsToImport.map((s: any) => {
-                            const subjects = s.enrollments?.map((e: any) => e.subject).join(' + ') || '';
+                            // Only take sessions that were recorded (completed or absent)
+                            const studentSessions = allSessions.filter((sess: any) =>
+                                sess.studentId === s.id &&
+                                (sess.status === 'completed' || sess.status === 'absent')
+                            );
 
-                            // Detailed Items Calculation
-                            const items = s.enrollments?.map((e: any) => {
-                                let amount = 0;
-                                let desc = e.subject;
-
-                                if (e.price) {
-                                    amount = e.price;
-                                } else if (s.sessionPrice) {
-                                    amount = (e.sessionsTotal || 0) * s.sessionPrice;
-                                    desc = `${e.subject} (${e.sessionsTotal} حصة × ${s.sessionPrice})`;
-                                }
-
-                                return {
-                                    description: desc,
-                                    amount: amount,
-                                    date: new Date().toLocaleDateString('en-CA')
-                                };
-                            }) || [];
+                            const items = studentSessions.map((sess: any) => ({
+                                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'حضور' : 'غياب'})`,
+                                amount: sess.price || s.sessionPrice || 0,
+                                date: sess.date
+                            }));
 
                             const totalAmount = items.reduce((sum: number, i: any) => sum + i.amount, 0);
+                            const subjects = Array.from(new Set(studentSessions.map((sess: any) => sess.subject))).join(' + ');
 
                             return api.post('/studentInvoices', {
                                 studentId: s.id,
                                 studentName: s.name,
                                 amount: totalAmount,
-                                description: subjects ? `رسوم: ${subjects}` : 'رسوم شهرية',
+                                description: subjects ? `رسوم حصص: ${subjects}` : 'رسوم شهرية',
                                 date: new Date().toLocaleDateString('en-CA'),
                                 dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
                                 status: 'pending',
                                 paymentMethod: 'نقدي',
-                                notes: 'استيراد تلقائي',
+                                notes: 'استيراد تلقائي من سجل الحصص',
                                 items: items
                             });
                         });

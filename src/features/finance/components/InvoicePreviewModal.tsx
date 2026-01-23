@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSettings } from '../../../context/AppContext';
@@ -20,6 +21,7 @@ interface InvoicePreviewModalProps {
 
 export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreviewModalProps) => {
     const { academyName, adminPhone } = useSettings();
+    const [hidePricing, setHidePricing] = useState(false);
 
     if (!isOpen) return null;
 
@@ -45,9 +47,20 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <p className="text-xs text-gray-400 font-bold uppercase tracking-widest leading-none mt-1">Invoice Preview</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <X size={24} className="text-gray-400" />
-                    </button>
+                    <div className="flex items-center gap-4">
+                        <label className="flex items-center gap-2 cursor-pointer no-print">
+                            <input
+                                type="checkbox"
+                                checked={hidePricing}
+                                onChange={(e) => setHidePricing(e.target.checked)}
+                                className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+                            />
+                            <span className="text-xs font-bold text-gray-600 dark:text-gray-400">إخفاء المبالغ</span>
+                        </label>
+                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <X size={24} className="text-gray-400" />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Invoice Content */}
@@ -107,7 +120,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <thead>
                                 <tr className="border-b-2 border-gray-900 dark:border-white">
                                     <th className="py-2 text-right text-[10px] font-black uppercase">التفاصيل</th>
-                                    <th className="py-2 text-left text-[10px] font-black uppercase">المبلغ</th>
+                                    {!hidePricing && <th className="py-2 text-left text-[10px] font-black uppercase">المبلغ</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -122,26 +135,33 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="py-3 text-left text-xs font-black font-mono text-gray-900 dark:text-white">
-                                                {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
-                                            </td>
+                                            {!hidePricing && (
+                                                <td className="py-3 text-left text-xs font-black font-mono text-gray-900 dark:text-white">
+                                                    {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
+                                                </td>
+                                            )}
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
                                         <td className="py-4 text-sm font-bold text-gray-700 dark:text-gray-300">{invoice.description}</td>
-                                        <td className="py-4 text-left text-sm font-black font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</td>
+                                        {!hidePricing && <td className="py-4 text-left text-sm font-black font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</td>}
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
 
-                    <div className="flex justify-end pt-4 border-t-2 border-gray-900 dark:border-white">
-                        <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-gray-50 dark:bg-gray-800/50">
-                            <span className="text-xs font-black uppercase tracking-widest">الإجمالي</span>
-                            <span className="text-lg font-black font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</span>
+                    <div className="flex justify-between items-center pt-4 border-t-2 border-gray-900 dark:border-white">
+                        <div className="text-xs font-bold text-gray-500">
+                            إجمالي الحصص: {invoice.items?.length || 0}
                         </div>
+                        {!hidePricing && (
+                            <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-gray-50 dark:bg-gray-800/50">
+                                <span className="text-xs font-black uppercase tracking-widest">الإجمالي</span>
+                                <span className="text-lg font-black font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</span>
+                            </div>
+                        )}
                     </div>
 
                     {invoice.notes && (
