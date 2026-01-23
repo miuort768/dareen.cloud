@@ -346,19 +346,17 @@ export const TeacherInvoices = () => {
 
     const handleImportTeachers = useCallback(async () => {
         try {
-            console.log('Starting import process...');
             setLoading(true);
 
-            // 1. Fetch all teachers
-            const teachers = await api.get<any[]>('/teachers');
-            console.log('Fetched teachers:', teachers);
+            // 1. Fetch data
+            const [teachersList, allSessions] = await Promise.all([
+                api.get<any[]>('/teachers'),
+                api.get<any[]>('/sessions')
+            ]);
 
-            // 2. Identify missing teachers (those not currently in invoices)
+            // 2. Identify missing teachers
             const currentTeacherNames = new Set(invoices.map(inv => inv.teacher));
-            console.log('Current teacher names in invoices:', Array.from(currentTeacherNames));
-
-            const teachersToImport = teachers.filter((t: any) => !currentTeacherNames.has(t.name));
-            console.log('Teachers to import:', teachersToImport);
+            const teachersToImport = teachersList.filter((t: any) => !currentTeacherNames.has(t.name));
 
             if (teachersToImport.length === 0) {
                 setConfirmModal({
@@ -374,26 +372,28 @@ export const TeacherInvoices = () => {
 
             setLoading(false);
 
-            // Create a formatted list of teacher names
-            const teachersList = teachersToImport
-                .map((t: any) => `• ${t.name}${t.subject ? ` (${t.subject})` : ''}`)
-                .join('\n');
-
             setConfirmModal({
                 isOpen: true,
                 title: 'استيراد المعلمات',
-                message: `سيتم استيراد ${teachersToImport.length} معلمة جديدة:\n\n${teachersList}\n\nهل تريد الاستمرار؟`,
+                message: `سيتم استيراد ${teachersToImport.length} معلمة جديدة واحتساب مستحقاتهم من سجل الحصص. هل تريد الاستمرار؟`,
                 isDestructive: false,
                 onConfirm: async () => {
                     try {
-                        console.log('Importing teachers...');
-
+                        setLoading(true);
                         const importPromises = teachersToImport.map((t: any) => {
+                            // Calculate total amount for this teacher from completed sessions
+                            const teacherSessions = allSessions.filter((sess: any) =>
+                                (sess.teacherId === t.id || sess.teacherName === t.name) &&
+                                sess.status === 'completed'
+                            );
+
+                            const totalAmount = teacherSessions.reduce((sum: number, sess: any) => sum + (sess.teacherPrice || t.price || 0), 0);
+
                             return api.post('/invoices/teacher', {
                                 teacherId: t.id || null,
                                 teacher: t.name,
                                 specialization: t.subject || '',
-                                amount: 0,
+                                amount: totalAmount,
                                 paymentMethod: 'نقدي',
                                 status: INVOICE_STATUS.PROCESSING,
                                 personalExpenses: 0,
@@ -402,12 +402,13 @@ export const TeacherInvoices = () => {
                         });
 
                         await Promise.all(importPromises);
-                        console.log('Import completed successfully');
                         await fetchInvoices();
                         showNotification(`تم استيراد ${teachersToImport.length} معلمة بنجاح`, 'success');
                     } catch (error) {
                         console.error('Error importing teachers:', error);
                         showNotification('حدث خطأ أثناء استيراد المعلمات', 'error');
+                    } finally {
+                        setLoading(false);
                     }
                 }
             });
