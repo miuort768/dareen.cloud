@@ -140,7 +140,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     body: message.content,
                     tag: message.conversationId, // Group notifications from same chat
                     renotify: true
-                });
+                } as any);
             }
         };
 

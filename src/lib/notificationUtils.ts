@@ -26,7 +26,7 @@ export const sendNativeNotification = async (title: string, options?: Notificati
     }
 
     try {
-        const defaultOptions: NotificationOptions = {
+        const defaultOptions: any = {
             icon: '/logo.png',
             badge: '/logo.png',
             silent: false,
