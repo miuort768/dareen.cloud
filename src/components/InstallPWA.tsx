@@ -54,12 +54,12 @@ export const InstallPWA = () => {
             {/* Pulsing Bell Trigger */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-24 lg:bottom-8 right-6 z-[100] w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow hover:scale-110 transition-all duration-500"
+                className="fixed bottom-24 lg:bottom-8 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow hover:scale-110 transition-all duration-500"
                 title="تثبيت المنصة"
             >
                 <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20"></div>
-                <Bell size={24} className="relative z-10 group-hover:rotate-12 transition-transform" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full border-2 border-white"></span>
+                <Bell size={20} className="relative z-10 group-hover:rotate-12 transition-transform" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full border-2 border-white"></span>
             </button>
 
             {/* Premium Installation Modal */}
@@ -68,64 +68,63 @@ export const InstallPWA = () => {
                 showModal ? "opacity-100 pointer-events-auto backdrop-blur-md bg-gray-950/40" : "opacity-0 pointer-events-none"
             )}>
                 <div className={cn(
-                    "bg-white dark:bg-gray-900 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 transform",
+                    "bg-white dark:bg-gray-900 w-full max-w-sm rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 transform",
                     showModal ? "translate-y-0 scale-100" : "translate-y-12 scale-95"
                 )}>
                     {/* Header with Background Decorative elements */}
-                    <div className="relative h-44 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 p-8 flex flex-col justify-end overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gold/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
+                    <div className="relative h-32 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 p-6 flex flex-col justify-end overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-xl"></div>
 
                         <button
                             onClick={() => setShowModal(false)}
-                            className="absolute top-6 left-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+                            className="absolute top-4 left-4 p-1.5 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
                         >
-                            <X size={20} />
+                            <X size={18} />
                         </button>
 
-                        <div className="relative z-10 inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 w-fit mb-4">
-                            <Sparkles size={14} className="text-gold" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white">تطبيق معهد دارين</span>
+                        <div className="relative z-10 inline-flex items-center gap-2 px-2.5 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 w-fit mb-2">
+                            <Sparkles size={12} className="text-gold" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.1em] text-white">تطبيق معهد دارين</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">تثبيت المنصة على جهازك</h2>
+                        <h2 className="text-lg md:text-xl font-black text-white leading-tight">تثبيت المنصة على جهازك</h2>
                     </div>
 
-                    <div className="p-8 space-y-6">
-                        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed font-medium text-right">
+                    <div className="p-5 space-y-4">
+                        <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm leading-relaxed font-medium text-right">
                             استمتع بتجربة تعليمية أسرع وأفضل من خلال تثبيت تطبيق معهد دارين. ستحصل على وصول فوري، إشعارات فورية، وأداء أكثر استقراراً.
                         </p>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-3xl border border-blue-100/50 dark:border-blue-800/30 flex flex-col items-center gap-3 text-center">
-                                <div className="p-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm text-blue-600">
-                                    <Smartphone size={24} />
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-100/50 dark:border-blue-800/30 flex flex-col items-center gap-2 text-center">
+                                <div className="p-1.5 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-blue-600">
+                                    <Smartphone size={20} />
                                 </div>
-                                <span className="text-[11px] font-bold text-gray-700 dark:text-gray-300">متوافق مع الهواتف</span>
+                                <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">للهواتف</span>
                             </div>
-                            <div className="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-3xl border border-emerald-100/50 dark:border-emerald-800/30 flex flex-col items-center gap-3 text-center">
-                                <div className="p-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm text-emerald-600">
-                                    <Monitor size={24} />
+                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100/50 dark:border-emerald-800/30 flex flex-col items-center gap-2 text-center">
+                                <div className="p-1.5 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-emerald-600">
+                                    <Monitor size={20} />
                                 </div>
-                                <span className="text-[11px] font-bold text-gray-700 dark:text-gray-300">متوافق مع الكمبيوتر</span>
+                                <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">للكمبيوتر</span>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
-                            <ShieldCheck className="text-emerald-500 shrink-0" size={20} />
-                            <p className="text-[10px] text-gray-500 font-bold">تطبيق آمن ومعتمد وخفيف المساحة على ذاكرة الجهاز</p>
+                        <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
+                            <ShieldCheck className="text-emerald-500 shrink-0" size={16} />
+                            <p className="text-[9px] text-gray-500 font-bold">تطبيق آمن ومعتمد وخفيف المساحة على الذاكرة</p>
                         </div>
 
-                        <div className="flex flex-col gap-3 pt-2">
+                        <div className="flex flex-col gap-2 pt-1">
                             <button
                                 onClick={handleInstall}
-                                className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-2xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
+                                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
                             >
-                                <Download size={20} />
+                                <Download size={18} />
                                 <span>تثبيت الآن مجاناً</span>
                             </button>
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="w-full py-4 text-gray-400 hover:text-gray-600 font-bold text-sm transition-colors"
+                                className="w-full py-2 text-gray-400 hover:text-gray-600 font-bold text-[11px] transition-colors"
                             >
                                 ربما لاحقاً
                             </button>
