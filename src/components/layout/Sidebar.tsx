@@ -48,6 +48,8 @@ export const Sidebar = () => {
     const navigation = [
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'متابعة الأبناء', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
+        { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: GraduationCap },
+        { name: 'الحضور والغياب', href: '/parent-attendance', id: 'parent_attendance', icon: UserCheck },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },

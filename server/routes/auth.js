@@ -91,6 +91,11 @@ router.post('/login', loginLimiter, async (req, res) => {
             permissions: userData.permissions ? (typeof userData.permissions === 'string' ? JSON.parse(userData.permissions) : userData.permissions) : []
         };
 
+        // Default permissions for parents
+        if (role === 'parent') {
+            tokenPayload.permissions = ['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'];
+        }
+
         if (role === 'teacher' && !teacherName) {
             // User found in 'users' table, not 'teachers'. Let's see if we can link them.
             const linkedTeacher = await req.db.get('SELECT * FROM teachers WHERE username = ?', [username]);
