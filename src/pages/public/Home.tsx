@@ -267,7 +267,7 @@ export const Home = () => {
 
 
             {/* Quran Memorization Section */}
-            <section className="pt-12 pb-6 relative overflow-hidden bg-[#FDFCF8]">
+            <section className="pt-6 pb-6 relative overflow-hidden bg-[#FDFCF8]">
                 {/* Subtle Islamic Pattern Background */}
                 <div className="absolute inset-0 opacity-[0.03]"
                     style={{ backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
