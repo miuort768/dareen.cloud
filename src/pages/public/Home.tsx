@@ -86,7 +86,7 @@ export const Home = () => {
             <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-16 md:pt-28 md:pb-6 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-6 md:pt-28 md:pb-2 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
@@ -175,7 +175,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-16 pb-16 bg-white relative overflow-hidden">
+            <section className="pt-10 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 max-w-3xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-[1.4] py-2">
