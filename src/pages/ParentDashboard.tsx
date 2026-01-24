@@ -3,14 +3,13 @@ import {
     Users,
     Calendar,
     AlertCircle,
-    MessageCircle,
     Receipt,
     Bell,
     TrendingUp,
     CheckCircle2,
-    CalendarCheck,
     CalendarDays,
-    Clock
+    Clock,
+    Headset
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -19,7 +18,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
 export const ParentDashboard = () => {
-    const { currentUser } = useApp();
+    const { currentUser, adminPhone } = useApp();
     const [children, setChildren] = useState<any[]>([]);
     const [sessions, setSessions] = useState<any[]>([]);
     const [invoices, setInvoices] = useState<any[]>([]);
@@ -182,7 +181,7 @@ export const ParentDashboard = () => {
                 />
             </div>
 
-            {/* Attention Alerts Section - MOVED UNDER STATS GRID */}
+            {/* Attention Alerts Section */}
             <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
                 <h4 className="font-black text-xs text-gray-400 uppercase tracking-widest mb-6 flex items-center justify-between">
                     تنبيهات الانتباه
@@ -210,7 +209,6 @@ export const ParentDashboard = () => {
                             </div>
                         </div>
                     )}
-                    {/* Placeholder if no alerts */}
                     {displayData.students.every(s => !(s.enrollments || []).some((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2)) && stats.pendingInvoiceCount === 0 && (
                         <div className="col-span-full py-2 text-center text-xs text-gray-400 font-black italic">
                             جميع اشتراكات الأبناء منتظمة ولا توجد فواتير معلقة حالياً
@@ -226,7 +224,7 @@ export const ParentDashboard = () => {
                     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
                         <div className="p-5 border-b border-gray-50 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <h4 className="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2">
-                                <CalendarCheck className="text-primary-600" size={18} />
+                                <CalendarDays className="text-primary-600" size={18} />
                                 {showAllDays ? 'جدول المواعيد الأسبوعي الكامل' : `مواعيد اليوم (${todayArabic})`}
                             </h4>
                             <button
@@ -272,67 +270,60 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Recent Sessions */}
+                    {/* Pending Invoices */}
                     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
                         <div className="p-5 border-b border-gray-50 dark:border-gray-800 flex items-center justify-between">
                             <h4 className="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2">
-                                <TrendingUp className="text-primary-600" size={18} />
-                                سجل المتابعة الدراسية
+                                <Receipt className="text-primary-600" size={18} />
+                                الفواتير المنشورة بانتظار السداد
                             </h4>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-right text-sm">
-                                <thead>
-                                    <tr className="bg-gray-50 dark:bg-gray-800/50 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700">
-                                        <th className="px-6 py-4">الابن / المادة</th>
-                                        <th className="px-6 py-4">التوقيت</th>
-                                        <th className="px-6 py-4">الحالة</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                                    {displayData.sessions.slice(0, 5).map((session) => (
-                                        <tr key={session.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                                            <td className="px-6 py-4">
-                                                <div className="font-bold text-gray-900 dark:text-white">{session.studentName}</div>
-                                                <div className="text-[10px] text-gray-400 font-black">{session.subject}</div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="font-bold text-gray-700 dark:text-gray-300">
-                                                    {format(new Date(session.date), 'eeee, d MMM', { locale: ar })}
-                                                </div>
-                                                <div className="text-[10px] text-gray-400">{session.time}</div>
-                                            </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className={cn(
-                                                    "px-3 py-1 text-[10px] font-black uppercase tracking-tighter border",
-                                                    session.status === 'completed'
-                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
-                                                        : "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800"
-                                                )}>
-                                                    {session.status === 'completed' ? 'تم الحضور' : 'مجدولة'}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        <div className="p-4">
+                            <div className="space-y-3">
+                                {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
+                                    <div key={invoice.id} className="p-4 bg-gray-50 dark:bg-gray-800/50 border-r-4 border-r-rose-400 flex items-center justify-between">
+                                        <div>
+                                            <p className="text-xs font-black text-gray-900 dark:text-white">فاتورة {invoice.month}/{invoice.year}</p>
+                                            <p className="text-[10px] text-gray-400 font-bold mt-1 italic">{invoice.studentName}</p>
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-lg font-black text-rose-600 tracking-tighter">{invoice.amount} ج.م</p>
+                                            <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest leading-none">مستحقة الآن</p>
+                                        </div>
+                                    </div>
+                                ))}
+                                {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
+                                    <div className="py-6 text-center">
+                                        <p className="text-xs text-gray-400 font-black italic">لا توجد فواتير معلقة بانتظار السداد حالياً. شكراً لالتزامكم ✨</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Right Column */}
-                <div className="space-y-6">
-                    <div className="bg-gray-900 p-8 text-white relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/20 -translate-y-16 translate-x-16 rotate-45 group-hover:scale-150 transition-transform duration-700"></div>
-                        <div className="relative z-10">
-                            <h4 className="font-black text-lg mb-2">تواصل مع الإدارة</h4>
-                            <p className="text-gray-400 text-xs font-bold leading-relaxed mb-6">لديك استفسار أو طلب خاص لأبنائك؟ سكرتارية المعهد جاهزة للرد عليك فوراً.</p>
-                            <button className="flex items-center gap-3 px-6 py-3 bg-primary-600 hover:bg-primary-700 transition-all font-black text-xs uppercase tracking-widest">
-                                <MessageCircle size={18} />
-                                إرسال رسالة واتساب
-                            </button>
+                <div className="space-y-4">
+                    {/* Full width premium contact button */}
+                    <a
+                        href={`https://wa.me/2${adminPhone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-between p-6 bg-gray-900 dark:bg-black border-r-4 border-primary-500 text-white group hover:bg-black transition-all shadow-xl"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 bg-white/10 text-primary-400 group-hover:scale-110 transition-transform">
+                                <Headset size={28} />
+                            </div>
+                            <div>
+                                <h4 className="font-black text-sm uppercase tracking-[0.2em] mb-1">تواصل مع الإدارة</h4>
+                                <p className="text-[10px] text-gray-400 font-bold">الدعم الفني وسكرتارية المعهد</p>
+                            </div>
                         </div>
-                    </div>
+                        <div className="text-primary-500">
+                            <TrendingUp size={24} />
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
