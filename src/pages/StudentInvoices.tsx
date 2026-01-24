@@ -84,13 +84,13 @@ export const StudentInvoices = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            console.log('Fetching invoices...');
+            // console.log('Fetching invoices...');
             const [invoicesData, studentsData] = await Promise.all([
                 api.get<StudentInvoice[]>('/studentInvoices'),
                 api.get<Student[]>('/students')
             ]);
 
-            console.log('Invoices fetched:', invoicesData);
+            // console.log('Invoices fetched:', invoicesData);
             setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as any).data || []);
             setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as any).data || []);
         } catch (error) {

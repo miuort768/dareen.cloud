@@ -264,7 +264,7 @@ export const Settings = () => {
                 // Restore database data if available
                 if (backupData.data) {
                     const result = await api.post<any>('/system/restore', { data: backupData.data });
-                    console.log('Database restored:', result);
+                    // console.log('Database restored:', result);
                 }
 
                 // Restore settings
