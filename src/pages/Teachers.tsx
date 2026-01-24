@@ -114,6 +114,15 @@ export const Teachers = () => {
     const handleConfirmLog = async (status: 'completed' | 'cancelled') => {
         if (!secureModalData || !selectedTeacher || !logDate) return;
         const { student, enrollment } = secureModalData;
+
+        const now = new Date();
+        const currentTime = now.toLocaleTimeString('ar-EG', {
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+
         try {
             await api.post('/sessions', {
                 studentId: student.id,
@@ -121,7 +130,7 @@ export const Teachers = () => {
                 teacherName: selectedTeacher.name,
                 subject: enrollment.subject,
                 date: logDate,
-                time: '12:00 م',
+                time: logDate === new Date().toISOString().split('T')[0] ? currentTime : '12:00 م',
                 status,
                 // price: '', // Leave empty to let backend fetch student's default price
                 teacherPrice: selectedTeacher.price // Explicitly set what the teacher should get

@@ -145,7 +145,10 @@ export const TeacherInvoices = () => {
     const [teachers, setTeachers] = useState<Teacher[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
-    const { showNotification } = useApp();
+    const { currentUser, showNotification } = useApp();
+
+    const isTeacher = currentUser?.role === 'teacher';
+    const teacherName = currentUser?.teacherName || currentUser?.name;
 
     // Confirm Modal State
     const [confirmModal, setConfirmModal] = useState<{
@@ -192,12 +195,20 @@ export const TeacherInvoices = () => {
 
     // Optimized Filters with useMemo
     const filteredInvoices = useMemo(() => {
-        return invoices.filter(invoice => {
+        let list = invoices;
+        if (isTeacher) {
+            list = list.filter(inv =>
+                (inv.teacherId && inv.teacherId === currentUser?.id) ||
+                (inv.teacher && inv.teacher.trim().toLowerCase() === teacherName?.trim().toLowerCase())
+            );
+        }
+
+        return list.filter(invoice => {
             const matchesSearch = invoice.teacher.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesStatus = filterStatus === 'all' || invoice.status === filterStatus;
             return matchesSearch && matchesStatus;
         });
-    }, [invoices, searchTerm, filterStatus]);
+    }, [invoices, searchTerm, filterStatus, isTeacher, teacherName, currentUser]);
 
     // Optimized Calculations with useMemo (single pass)
     const stats = useMemo(() => {
@@ -475,36 +486,49 @@ export const TeacherInvoices = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 no-print">
-                    <button
-                        onClick={handlePrint}
-                        className="bg-white text-indigo-700 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-50 border border-indigo-100 transition-all font-bold shadow-sm"
-                        title="طباعة"
-                    >
-                        <Printer size={18} />
-                    </button>
-                    <button
-                        onClick={toggleForm}
-                        className="bg-primary-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-primary-700 active:bg-primary-800 transition-all font-black shadow-lg hover:shadow-primary-500/30"
-                    >
-                        {showForm ? <X size={18} /> : <Plus size={18} />}
-                        <span>{showForm ? 'إلغاء' : 'إضافة'}</span>
-                    </button>
-                    <button
-                        onClick={handleImportTeachers}
-                        className="bg-indigo-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-700 active:bg-indigo-800 transition-all font-black shadow-lg hover:shadow-indigo-500/30"
-                    >
-                        <UserPlus size={18} />
-                        <span>استيراد</span>
-                    </button>
-                    <button
-                        onClick={handleDeleteAll}
-                        className="bg-rose-50 text-rose-600 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-rose-100 border border-rose-100 transition-all font-bold"
-                        title="حذف الكل"
-                    >
-                        <Trash2 size={18} />
-                    </button>
-                </div>
+                {!isTeacher && (
+                    <div className="flex items-center gap-3 no-print">
+                        <button
+                            onClick={handlePrint}
+                            className="bg-white text-indigo-700 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-50 border border-indigo-100 transition-all font-bold shadow-sm"
+                            title="طباعة"
+                        >
+                            <Printer size={18} />
+                        </button>
+                        <button
+                            onClick={toggleForm}
+                            className="bg-primary-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-primary-700 active:bg-primary-800 transition-all font-black shadow-lg hover:shadow-primary-500/30"
+                        >
+                            {showForm ? <X size={18} /> : <Plus size={18} />}
+                            <span>{showForm ? 'إلغاء' : 'إضافة'}</span>
+                        </button>
+                        <button
+                            onClick={handleImportTeachers}
+                            className="bg-indigo-600 text-white px-6 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-700 active:bg-indigo-800 transition-all font-black shadow-lg hover:shadow-indigo-500/30"
+                        >
+                            <UserPlus size={18} />
+                            <span>استيراد</span>
+                        </button>
+                        <button
+                            onClick={handleDeleteAll}
+                            className="bg-rose-50 text-rose-600 px-4 py-3 rounded-none flex items-center gap-2 hover:bg-rose-100 border border-rose-100 transition-all font-bold"
+                            title="حذف الكل"
+                        >
+                            <Trash2 size={18} />
+                        </button>
+                    </div>
+                )}
+                {isTeacher && (
+                    <div className="flex items-center gap-3 no-print">
+                        <button
+                            onClick={handlePrint}
+                            className="bg-white text-indigo-700 px-6 py-3 rounded-none flex items-center gap-2 hover:bg-indigo-50 border border-indigo-100 transition-all font-black shadow-lg shadow-indigo-500/10"
+                        >
+                            <Printer size={18} />
+                            <span>طباعة السجل</span>
+                        </button>
+                    </div>
+                )}
             </div>
 
 
@@ -636,7 +660,7 @@ export const TeacherInvoices = () => {
                                 <th className="text-center">الصافي</th>
                                 <th className="text-center">وسيلة الدفع</th>
                                 <th className="text-center">الحالة</th>
-                                <th className="text-center">الإجراءات</th>
+                                {!isTeacher && <th className="text-center">الإجراءات</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -692,26 +716,28 @@ export const TeacherInvoices = () => {
                                                 </span>
                                             </div>
                                         </td>
-                                        <td className="text-center">
-                                            <div className="flex items-center justify-center gap-1">
-                                                <button
-                                                    onClick={() => handleEdit(invoice)}
-                                                    className="table-action-btn text-indigo-600 hover:bg-indigo-50"
-                                                    title="تعديل"
-                                                    aria-label="تعديل فاتورة المعلمة"
-                                                >
-                                                    <Edit size={16} />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(invoice.id)}
-                                                    className="table-action-btn text-red-600 hover:bg-red-50"
-                                                    title="حذف"
-                                                    aria-label="حذف فاتورة المعلمة"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        </td>
+                                        {!isTeacher && (
+                                            <td className="text-center">
+                                                <div className="flex items-center justify-center gap-1">
+                                                    <button
+                                                        onClick={() => handleEdit(invoice)}
+                                                        className="table-action-btn text-indigo-600 hover:bg-indigo-50"
+                                                        title="تعديل"
+                                                        aria-label="تعديل فاتورة المعلمة"
+                                                    >
+                                                        <Edit size={16} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(invoice.id)}
+                                                        className="table-action-btn text-red-600 hover:bg-red-50"
+                                                        title="حذف"
+                                                        aria-label="حذف فاتورة المعلمة"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        )}
                                     </tr>
                                 ))
                             ) : (

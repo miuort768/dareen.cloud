@@ -129,11 +129,12 @@ export const useDashboardData = (currentUser: User | null) => {
             const attendanceRateValue = totalSessionsCount > 0 ? Math.round((completedSessionsCount / totalSessionsCount) * 100) : 0;
 
             const teacherUsedSessions = isTeacher
-                ? teacherStudents.reduce((sum: number, s: Student) => {
-                    const en = s.enrollments?.find((e: Enrollment) => e.teacher === teacherName);
-                    return sum + (en?.sessionsUsed || 0);
-                }, 0)
-                : 0;
+                ? sessionsAll.filter((s: Session) => {
+                    const nameMatch = s.teacherName === teacherName;
+                    const idMatch = currentUser?.id && s.teacherId === currentUser.id;
+                    return (nameMatch || idMatch) && s.status === 'completed';
+                }).length
+                : completedSessionsCount;
 
             const monthExpensesValue = teacherInvoices
                 .filter((inv: TeacherInvoice) => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))

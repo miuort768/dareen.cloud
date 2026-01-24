@@ -38,10 +38,12 @@ export interface Session {
     time: string;
     status: 'scheduled' | 'completed' | 'cancelled';
     price: number;
+    teacherId?: string;
 }
 
 export interface Enrollment {
     teacher: string;
+    teacherId?: string;
     sessionsTotal?: number;
     sessionsUsed?: number;
     subject?: string;
