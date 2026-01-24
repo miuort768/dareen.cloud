@@ -3,16 +3,11 @@ import {
     Users,
     Calendar,
     Wallet,
-    Clock,
     AlertCircle,
     MessageCircle,
-    FileText,
-    ArrowLeftRight,
     Receipt,
-    Activity,
     Bell,
     TrendingUp,
-    LayoutDashboard,
     CheckCircle2,
     CalendarCheck
 } from 'lucide-react';
@@ -23,7 +18,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
 export const ParentDashboard = () => {
-    const { currentUser, academyName } = useApp();
+    const { currentUser } = useApp();
     const [children, setChildren] = useState<any[]>([]);
     const [selectedChildId, setSelectedChildId] = useState<string | 'all'>('all');
     const [sessions, setSessions] = useState<any[]>([]);
