@@ -34,6 +34,17 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         script.onload = () => {
             if (jitsiContainerRef.current) {
                 const domain = "meet.jit.si";
+                const buttons = [
+                    'microphone',
+                    'desktop', // Screen sharing - The most important button
+                    'chat',
+                    'raisehand',
+                    'settings',
+                    'tileview',
+                    'fullscreen',
+                    isTeacher ? 'whiteboard' : ''
+                ].filter(Boolean);
+
                 const options = {
                     roomName: `Darin_Institute_${roomID}`,
                     width: '100%',
@@ -44,25 +55,14 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     },
                     configOverwrite: {
                         startWithAudioMuted: false,
-                        startWithVideoMuted: true, // Privacy: No camera by default
+                        startWithVideoMuted: true,
                         prejoinPageEnabled: false,
                         disableDeepLinking: true,
-                        desktopSharingFrameRate: {
-                            min: 15,
-                            max: 30
-                        },
-                        // Only show screen share and mic
-                        toolbarButtons: [
-                            'microphone',
-                            'desktop', // Screen sharing
-                            'chat',
-                            'raisehand',
-                            'settings',
-                            'tileview',
-                            'fullscreen',
-                            isTeacher ? 'whiteboard' : ''
-                        ].filter(Boolean),
-                        // Force disable camera permanently for this room
+                        enableWelcomePage: false,
+                        enableClosePage: false,
+                        toolbarButtons: buttons,
+                        // Screen sharing specific optimizations
+                        desktopSharingFrameRate: { min: 15, max: 30 },
                         enableVideoOut: false,
                         enableLocalVideo: false,
                     },
@@ -75,9 +75,8 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                         JITSI_WATERMARK_LINK: '',
                         MOBILE_APP_PROMO: false,
                         // Customizing interface to look more like part of the platform
-                        TOOLBAR_BUTTONS: [
-                            'microphone', 'desktop', 'chat', 'raisehand', 'settings', 'tileview', 'fullscreen'
-                        ],
+                        TOOLBAR_BUTTONS: buttons, // Duplicate for compatibility
+                        SETTINGS_SECTIONS: ['devices', 'language', 'profile'], // Hide camera settings if possible
                     }
                 };
                 apiRef.current = new window.JitsiMeetExternalAPI(domain, options);
