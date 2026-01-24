@@ -46,7 +46,11 @@ export const Header = () => {
         <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-gray-900/80 dark:border-gray-800 transition-colors duration-300">
 
             {/* Search Bar / Quick Search */}
-            <div className="flex-1 flex items-center gap-2 lg:gap-4 overflow-hidden">
+            <div className="flex-1 flex items-center gap-2 lg:gap-6 overflow-hidden">
+                <div className="flex flex-col items-center justify-center -mb-1 ml-4 border-l border-gray-100 dark:border-gray-800 pl-6 h-8">
+                    <span className="text-[10px] lg:text-xs font-black text-primary-600 dark:text-primary-400 leading-none uppercase tracking-tighter">معهد دارين</span>
+                    <span className="text-[8px] lg:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">مرحباً بك شريك النجاح</span>
+                </div>
                 {location.pathname === '/chat' && (
                     <a
                         href={`https://wa.me/2${adminPhone}`}
@@ -71,11 +75,6 @@ export const Header = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-1 lg:gap-4 ml-2">
-                <div className="hidden sm:flex flex-col items-center justify-center -mb-1 ml-2 border-l border-gray-100 dark:border-gray-800 pl-4 h-8">
-                    <span className="text-[10px] font-black text-primary-600 dark:text-primary-400 leading-none">معهد دارين</span>
-                    <span className="text-[8px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">مرحباً بك شريك النجاح</span>
-                </div>
-
                 {/* Dark Mode Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
