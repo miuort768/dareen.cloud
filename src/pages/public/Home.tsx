@@ -298,7 +298,7 @@ export const Home = () => {
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
                                 <a
-                                    href={`https://wa.me/2${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
+                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
