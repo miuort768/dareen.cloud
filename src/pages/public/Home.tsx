@@ -119,7 +119,7 @@ export const Home = () => {
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/2${adminPhone}`}
+                                    href={`https://wa.me/${adminPhone}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
