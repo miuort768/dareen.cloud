@@ -56,7 +56,9 @@ async function setupDatabase() {
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
             phone TEXT NOT NULL,
-            email TEXT
+            email TEXT,
+            username TEXT UNIQUE,
+            password TEXT
         );
 
         CREATE TABLE IF NOT EXISTS sessions (
@@ -293,7 +295,7 @@ async function setupDatabase() {
                 const dbUsername = t.username && t.username.trim() !== '' ? t.username.trim() : null;
 
                 let dbPassword = null;
-                if (t.password && t.password.trim() !== '') {
+                if (t.password && typeof t.password === 'string' && t.password.trim() !== '') {
                     const bcrypt = require('bcrypt'); // Added bcrypt here
                     dbPassword = t.password.startsWith('$2b$') ? t.password : await bcrypt.hash(t.password, 10);
                 }
@@ -423,9 +425,16 @@ async function setupDatabase() {
         );
     }
 
+    // Auto-populate parent credentials if missing
+    console.log('Verifying parent credentials...');
+    try {
+        await db.run("UPDATE parents SET username = phone, password = '123456' WHERE password IS NULL OR password = ''");
+        console.log('All parent credentials verified.');
+    } catch (e) {
+        console.warn('Could not auto-populate parent credentials:', e.message);
+    }
+
     console.log('Database setup complete.');
 }
-
-
 
 module.exports = { setupDatabase };

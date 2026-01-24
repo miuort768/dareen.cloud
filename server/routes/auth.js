@@ -162,7 +162,7 @@ router.post('/verify', async (req, res) => {
             userData = await req.db.get('SELECT id, name, username FROM chat_profiles WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'chat_user';
         } else if (decoded.role === 'parent') {
-            userData = await req.db.get('SELECT id, name, username FROM parents WHERE id = ?', [decoded.id]);
+            userData = await req.db.get('SELECT id, name, username, phone FROM parents WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'parent';
         }
 
