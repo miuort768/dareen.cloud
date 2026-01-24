@@ -33,6 +33,7 @@
     /* Firefox */
     -ms-overflow-style: none;
     /* IE and Edge */
+    -webkit-tap-highlight-color: transparent;
   }
 
   html::-webkit-scrollbar {
