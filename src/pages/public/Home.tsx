@@ -384,111 +384,71 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section - Premium Redesign */}
-            <section className="py-24 bg-[#FDFCF8] relative overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+            {/* Testimonials Section - Uula Inspired Social Wall */}
+            <section className="py-24 bg-[#0B1120] relative overflow-hidden">
+                {/* Decorative Background Glows */}
+                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 md:mb-20">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-100 rounded-full shadow-sm mb-6 mx-auto">
-                            <Quote size={14} className="text-gold" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-900">حكايات نجاح ملهمة</span>
+                    <div className="text-center mb-16 md:mb-24">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 mx-auto backdrop-blur-md">
+                            <Sparkles size={14} className="text-gold" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">مجتمع دارين</span>
                         </div>
-                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 font-heading leading-tight">
-                            ثقة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">أولياء الأمور</span><br className="md:hidden" /> هي سر تميزنا
+                        <h2 className="text-3xl md:text-6xl font-black text-white mb-8 font-heading leading-tight">
+                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full mb-8"></div>
+                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full opacity-50"></div>
                     </div>
 
                     <div className="max-w-7xl mx-auto">
-                        {/* Mobile Slider View */}
-                        <div className="lg:hidden">
-                            <div className="relative group">
-                                <div className="p-8 sm:p-10 bg-white border border-gray-100 rounded-[2.5rem] shadow-xl relative overflow-hidden flex flex-col min-h-[400px]">
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-
-                                    <Quote size={50} className="text-blue-600/5 absolute top-6 left-6" />
-
-                                    <div className="relative z-10 flex flex-col h-full flex-grow">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white shadow-lg shrink-0">
-                                                <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" />
-                                            </div>
-                                            <div>
-                                                <h4 className="font-black text-gray-900 text-lg">{reviews[currentIndex].name}</h4>
-                                                <p className="text-[10px] text-blue-600 font-bold uppercase tracking-widest">{reviews[currentIndex].role}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex-grow overflow-y-auto pr-1 custom-scrollbar mb-6">
-                                            <p className="text-gray-600 text-base leading-relaxed font-medium italic">
-                                                "{reviews[currentIndex].content}"
-                                            </p>
-                                        </div>
-
-                                        <div className="flex items-center justify-between pt-6 border-t border-gray-50 mt-auto">
-                                            <div className="flex gap-1 text-gold">
-                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
-                                            </div>
-                                            <div className="flex gap-2">
-                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90">
-                                                    <ChevronRight className="rotate-180" size={18} />
-                                                </button>
-                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90">
-                                                    <LucideChevronLeft className="rotate-180" size={18} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Desktop Wall of Trust */}
-                        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+                        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
                             {reviews.map((review, index) => (
-                                <div key={index} className="group relative bg-white p-10 xl:p-12 rounded-[3.5rem] shadow-[0_10px_40px_rgba(0,0,0,0.02)] hover:shadow-2xl transition-all duration-700 border border-gray-100/50 flex flex-col items-start overflow-hidden hover:-translate-y-3 min-h-[440px]">
-                                    {/* Holographic Mesh Effect on Hover */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                                        style={{ background: 'radial-gradient(at 0% 0%, #2563eb 0px, transparent 50%), radial-gradient(at 100% 100%, #d4af37 0px, transparent 50%)' }}>
-                                    </div>
+                                <div
+                                    key={index}
+                                    className="break-inside-avoid relative group"
+                                >
+                                    {/* Chat Bubble Card */}
+                                    <div className="bg-[#1E293B] p-8 rounded-[2rem] border border-white/5 shadow-xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 group">
 
-                                    <Quote size={80} className="absolute -top-6 -left-6 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
+                                        {/* Stars */}
+                                        <div className="flex gap-1 mb-6 text-gold">
+                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
+                                        </div>
 
-                                    <div className="relative z-10 w-full flex flex-col h-full flex-grow">
-                                        <div className="flex items-center gap-5 mb-8">
-                                            <div className="relative">
-                                                <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg border-2 border-white group-hover:rotate-6 transition-transform duration-500">
-                                                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
-                                                </div>
-                                                <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-gold rounded-xl flex items-center justify-center shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
-                                                    <Star size={12} className="text-white fill-white" />
-                                                </div>
+                                        {/* Content */}
+                                        <p className="text-blue-50/90 text-lg leading-relaxed font-medium mb-8 italic">
+                                            "{review.content}"
+                                        </p>
+
+                                        {/* User Info */}
+                                        <div className="flex items-center gap-4 pt-6 border-t border-white/5">
+                                            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0 transform group-hover:scale-110 transition-transform">
+                                                <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                                             </div>
                                             <div>
-                                                <h4 className="font-black text-gray-900 text-xl group-hover:text-blue-700 transition-colors">{review.name}</h4>
-                                                <p className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mt-1">{review.role}</p>
+                                                <h4 className="font-black text-white text-base">{review.name}</h4>
+                                                <p className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mt-1">{review.role}</p>
                                             </div>
                                         </div>
 
-                                        <div className="flex-grow pr-1 custom-scrollbar overflow-y-auto mb-8">
-                                            <p className="text-gray-500 text-lg leading-relaxed font-medium italic relative z-10">
-                                                "{review.content}"
-                                            </p>
-                                        </div>
-
-                                        <div className="mt-auto flex items-center justify-between w-full pt-6 border-t border-gray-50">
-                                            <div className="flex gap-1 text-gold">
-                                                {[1, 2, 3, 4, 5].map(star => <Star key={star} size={15} fill="currentColor" />)}
-                                            </div>
-                                            <span className="text-[9px] font-black text-gray-300 tracking-widest uppercase group-hover:text-blue-200 transition-colors">عضو موثق</span>
-                                        </div>
+                                        {/* Bubble Tail Accent */}
+                                        <div className="absolute -bottom-2 right-12 w-6 h-6 bg-[#1E293B] rotate-45 border-r border-b border-white/5 group-hover:bg-[#253146] transition-colors"></div>
                                     </div>
                                 </div>
                             ))}
+                        </div>
+
+                        {/* CTA Footer */}
+                        <div className="mt-20 text-center">
+                            <Link
+                                to="/courses"
+                                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-2xl shadow-2xl shadow-blue-900/40 hover:scale-105 transition-all group"
+                            >
+                                <span>انضم لعائلة دارين الآن</span>
+                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                            </Link>
                         </div>
                     </div>
                 </div>
