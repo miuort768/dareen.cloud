@@ -13,7 +13,8 @@ import {
     Clock,
     ChevronLeft,
     ChevronRight,
-    AlertCircle
+    AlertCircle,
+    XCircle
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
@@ -28,6 +29,7 @@ export const ParentStudents = () => {
 
     // Modal & Session View State
     const [viewingStudent, setViewingStudent] = useState<any | null>(null);
+    const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<any | null>(null);
     const [viewingSubject, setViewingSubject] = useState<any | null>(null);
     const [childSessions, setChildSessions] = useState<any[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
@@ -184,11 +186,11 @@ export const ParentStudents = () => {
                                 تواريخ الحصص
                             </button>
                             <button
-                                onClick={() => navigate('/parent-attendance')}
+                                onClick={() => setViewingAttendanceStudent(student)}
                                 className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
                             >
-                                <BarChart3 size={14} />
-                                كشف الدرجات
+                                <TrendingUp size={14} />
+                                نسبة الحضور الإجمالية
                             </button>
                         </div>
                     </div>
@@ -323,6 +325,103 @@ export const ParentStudents = () => {
                         <div className="p-6 border-t border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 flex justify-end shrink-0">
                             <button
                                 onClick={() => setViewingStudent(null)}
+                                className="px-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-[10px] font-black uppercase tracking-widest transition-all"
+                            >
+                                إغلاق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Total Attendance Report Modal */}
+            {viewingAttendanceStudent && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+                    <div
+                        className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
+                        onClick={() => setViewingAttendanceStudent(null)}
+                    />
+                    <div className="relative w-full max-w-2xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 flex flex-col max-h-[90vh]">
+                        {/* Modal Header */}
+                        <div className="p-6 bg-emerald-600 text-white flex items-center justify-between shrink-0">
+                            <div className="flex items-center gap-4">
+                                <div className="p-2 bg-white/10">
+                                    <TrendingUp size={20} className="text-white" />
+                                </div>
+                                <div className="text-right">
+                                    <h2 className="text-lg font-black leading-none">{viewingAttendanceStudent.name}</h2>
+                                    <p className="text-[10px] text-white/80 font-bold mt-1 uppercase tracking-widest">
+                                        تقرير نسب الحضور والانصراف لكل المواد
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setViewingAttendanceStudent(null)}
+                                className="p-2 hover:bg-white/10 transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {/* Modal Content */}
+                        <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-4">
+                            {(viewingAttendanceStudent.enrollments || []).map((en: any, idx: number) => {
+                                const absent = Number(en.sessionsTotal) - Number(en.sessionsUsed);
+                                const percentage = en.sessionsTotal > 0 ? Math.round((en.sessionsUsed / en.sessionsTotal) * 100) : 0;
+
+                                return (
+                                    <div key={idx} className="p-5 border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 relative overflow-hidden group">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div>
+                                                <h4 className="font-black text-gray-900 dark:text-white mb-1 text-sm">{en.subject}</h4>
+                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">المعلم: {en.teacher}</p>
+                                            </div>
+                                            <div className="text-left">
+                                                <span className="text-xl font-black text-emerald-600 tracking-tighter">{percentage}%</span>
+                                                <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest leading-none">نسبة الالتزام</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-3 mb-4">
+                                            <div className="bg-emerald-50 dark:bg-emerald-900/10 p-2 flex items-center gap-3">
+                                                <CheckCircle2 size={16} className="text-emerald-500" />
+                                                <div>
+                                                    <p className="text-[9px] text-emerald-600 font-black uppercase">حضر</p>
+                                                    <p className="text-sm font-black text-emerald-700 dark:text-emerald-400">{en.sessionsUsed} حصة</p>
+                                                </div>
+                                            </div>
+                                            <div className="bg-rose-50 dark:bg-rose-900/10 p-2 flex items-center gap-3">
+                                                <XCircle size={16} className="text-rose-500" />
+                                                <div>
+                                                    <p className="text-[9px] text-rose-600 font-black uppercase">غاب</p>
+                                                    <p className="text-sm font-black text-rose-700 dark:text-rose-400">{absent > 0 ? absent : 0} حصة</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Progress Bar Container */}
+                                        <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                                            <div
+                                                className="h-full bg-emerald-500 transition-all duration-1000 ease-out"
+                                                style={{ width: `${percentage}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+
+                            {(viewingAttendanceStudent.enrollments || []).length === 0 && (
+                                <div className="py-20 text-center">
+                                    <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
+                                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد اشتراكات مسجلة لهذا الابن بعد</p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Modal Footer */}
+                        <div className="p-6 border-t border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 flex justify-end shrink-0">
+                            <button
+                                onClick={() => setViewingAttendanceStudent(null)}
                                 className="px-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-[10px] font-black uppercase tracking-widest transition-all"
                             >
                                 إغلاق
