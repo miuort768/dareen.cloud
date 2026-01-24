@@ -216,7 +216,12 @@ export const Chat = () => {
         if (selectedConv) {
             const updatedConv = conversations.find(c => c.id === selectedConv.id);
             if (updatedConv) {
-                if (updatedConv.displayName !== selectedConv.displayName || updatedConv.lastMessageTime !== selectedConv.lastMessageTime) {
+                if (
+                    updatedConv.displayName !== selectedConv.displayName ||
+                    updatedConv.lastMessageTime !== selectedConv.lastMessageTime ||
+                    updatedConv.isLive !== selectedConv.isLive ||
+                    updatedConv.meetingUrl !== selectedConv.meetingUrl
+                ) {
                     setSelectedConv(updatedConv);
                 }
                 if (updatedConv.unreadCount && updatedConv.unreadCount > 0) {
