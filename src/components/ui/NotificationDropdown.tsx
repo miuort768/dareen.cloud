@@ -205,18 +205,18 @@ export const NotificationDropdown = () => {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-start justify-between gap-2">
-                                                <h4 className="font-bold text-sm text-gray-900 dark:text-white">
+                                                <h4 className="font-bold text-[11px] sm:text-sm text-gray-900 dark:text-white">
                                                     {notification.title}
                                                 </h4>
                                                 {!notification.read && (
-                                                    <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1"></div>
+                                                    <div className="w-1.5 h-1.5 bg-blue-600 rounded-full flex-shrink-0 mt-1"></div>
                                                 )}
                                             </div>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
+                                            <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
                                                 {notification.message}
                                             </p>
                                             <div className="flex items-center justify-between mt-2">
-                                                <span className="text-xs text-gray-400 dark:text-gray-500">
+                                                <span className="text-[9px] sm:text-xs text-gray-400 dark:text-gray-500">
                                                     {notification.time}
                                                 </span>
                                                 <button
