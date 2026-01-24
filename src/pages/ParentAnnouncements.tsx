@@ -83,7 +83,7 @@ export const ParentAnnouncements = () => {
     return (
         <div className="space-y-8 pb-32 animate-in fade-in duration-700" dir="rtl">
             {/* Header Section */}
-            <div className="relative overflow-hidden bg-gray-900 p-8 text-white">
+            <div className="relative overflow-hidden bg-gray-900 p-4 md:p-8 text-white">
                 <div className="absolute top-0 left-0 w-64 h-64 bg-primary-600/10 blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="flex items-center gap-5">
@@ -91,8 +91,8 @@ export const ParentAnnouncements = () => {
                             <Megaphone size={32} className="text-primary-400" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-black tracking-tight">لوحة إعلانات المعهد</h1>
-                            <p className="text-sm text-gray-400 font-bold mt-1">تابع آخر أخبار وقرارات المعهد الرسمية أولاً بأول</p>
+                            <h1 className="text-lg md:text-2xl font-black tracking-tight whitespace-nowrap">لوحة إعلانات المعهد</h1>
+                            <p className="text-xs md:text-sm text-gray-400 font-bold mt-1 max-w-[250px] md:max-w-full truncate">تابع آخر أخبار وقرارات المعهد.</p>
                         </div>
                     </div>
 
