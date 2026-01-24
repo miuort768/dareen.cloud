@@ -10,7 +10,9 @@ import {
     CheckCircle2,
     CalendarDays,
     Clock,
-    Headset
+    Headset,
+    Activity,
+    XCircle
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -73,15 +75,24 @@ export const ParentDashboard = () => {
             });
         });
 
+        const totalAttendance = displayData.sessions.filter(s => s.status === 'completed').length;
+        const totalAbsence = displayData.sessions.filter(s => s.status === 'absent').length;
+        const attendanceRate = (totalAttendance + totalAbsence) > 0
+            ? Math.round((totalAttendance / (totalAttendance + totalAbsence)) * 100)
+            : 0;
+
         return {
             childCount: displayData.students.length,
             sessionCount: displayData.sessions.length,
             pendingInvoiceCount: pendingInvoices.length,
             totalPaid,
             totalPending: pendingInvoices.reduce((sum, i) => sum + i.amount, 0),
-            upcomingSessions: displayData.sessions.filter(s => s.status !== 'completed').length,
+            upcomingSessions: displayData.sessions.filter(s => s.status !== 'completed' && s.status !== 'absent').length,
             sessionsUsed,
-            sessionsTotal
+            sessionsTotal,
+            totalAttendance,
+            totalAbsence,
+            attendanceRate
         };
     }, [displayData]);
 
@@ -223,6 +234,38 @@ export const ParentDashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
+
+                    {/* Attendance Analysis Grid - 4 side by side */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                        <StatCard
+                            icon={Activity}
+                            label="إجمالي الحضور"
+                            value={stats.totalAttendance}
+                            color="emerald"
+                            subValue="حصة مكتملة"
+                        />
+                        <StatCard
+                            icon={XCircle}
+                            label="إجمالي الغياب"
+                            value={stats.totalAbsence}
+                            color="rose"
+                            subValue="حصة فائتة"
+                        />
+                        <StatCard
+                            icon={TrendingUp}
+                            label="نسبة الالتزام"
+                            value={`${stats.attendanceRate}%`}
+                            color="blue"
+                            subValue="معدل الحضور"
+                        />
+                        <StatCard
+                            icon={CheckCircle2}
+                            label="الرصيد المتبقي"
+                            value={stats.sessionsTotal - stats.sessionsUsed}
+                            color="amber"
+                            subValue="حصة متوفرة"
+                        />
+                    </div>
 
                     {/* Weekly Schedule Section */}
                     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
