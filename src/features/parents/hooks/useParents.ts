@@ -205,8 +205,8 @@ export const useParents = () => {
     // Derived Data
     const filteredParents = useMemo(() => {
         return parents.filter(p =>
-            p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.phone.includes(searchTerm) ||
+            (p.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (p.phone || '').includes(searchTerm) ||
             (p.email && p.email.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     }, [parents, searchTerm]);

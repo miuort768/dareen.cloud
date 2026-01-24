@@ -73,7 +73,7 @@ export const About = () => {
                                 <div className="relative grid grid-cols-2 gap-4">
                                     <div className="pt-8 space-y-4">
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
-                                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Collaborative learning" />
+                                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Collaborative learning" loading="lazy" decoding="async" />
                                         </div>
                                         <div className="h-48 bg-gold rounded-[2rem] p-6 flex flex-col justify-end text-white shadow-xl">
                                             <Sparkles size={24} className="mb-4" />
@@ -86,7 +86,7 @@ export const About = () => {
                                             <h4 className="font-black text-lg">أهداف محققة</h4>
                                         </div>
                                         <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">
-                                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Effective teaching" />
+                                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Effective teaching" loading="lazy" decoding="async" />
                                         </div>
                                     </div>
                                 </div>

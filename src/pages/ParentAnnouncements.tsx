@@ -50,8 +50,8 @@ export const ParentAnnouncements = () => {
     const filteredAnnouncements = announcements
         .filter(ann =>
             (filterType === 'all' || ann.type === filterType) &&
-            (ann.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                ann.content.toLowerCase().includes(searchQuery.toLowerCase()))
+            ((ann.title || '').toLowerCase().includes((searchQuery || '').toLowerCase()) ||
+                (ann.content || '').toLowerCase().includes((searchQuery || '').toLowerCase()))
         )
         .sort((a, b) => {
             // Priority sort: urgent first, then by date

@@ -93,9 +93,9 @@ export const Attendance = () => {
 
         // Search match
         const searchMatch = !searchTerm ||
-            s.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            s.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            s.subject.toLowerCase().includes(searchTerm.toLowerCase());
+            (s.studentName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (s.teacherName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (s.subject || '').toLowerCase().includes(searchTerm.toLowerCase());
 
         // Status match
         const statusMatch = filterStatus === 'all' || s.status === filterStatus;
@@ -159,8 +159,8 @@ export const Attendance = () => {
                             </div>
                         </div>
                         <div className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6">
-                            {teacherStudents.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase())).length > 0 ?
-                                teacherStudents.filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase())).map(student => {
+                            {teacherStudents.filter(s => (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase())).length > 0 ?
+                                teacherStudents.filter(s => (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase())).map(student => {
                                     const en = student.enrollments.find(e => e.teacher === nameToMatch)!;
                                     return (
                                         <TeacherStudentCard
@@ -192,8 +192,8 @@ export const Attendance = () => {
                     {uniqueTeachers.filter(t => filterTeacher === 'all' || t === filterTeacher).map(teacher => {
                         const teacherStudentsList = students.filter(s => s.enrollments?.some(e => e.teacher === teacher));
                         const filteredTStudents = teacherStudentsList.filter(s =>
-                            s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            s.enrollments.some(e => e.teacher === teacher && e.subject.toLowerCase().includes(searchTerm.toLowerCase()))
+                            (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                            s.enrollments.some(e => e.teacher === teacher && (e.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase()))
                         );
 
                         if (filteredTStudents.length === 0) return null;

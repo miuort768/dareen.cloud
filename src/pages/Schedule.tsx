@@ -228,9 +228,9 @@ export const Schedule = () => {
 
     const filteredEvents = allEvents.filter(event => {
         const matchesSearch =
-            event.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            event.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            event.subject.toLowerCase().includes(searchTerm.toLowerCase());
+            (event.studentName || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+            (event.teacherName || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+            (event.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase());
         const matchesDay = filterDay === 'all' || event.day === filterDay;
         const matchesTeacher = filterTeacher === 'all' || event.teacherName === filterTeacher;
         return matchesSearch && matchesDay && matchesTeacher;

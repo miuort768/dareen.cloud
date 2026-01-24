@@ -45,10 +45,10 @@ export const Courses = () => {
 
     const filteredCourses = COURSES.filter(course => {
         const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
-        const searchLower = searchQuery.toLowerCase().trim();
+        const searchLower = (searchQuery || '').toLowerCase().trim();
         const matchesSearch = !searchLower ||
-            course.title.toLowerCase().includes(searchLower) ||
-            course.desc.toLowerCase().includes(searchLower);
+            (course.title || '').toLowerCase().includes(searchLower) ||
+            (course.desc || '').toLowerCase().includes(searchLower);
         return matchesCategory && matchesSearch;
     });
 

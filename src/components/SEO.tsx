@@ -7,6 +7,7 @@ interface SEOProps {
     keywords?: string;
     image?: string;
     url?: string;
+    preloadImages?: string[];
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -14,7 +15,8 @@ export const SEO: React.FC<SEOProps> = ({
     description,
     keywords,
     image = '/og-image.jpg',
-    url = 'https://dareen-edu.com/'
+    url = 'https://dareen-edu.com/',
+    preloadImages = []
 }) => {
     const siteTitle = "معهد دارين | أكاديمية دارين لتعليم والتدريب";
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
@@ -42,6 +44,11 @@ export const SEO: React.FC<SEOProps> = ({
             <meta property="twitter:title" content={fullTitle} />
             <meta property="twitter:description" content={siteDescription} />
             <meta property="twitter:image" content={image} />
+
+            {/* Preload Critical Assets */}
+            {preloadImages.map((src, idx) => (
+                <link key={idx} rel="preload" href={src} as="image" />
+            ))}
 
             {/* Canonical URL */}
             <link rel="canonical" href={url} />

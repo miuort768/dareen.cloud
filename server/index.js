@@ -169,8 +169,18 @@ async function startServer() {
 
         // Serve static files from the React app with long-term caching
         app.use(express.static(path.join(__dirname, '../dist'), {
-            maxAge: '7d', // Cache images/assets for 7 days
-            index: false
+            maxAge: '1y', // Cache for 1 year (for hashed files like those from Vite)
+            immutable: true,
+            index: false,
+            setHeaders: (res, path) => {
+                if (path.endsWith('.html')) {
+                    // Don't cache HTML files as they contain references to new assets
+                    res.setHeader('Cache-Control', 'no-cache');
+                } else if (path.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
+                    // Aggressive caching for assets
+                    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+                }
+            }
         }));
 
         app.use('/api', apiRouter);

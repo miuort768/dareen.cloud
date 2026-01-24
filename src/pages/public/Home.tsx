@@ -68,6 +68,7 @@ export const Home = () => {
             <SEO
                 title="الرئيسية"
                 description="معهد دارين وأكاديمية دارين للتعليم والتدريب - الخيار الأول للتعليم عن بعد في الكويت والخليج. دروس خصوصية لجميع المراحل، تحفيظ قرآن، ولغات."
+                preloadImages={['/hero-child.png']}
             />
             <PublicNavbar />
 
@@ -153,7 +154,8 @@ export const Home = () => {
                                     src="/hero-child.png"
                                     alt="Hero"
                                     className="relative w-full h-full object-contain filter drop-shadow-2xl z-10"
-                                    loading="lazy"
+                                    fetchPriority="high"
+                                    decoding="sync"
                                     onError={(e) => {
                                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
                                     }}
@@ -397,7 +399,7 @@ export const Home = () => {
                                         <div className="flex items-center justify-between pt-6 border-t border-gray-100 mt-auto">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-gray-200">
-                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" />
+                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                                                 </div>
                                                 <div>
                                                     <h4 className="font-black text-gray-900 text-base">{reviews[currentIndex].name}</h4>
@@ -439,7 +441,7 @@ export const Home = () => {
                                     {/* User Info */}
                                     <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
                                         <div className="w-8 h-8 rounded-none overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
-                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                                         </div>
                                         <div>
                                             <h4 className="font-black text-gray-900 text-xs">{review.name}</h4>

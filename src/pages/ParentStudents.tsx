@@ -69,7 +69,7 @@ export const ParentStudents = () => {
     };
 
     const filteredStudents = students.filter((s: any) =>
-        s.name.toLowerCase().includes(searchQuery.toLowerCase())
+        (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
     if (isLoading) {
