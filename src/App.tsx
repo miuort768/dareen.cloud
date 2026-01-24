@@ -55,9 +55,11 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
     return <Navigate to="/login" replace />;
   }
 
-  if (permission && currentUser?.permissions) {
-    const hasPermission = currentUser.permissions.includes('*') || currentUser.permissions.includes(permission);
-    if (!hasPermission) {
+  if (permission && currentUser) {
+    const hasExplicitPermission = currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission);
+    const isParentAccess = currentUser.role === 'parent' && permission.startsWith('parent_');
+
+    if (!hasExplicitPermission && !isParentAccess) {
       return <Navigate to="/" replace />;
     }
   }
