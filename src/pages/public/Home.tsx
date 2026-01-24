@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, Sparkles } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, Sparkles, ChevronRight, ChevronLeft as LucideChevronLeft, Quote } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { useApp } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
@@ -12,6 +12,7 @@ export const Home = () => {
     const { adminPhone } = useSettings();
     const { isAuthenticated, currentUser } = useApp();
     const navigate = useNavigate();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -61,6 +62,16 @@ export const Home = () => {
             avatar: "/images/avatars/mom3.png"
         }
     ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % reviews.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [reviews.length]);
+
+    const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % reviews.length);
+    const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
 
 
@@ -375,71 +386,95 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section - Uula Inspired Social Wall */}
-            <section className="py-24 bg-[#0B1120] relative overflow-hidden">
-                {/* Decorative Background Glows */}
-                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
+            {/* Testimonials Section - Refined Light Theme */}
+            <section className="py-12 md:py-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16 md:mb-24">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 mx-auto backdrop-blur-md">
-                            <Sparkles size={14} className="text-gold" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">مجتمع دارين</span>
+                    <div className="text-center mb-10 md:mb-12">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full mb-4 mx-auto">
+                            <Quote size={14} className="text-blue-600" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-700">ثقة متبادلة</span>
                         </div>
-                        <h2 className="text-3xl md:text-6xl font-black text-white mb-8 font-heading leading-tight">
-                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">أولياء الأمور؟</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 font-heading leading-tight">
+                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full opacity-50"></div>
+                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full"></div>
                     </div>
 
                     <div className="max-w-7xl mx-auto">
-                        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-                            {reviews.map((review, index) => (
-                                <div
-                                    key={index}
-                                    className="break-inside-avoid relative group"
-                                >
-                                    {/* Chat Bubble Card */}
-                                    <div className="bg-[#1E293B] p-8 rounded-[2rem] border border-white/5 shadow-xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2 group">
+                        {/* Mobile Slider View (One card at a time) */}
+                        <div className="lg:hidden">
+                            <div className="relative group">
+                                <div className="p-8 sm:p-10 bg-gray-50 border border-gray-100 rounded-[2.5rem] shadow-sm relative overflow-hidden flex flex-col min-h-[350px]">
+                                    <Quote size={50} className="text-blue-600/5 absolute top-6 left-6" />
 
-                                        {/* Stars */}
+                                    <div className="relative z-10 flex flex-col h-full flex-grow">
                                         <div className="flex gap-1 mb-6 text-gold">
                                             {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
                                         </div>
 
-                                        {/* Content */}
-                                        <p className="text-blue-50/90 text-lg leading-relaxed font-medium mb-8 italic">
-                                            "{review.content}"
-                                        </p>
-
-                                        {/* User Info */}
-                                        <div className="flex items-center gap-4 pt-6 border-t border-white/5">
-                                            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0 transform group-hover:scale-110 transition-transform">
-                                                <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
-                                            </div>
-                                            <div>
-                                                <h4 className="font-black text-white text-base">{review.name}</h4>
-                                                <p className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mt-1">{review.role}</p>
-                                            </div>
+                                        <div className="flex-grow overflow-y-auto pr-1 mb-6">
+                                            <p className="text-gray-600 text-lg leading-relaxed font-medium italic">
+                                                "{reviews[currentIndex].content}"
+                                            </p>
                                         </div>
 
-                                        {/* Bubble Tail Accent */}
-                                        <div className="absolute -bottom-2 right-12 w-6 h-6 bg-[#1E293B] rotate-45 border-r border-b border-white/5 group-hover:bg-[#253146] transition-colors"></div>
+                                        <div className="flex items-center justify-between pt-6 border-t border-gray-100 mt-auto">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-gray-200">
+                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-black text-gray-900 text-base">{reviews[currentIndex].name}</h4>
+                                                    <p className="text-[10px] text-blue-600 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                    <ChevronRight className="rotate-180" size={18} />
+                                                </button>
+                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                    <LucideChevronLeft className="rotate-180" size={18} />
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            ))}
+                            </div>
                         </div>
 
-                        {/* CTA Footer */}
-                        <div className="mt-20 text-center">
-                            <Link
-                                to="/courses"
-                                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-2xl shadow-2xl shadow-blue-900/40 hover:scale-105 transition-all group"
-                            >
-                                <span>انضم لعائلة دارين الآن</span>
-                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                            </Link>
+                        {/* Desktop Wall of Trust (Masonry Grid) */}
+                        <div className="hidden lg:grid lg:grid-cols-3 gap-6">
+                            {reviews.map((review, index) => (
+                                <div key={index} className="group relative bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+                                    <Quote size={60} className="absolute -top-4 -left-4 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
+
+                                    {/* Stars */}
+                                    <div className="flex gap-1 mb-6 text-gold">
+                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="mb-8">
+                                        <p className="text-gray-600 text-lg leading-relaxed font-medium italic">
+                                            "{review.content}"
+                                        </p>
+                                    </div>
+
+                                    {/* User Info */}
+                                    <div className="flex items-center gap-4 pt-6 border-t border-gray-200">
+                                        <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
+                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-black text-gray-900 text-base">{review.name}</h4>
+                                            <p className="text-[10px] text-blue-600 font-black uppercase tracking-widest mt-1">{review.role}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Small Tail Accent */}
+                                    <div className="absolute -bottom-2 right-12 w-4 h-4 bg-gray-50 rotate-45 border-r border-b border-gray-100"></div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
