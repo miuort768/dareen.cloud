@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Send, Smile, Share2, MoreVertical, Edit2, Trash2, ChevronRight, MonitorPlay } from 'lucide-react';
+import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, MonitorPlay } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';

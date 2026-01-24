@@ -11,15 +11,13 @@ import type { User } from '../../../types/auth';
 interface ChatSidebarProps {
     conversations: Conversation[];
     selectedConv: Conversation | null;
-    setSelectedConv: (conv: Conversation) => void;
+    setSelectedConv: (conv: Conversation | null) => void;
     currentUser: User | null;
     openGroupSettings: (conv: Conversation) => void;
     confirmDeleteConversation: (conv: Conversation) => void;
     setShowNewChatModal: (val: boolean) => void;
     confirmDeleteAllConversations: () => void;
     setIsEditingGroup: (val: boolean) => void;
-    setView: (view: 'chat' | 'management') => void;
-    view: 'chat' | 'management';
     logout: () => void;
     requestDesktopNotifications: () => Promise<boolean>;
     typingUsers: any[];
@@ -35,8 +33,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setShowNewChatModal,
     confirmDeleteAllConversations,
     setIsEditingGroup,
-    setView,
-    view,
     logout,
     requestDesktopNotifications,
     typingUsers
@@ -207,9 +203,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         )}
                                     </p>
                                     <div className="flex items-center gap-2">
-                                        {conv.unreadCount > 0 && (
+                                        {(conv.unreadCount ?? 0) > 0 && (
                                             <div className="bg-emerald-500 text-white text-[10px] font-black min-w-[20px] h-5 rounded-full flex items-center justify-center px-1 shadow-sm animate-in zoom-in duration-300">
-                                                {conv.unreadCount > 99 ? '+99' : conv.unreadCount}
+                                                {(conv.unreadCount ?? 0) > 99 ? '+99' : conv.unreadCount}
                                             </div>
                                         )}
                                         {currentUser?.role === 'admin' && (
