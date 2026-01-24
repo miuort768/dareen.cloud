@@ -387,33 +387,33 @@ export const Home = () => {
             </section>
 
             {/* Testimonials Section - Refined Light Theme */}
-            <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+            <section className="py-6 md:py-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-10 md:mb-12">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full mb-4 mx-auto">
-                            <Quote size={14} className="text-blue-600" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-700">ثقة متبادلة</span>
+                    <div className="text-center mb-6 md:mb-8">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-100 rounded-full mb-3 mx-auto">
+                            <Quote size={12} className="text-blue-600" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-700">ثقة متبادلة</span>
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 font-heading leading-tight">
+                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 font-heading leading-tight">
                             ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full"></div>
+                        <div className="h-1 w-16 bg-gold mx-auto rounded-full"></div>
                     </div>
 
                     <div className="max-w-7xl mx-auto">
                         {/* Mobile Slider View (One card at a time) */}
                         <div className="lg:hidden">
                             <div className="relative group">
-                                <div className="p-8 sm:p-10 bg-gray-50 border border-gray-100 rounded-[2.5rem] shadow-sm relative overflow-hidden flex flex-col min-h-[350px]">
-                                    <Quote size={50} className="text-blue-600/5 absolute top-6 left-6" />
+                                <div className="p-5 bg-gray-50 border border-gray-100 rounded-none shadow-sm relative overflow-hidden flex flex-col min-h-[250px]">
+                                    <Quote size={30} className="text-blue-600/5 absolute top-4 left-4" />
 
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
-                                        <div className="flex gap-1 mb-6 text-gold">
-                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
+                                        <div className="flex gap-1 mb-4 text-gold">
+                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                         </div>
 
-                                        <div className="flex-grow overflow-y-auto pr-1 mb-6">
-                                            <p className="text-gray-600 text-lg leading-relaxed font-medium italic">
+                                        <div className="flex-grow overflow-y-auto pr-1 mb-4">
+                                            <p className="text-gray-600 text-sm leading-relaxed font-medium italic">
                                                 "{reviews[currentIndex].content}"
                                             </p>
                                         </div>
@@ -443,36 +443,36 @@ export const Home = () => {
                         </div>
 
                         {/* Desktop Wall of Trust (Masonry Grid) */}
-                        <div className="hidden lg:grid lg:grid-cols-3 gap-6">
+                        <div className="hidden lg:grid lg:grid-cols-3 gap-3">
                             {reviews.map((review, index) => (
-                                <div key={index} className="group relative bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-                                    <Quote size={60} className="absolute -top-4 -left-4 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
+                                <div key={index} className="group relative bg-gray-50 p-4 rounded-none border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+                                    <Quote size={40} className="absolute -top-2 -left-2 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
 
                                     {/* Stars */}
-                                    <div className="flex gap-1 mb-6 text-gold">
-                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
+                                    <div className="flex gap-1 mb-3 text-gold">
+                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                     </div>
 
                                     {/* Content */}
-                                    <div className="mb-8">
-                                        <p className="text-gray-600 text-lg leading-relaxed font-medium italic">
+                                    <div className="mb-4">
+                                        <p className="text-gray-600 text-xs leading-relaxed font-medium italic">
                                             "{review.content}"
                                         </p>
                                     </div>
 
                                     {/* User Info */}
-                                    <div className="flex items-center gap-4 pt-6 border-t border-gray-200">
-                                        <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
+                                    <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
+                                        <div className="w-8 h-8 rounded-none overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
                                             <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
                                         </div>
                                         <div>
-                                            <h4 className="font-black text-gray-900 text-base">{review.name}</h4>
-                                            <p className="text-[10px] text-blue-600 font-black uppercase tracking-widest mt-1">{review.role}</p>
+                                            <h4 className="font-black text-gray-900 text-xs">{review.name}</h4>
+                                            <p className="text-[9px] text-blue-600 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
                                         </div>
                                     </div>
 
                                     {/* Small Tail Accent */}
-                                    <div className="absolute -bottom-2 right-12 w-4 h-4 bg-gray-50 rotate-45 border-r border-b border-gray-100"></div>
+                                    <div className="absolute -bottom-1 right-8 w-3 h-3 bg-gray-50 rotate-45 border-r border-b border-gray-100"></div>
                                 </div>
                             ))}
                         </div>
