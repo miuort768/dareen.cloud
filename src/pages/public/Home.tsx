@@ -384,83 +384,104 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section */}
-            <section className="py-12 bg-white relative overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-10">
-                        <h2 className="text-3xl lg:text-4xl font-black text-gray-900 uppercase">
-                            آراء <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">أولياء الأمور</span>
+            {/* Testimonials Section - Premium Redesign */}
+            <section className="py-24 bg-[#FDFCF8] relative overflow-hidden">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+                <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-16 md:mb-20">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-100 rounded-full shadow-sm mb-6 mx-auto">
+                            <Quote size={14} className="text-gold" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-900">حكايات نجاح ملهمة</span>
+                        </div>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 font-heading leading-tight">
+                            ثقة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">أولياء الأمور</span><br className="md:hidden" /> هي سر تميزنا
                         </h2>
-                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mt-4"></div>
+                        <div className="h-1.5 w-24 bg-gold mx-auto rounded-full mb-8"></div>
                     </div>
 
-                    <div className="max-w-6xl mx-auto relative">
-                        {/* Mobile Slider (Shows 1 card) */}
-                        <div className="block lg:hidden">
-                            <div className="relative">
-                                <div className="p-8 bg-gray-50 border border-gray-100 rounded-none relative transition-all duration-500 min-h-[250px] flex flex-col justify-center">
-                                    <Quote className="absolute top-4 left-4 w-12 h-12 text-blue-600/5" />
+                    <div className="max-w-7xl mx-auto">
+                        {/* Mobile Slider View */}
+                        <div className="lg:hidden">
+                            <div className="relative group">
+                                <div className="p-10 bg-white border border-gray-100 rounded-[2.5rem] shadow-xl relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
 
-                                    <div className="flex items-center gap-4 mb-6 text-right">
-                                        <div className="relative order-2">
-                                            <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-16 h-16 rounded-none object-cover border border-gray-200" />
-                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gold rounded-none flex items-center justify-center">
-                                                <Star size={10} className="text-white fill-white" />
+                                    <Quote size={60} className="text-blue-600/5 absolute top-8 left-8" />
+
+                                    <div className="relative z-10">
+                                        <div className="flex items-center gap-5 mb-8">
+                                            <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-white shadow-lg shrink-0">
+                                                <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-black text-gray-900 text-xl">{reviews[currentIndex].name}</h4>
+                                                <p className="text-xs text-blue-600 font-bold uppercase tracking-widest">{reviews[currentIndex].role}</p>
                                             </div>
                                         </div>
-                                        <div className="text-right flex-grow order-1">
-                                            <h4 className="font-bold text-gray-900 text-lg">{reviews[currentIndex].name}</h4>
-                                            <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{reviews[currentIndex].role}</p>
+
+                                        <p className="text-gray-600 text-lg leading-relaxed font-medium mb-10 italic">
+                                            "{reviews[currentIndex].content}"
+                                        </p>
+
+                                        <div className="flex items-center justify-between pt-8 border-t border-gray-100">
+                                            <div className="flex gap-1 text-gold">
+                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={16} fill="currentColor" />)}
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <button onClick={prevSlide} className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <ChevronRight className="rotate-180" size={20} />
+                                                </button>
+                                                <button onClick={nextSlide} className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all">
+                                                    <LucideChevronLeft className="rotate-180" size={20} />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <p className="text-gray-600 leading-relaxed text-base italic mb-6 text-right">"{reviews[currentIndex].content}"</p>
-
-                                    <div className="flex justify-end gap-1 text-gold pt-4 border-t border-gray-100">
-                                        {[1, 2, 3, 4, 5].map(star => <Star key={star} size={14} fill="currentColor" />)}
-                                    </div>
-                                </div>
-
-                                {/* Slider Controls with Dots */}
-                                <div className="flex justify-center flex-row-reverse gap-4 mt-8">
-                                    <button onClick={nextSlide} className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors">
-                                        <ChevronRight size={24} className="rotate-180" />
-                                    </button>
-                                    <div className="flex items-center gap-1.5">
-                                        {reviews.map((_, i) => (
-                                            <div key={i} className={`h-1.5 transition-all ${i === currentIndex ? 'w-6 bg-blue-600' : 'w-2 bg-gray-200'}`}></div>
-                                        ))}
-                                    </div>
-                                    <button onClick={prevSlide} className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors">
-                                        <LucideChevronLeft size={24} className="rotate-180" />
-                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Desktop Grid View */}
+                        {/* Desktop Wall of Trust */}
                         <div className="hidden lg:grid lg:grid-cols-3 gap-8">
                             {reviews.map((review, index) => (
-                                <div key={index} className="p-8 bg-gray-50 border border-gray-100 rounded-none relative group hover:bg-white hover:shadow-2xl transition-all duration-300 flex flex-col h-full text-right">
-                                    <Quote className="absolute top-4 left-4 w-12 h-12 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
-
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="relative order-2">
-                                            <img src={review.avatar} alt={review.name} className="w-16 h-16 rounded-none object-cover border border-gray-200" />
-                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gold rounded-none flex items-center justify-center">
-                                                <Star size={10} className="text-white fill-white" />
-                                            </div>
-                                        </div>
-                                        <div className="text-right flex-grow order-1">
-                                            <h4 className="font-bold text-gray-900 text-lg">{review.name}</h4>
-                                            <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{review.role}</p>
-                                        </div>
+                                <div key={index} className="group relative bg-white p-12 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 border border-gray-50 flex flex-col items-start overflow-hidden hover:-translate-y-3">
+                                    {/* Holographic Mesh Effect on Hover */}
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
+                                        style={{ background: 'radial-gradient(at 0% 0%, #2563eb 0px, transparent 50%), radial-gradient(at 100% 100%, #d4af37 0px, transparent 50%)' }}>
                                     </div>
 
-                                    <p className="text-gray-600 leading-relaxed text-base italic mb-8 flex-grow">"{review.content}"</p>
+                                    <Quote size={80} className="absolute -top-6 -left-6 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
 
-                                    <div className="flex justify-end gap-1 text-gold pt-4 border-t border-gray-100">
-                                        {[1, 2, 3, 4, 5].map(star => <Star key={star} size={14} fill="currentColor" />)}
+                                    <div className="relative z-10 w-full">
+                                        <div className="flex items-center gap-5 mb-10">
+                                            <div className="relative">
+                                                <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg border-2 border-white group-hover:rotate-6 transition-transform duration-500">
+                                                    <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-gold rounded-xl flex items-center justify-center shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
+                                                    <Star size={12} className="text-white fill-white" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-black text-gray-900 text-xl group-hover:text-blue-700 transition-colors">{review.name}</h4>
+                                                <p className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em] mt-1">{review.role}</p>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-gray-500 text-lg leading-relaxed font-medium mb-12 italic relative z-10">
+                                            "{review.content}"
+                                        </p>
+
+                                        <div className="mt-auto flex items-center justify-between w-full pt-8 border-t border-gray-100">
+                                            <div className="flex gap-1 text-gold">
+                                                {[1, 2, 3, 4, 5].map(star => <Star key={star} size={15} fill="currentColor" />)}
+                                            </div>
+                                            <span className="text-[10px] font-black text-gray-300 tracking-widest uppercase group-hover:text-blue-200 transition-colors">Verified Feedback</span>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
