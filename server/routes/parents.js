@@ -19,13 +19,18 @@ router.get('/', async (req, res) => {
 
 // 2. Add parent
 router.post('/', async (req, res) => {
-    const { id, name, phone, email } = req.body;
+    const { id, name, phone, email, username, password } = req.body;
+    const bcrypt = require('bcrypt');
+    const dbUsername = username || phone;
+    const dbPassword = password || '123456';
+    const hashedPassword = await bcrypt.hash(dbPassword, 10);
+
     const { v4: uuidv4 } = require('uuid');
     const newId = id || uuidv4();
     try {
         await req.db.run(
-            `INSERT INTO parents (id, name, phone, email) VALUES (?, ?, ?, ?)`,
-            [newId, name, phone, email]
+            `INSERT INTO parents (id, name, phone, email, username, password) VALUES (?, ?, ?, ?, ?, ?)`,
+            [newId, name, phone, email || '', dbUsername, hashedPassword]
         );
         const newItem = await req.db.get('SELECT * FROM parents WHERE id = ?', [newId]);
         res.status(201).json(newItem);
@@ -38,13 +43,23 @@ router.post('/', async (req, res) => {
 // 3. Update parent
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, phone, email } = req.body;
+    const { name, phone, email, username, password } = req.body;
+    const bcrypt = require('bcrypt');
+
     try {
-        await req.db.run(
-            `UPDATE parents SET name = ?, phone = ?, email = ? WHERE id = ?`,
-            [name, phone, email, id]
-        );
-        const updated = await req.db.get('SELECT * FROM parents WHERE id = ?', [id]);
+        if (password && password.trim() !== '') {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await req.db.run(
+                `UPDATE parents SET name = ?, phone = ?, email = ?, username = ?, password = ? WHERE id = ?`,
+                [name, phone, email || '', username || phone, hashedPassword, id]
+            );
+        } else {
+            await req.db.run(
+                `UPDATE parents SET name = ?, phone = ?, email = ?, username = ? WHERE id = ?`,
+                [name, phone, email || '', username || phone, id]
+            );
+        }
+        const updated = await req.db.get('SELECT id, name, phone, email, username FROM parents WHERE id = ?', [id]);
         res.json(updated);
     } catch (err) {
         logger.error('Error updating parent', err, { id });

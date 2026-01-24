@@ -428,8 +428,20 @@ async function setupDatabase() {
     // Auto-populate parent credentials if missing
     console.log('Verifying parent credentials...');
     try {
-        await db.run("UPDATE parents SET username = phone, password = '123456' WHERE password IS NULL OR password = ''");
-        console.log('All parent credentials verified.');
+        const bcrypt = require('bcrypt');
+        const defaultHashed = await bcrypt.hash('123456', 10);
+
+        // 1. Ensure all parents have a username (fallback to phone)
+        await db.run("UPDATE parents SET username = phone WHERE username IS NULL OR username = ''");
+
+        // 2. Ensure all parents have a hashed password
+        const parents = await db.all("SELECT id, password FROM parents");
+        for (const p of parents) {
+            if (!p.password || !p.password.startsWith('$2b$')) {
+                await db.run("UPDATE parents SET password = ? WHERE id = ?", [defaultHashed, p.id]);
+            }
+        }
+        console.log('All parent credentials verified and hashed.');
     } catch (e) {
         console.warn('Could not auto-populate parent credentials:', e.message);
     }

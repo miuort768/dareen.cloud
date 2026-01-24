@@ -129,8 +129,9 @@ router.post('/login', loginLimiter, async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('CRITICAL LOGIN ERROR:', error);
         logger.error('Login error', error, { username });
-        res.status(500).json({ error: 'Server error during authentication' });
+        res.status(500).json({ error: 'Server error during authentication', details: error.message });
     }
 });
 
