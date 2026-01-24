@@ -86,6 +86,7 @@ router.post('/login', loginLimiter, async (req, res) => {
             id: userData.id,
             username: userData.username,
             role: role,
+            phone: userData.phone || null,
             teacherName: teacherName,
             permissions: userData.permissions ? (typeof userData.permissions === 'string' ? JSON.parse(userData.permissions) : userData.permissions) : []
         };
