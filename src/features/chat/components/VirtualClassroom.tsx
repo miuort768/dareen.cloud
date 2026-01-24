@@ -10,7 +10,6 @@ interface VirtualClassroomProps {
 }
 
 export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, userName, onClose, isTeacher }) => {
-    const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peerConnections = useRef<Map<string, RTCPeerConnection>>(new Map());
     const localStream = useRef<MediaStream | null>(null);
@@ -29,6 +28,16 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         ]
     };
 
+    // --- Helper to toggle local tracks ---
+    const toggleLocalMute = useCallback((muted: boolean) => {
+        if (localStream.current) {
+            localStream.current.getAudioTracks().forEach(track => {
+                track.enabled = !muted;
+            });
+        }
+        setIsMuted(muted);
+    }, []);
+
     const createPeerConnection = useCallback((targetSocketId: string) => {
         const pc = new RTCPeerConnection(configuration);
         peerConnections.current.set(targetSocketId, pc);
@@ -43,37 +52,79 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             }
         };
 
-        if (isTeacher && localStream.current) {
+        // Add local tracks (Audio always, Video if teacher is sharing)
+        if (localStream.current) {
             localStream.current.getTracks().forEach(track => {
                 pc.addTrack(track, localStream.current!);
             });
-        } else {
-            pc.ontrack = (event) => {
-                if (remoteVideoRef.current) {
-                    remoteVideoRef.current.srcObject = event.streams[0];
-                    setHasRemoteStream(true);
-                    remoteVideoRef.current.play().catch(console.error);
-                }
-            };
         }
 
+        pc.ontrack = (event) => {
+            console.log("🎥 Received track:", event.track.kind);
+            if (remoteVideoRef.current) {
+                // If it's a new stream, attach it
+                if (remoteVideoRef.current.srcObject !== event.streams[0]) {
+                    remoteVideoRef.current.srcObject = event.streams[0];
+                    setHasRemoteStream(true);
+                }
+                remoteVideoRef.current.play().catch(e => console.warn("Autoplay wait:", e));
+            }
+        };
+
         return pc;
-    }, [roomID, isTeacher]);
+    }, [roomID]);
 
-    const startStream = async () => {
+    // Initial Mic Setup for everyone
+    useEffect(() => {
+        const initMic = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                localStream.current = stream;
+                // If already in a call, we'd need to add/replace tracks, 
+                // but since we do PC creation on demand, it's fine.
+            } catch (err) {
+                console.error("Mic access denied:", err);
+            }
+        };
+        initMic();
+    }, []);
+
+    const startScreenShare = async () => {
         try {
-            const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-            const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const combined = new MediaStream([...stream.getVideoTracks(), ...mic.getAudioTracks()]);
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
 
-            localStream.current = combined;
-            if (localVideoRef.current) localVideoRef.current.srcObject = combined;
+            // Add screen tracks to localStream
+            if (localStream.current) {
+                // Remove old video tracks if any
+                localStream.current.getVideoTracks().forEach(t => {
+                    localStream.current?.removeTrack(t);
+                    t.stop();
+                });
+
+                screenStream.getTracks().forEach(track => {
+                    localStream.current?.addTrack(track);
+                    // Add to all existing peer connections
+                    peerConnections.current.forEach(pc => {
+                        pc.addTrack(track, localStream.current!);
+                    });
+                });
+            } else {
+                localStream.current = screenStream;
+            }
+
             setIsSharing(true);
 
-            // Notify everyone in the room that I'm starting
-            socketService.getSocket().emit('offer', { roomID, offer: null }); // Signal start
+            // Re-negotiation: Send new offers to everyone
+            const socket = socketService.getSocket();
+            for (const [targetId, pc] of peerConnections.current.entries()) {
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+                socket.emit('offer', { to: targetId, offer, roomID });
+            }
+
+            // If no one is here yet, the next joiner will get it via request_stream
         } catch (err) {
-            console.error("Stream access denied", err);
+            console.error("Screen share error:", err);
         }
     };
 
@@ -82,25 +133,24 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         socket.emit('join_class', roomID);
 
         socket.on('request_stream', async (data: any) => {
-            if (isTeacher && localStream.current) {
-                const pc = createPeerConnection(data.from);
-                const offer = await pc.createOffer();
-                await pc.setLocalDescription(offer);
-                socket.emit('offer', { to: data.from, offer });
-            }
+            console.log("Request from:", data.from);
+            const pc = createPeerConnection(data.from);
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+            socket.emit('offer', { to: data.from, offer, roomID });
         });
 
         socket.on('offer', async (data: any) => {
-            if (!isTeacher) {
-                const pc = createPeerConnection(data.from);
-                await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
-                const answer = await pc.createAnswer();
-                await pc.setLocalDescription(answer);
-                socket.emit('answer', { to: data.from, answer });
-            }
+            console.log("Offer from:", data.from);
+            const pc = peerConnections.current.get(data.from) || createPeerConnection(data.from);
+            await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+            socket.emit('answer', { to: data.from, answer });
         });
 
         socket.on('answer', async (data: any) => {
+            console.log("Answer from:", data.from);
             const pc = peerConnections.current.get(data.from);
             if (pc) {
                 await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
@@ -114,10 +164,8 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             }
         });
 
-        // Auto-request for students
-        if (!isTeacher) {
-            socket.emit('request_stream', { roomID });
-        }
+        // Auto-notify others I've joined
+        socket.emit('request_stream', { roomID });
 
         return () => {
             socket.off('offer');
@@ -127,67 +175,125 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             localStream.current?.getTracks().forEach(t => t.stop());
             peerConnections.current.forEach(pc => pc.close());
         };
-    }, [roomID, isTeacher, createPeerConnection]);
+    }, [roomID, createPeerConnection]);
 
-    // Drawing
+    // Drawing Logic (Teacher only)
     const startDrawing = () => { if (drawMode !== 'cursor') setIsDrawing(true); };
     const stopDrawing = () => { setIsDrawing(false); canvasRef.current?.getContext('2d')?.beginPath(); };
     const draw = (e: any) => {
         if (!isDrawing || !canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d')!;
         const rect = canvasRef.current.getBoundingClientRect();
-        const x = (e.clientX || e.touches[0].clientX) - rect.left;
-        const y = (e.clientY || e.touches[0].clientY) - rect.top;
-        ctx.lineWidth = drawMode === 'eraser' ? 20 : 3;
+        const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+        const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+        ctx.lineWidth = drawMode === 'eraser' ? 25 : 4;
+        ctx.lineCap = 'round';
         ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
         ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
     };
 
     return (
-        <div className="fixed inset-0 z-[100] bg-black flex flex-col font-sans">
-            <div className="h-16 px-6 bg-[#111b21] border-b border-gray-800 flex items-center justify-between">
+        <div className="fixed inset-0 z-[100] bg-black flex flex-col font-sans select-none overflow-hidden">
+            {/* Native Header */}
+            <div className="h-16 px-6 bg-[#111b21] border-b border-gray-800 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-4">
                     <Monitor className="text-emerald-500" size={24} />
                     <div>
-                        <h2 className="text-white font-bold text-sm">بث دارين المباشر</h2>
-                        <p className="text-gray-400 text-[10px]">
-                            {isTeacher ? `أهلاً معلمة ${userName}` : `متابعة الشرح مع المعلمة`}
-                        </p>
+                        <h2 className="text-white font-bold text-sm tracking-tight">فصل دارين المباشر</h2>
+                        <p className="text-gray-400 text-[10px]">{isTeacher ? `المعلمة: ${userName}` : `الطالب: ${userName}`}</p>
                     </div>
                 </div>
+
                 <div className="flex items-center gap-3">
                     {isTeacher && (
-                        <div className="flex bg-gray-900 rounded-lg p-1">
-                            <button onClick={() => setDrawMode('cursor')} className={`p-2 ${drawMode === 'cursor' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><MousePointer2 size={16} /></button>
-                            <button onClick={() => setDrawMode('pen')} className={`p-2 ${drawMode === 'pen' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Edit2 size={16} /></button>
-                            <button onClick={() => setDrawMode('eraser')} className={`p-2 ${drawMode === 'eraser' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Eraser size={16} /></button>
+                        <div className="flex bg-gray-950 rounded-lg p-1 border border-gray-800">
+                            <button onClick={() => setDrawMode('cursor')} className={`p-2 rounded-md ${drawMode === 'cursor' ? 'text-white bg-emerald-600 shadow-lg' : 'text-gray-500 hover:text-gray-300'}`} title="المؤشر"><MousePointer2 size={16} /></button>
+                            <button onClick={() => setDrawMode('pen')} className={`p-2 rounded-md ${drawMode === 'pen' ? 'text-white bg-emerald-600 shadow-lg' : 'text-gray-500 hover:text-gray-300'}`} title="القلم"><Edit2 size={16} /></button>
+                            <button onClick={() => setDrawMode('eraser')} className={`p-2 rounded-md ${drawMode === 'eraser' ? 'text-white bg-emerald-600 shadow-lg' : 'text-gray-500 hover:text-gray-300'}`} title="الممحاة"><Eraser size={16} /></button>
                         </div>
                     )}
-                    {isTeacher && !isSharing ? (
-                        <button onClick={startStream} className="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold text-xs uppercase">بدء الشرح</button>
-                    ) : (
-                        <button onClick={() => setIsMuted(!isMuted)} className={`w-10 h-10 flex items-center justify-center rounded-lg ${isMuted ? 'bg-rose-600 text-white' : 'bg-gray-800 text-gray-400'}`}>
+
+                    <div className="flex items-center gap-2">
+                        {isTeacher && !isSharing && (
+                            <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-black text-[10px] uppercase shadow-lg transition-transform active:scale-95">بدء الشرح</button>
+                        )}
+
+                        <button
+                            onClick={() => toggleLocalMute(!isMuted)}
+                            className={`w-10 h-10 flex items-center justify-center rounded-lg border transition-all ${isMuted ? 'bg-rose-600/20 border-rose-500/50 text-rose-500' : 'bg-gray-800 border-gray-700 text-gray-300'}`}
+                            title={isMuted ? "تشغيل المايك" : "كتم المايك"}
+                        >
                             {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
                         </button>
-                    )}
-                    <button onClick={onClose} className="w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center"><X size={20} /></button>
+
+                        <button onClick={onClose} className="w-10 h-10 bg-rose-600 hover:bg-rose-700 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors border border-rose-500/20" title="خروج">
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="flex-1 relative bg-black flex items-center justify-center">
-                <video ref={isTeacher ? localVideoRef : remoteVideoRef} autoPlay playsInline muted={isTeacher || isMuted} className="max-w-full max-h-full" />
+            {/* Content Area */}
+            <div className="flex-1 relative bg-[#0b141a] flex items-center justify-center">
+                <video
+                    ref={remoteVideoRef}
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-contain pointer-events-none"
+                />
+
                 {!isTeacher && !hasRemoteStream && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-950/80">
-                        <div className="text-center">
-                            <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent animate-spin rounded-full mx-auto mb-4"></div>
-                            <p className="text-white font-bold">في انتظار شاشة المعلمة...</p>
-                        </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] z-30">
+                        <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent animate-spin rounded-full mb-6"></div>
+                        <h3 className="text-white font-black text-lg mb-2">في انتظار المعلمة</h3>
+                        <p className="text-gray-500 text-xs font-bold uppercase tracking-widest text-center max-w-[200px]">سيبدأ الشرح فور قيام المعلمة بمشاركة شاشتها</p>
                     </div>
                 )}
-                {isTeacher && isSharing && (
-                    <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseOut={stopDrawing} onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing}
-                        className={`absolute inset-0 z-20 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`} width={window.innerWidth} height={window.innerHeight} />
+
+                {isTeacher && !isSharing && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] z-30 text-center px-6">
+                        <div className="w-24 h-24 bg-emerald-600/10 rounded-full flex items-center justify-center mb-6 border border-emerald-600/20 shadow-2xl">
+                            <Monitor className="text-emerald-500" size={48} />
+                        </div>
+                        <h3 className="text-2xl font-black text-white mb-2 tracking-tight">جاهزة لبدء الشرح؟</h3>
+                        <p className="text-gray-500 text-sm font-medium max-w-sm mb-8">اضغطي على زر "بدء الشرح" في الأعلى لاختيار الشاشة والبدء فوراً.</p>
+                        <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-black text-sm shadow-xl shadow-emerald-600/20 transition-all active:scale-95">بدء مشاركة الشاشة</button>
+                    </div>
                 )}
+
+                {/* Drawing Over Screen (Teacher only) */}
+                {isTeacher && isSharing && (
+                    <canvas
+                        ref={canvasRef}
+                        onMouseDown={startDrawing}
+                        onMouseMove={draw}
+                        onMouseUp={stopDrawing}
+                        onMouseOut={stopDrawing}
+                        onTouchStart={startDrawing}
+                        onTouchMove={draw}
+                        onTouchEnd={stopDrawing}
+                        className={`absolute inset-0 z-40 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`}
+                        width={window.innerWidth}
+                        height={window.innerHeight - 104} // Accounting for header/footer
+                    />
+                )}
+            </div>
+
+            {/* Footer Status */}
+            <div className="h-10 bg-[#111b21] border-t border-gray-800 px-6 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-3">
+                    <span className={`w-2 h-2 rounded-full ${isSharing || hasRemoteStream ? 'bg-emerald-500 animate-pulse' : 'bg-gray-600'}`}></span>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                        {isSharing || hasRemoteStream ? 'البث مستمر حالياً' : 'جاهز للاتصال'}
+                    </span>
+                    <p className="text-gray-700 text-[10px] font-bold">|</p>
+                    <p className="text-[10px] text-gray-500 font-bold tracking-widest uppercase">
+                        {isMuted ? 'المايك مكتوم' : 'المايك يعمل'}
+                    </p>
+                </div>
+                <div className="text-[9px] text-gray-600 font-black uppercase tracking-[0.2em]">
+                    Darin Smart Classroom v1.2
+                </div>
             </div>
         </div>
     );
