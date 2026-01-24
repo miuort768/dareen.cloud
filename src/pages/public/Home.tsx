@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { useApp } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
@@ -464,6 +464,60 @@ export const Home = () => {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-12 md:py-16 bg-[#FDFCF8] relative overflow-hidden">
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-100 rounded-full mb-3 mx-auto shadow-sm">
+                            <HelpCircle size={14} className="text-gold" />
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">لديك استفسار؟</span>
+                        </div>
+                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 font-heading">
+                            الأسئلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">الشائعة</span>
+                        </h2>
+                    </div>
+
+                    <div className="max-w-3xl mx-auto space-y-4">
+                        {[
+                            {
+                                q: "كيف يتم الدراسة في المعهد؟",
+                                a: "الدراسة تتم عن بعد عبر فصول افتراضية تفاعلية مباشرة (لايف) بين المعلم والطالب، باستخدام أحدث التقنيات لضمان جودة الصوت والصورة."
+                            },
+                            {
+                                q: "هل المناهج معتمدة؟",
+                                a: "نعم، نلتزم بتدريس المناهج الحكومية المعتمدة في الكويت ودول الخليج، بالإضافة إلى مناهجنا الخاصة في التأسيس واللغات."
+                            },
+                            {
+                                q: "كيف يمكنني متابعة مستوى ابني؟",
+                                a: "نقوم بإرسال تقارير دورية ومفصلة لولي الأمر عبر الواتساب، تشمل مستوى الطالب، الحضور والغياب، وملاحظات المعلم."
+                            },
+                            {
+                                q: "هل توجد حصص تجريبية؟",
+                                a: "نعم، نقدم حصة تجريبية مجانية لتقييم مستوى الطالب والتعرف على طريقة التدريس قبل الاشتراك الفعلي."
+                            }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white border border-gray-100 rounded-2xl overflow-hidden group hover:border-blue-100 transition-colors">
+                                <details className="group">
+                                    <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
+                                        <h3 className="text-sm md:text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                            {item.q}
+                                        </h3>
+                                        <span className="transform group-open:rotate-180 transition-transform duration-300">
+                                            <ChevronDown size={20} className="text-gray-400 group-open:text-blue-600" />
+                                        </span>
+                                    </summary>
+                                    <div className="px-5 pb-5 pt-0">
+                                        <p className="text-xs md:text-sm text-gray-600 leading-relaxed border-t border-gray-50 pt-3">
+                                            {item.a}
+                                        </p>
+                                    </div>
+                                </details>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
