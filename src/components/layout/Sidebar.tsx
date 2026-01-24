@@ -50,7 +50,7 @@ export const Sidebar = () => {
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
-        { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_attendance', icon: Megaphone },
+        { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
