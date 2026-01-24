@@ -98,12 +98,15 @@ async function startServer() {
 
         app.set('trust proxy', 1);
 
-        // Security: Rate Limiting
+        // Security: Rate Limiting - Optimized for High Traffic
         const rateLimit = require('express-rate-limit');
         const limiter = rateLimit({
             windowMs: 15 * 60 * 1000, // 15 minutes
-            max: process.env.NODE_ENV === 'development' ? 100000 : 50000, // Increased for production
-            message: { error: 'Too many requests, please try again later.' }
+            max: process.env.NODE_ENV === 'development' ? 100000 : 50000, // High limits for scalability
+            message: { error: 'Too many requests, please try again later.' },
+            standardHeaders: true, // Return rate limit info in headers
+            legacyHeaders: false, // Disable X-RateLimit-* headers
+            skip: (req) => req.path === '/health' // Skip health checks
         });
         app.use('/api/', limiter);
 
