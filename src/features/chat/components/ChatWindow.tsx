@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, MonitorPlay } from 'lucide-react';
-import { socketService } from '../../../lib/socket';
+import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, Video, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -21,8 +20,8 @@ interface ChatWindowProps {
     showMoreMenu: boolean;
     setShowMoreMenu: (val: boolean) => void;
     menuRef: React.RefObject<HTMLDivElement>;
-    typingUsers: any[];
     setTyping: (convId: string, isTyping: boolean, name: string) => void;
+    toggleLiveStatus: (data: { id: string, isLive: boolean, meetingUrl?: string }) => Promise<any>;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -39,20 +38,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     showMoreMenu,
     setShowMoreMenu,
     menuRef,
-    typingUsers,
-    setTyping
+    setTyping,
+    toggleLiveStatus
 }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const [activeClasses, setActiveClasses] = useState<string[]>([]);
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+    const [isEditingMeeting, setIsEditingMeeting] = useState(false);
+    const [meetingUrl, setMeetingUrl] = useState(selectedConv.meetingUrl || '');
 
     useEffect(() => {
-        const socket = socketService.getSocket();
-        const handleStatusChange = (classes: string[]) => setActiveClasses(classes);
-        socket.on('class_status_change', handleStatusChange);
-        socket.emit('check_class_status');
-        return () => { socket.off('class_status_change', handleStatusChange); };
-    }, []);
+        setMeetingUrl(selectedConv.meetingUrl || '');
+    }, [selectedConv]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,6 +58,25 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         scrollToBottom();
     }, [messages]);
 
+    const handleToggleLive = async () => {
+        const nextStatus = !selectedConv.isLive;
+        if (nextStatus && !meetingUrl.trim()) {
+            alert('يرجى إدخال رابط الاجتماع أولاً');
+            return;
+        }
+
+        try {
+            await toggleLiveStatus({
+                id: selectedConv.id,
+                isLive: nextStatus,
+                meetingUrl: meetingUrl.trim()
+            });
+            setIsEditingMeeting(false);
+        } catch (error) {
+            console.error('Error toggling live status:', error);
+        }
+    };
+
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
@@ -70,7 +85,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             !isChatOnly && "pb-[80px] lg:pb-0"
         )}>
             {/* Chat Header */}
-            <div className="h-16 lg:h-20 shrink-0 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-[#f0f2f5] dark:bg-[#202c33] sticky top-0 z-50 shadow-sm px-4">
+            <div className="h-16 lg:h-24 shrink-0 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-[#f0f2f5] dark:bg-[#202c33] sticky top-0 z-50 shadow-sm px-4">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
@@ -81,67 +96,132 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </button>
 
                     <div className="relative shrink-0">
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 rounded-full flex items-center justify-center font-black text-base lg:text-lg shadow-sm border border-white dark:border-gray-700">
+                        <div className="w-10 h-10 lg:w-14 lg:h-14 bg-gradient-to-br from-primary-500 to-primary-700 text-white rounded-full flex items-center justify-center font-black text-lg lg:text-xl shadow-lg border-2 border-white dark:border-gray-700">
                             {selectedConv.displayName?.charAt(0)}
                         </div>
-                        <div className="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-[#f0f2f5] dark:border-[#202c33] rounded-full"></div>
+                        <div className={cn(
+                            "absolute -bottom-1 -left-1 w-4 h-4 border-2 border-[#f0f2f5] dark:border-[#202c33] rounded-full",
+                            selectedConv.isLive ? "bg-emerald-500 animate-pulse" : "bg-gray-300"
+                        )}></div>
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <h2 className="font-bold text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-xs lg:text-[16px]">{selectedConv.displayName}</h2>
+                        <h2 className="font-black text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-sm lg:text-[18px]">{selectedConv.displayName}</h2>
 
-                        <div className="flex items-center gap-4 mt-0.5">
-                            {/* Move Button here - below name */}
-                            {(isTeacher || activeClasses.includes(selectedConv.id)) && (
-                                <button
-                                    onClick={() => (window as any).toggleMeeting?.(selectedConv.id)}
-                                    className="flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white rounded-full transition-all shadow-md active:scale-95 animate-in slide-in-from-right duration-500"
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                            {selectedConv.isLive ? (
+                                <a
+                                    href={selectedConv.meetingUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition-all shadow-md active:scale-95 animate-bounce-subtle"
                                 >
-                                    <MonitorPlay size={12} className="animate-pulse" />
-                                    <span className="text-[10px] font-black uppercase">دخول الفصل</span>
-                                </button>
+                                    <Video size={14} />
+                                    <span className="text-[10px] font-black">انضم للاجتماع الآن</span>
+                                    <ExternalLink size={10} />
+                                </a>
+                            ) : (
+                                <div className="text-[11px] text-gray-400 font-bold flex items-center gap-1">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                    <span>لا يوجد اجتماع حالي</span>
+                                </div>
                             )}
 
-                            {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 0 ? (
-                                <p className="text-[11px] lg:text-[12px] text-emerald-600 dark:text-[#8696a0] font-medium italic animate-pulse">يكتب الآن...</p>
-                            ) : (
-                                <p className="text-[11px] lg:text-[12px] text-gray-500 dark:text-[#8696a0] font-medium">متصل الآن</p>
+                            {isTeacher && (
+                                <button
+                                    onClick={() => setIsEditingMeeting(!isEditingMeeting)}
+                                    className="p-1 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
+                                    title="إعدادات الاجتماع"
+                                >
+                                    <Edit2 size={14} />
+                                </button>
                             )}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-1 relative" ref={menuRef}>
-                    <button
-                        onClick={() => setShowMoreMenu(!showMoreMenu)}
-                        className="p-2 text-gray-400 hover:text-primary-600 transition-all rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
-                    >
-                        <MoreVertical size={20} />
-                    </button>
-                    {showMoreMenu && (
-                        <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-2xl z-50 rounded-2xl overflow-hidden backdrop-blur-xl">
-                            {selectedConv.isGroup && currentUser?.role === 'admin' && (
-                                <>
-                                    <button
-                                        onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                        className="w-full text-right p-3 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-primary-50 flex items-center gap-2"
-                                    >
-                                        <Edit2 size={16} className="text-primary-600" />
-                                        تعديل المجموعة
-                                    </button>
-                                    <button
-                                        onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                        className="w-full text-right p-3 text-sm font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2"
-                                    >
-                                        <Trash2 size={16} />
-                                        حذف المجموعة
-                                    </button>
-                                </>
-                            )}
+                <div className="flex items-center gap-2">
+                    {isTeacher && isEditingMeeting && (
+                        <div className="hidden lg:flex items-center gap-2 bg-white dark:bg-gray-800 p-1.5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm animate-in fade-in slide-in-from-right duration-300">
+                            <input
+                                type="text"
+                                value={meetingUrl}
+                                onChange={(e) => setMeetingUrl(e.target.value)}
+                                placeholder="رابط Google Meet..."
+                                className="bg-transparent border-none text-[12px] font-bold outline-none min-w-[200px] text-gray-700 dark:text-gray-200"
+                            />
+                            <button
+                                onClick={handleToggleLive}
+                                className={cn(
+                                    "px-4 py-1.5 rounded-lg text-[11px] font-black transition-all",
+                                    selectedConv.isLive ? "bg-rose-600 text-white" : "bg-primary-600 text-white"
+                                )}
+                            >
+                                {selectedConv.isLive ? "إنهاء البث" : "بدء البث"}
+                            </button>
                         </div>
                     )}
+
+                    <div className="flex items-center gap-1 relative" ref={menuRef}>
+                        <button
+                            onClick={() => setShowMoreMenu(!showMoreMenu)}
+                            className="p-2 text-gray-400 hover:text-primary-600 transition-all rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
+                        >
+                            <MoreVertical size={20} />
+                        </button>
+                        {showMoreMenu && (
+                            <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-2xl z-50 rounded-2xl overflow-hidden backdrop-blur-xl">
+                                {isTeacher && (
+                                    <button
+                                        onClick={() => { setIsEditingMeeting(true); setShowMoreMenu(false); }}
+                                        className="w-full text-right p-3 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-primary-50 flex items-center gap-2"
+                                    >
+                                        <Video size={16} className="text-primary-600" />
+                                        إعدادات البث المباشر
+                                    </button>
+                                )}
+                                {selectedConv.isGroup && currentUser?.role === 'admin' && (
+                                    <>
+                                        <button
+                                            onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
+                                            className="w-full text-right p-3 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-primary-50 flex items-center gap-2"
+                                        >
+                                            <Edit2 size={16} className="text-primary-600" />
+                                            تعديل المجموعة
+                                        </button>
+                                        <button
+                                            onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
+                                            className="w-full text-right p-3 text-sm font-bold text-rose-600 hover:bg-rose-50 flex items-center gap-2"
+                                        >
+                                            <Trash2 size={16} />
+                                            حذف المجموعة
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
+
+            {/* If Mobile and editing meeting, show full area Overlay */}
+            {isTeacher && isEditingMeeting && (
+                <div className="lg:hidden p-4 bg-primary-50 dark:bg-primary-900/10 border-b border-primary-100 dark:border-primary-900/20 animate-in slide-in-from-top">
+                    <p className="text-[11px] font-black text-primary-700 dark:text-primary-400 mb-2">إعدادات البث المباشر (Google Meet)</p>
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={meetingUrl}
+                            onChange={(e) => setMeetingUrl(e.target.value)}
+                            placeholder="ضع رابط الاجتماع هنا..."
+                            className="flex-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-2 rounded-xl text-xs font-bold"
+                        />
+                        <button onClick={handleToggleLive} className={cn("px-4 py-2 rounded-xl text-xs font-black", selectedConv.isLive ? "bg-rose-600 text-white" : "bg-emerald-600 text-white")}>
+                            {selectedConv.isLive ? "إغلاق" : "بدء"}
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#efe7de] dark:bg-[#0b141a] custom-scrollbar relative">

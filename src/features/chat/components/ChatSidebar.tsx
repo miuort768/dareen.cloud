@@ -46,10 +46,21 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
     useEffect(() => {
         const socket = socketService.getSocket();
-        const handleStatusChange = (classes: string[]) => setActiveClasses(classes);
-        socket.on('class_status_change', handleStatusChange);
+
+        // This listener helps to show immediate pulse updates in the sidebar
+        const handleSidebarStatusChange = (data: { conversationId: string, isLive: boolean }) => {
+            setActiveClasses(prev => {
+                if (data.isLive) return [...new Set([...prev, data.conversationId])];
+                return prev.filter(id => id !== data.conversationId);
+            });
+        };
+
+        socket.on('class_status_change_sidebar', handleSidebarStatusChange);
         socket.emit('check_class_status');
-        return () => { socket.off('class_status_change', handleStatusChange); };
+
+        return () => {
+            socket.off('class_status_change_sidebar', handleSidebarStatusChange);
+        };
     }, []);
 
     const confirmDeleteAllConversationsLocal = () => {
@@ -165,7 +176,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 <div className="flex items-center justify-between mb-1">
                                     <h3 className="font-black text-gray-900 dark:text-white truncate text-sm lg:text-base">{conv.displayName}</h3>
                                     <div className="flex items-center gap-2">
-                                        {(activeClasses.includes(conv.id)) && (
+                                        {(conv.isLive || activeClasses.includes(conv.id)) && (
                                             <div className="flex items-center gap-1 text-[9px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full animate-pulse border border-emerald-500/20">
                                                 <MonitorPlay size={10} />
                                                 <span>مباشر</span>

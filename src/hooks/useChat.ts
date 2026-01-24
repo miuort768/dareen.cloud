@@ -162,6 +162,18 @@ export const useChat = (userId?: string) => {
         }
     });
 
+    // Toggle Live Status
+    const toggleLiveStatusMutation = useMutation({
+        mutationFn: async ({ id, isLive, meetingUrl }: { id: string, isLive: boolean, meetingUrl?: string }) => {
+            return api.post(`/chat/conversations/${id}/live`, { isLive, meetingUrl });
+        },
+        onSuccess: (_data, vars) => {
+            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+                return (old || []).map(conv => conv.id === vars.id ? { ...conv, isLive: vars.isLive, meetingUrl: vars.meetingUrl } : conv);
+            });
+        }
+    });
+
     return {
         conversations,
         isLoadingConversations,
@@ -178,6 +190,7 @@ export const useChat = (userId?: string) => {
         typingUsers,
         setTyping,
         markAsRead: markAsReadMutation.mutate,
+        toggleLiveStatus: toggleLiveStatusMutation.mutateAsync,
         totalUnreadCount
     };
 };

@@ -16,6 +16,8 @@ export interface Conversation {
     lastMessageTime: string | null;
     members: string[];
     unreadCount?: number;
+    isLive?: boolean;
+    meetingUrl?: string;
 }
 
 export interface ChatUser {
