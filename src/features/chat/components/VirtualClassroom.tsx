@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { X, Monitor, Mic, MicOff, Edit2, Eraser, MousePointer2 } from 'lucide-react';
-import { socket } from '../../../lib/socket';
+import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
     roomID: string;
@@ -28,6 +28,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
 
     const setupPeerConnection = useCallback(() => {
         pc.current = new RTCPeerConnection(configuration);
+        const socket = socketService.getSocket();
 
         pc.current.onicecandidate = (event) => {
             if (event.candidate) {
@@ -74,7 +75,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             // Create Offer
             const offer = await pc.current?.createOffer();
             await pc.current?.setLocalDescription(offer);
-            socket.emit('offer', { roomID, offer });
+            socketService.getSocket().emit('offer', { roomID, offer });
 
         } catch (err) {
             console.error("Error starting stream:", err);
@@ -83,9 +84,10 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     };
 
     useEffect(() => {
+        const socket = socketService.getSocket();
         socket.emit('join_class', roomID);
 
-        socket.on('offer', async (data) => {
+        socket.on('offer', async (data: any) => {
             if (isTeacher) return; // Teachers don't receive offers
             setupPeerConnection();
             await pc.current?.setRemoteDescription(new RTCSessionDescription(data.offer));
@@ -94,11 +96,11 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             socket.emit('answer', { to: data.from, answer });
         });
 
-        socket.on('answer', async (data) => {
+        socket.on('answer', async (data: any) => {
             await pc.current?.setRemoteDescription(new RTCSessionDescription(data.answer));
         });
 
-        socket.on('ice-candidate', async (data) => {
+        socket.on('ice-candidate', async (data: any) => {
             try {
                 await pc.current?.addIceCandidate(new RTCIceCandidate(data.candidate));
             } catch (e) {
