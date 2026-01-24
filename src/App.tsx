@@ -41,8 +41,9 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   if (permission && currentUser) {
     const hasExplicitPermission = currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission);
     const isParentAccess = currentUser.role === 'parent' && (permission.startsWith('parent_') || permission === 'parent_announcements');
+    const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard';
 
-    if (!hasExplicitPermission && !isParentAccess) {
+    if (!hasExplicitPermission && !isParentAccess && !isTeacherDashboard) {
       return <Navigate to="/" replace />;
     }
   }
@@ -85,7 +86,7 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route path="dashboard" element={<ProtectedRoute permission="*"><Dashboard /></ProtectedRoute>} />
+        <Route path="dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
 
         {/* Parent Routes */}
         <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />

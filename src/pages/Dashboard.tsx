@@ -29,7 +29,7 @@ export const Dashboard = () => {
     // The previous handleSendWhatsAppReminder function is removed as per instruction
     // The imported sendWhatsAppReminder function will be used directly where needed.
 
-    if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
+    if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard') && currentUser.role !== 'teacher')) {
         return <div className="min-h-screen bg-gray-50 dark:bg-gray-950" />;
     }
 

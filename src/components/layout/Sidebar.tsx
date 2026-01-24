@@ -86,6 +86,9 @@ export const Sidebar = () => {
             if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat'].includes(item.id)) return true;
         }
 
+        // Explicitly allow Dashboard for Teachers
+        if (item.id === 'dashboard' && currentUser.role === 'teacher') return true;
+
         // Specific page access
         return currentUser.permissions?.includes(item.id);
     });
