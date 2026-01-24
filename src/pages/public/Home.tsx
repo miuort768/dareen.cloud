@@ -292,7 +292,7 @@ export const Home = () => {
                                 </span> تبدأ بخطوة
                             </h2>
 
-                            <p className="text-gray-600 text-base lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
+                            <p className="text-gray-600 text-xs sm:text-sm lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
                                 منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">حلقات فردية</span> ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                             </p>
 
