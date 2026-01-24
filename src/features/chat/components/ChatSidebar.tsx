@@ -136,8 +136,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
             {/* Conversations List */}
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-                {conversations.filter(c => c.displayName.toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? (
-                    conversations.filter(c => c.displayName.toLowerCase().includes(searchQuery.toLowerCase())).map(conv => (
+                {conversations.filter(c => (c.displayName || '').toLowerCase().includes((searchQuery || '').toLowerCase())).length > 0 ? (
+                    conversations.filter(c => (c.displayName || '').toLowerCase().includes((searchQuery || '').toLowerCase())).map(conv => (
                         <button
                             key={conv.id}
                             onClick={() => setSelectedConv(conv)}

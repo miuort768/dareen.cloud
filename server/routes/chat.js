@@ -183,9 +183,11 @@ router.post('/conversations/:id/messages', async (req, res) => {
                 UNION ALL
                 SELECT name FROM teachers WHERE id = ?
                 UNION ALL
+                SELECT name FROM parents WHERE id = ?
+                UNION ALL
                 SELECT name FROM chat_profiles WHERE id = ?
             ) LIMIT 1
-        `, [senderId, senderId, senderId]);
+        `, [senderId, senderId, senderId, senderId]);
 
         const senderName = userProfile ? userProfile.name : 'Unknown';
 

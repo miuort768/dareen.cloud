@@ -107,7 +107,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                                 <div className="max-h-[300px] overflow-y-auto custom-scrollbar border border-gray-50 dark:border-gray-900">
                                     {availableUsers
-                                        .filter(u => u.name.toLowerCase().includes(searchUser.toLowerCase()) || u.username.toLowerCase().includes(searchUser.toLowerCase()))
+                                        .filter(u => (u.name || '').toLowerCase().includes((searchUser || '').toLowerCase()) || (u.username || '').toLowerCase().includes((searchUser || '').toLowerCase()))
                                         .map(user => (
                                             <div
                                                 key={user.id}
