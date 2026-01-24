@@ -35,7 +35,7 @@ export const ParentAnnouncements = () => {
             try {
                 setIsLoading(true);
                 // Fetching only active announcements for parents
-                const data = await api.get<Announcement[]>('/system/announcements');
+                const data = await api.get<Announcement[]>('/announcements');
                 setAnnouncements(data?.filter(a => a.isActive) || []);
             } catch (error) {
                 console.error('Error fetching announcements:', error);

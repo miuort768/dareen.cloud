@@ -202,6 +202,16 @@ async function setupDatabase() {
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS announcements (
+            id TEXT PRIMARY KEY,
+            title TEXT NOT NULL,
+            content TEXT,
+            type TEXT DEFAULT 'general',
+            date TEXT NOT NULL,
+            isActive INTEGER DEFAULT 1,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         -- Tables created above
     `);
 

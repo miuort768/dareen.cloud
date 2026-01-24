@@ -49,7 +49,7 @@ export const Announcements = () => {
         try {
             setIsLoading(true);
             // Using a generic settings key or specific endpoint if exists
-            const data = await api.get<Announcement[]>('/system/announcements');
+            const data = await api.get<Announcement[]>('/announcements');
             setAnnouncements(data || []);
         } catch (error) {
             console.error('Error fetching announcements:', error);
@@ -69,10 +69,10 @@ export const Announcements = () => {
             };
 
             if (editingAnnouncement) {
-                await api.put(`/system/announcements/${editingAnnouncement.id}`, payload);
+                await api.put(`/announcements/${editingAnnouncement.id}`, payload);
                 showNotification('تم تحديث الإعلان بنجاح', 'success');
             } else {
-                await api.post('/system/announcements', payload);
+                await api.post('/announcements', payload);
                 showNotification('تم نشر الإعلان بنجاح', 'success');
             }
 
@@ -88,7 +88,7 @@ export const Announcements = () => {
     const handleDelete = async (id: string) => {
         if (!window.confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
         try {
-            await api.delete(`/system/announcements/${id}`);
+            await api.delete(`/announcements/${id}`);
             showNotification('تم حذف الإعلان', 'success');
             fetchAnnouncements();
         } catch (error) {
