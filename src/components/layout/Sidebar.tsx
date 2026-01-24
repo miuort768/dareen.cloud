@@ -74,9 +74,11 @@ export const Sidebar = () => {
         // Admin access ('*')
         if (currentUser.permissions?.includes('*')) return true;
 
-        // Parent specific access (hardcoded for now to avoid session/token issues)
-        if (currentUser.role === 'parent' && ['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'].includes(item.id)) {
-            return true;
+        // Parent specific access
+        // Exclude general dashboard for parents as they have parent-dashboard
+        if (currentUser.role === 'parent') {
+            if (item.id === 'dashboard') return false;
+            if (['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'].includes(item.id)) return true;
         }
 
         // Specific page access

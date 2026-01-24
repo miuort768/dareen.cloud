@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     User,
     BarChart3,
@@ -12,6 +13,7 @@ import {
 import { api } from '../lib/api';
 
 export const ParentStudents = () => {
+    const navigate = useNavigate();
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -142,11 +144,17 @@ export const ParentStudents = () => {
 
                         {/* Action Buttons */}
                         <div className="p-6 pt-0 mt-auto grid grid-cols-2 gap-2">
-                            <button className="py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => navigate('/parent-dashboard')}
+                                className="py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2"
+                            >
                                 <Calendar size={14} />
                                 جدول الحصص
                             </button>
-                            <button className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20">
+                            <button
+                                onClick={() => navigate('/parent-attendance')}
+                                className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
+                            >
                                 <BarChart3 size={14} />
                                 كشف الدرجات
                             </button>
