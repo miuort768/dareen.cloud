@@ -38,7 +38,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     typingUsers
 }) => {
     const [activeClasses, setActiveClasses] = useState<string[]>([]);
-    const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
 
     const { isConnected } = useChatContext();
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
@@ -179,20 +178,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         )}
                                     </div>
                                 </div>
-
-                                {/* New: Meeting Link in Sidebar */}
-                                {(isTeacher || activeClasses.includes(conv.id)) && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            (window as any).toggleMeeting?.(conv.id);
-                                        }}
-                                        className="mb-2 flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white rounded-lg text-[10px] font-black shadow-md hover:bg-emerald-700 transition-all active:scale-95"
-                                    >
-                                        <MonitorPlay size={12} />
-                                        دخول الفصل
-                                    </button>
-                                )}
 
                                 <div className="flex items-center justify-between">
                                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate font-bold flex-1">
