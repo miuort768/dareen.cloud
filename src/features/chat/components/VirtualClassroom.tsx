@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, RotateCw, Monitor } from 'lucide-react';
+import { X, RotateCw, Monitor, Mic, MicOff } from 'lucide-react';
 
 interface VirtualClassroomProps {
     roomID: string;
@@ -18,6 +18,8 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     const jitsiContainerRef = useRef<HTMLDivElement>(null);
     const apiRef = useRef<any>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isMuted, setIsMuted] = useState(false);
+    const [isSharing, setIsSharing] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     useEffect(() => {
@@ -26,33 +28,28 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const handleShareScreen = () => {
+        apiRef.current?.executeCommand('toggleShareScreen');
+    };
+
+    const handleToggleAudio = () => {
+        apiRef.current?.executeCommand('toggleAudio');
+        setIsMuted(!isMuted);
+    };
+
     useEffect(() => {
-        // Load Jitsi script
         const script = document.createElement('script');
         script.src = "https://meet.jit.si/external_api.js";
         script.async = true;
         script.onload = () => {
             if (jitsiContainerRef.current) {
                 const domain = "meet.jit.si";
-                const buttons = [
-                    'microphone',
-                    'desktop', // Screen sharing - The most important button
-                    'chat',
-                    'raisehand',
-                    'settings',
-                    'tileview',
-                    'fullscreen',
-                    isTeacher ? 'whiteboard' : ''
-                ].filter(Boolean);
-
                 const options = {
-                    roomName: `Darin_Institute_${roomID}`,
+                    roomName: `Darin_Class_${roomID}`,
                     width: '100%',
                     height: '100%',
                     parentNode: jitsiContainerRef.current,
-                    userInfo: {
-                        displayName: userName
-                    },
+                    userInfo: { displayName: userName },
                     configOverwrite: {
                         startWithAudioMuted: false,
                         startWithVideoMuted: true,
@@ -60,107 +57,98 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                         disableDeepLinking: true,
                         enableWelcomePage: false,
                         enableClosePage: false,
-                        toolbarButtons: buttons,
-                        // Screen sharing specific optimizations
-                        desktopSharingFrameRate: { min: 15, max: 30 },
-                        enableVideoOut: false,
-                        enableLocalVideo: false,
+                        toolbarButtons: [], // Hide their toolbar to use OURS for simplicity
                     },
                     interfaceConfigOverwrite: {
                         DEFAULT_BACKGROUND: '#0b141a',
                         SHOW_JITSI_WATERMARK: false,
                         SHOW_WATERMARK_FOR_GUESTS: false,
                         SHOW_BRAND_WATERMARK: false,
-                        BRAND_WATERMARK_LINK: '',
-                        JITSI_WATERMARK_LINK: '',
                         MOBILE_APP_PROMO: false,
-                        // Customizing interface to look more like part of the platform
-                        TOOLBAR_BUTTONS: buttons, // Duplicate for compatibility
-                        SETTINGS_SECTIONS: ['devices', 'language', 'profile'], // Hide camera settings if possible
+                        TOOLBAR_BUTTONS: [],
+                        SETTINGS_SECTIONS: [],
                     }
                 };
                 apiRef.current = new window.JitsiMeetExternalAPI(domain, options);
 
                 apiRef.current.addEventListeners({
-                    videoConferenceJoined: () => {
-                        setIsLoading(false);
-                        // If teacher, auto-request screen share (optional, maybe better manually)
-                    },
-                    readyToClose: () => {
-                        onClose();
-                    }
+                    videoConferenceJoined: () => setIsLoading(false),
+                    screenSharingStatusChanged: (e: any) => setIsSharing(e.on),
+                    readyToClose: () => onClose()
                 });
             }
         };
         document.body.appendChild(script);
-
         return () => {
             if (apiRef.current) apiRef.current.dispose();
-            document.body.removeChild(script);
+            const s = document.querySelector('script[src*="jitsi"]');
+            if (s) s.remove();
         };
-    }, [roomID, userName, onClose, isTeacher]);
+    }, [roomID, userName, onClose]);
 
     return (
-        <div className="fixed inset-0 z-[100] bg-black flex flex-col animate-in fade-in duration-500">
-            {/* Header / Controls Overlay */}
-            <div className="absolute top-0 left-0 right-0 h-16 px-6 bg-gradient-to-b from-black/80 to-transparent flex items-center justify-between z-[110] pointer-events-none">
-                <div className="flex items-center gap-4 pointer-events-auto">
-                    <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center shadow-lg border border-emerald-500/30">
-                        <Monitor className="text-white" size={20} />
+        <div className="fixed inset-0 z-[100] bg-[#0b141a] flex flex-col animate-in fade-in">
+            {/* Header / Our Own Simple Controls */}
+            <div className="h-16 px-4 bg-[#111b21] border-b border-gray-800 flex items-center justify-between z-[110]">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                        <Monitor className="text-white" size={18} />
                     </div>
                     <div>
-                        <h2 className="text-white font-black text-sm lg:text-base leading-tight uppercase tracking-widest">فصل دارين الذكي</h2>
-                        <p className="text-emerald-400 text-[10px] font-bold">بث مباشر - {isTeacher ? 'وضع المعلمة' : 'وضع الطالب'}</p>
+                        <h2 className="text-white font-bold text-sm">فصل دارين المباشر</h2>
+                        <p className="text-gray-400 text-[10px]">{isTeacher ? 'أنت المعلمة' : 'أنت الطالب'}</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 pointer-events-auto">
-                    {isMobile && (
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/20 text-amber-500 border border-amber-500/30 rounded-full">
-                            <RotateCw size={14} className="animate-pulse" />
-                            <span className="text-[10px] font-bold whitespace-nowrap">قم بتدوير الهاتف</span>
-                        </div>
+                <div className="flex items-center gap-2">
+                    {isTeacher && !isLoading && (
+                        <>
+                            <button
+                                onClick={handleShareScreen}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg font-bold text-xs transition-all ${isSharing ? "bg-rose-600 text-white" : "bg-emerald-600 text-white"
+                                    }`}
+                            >
+                                <Monitor size={14} />
+                                <span>{isSharing ? 'إيقاف الشاشة' : 'مشاركة الشاشة'}</span>
+                            </button>
+                            <button
+                                onClick={handleToggleAudio}
+                                className="w-9 h-9 bg-gray-700 text-white rounded-lg flex items-center justify-center"
+                            >
+                                {isMuted ? <MicOff size={18} /> : <Mic size={18} />}
+                            </button>
+                        </>
                     )}
+
                     <button
                         onClick={onClose}
-                        className="w-10 h-10 bg-rose-600 hover:bg-rose-700 text-white rounded-full flex items-center justify-center transition-all active:scale-90 shadow-xl border border-rose-500/30"
+                        className="w-9 h-9 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white rounded-lg flex items-center justify-center transition-all"
                         title="إغلاق الحصة"
                     >
-                        <X size={24} />
+                        <X size={20} />
                     </button>
                 </div>
             </div>
 
-            {/* Hint for Screen Sharing (Teacher side) */}
-            {isTeacher && isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center z-[105] bg-gray-950 px-6 text-center">
-                    <div className="max-w-md space-y-6">
-                        <div className="w-20 h-20 bg-emerald-600/20 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-emerald-500/20 animate-pulse">
-                            <Monitor className="text-emerald-500" size={40} />
-                        </div>
-                        <h3 className="text-2xl font-black text-white">جاري تجهيز فصلك الذكي...</h3>
-                        <p className="text-gray-400 font-medium">سيتم فتح الواجهة الآن، يرجى الضغط على زر "مشاركة الشاشة" للبدء في الشرح.</p>
-                        <div className="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-600 animate-[loading_1.5s_infinite]" style={{ width: '40%' }}></div>
+            {/* Jitsi Area */}
+            <div className="flex-1 relative">
+                {isLoading && (
+                    <div className="absolute inset-0 bg-[#0b141a] flex items-center justify-center z-50">
+                        <div className="text-center">
+                            <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                            <p className="text-gray-400 text-sm font-bold">جاري فتح الفصل...</p>
                         </div>
                     </div>
-                </div>
-            )}
-
-            {/* Container for Jitsi */}
-            <div ref={jitsiContainerRef} className="flex-1 w-screen h-screen mt-0 overflow-hidden" />
-
-            {/* Watermark Overlay (Brand focus) */}
-            <div className="absolute bottom-6 right-6 z-[110] pointer-events-none opacity-40">
-                <p className="text-white font-black text-xs uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full border border-white/10">Darin Institute</p>
+                )}
+                <div ref={jitsiContainerRef} className="w-full h-full" />
             </div>
 
-            <style>{`
-                @keyframes loading {
-                    0% { transform: translateX(-100%); }
-                    100% { transform: translateX(250%); }
-                }
-            `}</style>
+            {isMobile && !isSharing && (
+                <div className="absolute bottom-20 left-1/2 -translate-x-1/2 bg-amber-500 text-black px-4 py-2 rounded-full text-[10px] font-bold flex items-center gap-2 z-[120]">
+                    <RotateCw size={12} className="animate-spin" />
+                    يرجى قلب الهاتف للوضعية العرضية
+                </div>
+            )}
         </div>
     );
 };
