@@ -79,26 +79,28 @@ export const Students = () => {
             const sessionInfos = generateSessionDates(enrollData.schedule, enrollData.totalSessions);
 
             // 2. Create the sessions in DB
-            const teacher = teachers.find(t => t.name === enrollData.teacher);
+            const teacherObj = teachers.find(t => t.name === enrollData.teacher);
 
             // Create sessions sequentially to avoid SQLITE_BUSY errors
             for (const info of sessionInfos) {
                 await api.post('/sessions', {
                     studentId: selectedStudent.id,
                     studentName: selectedStudent.name,
+                    teacherId: teacherObj?.id,
                     teacherName: enrollData.teacher,
                     subject: enrollData.subject,
                     date: info.date.toISOString().split('T')[0],
                     day: info.slot.day,
                     time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
                     status: 'pending',
-                    price: teacher?.price || 0
+                    price: teacherObj?.price || 0
                 });
             }
 
             // 3. Update student with new enrollment
             const newEnrollment: Enrollment = {
                 teacher: enrollData.teacher,
+                teacherId: teacherObj?.id,
                 subject: enrollData.subject,
                 curr: enrollData.curr,
                 sessionsTotal: enrollData.totalSessions,
@@ -127,20 +129,21 @@ export const Students = () => {
 
         try {
             const sessionInfos = generateSessionDates(enrollment.schedule, amount);
-            const teacher = teachers.find(t => t.name === enrollment.teacher);
+            const teacherObj = teachers.find(t => t.name === enrollment.teacher);
 
             // Create sessions sequentially
             for (const info of sessionInfos) {
                 await api.post('/sessions', {
                     studentId: selectedStudent.id,
                     studentName: selectedStudent.name,
+                    teacherId: teacherObj?.id || enrollment.teacherId,
                     teacherName: enrollment.teacher,
                     subject: enrollment.subject,
                     date: info.date.toISOString().split('T')[0],
                     day: info.slot.day,
                     time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
                     status: 'pending',
-                    price: teacher?.price || 0
+                    price: teacherObj?.price || enrollment.price || 0
                 });
             }
 

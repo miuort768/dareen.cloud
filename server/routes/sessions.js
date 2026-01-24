@@ -1,13 +1,42 @@
 const express = require('express');
 const router = express.Router();
-
-// Using req.db from middleware
-
-
 const logger = require('../utils/logger');
 const { withTransaction } = require('../utils/dbHelper');
 const validate = require('../middleware/validation');
 const { createSessionSchema, updateSessionSchema } = require('../utils/validators');
+
+// HELPER: Robust enrollment matching
+const updateEnrollmentSessions = async (tx, studentId, subject, teacherName, teacherId, delta) => {
+    // Secondary check for teacherId if missing (lookup by name)
+    let finalTid = teacherId;
+    if (!finalTid && teacherName) {
+        const row = await tx.get('SELECT id FROM teachers WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))', [teacherName]);
+        if (row) finalTid = row.id;
+    }
+
+    const sql = delta > 0
+        ? `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1`
+        : `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1)`;
+
+    // EXTREMELY ROBUST MATCHING: TRIM + LOWER everywhere
+    const res = await tx.run(
+        `${sql} WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) 
+         AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) 
+         AND (
+            (teacherId IS NOT NULL AND LOWER(TRIM(teacherId)) = LOWER(TRIM(?)))
+            OR 
+            (LOWER(TRIM(teacher)) = LOWER(TRIM(?)))
+         )`,
+        [studentId, subject, finalTid || 'NEVER_MATCH', teacherName]
+    );
+
+    if (res.changes === 0) {
+        logger.warn(`ROBUST UPDATE FAILED: No enrollment found for ${studentId}, subject: ${subject}, teacher: ${teacherName} (${finalTid})`);
+    } else {
+        logger.info(`ROBUST UPDATE SUCCESS: ${res.changes} changes for ${studentId} (${delta})`);
+    }
+    return res.changes;
+};
 
 // 1. Get all sessions
 router.get('/', async (req, res) => {
@@ -72,57 +101,29 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
         const newItem = await withTransaction(req.db, async (tx) => {
             // Check for existing session for same student, teacher, subject and date to prevent duplicates
             const existing = await tx.get(
-                'SELECT id, status FROM sessions WHERE studentId = ? AND (teacherName = ?) AND subject = ? AND date = ?',
+                'SELECT id, status FROM sessions WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) AND LOWER(TRIM(teacherName)) = LOWER(TRIM(?)) AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) AND date = ?',
                 [body.studentId, body.teacherName, body.subject, body.date]
             );
 
             if (existing) {
-                // If it exists and status is the same, just return it
                 if (existing.status === body.status) {
                     return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
                 }
 
-                // If status is different, update the existing one instead of creating new
                 await tx.run(
                     'UPDATE sessions SET status = ?, time = ?, day = ? WHERE id = ?',
                     [body.status, body.time, body.day, existing.id]
                 );
 
-                // Handle sessionsUsed counting logic for update
                 if (existing.status !== 'completed' && body.status === 'completed') {
-                    const enrollmentUpdate = await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                         WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
-                        [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
-                    );
-
-                    if (enrollmentUpdate.changes === 0) {
-                        await tx.run(
-                            `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                             WHERE studentId = ? AND subject = ? AND teacher = ?`,
-                            [body.studentId, body.subject, body.teacherName]
-                        );
-                    }
+                    await updateEnrollmentSessions(tx, body.studentId, body.subject, body.teacherName, body.teacherId, 1);
                 } else if (existing.status === 'completed' && body.status !== 'completed') {
-                    const enrollmentUpdate = await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                         WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
-                        [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
-                    );
-
-                    if (enrollmentUpdate.changes === 0) {
-                        await tx.run(
-                            `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                             WHERE studentId = ? AND subject = ? AND teacher = ?`,
-                            [body.studentId, body.subject, body.teacherName]
-                        );
-                    }
+                    await updateEnrollmentSessions(tx, body.studentId, body.subject, body.teacherName, body.teacherId, -1);
                 }
 
                 return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
             }
 
-            // If not existing, proceed with insert
             const id = body.id || `sess_${Math.random().toString(36).substr(2, 7)}`;
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
@@ -132,36 +133,23 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
                 if (student) studentPrice = student.sessionPrice;
             }
 
-            if (body.teacherId || body.teacherName) {
-                const teacher = await tx.get(
-                    'SELECT price FROM teachers WHERE id = ? OR name = ?',
-                    [body.teacherId || null, body.teacherName]
-                );
-                if (teacher) {
-                    teacherPrice = teacher.price;
-                }
+            const teacherRow = await tx.get(
+                'SELECT id, price FROM teachers WHERE id = ? OR LOWER(TRIM(name)) = LOWER(TRIM(?))',
+                [body.teacherId || null, body.teacherName]
+            );
+
+            const finalTeacherId = body.teacherId || (teacherRow ? teacherRow.id : null);
+            if (teacherRow) {
+                teacherPrice = teacherRow.price;
             }
 
             await tx.run(
                 `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id, body.studentId, body.studentName, body.teacherId || null, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status]
+                [id, body.studentId, body.studentName, finalTeacherId, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status]
             );
 
             if (body.status === 'completed') {
-                const enrollmentUpdate = await tx.run(
-                    `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
-                    [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
-                );
-
-                if (enrollmentUpdate.changes === 0) {
-                    // Secondary attempt: match by teacher name if teacherId didn't match
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
-                        [body.studentId, body.subject, body.teacherName]
-                    );
-                }
+                await updateEnrollmentSessions(tx, body.studentId, body.subject, body.teacherName, finalTeacherId, 1);
             }
             return tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
         });
@@ -193,42 +181,15 @@ router.patch('/:id', validate(updateSessionSchema), async (req, res) => {
             await tx.run(`UPDATE sessions SET ${setClause} WHERE id = ?`, [...values, id]);
             const newSession = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
 
-            // Handle sessionsUsed counting logic
             const wasCompleted = oldSession.status === 'completed';
             const isCompleted = newSession.status === 'completed';
 
-            // 1. If it was completed, decrement the OLD bucket
             if (wasCompleted) {
-                const enrollmentUpdate = await tx.run(
-                    `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
-                    [oldSession.studentId, oldSession.subject, oldSession.teacherId || 'NEVER_MATCH', oldSession.teacherName]
-                );
-
-                if (enrollmentUpdate.changes === 0) {
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
-                        [oldSession.studentId, oldSession.subject, oldSession.teacherName]
-                    );
-                }
+                await updateEnrollmentSessions(tx, oldSession.studentId, oldSession.subject, oldSession.teacherName, oldSession.teacherId, -1);
             }
 
-            // 2. If it is NOW completed, increment the NEW bucket
             if (isCompleted) {
-                const enrollmentUpdate = await tx.run(
-                    `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
-                    [newSession.studentId, newSession.subject, newSession.teacherId || 'NEVER_MATCH', newSession.teacherName]
-                );
-
-                if (enrollmentUpdate.changes === 0) {
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
-                        [newSession.studentId, newSession.subject, newSession.teacherName]
-                    );
-                }
+                await updateEnrollmentSessions(tx, newSession.studentId, newSession.subject, newSession.teacherName, newSession.teacherId, 1);
             }
 
             return newSession;
@@ -250,11 +211,7 @@ router.delete('/:id', async (req, res) => {
             const session = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
             if (session) {
                 if (session.status === 'completed') {
-                    await tx.run(
-                        `UPDATE enrollments SET sessionsUsed = sessionsUsed - 1 
-                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                        [session.studentId, session.teacherName, session.teacherId || null, session.subject]
-                    );
+                    await updateEnrollmentSessions(tx, session.studentId, session.subject, session.teacherName, session.teacherId, -1);
                 }
                 await tx.run('DELETE FROM sessions WHERE id = ?', [id]);
             }
@@ -267,4 +224,3 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = { sessionRouter: router };
-

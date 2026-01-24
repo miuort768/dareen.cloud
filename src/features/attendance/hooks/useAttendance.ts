@@ -87,18 +87,28 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
     }, [allSessions, date]);
 
     const teacherData = useMemo(() => {
-        const nameToMatch = currentUser?.teacherName || currentUser?.name;
-        const teacherStudents = students.filter(s => s.enrollments?.some(e => e.teacher === nameToMatch));
+        const nameToMatch = (currentUser?.teacherName || currentUser?.name || '').trim().toLowerCase();
+        const tidToMatch = currentUser?.id;
+
+        // Flatten enrollments to handle multiple subjects per student for the same teacher
+        const matchedEnrollments = students.flatMap(s =>
+            (s.enrollments || [])
+                .filter(en => {
+                    const enTeacherName = (en.teacher || '').trim().toLowerCase();
+                    // Match by ID if available, otherwise fallback to robust name matching
+                    const isIdMatch = tidToMatch && en.teacherId === tidToMatch;
+                    const isNameMatch = enTeacherName === nameToMatch;
+                    return isIdMatch || isNameMatch;
+                })
+                .map(en => ({
+                    student: s,
+                    enrollment: en
+                }))
+        );
 
         const teacherStats: TeacherStats = {
-            expected: teacherStudents.reduce((acc, s) => {
-                const en = s.enrollments.find(e => e.teacher === nameToMatch);
-                return acc + (en?.sessionsTotal || 0);
-            }, 0),
-            used: teacherStudents.reduce((acc, s) => {
-                const en = s.enrollments.find(e => e.teacher === nameToMatch);
-                return acc + (en?.sessionsUsed || 0);
-            }, 0),
+            expected: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsTotal || 0), 0),
+            used: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsUsed || 0), 0),
             remaining: 0,
             rate: 0
         };
@@ -106,7 +116,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         teacherStats.remaining = teacherStats.expected - teacherStats.used;
         teacherStats.rate = teacherStats.expected > 0 ? Math.round((teacherStats.used / teacherStats.expected) * 100) : 0;
 
-        return { teacherStudents, teacherStats };
+        return { matchedEnrollments, teacherStats };
     }, [students, currentUser]);
 
     const uniqueTeachers = useMemo(() => {

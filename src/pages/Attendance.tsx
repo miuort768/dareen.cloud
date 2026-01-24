@@ -28,7 +28,7 @@ export const Attendance = () => {
         logAttendance,
         updateSchedule,
         stats,
-        teacherStudents,
+        matchedEnrollments,
         teacherStats,
         uniqueTeachers
     } = useAttendance(currentUser, date);
@@ -109,7 +109,6 @@ export const Attendance = () => {
     });
 
     const isTeacher = currentUser?.role === 'teacher';
-    const nameToMatch = currentUser?.teacherName || currentUser?.name;
 
     return (
         <div className="space-y-4 pb-32">
@@ -147,7 +146,7 @@ export const Attendance = () => {
                         <div className="px-1 border-b border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4">
                             <h3 className="text-base lg:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
                                 <Users size={20} className="text-primary-600" />
-                                إدارة طلابك ومواعيدهم
+                                إدارة طلابك وموادهم
                             </h3>
                             <div className="relative w-full md:w-64">
                                 <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -155,30 +154,33 @@ export const Attendance = () => {
                                     type="text"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    placeholder="ابحث عن طالب..."
+                                    placeholder="ابحث عن طالب أو مادة..."
                                     className="w-full pr-10 pl-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-bold focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all outline-none"
                                 />
                             </div>
                         </div>
                         <div className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6">
-                            {teacherStudents.filter(s => (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase())).length > 0 ?
-                                teacherStudents.filter(s => (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase())).map(student => {
-                                    const en = student.enrollments.find(e => e.teacher === nameToMatch)!;
-                                    return (
-                                        <TeacherStudentCard
-                                            key={student.id}
-                                            student={student}
-                                            enrollment={en}
-                                            actualSessionsUsed={en.sessionsUsed}
-                                            onUpdateSchedule={updateSchedule}
-                                            onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                            onViewHistory={(id, name, grade, subject, curriculum) => setHistoryStudent({ id, name, grade, subject, curriculum })}
-                                            onDeleteSlot={(s, e, i) => setDeletingSlot({ student: s, enrollment: e, slotIndex: i })}
-                                            logDate={logDate}
-                                            onDateChange={setLogDate}
-                                        />
-                                    );
-                                }) : (
+                            {(matchedEnrollments || []).filter(me =>
+                                (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                                (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
+                            ).length > 0 ?
+                                (matchedEnrollments || []).filter(me =>
+                                    (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                                    (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
+                                ).map(({ student, enrollment }) => (
+                                    <TeacherStudentCard
+                                        key={`${student.id}-${enrollment.subject}`}
+                                        student={student}
+                                        enrollment={enrollment}
+                                        actualSessionsUsed={enrollment.sessionsUsed}
+                                        onUpdateSchedule={updateSchedule}
+                                        onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                        onViewHistory={(id, name, grade, subject, curriculum) => setHistoryStudent({ id, name, grade, subject, curriculum })}
+                                        onDeleteSlot={(s, e, i) => setDeletingSlot({ student: s, enrollment: e, slotIndex: i })}
+                                        logDate={logDate}
+                                        onDateChange={setLogDate}
+                                    />
+                                )) : (
                                     <div className="col-span-full py-12 text-center text-gray-400 flex flex-col items-center gap-3">
                                         <div className="w-16 h-16 bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
                                             <Users size={32} className="opacity-20" />
