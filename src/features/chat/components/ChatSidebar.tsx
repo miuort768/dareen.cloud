@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Search, Plus, Trash2, Edit2, LogOut, MonitorPlay, MessageCircle, Bell, BellOff } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Plus, Trash2, Edit2, LogOut, MessageCircle, Bell, BellOff } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
-import { socketService } from '../../../lib/socket';
 import type { Conversation } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -37,32 +36,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     requestDesktopNotifications,
     typingUsers
 }) => {
-    const [activeClasses, setActiveClasses] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
 
     const { isConnected } = useChatContext();
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
         'Notification' in window && Notification.permission === 'granted'
     );
-
-    useEffect(() => {
-        const socket = socketService.getSocket();
-
-        // This listener helps to show immediate pulse updates in the sidebar
-        const handleSidebarStatusChange = (data: { conversationId: string, isLive: boolean }) => {
-            setActiveClasses(prev => {
-                if (data.isLive) return [...new Set([...prev, data.conversationId])];
-                return prev.filter(id => id !== data.conversationId);
-            });
-        };
-
-        socket.on('class_status_change_sidebar', handleSidebarStatusChange);
-        socket.emit('check_class_status');
-
-        return () => {
-            socket.off('class_status_change_sidebar', handleSidebarStatusChange);
-        };
-    }, []);
 
     const confirmDeleteAllConversationsLocal = () => {
         if (window.confirm('هل أنت متأكد من حذف كافة المحادثات؟ لا يمكن التراجع عن هذه الخطوة.')) {
@@ -179,12 +158,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 <div className="flex items-center justify-between mb-1">
                                     <h3 className="font-black text-gray-900 dark:text-white truncate text-sm lg:text-base">{conv.displayName}</h3>
                                     <div className="flex items-center gap-2">
-                                        {(conv.isLive || activeClasses.includes(conv.id)) && (
-                                            <div className="flex items-center gap-1 text-[9px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full animate-pulse border border-emerald-500/20">
-                                                <MonitorPlay size={10} />
-                                                <span>مباشر</span>
-                                            </div>
-                                        )}
                                         {conv.lastMessageTime && (
                                             <span className="text-[10px] text-gray-400 font-bold uppercase">
                                                 {format(new Date(conv.lastMessageTime), 'HH:mm', { locale: ar })}
