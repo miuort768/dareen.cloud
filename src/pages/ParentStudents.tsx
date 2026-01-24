@@ -163,8 +163,11 @@ export const ParentStudents = () => {
                                         {/* Progress Bar */}
                                         <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 overflow-hidden">
                                             <div
-                                                className="h-full bg-primary-600 transition-all duration-1000"
-                                                style={{ width: `${en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0}%` }}
+                                                className={cn(
+                                                    "h-full transition-all duration-1000",
+                                                    (en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0) > 80 ? "bg-rose-500" : (en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0) > 50 ? "bg-amber-500" : "bg-primary-600"
+                                                )}
+                                                style={{ width: `${Math.min(100, en.sessionsTotal > 0 ? (en.sessionsUsed / en.sessionsTotal) * 100 : 0)}%` }}
                                             ></div>
                                         </div>
                                     </div>

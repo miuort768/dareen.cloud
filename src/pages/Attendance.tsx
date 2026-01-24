@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Users, Search, BookOpen } from 'lucide-react';
+import { Users, Search, BookOpen, TrendingUp } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 import { useApp } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -253,6 +254,30 @@ export const Attendance = () => {
                                                         </div>
                                                         <div className="text-[9px] font-black bg-amber-50 text-amber-600 px-2 py-0.5 rounded-none uppercase tracking-tighter">
                                                             لم يتم التحضير
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="p-0 space-y-2 rounded-none">
+                                                        <div className="flex justify-between items-center">
+                                                            <div className="flex items-center gap-2">
+                                                                <TrendingUp size={14} className="text-primary-500" />
+                                                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">تغطية المنهج</span>
+                                                            </div>
+                                                            <div className="flex items-baseline gap-1">
+                                                                <span className="text-sm font-black text-gray-900 dark:text-white">{enrollment.sessionsUsed}</span>
+                                                                <span className="text-[10px] font-bold text-gray-400">/ {enrollment.sessionsTotal}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="h-1.5 bg-gray-100 dark:bg-gray-700 overflow-hidden shadow-inner relative rounded-none">
+                                                            <div
+                                                                className={cn(
+                                                                    "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
+                                                                    (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 80 ? 'bg-emerald-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 50 ? 'bg-primary-600' : 'bg-amber-500'
+                                                                )}
+                                                                style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
+                                                            >
+                                                                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
 

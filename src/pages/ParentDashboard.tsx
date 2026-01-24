@@ -76,7 +76,7 @@ export const ParentDashboard = () => {
         });
 
         const totalAttendance = displayData.sessions.filter(s => s.status === 'completed').length;
-        const totalAbsence = displayData.sessions.filter(s => s.status === 'absent').length;
+        const totalAbsence = displayData.sessions.filter(s => s.status === 'cancelled').length;
         const attendanceRate = (totalAttendance + totalAbsence) > 0
             ? Math.round((totalAttendance / (totalAttendance + totalAbsence)) * 100)
             : 0;
@@ -87,7 +87,7 @@ export const ParentDashboard = () => {
             pendingInvoiceCount: pendingInvoices.length,
             totalPaid,
             totalPending: pendingInvoices.reduce((sum, i) => sum + i.amount, 0),
-            upcomingSessions: displayData.sessions.filter(s => s.status !== 'completed' && s.status !== 'absent').length,
+            upcomingSessions: displayData.sessions.filter(s => s.status !== 'completed' && s.status !== 'cancelled').length,
             sessionsUsed,
             sessionsTotal,
             totalAttendance,
@@ -132,6 +132,8 @@ export const ParentDashboard = () => {
         );
     }
 
+    const totalUsagePercent = stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0;
+
     return (
         <div className="space-y-6 pb-32 animate-in fade-in duration-500" dir="rtl">
 
@@ -164,8 +166,11 @@ export const ParentDashboard = () => {
                             </h3>
                             <div className="w-20 h-1 bg-gray-100 dark:bg-gray-800 mt-2 rounded-none overflow-hidden">
                                 <div
-                                    className="h-full bg-primary-600"
-                                    style={{ width: `${stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0}%` }}
+                                    className={cn(
+                                        "h-full transition-all duration-1000",
+                                        totalUsagePercent > 80 ? "bg-rose-500" : totalUsagePercent > 50 ? "bg-amber-500" : "bg-primary-600"
+                                    )}
+                                    style={{ width: `${Math.min(100, totalUsagePercent)}%` }}
                                 ></div>
                             </div>
                         </div>
