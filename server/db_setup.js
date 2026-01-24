@@ -230,8 +230,15 @@ async function setupDatabase() {
     await addColumnIfNotExists('teachers', 'username', 'TEXT');
     await addColumnIfNotExists('teachers', 'password', 'TEXT');
     await addColumnIfNotExists('students', 'sessionPrice', 'INTEGER DEFAULT 0');
-    await addColumnIfNotExists('parents', 'username', 'TEXT UNIQUE');
+    await addColumnIfNotExists('parents', 'username', 'TEXT');
     await addColumnIfNotExists('parents', 'password', 'TEXT');
+
+    // Create unique index for parent username separately (SQLite restriction)
+    try {
+        await db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_parents_username ON parents(username)');
+    } catch (e) {
+        console.warn('Note: Could not create unique index on parents(username):', e.message);
+    }
 
 
     await addColumnIfNotExists('enrollments', 'teacherId', 'TEXT REFERENCES teachers(id) ON DELETE SET NULL');
