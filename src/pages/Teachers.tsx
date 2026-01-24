@@ -130,7 +130,7 @@ export const Teachers = () => {
                 teacherName: selectedTeacher.name,
                 subject: enrollment.subject,
                 date: logDate,
-                time: logDate === new Date().toISOString().split('T')[0] ? currentTime : '12:00 م',
+                time: currentTime,
                 status,
                 // price: '', // Leave empty to let backend fetch student's default price
                 teacherPrice: selectedTeacher.price // Explicitly set what the teacher should get

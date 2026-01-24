@@ -73,7 +73,7 @@ export const Attendance = () => {
             teacherId: enrollment.teacherId,
             subject: enrollment.subject,
             date: logDate,
-            time: logDate === new Date().toISOString().split('T')[0] ? currentTime : '12:00 م',
+            time: currentTime,
             status: status,
             day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' })
         });

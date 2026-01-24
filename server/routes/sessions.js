@@ -67,31 +67,6 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
-            // Check for existing session for same student, teacher, subject, date AND time to prevent exact duplicates
-            const existing = await tx.get(
-                'SELECT id, status FROM sessions WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) AND LOWER(TRIM(teacherName)) = LOWER(TRIM(?)) AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) AND date = ? AND time = ?',
-                [body.studentId, body.teacherName, body.subject, body.date, body.time]
-            );
-
-            if (existing) {
-                if (existing.status === body.status) {
-                    return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
-                }
-
-                await tx.run(
-                    'UPDATE sessions SET status = ?, time = ?, day = ? WHERE id = ?',
-                    [body.status, body.time, body.day, existing.id]
-                );
-
-                if (existing.status !== 'completed' && body.status === 'completed') {
-                    await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: body.teacherId, delta: 1 });
-                } else if (existing.status === 'completed' && body.status !== 'completed') {
-                    await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: body.teacherId, delta: -1 });
-                }
-
-                return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
-            }
-
             const id = body.id || `sess_${Math.random().toString(36).substr(2, 7)}`;
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
