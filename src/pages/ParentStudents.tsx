@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
     User,
-    BarChart3,
     Calendar,
     Search,
     Users,
@@ -22,7 +20,6 @@ import { ar } from 'date-fns/locale';
 import { api } from '../lib/api';
 
 export const ParentStudents = () => {
-    const navigate = useNavigate();
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -274,7 +271,7 @@ export const ParentStudents = () => {
                                     ) : (
                                         <div className="relative border-r-2 border-primary-500/20 pr-6 mr-3 space-y-8">
                                             {childSessions
-                                                .filter(s => s.subject === viewingSubject.subject)
+                                                .filter(s => s.subject === viewingSubject.subject && s.status === 'completed')
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .map((session, sIdx) => (
                                                     <div key={sIdx} className="relative">
