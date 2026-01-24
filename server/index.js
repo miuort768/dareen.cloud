@@ -249,6 +249,36 @@ async function startServer() {
             socket.on('typing', (data) => {
                 socket.to(data.conversationId).emit('typing', data);
             });
+
+            // --- WebRTC Signaling for Virtual Class ---
+            socket.on('join_class', (roomId) => {
+                socket.join(`class_${roomId}`);
+                console.log(`🏫 User joined class room: class_${roomId}`);
+            });
+
+            socket.on('offer', (data) => {
+                // Forward offer to everyone else in the room
+                socket.to(`class_${data.roomID}`).emit('offer', {
+                    offer: data.offer,
+                    from: socket.id
+                });
+            });
+
+            socket.on('answer', (data) => {
+                // Forward answer to the specific peer
+                socket.to(data.to).emit('answer', {
+                    answer: data.answer,
+                    from: socket.id
+                });
+            });
+
+            socket.on('ice-candidate', (data) => {
+                // Forward ICE candidate to everyone else in the room
+                socket.to(`class_${data.roomID}`).emit('ice-candidate', {
+                    candidate: data.candidate,
+                    from: socket.id
+                });
+            });
         });
 
         const serverInstance = server.listen(PORT, () => {
