@@ -18,8 +18,7 @@ import {
     ListTodo,
     Presentation,
     MessageCircle,
-    Home,
-    Heart
+    Home
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';

@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-    Users,
     Calendar,
     Wallet,
     Clock,
-    ChevronLeft,
     GraduationCap,
     BadgeCheck,
-    TrendingUp,
     AlertCircle,
     MessageCircle,
     FileText,
-    ArrowLeftRight
+    ArrowLeftRight,
+    Receipt
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
