@@ -67,6 +67,8 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     audioElem = document.createElement('audio');
                     audioElem.id = `audio_${targetSocketId}`;
                     audioElem.autoplay = true;
+                    audioElem.muted = false;
+                    audioElem.volume = 1.0;
                     remoteAudioContainerRef.current?.appendChild(audioElem);
                 }
                 audioElem.srcObject = event.streams[0];
@@ -153,10 +155,48 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     // Draggable Logic
     const handleDrag = (e: any) => {
         if (!isDragging) return;
-        setToolbarPos({
-            x: (e.clientX || e.touches[0].clientX) - 20,
-            y: (e.clientY || e.touches[0].clientY) - 20
-        });
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        setToolbarPos({ x: clientX - 20, y: clientY - 20 });
+    };
+
+    // Drawing Logic
+    const getCoordinates = (e: any) => {
+        if (!canvasRef.current) return { x: 0, y: 0 };
+        const rect = canvasRef.current.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        return {
+            x: Math.round(clientX - rect.left),
+            y: Math.round(clientY - rect.top)
+        };
+    };
+
+    const startDrawing = (e: any) => {
+        if (drawMode === 'cursor') return;
+        setIsDrawing(true);
+        const { x, y } = getCoordinates(e);
+        const ctx = canvasRef.current?.getContext('2d');
+        if (ctx) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+    };
+
+    const draw = (e: any) => {
+        if (!isDrawing || !canvasRef.current || drawMode === 'cursor') return;
+        const ctx = canvasRef.current.getContext('2d')!;
+        const { x, y } = getCoordinates(e);
+        ctx.lineWidth = drawMode === 'eraser' ? 30 : 4;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    };
+
+    const stopDrawing = () => {
+        setIsDrawing(false);
     };
 
     return (
@@ -169,7 +209,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         >
             <div ref={remoteAudioContainerRef} className="hidden" />
 
-            {/* Draggable Floating Controller (For Teacher mainly) */}
+            {/* Draggable Floating Controller */}
             <div
                 style={{ left: `${toolbarPos.x}px`, top: `${toolbarPos.y}px` }}
                 className={`absolute z-[120] pointer-events-auto flex items-center gap-2 p-2 bg-[#111b21]/90 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl transition-all ${isDragging ? 'scale-105 opacity-80' : ''}`}
@@ -224,7 +264,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                 </button>
             </div>
 
-            {/* Main Content (Hidden in Mini Mode) */}
+            {/* Main Content */}
             {!isMini && (
                 <div className="flex-1 relative flex items-center justify-center">
                     <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
@@ -246,19 +286,13 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     {isTeacher && isSharing && (
                         <canvas
                             ref={canvasRef}
-                            onMouseDown={() => drawMode !== 'cursor' && setIsDrawing(true)}
-                            onMouseMove={(e) => {
-                                if (!isDrawing || !canvasRef.current) return;
-                                const ctx = canvasRef.current.getContext('2d')!;
-                                const rect = canvasRef.current.getBoundingClientRect();
-                                const x = e.clientX - rect.left;
-                                const y = e.clientY - rect.top;
-                                ctx.lineWidth = drawMode === 'eraser' ? 30 : 4;
-                                ctx.lineCap = 'round';
-                                ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
-                                ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
-                            }}
-                            onMouseUp={() => { setIsDrawing(false); canvasRef.current?.getContext('2d')?.beginPath(); }}
+                            onMouseDown={startDrawing}
+                            onMouseMove={draw}
+                            onMouseUp={stopDrawing}
+                            onMouseOut={stopDrawing}
+                            onTouchStart={startDrawing}
+                            onTouchMove={draw}
+                            onTouchEnd={stopDrawing}
                             className={`absolute inset-0 z-40 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`}
                             width={window.innerWidth} height={window.innerHeight}
                         />
