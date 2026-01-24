@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move, RefreshCw } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move, RefreshCw, AlertCircle } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
@@ -29,43 +29,54 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     const [isDragging, setIsDragging] = useState(false);
 
     const configuration = {
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }]
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            { urls: 'stun:stun2.l.google.com:19302' }
+        ]
     };
 
-    // --- RE-ENGINEERED MIC DETECTION ---
-    const initMic = useCallback(async () => {
+    // --- ENHANCED MIC INITIALIZATION ---
+    const initMic = useCallback(async (force = false) => {
+        if (localStream.current && !force) return true;
+
         setMicStatus('requesting');
         try {
-            console.log("🎤 Requesting mic for:", userName);
+            console.log("🎤 [Mic] Requesting access for:", userName);
             const stream = await navigator.mediaDevices.getUserMedia({
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                }
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
             });
+
             localStream.current = stream;
             setMicStatus('ready');
 
-            // If we are already in calls, we should add our track to them
+            // Re-attach tracks to all existing peer connections if they exist
             peerConnections.current.forEach(pc => {
                 stream.getAudioTracks().forEach(track => {
-                    pc.addTrack(track, stream);
+                    const senders = pc.getSenders();
+                    const audioSender = senders.find(s => s.track?.kind === 'audio');
+                    if (audioSender) {
+                        audioSender.replaceTrack(track);
+                    } else {
+                        pc.addTrack(track, stream);
+                    }
                 });
             });
 
-            console.log("✅ Microphone initialized successfully");
+            console.log("✅ [Mic] Active");
             return true;
         } catch (err: any) {
-            console.error("❌ Mic access error:", err);
-            if (err.name === 'NotAllowedError') setMicStatus('denied');
-            else setMicStatus('error');
+            console.error("❌ [Mic] Error:", err);
+            setMicStatus(err.name === 'NotAllowedError' ? 'denied' : 'error');
             return false;
         }
     }, [userName]);
 
     useEffect(() => {
         initMic();
+        return () => {
+            localStream.current?.getTracks().forEach(t => t.stop());
+        };
     }, [initMic]);
 
     const toggleLocalMute = useCallback((muted: boolean) => {
@@ -76,6 +87,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     }, []);
 
     const createPeerConnection = useCallback((targetSocketId: string) => {
+        console.log("🕸️ [WebRTC] Creating connection for:", targetSocketId);
         const pc = new RTCPeerConnection(configuration);
         peerConnections.current.set(targetSocketId, pc);
 
@@ -85,16 +97,24 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             }
         };
 
+        pc.onconnectionstatechange = () => {
+            console.log(`📡 [WebRTC] State for ${targetSocketId}:`, pc.connectionState);
+        };
+
+        // Add local tracks ASAP
         if (localStream.current) {
-            localStream.current.getTracks().forEach(track => { pc.addTrack(track, localStream.current!); });
+            localStream.current.getTracks().forEach(track => {
+                pc.addTrack(track, localStream.current!);
+            });
         }
 
         pc.ontrack = (event) => {
+            console.log(`🎵 [WebRTC] Track discovered: ${event.track.kind} from ${targetSocketId}`);
             if (event.track.kind === 'video') {
                 if (remoteVideoRef.current) {
                     remoteVideoRef.current.srcObject = event.streams[0];
                     setHasRemoteStream(true);
-                    remoteVideoRef.current.play().catch(() => { });
+                    remoteVideoRef.current.play().catch(e => console.warn("Video play blocked:", e));
                 }
             } else if (event.track.kind === 'audio') {
                 let audioElem = document.getElementById(`audio_${targetSocketId}`) as HTMLAudioElement;
@@ -102,12 +122,19 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     audioElem = document.createElement('audio');
                     audioElem.id = `audio_${targetSocketId}`;
                     audioElem.autoplay = true;
-                    audioElem.muted = false;
                     audioElem.volume = 1.0;
                     remoteAudioContainerRef.current?.appendChild(audioElem);
                 }
                 audioElem.srcObject = event.streams[0];
-                audioElem.play().catch(() => { });
+                audioElem.play().catch(e => {
+                    console.warn("Audio play blocked, retrying on interaction:", e);
+                    // Standard workaround for autoplay policies: play on any document click
+                    const playOnIntervene = () => {
+                        audioElem.play();
+                        document.removeEventListener('click', playOnIntervene);
+                    };
+                    document.addEventListener('click', playOnIntervene);
+                });
             }
         };
 
@@ -115,16 +142,10 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     }, [roomID]);
 
     const startScreenShare = async () => {
-        if (micStatus !== 'ready') {
-            const retry = await initMic();
-            if (!retry) return alert("يرجى تشغيل الميكروفون أولاً للمتابعة");
-        }
-
         try {
             const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
             if (localStream.current) {
                 const videoTrack = screenStream.getVideoTracks()[0];
-                // Remove old screenshare tracks but keep mic
                 localStream.current.getVideoTracks().forEach(t => { localStream.current?.removeTrack(t); t.stop(); });
                 localStream.current.addTrack(videoTrack);
 
@@ -135,11 +156,10 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                 });
             }
             setIsSharing(true);
+            socketService.getSocket().emit('start_class', { roomID });
+
+            // Re-negotiate with everyone
             const socket = socketService.getSocket();
-
-            // Broadcast that the class has started
-            socket.emit('start_class', { roomID });
-
             for (const [targetId, pc] of peerConnections.current.entries()) {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
@@ -148,6 +168,11 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         } catch (err) {
             console.error("Share error:", err);
         }
+    };
+
+    const handleExit = () => {
+        if (isTeacher) socketService.getSocket().emit('end_class', { roomID });
+        onClose();
     };
 
     useEffect(() => {
@@ -179,30 +204,17 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             if (pc) await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => { });
         });
 
-        socket.on('class_ended', () => {
-            console.log("🚫 Class ended by teacher");
-            onClose();
-        });
+        socket.on('class_ended', () => handleExit());
 
-        // Always request stream when entering
         socket.emit('request_stream', { roomID });
 
         return () => {
-            socket.off('offer'); socket.off('answer'); socket.off('ice-candidate'); socket.off('request_stream');
-            socket.off('class_ended');
-            localStream.current?.getTracks().forEach(t => t.stop());
+            socket.off('offer'); socket.off('answer'); socket.off('ice-candidate'); socket.off('request_stream'); socket.off('class_ended');
             peerConnections.current.forEach(pc => pc.close());
         };
-    }, [roomID, createPeerConnection, onClose]);
+    }, [roomID, createPeerConnection]);
 
-    const handleExit = () => {
-        if (isTeacher) {
-            socketService.getSocket().emit('end_class', { roomID });
-        }
-        onClose();
-    };
-
-    // UI Handle Drag
+    // UI Interaction Logic
     const handleDrag = (e: any) => {
         if (!isDragging) return;
         const clientX = e.clientX || (e.touches && e.touches[0].clientX);
@@ -210,7 +222,6 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         setToolbarPos({ x: clientX - 25, y: clientY - 25 });
     };
 
-    // Drawing Logic
     const getCoordinates = (e: any) => {
         if (!canvasRef.current) return { x: 0, y: 0 };
         const rect = canvasRef.current.getBoundingClientRect();
@@ -219,65 +230,35 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         return { x: Math.round(clientX - rect.left), y: Math.round(clientY - rect.top) };
     };
 
-    const startDrawing = (e: any) => {
-        if (drawMode === 'cursor') return;
-        setIsDrawing(true);
-        const { x, y } = getCoordinates(e);
-        const ctx = canvasRef.current?.getContext('2d');
-        if (ctx) { ctx.beginPath(); ctx.moveTo(x, y); }
-    };
-
-    const draw = (e: any) => {
-        if (!isDrawing || !canvasRef.current || drawMode === 'cursor') return;
-        const ctx = canvasRef.current.getContext('2d')!;
-        const { x, y } = getCoordinates(e);
-        ctx.lineWidth = drawMode === 'eraser' ? 35 : 5;
-        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
-        ctx.lineTo(x, y); ctx.stroke();
-    };
-
-    const stopDrawing = () => {
-        setIsDrawing(false);
-    };
-
     return (
         <div
             className={`fixed inset-0 z-[100] flex flex-col font-sans select-none overflow-hidden transition-all duration-500 ${isMini ? 'pointer-events-none' : 'bg-black'}`}
-            onMouseMove={handleDrag}
-            onMouseUp={() => setIsDragging(false)}
-            onTouchMove={handleDrag}
-            onTouchEnd={() => setIsDragging(false)}
+            onMouseMove={handleDrag} onMouseUp={() => setIsDragging(false)} onTouchMove={handleDrag} onTouchEnd={() => setIsDragging(false)}
         >
             <div ref={remoteAudioContainerRef} className="hidden" />
 
-            {/* ERROR UI: MIC NOT DETECTED */}
+            {/* ERROR UI */}
             {micStatus !== 'ready' && !isMini && (
                 <div className="absolute inset-0 z-[150] bg-[#0b141a] flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-300">
                     <div className="w-20 h-20 bg-rose-500/10 rounded-full flex items-center justify-center mb-6 border border-rose-500/20">
-                        <MicOff className="text-rose-500" size={40} />
+                        <AlertCircle className="text-rose-500" size={40} />
                     </div>
-                    <h3 className="text-2xl font-black text-white mb-4">يجب تفعيل الميكروفون</h3>
+                    <h3 className="text-2xl font-black text-white mb-4">تهيئة الصوت والميكروفون</h3>
                     <p className="text-gray-400 max-w-sm mb-8 leading-relaxed">
-                        عذراً، لم نتمكن من الوصول للميكروفون. يرجى السماح للمتصفح باستخدام الميكروفون لتتمكن من التواصل داخل الفصل الدراسي.
+                        نحتاج للتأكد من الميكروفون والصوت لضمان أفضل تجربة شرح. يرجى الضغط على الزر أدناه للسماح بالوصول.
                     </p>
-                    <div className="flex gap-4">
-                        <button
-                            onClick={() => initMic()}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl shadow-emerald-600/20 active:scale-95 transition-all"
-                        >
-                            <RefreshCw size={18} className={micStatus === 'requesting' ? 'animate-spin' : ''} />
-                            إعادة المحاولة
-                        </button>
-                        <button onClick={onClose} className="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold">إغلاق</button>
-                    </div>
+                    <button onClick={() => initMic(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-4 rounded-2xl font-black flex items-center gap-3 shadow-2xl shadow-emerald-500/20 active:scale-95 transition-all">
+                        <Mic size={20} />
+                        تفعيل الميكروفون الآن
+                    </button>
+                    <button onClick={onClose} className="mt-4 text-gray-500 font-bold hover:text-white transition-colors">إلغاء والدخول للدردشة فقط</button>
                 </div>
             )}
 
-            {/* Draggable Control Bar */}
+            {/* Draggable Toolbar */}
             <div
                 style={{ left: `${toolbarPos.x}px`, top: `${toolbarPos.y}px` }}
-                className={`absolute z-[120] pointer-events-auto flex items-center gap-2 p-2.5 bg-[#111b21]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-shadow ${isDragging ? 'shadow-none' : ''}`}
+                className={`absolute z-[120] pointer-events-auto flex items-center gap-2 p-2.5 bg-[#111b21]/95 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl transition-all ${isDragging ? 'scale-105' : ''}`}
             >
                 <div onMouseDown={() => setIsDragging(true)} onTouchStart={() => setIsDragging(true)} className="p-2 cursor-grab active:cursor-grabbing text-gray-500 hover:text-white transition-colors">
                     <Move size={20} />
@@ -287,86 +268,85 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
 
                 <button
                     onClick={() => toggleLocalMute(!isMuted)}
-                    className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all shadow-lg ${isMuted ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'}`}
+                    className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${isMuted ? 'bg-rose-500/20 text-rose-500 border border-rose-500/10' : 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'}`}
                 >
                     {isMuted ? <MicOff size={22} /> : <Mic size={22} />}
                 </button>
 
                 {isTeacher && (
                     <>
-                        <button
-                            onClick={startScreenShare}
-                            className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${isSharing ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-400 hover:text-white border border-white/5'}`}
-                        >
+                        <button onClick={startScreenShare} className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${isSharing ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 border border-white/5'}`} title="مشاركة الشاشة">
                             <Monitor size={22} />
                         </button>
                         <div className="flex bg-white/5 rounded-2xl p-1 border border-white/10">
-                            <button onClick={() => setDrawMode('pen')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${drawMode === 'pen' ? 'bg-emerald-600 text-white shadow-inner' : 'text-gray-500'}`}><Edit2 size={18} /></button>
-                            <button onClick={() => setDrawMode('eraser')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${drawMode === 'eraser' ? 'bg-rose-500 text-white shadow-inner' : 'text-gray-500'}`}><Eraser size={18} /></button>
+                            <button onClick={() => setDrawMode('pen')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${drawMode === 'pen' ? 'bg-emerald-600 text-white shadow-inner' : 'text-gray-400'}`}><Edit2 size={18} /></button>
+                            <button onClick={() => setDrawMode('eraser')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${drawMode === 'eraser' ? 'bg-rose-500 text-white shadow-inner' : 'text-gray-400'}`}><Eraser size={18} /></button>
                         </div>
                     </>
                 )}
 
                 <div className="h-10 w-px bg-white/10 mx-1"></div>
 
+                <button onClick={() => initMic(true)} className="w-12 h-12 bg-white/5 text-gray-400 hover:text-emerald-500 rounded-2xl flex items-center justify-center transition-all" title="تنشيط الصوت">
+                    <RefreshCw size={22} className={micStatus === 'requesting' ? 'animate-spin' : ''} />
+                </button>
+
                 <button onClick={() => setIsMini(!isMini)} className="w-12 h-12 bg-white/5 text-gray-400 hover:text-white rounded-2xl flex items-center justify-center transition-all">
                     {isMini ? <Maximize2 size={22} /> : <Minimize2 size={22} />}
                 </button>
 
-                <button onClick={handleExit} className="w-12 h-12 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white rounded-2xl flex items-center justify-center transition-all">
+                <button onClick={handleExit} className="w-12 h-12 bg-rose-600/80 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-rose-600 active:scale-95 transition-all">
                     <X size={22} />
                 </button>
             </div>
 
-            {/* Main Area */}
+            {/* Content View */}
             {!isMini && (
                 <div className="flex-1 relative flex items-center justify-center bg-[#0b141a]">
                     <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
 
                     {!isTeacher && !hasRemoteStream && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a]">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] z-10 transition-all">
                             <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent animate-spin rounded-full mb-6"></div>
-                            <h3 className="text-white font-black text-xl mb-2">في انتظار شاشة المعلمة</h3>
-                            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest">تأكد من أن الميكروفون لديك مفعل</p>
+                            <h3 className="text-white font-black text-xl mb-2">اتصال مباشر...</h3>
+                            <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.2em]">بانتظار عرض المعلمة</p>
                         </div>
                     )}
 
                     {isTeacher && !isSharing && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] text-center px-6">
-                            <div className="w-24 h-24 bg-emerald-600/10 rounded-full flex items-center justify-center mb-6 border border-emerald-600/20 shadow-2xl">
-                                <Mic className="text-emerald-500" size={48} />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111b21] z-20 text-center px-6">
+                            <div className="w-24 h-24 bg-emerald-600/5 rounded-full flex items-center justify-center mb-8 border border-emerald-600/10 shadow-[0_0_60px_rgba(16,185,129,0.1)]">
+                                <Monitor className="text-emerald-500 opacity-60" size={56} />
                             </div>
-                            <h3 className="text-3xl font-black text-white mb-2">تعرفنا على الميكروفون بنجاح!</h3>
-                            <p className="text-gray-400 text-sm max-w-sm mb-10 leading-relaxed font-medium">
-                                الطلاب الآن يمكنهم سماعك بوضوح. اضغطي على زر "مشاركة الشاشة" في الشريط العائم للبدء في الشرح.
-                            </p>
-                            <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-2xl shadow-emerald-500/20 active:scale-95 transition-all">ابدأ مشاركة الشاشة الآن</button>
+                            <h3 className="text-3xl font-black text-white mb-3 tracking-tight">جاهزة للبث؟</h3>
+                            <p className="text-gray-500 text-sm max-w-sm mb-12 leading-relaxed">الميكروفون متصل. اضغطي على زر الشاشة في اللوحة العائمة لمشاركة شرحك مع الطلاب الآن.</p>
+                            <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-4 rounded-2xl font-black text-sm shadow-2xl shadow-emerald-500/20 active:scale-95 transition-all">بدء مشاركة الشاشة</button>
                         </div>
                     )}
 
                     {isTeacher && isSharing && (
-                        <canvas
-                            ref={canvasRef} onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseOut={stopDrawing} onTouchStart={startDrawing} onTouchMove={draw} onTouchEnd={stopDrawing}
+                        <canvas ref={canvasRef}
+                            onMouseDown={(e) => { if (drawMode !== 'cursor') setIsDrawing(true); const { x, y } = getCoordinates(e); const ctx = canvasRef.current?.getContext('2d'); if (ctx) { ctx.beginPath(); ctx.moveTo(x, y); } }}
+                            onMouseMove={(e) => { if (!isDrawing || !canvasRef.current || drawMode === 'cursor') return; const ctx = canvasRef.current.getContext('2d')!; const { x, y } = getCoordinates(e); ctx.lineWidth = drawMode === 'eraser' ? 40 : 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981'; ctx.lineTo(x, y); ctx.stroke(); }}
+                            onMouseUp={() => setIsDrawing(false)} onTouchStart={(e) => { if (drawMode !== 'cursor') setIsDrawing(true); const { x, y } = getCoordinates(e); const ctx = canvasRef.current?.getContext('2d'); if (ctx) { ctx.beginPath(); ctx.moveTo(x, y); } }}
+                            onTouchMove={(e) => { if (!isDrawing || !canvasRef.current || drawMode === 'cursor') return; const ctx = canvasRef.current.getContext('2d')!; const { x, y } = getCoordinates(e); ctx.lineWidth = drawMode === 'eraser' ? 40 : 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981'; ctx.lineTo(x, y); ctx.stroke(); }}
+                            onTouchEnd={() => setIsDrawing(false)}
                             className={`absolute inset-0 z-40 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`}
-                            width={window.innerWidth} height={window.innerHeight}
-                        />
+                            width={window.innerWidth} height={window.innerHeight} />
                     )}
                 </div>
             )}
 
-            {/* Native Status Tracker */}
+            {/* Status Footer */}
             {!isMini && (
-                <div className="h-10 bg-[#111b21] border-t border-white/5 px-6 flex items-center justify-between">
+                <div className="h-10 bg-[#111b21] border-t border-white/5 px-6 flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                        <span className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">Live Session</span>
-                        <div className="h-4 w-px bg-white/10 mx-1"></div>
-                        <div className="flex items-center gap-1.5 text-[10px] font-black text-gray-400 uppercase">
-                            <Volume2 size={12} className="text-emerald-500" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <div className="flex items-center gap-2 text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                            <Volume2 size={12} className={!isMuted ? 'text-emerald-500' : ''} />
                             {userName}
                         </div>
                     </div>
-                    <div className="text-[10px] text-gray-600 font-black tracking-widest uppercase">Darin Intelligent Hub</div>
                 </div>
             )}
         </div>

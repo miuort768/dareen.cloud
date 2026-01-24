@@ -1,9 +1,10 @@
-import React from 'react';
-import { Search, MessageCircle, Edit2, Trash2, Plus, LogOut, Bell, BellOff } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Search, Plus, Trash2, Edit2, LogOut, MonitorPlay, MessageCircle, Bell, BellOff } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
+import { socketService } from '../../../lib/socket';
 import type { Conversation } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -21,7 +22,7 @@ interface ChatSidebarProps {
     view: 'chat' | 'management';
     logout: () => void;
     requestDesktopNotifications: () => Promise<boolean>;
-    typingUsers: { conversationId: string, userName: string }[];
+    typingUsers: any[];
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -40,68 +41,73 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     requestDesktopNotifications,
     typingUsers
 }) => {
+    const [activeClasses, setActiveClasses] = useState<string[]>([]);
+    const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+
     const { isConnected } = useChatContext();
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
         'Notification' in window && Notification.permission === 'granted'
     );
 
-    const handleToggleNotifications = async () => {
-        const granted = await requestDesktopNotifications();
-        setIsNotificationGranted(granted);
+    useEffect(() => {
+        const socket = socketService.getSocket();
+        const handleStatusChange = (classes: string[]) => setActiveClasses(classes);
+        socket.on('class_status_change', handleStatusChange);
+        socket.emit('check_class_status');
+        return () => { socket.off('class_status_change', handleStatusChange); };
+    }, []);
+
+    const confirmDeleteAllConversationsLocal = () => {
+        if (window.confirm('هل أنت متأكد من حذف كافة المحادثات؟ لا يمكن التراجع عن هذه الخطوة.')) {
+            confirmDeleteAllConversations();
+        }
     };
+
     return (
         <div className={cn(
-            "w-full lg:w-[400px] border-l border-gray-100 dark:border-gray-800 flex flex-col bg-white/50 dark:bg-gray-950/50 backdrop-blur-xl z-20",
+            "w-full lg:w-[350px] flex flex-col bg-[#f0f2f5] dark:bg-[#111b21] border-l border-gray-100 dark:border-gray-800 transition-all duration-500 ease-in-out shrink-0",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
             {/* Sidebar Header */}
-            <div className="p-4 lg:p-6 border-b border-gray-100 dark:border-gray-800">
-                <div className="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 className="text-xl lg:text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">الدردشة</h2>
-                        <div className="flex items-center gap-1.5 mt-1">
-                            <div className={cn(
-                                "w-2 h-2 rounded-full",
-                                isConnected ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
-                            )}></div>
-                            <span className="text-[9px] lg:text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                                {isConnected ? 'متصل لحظياً' : 'جاري الاتصال...'}
-                            </span>
+            <div className="p-4 bg-[#f0f2f5] dark:bg-[#111b21] border-b border-gray-100 dark:border-gray-800">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 bg-primary-600 rounded-none flex items-center justify-center text-white shadow-lg">
+                            <MessageCircle size={22} />
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-black text-[#111b21] dark:text-[#e9edef] tracking-tight">محادثات دارين</h1>
+                            <div className="flex items-center gap-1.5 leading-none">
+                                <div className={cn(
+                                    "w-1.5 h-1.5 rounded-full animate-pulse",
+                                    isConnected ? "bg-emerald-500 shadow-[0_0_5px_rgba(16,185,129,0.5)]" : "bg-rose-500"
+                                )} />
+                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest leading-none">
+                                    {isConnected ? 'متصل' : 'جارٍ الاتصال...'}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                         <button
-                            onClick={handleToggleNotifications}
+                            onClick={async () => {
+                                const success = await requestDesktopNotifications();
+                                if (success) setIsNotificationGranted(true);
+                            }}
                             className={cn(
                                 "w-10 h-10 rounded-none flex items-center justify-center transition-all",
-                                isNotificationGranted
-                                    ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20"
-                                    : "bg-amber-50 text-amber-600 dark:bg-amber-900/20 animate-pulse"
+                                isNotificationGranted ? "text-emerald-500" : "text-gray-400 hover:text-primary-600"
                             )}
-                            title={isNotificationGranted ? "الإشعارات المكتبية مفعلة" : "تفعيل الإشعارات المكتبية"}
+                            title={isNotificationGranted ? "تم تفعيل التنبيهات" : "تفعيل تنبيهات سطح المكتب"}
                         >
                             {isNotificationGranted ? <Bell size={20} /> : <BellOff size={20} />}
                         </button>
-                        {currentUser?.role === 'admin' && (
-                            <button
-                                onClick={() => setView(view === 'management' ? 'chat' : 'management')}
-                                className={cn(
-                                    "w-10 h-10 rounded-none flex items-center justify-center transition-all",
-                                    view === 'management'
-                                        ? "bg-primary-600 text-white shadow-lg"
-                                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                                )}
-                                title="إدارة المستخدمين"
-                            >
-                                <Plus size={20} className={cn("transition-transform duration-500", view === 'management' && "rotate-45")} />
-                            </button>
-                        )}
                         <button
                             onClick={() => {
                                 logout();
                                 window.location.href = '/#/login';
                             }}
-                            className="w-10 h-10 bg-rose-50 text-rose-600 rounded-none flex items-center justify-center hover:bg-rose-100 transition-all"
+                            className="w-10 h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-600 rounded-none flex items-center justify-center hover:bg-rose-100 dark:hover:bg-rose-900/20 transition-all"
                             title="تسجيل الخروج"
                         >
                             <LogOut size={20} />
@@ -120,7 +126,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         )}
                         {currentUser?.role === 'admin' && conversations.length > 0 && (
                             <button
-                                onClick={confirmDeleteAllConversations}
+                                onClick={confirmDeleteAllConversationsLocal}
                                 className="w-10 h-10 bg-rose-600 text-white rounded-none flex items-center justify-center shadow-lg hover:bg-rose-700 active:scale-95 transition-all"
                                 title="حذف كافة المحادثات"
                             >
@@ -160,10 +166,16 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 </div>
                                 <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
                             </div>
-                            <div className="flex-1 min-w-0">
+                            <div className="flex-1 min-w-0 text-right">
                                 <div className="flex items-center justify-between mb-1">
                                     <h3 className="font-black text-gray-900 dark:text-white truncate text-sm lg:text-base">{conv.displayName}</h3>
                                     <div className="flex items-center gap-2">
+                                        {(activeClasses.includes(conv.id)) && (
+                                            <div className="flex items-center gap-1 text-[9px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full animate-pulse border border-emerald-500/20">
+                                                <MonitorPlay size={10} />
+                                                <span>مباشر</span>
+                                            </div>
+                                        )}
                                         {conv.lastMessageTime && (
                                             <span className="text-[10px] text-gray-400 font-bold uppercase">
                                                 {format(new Date(conv.lastMessageTime), 'HH:mm', { locale: ar })}
@@ -171,6 +183,21 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         )}
                                     </div>
                                 </div>
+
+                                {/* New: Meeting Link in Sidebar */}
+                                {(isTeacher || activeClasses.includes(conv.id)) && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            (window as any).toggleMeeting?.(conv.id);
+                                        }}
+                                        className="mb-2 flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white rounded-lg text-[10px] font-black shadow-md hover:bg-emerald-700 transition-all active:scale-95"
+                                    >
+                                        <MonitorPlay size={12} />
+                                        دخول الفصل
+                                    </button>
+                                )}
+
                                 <div className="flex items-center justify-between">
                                     <p className="text-xs text-gray-500 dark:text-gray-400 truncate font-bold flex-1">
                                         {typingUsers.filter(u => u.conversationId === conv.id).length > 0 ? (
@@ -180,7 +207,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                         )}
                                     </p>
                                     <div className="flex items-center gap-2">
-                                        {conv.unreadCount !== undefined && conv.unreadCount > 0 && (
+                                        {conv.unreadCount > 0 && (
                                             <div className="bg-emerald-500 text-white text-[10px] font-black min-w-[20px] h-5 rounded-full flex items-center justify-center px-1 shadow-sm animate-in zoom-in duration-300">
                                                 {conv.unreadCount > 99 ? '+99' : conv.unreadCount}
                                             </div>
@@ -202,7 +229,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                                         e.stopPropagation();
                                                         confirmDeleteConversation(conv);
                                                     }}
-                                                    className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                                    className="p-1.5 text-rose-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
                                                     title="حذف"
                                                 >
                                                     <Trash2 size={12} />
@@ -215,9 +242,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         </button>
                     ))
                 ) : (
-                    <div className="p-12 text-center opacity-40 grayscale scale-90 transition-all">
-                        <MessageCircle size={64} className="mx-auto mb-4 text-gray-300" />
-                        <p className="text-sm font-black text-gray-400 uppercase tracking-widest leading-loose">ابدأ محادثة جديدة الآن مع أعضاء المعهد</p>
+                    <div className="flex flex-col items-center justify-center h-full p-8 text-center opacity-50">
+                        <MessageCircle size={48} className="mb-4 text-gray-300" />
+                        <p className="text-gray-500 font-bold">لا توجد محادثات</p>
                     </div>
                 )}
             </div>
