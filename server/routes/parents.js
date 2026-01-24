@@ -62,53 +62,55 @@ router.delete('/:id', async (req, res) => {
         logger.error('Error deleting parent', err, { id });
         res.status(500).json({ error: 'Internal Server Error' });
     }
-    // 5. Parent Portal: Get Children
-    router.get('/my-children', async (req, res) => {
-        try {
-            const parentPhone = req.user.phone;
-            const children = await req.db.all('SELECT * FROM students WHERE parentPhone = ?', [parentPhone]);
-            res.json(children);
-        } catch (err) {
-            logger.error('Error fetching children', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    });
+});
 
-    // 6. Parent Portal: Get Child Sessions
-    router.get('/child-sessions/:studentId', async (req, res) => {
-        try {
-            const { studentId } = req.params;
-            const parentPhone = req.user.phone;
+// 5. Parent Portal: Get Children
+router.get('/my-children', async (req, res) => {
+    try {
+        const parentPhone = req.user.phone;
+        const children = await req.db.all('SELECT * FROM students WHERE parentPhone = ?', [parentPhone]);
+        res.json(children);
+    } catch (err) {
+        logger.error('Error fetching children', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
-            // Security check: ensure student belongs to parent
-            const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
-            if (!student) return res.status(403).json({ error: 'Unauthorized' });
+// 6. Parent Portal: Get Child Sessions
+router.get('/child-sessions/:studentId', async (req, res) => {
+    try {
+        const { studentId } = req.params;
+        const parentPhone = req.user.phone;
 
-            const sessions = await req.db.all('SELECT * FROM sessions WHERE studentId = ? ORDER BY date DESC', [studentId]);
-            res.json(sessions);
-        } catch (err) {
-            logger.error('Error fetching child sessions', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    });
+        // Security check: ensure student belongs to parent
+        const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
+        if (!student) return res.status(403).json({ error: 'Unauthorized' });
 
-    // 7. Parent Portal: Get Child Invoices
-    router.get('/child-invoices/:studentId', async (req, res) => {
-        try {
-            const { studentId } = req.params;
-            const parentPhone = req.user.phone;
+        const sessions = await req.db.all('SELECT * FROM sessions WHERE studentId = ? ORDER BY date DESC', [studentId]);
+        res.json(sessions);
+    } catch (err) {
+        logger.error('Error fetching child sessions', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
-            // Security check
-            const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
-            if (!student) return res.status(403).json({ error: 'Unauthorized' });
+// 7. Parent Portal: Get Child Invoices
+router.get('/child-invoices/:studentId', async (req, res) => {
+    try {
+        const { studentId } = req.params;
+        const parentPhone = req.user.phone;
 
-            const invoices = await req.db.all('SELECT * FROM student_invoices WHERE studentId = ? ORDER BY date DESC', [studentId]);
-            res.json(invoices);
-        } catch (err) {
-            logger.error('Error fetching child invoices', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    });
+        // Security check
+        const student = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [studentId, parentPhone]);
+        if (!student) return res.status(403).json({ error: 'Unauthorized' });
 
-    module.exports = { parentRouter: router };
+        const invoices = await req.db.all('SELECT * FROM student_invoices WHERE studentId = ? ORDER BY date DESC', [studentId]);
+        res.json(invoices);
+    } catch (err) {
+        logger.error('Error fetching child invoices', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+module.exports = { parentRouter: router };
 
