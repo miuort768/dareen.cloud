@@ -58,7 +58,13 @@ export const Attendance = () => {
         const { student, enrollment } = secureModalData;
 
         const now = new Date();
-        const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', hour12: true });
+        // Adding seconds ensures uniqueness even if recorded in the same minute
+        const currentTime = now.toLocaleTimeString('ar-EG', {
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
 
         const success = await logAttendance({
             studentId: student.id,
