@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move, AlertCircle, RefreshCw } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move, RefreshCw } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
@@ -218,6 +218,10 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         ctx.lineCap = 'round'; ctx.lineJoin = 'round';
         ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
         ctx.lineTo(x, y); ctx.stroke();
+    };
+
+    const stopDrawing = () => {
+        setIsDrawing(false);
     };
 
     return (
