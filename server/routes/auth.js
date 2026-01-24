@@ -15,6 +15,7 @@ const loginLimiter = rateLimit({
 });
 
 router.post('/login', loginLimiter, async (req, res) => {
+    console.log('Login Request Body:', req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -31,8 +32,8 @@ router.post('/login', loginLimiter, async (req, res) => {
 
         if (!userData) {
             userData = await req.db.get(
-                'SELECT * FROM teachers WHERE username = ?',
-                [username]
+                'SELECT * FROM teachers WHERE username = ? OR email = ?',
+                [username, username]
             );
             if (userData) {
                 role = 'teacher';
