@@ -80,14 +80,29 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// 5. Parent Portal: Get Children
+// 5. Parent Portal: Get Children (with deep data)
 router.get('/my-children', async (req, res) => {
     try {
         const parentPhone = req.user.phone;
         const children = await req.db.all('SELECT * FROM students WHERE parentPhone = ?', [parentPhone]);
-        res.json(children);
+
+        // Deep fetch enrollments for each child
+        const childrenWithData = await Promise.all(children.map(async (child) => {
+            const enrollments = await req.db.all('SELECT * FROM enrollments WHERE studentId = ?', [child.id]);
+            // Parse schedule JSON if it exists
+            const enrollmentsWithParsedData = enrollments.map(en => ({
+                ...en,
+                schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
+            }));
+            return {
+                ...child,
+                enrollments: enrollmentsWithParsedData
+            };
+        }));
+
+        res.json(childrenWithData);
     } catch (err) {
-        logger.error('Error fetching children', err);
+        logger.error('Error fetching children with data', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
