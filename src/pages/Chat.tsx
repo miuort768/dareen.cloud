@@ -38,7 +38,7 @@ export const Chat = () => {
 
     // UI State
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
-    const [view, setView] = useState<ChatView>('chat');
+    const [view] = useState<ChatView>('chat');
     const [newMessage, setNewMessage] = useState('');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
