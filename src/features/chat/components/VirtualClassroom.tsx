@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Edit2, Eraser, MousePointer2, Volume2, Maximize2, Minimize2, Move } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
