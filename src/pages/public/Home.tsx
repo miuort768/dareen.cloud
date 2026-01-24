@@ -177,12 +177,12 @@ export const Home = () => {
             {/* Why Choose Us */}
             <section className="pt-10 pb-16 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-6 max-w-3xl mx-auto">
+                    <div className="text-center mb-6 max-w-5xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-[1.4] py-2">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
-                        <p className="text-gray-500 text-lg leading-relaxed">
+                        <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed font-medium">
                             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
                         </p>
                     </div>
