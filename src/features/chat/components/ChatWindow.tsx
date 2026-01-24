@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Send, Smile, Share2, MoreVertical, Edit2, Trash2, ChevronRight, MonitorPlay } from 'lucide-react';
+import { socketService } from '../../../lib/socket';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -20,8 +21,8 @@ interface ChatWindowProps {
     showMoreMenu: boolean;
     setShowMoreMenu: (val: boolean) => void;
     menuRef: React.RefObject<HTMLDivElement>;
-    typingUsers: { conversationId: string, userName: string }[];
-    setTyping: (convId: string, isTyping: boolean, userName: string) => void;
+    typingUsers: any[];
+    setTyping: (convId: string, isTyping: boolean, name: string) => void;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -42,6 +43,24 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     setTyping
 }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const [activeClasses, setActiveClasses] = useState<string[]>([]);
+    const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+
+    useEffect(() => {
+        const socket = socketService.getSocket();
+
+        const handleStatusChange = (classes: string[]) => {
+            setActiveClasses(classes);
+        };
+
+        socket.on('class_status_change', handleStatusChange);
+        socket.emit('check_class_status');
+
+        return () => {
+            socket.off('class_status_change', handleStatusChange);
+        };
+    }, []);
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -78,13 +97,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                         {/* Virtual Class Button */}
                         <div className="flex items-center gap-4 mt-0.5">
-                            <button
-                                onClick={() => (window as any).toggleMeeting?.(selectedConv.id)}
-                                className="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border border-emerald-600/20 rounded-full transition-all group active:scale-95"
-                            >
-                                <MonitorPlay size={12} className="group-hover:scale-110 transition-transform" />
-                                <span className="text-[10px] font-black uppercase tracking-tight">دخول الفصل المباشر</span>
-                            </button>
+                            {(isTeacher || activeClasses.includes(selectedConv.id)) && (
+                                <button
+                                    onClick={() => (window as any).toggleMeeting?.(selectedConv.id)}
+                                    className="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border border-emerald-600/20 rounded-full transition-all group active:scale-95"
+                                >
+                                    <MonitorPlay size={12} className="group-hover:scale-110 transition-transform" />
+                                    <span className="text-[10px] font-black uppercase tracking-tight">دخول الفصل المباشر</span>
+                                </button>
+                            )}
 
                             {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 0 ? (
                                 <p className="text-[11px] lg:text-[12px] text-emerald-600 dark:text-[#8696a0] font-medium italic animate-pulse">يكتب الآن...</p>

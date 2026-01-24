@@ -136,6 +136,10 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             }
             setIsSharing(true);
             const socket = socketService.getSocket();
+
+            // Broadcast that the class has started
+            socket.emit('start_class', { roomID });
+
             for (const [targetId, pc] of peerConnections.current.entries()) {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
@@ -175,15 +179,28 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             if (pc) await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => { });
         });
 
+        socket.on('class_ended', () => {
+            console.log("🚫 Class ended by teacher");
+            onClose();
+        });
+
         // Always request stream when entering
         socket.emit('request_stream', { roomID });
 
         return () => {
             socket.off('offer'); socket.off('answer'); socket.off('ice-candidate'); socket.off('request_stream');
+            socket.off('class_ended');
             localStream.current?.getTracks().forEach(t => t.stop());
             peerConnections.current.forEach(pc => pc.close());
         };
-    }, [roomID, createPeerConnection]);
+    }, [roomID, createPeerConnection, onClose]);
+
+    const handleExit = () => {
+        if (isTeacher) {
+            socketService.getSocket().emit('end_class', { roomID });
+        }
+        onClose();
+    };
 
     // UI Handle Drag
     const handleDrag = (e: any) => {
@@ -296,7 +313,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     {isMini ? <Maximize2 size={22} /> : <Minimize2 size={22} />}
                 </button>
 
-                <button onClick={onClose} className="w-12 h-12 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white rounded-2xl flex items-center justify-center transition-all">
+                <button onClick={handleExit} className="w-12 h-12 bg-rose-600/20 text-rose-500 hover:bg-rose-600 hover:text-white rounded-2xl flex items-center justify-center transition-all">
                     <X size={22} />
                 </button>
             </div>

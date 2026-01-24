@@ -199,6 +199,9 @@ async function startServer() {
 
         const jwt = require('jsonwebtoken');
 
+        // --- Global State for Virtual Classes ---
+        const activeClasses = new Set();
+
         // Socket.io Middleware for Authentication
         io.use((socket, next) => {
             const token = socket.handshake.auth.token || socket.handshake.query.token;
@@ -273,6 +276,23 @@ async function startServer() {
 
             socket.on('request_stream', (data) => {
                 socket.to(`class_${data.roomID}`).emit('request_stream', { from: socket.id });
+            });
+
+            socket.on('end_class', (data) => {
+                activeClasses.delete(data.roomID);
+                socket.to(`class_${data.roomID}`).emit('class_ended');
+                io.emit('class_status_change', Array.from(activeClasses));
+                console.log(`🛑 Class ended in room: class_${data.roomID}`);
+            });
+
+            socket.on('start_class', (data) => {
+                activeClasses.add(data.roomID);
+                io.emit('class_status_change', Array.from(activeClasses));
+                console.log(`🚀 Class started in room: class_${data.roomID}`);
+            });
+
+            socket.on('check_class_status', () => {
+                socket.emit('class_status_change', Array.from(activeClasses));
             });
 
             socket.on('ice-candidate', (data) => {
