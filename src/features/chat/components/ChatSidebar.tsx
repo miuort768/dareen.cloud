@@ -38,6 +38,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     typingUsers
 }) => {
     const [activeClasses, setActiveClasses] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const { isConnected } = useChatContext();
     const [isNotificationGranted, setIsNotificationGranted] = React.useState(
@@ -147,6 +148,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     <input
                         type="text"
                         placeholder="البحث في المحادثات..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full bg-gray-100 dark:bg-gray-800 border-none px-12 py-3 text-sm font-bold focus:ring-2 ring-primary-500 outline-none rounded-none dark:text-white"
                     />
                 </div>
@@ -154,8 +157,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
             {/* Conversations List */}
             <div className="flex-1 overflow-y-auto custom-scrollbar">
-                {conversations.length > 0 ? (
-                    conversations.map(conv => (
+                {conversations.filter(c => c.displayName.toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? (
+                    conversations.filter(c => c.displayName.toLowerCase().includes(searchQuery.toLowerCase())).map(conv => (
                         <button
                             key={conv.id}
                             onClick={() => setSelectedConv(conv)}
