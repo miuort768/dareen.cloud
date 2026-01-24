@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Maximize2, Minimize2, Move, RefreshCw, Volume2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Maximize2, Minimize2, Move, RefreshCw, Volume2, ShieldCheck } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 import { cn } from '../../../lib/utils';
 
