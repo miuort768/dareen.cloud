@@ -147,29 +147,29 @@ export const NotificationDropdown = () => {
             {isOpen && (
                 <div className="absolute left-[-50px] sm:left-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50 origin-top-right">
                     {/* Header */}
-                    <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <Bell size={18} className="text-indigo-600" />
-                            <h3 className="font-bold text-gray-900 dark:text-white">الإشعارات</h3>
+                            <Bell size={16} className="text-indigo-600" />
+                            <h3 className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full dark:bg-red-900/30 dark:text-red-400">
+                                <span className="bg-red-100 text-red-700 text-[9px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full dark:bg-red-900/30 dark:text-red-400">
                                     {unreadCount} جديد
                                 </span>
                             )}
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3">
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllAsRead}
-                                    className="text-xs text-indigo-600 hover:text-indigo-700 font-bold dark:text-indigo-400"
+                                    className="text-[10px] sm:text-xs text-indigo-600 hover:text-indigo-700 font-black dark:text-indigo-400 whitespace-nowrap"
                                 >
-                                    تحديد الكل كمقروء
+                                    تحديد الكل
                                 </button>
                             )}
                             {Array.isArray(notifications) && notifications.length > 0 && (
                                 <button
                                     onClick={clearAll}
-                                    className="text-xs text-red-600 hover:text-red-700 font-bold dark:text-red-400"
+                                    className="text-[10px] sm:text-xs text-red-600 hover:text-red-700 font-black dark:text-red-400 whitespace-nowrap"
                                 >
                                     حذف الكل
                                 </button>
