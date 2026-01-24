@@ -21,7 +21,6 @@ const { systemRouter } = require('./routes/system');
 const financeRouter = require('./routes/finance');
 const tasksRouter = require('./routes/tasks');
 const appointmentsRouter = require('./routes/appointments');
-const appointmentsRouter = require('./routes/appointments');
 const chatRouter = require('./routes/chat');
 const { announcementsRouter } = require('./routes/announcements');
 
