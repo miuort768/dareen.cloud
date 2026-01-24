@@ -22,6 +22,10 @@ import { Tasks } from './pages/Tasks';
 import { Chat } from './pages/Chat';
 import { Appointments } from './pages/Appointments';
 import { Announcements } from './pages/Announcements';
+import { About } from './pages/public/About';
+import { Courses } from './pages/public/Courses';
+import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
+import { TermsOfService } from './pages/public/TermsOfService';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -78,17 +82,23 @@ function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Navigate to="/" replace />} />
+      <Route path="/courses" element={<Courses />} />
+      <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
 
+      {/* Protected App Routes */}
       <Route
-        path="/"
         element={
           <ProtectedRoute>
             <Layout />
           </ProtectedRoute>
         }
       >
+        <Route index element={<DashboardRedirect />} />
         <Route path="dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
 
         {/* Parent Routes */}
@@ -113,8 +123,6 @@ function App() {
 
         {/* New Announcements Admin Route */}
         <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
-
-        <Route index element={<DashboardRedirect />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

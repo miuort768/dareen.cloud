@@ -16,12 +16,14 @@ export const useApp = () => {
     }
 
     // Combine all contexts for backward compatibility
+    // We must ensure useAuth doesn't crash if we are only looking for UI context, 
+    // but the current architecture deeply couples them.
+    // Ideally split them, but for quick fix, we just ensure nesting.
     return {
         ...uiContext,
         ...auth,
         ...settings,
         ...users,
-        // Compatibility aliases
         user: auth.currentUser || ({ id: 'guest', name: 'ضيف', username: 'guest' } as User),
         updateUser: auth.updateCurrentUser
     };
