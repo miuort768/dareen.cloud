@@ -7,12 +7,17 @@ export const InstallPWA = () => {
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [isIOS, setIsIOS] = useState(false);
     const location = useLocation();
 
     // Only show on specific public pages
     const isPublicPage = ['/', '/courses', '/about'].includes(location.pathname);
 
     useEffect(() => {
+        // Detect iOS
+        const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+        setIsIOS(isIOSDevice);
+
         const handler = (e: any) => {
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
@@ -26,12 +31,21 @@ export const InstallPWA = () => {
         // Check if already installed
         if (window.matchMedia('(display-mode: standalone)').matches) {
             setShowTrigger(false);
+        } else if (isIOSDevice && !(window.navigator as any).standalone) {
+            // For iOS, show trigger if not already installed
+            setShowTrigger(true);
         }
 
         return () => window.removeEventListener('beforeinstallprompt', handler);
     }, []);
 
     const handleInstall = async () => {
+        if (isIOS) {
+            // For iOS, just show the modal with instructions
+            // The modal will display manual steps
+            return;
+        }
+
         if (!deferredPrompt) return;
 
         // Show the prompt
@@ -120,19 +134,49 @@ export const InstallPWA = () => {
                         </div>
 
                         <div className="flex flex-col gap-2 pt-1">
-                            <button
-                                onClick={handleInstall}
-                                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-                            >
-                                <Download size={18} />
-                                <span>تثبيت الآن مجاناً</span>
-                            </button>
-                            <button
-                                onClick={() => setShowModal(false)}
-                                className="w-full py-2 text-gray-400 hover:text-gray-600 font-bold text-[11px] transition-colors"
-                            >
-                                ربما لاحقاً
-                            </button>
+                            {isIOS ? (
+                                <div className="space-y-3">
+                                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
+                                        <p className="text-xs font-bold text-blue-900 dark:text-blue-300 mb-3 text-right">خطوات التثبيت على iPhone/iPad:</p>
+                                        <ol className="text-xs text-blue-800 dark:text-blue-400 space-y-2 text-right">
+                                            <li className="flex items-start gap-2">
+                                                <span className="font-black">1.</span>
+                                                <span>اضغط على زر <strong>المشاركة</strong> 📤 في شريط Safari السفلي</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="font-black">2.</span>
+                                                <span>اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong> ➕</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="font-black">3.</span>
+                                                <span>اضغط <strong>"إضافة"</strong> في الزاوية العلوية ✅</span>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+                                    >
+                                        <span>فهمت، شكراً!</span>
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <button
+                                        onClick={handleInstall}
+                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+                                    >
+                                        <Download size={18} />
+                                        <span>تثبيت الآن مجاناً</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="w-full py-2 text-gray-400 hover:text-gray-600 font-bold text-[11px] transition-colors"
+                                    >
+                                        ربما لاحقاً
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
