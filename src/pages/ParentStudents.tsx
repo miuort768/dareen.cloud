@@ -64,6 +64,11 @@ export const ParentStudents = () => {
         fetchChildSessions(student.id);
     };
 
+    const handleViewAttendance = (student: any) => {
+        setViewingAttendanceStudent(student);
+        fetchChildSessions(student.id);
+    };
+
     const filteredStudents = students.filter((s: any) =>
         s.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -141,7 +146,7 @@ export const ParentStudents = () => {
                         {/* Detailed Enrollments List */}
                         <div className="p-6 space-y-4 flex-1">
                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 pb-1 flex items-center justify-between">
-                                تفاصيل المواد الدراسيـة
+                                تفاصيل المواد الدراسية
                                 <CheckCircle2 size={12} className="text-gray-300" />
                             </p>
                             <div className="space-y-4">
@@ -183,7 +188,7 @@ export const ParentStudents = () => {
                                 تواريخ الحصص
                             </button>
                             <button
-                                onClick={() => setViewingAttendanceStudent(student)}
+                                onClick={() => handleViewAttendance(student)}
                                 className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
                             >
                                 <TrendingUp size={14} />
@@ -362,56 +367,68 @@ export const ParentStudents = () => {
 
                         {/* Modal Content */}
                         <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-4">
-                            {(viewingAttendanceStudent.enrollments || []).map((en: any, idx: number) => {
-                                const absent = Number(en.sessionsTotal) - Number(en.sessionsUsed);
-                                const percentage = en.sessionsTotal > 0 ? Math.round((en.sessionsUsed / en.sessionsTotal) * 100) : 0;
-
-                                return (
-                                    <div key={idx} className="p-5 border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 relative overflow-hidden group">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div>
-                                                <h4 className="font-black text-gray-900 dark:text-white mb-1 text-sm">{en.subject}</h4>
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">المعلم: {en.teacher}</p>
-                                            </div>
-                                            <div className="text-left">
-                                                <span className="text-xl font-black text-emerald-600 tracking-tighter">{percentage}%</span>
-                                                <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest leading-none">نسبة الالتزام</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-2 gap-3 mb-4">
-                                            <div className="bg-emerald-50 dark:bg-emerald-900/10 p-2 flex items-center gap-3">
-                                                <CheckCircle2 size={16} className="text-emerald-500" />
-                                                <div>
-                                                    <p className="text-[9px] text-emerald-600 font-black uppercase">حضر</p>
-                                                    <p className="text-sm font-black text-emerald-700 dark:text-emerald-400">{en.sessionsUsed} حصة</p>
-                                                </div>
-                                            </div>
-                                            <div className="bg-rose-50 dark:bg-rose-900/10 p-2 flex items-center gap-3">
-                                                <XCircle size={16} className="text-rose-500" />
-                                                <div>
-                                                    <p className="text-[9px] text-rose-600 font-black uppercase">غاب</p>
-                                                    <p className="text-sm font-black text-rose-700 dark:text-rose-400">{absent > 0 ? absent : 0} حصة</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Progress Bar Container */}
-                                        <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-                                            <div
-                                                className="h-full bg-emerald-500 transition-all duration-1000 ease-out"
-                                                style={{ width: `${percentage}%` }}
-                                            ></div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-
-                            {(viewingAttendanceStudent.enrollments || []).length === 0 && (
-                                <div className="py-20 text-center">
-                                    <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
-                                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد اشتراكات مسجلة لهذا الابن بعد</p>
+                            {isSessionsLoading ? (
+                                <div className="space-y-4">
+                                    {[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 animate-pulse" />)}
                                 </div>
+                            ) : (
+                                <>
+                                    {(viewingAttendanceStudent.enrollments || []).map((en: any, idx: number) => {
+                                        const subjectSessions = childSessions.filter(s => s.subject === en.subject);
+                                        const attended = subjectSessions.filter(s => s.status === 'completed').length;
+                                        const totalRecorded = subjectSessions.length;
+                                        const absent = subjectSessions.filter(s => s.status === 'absent').length;
+                                        const percentage = totalRecorded > 0 ? Math.round((attended / totalRecorded) * 100) : 0;
+
+                                        return (
+                                            <div key={idx} className="p-5 border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 relative overflow-hidden group">
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <div>
+                                                        <h4 className="font-black text-gray-900 dark:text-white mb-1 text-sm">{en.subject}</h4>
+                                                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">المعلم: {en.teacher}</p>
+                                                    </div>
+                                                    <div className="text-left">
+                                                        <span className="text-xl font-black text-emerald-600 tracking-tighter">{percentage}%</span>
+                                                        <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest leading-none">نسبة الالتزام</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-2 gap-3 mb-4">
+                                                    <div className="bg-emerald-50 dark:bg-emerald-900/10 p-2 flex items-center gap-3">
+                                                        <CheckCircle2 size={16} className="text-emerald-500" />
+                                                        <div>
+                                                            <p className="text-[9px] text-emerald-600 font-black uppercase">حضر</p>
+                                                            <p className="text-sm font-black text-emerald-700 dark:text-emerald-400">{attended} حصة</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-rose-50 dark:bg-rose-900/10 p-2 flex items-center gap-3">
+                                                        <XCircle size={16} className="text-rose-500" />
+                                                        <div>
+                                                            <p className="text-[9px] text-rose-600 font-black uppercase">غاب</p>
+                                                            <p className="text-sm font-black text-rose-700 dark:text-rose-400">{absent} حصة</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Progress Bar Container */}
+                                                <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                                                    <div
+                                                        className="h-full bg-emerald-500 transition-all duration-1000 ease-out"
+                                                        style={{ width: `${percentage}%` }}
+                                                    ></div>
+                                                </div>
+                                                <p className="text-[9px] text-gray-400 font-bold mt-2 text-right">إجمالي الجلسات المسجلة من المعلم: {totalRecorded}</p>
+                                            </div>
+                                        );
+                                    })}
+
+                                    {(viewingAttendanceStudent.enrollments || []).length === 0 && (
+                                        <div className="py-20 text-center">
+                                            <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
+                                            <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد اشتراكات مسجلة لهذا الابن بعد</p>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
 
