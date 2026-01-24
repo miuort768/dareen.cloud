@@ -71,6 +71,11 @@ export const Header = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-1 lg:gap-4 ml-2">
+                <div className="hidden sm:flex flex-col items-center justify-center -mb-1 ml-2 border-l border-gray-100 dark:border-gray-800 pl-4 h-8">
+                    <span className="text-[10px] font-black text-primary-600 dark:text-primary-400 leading-none">معهد دارين</span>
+                    <span className="text-[8px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">مرحباً بك شريك النجاح</span>
+                </div>
+
                 {/* Dark Mode Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
