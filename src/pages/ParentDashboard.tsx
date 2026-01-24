@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Users,
     Calendar,
@@ -19,6 +20,7 @@ import { ar } from 'date-fns/locale';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
+    const navigate = useNavigate();
     const [children, setChildren] = useState<any[]>([]);
     const [sessions, setSessions] = useState<any[]>([]);
     const [invoices, setInvoices] = useState<any[]>([]);
@@ -139,7 +141,10 @@ export const ParentDashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <div className="p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden">
+                <div
+                    onClick={() => navigate('/parent-attendance')}
+                    className="p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden cursor-pointer"
+                >
                     <div className="flex justify-between items-start">
                         <div>
                             <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">رصيد الحصص الكلي</p>
@@ -165,12 +170,14 @@ export const ParentDashboard = () => {
                     value={stats.sessionCount}
                     color="amber"
                     subValue={`${stats.upcomingSessions} قادمة`}
+                    onClick={() => navigate('/parent-attendance')}
                 />
                 <StatCard
                     icon={Users}
                     label="إجمالي عدد الطلاب"
                     value={stats.childCount}
                     color="emerald"
+                    onClick={() => navigate('/parent-students')}
                 />
                 <StatCard
                     icon={Receipt}
@@ -327,16 +334,22 @@ export const ParentDashboard = () => {
     );
 };
 
-const StatCard = ({ icon: Icon, label, value, color, subValue }: any) => {
+const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) => {
     const colors: any = {
         blue: "text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400 border-blue-100 dark:border-blue-900/30",
         amber: "text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 border-amber-100 dark:border-amber-900/30",
-        emerald: "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30",
+        emerald: "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400 border-emerald-100 dark:border-amber-900/30",
         rose: "text-rose-600 bg-rose-50 dark:bg-rose-900/20 dark:text-rose-400 border-rose-100 dark:border-rose-900/30",
     };
 
     return (
-        <div className={cn("p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden")}>
+        <div
+            onClick={onClick}
+            className={cn(
+                "p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden",
+                onClick && "cursor-pointer"
+            )}
+        >
             <div className="flex justify-between items-start relative z-10">
                 <div>
                     <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">{label}</p>
