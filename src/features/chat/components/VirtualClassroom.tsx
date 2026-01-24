@@ -185,7 +185,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         socket.on('ice-candidate', async (data: any) => {
             const pc = peerConnections.current.get(data.from);
             if (pc) {
-                await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(e => { });
+                await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => { });
             }
         });
 
