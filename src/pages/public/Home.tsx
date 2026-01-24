@@ -511,7 +511,7 @@ export const Home = () => {
                                         </span>
                                     </summary>
                                     <div className="px-5 pb-5 pt-0">
-                                        <p className="text-xs md:text-sm text-gray-600 leading-relaxed border-t border-gray-50 pt-3">
+                                        <p className={`${idx < 2 ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'} text-gray-600 leading-relaxed border-t border-gray-50 pt-3`}>
                                             {item.a}
                                         </p>
                                     </div>
