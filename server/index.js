@@ -272,6 +272,10 @@ async function startServer() {
                 });
             });
 
+            socket.on('request_stream', (data) => {
+                socket.to(`class_${data.roomID}`).emit('request_stream', { from: socket.id });
+            });
+
             socket.on('ice-candidate', (data) => {
                 // Forward ICE candidate to everyone else in the room
                 socket.to(`class_${data.roomID}`).emit('ice-candidate', {

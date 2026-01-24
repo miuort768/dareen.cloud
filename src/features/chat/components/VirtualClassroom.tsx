@@ -37,8 +37,11 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         };
 
         pc.current.ontrack = (event) => {
+            console.log("🎥 Received remote stream track");
             if (remoteVideoRef.current) {
                 remoteVideoRef.current.srcObject = event.streams[0];
+                setIsSharing(true); // Now the student knows the stream is active
+                remoteVideoRef.current.play().catch(e => console.warn("Autoplay failed:", e));
             }
         };
 
@@ -87,8 +90,24 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         const socket = socketService.getSocket();
         socket.emit('join_class', roomID);
 
+        // If I'm a student, I ask the teacher to send me the stream
+        if (!isTeacher) {
+            console.log("🙋 Student requesting stream...");
+            socket.emit('request_stream', { roomID });
+        }
+
+        socket.on('request_stream', async () => {
+            if (isTeacher && isSharing) {
+                console.log("👨‍🏫 Teacher received stream request, sending offer...");
+                const offer = await pc.current?.createOffer();
+                await pc.current?.setLocalDescription(offer);
+                socket.emit('offer', { roomID, offer });
+            }
+        });
+
         socket.on('offer', async (data: any) => {
-            if (isTeacher) return; // Teachers don't receive offers
+            if (isTeacher) return;
+            console.log("📩 Received offer from teacher");
             setupPeerConnection();
             await pc.current?.setRemoteDescription(new RTCSessionDescription(data.offer));
             const answer = await pc.current?.createAnswer();
@@ -97,6 +116,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
         });
 
         socket.on('answer', async (data: any) => {
+            console.log("📩 Received answer from student");
             await pc.current?.setRemoteDescription(new RTCSessionDescription(data.answer));
         });
 
@@ -112,10 +132,11 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             socket.off('offer');
             socket.off('answer');
             socket.off('ice-candidate');
+            socket.off('request_stream');
             localStream.current?.getTracks().forEach(t => t.stop());
             pc.current?.close();
         };
-    }, [roomID, isTeacher, setupPeerConnection]);
+    }, [roomID, isTeacher, setupPeerConnection, isSharing]);
 
     // Drawing Logic
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
