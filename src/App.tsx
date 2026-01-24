@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
+import { Dashboard } from './pages/Dashboard';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { ParentStudents } from './pages/ParentStudents';
 import { ParentAnnouncements } from './pages/ParentAnnouncements';
@@ -83,7 +84,7 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route path="dashboard" element={<DashboardRedirect />} />
+        <Route path="dashboard" element={<ProtectedRoute permission="*"><Dashboard /></ProtectedRoute>} />
 
         {/* Parent Routes */}
         <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
