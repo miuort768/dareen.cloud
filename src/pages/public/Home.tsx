@@ -329,56 +329,44 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        {/* Visual Side (Geometric Diamonds) */}
-                        <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0 overflow-visible">
-                            <div className="relative w-[310px] h-[310px] md:w-[400px] md:h-[400px] scale-90 sm:scale-100">
-
-                                {/* Top Card - Flexible Times */}
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 md:w-44 md:h-44 bg-white rounded-3xl shadow-xl border border-gray-100 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
-                                    <div className="-rotate-45 text-center px-2 md:px-4">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2 md:mb-3 mx-auto group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                            <Clock className="w-4 h-4 md:w-5 md:h-5" />
-                                        </div>
-                                        <h3 className="font-bold text-gray-900 text-xs md:text-sm mb-0.5 md:mb-1">أوقات مرنة</h3>
-                                        <p className="text-gray-400 text-[9px] md:text-[10px] leading-tight font-medium hidden sm:block">اختر مواعيدك المفضلة</p>
+                        {/* Visual Side (Modern Grid System) */}
+                        <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
+                            <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
+                                {/* Feature 1: Flexible Times */}
+                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-blue-50 hover:shadow-md hover:border-blue-100 transition-all flex flex-col items-center text-center group">
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        <Clock className="w-5 h-5" />
                                     </div>
+                                    <h3 className="font-bold text-gray-900 text-xs mb-1">أوقات مرنة</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">اختر مواعيدك المفضلة</p>
                                 </div>
 
-                                {/* Right Card - Accurate Follow-up */}
-                                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-32 md:w-44 md:h-44 bg-white rounded-3xl shadow-xl border border-gray-100 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
-                                    <div className="-rotate-45 text-center px-2 md:px-4">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-2 md:mb-3 mx-auto group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                                            <ClipboardCheck className="w-4 h-4 md:w-5 md:h-5" />
-                                        </div>
-                                        <h3 className="font-bold text-gray-900 text-xs md:text-sm mb-0.5 md:mb-1">متابعة دقيقة</h3>
-                                        <p className="text-gray-400 text-[9px] md:text-[10px] leading-tight font-medium hidden sm:block">تقارير إنجاز أسبوعية</p>
+                                {/* Feature 2: Accurate Follow-up */}
+                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-amber-50 hover:shadow-md hover:border-amber-100 transition-all flex flex-col items-center text-center group">
+                                    <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                                        <ClipboardCheck className="w-5 h-5" />
                                     </div>
+                                    <h3 className="font-bold text-gray-900 text-xs mb-1">متابعة دقيقة</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
                                 </div>
 
-                                {/* Left Card - Certified Teachers */}
-                                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-32 md:w-44 md:h-44 bg-white rounded-3xl shadow-xl border border-gray-100 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
-                                    <div className="-rotate-45 text-center px-2 md:px-4">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-2 md:mb-3 mx-auto group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                            <Mic className="w-4 h-4 md:w-5 md:h-5" />
-                                        </div>
-                                        <h3 className="font-bold text-gray-900 text-xs md:text-sm mb-0.5 md:mb-1">معلمون مجازون</h3>
-                                        <p className="text-gray-400 text-[9px] md:text-[10px] leading-tight font-medium hidden sm:block">نخبة الحفاظ المبدعون</p>
+                                {/* Feature 3: Certified Teachers */}
+                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-emerald-50 hover:shadow-md hover:border-emerald-100 transition-all flex flex-col items-center text-center group">
+                                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                        <Mic className="w-5 h-5" />
                                     </div>
+                                    <h3 className="font-bold text-gray-900 text-xs mb-1">معلمون مجازون</h3>
+                                    <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
 
-                                {/* Bottom Card - Try Free */}
-                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 md:w-44 md:h-44 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl shadow-2xl shadow-emerald-200/50 flex items-center justify-center rotate-45 hover:scale-110 hover:z-30 transition-all group cursor-default">
-                                    <div className="-rotate-45 text-center px-2 md:px-4">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-white/20 text-white flex items-center justify-center mb-2 md:mb-3 mx-auto">
-                                            <Zap className="w-4 h-4 md:w-5 md:h-5" />
-                                        </div>
-                                        <h3 className="font-bold text-white text-xs md:text-sm mb-0.5 md:mb-1">جرب مجاناً</h3>
-                                        <p className="text-white/70 text-[9px] md:text-[10px] leading-tight font-medium hidden sm:block">حصة تجريبية للمشتركين</p>
+                                {/* Feature 4: Try Free */}
+                                <div className="p-4 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg shadow-blue-200 text-white flex flex-col items-center text-center group hover:scale-[1.02] transition-transform cursor-pointer">
+                                    <div className="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm">
+                                        <Zap className="w-5 h-5" />
                                     </div>
+                                    <h3 className="font-bold text-white text-xs mb-1">جرب مجاناً</h3>
+                                    <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
                                 </div>
-
-                                {/* Central Glow */}
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-emerald-500/20 rounded-full blur-2xl animate-pulse"></div>
                             </div>
                         </div>
 
