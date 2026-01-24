@@ -8,7 +8,9 @@ import {
     Bell,
     TrendingUp,
     CheckCircle2,
-    CalendarCheck
+    CalendarCheck,
+    CalendarDays,
+    Clock
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -229,8 +231,9 @@ export const ParentDashboard = () => {
                             </h4>
                             <button
                                 onClick={() => setShowAllDays(!showAllDays)}
-                                className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:text-primary-600 transition-colors border border-gray-100 dark:border-gray-700"
+                                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest px-5 py-2.5 bg-gray-900 border-b-2 border-primary-600 text-white hover:bg-black transition-all shadow-lg active:scale-95"
                             >
+                                <CalendarDays size={14} className="text-primary-400" />
                                 {showAllDays ? 'إظهار اليوم فقط' : 'عرض الجدول الأسبوعي الكامل'}
                             </button>
                         </div>
@@ -255,8 +258,14 @@ export const ParentDashboard = () => {
                                     </div>
                                 ))}
                                 {((showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).length === 0) && (
-                                    <div className="col-span-full py-12 text-center text-gray-400 font-bold uppercase text-[10px] tracking-widest italic">
-                                        {showAllDays ? 'لم يتم تحديد مواعيد ثابتة في الجدول بعد' : `لا توجد مواعيد مسجلة ليوم ${todayArabic}`}
+                                    <div className="col-span-full py-16 bg-gray-50/50 dark:bg-gray-800/20 border border-dashed border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center animate-in fade-in zoom-in duration-500">
+                                        <div className="w-12 h-12 bg-white dark:bg-gray-900 shadow-sm flex items-center justify-center text-gray-300 dark:text-gray-700 mb-4 border border-gray-100 dark:border-gray-800">
+                                            <Clock size={24} />
+                                        </div>
+                                        <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em]">لا توجد مواعيد حالياً</h3>
+                                        <p className="text-[10px] text-gray-400/80 font-bold mt-2 italic">
+                                            {showAllDays ? 'لم يتم تسجيل مواعيد أسبوعية للأبناء في النظام بعد.' : `يوم ${todayArabic} هو يوم راحة للأبناء من الحصص الدراسية.`}
+                                        </p>
                                     </div>
                                 )}
                             </div>
