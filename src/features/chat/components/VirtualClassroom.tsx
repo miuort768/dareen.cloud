@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Edit2, Eraser, MousePointer2, Volume2 } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Edit2, Eraser, MousePointer2, Volume2, Maximize2, Minimize2, Move } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
@@ -23,56 +23,45 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     const [hasRemoteStream, setHasRemoteStream] = useState(false);
     const [micActive, setMicActive] = useState(false);
 
+    // UI States
+    const [isMini, setIsMini] = useState(false);
+    const [toolbarPos, setToolbarPos] = useState({ x: 20, y: 80 });
+    const [isDragging, setIsDragging] = useState(false);
+
     const configuration = {
-        iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' }
-        ]
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }]
     };
 
     const toggleLocalMute = useCallback((muted: boolean) => {
         if (localStream.current) {
-            localStream.current.getAudioTracks().forEach(track => {
-                track.enabled = !muted;
-            });
+            localStream.current.getAudioTracks().forEach(track => { track.enabled = !muted; });
         }
         setIsMuted(muted);
         setMicActive(!muted);
     }, []);
 
     const createPeerConnection = useCallback((targetSocketId: string) => {
-        console.log("🕸️ Creating PeerConnection for:", targetSocketId);
         const pc = new RTCPeerConnection(configuration);
         peerConnections.current.set(targetSocketId, pc);
 
         pc.onicecandidate = (event) => {
             if (event.candidate) {
-                socketService.getSocket().emit('ice-candidate', {
-                    roomID,
-                    candidate: event.candidate,
-                    to: targetSocketId
-                });
+                socketService.getSocket().emit('ice-candidate', { roomID, candidate: event.candidate, to: targetSocketId });
             }
         };
 
-        // Add local tracks (Audio is vital)
         if (localStream.current) {
-            localStream.current.getTracks().forEach(track => {
-                pc.addTrack(track, localStream.current!);
-            });
+            localStream.current.getTracks().forEach(track => { pc.addTrack(track, localStream.current!); });
         }
 
         pc.ontrack = (event) => {
-            console.log("🎵 Received track:", event.track.kind, "from", targetSocketId);
-
             if (event.track.kind === 'video') {
                 if (remoteVideoRef.current) {
                     remoteVideoRef.current.srcObject = event.streams[0];
                     setHasRemoteStream(true);
-                    remoteVideoRef.current.play().catch(e => console.error("Video play error:", e));
+                    remoteVideoRef.current.play().catch(() => { });
                 }
             } else if (event.track.kind === 'audio') {
-                // For audio, we create a hidden audio element to ensure it plays regardless of video
                 let audioElem = document.getElementById(`audio_${targetSocketId}`) as HTMLAudioElement;
                 if (!audioElem) {
                     audioElem = document.createElement('audio');
@@ -81,31 +70,23 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     remoteAudioContainerRef.current?.appendChild(audioElem);
                 }
                 audioElem.srcObject = event.streams[0];
-                audioElem.play().catch(e => console.error("Audio play error:", e));
+                audioElem.play().catch(() => { });
             }
         };
 
         return pc;
     }, [roomID]);
 
-    // Initial Mic Setup
     useEffect(() => {
         const initMic = async () => {
             try {
-                console.log("🎤 Requesting Microphone access...");
                 const stream = await navigator.mediaDevices.getUserMedia({
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        autoGainControl: true
-                    }
+                    audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
                 });
                 localStream.current = stream;
                 setMicActive(true);
-                console.log("✅ Microphone active");
             } catch (err) {
-                console.error("❌ Mic access denied:", err);
-                alert("يرجى إعطاء صلاحية الميكروفون لتتمكن من التواصل");
+                console.error("Mic error:", err);
             }
         };
         initMic();
@@ -113,38 +94,18 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
 
     const startScreenShare = async () => {
         try {
-            console.log("🖥️ Requesting Screen Share...");
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({
-                video: true,
-                audio: true
-            });
-
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
             if (localStream.current) {
-                // Keep audio tracks, replace/add video tracks
                 const videoTrack = screenStream.getVideoTracks()[0];
-
-                // Remove old video tracks
-                localStream.current.getVideoTracks().forEach(t => {
-                    localStream.current?.removeTrack(t);
-                    t.stop();
-                });
-
+                localStream.current.getVideoTracks().forEach(t => { localStream.current?.removeTrack(t); t.stop(); });
                 localStream.current.addTrack(videoTrack);
-
-                // Update all existing connections
                 peerConnections.current.forEach(pc => {
                     const sender = pc.getSenders().find(s => s.track?.kind === 'video');
-                    if (sender) {
-                        sender.replaceTrack(videoTrack);
-                    } else {
-                        pc.addTrack(videoTrack, localStream.current!);
-                    }
+                    if (sender) sender.replaceTrack(videoTrack);
+                    else pc.addTrack(videoTrack, localStream.current!);
                 });
             }
-
             setIsSharing(true);
-
-            // Re-negotiate
             const socket = socketService.getSocket();
             for (const [targetId, pc] of peerConnections.current.entries()) {
                 const offer = await pc.createOffer();
@@ -152,21 +113,19 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                 socket.emit('offer', { to: targetId, offer, roomID });
             }
         } catch (err) {
-            console.error("Screen share error:", err);
+            console.error("Share error:", err);
         }
     };
 
     useEffect(() => {
         const socket = socketService.getSocket();
         socket.emit('join_class', roomID);
-
         socket.on('request_stream', async (data: any) => {
             const pc = createPeerConnection(data.from);
             const offer = await pc.createOffer();
             await pc.setLocalDescription(offer);
             socket.emit('offer', { to: data.from, offer, roomID });
         });
-
         socket.on('offer', async (data: any) => {
             const pc = peerConnections.current.get(data.from) || createPeerConnection(data.from);
             await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
@@ -174,152 +133,149 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             await pc.setLocalDescription(answer);
             socket.emit('answer', { to: data.from, answer });
         });
-
         socket.on('answer', async (data: any) => {
             const pc = peerConnections.current.get(data.from);
-            if (pc) {
-                await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
-            }
+            if (pc) await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
         });
-
         socket.on('ice-candidate', async (data: any) => {
             const pc = peerConnections.current.get(data.from);
-            if (pc) {
-                await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => { });
-            }
+            if (pc) await pc.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => { });
         });
-
-        // Trigger first connection
         socket.emit('request_stream', { roomID });
 
         return () => {
-            socket.off('offer');
-            socket.off('answer');
-            socket.off('ice-candidate');
-            socket.off('request_stream');
+            socket.off('offer'); socket.off('answer'); socket.off('ice-candidate'); socket.off('request_stream');
             localStream.current?.getTracks().forEach(t => t.stop());
             peerConnections.current.forEach(pc => pc.close());
-            if (remoteAudioContainerRef.current) remoteAudioContainerRef.current.innerHTML = '';
         };
     }, [roomID, createPeerConnection]);
 
-    // Drawing Logic
-    const startDrawing = () => { if (drawMode !== 'cursor') setIsDrawing(true); };
-    const stopDrawing = () => { setIsDrawing(false); canvasRef.current?.getContext('2d')?.beginPath(); };
-    const draw = (e: any) => {
-        if (!isDrawing || !canvasRef.current) return;
-        const ctx = canvasRef.current.getContext('2d')!;
-        const rect = canvasRef.current.getBoundingClientRect();
-        const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-        const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-        ctx.lineWidth = drawMode === 'eraser' ? 25 : 4;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
-        ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+    // Draggable Logic
+    const handleDrag = (e: any) => {
+        if (!isDragging) return;
+        setToolbarPos({
+            x: (e.clientX || e.touches[0].clientX) - 20,
+            y: (e.clientY || e.touches[0].clientY) - 20
+        });
     };
 
     return (
-        <div className="fixed inset-0 z-[100] bg-black flex flex-col font-sans select-none overflow-hidden animate-in fade-in">
-            {/* Hidden Audio Container */}
+        <div
+            className={`fixed inset-0 z-[100] flex flex-col font-sans select-none overflow-hidden transition-all duration-500 ${isMini ? 'pointer-events-none' : 'bg-black'}`}
+            onMouseMove={handleDrag}
+            onMouseUp={() => setIsDragging(false)}
+            onTouchMove={handleDrag}
+            onTouchEnd={() => setIsDragging(false)}
+        >
             <div ref={remoteAudioContainerRef} className="hidden" />
 
-            {/* Header */}
-            <div className="h-16 px-6 bg-[#111b21] border-b border-gray-800 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-4">
-                    <div className="relative">
-                        <Monitor className="text-emerald-500" size={24} />
-                        {micActive && !isMuted && (
-                            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
-                        )}
-                    </div>
-                    <div>
-                        <h2 className="text-white font-bold text-sm tracking-tight">فصل دارين المباشر</h2>
-                        <p className="text-gray-400 text-[10px] flex items-center gap-1">
-                            {isTeacher ? 'المعلمة' : 'الطالب'} : {userName}
-                            {micActive && !isMuted && <Volume2 size={10} className="text-emerald-500 animate-bounce" />}
-                        </p>
-                    </div>
+            {/* Draggable Floating Controller (For Teacher mainly) */}
+            <div
+                style={{ left: `${toolbarPos.x}px`, top: `${toolbarPos.y}px` }}
+                className={`absolute z-[120] pointer-events-auto flex items-center gap-2 p-2 bg-[#111b21]/90 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl transition-all ${isDragging ? 'scale-105 opacity-80' : ''}`}
+            >
+                <div
+                    onMouseDown={() => setIsDragging(true)}
+                    onTouchStart={() => setIsDragging(true)}
+                    className="p-2 cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300"
+                >
+                    <Move size={18} />
                 </div>
 
-                <div className="flex items-center gap-3">
-                    {isTeacher && (
-                        <div className="flex bg-gray-950 rounded-lg p-1 border border-gray-800">
-                            <button onClick={() => setDrawMode('cursor')} className={`p-2 rounded-md ${drawMode === 'cursor' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><MousePointer2 size={16} /></button>
-                            <button onClick={() => setDrawMode('pen')} className={`p-2 rounded-md ${drawMode === 'pen' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Edit2 size={16} /></button>
-                            <button onClick={() => setDrawMode('eraser')} className={`p-2 rounded-md ${drawMode === 'eraser' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Eraser size={16} /></button>
+                <div className="h-8 w-px bg-gray-700 mx-1"></div>
+
+                <button
+                    onClick={() => toggleLocalMute(!isMuted)}
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${isMuted ? 'bg-rose-600/20 text-rose-500 border border-rose-500/30' : 'bg-emerald-600/10 text-emerald-500 border border-emerald-500/30'}`}
+                    title="الميكروفون"
+                >
+                    {isMuted ? <MicOff size={18} /> : <Mic size={18} />}
+                </button>
+
+                {isTeacher && (
+                    <>
+                        <button
+                            onClick={startScreenShare}
+                            className={`w-10 h-10 flex items-center justify-center rounded-xl border transition-all ${isSharing ? 'bg-blue-600/20 text-blue-500 border-blue-500/30' : 'bg-gray-800 text-gray-400 border-gray-700'}`}
+                            title="مشاركة الشاشة"
+                        >
+                            <Monitor size={18} />
+                        </button>
+
+                        <div className="flex bg-gray-900/50 rounded-xl p-0.5 border border-gray-800">
+                            <button onClick={() => setDrawMode('pen')} className={`p-2 rounded-lg ${drawMode === 'pen' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Edit2 size={16} /></button>
+                            <button onClick={() => setDrawMode('eraser')} className={`p-2 rounded-lg ${drawMode === 'eraser' ? 'text-white bg-emerald-600' : 'text-gray-500'}`}><Eraser size={16} /></button>
+                        </div>
+                    </>
+                )}
+
+                <div className="h-8 w-px bg-gray-700 mx-1"></div>
+
+                <button
+                    onClick={() => setIsMini(!isMini)}
+                    className="w-10 h-10 bg-gray-800 text-gray-300 rounded-xl flex items-center justify-center hover:bg-gray-700 hover:text-white transition-all"
+                    title={isMini ? "تكبير الواجهة" : "تصغير الواجهة"}
+                >
+                    {isMini ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
+                </button>
+
+                <button onClick={onClose} className="w-10 h-10 bg-rose-600 text-white rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
+                    <X size={18} />
+                </button>
+            </div>
+
+            {/* Main Content (Hidden in Mini Mode) */}
+            {!isMini && (
+                <div className="flex-1 relative flex items-center justify-center">
+                    <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
+
+                    {!isTeacher && !hasRemoteStream && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a]">
+                            <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent animate-spin rounded-full mb-6"></div>
+                            <h3 className="text-white font-black text-lg mb-2">في انتظار المعلمة...</h3>
                         </div>
                     )}
 
-                    <div className="flex items-center gap-2">
-                        {isTeacher && !isSharing && (
-                            <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-black text-[10px] uppercase shadow-lg active:scale-95">بدء الشرح</button>
-                        )}
-
-                        <button
-                            onClick={() => toggleLocalMute(!isMuted)}
-                            className={`w-10 h-10 flex items-center justify-center rounded-lg border transition-all ${isMuted ? 'bg-rose-600/20 border-rose-500/50 text-rose-500' : 'bg-gray-800 border-gray-700 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]'}`}
-                        >
-                            {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
-                        </button>
-
-                        <button onClick={onClose} className="w-10 h-10 bg-rose-600 hover:bg-rose-700 text-white rounded-lg flex items-center justify-center shadow-lg transition-colors border border-rose-500/20">
-                            <X size={20} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Video View */}
-            <div className="flex-1 relative bg-[#0b141a] flex items-center justify-center">
-                <video
-                    ref={remoteVideoRef}
-                    autoPlay
-                    playsInline
-                    className="w-full h-full object-contain"
-                />
-
-                {!isTeacher && !hasRemoteStream && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] z-30">
-                        <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent animate-spin rounded-full mb-6"></div>
-                        <h3 className="text-white font-black text-lg mb-2">جاري الاتصال بالمعلمة</h3>
-                        <p className="text-gray-500 text-xs font-bold uppercase tracking-widest text-center">تأكد من سماحك بفتح المايكروفون للشرح</p>
-                    </div>
-                )}
-
-                {isTeacher && !isSharing && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] z-30 text-center px-6">
-                        <div className="w-24 h-24 bg-emerald-600/10 rounded-full flex items-center justify-center mb-6 border border-emerald-600/20 shadow-2xl">
-                            <Monitor className="text-emerald-500" size={48} />
+                    {isTeacher && !isSharing && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0b141a] text-center px-6">
+                            <h3 className="text-2xl font-black text-white mb-2">جاهزة لبدء الحصة؟</h3>
+                            <p className="text-gray-500 text-sm mb-8">الميكروفون يعمل الآن. اضغطي على زر الشاشة في اللوحة العائمة لبدء الشرح.</p>
                         </div>
-                        <h3 className="text-2xl font-black text-white mb-2">الفصل جاهز</h3>
-                        <p className="text-gray-500 text-sm font-medium max-w-sm mb-8">يمكنك الآن التحدث مع الطلاب وبدء مشاركة الشاشة.</p>
-                        <button onClick={startScreenShare} className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-black text-sm shadow-xl shadow-emerald-600/20 active:scale-95">بدء مشاركة الشاشة</button>
-                    </div>
-                )}
+                    )}
 
-                {isTeacher && isSharing && (
-                    <canvas
-                        ref={canvasRef}
-                        onMouseDown={startDrawing}
-                        onMouseMove={draw}
-                        onMouseUp={stopDrawing}
-                        onMouseOut={stopDrawing}
-                        className={`absolute inset-0 z-40 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`}
-                        width={window.innerWidth}
-                        height={window.innerHeight - 64}
-                    />
-                )}
-            </div>
-
-            {/* Footer */}
-            <div className="h-10 bg-[#111b21] border-t border-gray-800 px-6 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-3">
-                    <span className={`w-2 h-2 rounded-full ${micActive ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`}></span>
-                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                        {micActive ? 'الميكروفون متصل' : 'بانتظار تفعيل الميكروفون'}
-                    </span>
+                    {isTeacher && isSharing && (
+                        <canvas
+                            ref={canvasRef}
+                            onMouseDown={() => drawMode !== 'cursor' && setIsDrawing(true)}
+                            onMouseMove={(e) => {
+                                if (!isDrawing || !canvasRef.current) return;
+                                const ctx = canvasRef.current.getContext('2d')!;
+                                const rect = canvasRef.current.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const y = e.clientY - rect.top;
+                                ctx.lineWidth = drawMode === 'eraser' ? 30 : 4;
+                                ctx.lineCap = 'round';
+                                ctx.strokeStyle = drawMode === 'eraser' ? '#000' : '#10b981';
+                                ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+                            }}
+                            onMouseUp={() => { setIsDrawing(false); canvasRef.current?.getContext('2d')?.beginPath(); }}
+                            className={`absolute inset-0 z-40 ${drawMode === 'cursor' ? 'pointer-events-none' : 'cursor-crosshair'}`}
+                            width={window.innerWidth} height={window.innerHeight}
+                        />
+                    )}
                 </div>
-            </div>
+            )}
+
+            {/* Minimal Brand Footer */}
+            {!isMini && (
+                <div className="h-8 bg-[#111b21] border-t border-gray-800 px-6 flex items-center justify-between text-[9px] text-gray-600 font-bold uppercase tracking-widest">
+                    <span>Darin Smart Classroom</span>
+                    <div className="flex items-center gap-2">
+                        <Volume2 size={10} className={micActive && !isMuted ? 'text-emerald-500' : 'text-gray-700'} />
+                        {userName}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
