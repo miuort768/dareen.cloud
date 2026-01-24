@@ -22,6 +22,9 @@ export const ParentDashboard = () => {
     const [sessions, setSessions] = useState<any[]>([]);
     const [invoices, setInvoices] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showAllDays, setShowAllDays] = useState(false);
+
+    const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
     useEffect(() => {
         const fetchAllData = async () => {
@@ -219,15 +222,21 @@ export const ParentDashboard = () => {
 
                     {/* Weekly Schedule Section */}
                     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-                        <div className="p-5 border-b border-gray-50 dark:border-gray-800 flex items-center justify-between">
+                        <div className="p-5 border-b border-gray-50 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <h4 className="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2">
                                 <CalendarCheck className="text-primary-600" size={18} />
-                                جدول المواعيد الأسبوعي الثابت
+                                {showAllDays ? 'جدول المواعيد الأسبوعي الكامل' : `مواعيد اليوم (${todayArabic})`}
                             </h4>
+                            <button
+                                onClick={() => setShowAllDays(!showAllDays)}
+                                className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:text-primary-600 transition-colors border border-gray-100 dark:border-gray-700"
+                            >
+                                {showAllDays ? 'إظهار اليوم فقط' : 'عرض الجدول الأسبوعي الكامل'}
+                            </button>
                         </div>
                         <div className="p-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {weeklySchedule.map((dayData, idx) => (
+                                {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
                                     <div key={idx} className="bg-gray-50 dark:bg-gray-800/50 p-4 border-r-4 border-r-primary-500">
                                         <h5 className="font-black text-primary-700 dark:text-primary-400 mb-3 text-sm">{dayData.day}</h5>
                                         <div className="space-y-3">
@@ -245,9 +254,9 @@ export const ParentDashboard = () => {
                                         </div>
                                     </div>
                                 ))}
-                                {weeklySchedule.length === 0 && (
-                                    <div className="col-span-full py-12 text-center text-gray-400 font-bold uppercase text-[10px] tracking-widest">
-                                        لم يتم تحديد مواعيد ثابتة في الجدول بعد
+                                {((showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).length === 0) && (
+                                    <div className="col-span-full py-12 text-center text-gray-400 font-bold uppercase text-[10px] tracking-widest italic">
+                                        {showAllDays ? 'لم يتم تحديد مواعيد ثابتة في الجدول بعد' : `لا توجد مواعيد مسجلة ليوم ${todayArabic}`}
                                     </div>
                                 )}
                             </div>
