@@ -15,28 +15,28 @@ export const TermsOfService = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-12 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8]">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 border border-gray-100 rounded-none shadow-sm mb-4">
                         <Scale size={14} className="text-emerald-600" />
                         <span className="text-xs font-black tracking-[0.2em] uppercase">الشروط والأحكام</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-tight font-heading">
+                    <h1 className="text-xl md:text-5xl font-black text-gray-900 mb-3 leading-tight font-heading">
                         شروط <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-800 inline-block py-1">الاستخدام</span> والأحكام
                     </h1>
 
-                    <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
                         يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام خدماتنا
                     </p>
                 </div>
             </section>
 
             {/* Content Section */}
-            <section className="py-20 bg-white">
+            <section className="py-8 md:py-20 bg-white">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Acceptance */}
@@ -46,8 +46,8 @@ export const TermsOfService = () => {
                                 <FileCheck className="w-6 h-6 text-emerald-600" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-gray-900 mb-3">قبول الشروط</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">قبول الشروط</h2>
+                                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                                     بالوصول إلى منصة معهد دارين للتعليم والتدريب واستخدامها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا توافق على أي من هذه الشروط، يُمنع عليك استخدام هذه المنصة أو الوصول إليها.
                                 </p>
                             </div>
@@ -240,11 +240,11 @@ export const TermsOfService = () => {
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-4 bg-gray-900 text-white px-12 py-4 rounded-xl font-bold hover:bg-emerald-600 transition-all group relative overflow-hidden"
+                                className="inline-flex items-center justify-center gap-4 bg-gray-900 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-emerald-600 transition-all group relative overflow-hidden"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <Headphones className="w-5 h-5 relative z-10" />
-                                <span className="text-lg relative z-10">تواصل مع الدعم الفني</span>
+                                <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
                             </a>
                         </div>
                     </div>
