@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import {
     Users,
     Calendar,
-    Wallet,
     AlertCircle,
     MessageCircle,
     Receipt,
@@ -20,7 +19,6 @@ import { ar } from 'date-fns/locale';
 export const ParentDashboard = () => {
     const { currentUser } = useApp();
     const [children, setChildren] = useState<any[]>([]);
-    const [selectedChildId, setSelectedChildId] = useState<string | 'all'>('all');
     const [sessions, setSessions] = useState<any[]>([]);
     const [invoices, setInvoices] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -52,15 +50,8 @@ export const ParentDashboard = () => {
     }, []);
 
     const displayData = useMemo(() => {
-        if (selectedChildId === 'all') {
-            return { sessions, invoices, students: children };
-        }
-        return {
-            sessions: sessions.filter(s => s.studentId === selectedChildId),
-            invoices: invoices.filter(i => i.studentId === selectedChildId),
-            students: children.filter(s => s.id === selectedChildId)
-        };
-    }, [selectedChildId, sessions, invoices, children]);
+        return { sessions, invoices, students: children };
+    }, [sessions, invoices, children]);
 
     const stats = useMemo(() => {
         const pendingInvoices = displayData.invoices.filter(i => i.status === 'unpaid');
@@ -130,7 +121,7 @@ export const ParentDashboard = () => {
         <div className="space-y-6 pb-32 animate-in fade-in duration-500" dir="rtl">
 
             {/* Header */}
-            <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 p-8 -mx-4 lg:-mx-8 -mt-8 mb-8 shadow-sm">
+            <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 p-6 -mx-4 lg:-mx-8 -mt-8 mb-8 shadow-sm">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
                         <div className="w-16 h-16 bg-primary-600 rounded-none flex items-center justify-center text-white shadow-xl shadow-primary-600/20">
@@ -141,55 +132,27 @@ export const ParentDashboard = () => {
                             <p className="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 font-bold">أهلاً بك، أ/ {currentUser?.name}</p>
                         </div>
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-3">
-                        <button
-                            onClick={() => setSelectedChildId('all')}
-                            className={cn(
-                                "px-6 py-2.5 font-black text-sm transition-all border-b-4",
-                                selectedChildId === 'all'
-                                    ? "bg-primary-50 text-primary-700 border-primary-600 dark:bg-primary-900/20"
-                                    : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
-                            )}
-                        >
-                            نظرة عامة
-                        </button>
-                        {children.map(child => (
-                            <button
-                                key={child.id}
-                                onClick={() => setSelectedChildId(child.id)}
-                                className={cn(
-                                    "px-6 py-2.5 font-black text-sm transition-all border-b-4",
-                                    selectedChildId === child.id
-                                        ? "bg-primary-50 text-primary-700 border-primary-600 dark:bg-primary-900/20"
-                                        : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
-                                )}
-                            >
-                                {child.name.split(' ')[0]}
-                            </button>
-                        ))}
-                    </div>
                 </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-6 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden">
                     <div className="flex justify-between items-start">
                         <div>
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">رصيد الحصص الكلي</p>
-                            <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">
+                            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">رصيد الحصص الكلي</p>
+                            <h3 className="text-lg font-black text-gray-900 dark:text-white tracking-tighter">
                                 {stats.sessionsUsed} / {stats.sessionsTotal}
                             </h3>
-                            <div className="w-32 h-1.5 bg-gray-100 dark:bg-gray-800 mt-2 rounded-none overflow-hidden">
+                            <div className="w-20 h-1 bg-gray-100 dark:bg-gray-800 mt-2 rounded-none overflow-hidden">
                                 <div
-                                    className="h-full bg-primary-600 transition-all duration-1000"
+                                    className="h-full bg-primary-600"
                                     style={{ width: `${stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0}%` }}
                                 ></div>
                             </div>
                         </div>
-                        <div className="p-3 bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-100 dark:border-blue-900/30">
-                            <CheckCircle2 size={24} />
+                        <div className="p-1.5 bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-100 dark:border-blue-900/30">
+                            <CheckCircle2 size={18} />
                         </div>
                     </div>
                 </div>
@@ -199,12 +162,12 @@ export const ParentDashboard = () => {
                     label="حصص الشهر"
                     value={stats.sessionCount}
                     color="amber"
-                    subValue={`${stats.upcomingSessions} حصة متبقية`}
+                    subValue={`${stats.upcomingSessions} قادمة`}
                 />
                 <StatCard
-                    icon={Wallet}
-                    label="إجمالي المدفوعات"
-                    value={stats.totalPaid.toLocaleString() + ' ج.م'}
+                    icon={Users}
+                    label="إجمالي عدد الطلاب"
+                    value={stats.childCount}
                     color="emerald"
                 />
                 <StatCard
@@ -214,7 +177,7 @@ export const ParentDashboard = () => {
                     color="rose"
                     subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'لا يوجد'}
                 />
-            </div>
+            </div >
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
@@ -349,7 +312,7 @@ export const ParentDashboard = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
@@ -362,15 +325,15 @@ const StatCard = ({ icon: Icon, label, value, color, subValue }: any) => {
     };
 
     return (
-        <div className={cn("p-6 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden")}>
+        <div className={cn("p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden")}>
             <div className="flex justify-between items-start relative z-10">
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{label}</p>
-                    <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">{value}</h3>
-                    {subValue && <p className="text-[10px] font-black text-gray-400 mt-1 italic">{subValue}</p>}
+                    <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">{label}</p>
+                    <h3 className="text-lg font-black text-gray-900 dark:text-white tracking-tighter">{value}</h3>
+                    {subValue && <p className="text-[9px] font-black text-gray-400 mt-0.5 italic">{subValue}</p>}
                 </div>
-                <div className={cn("p-3 rounded-none transition-transform group-hover:scale-110 duration-500", colors[color])}>
-                    <Icon size={24} />
+                <div className={cn("p-1.5 rounded-none transition-transform group-hover:scale-110 duration-500", colors[color])}>
+                    <Icon size={18} />
                 </div>
             </div>
         </div>
