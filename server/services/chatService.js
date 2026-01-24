@@ -47,7 +47,6 @@ class ChatService {
             ...c,
             members: (c.memberIds || '').split(','),
             isGroup: !!c.isGroup,
-            isLive: !!c.isLive,
             unreadCount: c.unreadCount || 0
         }));
     }
@@ -227,18 +226,6 @@ class ChatService {
         );
         return { success: true };
     }
-
-    async updateLiveStatus(id, { isLive, meetingUrl }) {
-        if (isLive !== undefined && meetingUrl !== undefined) {
-            await this.db.run('UPDATE conversations SET isLive = ?, meetingUrl = ? WHERE id = ?', [isLive ? 1 : 0, meetingUrl, id]);
-        } else if (isLive !== undefined) {
-            await this.db.run('UPDATE conversations SET isLive = ? WHERE id = ?', [isLive ? 1 : 0, id]);
-        } else if (meetingUrl !== undefined) {
-            await this.db.run('UPDATE conversations SET meetingUrl = ? WHERE id = ?', [meetingUrl, id]);
-        }
-        return { success: true };
-    }
-
 }
 
 module.exports = ChatService;

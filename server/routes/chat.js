@@ -231,41 +231,5 @@ router.post('/conversations/:id/read', async (req, res) => {
     }
 });
 
-// 10. Toggle Live Status / Meeting URL
-router.post('/conversations/:id/live', async (req, res) => {
-    try {
-        const userId = req.user.id;
-        // Security: Ensure member or admin
-        const membership = await req.db.get('SELECT userId FROM conversation_members WHERE conversationId = ? AND userId = ?', [req.params.id, userId]);
-        if (!membership && req.user.role !== 'admin') {
-            return ResponseHandler.error(res, 'Unauthorized', 403);
-        }
-
-        const result = await req.chatService.updateLiveStatus(req.params.id, req.body);
-
-        // Emit socket event to notify all members
-        const io = req.app.get('socketio');
-        if (io) {
-            io.to(req.params.id).emit('class_status_change', {
-                conversationId: req.params.id,
-                isLive: req.body.isLive,
-                meetingUrl: req.body.meetingUrl
-            });
-
-            // Also notify individual user rooms for sidebar updates
-            const members = await req.db.all('SELECT userId FROM conversation_members WHERE conversationId = ?', req.params.id);
-            for (const member of members) {
-                io.to(`user_${member.userId}`).emit('class_status_change_sidebar', {
-                    conversationId: req.params.id,
-                    isLive: req.body.isLive
-                });
-            }
-        }
-
-        ResponseHandler.success(res, result);
-    } catch (err) {
-        ResponseHandler.error(res, err.message, 500, err);
-    }
-});
 
 module.exports = router;

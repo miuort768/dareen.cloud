@@ -20,7 +20,6 @@ const { notificationRouter } = require('./routes/notifications');
 const { systemRouter } = require('./routes/system');
 const financeRouter = require('./routes/finance');
 const tasksRouter = require('./routes/tasks');
-const appointmentsRouter = require('./routes/appointments');
 const chatRouter = require('./routes/chat');
 const { announcementsRouter } = require('./routes/announcements');
 
@@ -135,7 +134,6 @@ async function startServer() {
         apiRouter.use('/finance', checkRole(['admin']), financeRouter);
         apiRouter.use('/tasks', tasksRouter);
         apiRouter.use('/tasks', tasksRouter);
-        apiRouter.use('/appointments', appointmentsRouter);
         apiRouter.use('/chat', chatRouter);
         // Announcements have their own internal role checks (GET public, others Admin)
         apiRouter.use('/announcements', announcementsRouter);
@@ -206,8 +204,6 @@ async function startServer() {
 
         const jwt = require('jsonwebtoken');
 
-        // --- Global State for Virtual Classes ---
-        const activeClasses = new Set();
 
         // Socket.io Middleware for Authentication
         io.use((socket, next) => {
@@ -260,55 +256,6 @@ async function startServer() {
                 socket.to(data.conversationId).emit('typing', data);
             });
 
-            // --- WebRTC Signaling for Virtual Class ---
-            socket.on('join_class', (roomId) => {
-                socket.join(`class_${roomId}`);
-                console.log(`🏫 User joined class room: class_${roomId}`);
-            });
-
-            socket.on('offer', (data) => {
-                const target = data.to ? data.to : `class_${data.roomID}`;
-                socket.to(target).emit('offer', {
-                    offer: data.offer,
-                    from: socket.id
-                });
-            });
-
-            socket.on('answer', (data) => {
-                socket.to(data.to).emit('answer', {
-                    answer: data.answer,
-                    from: socket.id
-                });
-            });
-
-            socket.on('request_stream', (data) => {
-                socket.to(`class_${data.roomID}`).emit('request_stream', { from: socket.id });
-            });
-
-            socket.on('end_class', (data) => {
-                activeClasses.delete(data.roomID);
-                socket.to(`class_${data.roomID}`).emit('class_ended');
-                io.emit('class_status_change', Array.from(activeClasses));
-                console.log(`🛑 Class ended in room: class_${data.roomID}`);
-            });
-
-            socket.on('start_class', (data) => {
-                activeClasses.add(data.roomID);
-                io.emit('class_status_change', Array.from(activeClasses));
-                console.log(`🚀 Class started in room: class_${data.roomID}`);
-            });
-
-            socket.on('check_class_status', () => {
-                socket.emit('class_status_change', Array.from(activeClasses));
-            });
-
-            socket.on('ice-candidate', (data) => {
-                const target = data.to ? data.to : `class_${data.roomID}`;
-                socket.to(target).emit('ice-candidate', {
-                    candidate: data.candidate,
-                    from: socket.id
-                });
-            });
         });
 
         const serverInstance = server.listen(PORT, () => {

@@ -20,7 +20,6 @@ import { Parents } from './pages/Parents';
 import { Students } from './pages/Students';
 import { Tasks } from './pages/Tasks';
 import { Chat } from './pages/Chat';
-import { Appointments } from './pages/Appointments';
 import { Announcements } from './pages/Announcements';
 import { About } from './pages/public/About';
 import { Courses } from './pages/public/Courses';
@@ -118,7 +117,6 @@ function App() {
         <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
         <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
         <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
-        <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
         <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
         <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
 

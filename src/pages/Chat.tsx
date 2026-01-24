@@ -32,8 +32,7 @@ export const Chat = () => {
         deleteAllConversations,
         typingUsers,
         setTyping,
-        markAsRead,
-        toggleLiveStatus
+        markAsRead
     } = useChat(currentUser?.id);
 
     // UI State
@@ -218,9 +217,7 @@ export const Chat = () => {
             if (updatedConv) {
                 if (
                     updatedConv.displayName !== selectedConv.displayName ||
-                    updatedConv.lastMessageTime !== selectedConv.lastMessageTime ||
-                    updatedConv.isLive !== selectedConv.isLive ||
-                    updatedConv.meetingUrl !== selectedConv.meetingUrl
+                    updatedConv.lastMessageTime !== selectedConv.lastMessageTime
                 ) {
                     setSelectedConv(updatedConv);
                 }
@@ -298,7 +295,6 @@ export const Chat = () => {
                             setShowMoreMenu={setShowMoreMenu}
                             menuRef={menuRef}
                             setTyping={setTyping}
-                            toggleLiveStatus={toggleLiveStatus}
                         />
                     </div>
                 ) : (
