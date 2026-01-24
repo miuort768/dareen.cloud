@@ -91,7 +91,7 @@ export const ParentAnnouncements = () => {
                             <Megaphone size={32} className="text-primary-400" />
                         </div>
                         <div>
-                            <h1 className="text-lg md:text-2xl font-black tracking-tight whitespace-nowrap">لوحة إعلانات المعهد</h1>
+                            <h1 className="text-lg md:text-2xl font-black tracking-tight whitespace-nowrap text-white">لوحة إعلانات المعهد</h1>
                             <p className="text-xs md:text-sm text-gray-400 font-bold mt-1 max-w-[250px] md:max-w-full truncate">تابع آخر أخبار وقرارات المعهد.</p>
                         </div>
                     </div>
