@@ -257,15 +257,14 @@ async function startServer() {
             });
 
             socket.on('offer', (data) => {
-                // Forward offer to everyone else in the room
-                socket.to(`class_${data.roomID}`).emit('offer', {
+                const target = data.to ? data.to : `class_${data.roomID}`;
+                socket.to(target).emit('offer', {
                     offer: data.offer,
                     from: socket.id
                 });
             });
 
             socket.on('answer', (data) => {
-                // Forward answer to the specific peer
                 socket.to(data.to).emit('answer', {
                     answer: data.answer,
                     from: socket.id
@@ -277,8 +276,8 @@ async function startServer() {
             });
 
             socket.on('ice-candidate', (data) => {
-                // Forward ICE candidate to everyone else in the room
-                socket.to(`class_${data.roomID}`).emit('ice-candidate', {
+                const target = data.to ? data.to : `class_${data.roomID}`;
+                socket.to(target).emit('ice-candidate', {
                     candidate: data.candidate,
                     from: socket.id
                 });
