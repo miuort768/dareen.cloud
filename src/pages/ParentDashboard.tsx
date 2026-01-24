@@ -121,7 +121,7 @@ export const ParentDashboard = () => {
         <div className="space-y-6 pb-32 animate-in fade-in duration-500" dir="rtl">
 
             {/* Header */}
-            <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 p-6 -mx-4 lg:-mx-8 -mt-8 mb-8 shadow-sm">
+            <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 pt-12 pb-6 px-6 -mx-4 lg:-mx-8 -mt-8 mb-4 shadow-sm">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
                         <div className="w-16 h-16 bg-primary-600 rounded-none flex items-center justify-center text-white shadow-xl shadow-primary-600/20">
@@ -136,7 +136,7 @@ export const ParentDashboard = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="p-3 bg-white dark:bg-gray-900 border shadow-sm group hover:border-primary-500 transition-all duration-300 relative overflow-hidden">
                     <div className="flex justify-between items-start">
                         <div>
