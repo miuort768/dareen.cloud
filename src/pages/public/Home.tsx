@@ -274,7 +274,7 @@ export const Home = () => {
                 </div>
 
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 justify-center max-w-6xl mx-auto">
+                    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
 
                         {/* Content Side */}
                         <div className="w-full lg:w-1/2 text-center">
@@ -296,7 +296,7 @@ export const Home = () => {
                                 منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">حلقات فردية</span> ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
                                 <a
                                     href={`https://wa.me/2${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
                                     target="_blank"
