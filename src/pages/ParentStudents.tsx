@@ -8,7 +8,6 @@ import {
     BookOpen,
     TrendingUp,
     X,
-    Clock,
     ChevronLeft,
     ChevronRight,
     AlertCircle,
@@ -276,29 +275,20 @@ export const ParentStudents = () => {
                                     ) : (
                                         <div className="relative border-r-2 border-primary-500/20 pr-6 mr-3 space-y-8">
                                             {childSessions
-                                                .filter(s => s.subject === viewingSubject.subject && s.status === 'completed')
+                                                .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent'))
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .map((session, sIdx) => (
                                                     <div key={sIdx} className="relative">
-                                                        <div className="absolute -right-[33px] top-1.5 w-4 h-4 rounded-none bg-white dark:bg-gray-900 border-4 border-primary-500"></div>
+                                                        <div className={cn(
+                                                            "absolute -right-[33px] top-1.5 w-4 h-4 rounded-none bg-white dark:bg-gray-900 border-4",
+                                                            session.status === 'completed' ? "border-emerald-500" : "border-rose-500"
+                                                        )}></div>
                                                         <div className="bg-gray-50 dark:bg-gray-800/40 p-4 border border-gray-100 dark:border-gray-800 group hover:border-primary-500 transition-all">
                                                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                                                                 <div>
                                                                     <p className="text-sm font-black text-gray-900 dark:text-white">
                                                                         {format(new Date(session.date), 'eeee, d MMMM yyyy', { locale: ar })}
                                                                     </p>
-                                                                    <div className="flex items-center gap-2 mt-1">
-                                                                        <Clock size={12} className="text-gray-400" />
-                                                                        <span className="text-[10px] text-gray-400 font-bold">{session.time}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className={cn(
-                                                                    "px-3 py-1 text-[10px] font-black uppercase tracking-widest border shrink-0 text-center",
-                                                                    session.status === 'completed'
-                                                                        ? "bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800"
-                                                                        : "bg-rose-50 text-rose-700 border-rose-100 dark:bg-rose-900/20 dark:text-rose-400 dark:border-rose-800"
-                                                                )}>
-                                                                    {session.status === 'completed' ? 'تمت الحصة' : 'مُلغاة / معلقة'}
                                                                 </div>
                                                             </div>
                                                             {session.notes && (
@@ -311,7 +301,7 @@ export const ParentStudents = () => {
                                                         </div>
                                                     </div>
                                                 ))}
-                                            {childSessions.filter(s => s.subject === viewingSubject.subject && s.status === 'completed').length === 0 && (
+                                            {childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent')).length === 0 && (
                                                 <div className="py-20 text-center">
                                                     <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
                                                     <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
