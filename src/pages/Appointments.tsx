@@ -59,20 +59,29 @@ export const Appointments = () => {
     useEffect(() => {
         const checkAndReset = async () => {
             try {
-                const settings = await api.get<any>('/system/settings');
-                const lastResetDate = settings?.last_appointment_reset;
-                const todayStr = new Date().toDateString();
+                if (currentUser?.role === 'admin') {
+                    // Only admin can access system settings and perform reset
+                    const settings = await api.get<any>('/system/settings');
+                    const lastResetDate = settings?.last_appointment_reset;
+                    const todayStr = new Date().toDateString();
 
-                if (lastResetDate !== todayStr) {
-                    await api.delete('/appointments/completed-sessions/reset');
-                    setCompletedSessionIds([]);
-                    await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
+                    if (lastResetDate !== todayStr) {
+                        await api.delete('/appointments/completed-sessions/reset');
+                        setCompletedSessionIds([]);
+                        await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
+                    } else {
+                        const sessions = await api.get<string[]>('/appointments/completed-sessions');
+                        setCompletedSessionIds(sessions || []);
+                    }
                 } else {
+                    // Start Update: Teachers just fetch the list, they rely on Admin (or first admin login) to reset.
+                    // Ideally the server should handle reset automatically, but for now this fixes the display issue.
                     const sessions = await api.get<string[]>('/appointments/completed-sessions');
                     setCompletedSessionIds(sessions || []);
                 }
             } catch (error) {
                 console.error("Error managing appointment reset:", error);
+                // Fallback: try to just get sessions if admin check failed? No, safe to just log.
             }
         };
 
