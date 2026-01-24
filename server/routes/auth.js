@@ -69,9 +69,9 @@ router.post('/login', loginLimiter, async (req, res) => {
         }
 
         let isValidPassword = false;
-        if (userData.password.startsWith('$2b$')) {
+        if (userData.password && userData.password.startsWith('$2b$')) {
             isValidPassword = await bcrypt.compare(password, userData.password);
-        } else {
+        } else if (userData.password) {
             isValidPassword = password === userData.password;
         }
 
