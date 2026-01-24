@@ -137,8 +137,8 @@ export const ParentDashboard = () => {
                             <Users size={32} />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">بوابة المتابعة الذكية</h1>
-                            <p className="text-gray-500 dark:text-gray-400 font-bold">أهلاً بك، أ/ {currentUser?.name}</p>
+                            <h1 className="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">بوابة المتابعة الذكية</h1>
+                            <p className="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 font-bold">أهلاً بك، أ/ {currentUser?.name}</p>
                         </div>
                     </div>
 
