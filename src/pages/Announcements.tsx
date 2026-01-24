@@ -17,11 +17,13 @@ import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
+type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event';
+
 interface Announcement {
     id: string;
     title: string;
     content: string;
-    type: 'general' | 'urgent' | 'holiday' | 'event';
+    type: AnnouncementType;
     date: string;
     isActive: boolean;
 }
@@ -34,7 +36,12 @@ export const Announcements = () => {
     const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
     // Form State
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        title: string;
+        content: string;
+        type: AnnouncementType;
+        isActive: boolean;
+    }>({
         title: '',
         content: '',
         type: 'general',
@@ -244,7 +251,7 @@ export const Announcements = () => {
                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">نوع الإعلان</label>
                                     <select
                                         value={formData.type}
-                                        onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                                        onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
                                         className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b-2 border-transparent focus:border-primary-500 focus:outline-none font-bold text-sm"
                                     >
                                         <option value="general">عام</option>

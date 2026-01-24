@@ -47,7 +47,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     };
 
     const addLog = (msg: string) => {
-        console.log(`[Classroom] ${msg}`);
+        // console.log(`[Classroom] ${msg}`);
         setConnectionLog(prev => [msg, ...prev].slice(0, 5));
     };
 

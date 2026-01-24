@@ -25,7 +25,7 @@ class SocketService {
             });
 
             this.socket.on('connect', () => {
-                console.log('✅ Connected to WebSocket server as:', this.socket?.id);
+                // console.log('✅ Connected to WebSocket server as:', this.socket?.id);
                 // Explicitly join personal room just in case server-side join on connection fails
                 const decoded = this.decodeToken(token);
                 if (decoded?.id) {

@@ -40,11 +40,11 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const currentUserId = String(currentUser.id);
 
         const onConnect = () => {
-            console.log('✅ Chat Socket connected');
+            // console.log('✅ Chat Socket connected');
             setIsConnected(true);
         };
         const onDisconnect = () => {
-            console.log('❌ Chat Socket disconnected');
+            // console.log('❌ Chat Socket disconnected');
             setIsConnected(false);
         };
         const onConnectError = (err: any) => {
@@ -88,7 +88,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         const handleNewMessage = (message: ChatMessage) => {
-            console.log('📬 Global Socket: New message received:', message);
+            // console.log('📬 Global Socket: New message received:', message);
 
             // Immediately clear typing status for the person who just sent a message
             setTypingUsers(prev => prev.filter(u => u.conversationId !== message.conversationId || u.userName !== message.senderName));
@@ -146,7 +146,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         const handleNewConversation = (conv: Conversation) => {
-            console.log('🆕 Global Socket: New conversation created:', conv);
+            // console.log('🆕 Global Socket: New conversation created:', conv);
             queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
                 const conversations = Array.isArray(old) ? old : [];
                 if (conversations.find((c: any) => c.id === conv.id)) return conversations;
