@@ -73,7 +73,11 @@ export const Sidebar = () => {
         if (!currentUser) return false;
 
         // Admin access ('*')
-        if (currentUser.permissions?.includes('*')) return true;
+        if (currentUser.permissions?.includes('*')) {
+            // Explicitly hide Parent Portal pages from Admin Sidebar to prevent clutter
+            if (['parent_dashboard', 'parent_students', 'parent_announcements'].includes(item.id)) return false;
+            return true;
+        }
 
         // Parent specific access
         // Exclude general dashboard for parents as they have parent-dashboard
