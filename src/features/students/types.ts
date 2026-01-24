@@ -15,6 +15,7 @@ export interface Enrollment {
     sessionsTotal: number;
     sessionsUsed: number;
     schedule: ScheduleSlot[];
+    price?: number;
 }
 
 export interface ScheduleSlot {
