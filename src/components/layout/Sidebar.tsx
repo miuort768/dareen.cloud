@@ -18,7 +18,8 @@ import {
     ListTodo,
     Presentation,
     MessageCircle,
-    Home
+    Home,
+    Activity
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -47,9 +48,9 @@ export const Sidebar = () => {
 
     const navigation = [
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
-        { name: 'متابعة الأبناء', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
-        { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: GraduationCap },
-        { name: 'الحضور والغياب', href: '/parent-attendance', id: 'parent_attendance', icon: UserCheck },
+        { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
+        { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
+        { name: 'سجل الحضور', href: '/parent-attendance', id: 'parent_attendance', icon: Activity },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
@@ -67,14 +68,19 @@ export const Sidebar = () => {
 
     // Filter navigation based on permissions
     const filteredNavigation = navigation.filter(item => {
-        // If no user or no permissions, show nothing (or default safe pages)
-        if (!currentUser?.permissions) return false;
+        // If no user, show nothing
+        if (!currentUser) return false;
 
         // Admin access ('*')
-        if (currentUser.permissions.includes('*')) return true;
+        if (currentUser.permissions?.includes('*')) return true;
+
+        // Parent specific access (hardcoded for now to avoid session/token issues)
+        if (currentUser.role === 'parent' && ['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'].includes(item.id)) {
+            return true;
+        }
 
         // Specific page access
-        return currentUser.permissions.includes(item.id);
+        return currentUser.permissions?.includes(item.id);
     });
 
     // Show loading state instead of hiding sidebar completely
