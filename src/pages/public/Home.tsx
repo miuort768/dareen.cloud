@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, Sparkles, ChevronRight, ChevronLeft as LucideChevronLeft, Quote } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { useApp } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
