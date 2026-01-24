@@ -44,6 +44,7 @@ const createSessionSchema = z.object({
     id: z.string().optional(), // Often generated on client or server
     studentId: idSchema,
     studentName: z.string().min(1, "Student Name is required"),
+    teacherId: idSchema.optional(),
     teacherName: z.string().min(1, "Teacher Name is required"),
     subject: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
