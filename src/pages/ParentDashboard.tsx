@@ -313,7 +313,7 @@ export const ParentDashboard = () => {
                                 <Headset size={28} />
                             </div>
                             <div>
-                                <h4 className="font-black text-sm uppercase tracking-[0.2em] mb-1">تواصل مع الإدارة</h4>
+                                <h4 className="font-black text-sm uppercase tracking-[0.2em] mb-1 text-white">تواصل مع الإدارة فوراً</h4>
                                 <p className="text-[10px] text-gray-400 font-bold">الدعم الفني وسكرتارية المعهد</p>
                             </div>
                         </div>
