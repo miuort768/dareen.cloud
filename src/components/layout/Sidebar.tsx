@@ -19,7 +19,8 @@ import {
     Presentation,
     MessageCircle,
     Home,
-    Activity
+    Activity,
+    Megaphone
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -50,7 +51,7 @@ export const Sidebar = () => {
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
-        { name: 'سجل الحضور', href: '/parent-attendance', id: 'parent_attendance', icon: Activity },
+        { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_attendance', icon: Megaphone },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
@@ -63,6 +64,7 @@ export const Sidebar = () => {
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: MessageCircle },
+        { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
     ];
 
@@ -78,7 +80,7 @@ export const Sidebar = () => {
         // Exclude general dashboard for parents as they have parent-dashboard
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
-            if (['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'].includes(item.id)) return true;
+            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat'].includes(item.id)) return true;
         }
 
         // Specific page access
