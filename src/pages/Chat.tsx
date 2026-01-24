@@ -12,6 +12,7 @@ import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatManagement } from '../features/chat/components/ChatManagement';
 import { ChatModals, type ProfileFormData } from '../features/chat/components/ChatModals';
+import { VirtualClassroom } from '../features/chat/components/VirtualClassroom';
 
 export const Chat = () => {
     const { currentUser, logout } = useApp();
@@ -59,6 +60,26 @@ export const Chat = () => {
     const [deleteType, setDeleteType] = useState<DeleteType | 'all_conversations'>('conversation');
     const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+
+    // Meeting State
+    const [showMeeting, setShowMeeting] = useState(false);
+    const [meetingRoomID, setMeetingRoomID] = useState<string | null>(null);
+
+    const toggleMeeting = useCallback((roomId?: string) => {
+        if (roomId) {
+            setMeetingRoomID(roomId);
+            setShowMeeting(true);
+        } else {
+            setShowMeeting(false);
+            setMeetingRoomID(null);
+        }
+    }, []);
+
+    // Expose toggleMeeting to window for deeper components
+    useEffect(() => {
+        (window as any).toggleMeeting = toggleMeeting;
+        return () => { delete (window as any).toggleMeeting; };
+    }, [toggleMeeting]);
 
     // HANDLERS
     const handleSendMessage = useCallback(async (e: React.FormEvent) => {
@@ -349,6 +370,15 @@ export const Chat = () => {
                 isDeleting={isDeleting}
                 handleDeleteAction={handleDeleteAction}
             />
+
+            {showMeeting && meetingRoomID && (
+                <VirtualClassroom
+                    roomID={meetingRoomID}
+                    userName={currentUser?.name || 'مستخدم دارين'}
+                    isTeacher={currentUser?.role === 'teacher' || currentUser?.role === 'admin'}
+                    onClose={() => toggleMeeting()}
+                />
+            )}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Send, Smile, Share2, MoreVertical, Edit2, Trash2, ChevronRight } from 'lucide-react';
+import { Send, Smile, Share2, MoreVertical, Edit2, Trash2, ChevronRight, MonitorPlay } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -75,7 +75,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
                     <div className="min-w-0 flex-1">
                         <h2 className="font-bold text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-xs lg:text-[16px]">{selectedConv.displayName}</h2>
-                        <div className="flex items-center gap-1.5">
+
+                        {/* Virtual Class Button */}
+                        <div className="flex items-center gap-4 mt-0.5">
+                            <button
+                                onClick={() => (window as any).toggleMeeting?.(selectedConv.id)}
+                                className="flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border border-emerald-600/20 rounded-full transition-all group active:scale-95"
+                            >
+                                <MonitorPlay size={12} className="group-hover:scale-110 transition-transform" />
+                                <span className="text-[10px] font-black uppercase tracking-tight">دخول الفصل المباشر</span>
+                            </button>
+
                             {typingUsers.filter(u => u.conversationId === selectedConv.id).length > 0 ? (
                                 <p className="text-[11px] lg:text-[12px] text-emerald-600 dark:text-[#8696a0] font-medium italic animate-pulse">يكتب الآن...</p>
                             ) : (
