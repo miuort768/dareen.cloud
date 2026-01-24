@@ -290,8 +290,6 @@ export const Chat = () => {
                 setShowNewChatModal={setShowNewChatModal}
                 confirmDeleteAllConversations={confirmDeleteAllConversations}
                 setIsEditingGroup={setIsEditingGroup}
-                setView={setView}
-                view={view}
                 logout={logout}
                 requestDesktopNotifications={requestDesktopNotifications}
                 typingUsers={typingUsers}
