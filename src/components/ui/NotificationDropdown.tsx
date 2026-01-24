@@ -145,7 +145,7 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute left-0 mt-2 w-96 bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50">
+                <div className="absolute left-[-50px] sm:left-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50 origin-top-right">
                     {/* Header */}
                     <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                         <div className="flex items-center gap-2">
