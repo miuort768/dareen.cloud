@@ -181,41 +181,38 @@ export const ParentDashboard = () => {
                 />
             </div>
 
-            {/* Attention Alerts Section */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
-                <h4 className="font-black text-xs text-gray-400 uppercase tracking-widest mb-6 flex items-center justify-between">
-                    تنبيهات الانتباه
-                    <Bell size={16} className="text-rose-500 animate-bounce" />
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {displayData.students.map(student => {
-                        const lowBalanceEnrollments = (student.enrollments || []).filter((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2);
-                        return lowBalanceEnrollments.map((en: any, idx: number) => (
-                            <div key={`${student.id}-${idx}`} className="p-3 bg-rose-50 dark:bg-rose-900/20 border-r-4 border-r-rose-500 flex items-start gap-4">
-                                <AlertCircle size={20} className="text-rose-600 mt-0.5 shrink-0" />
+            {/* Attention Alerts Section - Only show when there are alerts */}
+            {((displayData.students.some(s => (s.enrollments || []).some((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2))) || stats.pendingInvoiceCount > 0) && (
+                <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
+                    <h4 className="font-black text-xs text-gray-400 uppercase tracking-widest mb-6 flex items-center justify-between">
+                        تنبيهات الانتباه
+                        <Bell size={16} className="text-rose-500 animate-bounce" />
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {displayData.students.map(student => {
+                            const lowBalanceEnrollments = (student.enrollments || []).filter((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2);
+                            return lowBalanceEnrollments.map((en: any, idx: number) => (
+                                <div key={`${student.id}-${idx}`} className="p-3 bg-rose-50 dark:bg-rose-900/20 border-r-4 border-r-rose-500 flex items-start gap-4">
+                                    <AlertCircle size={20} className="text-rose-600 mt-0.5 shrink-0" />
+                                    <div>
+                                        <p className="text-xs font-black text-rose-900 dark:text-rose-200">تجديد الاشتراك: {student.name}</p>
+                                        <p className="text-[10px] text-rose-700 dark:text-rose-300 font-bold mt-1">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص فقط في مادة {en.subject}</p>
+                                    </div>
+                                </div>
+                            ));
+                        })}
+                        {stats.pendingInvoiceCount > 0 && (
+                            <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border-r-4 border-r-amber-500 flex items-start gap-4">
+                                <AlertCircle size={20} className="text-amber-600 mt-0.5 shrink-0" />
                                 <div>
-                                    <p className="text-xs font-black text-rose-900 dark:text-rose-200">تجديد الاشتراك: {student.name}</p>
-                                    <p className="text-[10px] text-rose-700 dark:text-rose-300 font-bold mt-1">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص فقط في مادة {en.subject}</p>
+                                    <p className="text-xs font-black text-amber-900 dark:text-amber-200">سداد الفواتير المعلقة</p>
+                                    <p className="text-[10px] text-amber-700 dark:text-amber-300 font-bold mt-1">يوجد {stats.pendingInvoiceCount} فواتير بانتظار السداد بقيمة {stats.totalPending.toLocaleString()} ج.م</p>
                                 </div>
                             </div>
-                        ));
-                    })}
-                    {stats.pendingInvoiceCount > 0 && (
-                        <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border-r-4 border-r-amber-500 flex items-start gap-4">
-                            <AlertCircle size={20} className="text-amber-600 mt-0.5 shrink-0" />
-                            <div>
-                                <p className="text-xs font-black text-amber-900 dark:text-amber-200">سداد الفواتير المعلقة</p>
-                                <p className="text-[10px] text-amber-700 dark:text-amber-300 font-bold mt-1">يوجد {stats.pendingInvoiceCount} فواتير بانتظار السداد بقيمة {stats.totalPending.toLocaleString()} ج.م</p>
-                            </div>
-                        </div>
-                    )}
-                    {displayData.students.every(s => !(s.enrollments || []).some((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2)) && stats.pendingInvoiceCount === 0 && (
-                        <div className="col-span-full py-2 text-center text-xs text-gray-400 font-black italic">
-                            جميع اشتراكات الأبناء منتظمة ولا توجد فواتير معلقة حالياً
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
