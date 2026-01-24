@@ -37,6 +37,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
             const studentHistory = sessions.filter(s =>
                 s.studentId === studentId &&
                 s.teacherName === teacherName &&
+                (studentSubject ? s.subject === studentSubject : true) &&
                 (s.status === 'completed' || s.status === 'cancelled')
             ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

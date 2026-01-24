@@ -75,7 +75,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
-                                progress > 80 ? 'bg-emerald-500' : progress > 50 ? 'bg-primary-600' : 'bg-amber-500'
+                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                             )}
                             style={{ width: `${Math.min(100, progress)}%` }}
                         >

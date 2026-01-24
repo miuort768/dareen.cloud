@@ -25,7 +25,8 @@ const getStudentEnrollments = async (db, studentId) => {
  */
 const withTransaction = async (db, callback) => {
     const logger = require('./logger');
-    await db.run('BEGIN TRANSACTION');
+    // Important: Use BEGIN IMMEDIATE for SQLite to handle concurrent writes better in WAL mode
+    await db.run('BEGIN IMMEDIATE TRANSACTION');
     try {
         const result = await callback(db);
         await db.run('COMMIT');
@@ -35,6 +36,44 @@ const withTransaction = async (db, callback) => {
         logger.error('Transaction rolled back', err);
         throw err;
     }
+};
+
+/**
+ * Robust helper to increment or decrement used sessions in an enrollment.
+ * Centralized here to ensure consistency across routes.
+ */
+const updateEnrollmentSessions = async (tx, { studentId, subject, teacherName, teacherId, delta }) => {
+    const logger = require('./logger');
+
+    // Ensure we have a teacherId if possible (lookup by name if only name is provided)
+    let finalTid = teacherId;
+    if (!finalTid && teacherName) {
+        const row = await tx.get('SELECT id FROM teachers WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))', [teacherName]);
+        if (row) finalTid = row.id;
+    }
+
+    const sql = delta > 0
+        ? `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1`
+        : `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1)`;
+
+    // MATCHING CRITERIA: studentId + subject AND (teacherId OR teacherName)
+    const res = await tx.run(
+        `${sql} WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) 
+         AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) 
+         AND (
+            (teacherId IS NOT NULL AND LOWER(TRIM(teacherId)) = LOWER(TRIM(?)))
+            OR 
+            (LOWER(TRIM(teacher)) = LOWER(TRIM(?)))
+         )`,
+        [studentId, subject, finalTid || 'NEVER_MATCH', teacherName]
+    );
+
+    if (res.changes === 0) {
+        logger.warn(`ENROLLMENT SYNC FAILED: No record found for Std: ${studentId}, Sub: ${subject}, Tea: ${teacherName}`);
+    } else {
+        logger.info(`ENROLLMENT SYNC SUCCESS: Updated ${studentId} (${delta})`);
+    }
+    return res.changes;
 };
 
 const getStudentsWithEnrollments = async (db, studentIds = null) => {
@@ -61,7 +100,7 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
         const enrollmentMap = enrollments.reduce((acc, e) => {
             const formatted = {
                 ...e,
-                schedule: JSON.parse(e.schedule || '[]')
+                schedule: e.schedule ? (typeof e.schedule === 'string' ? JSON.parse(e.schedule) : e.schedule) : []
             };
             if (!acc[e.studentId]) acc[e.studentId] = [];
             acc[e.studentId].push(formatted);
@@ -81,6 +120,6 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
 module.exports = {
     getStudentEnrollments,
     getStudentsWithEnrollments,
-    withTransaction
+    withTransaction,
+    updateEnrollmentSessions
 };
-

@@ -100,24 +100,38 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 
     try {
         const updatedStudent = await withTransaction(req.db, async (tx) => {
+            // 1. Update basic student info
             await tx.run(
                 `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ? WHERE id = ?`,
                 [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, id]
             );
 
+            // 2. Fetch existing enrollments to preserve their sessionsUsed
+            const existingEnrollments = await tx.all('SELECT teacher, subject, sessionsUsed FROM enrollments WHERE studentId = ?', [id]);
+            const sessionsMap = {};
+            existingEnrollments.forEach(en => {
+                const key = `${en.teacher.trim().toLowerCase()}-${en.subject.trim().toLowerCase()}`;
+                sessionsMap[key] = en.sessionsUsed;
+            });
+
+            // 3. Re-sync enrollments
             await tx.run('DELETE FROM enrollments WHERE studentId = ?', [id]);
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
                     let finalTeacherId = e.teacherId || null;
                     if (!finalTeacherId && e.teacher) {
-                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE name = ?', [e.teacher]);
+                        const teacherRecord = await tx.get('SELECT id FROM teachers WHERE LOWER(TRIM(name)) = LOWER(TRIM(?))', [e.teacher]);
                         if (teacherRecord) finalTeacherId = teacherRecord.id;
                     }
 
+                    // CRITICAL FIX: Preserve sessionsUsed if this (teacher/subject) pair existed
+                    const matchKey = `${e.teacher.trim().toLowerCase()}-${e.subject.trim().toLowerCase()}`;
+                    const preservedUsed = sessionsMap[matchKey] !== undefined ? sessionsMap[matchKey] : (e.sessionsUsed || 0);
+
                     await tx.run(
                         `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
+                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, preservedUsed, JSON.stringify(e.schedule)]
                     );
                 }
             }
@@ -127,8 +141,6 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
         });
 
         res.json(updatedStudent);
-
-
     } catch (err) {
         logger.error('Error updating student', err);
         res.status(500).json({ error: 'Internal Server Error' });

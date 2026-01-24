@@ -274,7 +274,7 @@ export const Attendance = () => {
                                                             <div
                                                                 className={cn(
                                                                     "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
-                                                                    (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 80 ? 'bg-emerald-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 50 ? 'bg-primary-600' : 'bg-amber-500'
+                                                                    (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-rose-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                                                                 )}
                                                                 style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
                                                             >

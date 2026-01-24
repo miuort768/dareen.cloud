@@ -100,7 +100,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">تغطية المنهج</span>
                         </div>
                         <div className="flex items-baseline gap-1">
-                            <span className="text-lg font-black text-primary-600 dark:text-primary-400">{actualSessionsUsed}</span>
+                            <span className={cn(
+                                "text-lg font-black",
+                                attendancePercent > 80 ? "text-rose-600" : "text-primary-600"
+                            )}>{actualSessionsUsed}</span>
                             <span className="text-[10px] font-bold text-gray-400">/ {en.sessionsTotal} حصص</span>
                         </div>
                     </div>
@@ -109,7 +112,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
-                                attendancePercent > 80 ? "bg-emerald-500" : attendancePercent > 40 ? "bg-primary-600" : "bg-amber-500"
+                                attendancePercent > 85 ? "bg-rose-500" : attendancePercent > 60 ? "bg-amber-500" : "bg-emerald-500"
                             )}
                             style={{ width: `${Math.min(100, attendancePercent)}%` }}
                         >
