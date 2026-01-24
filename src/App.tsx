@@ -62,7 +62,7 @@ const DashboardRedirect = () => {
   if (currentUser?.role === 'parent') return <Navigate to="/parent-dashboard" replace />;
   if (currentUser?.role === 'teacher') return <Navigate to="/attendance" replace />;
   if (currentUser?.role === 'chat_user') return <Navigate to="/chat" replace />;
-  return <Navigate to="/dashboard" replace />;
+  return <Navigate to="/admin-dashboard" replace />;
 };
 
 function App() {
@@ -91,6 +91,7 @@ function App() {
       <Route path="/terms-of-service" element={<TermsOfService />} />
 
       {/* Protected App Routes */}
+      {/* Protected App Routes */}
       <Route
         element={
           <ProtectedRoute>
@@ -98,8 +99,8 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<DashboardRedirect />} />
-        <Route path="dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
+        <Route path="dashboard" element={<DashboardRedirect />} />
+        <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
 
         {/* Parent Routes */}
         <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />

@@ -4,25 +4,13 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
-import { useApp } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
-import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
     const { adminPhone } = useSettings();
-    const { isAuthenticated, currentUser } = useApp();
-    const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            if (currentUser?.role === 'chat_user') {
-                navigate('/chat', { replace: true });
-            } else {
-                navigate('/dashboard', { replace: true });
-            }
-        }
-    }, [isAuthenticated, currentUser, navigate]);
+    // Automatic redirect removed to allow landing page visibility
 
     const reviews = [
         {
