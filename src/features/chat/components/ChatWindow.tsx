@@ -147,7 +147,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 type="text"
                                 value={meetingUrl}
                                 onChange={(e) => setMeetingUrl(e.target.value)}
-                                placeholder="رابط Google Meet..."
+                                placeholder="رابط اجتماع Zoom..."
                                 className="bg-transparent border-none text-[12px] font-bold outline-none min-w-[200px] text-gray-700 dark:text-gray-200"
                             />
                             <button
@@ -207,7 +207,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             {/* If Mobile and editing meeting, show full area Overlay */}
             {isTeacher && isEditingMeeting && (
                 <div className="lg:hidden p-4 bg-primary-50 dark:bg-primary-900/10 border-b border-primary-100 dark:border-primary-900/20 animate-in slide-in-from-top">
-                    <p className="text-[11px] font-black text-primary-700 dark:text-primary-400 mb-2">إعدادات البث المباشر (Google Meet)</p>
+                    <p className="text-[11px] font-black text-primary-700 dark:text-primary-400 mb-2">إعدادات البث المباشر (Zoom)</p>
                     <div className="flex gap-2">
                         <input
                             type="text"
