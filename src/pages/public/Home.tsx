@@ -177,7 +177,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-10 pb-16 bg-white relative overflow-hidden">
+            <section className="py-6 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 max-w-5xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-[1.4] py-2">
@@ -231,18 +231,18 @@ export const Home = () => {
                         </div>
 
                         {/* Feature 4 */}
-                        <div className="md:col-span-2 p-8 md:p-12 bg-gray-900 rounded-none shadow-2xl text-white relative overflow-hidden group">
+                        <div className="md:col-span-2 p-6 md:p-8 bg-gray-900 rounded-none shadow-2xl text-white relative overflow-hidden group">
                             {/* Decorative Glow */}
                             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
-                            <div className="relative z-10 flex flex-col lg:flex-row items-center gap-10">
+                            <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">
                                 <div className="flex-1 text-center lg:text-right">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-4 border border-white/10 mx-auto lg:mx-0">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-2 border border-white/10 mx-auto lg:mx-0">
                                         <Award size={16} className="text-gold" />
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-black mb-4 font-heading text-white">بيئة تعليمية متطورة</h3>
-                                    <p className="text-white/80 text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
+                                    <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
+                                    <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
                                         نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.
                                     </p>
                                 </div>
