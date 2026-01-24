@@ -22,6 +22,7 @@ const TeacherInvoices = lazy(() => import('./pages/TeacherInvoices').then(m => (
 const StudentInvoices = lazy(() => import('./pages/StudentInvoices').then(m => ({ default: m.StudentInvoices })));
 const Tasks = lazy(() => import('./pages/Tasks').then(m => ({ default: m.Tasks })));
 const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
+const ParentDashboard = lazy(() => import('./pages/ParentDashboard').then(m => ({ default: m.ParentDashboard })));
 const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('./pages/public/TermsOfService').then(m => ({ default: m.TermsOfService })));
 
@@ -73,6 +74,9 @@ const DashboardRedirect = () => {
   if (currentUser?.role === 'chat_user') {
     return <Navigate to="/chat" replace />;
   }
+  if (currentUser?.role === 'parent') {
+    return <Navigate to="/parent-dashboard" replace />;
+  }
   return <Dashboard />;
 };
 
@@ -96,6 +100,7 @@ function AppContent() {
           </ProtectedRoute>
         }>
           <Route path="dashboard" element={<DashboardRedirect />} />
+          <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
           <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
           <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
           <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />

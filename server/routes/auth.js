@@ -52,6 +52,17 @@ router.post('/login', loginLimiter, async (req, res) => {
             }
         }
 
+        // Try Parents
+        if (!userData) {
+            userData = await req.db.get(
+                'SELECT * FROM parents WHERE username = ? OR phone = ?',
+                [username, username]
+            );
+            if (userData) {
+                role = 'parent';
+            }
+        }
+
         if (!userData) {
             logger.warn(`Login failed: User '${username}' not found`);
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -111,7 +122,9 @@ router.post('/login', loginLimiter, async (req, res) => {
                     ? (finalUserData.permissions ? (typeof finalUserData.permissions === 'string' ? JSON.parse(finalUserData.permissions) : finalUserData.permissions) : ['*'])
                     : (role === 'teacher'
                         ? ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat']
-                        : ['chat']) // Chat users only see chat
+                        : (role === 'parent'
+                            ? ['parent_dashboard', 'chat']
+                            : ['chat'])) // Chat users only see chat
             }
         });
     } catch (error) {
@@ -147,6 +160,9 @@ router.post('/verify', async (req, res) => {
         } else if (decoded.role === 'chat_user') {
             userData = await req.db.get('SELECT id, name, username FROM chat_profiles WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'chat_user';
+        } else if (decoded.role === 'parent') {
+            userData = await req.db.get('SELECT id, name, username FROM parents WHERE id = ?', [decoded.id]);
+            if (userData) userData.role = 'parent';
         }
 
         if (!userData) {
@@ -161,6 +177,8 @@ router.post('/verify', async (req, res) => {
                 userData.permissions = ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat'];
             } else if (userData.role === 'chat_user') {
                 userData.permissions = ['chat'];
+            } else if (userData.role === 'parent') {
+                userData.permissions = ['parent_dashboard', 'chat'];
             }
         }
 

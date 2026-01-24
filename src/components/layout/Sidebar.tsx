@@ -17,7 +17,9 @@ import {
     DollarSign,
     ListTodo,
     Presentation,
-    MessageCircle
+    MessageCircle,
+    Home,
+    Heart
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -46,6 +48,7 @@ export const Sidebar = () => {
 
     const navigation = [
         { name: 'لوحة التحكم', href: '/dashboard', id: 'dashboard', icon: LayoutDashboard },
+        { name: 'متابعة الأبناء', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
