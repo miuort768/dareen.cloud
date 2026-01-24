@@ -130,7 +130,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
     }, [roomID, isTeacher, createPeerConnection]);
 
     // Drawing
-    const startDrawing = (e: any) => { if (drawMode !== 'cursor') setIsDrawing(true); };
+    const startDrawing = () => { if (drawMode !== 'cursor') setIsDrawing(true); };
     const stopDrawing = () => { setIsDrawing(false); canvasRef.current?.getContext('2d')?.beginPath(); };
     const draw = (e: any) => {
         if (!isDrawing || !canvasRef.current) return;
@@ -150,7 +150,9 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                     <Monitor className="text-emerald-500" size={24} />
                     <div>
                         <h2 className="text-white font-bold text-sm">بث دارين المباشر</h2>
-                        <p className="text-gray-400 text-[10px]">{isTeacher ? 'وضع الشرح' : 'وضع المشاهدة'}</p>
+                        <p className="text-gray-400 text-[10px]">
+                            {isTeacher ? `أهلاً معلمة ${userName}` : `متابعة الشرح مع المعلمة`}
+                        </p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
