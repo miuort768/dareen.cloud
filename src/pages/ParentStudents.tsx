@@ -306,7 +306,7 @@ export const ParentStudents = () => {
                                                         </div>
                                                     </div>
                                                 ))}
-                                            {childSessions.filter(s => s.subject === viewingSubject.subject).length === 0 && (
+                                            {childSessions.filter(s => s.subject === viewingSubject.subject && s.status === 'completed').length === 0 && (
                                                 <div className="py-20 text-center">
                                                     <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
                                                     <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
