@@ -310,7 +310,7 @@ export const ParentDashboard = () => {
                 <div className="space-y-4">
                     {/* Full width premium contact button */}
                     <a
-                        href={`https://wa.me/2${adminPhone}`}
+                        href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-between p-6 bg-gray-900 dark:bg-black border-r-4 border-primary-500 text-white group hover:bg-black transition-all shadow-xl"
