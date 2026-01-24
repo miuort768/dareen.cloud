@@ -469,15 +469,15 @@ export const Home = () => {
             </section>
 
             {/* FAQ Section */}
-            <section className="py-12 md:py-16 bg-[#FDFCF8] relative overflow-hidden">
+            <section className="py-6 md:py-8 bg-[#FDFCF8] relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-10">
+                    <div className="text-center mb-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-100 rounded-full mb-3 mx-auto shadow-sm">
                             <HelpCircle size={14} className="text-gold" />
                             <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">لديك استفسار؟</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 font-heading">
-                            الأسئلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold">الشائعة</span>
+                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-2 font-heading">
+                            الأسئلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold inline-block py-1">الشائعة</span>
                         </h2>
                     </div>
 
