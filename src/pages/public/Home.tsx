@@ -471,7 +471,7 @@ export const Home = () => {
             {/* FAQ Section */}
             <section className="py-6 md:py-8 bg-[#FDFCF8] relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-6">
+                    <div className="text-center mb-4">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-100 rounded-full mb-3 mx-auto shadow-sm">
                             <HelpCircle size={14} className="text-gold" />
                             <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">لديك استفسار؟</span>
@@ -484,19 +484,19 @@ export const Home = () => {
                     <div className="max-w-3xl mx-auto space-y-4">
                         {[
                             {
-                                q: "كيف يتم الدراسة في المعهد؟",
+                                q: "كيف يتم الدراسة في المعهد ؟",
                                 a: "الدراسة تتم عن بعد عبر فصول افتراضية تفاعلية مباشرة (لايف) بين المعلم والطالب، باستخدام أحدث التقنيات لضمان جودة الصوت والصورة."
                             },
                             {
-                                q: "هل المناهج معتمدة؟",
+                                q: "هل المناهج معتمدة ؟",
                                 a: "نعم، نلتزم بتدريس المناهج الحكومية المعتمدة في الكويت ودول الخليج، بالإضافة إلى مناهجنا الخاصة في التأسيس واللغات."
                             },
                             {
-                                q: "كيف يمكنني متابعة مستوى ابني؟",
+                                q: "كيف يمكنني متابعة مستوى ابني ؟",
                                 a: "نقوم بإرسال تقارير دورية ومفصلة لولي الأمر عبر الواتساب، تشمل مستوى الطالب، الحضور والغياب، وملاحظات المعلم."
                             },
                             {
-                                q: "هل توجد حصص تجريبية؟",
+                                q: "هل توجد حصص تجريبية ؟",
                                 a: "نعم، نقدم حصة تجريبية مجانية لتقييم مستوى الطالب والتعرف على طريقة التدريس قبل الاشتراك الفعلي."
                             }
                         ].map((item, idx) => (
