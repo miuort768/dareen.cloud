@@ -67,10 +67,10 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
-            // Check for existing session for same student, teacher, subject and date to prevent duplicates
+            // Check for existing session for same student, teacher, subject, date AND time to prevent exact duplicates
             const existing = await tx.get(
-                'SELECT id, status FROM sessions WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) AND LOWER(TRIM(teacherName)) = LOWER(TRIM(?)) AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) AND date = ?',
-                [body.studentId, body.teacherName, body.subject, body.date]
+                'SELECT id, status FROM sessions WHERE LOWER(TRIM(studentId)) = LOWER(TRIM(?)) AND LOWER(TRIM(teacherName)) = LOWER(TRIM(?)) AND LOWER(TRIM(subject)) = LOWER(TRIM(?)) AND date = ? AND time = ?',
+                [body.studentId, body.teacherName, body.subject, body.date, body.time]
             );
 
             if (existing) {

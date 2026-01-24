@@ -57,6 +57,9 @@ export const Attendance = () => {
         if (!secureModalData || !logDate) return;
         const { student, enrollment } = secureModalData;
 
+        const now = new Date();
+        const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', hour12: true });
+
         const success = await logAttendance({
             studentId: student.id,
             studentName: student.name,
@@ -64,9 +67,8 @@ export const Attendance = () => {
             teacherId: enrollment.teacherId,
             subject: enrollment.subject,
             date: logDate,
-            time: '12:00 م',
+            time: logDate === new Date().toISOString().split('T')[0] ? currentTime : '12:00 م',
             status: status,
-            // price: enrollment.price || 0, // Backend will fetch student's default price if not provided
             day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' })
         });
 
