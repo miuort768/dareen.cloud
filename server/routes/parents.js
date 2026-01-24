@@ -62,8 +62,9 @@ router.put('/:id', async (req, res) => {
         const updated = await req.db.get('SELECT id, name, phone, email, username FROM parents WHERE id = ?', [id]);
         res.json(updated);
     } catch (err) {
+        console.error('SERVER UPDATE PARENT ERROR:', err);
         logger.error('Error updating parent', err, { id });
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error', details: err.message });
     }
 });
 

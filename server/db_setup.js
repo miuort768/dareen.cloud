@@ -210,8 +210,8 @@ async function setupDatabase() {
 
     async function addColumnIfNotExists(tableName, columnName, columnDefinition) {
         const columns = await db.all(`PRAGMA table_info(${tableName})`);
-        console.log(`Columns for ${tableName}:`, columns.map(c => c.name).join(', '));
-        if (!columns.find(c => c.name === columnName)) {
+        // Use case-insensitive search for column name
+        if (!columns.some(c => c.name.toLowerCase() === columnName.toLowerCase())) {
             console.log(`Adding column ${columnName} to ${tableName}...`);
             try {
                 await db.exec(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnDefinition}`);

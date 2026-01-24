@@ -47,6 +47,7 @@ export interface Parent {
     phone: string;
     email: string;
     username?: string;
+    password?: string;
 }
 
 export interface Session {

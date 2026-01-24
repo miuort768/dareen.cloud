@@ -78,8 +78,9 @@ export const useParents = () => {
             }
             setShowAddForm(false);
             setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving parent", error);
+            showNotification(error.response?.data?.details || error.message || 'فشل في حفظ البيانات', 'error');
         }
     };
 
