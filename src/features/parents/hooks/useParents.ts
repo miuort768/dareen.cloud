@@ -15,7 +15,13 @@ export const useParents = () => {
     const [selectedParent, setSelectedParent] = useState<Parent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
     const [editId, setEditId] = useState<string | null>(null);
-    const [newParent, setNewParent] = useState({ name: '', phone: '', email: '' });
+    const [newParent, setNewParent] = useState<{ name: string; phone: string; email: string; username?: string; password?: string }>({
+        name: '',
+        phone: '',
+        email: '',
+        username: '',
+        password: ''
+    });
 
     const [confirmModal, setConfirmModal] = useState<{
         show: boolean;
@@ -71,14 +77,20 @@ export const useParents = () => {
                 await addMutation.mutateAsync(newParent);
             }
             setShowAddForm(false);
-            setNewParent({ name: '', phone: '', email: '' });
+            setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
         } catch (error) {
             console.error("Error saving parent", error);
         }
     };
 
     const handleEditParent = (parent: Parent) => {
-        setNewParent({ name: parent.name, phone: parent.phone, email: parent.email || '' });
+        setNewParent({
+            name: parent.name,
+            phone: parent.phone,
+            email: parent.email || '',
+            username: (parent as any).username || parent.phone,
+            password: ''
+        });
         setEditId(parent.id);
         setShowAddForm(true);
     };

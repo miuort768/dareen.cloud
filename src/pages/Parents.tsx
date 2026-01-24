@@ -37,7 +37,7 @@ export const Parents = () => {
                     actions.setShowAddForm(!state.showAddForm);
                     if (!state.showAddForm) {
                         actions.setEditId(null);
-                        actions.setNewParent({ name: '', phone: '', email: '' });
+                        actions.setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
                     }
                 }}
                 onImport={actions.handleImportParents}

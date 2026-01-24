@@ -3,8 +3,8 @@ import { User, Phone, Mail, Save } from 'lucide-react';
 
 interface ParentFormProps {
     isEdit: boolean;
-    formData: { name: string; phone: string; email: string };
-    onChange: (data: { name: string; phone: string; email: string }) => void;
+    formData: { name: string; phone: string; email: string; username?: string; password?: string };
+    onChange: (data: { name: string; phone: string; email: string; username?: string; password?: string }) => void;
     onSubmit: (e: React.FormEvent) => void;
 }
 
@@ -67,6 +67,36 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                                 className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 focus:bg-white dark:bg-slate-800/50 dark:border-slate-700 dark:text-white transition-all rounded-none text-left text-sm font-bold"
                                 dir="ltr"
                                 placeholder="example@mail.com"
+                            />
+                        </div>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">اسم المستخدم (للدخول)</label>
+                        <div className="relative group">
+                            <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500 transition-colors" size={16} />
+                            <input
+                                required
+                                type="text"
+                                value={formData.username || ''}
+                                onChange={e => onChange({ ...formData, username: e.target.value })}
+                                className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 focus:bg-white dark:bg-slate-800/50 dark:border-slate-700 dark:text-white transition-all rounded-none text-left text-sm font-bold"
+                                dir="ltr"
+                                placeholder="رقم الهاتف أو اسم مستخدم"
+                            />
+                        </div>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">كلمة المرور</label>
+                        <div className="relative group">
+                            <Save className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500 transition-colors" size={16} />
+                            <input
+                                required={!isEdit}
+                                type="password"
+                                value={formData.password || ''}
+                                onChange={e => onChange({ ...formData, password: e.target.value })}
+                                className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 focus:bg-white dark:bg-slate-800/50 dark:border-slate-700 dark:text-white transition-all rounded-none text-left text-sm font-bold"
+                                dir="ltr"
+                                placeholder={isEdit ? "اتركها فارغة إذا لا تريد التغيير" : "******"}
                             />
                         </div>
                     </div>
