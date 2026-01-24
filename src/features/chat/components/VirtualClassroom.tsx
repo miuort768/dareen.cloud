@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Monitor, Mic, MicOff, Edit2, Eraser, Volume2, Maximize2, Minimize2, Move, RefreshCw, Settings, Info } from 'lucide-react';
+import { X, Monitor, Mic, MicOff, Maximize2, Minimize2, Move, RefreshCw } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 
 interface VirtualClassroomProps {
@@ -9,18 +9,15 @@ interface VirtualClassroomProps {
     isTeacher: boolean;
 }
 
-export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, userName, onClose, isTeacher }) => {
+export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, onClose, isTeacher }) => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const remoteAudioContainerRef = useRef<HTMLDivElement>(null);
     const peerConnections = useRef<Map<string, RTCPeerConnection>>(new Map());
     const localStream = useRef<MediaStream | null>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const [isMuted, setIsMuted] = useState(false);
     const [isSharing, setIsSharing] = useState(false);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [drawMode, setDrawMode] = useState<'pen' | 'eraser' | 'cursor'>('cursor');
     const [hasRemoteStream, setHasRemoteStream] = useState(false);
     const [micStatus, setMicStatus] = useState<'requesting' | 'ready' | 'denied' | 'error'>('requesting');
     const [debugInfo, setDebugInfo] = useState<string>('');
@@ -55,7 +52,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                 await pc.setLocalDescription(offer);
                 socket.emit('offer', { to: targetId, offer, roomID });
                 addLog(`Offer sent to ${targetId}`);
-            } catch (e) {
+            } catch {
                 addLog(`Offer failed for ${targetId}`);
             }
         }
@@ -138,7 +135,7 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
                 if (remoteVideoRef.current) {
                     remoteVideoRef.current.srcObject = event.streams[0];
                     setHasRemoteStream(true);
-                    remoteVideoRef.current.play().catch(e => addLog("Remote video play blocked"));
+                    remoteVideoRef.current.play().catch(() => addLog("Remote video play blocked"));
                 }
             } else if (event.track.kind === 'audio') {
                 let audioElem = document.getElementById(`audio_${targetSocketId}`) as HTMLAudioElement;
@@ -194,9 +191,8 @@ export const VirtualClassroom: React.FC<VirtualClassroomProps> = ({ roomID, user
             setIsSharing(true);
             socketService.getSocket().emit('start_class', { roomID });
             renegotiateAll();
-        } catch (err) {
+        } catch {
             addLog("Screen share cancelled/failed.");
-            console.error(err);
         }
     };
 
