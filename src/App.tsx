@@ -4,6 +4,7 @@ import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
+import { Settings } from './pages/Settings';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { ParentStudents } from './pages/ParentStudents';
 import { ParentAnnouncements } from './pages/ParentAnnouncements';
@@ -104,6 +105,7 @@ function App() {
         <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
         <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
         <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
+        <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
 
         {/* New Announcements Admin Route */}
         <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
