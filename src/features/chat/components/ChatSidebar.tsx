@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Search, Plus, Trash2, Edit2, LogOut, MessageCircle, Bell, BellOff } from 'lucide-react';
+import { Search, Plus, Trash2, Edit2, LogOut, MessageCircle, Bell, BellOff, Settings } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
-import type { Conversation } from '../../../types/chat.types';
+import type { Conversation, ChatView } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
 interface ChatSidebarProps {
@@ -20,6 +20,8 @@ interface ChatSidebarProps {
     logout: () => void;
     requestDesktopNotifications: () => Promise<boolean>;
     typingUsers: any[];
+    view: ChatView;
+    setView: (view: ChatView) => void;
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -34,7 +36,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setIsEditingGroup,
     logout,
     requestDesktopNotifications,
-    typingUsers
+    typingUsers,
+    view,
+    setView
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -88,6 +92,18 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         >
                             {isNotificationGranted ? <Bell size={20} /> : <BellOff size={20} />}
                         </button>
+                        {currentUser?.role === 'admin' && (
+                            <button
+                                onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
+                                className={cn(
+                                    "w-10 h-10 rounded-none flex items-center justify-center transition-all",
+                                    view === 'management' ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-400 hover:text-primary-600"
+                                )}
+                                title={view === 'management' ? "العودة للدردشة" : "إدارة المستخدمين"}
+                            >
+                                <Settings size={20} />
+                            </button>
+                        )}
                         <button
                             onClick={() => {
                                 logout();

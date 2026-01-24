@@ -37,7 +37,7 @@ export const Chat = () => {
 
     // UI State
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
-    const [view] = useState<ChatView>('chat');
+    const [view, setView] = useState<ChatView>('chat');
     const [newMessage, setNewMessage] = useState('');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -275,6 +275,8 @@ export const Chat = () => {
                 logout={logout}
                 requestDesktopNotifications={requestDesktopNotifications}
                 typingUsers={typingUsers}
+                view={view}
+                setView={setView}
             />
 
             {view === 'chat' ? (
