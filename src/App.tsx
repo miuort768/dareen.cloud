@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
+import { Home } from './pages/public/Home';
 import { Dashboard } from './pages/Dashboard';
 import { Settings } from './pages/Settings';
 import { ParentDashboard } from './pages/ParentDashboard';
@@ -76,6 +77,8 @@ function App() {
 
   return (
     <Routes>
+      {/* Public Routes */}
+      <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
 
       <Route

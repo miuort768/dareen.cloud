@@ -179,7 +179,7 @@ export const Login = () => {
 
                 <div className="mt-4">
                     <Link
-                        to="/"
+                        to="/home"
                         className="flex items-center justify-center gap-2 text-blue-600 hover:text-blue-700 font-bold transition-all group py-2"
                     >
                         <span>العودة للرئيسية</span>
