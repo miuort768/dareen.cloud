@@ -37,7 +37,7 @@ export const Announcements = () => {
     const [formData, setFormData] = useState({
         title: '',
         content: '',
-        type: 'general' as const,
+        type: 'general',
         isActive: true
     });
 

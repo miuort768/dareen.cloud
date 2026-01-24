@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
-import { Dashboard } from './pages/Dashboard';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { ParentStudents } from './pages/ParentStudents';
 import { ParentAnnouncements } from './pages/ParentAnnouncements';
