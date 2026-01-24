@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Quote, ChevronRight, ChevronLeft as LucideChevronLeft, Clock, Mic, ClipboardCheck } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, Sparkles } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { useApp } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
@@ -12,7 +12,6 @@ export const Home = () => {
     const { adminPhone } = useSettings();
     const { isAuthenticated, currentUser } = useApp();
     const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -63,15 +62,7 @@ export const Home = () => {
         }
     ];
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % reviews.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, [reviews.length]);
 
-    const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative overflow-x-hidden">
