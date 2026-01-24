@@ -9,6 +9,7 @@ export interface Student {
 
 export interface Enrollment {
     teacher: string;
+    teacherId?: string;
     subject: string;
     curr: string;
     sessionsTotal: number;

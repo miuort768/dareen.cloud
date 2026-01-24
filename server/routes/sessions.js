@@ -90,17 +90,33 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
 
                 // Handle sessionsUsed counting logic for update
                 if (existing.status !== 'completed' && body.status === 'completed') {
-                    await tx.run(
+                    const enrollmentUpdate = await tx.run(
                         `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                        [body.studentId, body.teacherName, body.teacherId || null, body.subject]
+                         WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
+                        [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
                     );
+
+                    if (enrollmentUpdate.changes === 0) {
+                        await tx.run(
+                            `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
+                             WHERE studentId = ? AND subject = ? AND teacher = ?`,
+                            [body.studentId, body.subject, body.teacherName]
+                        );
+                    }
                 } else if (existing.status === 'completed' && body.status !== 'completed') {
-                    await tx.run(
+                    const enrollmentUpdate = await tx.run(
                         `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                         WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                        [body.studentId, body.teacherName, body.teacherId || null, body.subject]
+                         WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
+                        [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
                     );
+
+                    if (enrollmentUpdate.changes === 0) {
+                        await tx.run(
+                            `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
+                             WHERE studentId = ? AND subject = ? AND teacher = ?`,
+                            [body.studentId, body.subject, body.teacherName]
+                        );
+                    }
                 }
 
                 return tx.get('SELECT * FROM sessions WHERE id = ?', [existing.id]);
@@ -132,11 +148,20 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
             );
 
             if (body.status === 'completed') {
-                await tx.run(
+                const enrollmentUpdate = await tx.run(
                     `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                     WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                    [body.studentId, body.teacherName, body.teacherId || null, body.subject]
+                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
+                    [body.studentId, body.subject, body.teacherId || 'NEVER_MATCH', body.teacherName]
                 );
+
+                if (enrollmentUpdate.changes === 0) {
+                    // Secondary attempt: match by teacher name if teacherId didn't match
+                    await tx.run(
+                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
+                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
+                        [body.studentId, body.subject, body.teacherName]
+                    );
+                }
             }
             return tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
         });
@@ -174,20 +199,36 @@ router.patch('/:id', validate(updateSessionSchema), async (req, res) => {
 
             // 1. If it was completed, decrement the OLD bucket
             if (wasCompleted) {
-                await tx.run(
+                const enrollmentUpdate = await tx.run(
                     `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
-                     WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                    [oldSession.studentId, oldSession.teacherName, oldSession.teacherId || null, oldSession.subject]
+                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
+                    [oldSession.studentId, oldSession.subject, oldSession.teacherId || 'NEVER_MATCH', oldSession.teacherName]
                 );
+
+                if (enrollmentUpdate.changes === 0) {
+                    await tx.run(
+                        `UPDATE enrollments SET sessionsUsed = MAX(0, sessionsUsed - 1) 
+                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
+                        [oldSession.studentId, oldSession.subject, oldSession.teacherName]
+                    );
+                }
             }
 
             // 2. If it is NOW completed, increment the NEW bucket
             if (isCompleted) {
-                await tx.run(
+                const enrollmentUpdate = await tx.run(
                     `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
-                     WHERE studentId = ? AND (teacher = ? OR teacherId = ?) AND subject = ?`,
-                    [newSession.studentId, newSession.teacherName, newSession.teacherId || null, newSession.subject]
+                     WHERE studentId = ? AND subject = ? AND (teacherId = ? OR (teacherId IS NULL AND teacher = ?))`,
+                    [newSession.studentId, newSession.subject, newSession.teacherId || 'NEVER_MATCH', newSession.teacherName]
                 );
+
+                if (enrollmentUpdate.changes === 0) {
+                    await tx.run(
+                        `UPDATE enrollments SET sessionsUsed = sessionsUsed + 1 
+                         WHERE studentId = ? AND subject = ? AND teacher = ?`,
+                        [newSession.studentId, newSession.subject, newSession.teacherName]
+                    );
+                }
             }
 
             return newSession;

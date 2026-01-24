@@ -12,6 +12,7 @@ export interface Session {
     studentId: string;
     studentName: string;
     teacherName: string;
+    teacherId?: string;
     subject: string;
     time: string;
     status: 'scheduled' | 'completed' | 'cancelled';
@@ -23,6 +24,7 @@ export interface Session {
 
 export interface Enrollment {
     teacher: string;
+    teacherId?: string;
     subject: string;
     sessionsTotal: number;
     sessionsUsed: number;

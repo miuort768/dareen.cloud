@@ -60,6 +60,7 @@ export const Attendance = () => {
             studentId: student.id,
             studentName: student.name,
             teacherName: enrollment.teacher,
+            teacherId: enrollment.teacherId,
             subject: enrollment.subject,
             date: logDate,
             time: '12:00 م',
