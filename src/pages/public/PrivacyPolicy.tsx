@@ -40,7 +40,7 @@ export const PrivacyPolicy = () => {
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-blue-50 rounded-none flex items-center justify-center shrink-0">
                                 <FileText className="w-6 h-6 text-blue-600" />
@@ -55,7 +55,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Data Collection */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-emerald-50 rounded-none flex items-center justify-center shrink-0">
                                 <Database className="w-6 h-6 text-emerald-600" />
@@ -96,7 +96,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Data Usage */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-indigo-50 rounded-none flex items-center justify-center shrink-0">
                                 <Eye className="w-6 h-6 text-indigo-600" />
@@ -120,7 +120,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Data Protection */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-red-50 rounded-none flex items-center justify-center shrink-0">
                                 <Lock className="w-6 h-6 text-red-600" />
@@ -142,7 +142,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Data Sharing */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-amber-50 rounded-none flex items-center justify-center shrink-0">
                                 <UserCheck className="w-6 h-6 text-amber-600" />
@@ -163,7 +163,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* User Rights */}
-                    <div className="mb-8">
+                    <div className="mb-4">
                         <div className="bg-gray-50 border border-gray-100 p-8 rounded-none">
                             <h2 className="text-2xl font-black text-gray-900 mb-4">حقوقك</h2>
                             <div className="space-y-2 text-gray-600">
@@ -181,7 +181,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Updates */}
-                    <div className="mb-24">
+                    <div className="mb-4">
                         <h2 className="text-2xl font-black text-gray-900 mb-4">التحديثات على هذه السياسة</h2>
                         <p className="text-gray-600 leading-relaxed">
                             قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإخطارك بأي تغييرات جوهرية عن طريق نشر السياسة الجديدة على هذه الصفحة وتحديث تاريخ "آخر تحديث" أدناه.
@@ -192,7 +192,7 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-16 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-16 relative overflow-hidden group rounded-2xl">
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-8 relative overflow-hidden group rounded-2xl">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
