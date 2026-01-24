@@ -125,23 +125,38 @@ export const Announcements = () => {
 
     return (
         <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">إدارة الإعلانات والتعميمات</h1>
-                    <p className="text-sm text-gray-500 font-bold dark:text-gray-400">نشر رسائل هامة لأولياء الأمور والمعلمات</p>
-                </div>
+            {/* Premium Header with Icon */}
+            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500">
+                {/* Background Decorative Elements */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
 
-                <button
-                    onClick={() => {
-                        setEditingAnnouncement(null);
-                        setFormData({ title: '', content: '', type: 'general', isActive: true });
-                        setIsModalOpen(true);
-                    }}
-                    className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white font-black text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-lg active:scale-95"
-                >
-                    <Plus size={18} />
-                    إضافة إعلان جديد
-                </button>
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
+                    <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
+                            <Megaphone size={36} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">إدارة الإعلانات والتعميمات</h1>
+                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
+                                <Bell size={14} className="text-white" />
+                                نشر رسائل هامة لأولياء الأمور والمعلمات
+                            </p>
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={() => {
+                            setEditingAnnouncement(null);
+                            setFormData({ title: '', content: '', type: 'general', isActive: true });
+                            setIsModalOpen(true);
+                        }}
+                        className="bg-white text-primary-700 px-8 py-3 flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14 text-xs uppercase tracking-widest"
+                    >
+                        <Plus size={20} />
+                        <span>إضافة إعلان جديد</span>
+                    </button>
+                </div>
             </div>
 
             {/* Announcements List */}
