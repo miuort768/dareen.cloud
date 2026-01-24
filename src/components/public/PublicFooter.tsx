@@ -6,7 +6,7 @@ export const PublicFooter = () => {
     const { adminPhone } = useSettings();
 
     return (
-        <footer className="relative bg-gray-900 text-white overflow-hidden pt-16 pb-10">
+        <footer className="relative bg-gray-900 text-white overflow-hidden pt-8 pb-6 md:pt-16 md:pb-10">
             {/* Decorative Overlays */}
             <div className="absolute inset-0 pointer-events-none opacity-10">
                 <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-gold rounded-full blur-[100px]"></div>
@@ -119,7 +119,7 @@ export const PublicFooter = () => {
                 </div>
 
                 {/* Bottom */}
-                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="border-t border-white/10 pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-6">
                     <div className="text-center md:text-right">
                         <p className="text-gray-500 text-sm">
                             &copy; {new Date().getFullYear()} <span className="text-white font-medium">معهد دارين</span>. جميع الحقوق محفوظة.
