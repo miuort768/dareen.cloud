@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { CalendarCheck, Clock, CheckCircle2, XCircle, Search, Calendar, User, BookOpen } from 'lucide-react';
+import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
@@ -88,7 +88,7 @@ export const Agenda = () => {
             item.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.teacherName.toLowerCase().includes(searchTerm.toLowerCase())
-        ).sort((a, b) => {
+        ).sort(() => {
             // Sort by time?
             return 0;
         });
