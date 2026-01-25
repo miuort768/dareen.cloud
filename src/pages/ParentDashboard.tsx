@@ -76,9 +76,12 @@ export const ParentDashboard = () => {
         });
 
         const totalAttendance = displayData.sessions.filter(s => s.status === 'completed').length;
+        // In the context of parent dashboard, cancelled usually means absent if it was a past session
         const totalAbsence = displayData.sessions.filter(s => s.status === 'cancelled').length;
-        const attendanceRate = (totalAttendance + totalAbsence) > 0
-            ? Math.round((totalAttendance / (totalAttendance + totalAbsence)) * 100)
+
+        const totalRecorded = totalAttendance + totalAbsence;
+        const attendanceRate = totalRecorded > 0
+            ? Math.round((totalAttendance / totalRecorded) * 100)
             : 0;
 
         return {
