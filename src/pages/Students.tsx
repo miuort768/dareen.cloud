@@ -37,7 +37,7 @@ export const Students = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { students, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents(searchTerm);
+    const { students, isLoading: loadingStudents, createStudent, createStudentAsync, updateStudent, deleteStudent, deleteAllStudents } = useStudents(searchTerm);
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
 
@@ -232,7 +232,9 @@ export const Students = () => {
                         };
 
                         if (studentData.name) {
-                            await createStudent(studentData as Omit<Student, 'id'>);
+                            await createStudentAsync(studentData as Omit<Student, 'id'>);
+                            // Add small delay to prevent SQLite contention
+                            await new Promise(resolve => setTimeout(resolve, 50));
                             success++;
                         }
                     } catch (err) {

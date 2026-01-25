@@ -56,6 +56,7 @@ export const useStudents = (searchTerm?: string) => {
         students: studentsQuery.data || [],
         isLoading: studentsQuery.isLoading,
         createStudent: createMutation.mutate,
+        createStudentAsync: createMutation.mutateAsync,
         updateStudent: updateMutation.mutate,
         deleteStudent: deleteMutation.mutate,
         deleteAllStudents: deleteAllMutation.mutate

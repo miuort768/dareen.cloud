@@ -232,6 +232,8 @@ export const Teachers = () => {
 
                         if (teacherData.name) {
                             await createTeacherAsync(teacherData as Omit<Teacher, 'id'>);
+                            // Add small delay to prevent SQLite contention
+                            await new Promise(resolve => setTimeout(resolve, 50));
                             successCount++;
                         }
                     } catch (err) {
