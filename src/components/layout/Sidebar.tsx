@@ -20,6 +20,7 @@ import {
     Home,
     Megaphone,
     CalendarCheck,
+    MessageSquare,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -62,7 +63,7 @@ export const Sidebar = () => {
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student-invoices', icon: DollarSign },
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
-        { name: 'الدردشة', href: '/chat', id: 'chat', icon: MessageCircle },
+        { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
     ];
