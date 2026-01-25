@@ -116,36 +116,55 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                     </div>
 
                     <div className="mb-8">
-                        <table className="w-full">
+                        <table className="w-full table-fixed border-collapse">
                             <thead>
                                 <tr className="border-b-2 border-gray-900 dark:border-white">
-                                    <th className="py-2 text-right text-[10px] font-black uppercase">التفاصيل</th>
-                                    {!hidePricing && <th className="py-2 text-left text-[10px] font-black uppercase">المبلغ</th>}
+                                    <th className="py-2 text-right text-[10px] font-black uppercase w-1/4">التاريخ</th>
+                                    <th className="py-2 text-right text-[10px] font-black uppercase w-1/4">المعلمة</th>
+                                    <th className="py-2 text-right text-[10px] font-black uppercase w-1/4">المادة</th>
+                                    {!hidePricing && <th className="py-2 text-left text-[10px] font-black uppercase w-1/4">الحساب</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                                 {invoice.items && invoice.items.length > 0 ? (
-                                    invoice.items.map((item, idx) => (
-                                        <tr key={idx}>
-                                            <td className="py-3 text-xs font-bold text-gray-700 dark:text-gray-300">
-                                                {item.description}
-                                                {item.date && (
-                                                    <span className="block text-[10px] text-gray-400 font-mono mt-0.5" dir="ltr">
-                                                        {new Date(item.date).toLocaleDateString('ar-EG')}
-                                                    </span>
-                                                )}
-                                            </td>
-                                            {!hidePricing && (
-                                                <td className="py-3 text-left text-xs font-black font-mono text-gray-900 dark:text-white">
-                                                    {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
+                                    invoice.items.map((item, idx) => {
+                                        // item.description format: "Math - TeacherName (Status)"
+                                        const parts = item.description.split(' - ');
+                                        const subject = parts[0] || '-';
+                                        const teacherWithStatus = parts[1] || '';
+                                        const teacherName = teacherWithStatus.split(' (')[0] || '-';
+                                        const status = teacherWithStatus.includes('حضور') ? 'حضور' : teacherWithStatus.includes('غياب') ? 'غياب' : '-';
+
+                                        return (
+                                            <tr key={idx}>
+                                                <td className="py-3 text-xs font-mono font-bold text-gray-700 dark:text-gray-300" dir="ltr">
+                                                    {item.date ? new Date(item.date).toLocaleDateString('ar-EG') : '-'}
                                                 </td>
-                                            )}
-                                        </tr>
-                                    ))
+                                                <td className="py-3 text-xs font-bold text-gray-700 dark:text-gray-300">
+                                                    {teacherName}
+                                                </td>
+                                                <td className="py-3 text-xs font-bold text-gray-700 dark:text-gray-300">
+                                                    {subject}
+                                                    {status !== '-' && (
+                                                        <span className={cn(
+                                                            "mr-2 px-1.5 py-0.5 text-[9px] rounded-sm",
+                                                            status === 'حضور' ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+                                                        )}>
+                                                            {status}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                                {!hidePricing && (
+                                                    <td className="py-3 text-left text-xs font-black font-mono text-gray-900 dark:text-white">
+                                                        {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
+                                                    </td>
+                                                )}
+                                            </tr>
+                                        );
+                                    })
                                 ) : (
                                     <tr>
-                                        <td className="py-4 text-sm font-bold text-gray-700 dark:text-gray-300">{invoice.description}</td>
-                                        {!hidePricing && <td className="py-4 text-left text-sm font-black font-mono text-gray-900 dark:text-white">{invoice.amount.toLocaleString()} ج.م</td>}
+                                        <td colSpan={4} className="py-4 text-center text-sm font-bold text-gray-500">لا توجد تفاصيل للحصص</td>
                                     </tr>
                                 )}
                             </tbody>
