@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Bell, X, Download, Smartphone, Monitor, ShieldCheck } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -8,10 +7,9 @@ export const InstallPWA = () => {
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isIOS, setIsIOS] = useState(false);
-    const location = useLocation();
 
-    // Only show on specific public pages
-    const isPublicPage = ['/', '/courses', '/about'].includes(location.pathname);
+    // Always show on all pages as requested
+    const isPublicPage = true;
 
     useEffect(() => {
         // Detect iOS
