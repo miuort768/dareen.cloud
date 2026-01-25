@@ -66,7 +66,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             <MessageCircle size={22} />
                         </div>
                         <div>
-                            <h1 className="text-xl font-black text-[#111b21] dark:text-[#e9edef] tracking-tight">محادثات دارين</h1>
+                            {currentUser?.role !== 'admin' && (
+                                <h1 className="text-xl font-black text-[#111b21] dark:text-[#e9edef] tracking-tight">محادثات دارين</h1>
+                            )}
                             <div className="flex items-center gap-1.5 leading-none">
                                 <div className={cn(
                                     "w-1.5 h-1.5 rounded-full animate-pulse",
