@@ -56,6 +56,7 @@ export const Sidebar = () => {
         { name: 'المالية', href: '/finance', id: 'finance', icon: Wallet },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
         { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
+        { name: 'أجندة اليوم', href: '/agenda', id: 'schedule', icon: ListTodo },
         { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student-invoices', icon: DollarSign },
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
