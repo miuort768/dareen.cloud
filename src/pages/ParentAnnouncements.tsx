@@ -147,10 +147,10 @@ export const ParentAnnouncements = () => {
                                     </div>
                                 </div>
 
-                                <h3 className="text-lg font-black text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 transition-colors leading-tight">
+                                <h3 className="text-sm md:text-xl font-black text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 transition-colors leading-tight">
                                     {ann.title}
                                 </h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400 font-bold leading-relaxed whitespace-pre-wrap">
+                                <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-bold leading-relaxed whitespace-pre-wrap">
                                     {ann.content}
                                 </p>
                             </div>
