@@ -89,7 +89,7 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                         </div>
                     )}
 
-                    <Link to="/agenda" className="group relative flex items-center gap-4 bg-white/5 hover:bg-white/10 backdrop-blur-xl px-5 py-3 border border-white/10 rounded-none transition-all active:scale-95 shadow-2xl overflow-hidden w-full sm:w-40">
+                    <Link to="/appointments" className="group relative flex items-center gap-4 bg-white/5 hover:bg-white/10 backdrop-blur-xl px-5 py-3 border border-white/10 rounded-none transition-all active:scale-95 shadow-2xl overflow-hidden w-full sm:w-40">
                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <div className="relative p-2 bg-white/10 text-white rounded-none group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
                             <CalendarCheck size={20} />

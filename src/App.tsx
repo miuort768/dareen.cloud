@@ -22,6 +22,7 @@ import { Tasks } from './pages/Tasks';
 import { Chat } from './pages/Chat';
 import { Announcements } from './pages/Announcements';
 import { Agenda } from './pages/Agenda';
+import { Appointments } from './pages/Appointments';
 import { About } from './pages/public/About';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
@@ -114,6 +115,7 @@ function App() {
         <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
         <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
         <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
+        <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
         <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
         <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
         <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
