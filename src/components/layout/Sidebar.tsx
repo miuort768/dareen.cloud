@@ -18,7 +18,9 @@ import {
     Presentation,
     MessageCircle,
     Home,
-    Megaphone
+    Megaphone,
+    Bell,
+    CalendarCheck,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
