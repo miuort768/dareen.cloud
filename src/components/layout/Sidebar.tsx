@@ -19,7 +19,6 @@ import {
     MessageCircle,
     Home,
     Megaphone,
-    Bell,
     CalendarCheck,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
