@@ -118,8 +118,8 @@ router.post('/restore', async (req, res) => {
             // 2. Teachers & Parents (independent entities)
             if (data.teachers) {
                 for (const t of data.teachers) {
-                    await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.name, t.phone1 || '', t.phone2 || '', t.subject || '', t.price || 0, t.email || '', t.username || null, t.password || null]);
+                    await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [t.id, t.name, t.phone1 || '', t.phone2 || '', t.subject || '', t.price || 0, t.email || '', t.username || null, t.password || null, t.created_at || new Date().toISOString()]);
                 }
             }
 
@@ -145,11 +145,11 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            // 4. Sessions
+            // 4. Sessions (Added all columns like teacherPrice)
             if (data.sessions) {
                 for (const s of data.sessions) {
-                    await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [s.id, s.studentId, s.studentName, s.teacherId || null, s.teacherName, s.subject, s.date, s.day || '', s.time, s.price || 0, s.status]);
+                    await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [s.id, s.studentId, s.studentName, s.teacherId || null, s.teacherName, s.subject, s.date, s.day || '', s.time, s.price || 0, s.teacherPrice || 0, s.status, s.created_at || new Date().toISOString()]);
                 }
             }
 
@@ -170,8 +170,8 @@ router.post('/restore', async (req, res) => {
 
             if (data.manualTransactions) {
                 for (const t of data.manualTransactions) {
-                    await tx.run(`INSERT INTO manual_transactions (id, type, category, amount, date, description, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.type, t.category, t.amount, t.date, t.description, t.status]);
+                    await tx.run(`INSERT INTO manual_transactions (id, type, category, amount, date, description, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [t.id, t.type, t.category, t.amount, t.date, t.description, t.status, t.created_at || new Date().toISOString()]);
                 }
             }
 
@@ -204,8 +204,6 @@ router.post('/restore', async (req, res) => {
 
             if (data.notifications) {
                 for (const n of data.notifications) {
-                    // Check if notification table has conversationId column (backward compat)
-                    // Assuming columns: id, senderId, receiverId, senderName, title, message, type, time, read, conversationId
                     await tx.run(`INSERT OR IGNORE INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [n.id, n.senderId || 'system', n.receiverId, n.senderName || 'System', n.title, n.message, n.type, n.time, n.read, n.conversationId || null]);
                 }
@@ -240,9 +238,9 @@ router.post('/restore', async (req, res) => {
             }
         });
 
-        res.json({ message: 'Restore successful, system updated.' });
+        res.json({ message: 'Restore successful, system completely updated.' });
     } catch (err) {
-        console.error("Restore Error:", err);
+        console.error("CRITICAL RESTORE ERROR:", err);
         res.status(500).json({ error: 'Restore failed: ' + err.message });
     }
 });

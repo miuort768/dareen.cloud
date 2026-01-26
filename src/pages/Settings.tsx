@@ -258,11 +258,13 @@ export const Settings = () => {
 
         const reader = new FileReader();
         reader.onload = async (event) => {
+            setIsSaving(true); // Reuse isSaving for import too
             try {
                 const backupData = JSON.parse(event.target?.result as string);
 
                 // Restore database data if available using settingsService
                 if (backupData.data) {
+                    showNotification('جاري استعادة قواعد البيانات... يرجى الانتظار');
                     await settingsService.restoreBackup(backupData.data);
                 }
 
@@ -272,11 +274,13 @@ export const Settings = () => {
 
                     if (settings.academy) {
                         setLocalAcademyName(settings.academy.name);
+                        await setAcademyName(settings.academy.name);
                     }
 
                     if (settings.user) {
                         setLocalName(settings.user.name);
                         setLocalUsername(settings.user.username);
+                        // No password restore for security
                     }
 
                     if (settings.appSettings) {
@@ -293,10 +297,13 @@ export const Settings = () => {
                 }
 
                 showNotification('تم استيراد النسخة الاحتياطية بنجاح! سيتم إعادة تحميل الصفحة...');
-                setTimeout(() => window.location.reload(), 2000);
-            } catch (err) {
+
+                // Final save attempt of context state to be extra safe
+                setTimeout(() => window.location.reload(), 1500);
+            } catch (err: any) {
                 console.error('Import error:', err);
-                alert('حدث خطأ أثناء قراءة الملف. تأكد من صحة الملف.');
+                alert('حدث خطأ أثناء استيراد الملف: ' + (err.response?.data?.error || err.message));
+                setIsSaving(false);
             }
         };
         reader.readAsText(file);
