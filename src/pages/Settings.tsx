@@ -127,8 +127,7 @@ export const Settings = () => {
             // Save Global Context Data
             await Promise.all([
                 setAcademyName(localAcademyName),
-                setAdminPhone(localAdminPhone),
-                setMaintenanceMode(localMaintenanceMode)
+                setAdminPhone(localAdminPhone)
             ]);
 
             const updates: { name?: string; username: string; password?: string } = {
@@ -503,7 +502,17 @@ export const Settings = () => {
                                             type="checkbox"
                                             className="sr-only peer"
                                             checked={localMaintenanceMode}
-                                            onChange={(e) => setLocalMaintenanceMode(e.target.checked)}
+                                            onChange={async (e) => {
+                                                const val = e.target.checked;
+                                                setLocalMaintenanceMode(val);
+                                                try {
+                                                    await setMaintenanceMode(val);
+                                                    showNotification(val ? 'تم تفعيل وضع الصيانة بنجاح' : 'تم إيقاف وضع الصيانة');
+                                                } catch (err) {
+                                                    setLocalMaintenanceMode(!val);
+                                                    alert('فشل في تغيير وضع الصيانة');
+                                                }
+                                            }}
                                         />
                                         <div className={cn(
                                             "w-11 h-6 rounded-full transition-colors duration-300",
