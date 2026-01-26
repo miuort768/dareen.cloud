@@ -266,6 +266,47 @@ export const Teachers = () => {
         e.target.value = '';
     };
 
+    const handleDeleteAll = async () => {
+        if (!window.confirm('⚠️ تحذير: هل أنت متأكد من حذف جميع المعلمات؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+            return;
+        }
+
+        if (!window.confirm('⚠️ تأكيد نهائي: سيتم حذف جميع بيانات المعلمات نهائياً. هل تريد المتابعة؟')) {
+            return;
+        }
+
+        try {
+            showNotification('جاري حذف جميع المعلمات...', 'info');
+
+            // Delete all teachers one by one
+            let successCount = 0;
+            let failCount = 0;
+
+            for (const teacher of teachers) {
+                try {
+                    await api.delete(`/teachers/${teacher.id}`);
+                    successCount++;
+                    // Small delay to prevent overwhelming the server
+                    await new Promise(resolve => setTimeout(resolve, 50));
+                } catch (err) {
+                    console.error('Error deleting teacher:', teacher.id, err);
+                    failCount++;
+                }
+            }
+
+            queryClient.invalidateQueries({ queryKey: ['teachers'] });
+
+            if (failCount === 0) {
+                showNotification(`تم حذف ${successCount} معلمة بنجاح`, 'success');
+            } else {
+                showNotification(`تم حذف ${successCount} معلمة، وفشل حذف ${failCount}`, 'warning');
+            }
+        } catch (error) {
+            console.error('Delete all error:', error);
+            showNotification('حدث خطأ أثناء حذف المعلمات', 'error');
+        }
+    };
+
     const unenrollMutation = useMutation({
         mutationFn: async ({ student, teacherName }: { student: Student, teacherName: string }) => {
             const updatedEnrollments = student.enrollments.filter((en: Enrollment) => en.teacher !== teacherName);
@@ -328,6 +369,7 @@ export const Teachers = () => {
                 }}
                 onImport={() => fileInputRef.current?.click()}
                 onExport={handleExport}
+                onDeleteAll={handleDeleteAll}
             />
 
             <input

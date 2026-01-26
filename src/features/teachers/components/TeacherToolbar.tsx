@@ -1,4 +1,4 @@
-import { Search, Plus, X, Upload, Download } from 'lucide-react';
+import { Search, Plus, X, Upload, Download, Trash2 } from 'lucide-react';
 
 interface TeacherToolbarProps {
     searchTerm: string;
@@ -7,9 +7,10 @@ interface TeacherToolbarProps {
     onToggleAddForm: () => void;
     onImport: () => void;
     onExport: () => void;
+    onDeleteAll: () => void;
 }
 
-export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExport }: TeacherToolbarProps) => {
+export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExport, onDeleteAll }: TeacherToolbarProps) => {
     return (
         <div className="bg-primary-50/50 p-4 border border-primary-100 dark:bg-gray-900 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="relative w-full md:max-w-md">
@@ -24,6 +25,13 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
             </div>
 
             <div className="flex items-center gap-3 w-full md:w-auto no-print">
+                <button
+                    onClick={onDeleteAll}
+                    title="حذف جميع المعلمات"
+                    className="bg-white text-red-600 border border-gray-200 px-3 py-2.5 font-bold hover:bg-red-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-red-400"
+                >
+                    <Trash2 size={18} />
+                </button>
                 <button
                     onClick={onExport}
                     className="bg-white text-gray-700 border border-gray-200 px-4 py-2.5 font-bold hover:bg-gray-50 flex items-center gap-2 rounded-none shadow-sm transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
