@@ -278,29 +278,11 @@ export const Teachers = () => {
         try {
             showNotification('جاري حذف جميع المعلمات...', 'info');
 
-            // Delete all teachers one by one
-            let successCount = 0;
-            let failCount = 0;
-
-            for (const teacher of teachers) {
-                try {
-                    await api.delete(`/teachers/${teacher.id}`);
-                    successCount++;
-                    // Small delay to prevent overwhelming the server
-                    await new Promise(resolve => setTimeout(resolve, 50));
-                } catch (err) {
-                    console.error('Error deleting teacher:', teacher.id, err);
-                    failCount++;
-                }
-            }
+            // Delete all teachers in one request (Admin only endpoint)
+            await api.delete('/teachers');
 
             queryClient.invalidateQueries({ queryKey: ['teachers'] });
-
-            if (failCount === 0) {
-                showNotification(`تم حذف ${successCount} معلمة بنجاح`, 'success');
-            } else {
-                showNotification(`تم حذف ${successCount} معلمة، وفشل حذف ${failCount}`, 'warning');
-            }
+            showNotification(`تم حذف جميع المعلمات بنجاح`, 'success');
         } catch (error) {
             console.error('Delete all error:', error);
             showNotification('حدث خطأ أثناء حذف المعلمات', 'error');

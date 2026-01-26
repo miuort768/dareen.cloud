@@ -7,13 +7,19 @@ const router = express.Router();
 // 1. Get notifications
 router.get('/', async (req, res) => {
     try {
-        const { receiverId } = req.query;
+        const userId = req.user.id;
+        const isAdmin = req.user.role === 'admin';
+
+        // Users can only see their own notifications, Admins can see all if they specify receiverId
         let query = 'SELECT * FROM notifications';
         const params = [];
 
-        if (receiverId) {
+        if (!isAdmin) {
             query += ' WHERE receiverId = ?';
-            params.push(receiverId);
+            params.push(userId);
+        } else if (req.query.receiverId) {
+            query += ' WHERE receiverId = ?';
+            params.push(req.query.receiverId);
         }
 
         query += ' ORDER BY time DESC';
@@ -35,9 +41,12 @@ router.post('/', async (req, res) => {
     const { v4: uuidv4 } = require('uuid');
     const id = body.id || uuidv4();
     try {
+        // Validation: senderId should ideally be current user or 'system'
+        const senderId = body.senderId || 'system';
+
         await req.db.run(
-            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, body.senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0]
+            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [id, senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0, body.conversationId || null]
         );
         const newItem = await req.db.get('SELECT * FROM notifications WHERE id = ?', [id]);
         if (newItem) {
@@ -54,6 +63,12 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const body = req.body;
     try {
+        // Security: Ensure notification belongs to user
+        const notif = await req.db.get('SELECT receiverId FROM notifications WHERE id = ?', [id]);
+        if (notif && notif.receiverId !== req.user.id && req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Unauthorized to update this notification' });
+        }
+
         await req.db.run(
             `UPDATE notifications SET read = ? WHERE id = ?`,
             [body.read ? 1 : 0, id]
@@ -72,6 +87,12 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        // Security check
+        const notif = await req.db.get('SELECT receiverId FROM notifications WHERE id = ?', [id]);
+        if (notif && notif.receiverId !== req.user.id && req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Unauthorized to delete this notification' });
+        }
+
         await req.db.run('DELETE FROM notifications WHERE id = ?', [id]);
         res.json({ message: 'Deleted' });
     } catch (err) {
@@ -81,14 +102,13 @@ router.delete('/:id', async (req, res) => {
 
 // 5. Delete all notifications (optional filter by receiver)
 router.delete('/', async (req, res) => {
-    const { receiverId } = req.query;
+    const userId = req.user.id;
+    const isAdmin = req.user.role === 'admin';
+    const targetReceiver = isAdmin ? (req.query.receiverId || userId) : userId;
+
     try {
-        if (receiverId) {
-            await req.db.run('DELETE FROM notifications WHERE receiverId = ?', [receiverId]);
-        } else {
-            await req.db.run('DELETE FROM notifications');
-        }
-        res.json({ message: 'Deleted all' });
+        await req.db.run('DELETE FROM notifications WHERE receiverId = ?', [targetReceiver]);
+        res.json({ message: 'Deleted notifications for user' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

@@ -8,8 +8,8 @@ const compression = require('compression');
 
 const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
+const helmet = require('helmet');
 
-// Route Imports
 const { authRouter } = require('./routes/auth');
 const { studentRouter } = require('./routes/students');
 const { teacherRouter } = require('./routes/teachers');
@@ -62,14 +62,18 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Deep Security Headers
-app.use((req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-    next();
-});
+// Production-Grade Security Headers with Helmet
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+            "img-src": ["'self'", "data:", "https:", "http:"],
+            "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+            "connect-src": ["'self'", "https:", "http:", "ws:", "wss:"]
+        }
+    },
+    crossOriginEmbedderPolicy: false
+}));
 
 // Performance Monitoring Middleware
 app.use((req, res, next) => {
@@ -83,7 +87,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '50mb' }));
 
 async function startServer() {
     try {
