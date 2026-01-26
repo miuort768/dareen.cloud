@@ -43,10 +43,10 @@ export const MaintenanceScreen = () => {
                         </div>
                         <p className="text-[10px] text-gray-400 font-bold">للتواصل العاجل</p>
                         <a
-                            href={`https://wa.me/${adminPhone}`}
+                            href={`https://wa.me/${adminPhone?.startsWith('01') ? '2' + adminPhone : adminPhone}`}
                             className="text-base md:text-lg font-black text-gray-900 dark:text-white hover:text-primary-600 transition-colors truncate w-full"
                         >
-                            {adminPhone}
+                            {adminPhone?.startsWith('01') ? '+2' + adminPhone : adminPhone}
                         </a>
                     </div>
                     <div className="bg-white dark:bg-gray-900 p-4 md:p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 md:gap-3 rounded-none">

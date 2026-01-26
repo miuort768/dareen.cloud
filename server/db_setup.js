@@ -429,7 +429,7 @@ async function setupDatabase() {
         console.log('Seeding default system settings...');
         const defaultSettings = [
             { key: 'academy_name', value: 'منصة دارين' },
-            { key: 'admin_phone', value: '01152001250' },
+            { key: 'admin_phone', value: '201152001250' },
             { key: 'theme_color', value: 'indigo' },
             { key: 'notifications_enabled', value: 'true' },
             { key: 'maintenance_mode', value: 'false' }
