@@ -12,7 +12,8 @@ router.get('/backup', async (req, res) => {
         const [
             students, teachers, parents, sessions, teacherInvoices,
             studentInvoices, manualTransactions, fixedExpenses,
-            tasks, completedSessions, dismissedNotifications, systemSettings, users
+            tasks, completedSessions, dismissedNotifications, systemSettings, users,
+            announcements, conversations, messages, notifications
         ] = await Promise.all([
             req.db.all('SELECT * FROM students'),
             req.db.all('SELECT * FROM teachers'),
@@ -26,7 +27,11 @@ router.get('/backup', async (req, res) => {
             req.db.all('SELECT * FROM completed_sessions'),
             req.db.all('SELECT * FROM dismissed_notifications'),
             req.db.all('SELECT * FROM system_settings'),
-            req.db.all('SELECT id, name, username, password, role, permissions FROM users')
+            req.db.all('SELECT id, name, username, password, role, permissions FROM users'),
+            req.db.all('SELECT * FROM announcements'),
+            req.db.all('SELECT * FROM conversations'),
+            req.db.all('SELECT * FROM messages'),
+            req.db.all('SELECT * FROM notifications')
         ]);
 
         const studentsWithEnrollments = await Promise.all(students.map(async (s) => {
@@ -35,7 +40,7 @@ router.get('/backup', async (req, res) => {
         }));
 
         const backup = {
-            version: '1.0',
+            version: '1.2', // Incremented version
             timestamp: new Date().toISOString(),
             data: {
                 students: studentsWithEnrollments,
@@ -49,8 +54,13 @@ router.get('/backup', async (req, res) => {
                 tasks,
                 completedSessions,
                 dismissedNotifications,
+                // Include active notifications too to preserve user state
+                notifications,
                 systemSettings,
-                users
+                users,
+                announcements,
+                conversations,
+                messages
             }
         };
 
@@ -67,13 +77,19 @@ router.post('/restore', async (req, res) => {
 
     try {
         await withTransaction(req.db, async (tx) => {
-            await tx.run('DELETE FROM enrollments');
+            // Delete existing data in reverse order of dependencies
+            await tx.run('DELETE FROM messages');
+            await tx.run('DELETE FROM conversations');
+            await tx.run('DELETE FROM announcements');
+            await tx.run('DELETE FROM enrollments'); // Depends on students/teachers
+            await tx.run('DELETE FROM student_invoices');
+            await tx.run('DELETE FROM sessions');
+
             await tx.run('DELETE FROM students');
             await tx.run('DELETE FROM teachers');
             await tx.run('DELETE FROM parents');
-            await tx.run('DELETE FROM sessions');
+
             await tx.run('DELETE FROM teacher_invoices');
-            await tx.run('DELETE FROM student_invoices');
             await tx.run('DELETE FROM notifications');
             await tx.run('DELETE FROM tasks');
             await tx.run('DELETE FROM manual_transactions');
@@ -81,35 +97,55 @@ router.post('/restore', async (req, res) => {
             await tx.run('DELETE FROM completed_sessions');
             await tx.run('DELETE FROM dismissed_notifications');
             await tx.run('DELETE FROM system_settings');
-            // We keep the primary 'admin' to avoid locking out, but clear others if they're about to be replaced
-            await tx.run("DELETE FROM users WHERE username != 'admin'");
 
-            if (data.students) {
-                for (const s of data.students) {
-                    await tx.run(`INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [s.id, s.name, s.grade, s.parentPhone, s.studentPhone || '', s.curriculum || '', s.notes || '', s.sessionPrice || 0]);
-                    if (s.enrollments) {
-                        for (const e of s.enrollments) {
-                            await tx.run(`INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                                [s.id, e.teacher, e.teacherId || null, e.subject, e.curr || '', e.sessionsTotal || 0, e.sessionsUsed || 0, JSON.stringify(e.schedule || [])]);
-                        }
-                    }
+            // We keep the primary 'admin' to avoid locking out, but clear others
+            // Only if we are restoring users, otherwise keep existing
+            if (data.users && data.users.length > 0) {
+                await tx.run("DELETE FROM users WHERE username != 'admin'");
+            }
+
+            // --- RESTORE PROCESS ---
+
+            // 1. Users first (as other tables might refer to them)
+            if (data.users) {
+                for (const u of data.users) {
+                    if (u.username === 'admin') continue;
+                    await tx.run(`INSERT OR REPLACE INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions)]);
                 }
             }
 
+            // 2. Teachers & Parents (independent entities)
             if (data.teachers) {
                 for (const t of data.teachers) {
                     await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [t.id, t.name, t.phone1, t.phone2 || '', t.subject, t.price || 0, t.email || '', t.username || null, t.password || null]);
+                        [t.id, t.name, t.phone1 || '', t.phone2 || '', t.subject || '', t.price || 0, t.email || '', t.username || null, t.password || null]);
                 }
             }
 
             if (data.parents) {
                 for (const p of data.parents) {
-                    await tx.run(`INSERT INTO parents (id, name, phone, email) VALUES (?, ?, ?, ?)`, [p.id, p.name, p.phone, p.email || '']);
+                    await tx.run(`INSERT INTO parents (id, name, phone, email) VALUES (?, ?, ?, ?)`,
+                        [p.id, p.name, p.phone || '', p.email || '']);
                 }
             }
 
+            // 3. Students & Enrollments
+            if (data.students) {
+                for (const s of data.students) {
+                    await tx.run(`INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [s.id, s.name, s.grade || '', s.parentPhone || '', s.studentPhone || '', s.curriculum || '', s.notes || '', s.sessionPrice !== undefined ? s.sessionPrice : 0]);
+
+                    if (s.enrollments) {
+                        for (const e of s.enrollments) {
+                            await tx.run(`INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                                [s.id, e.teacher || '', e.teacherId || null, e.subject || '', e.curr || '', e.sessionsTotal || 0, e.sessionsUsed || 0, typeof e.schedule === 'string' ? e.schedule : JSON.stringify(e.schedule || [])]);
+                        }
+                    }
+                }
+            }
+
+            // 4. Sessions
             if (data.sessions) {
                 for (const s of data.sessions) {
                     await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -117,10 +153,11 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
+            // 5. Financials
             if (data.invoices) {
                 for (const i of data.invoices) {
                     await tx.run(`INSERT INTO teacher_invoices (id, teacherId, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [i.id, i.teacherId || null, i.teacher, i.specialization, i.amount, i.paymentMethod, i.status, i.personalExpenses || 0, i.date]);
+                        [i.id, i.teacherId || null, i.teacher, i.specialization || '', i.amount, i.paymentMethod, i.status, i.personalExpenses || 0, i.date]);
                 }
             }
 
@@ -145,6 +182,7 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
+            // 6. Tasks & Notifications & Settings
             if (data.tasks) {
                 for (const t of data.tasks) {
                     await tx.run(`INSERT INTO tasks (id, title, description, status, priority, dueDate) VALUES (?, ?, ?, ?, ?, ?)`,
@@ -160,7 +198,16 @@ router.post('/restore', async (req, res) => {
 
             if (data.dismissedNotifications) {
                 for (const n of data.dismissedNotifications) {
-                    await tx.run(`INSERT INTO dismissed_notifications (id) VALUES (?)`, [n.id]);
+                    await tx.run(`INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)`, [n.id]);
+                }
+            }
+
+            if (data.notifications) {
+                for (const n of data.notifications) {
+                    // Check if notification table has conversationId column (backward compat)
+                    // Assuming columns: id, senderId, receiverId, senderName, title, message, type, time, read, conversationId
+                    await tx.run(`INSERT OR IGNORE INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [n.id, n.senderId || 'system', n.receiverId, n.senderName || 'System', n.title, n.message, n.type, n.time, n.read, n.conversationId || null]);
                 }
             }
 
@@ -170,19 +217,33 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            if (data.users) {
-                for (const u of data.users) {
-                    // Skip if user is 'admin' to avoid locking out
-                    if (u.username === 'admin') continue;
-                    await tx.run(`INSERT OR REPLACE INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions)]);
+            // 7. New Tables: Announcements & Chat
+            if (data.announcements) {
+                for (const a of data.announcements) {
+                    await tx.run(`INSERT INTO announcements (id, title, content, targetAudience, date, active) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [a.id, a.title, a.content, a.targetAudience, a.date, a.active]);
+                }
+            }
+
+            if (data.conversations) {
+                for (const c of data.conversations) {
+                    await tx.run(`INSERT INTO conversations (id, name, type, participants, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [c.id, c.name, c.type, typeof c.participants === 'string' ? c.participants : JSON.stringify(c.participants), c.createdAt, c.updatedAt]);
+                }
+            }
+
+            if (data.messages) {
+                for (const m of data.messages) {
+                    await tx.run(`INSERT INTO messages (id, conversationId, senderId, senderName, content, type, timestamp, readBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.type, m.timestamp, typeof m.readBy === 'string' ? m.readBy : JSON.stringify(m.readBy)]);
                 }
             }
         });
 
-        res.json({ message: 'Restore successful' });
+        res.json({ message: 'Restore successful, system updated.' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error("Restore Error:", err);
+        res.status(500).json({ error: 'Restore failed: ' + err.message });
     }
 });
 
