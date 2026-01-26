@@ -123,6 +123,19 @@ async function startServer() {
 
         apiRouter.use('/auth', authRouter);
 
+        // Public system settings (Accessable before login for Maintenance Mode & Branding)
+        apiRouter.get('/system/public-settings', async (req, res) => {
+            try {
+                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?)',
+                    ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color']);
+                const settingsMap = {};
+                settings.forEach(s => settingsMap[s.key] = s.value);
+                res.json(settingsMap);
+            } catch (err) {
+                res.status(500).json({ error: err.message });
+            }
+        });
+
         // Apply authentication to ALL other API routes
         apiRouter.use(authMiddleware);
 

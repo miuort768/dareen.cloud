@@ -84,12 +84,25 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
+
   if (maintenanceMode && !isAdmin) {
     return <MaintenanceScreen />;
   }
 
   return (
     <>
+      {/* Maintenance Indicator for Admins */}
+      {maintenanceMode && isAdmin && (
+        <div className="fixed top-0 inset-x-0 z-[9999] bg-amber-600 text-white text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
+          <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
+          <button
+            onClick={() => window.location.href = '/settings'}
+            className="underline hover:no-underline"
+          >
+            انقر هنا للإلغاء
+          </button>
+        </div>
+      )}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />

@@ -31,7 +31,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const settings = await api.get<any>('/system/settings');
+                const settings = await api.get<any>('/system/public-settings');
                 if (settings) {
                     if (settings.academy_name) setAcademyNameState(settings.academy_name);
                     if (settings.admin_phone) setAdminPhoneState(settings.admin_phone);
