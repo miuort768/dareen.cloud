@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const { isAuthenticated, currentUser, logout } = useApp();
     const location = useLocation();
 
@@ -15,6 +17,23 @@ export const PublicNavbar = () => {
     ];
 
     const isActive = (path: string) => location.pathname === path;
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        if (isDropdownOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isDropdownOpen]);
 
     return (
         <header className="fixed top-2 md:top-4 left-0 right-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
@@ -58,30 +77,35 @@ export const PublicNavbar = () => {
                     {/* Desktop Auth */}
                     <div className="hidden md:flex items-center gap-4">
                         {isAuthenticated ? (
-                            <div className="relative group">
-                                <button className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-4 py-2">
+                            <div className="relative" ref={dropdownRef}>
+                                <button
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-4 py-2"
+                                >
                                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-hover text-white flex items-center justify-center font-bold shadow-md">
                                         {currentUser?.name.charAt(0)}
                                     </div>
                                     <span className="font-bold">{currentUser?.name}</span>
-                                    <ChevronDown className="w-4 h-4" />
+                                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div className="absolute left-0 mt-4 w-56 bg-white rounded-2xl shadow-xl hidden group-hover:block border border-gray-100 overflow-hidden z-50">
+                                <div className={`absolute left-0 mt-4 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                                     <div className="p-4 border-b border-gray-50 bg-gray-50/50">
                                         <p className="text-sm font-bold text-gray-900">{currentUser?.name}</p>
                                         <p className="text-xs text-gray-500">{currentUser?.username}</p>
                                     </div>
                                     <Link
                                         to="/dashboard"
+                                        onClick={() => setIsDropdownOpen(false)}
                                         className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-yellow-50 hover:text-gold transition-colors"
                                     >
                                         <Sparkles className="w-5 h-5 text-gold" />
                                         لوحة التحكم
                                     </Link>
                                     <button
-                                        onClick={logout}
+                                        onClick={() => { logout(); setIsDropdownOpen(false); }}
                                         className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
                                     >
+                                        <LogOut className="w-5 h-5" />
                                         تسجيل الخروج
                                     </button>
                                 </div>
