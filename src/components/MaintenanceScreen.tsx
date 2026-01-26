@@ -5,63 +5,63 @@ export const MaintenanceScreen = () => {
     const { academyName, adminPhone } = useApp();
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-4 md:p-6 text-center overflow-y-auto no-scrollbar" dir="rtl">
             {/* Background Decorative Blobs */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            <div className="fixed top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-primary-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="fixed bottom-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-amber-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
-            <div className="relative max-w-2xl w-full space-y-8 animate-in fade-in zoom-in duration-700">
+            <div className="relative max-w-2xl w-full space-y-6 md:space-y-8 animate-in fade-in zoom-in duration-700 py-8">
                 {/* Icon Container */}
-                <div className="relative mx-auto w-32 h-32 flex items-center justify-center">
+                <div className="relative mx-auto w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
                     <div className="absolute inset-0 bg-amber-500/20 rounded-full animate-ping"></div>
-                    <div className="relative w-24 h-24 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-3xl rotate-12 flex items-center justify-center shadow-xl">
-                        <Hammer size={40} className="text-white -rotate-12" />
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-2xl md:rounded-3xl rotate-12 flex items-center justify-center shadow-xl">
+                        <Hammer size={32} className="text-white md:size-[40px] -rotate-12" />
                     </div>
-                    <div className="absolute -bottom-2 -right-2 bg-white dark:bg-gray-900 p-2 rounded-full shadow-lg border border-gray-100 dark:border-gray-800">
-                        <AlertTriangle size={24} className="text-amber-500" />
+                    <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-white dark:bg-gray-900 p-1.5 md:p-2 rounded-full shadow-lg border border-gray-100 dark:border-gray-800">
+                        <AlertTriangle size={18} className="text-amber-500 md:size-[24px]" />
                     </div>
                 </div>
 
                 {/* Text Content */}
-                <div className="space-y-4">
-                    <div className="inline-flex items-center gap-2 px-4 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full text-xs font-black uppercase tracking-wider">
+                <div className="space-y-3 md:space-y-4 px-2">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full text-[10px] md:text-xs font-black uppercase tracking-wider">
                         وضع الصيانة قيد التنفيذ
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight">
+                    <h1 className="text-2xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight">
                         {academyName}
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-bold leading-relaxed max-w-xl mx-auto">
+                    <p className="text-sm md:text-xl text-gray-600 dark:text-gray-400 font-bold leading-relaxed max-w-xl mx-auto">
                         نعمل حالياً على تحسين المنصة لتقديم تجربة أفضل لكم. يرجى العودة لاحقاً.
                     </p>
                 </div>
 
                 {/* Stats/Status Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
-                    <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-3">
-                        <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-2xl">
-                            <Phone size={24} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-4 md:pt-8 px-2">
+                    <div className="bg-white dark:bg-gray-900 p-4 md:p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 md:gap-3 rounded-none">
+                        <div className="p-2 md:p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-xl md:rounded-2xl">
+                            <Phone size={20} className="md:size-[24px]" />
                         </div>
-                        <p className="text-xs text-gray-400 font-bold">للتواصل العاجل</p>
+                        <p className="text-[10px] text-gray-400 font-bold">للتواصل العاجل</p>
                         <a
                             href={`https://wa.me/${adminPhone}`}
-                            className="text-lg font-black text-gray-900 dark:text-white hover:text-primary-600 transition-colors"
+                            className="text-base md:text-lg font-black text-gray-900 dark:text-white hover:text-primary-600 transition-colors truncate w-full"
                         >
                             {adminPhone}
                         </a>
                     </div>
-                    <div className="bg-white dark:bg-gray-900 p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-3">
-                        <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-2xl">
-                            <ExternalLink size={24} />
+                    <div className="bg-white dark:bg-gray-900 p-4 md:p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 md:gap-3 rounded-none">
+                        <div className="p-2 md:p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-xl md:rounded-2xl">
+                            <ExternalLink size={20} className="md:size-[24px]" />
                         </div>
-                        <p className="text-xs text-gray-400 font-bold">الحالة الفنية</p>
-                        <p className="text-lg font-black text-emerald-500">جاري التحديث...</p>
+                        <p className="text-[10px] text-gray-400 font-bold">الحالة الفنية</p>
+                        <p className="text-base md:text-lg font-black text-emerald-500">جاري التحديث...</p>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="flex flex-col items-center gap-4 pt-8 opacity-50">
-                    <div className="w-12 h-1 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
-                    <p className="text-xs font-bold text-gray-500">مركز التقني لمعهد {academyName} &copy; {new Date().getFullYear()}</p>
+                <div className="flex flex-col items-center gap-3 md:gap-4 pt-4 md:pt-8 opacity-50">
+                    <div className="w-10 md:w-12 h-0.5 md:h-1 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+                    <p className="text-[10px] md:text-xs font-bold text-gray-500">مركز التقني لمعهد {academyName} &copy; {new Date().getFullYear()}</p>
                 </div>
             </div>
         </div>
