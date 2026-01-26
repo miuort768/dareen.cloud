@@ -59,9 +59,9 @@ export const MaintenanceScreen = () => {
                 </div>
 
                 {/* Footer */}
-                <div className="flex flex-col items-center gap-3 md:gap-4 pt-4 md:pt-8 opacity-50">
-                    <div className="w-10 md:w-12 h-0.5 md:h-1 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
-                    <p className="text-[10px] md:text-xs font-bold text-gray-500">مركز التقني لمعهد {academyName} &copy; {new Date().getFullYear()}</p>
+                <div className="flex flex-col items-center gap-2 pt-2 md:pt-4 opacity-40">
+                    <div className="w-8 md:w-10 h-0.5 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+                    <p className="text-[9px] md:text-[11px] font-black text-gray-500 uppercase tracking-widest">الإدارة التقنية لمنصة {academyName} &copy; {new Date().getFullYear()}</p>
                 </div>
             </div>
         </div>
