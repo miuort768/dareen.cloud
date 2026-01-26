@@ -31,12 +31,12 @@ export const MaintenanceScreen = () => {
                         {academyName}
                     </h1>
                     <p className="text-sm md:text-xl text-gray-600 dark:text-gray-400 font-bold leading-relaxed max-w-xl mx-auto">
-                        نعمل حالياً على تحسين المنصة لتقديم تجربة أفضل لكم. يرجى العودة لاحقاً.
+                        تخضع المنصة حالياً لأعمال تحديث وتطوير شاملة لضمان تقديم أفضل تجربة تعليمية ممكنة. سنعود للعمل بكامل طاقتنا خلال وقت وجيز.
                     </p>
                 </div>
 
                 {/* Stats/Status Info */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-4 md:pt-8 px-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4 px-2">
                     <div className="bg-white dark:bg-gray-900 p-4 md:p-6 border border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 md:gap-3 rounded-none">
                         <div className="p-2 md:p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-xl md:rounded-2xl">
                             <Phone size={20} className="md:size-[24px]" />
