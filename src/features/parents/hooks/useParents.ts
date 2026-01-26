@@ -202,6 +202,24 @@ export const useParents = () => {
         });
     };
 
+    const handleExportParents = () => {
+        try {
+            const dataStr = JSON.stringify(parents, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `parents_export_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showNotification('تم تصدير بيانات أولياء الأمور بنجاح', 'success');
+        } catch (error) {
+            showNotification('حدث خطأ أثناء تصدير البيانات', 'error');
+        }
+    };
+
     // Derived Data
     const filteredParents = useMemo(() => {
         return parents.filter(p =>
@@ -282,6 +300,7 @@ export const useParents = () => {
             handleEditParent,
             handleDeleteParent,
             handleImportParents,
+            handleExportParents,
             refresh: () => {
                 queryClient.invalidateQueries({ queryKey: ['parents'] });
                 queryClient.invalidateQueries({ queryKey: ['students'] });

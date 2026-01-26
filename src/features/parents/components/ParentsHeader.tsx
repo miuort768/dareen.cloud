@@ -8,6 +8,7 @@ interface ParentsHeaderProps {
     showAddForm: boolean;
     onToggleAddForm: () => void;
     onImport: () => void;
+    onExport: () => void;
 }
 
 export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
@@ -15,7 +16,8 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
     totalLinkedStudents,
     showAddForm,
     onToggleAddForm,
-    onImport
+    onImport,
+    onExport
 }) => {
     return (
         <div className="space-y-6">
@@ -69,6 +71,13 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                             >
                                 <Download size={16} className="md:w-5 md:h-5" />
                                 <span>استيراد</span>
+                            </button>
+                            <button
+                                onClick={onExport}
+                                className="flex-1 md:flex-none justify-center bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-4 py-2 md:px-6 md:py-3 rounded-none flex items-center gap-2 md:gap-3 hover:bg-primary-900/60 transition-all font-black text-xs md:text-base shadow-lg"
+                            >
+                                <Download size={16} className="md:w-5 md:h-5 rotate-180" />
+                                <span>تصدير</span>
                             </button>
                         </div>
                     </div>

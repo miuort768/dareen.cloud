@@ -41,6 +41,7 @@ export const Parents = () => {
                     }
                 }}
                 onImport={actions.handleImportParents}
+                onExport={actions.handleExportParents}
             />
 
             {state.showAddForm && (
