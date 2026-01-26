@@ -4,7 +4,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
-import { InstallPWA } from '../InstallPWA';
+
 
 export const Layout = () => {
     const location = useLocation();
@@ -42,8 +42,7 @@ export const Layout = () => {
                     </div>
                 </main>
             </div>
-            {/* PWA Install Trigger - Appears globally in the dashboard */}
-            <InstallPWA />
+
         </div>
     );
 };

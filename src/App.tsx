@@ -27,6 +27,7 @@ import { About } from './pages/public/About';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { TermsOfService } from './pages/public/TermsOfService';
+import { InstallPWA } from './components/InstallPWA';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -81,55 +82,60 @@ function App() {
   }
 
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Navigate to="/" replace />} />
-      <Route path="/courses" element={<Courses />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
+    <>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
 
-      {/* Protected App Routes */}
-      {/* Protected App Routes */}
-      <Route
-        element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="dashboard" element={<DashboardRedirect />} />
-        <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
+        {/* Protected App Routes */}
+        {/* Protected App Routes */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<DashboardRedirect />} />
+          <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
 
-        {/* Parent Routes */}
-        <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
-        <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
-        <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
+          {/* Parent Routes */}
+          <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
+          <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
+          <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
 
-        {/* Admin/Teacher Routes */}
-        <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
-        <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
-        <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
-        <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
-        <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
-        <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
-        <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
-        <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
-        <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
-        <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
-        <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
-        <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
-        <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
-        <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
+          {/* Admin/Teacher Routes */}
+          <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
+          <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
+          <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
+          <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
+          <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
+          <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
+          <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
+          <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
+          <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
+          <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
+          <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
+          <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
+          <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
+          <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
 
-        {/* New Announcements Admin Route */}
-        <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
-      </Route>
+          {/* New Announcements Admin Route */}
+          <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
+        </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
+      {/* Global PWA Install Trigger */}
+      <InstallPWA />
+    </>
   );
 }
 
