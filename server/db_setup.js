@@ -431,11 +431,15 @@ async function setupDatabase() {
             { key: 'academy_name', value: 'منصة دارين' },
             { key: 'admin_phone', value: '01152001250' },
             { key: 'theme_color', value: 'indigo' },
-            { key: 'notifications_enabled', value: 'true' }
+            { key: 'notifications_enabled', value: 'true' },
+            { key: 'maintenance_mode', value: 'false' }
         ];
         for (const s of defaultSettings) {
             await db.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);
         }
+    } else {
+        // Ensure maintenance_mode exists even if table is not empty
+        await db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('maintenance_mode', 'false')");
     }
 
     // Seed default admin if empty

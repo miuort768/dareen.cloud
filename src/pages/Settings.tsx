@@ -61,7 +61,9 @@ export const Settings = () => {
         adminPhone,
         setAdminPhone,
         autoBackup,
-        setAutoBackup
+        setAutoBackup,
+        maintenanceMode,
+        setMaintenanceMode
     } = useApp();
 
     const [theme, setTheme] = useDarkMode();
@@ -74,6 +76,7 @@ export const Settings = () => {
     // Academy Settings
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone);
+    const [localMaintenanceMode, setLocalMaintenanceMode] = useState(maintenanceMode);
 
     // New/Edit User State
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
@@ -105,11 +108,12 @@ export const Settings = () => {
     useEffect(() => {
         if (academyName) setLocalAcademyName(academyName);
         if (adminPhone) setLocalAdminPhone(adminPhone);
+        if (maintenanceMode !== undefined) setLocalMaintenanceMode(maintenanceMode);
         if (user) {
             setLocalName(user.name);
             setLocalUsername(user.username);
         }
-    }, [academyName, adminPhone, user]);
+    }, [academyName, adminPhone, maintenanceMode, user]);
 
     const showNotification = (message: string) => {
         setNotificationMessage(message);
@@ -123,7 +127,8 @@ export const Settings = () => {
             // Save Global Context Data
             await Promise.all([
                 setAcademyName(localAcademyName),
-                setAdminPhone(localAdminPhone)
+                setAdminPhone(localAdminPhone),
+                setMaintenanceMode(localMaintenanceMode)
             ]);
 
             const updates: { name?: string; username: string; password?: string } = {
@@ -477,6 +482,39 @@ export const Settings = () => {
                                     placeholder="201xxxxxxxxx"
                                     dir="ltr"
                                 />
+                            </div>
+
+                            <div className="pt-2">
+                                <label className="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 cursor-pointer group transition-all">
+                                    <div className="flex items-center gap-3">
+                                        <div className={cn(
+                                            "p-2 rounded-full transition-colors",
+                                            localMaintenanceMode ? "bg-amber-500 text-white" : "bg-gray-200 text-gray-400 dark:bg-gray-800"
+                                        )}>
+                                            <AlertCircle size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-black text-gray-900 dark:text-white">وضع الصيانة (Maintenance Mode)</p>
+                                            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">عند تفعيله، ستظهر رسالة صيانة لجميع المستخدمين عدا مديري النظام</p>
+                                        </div>
+                                    </div>
+                                    <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={localMaintenanceMode}
+                                            onChange={(e) => setLocalMaintenanceMode(e.target.checked)}
+                                        />
+                                        <div className={cn(
+                                            "w-11 h-6 rounded-full transition-colors duration-300",
+                                            localMaintenanceMode ? "bg-amber-500" : "bg-gray-300 dark:bg-gray-700"
+                                        )}></div>
+                                        <div className={cn(
+                                            "absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 shadow-sm",
+                                            localMaintenanceMode ? "translate-x-5" : "translate-x-0"
+                                        )}></div>
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </section>

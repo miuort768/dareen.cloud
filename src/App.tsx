@@ -28,6 +28,7 @@ import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { TermsOfService } from './pages/public/TermsOfService';
 import { InstallPWA } from './components/InstallPWA';
+import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -68,9 +69,9 @@ const DashboardRedirect = () => {
 };
 
 function App() {
-  const { isLoading } = useApp();
+  const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
 
-  if (isLoading) {
+  if (isLoading || isSettingsLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
         <div className="relative w-12 h-12">
@@ -79,6 +80,12 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  // Maintenance Gate: Show screen if mode is active and user is NOT admin
+  const isAdmin = isAuthenticated && currentUser?.role === 'admin';
+  if (maintenanceMode && !isAdmin) {
+    return <MaintenanceScreen />;
   }
 
   return (

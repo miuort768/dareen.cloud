@@ -7,11 +7,14 @@ interface SettingsContextType {
     themeColor: string;
     notificationsEnabled: boolean;
     autoBackup: boolean;
+    maintenanceMode: boolean;
+    isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAdminPhone: (phone: string) => Promise<void>;
     setThemeColor: (color: string) => Promise<void>;
     setNotificationsEnabled: (enabled: boolean) => Promise<void>;
     setAutoBackup: (enabled: boolean) => Promise<void>;
+    setMaintenanceMode: (enabled: boolean) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -22,6 +25,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [themeColor, setThemeColorState] = useState(() => localStorage.getItem('app_theme_color') || 'indigo');
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
     const [autoBackup, setAutoBackupState] = useState(false);
+    const [maintenanceMode, setMaintenanceModeState] = useState(false);
+    const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
         const fetchSettings = async () => {
@@ -33,9 +38,12 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.theme_color) setThemeColorState(settings.theme_color);
                     if (settings.notifications_enabled) setNotificationsEnabledState(settings.notifications_enabled === 'true');
                     if (settings.auto_backup) setAutoBackupState(settings.auto_backup === 'true');
+                    if (settings.maintenance_mode) setMaintenanceModeState(settings.maintenance_mode === 'true');
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
+            } finally {
+                setIsSettingsLoading(false);
             }
         };
         fetchSettings();
@@ -77,6 +85,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('auto_backup', String(enabled));
     };
 
+    const setMaintenanceMode = async (enabled: boolean) => {
+        setMaintenanceModeState(enabled);
+        await updateSetting('maintenance_mode', String(enabled));
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -90,8 +103,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <SettingsContext.Provider value={{
-            academyName, adminPhone, themeColor, notificationsEnabled, autoBackup,
-            setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup
+            academyName, adminPhone, themeColor, notificationsEnabled, autoBackup, maintenanceMode, isSettingsLoading,
+            setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup, setMaintenanceMode
         }}>
             {children}
         </SettingsContext.Provider>

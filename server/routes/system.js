@@ -300,7 +300,8 @@ router.post('/system-reset', async (req, res) => {
                 { key: 'academy_name', value: 'دارين لتعليم و التدريب' },
                 { key: 'admin_phone', value: '01152001250' },
                 { key: 'theme_color', value: 'indigo' },
-                { key: 'notifications_enabled', value: 'true' }
+                { key: 'notifications_enabled', value: 'true' },
+                { key: 'maintenance_mode', value: 'false' }
             ];
             for (const s of defaultSettings) {
                 await tx.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);
