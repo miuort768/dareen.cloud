@@ -13,7 +13,7 @@ router.get('/backup', async (req, res) => {
             students, teachers, parents, sessions, teacherInvoices,
             studentInvoices, manualTransactions, fixedExpenses,
             tasks, completedSessions, dismissedNotifications, systemSettings, users,
-            announcements, conversations, messages, notifications
+            announcements, conversations, messages, notifications, chatProfiles, conversationMembers
         ] = await Promise.all([
             req.db.all('SELECT * FROM students'),
             req.db.all('SELECT * FROM teachers'),
@@ -31,7 +31,9 @@ router.get('/backup', async (req, res) => {
             req.db.all('SELECT * FROM announcements'),
             req.db.all('SELECT * FROM conversations'),
             req.db.all('SELECT * FROM messages'),
-            req.db.all('SELECT * FROM notifications')
+            req.db.all('SELECT * FROM notifications'),
+            req.db.all('SELECT * FROM chat_profiles'),
+            req.db.all('SELECT * FROM conversation_members')
         ]);
 
         const studentsWithEnrollments = await Promise.all(students.map(async (s) => {
@@ -60,7 +62,9 @@ router.get('/backup', async (req, res) => {
                 users,
                 announcements,
                 conversations,
-                messages
+                messages,
+                chatProfiles,
+                conversationMembers
             }
         };
 
@@ -79,7 +83,9 @@ router.post('/restore', async (req, res) => {
         await withTransaction(req.db, async (tx) => {
             // Delete existing data in reverse order of dependencies
             await tx.run('DELETE FROM messages');
+            await tx.run('DELETE FROM conversation_members');
             await tx.run('DELETE FROM conversations');
+            await tx.run('DELETE FROM chat_profiles');
             await tx.run('DELETE FROM announcements');
             await tx.run('DELETE FROM enrollments'); // Depends on students/teachers
             await tx.run('DELETE FROM student_invoices');
@@ -209,6 +215,13 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
+            if (data.chatProfiles) {
+                for (const cp of data.chatProfiles) {
+                    await tx.run(`INSERT INTO chat_profiles (id, name, username, password, avatar, status, lastSeen, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [cp.id, cp.name, cp.username, cp.password, cp.avatar || null, cp.status || 'offline', cp.lastSeen || null, cp.createdAt || new Date().toISOString()]);
+                }
+            }
+
             if (data.systemSettings) {
                 for (const s of data.systemSettings) {
                     await tx.run(`INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)`, [s.key, s.value]);
@@ -218,22 +231,32 @@ router.post('/restore', async (req, res) => {
             // 7. New Tables: Announcements & Chat
             if (data.announcements) {
                 for (const a of data.announcements) {
-                    await tx.run(`INSERT INTO announcements (id, title, content, targetAudience, date, active) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [a.id, a.title, a.content, a.targetAudience, a.date, a.active]);
+                    // Check column naming carefully: isActive vs active, created_at vs date
+                    await tx.run(`INSERT INTO announcements (id, title, content, type, date, isActive, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                        [a.id, a.title, a.content, a.type || a.targetAudience || 'general', a.date, a.isActive !== undefined ? a.isActive : (a.active !== undefined ? a.active : 1), a.created_at || a.date || new Date().toISOString()]);
                 }
             }
 
             if (data.conversations) {
                 for (const c of data.conversations) {
-                    await tx.run(`INSERT INTO conversations (id, name, type, participants, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [c.id, c.name, c.type, typeof c.participants === 'string' ? c.participants : JSON.stringify(c.participants), c.createdAt, c.updatedAt]);
+                    // Schema columns: id, name, isGroup, createdBy, createdAt
+                    await tx.run(`INSERT INTO conversations (id, name, isGroup, createdBy, createdAt) VALUES (?, ?, ?, ?, ?)`,
+                        [c.id, c.name || null, c.isGroup !== undefined ? c.isGroup : (c.type === 'group' ? 1 : 0), c.createdBy || 'system', c.createdAt || c.updatedAt || new Date().toISOString()]);
+                }
+            }
+
+            if (data.conversationMembers) {
+                for (const cm of data.conversationMembers) {
+                    await tx.run(`INSERT INTO conversation_members (conversationId, userId) VALUES (?, ?)`,
+                        [cm.conversationId, cm.userId]);
                 }
             }
 
             if (data.messages) {
                 for (const m of data.messages) {
-                    await tx.run(`INSERT INTO messages (id, conversationId, senderId, senderName, content, type, timestamp, readBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.type, m.timestamp, typeof m.readBy === 'string' ? m.readBy : JSON.stringify(m.readBy)]);
+                    // Schema columns: id, conversationId, senderId, senderName, content, timestamp
+                    await tx.run(`INSERT INTO messages (id, conversationId, senderId, senderName, content, timestamp) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.timestamp]);
                 }
             }
         });

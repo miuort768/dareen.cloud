@@ -24,7 +24,8 @@ async function setupDatabase() {
             price INTEGER DEFAULT 0,
             email TEXT,
             username TEXT UNIQUE,
-            password TEXT
+            password TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
         CREATE TABLE IF NOT EXISTS students (
@@ -72,7 +73,9 @@ async function setupDatabase() {
             day TEXT,
             time TEXT,
             price INTEGER DEFAULT 0,
+            teacherPrice INTEGER DEFAULT 0,
             status TEXT DEFAULT 'pending',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(studentId) REFERENCES students(id) ON DELETE CASCADE,
             FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
         );
@@ -239,9 +242,11 @@ async function setupDatabase() {
     await addColumnIfNotExists('teachers', 'email', 'TEXT');
     await addColumnIfNotExists('teachers', 'username', 'TEXT');
     await addColumnIfNotExists('teachers', 'password', 'TEXT');
+    await addColumnIfNotExists('teachers', 'created_at', 'TEXT DEFAULT CURRENT_TIMESTAMP');
     await addColumnIfNotExists('students', 'sessionPrice', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('parents', 'username', 'TEXT');
     await addColumnIfNotExists('parents', 'password', 'TEXT');
+    await addColumnIfNotExists('sessions', 'created_at', 'TEXT DEFAULT CURRENT_TIMESTAMP');
 
     // Create unique index for parent username separately (SQLite restriction)
     try {
