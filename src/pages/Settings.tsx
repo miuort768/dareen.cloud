@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
-import { api } from '../lib/api';
+import { settingsService } from '../features/settings/services/settingsService';
 import { cn } from '../lib/utils';
 import {
     Save, User, Building2, Lock, Download, Upload, Database, Check,
@@ -217,8 +217,8 @@ export const Settings = () => {
 
     const handleExport = async () => {
         try {
-            // Fetch complete backup from server
-            const backupData = await api.get<any>('/system/backup');
+            // Fetch complete backup from server using settingsService
+            const backupData = await settingsService.getBackup();
 
             // Add settings data
             const completeBackup = {
@@ -261,9 +261,9 @@ export const Settings = () => {
             try {
                 const backupData = JSON.parse(event.target?.result as string);
 
-                // Restore database data if available
+                // Restore database data if available using settingsService
                 if (backupData.data) {
-                    await api.post<any>('/system/restore', { data: backupData.data });
+                    await settingsService.restoreBackup(backupData.data);
                 }
 
                 // Restore settings
@@ -310,7 +310,7 @@ export const Settings = () => {
     const handleSystemReset = async () => {
         setResetLoading(true);
         try {
-            await api.post('/system/system-reset', {});
+            await settingsService.systemReset();
 
             // Clear Session Data
             localStorage.removeItem('auth_token');
