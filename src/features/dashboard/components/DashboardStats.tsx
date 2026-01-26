@@ -1,4 +1,4 @@
-import { Users, BookOpen, CalendarCheck, GraduationCap } from 'lucide-react';
+import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import { StatsCard } from '../../../shared/components/StatsCard';
 import type { DashboardStats as Stats } from '../types';
 
@@ -15,9 +15,18 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
                 trendUp={true} />
             <StatsCard title="حصص اليوم" value={stats.todaySessions} icon={CalendarCheck} color="amber"
                 trendUp={true} />
+            <StatsCard title="الحصص المنفذة" value={stats.completedSessions} icon={CheckCircle2} color="emerald" trendUp={true} />
 
             {!isTeacher && (
-                <StatsCard title="إجمالي المعلمين" value={stats.teachersCount} icon={GraduationCap} color="indigo" trendUp={true} />
+                <>
+                    <StatsCard title="إجمالي المعلمين" value={stats.teachersCount} icon={GraduationCap} color="indigo" trendUp={true} />
+                    <StatsCard title="إيراد الشهر" value={stats.monthRevenue.toLocaleString() + ' ج.م'} icon={TrendingUp} color="emerald"
+                        trendUp={true} />
+                    <StatsCard title="مصروفات الشهر" value={stats.monthExpenses.toLocaleString() + ' ج.م'} icon={TrendingDown} color="rose"
+                        trendUp={false} />
+                    <StatsCard title="صافي الربح" value={stats.monthNetProfit.toLocaleString() + ' ج.م'} icon={DollarSign} color="purple"
+                        trendUp={true} />
+                </>
             )}
         </div>
     );
