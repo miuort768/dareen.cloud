@@ -39,13 +39,15 @@ export const useDashboardData = (currentUser: User | null) => {
     const fetchDashboardData = useCallback(async () => {
         try {
             setLoading(true);
-            const [rawStudents, rawTeachers, rawParents, rawSessions, rawInvoices, rawStudentInvoices] = await Promise.all([
-                api.get<Student[]>('/students'),
-                api.get<Teacher[]>('/teachers'),
-                api.get<any[]>('/parents'),
-                api.get<Session[]>('/sessions'),
-                api.get<TeacherInvoice[]>('/invoices'),
-                api.get<StudentInvoice[]>('/studentInvoices'),
+            const [rawStudents, rawTeachers, rawParents, rawSessions, rawInvoices, rawStudentInvoices, rawTransactions, rawFixedExpenses] = await Promise.all([
+                api.get<Student[]>(`/students?t=${Date.now()}`),
+                api.get<Teacher[]>(`/teachers?t=${Date.now()}`),
+                api.get<any[]>(`/parents?t=${Date.now()}`),
+                api.get<Session[]>(`/sessions?t=${Date.now()}`),
+                api.get<TeacherInvoice[]>(`/invoices?t=${Date.now()}`),
+                api.get<StudentInvoice[]>(`/studentInvoices?t=${Date.now()}`),
+                api.get<any[]>(`/finance/transactions?t=${Date.now()}`),
+                api.get<any[]>(`/finance/fixed-expenses?t=${Date.now()}`)
             ]);
 
             const students = Array.isArray(rawStudents) ? rawStudents : [];
@@ -54,6 +56,8 @@ export const useDashboardData = (currentUser: User | null) => {
             const sessionsAll = Array.isArray(rawSessions) ? rawSessions : [];
             const teacherInvoices = Array.isArray(rawInvoices) ? rawInvoices : [];
             const studentInvoicesAll = Array.isArray(rawStudentInvoices) ? rawStudentInvoices : [];
+            const transactions = Array.isArray(rawTransactions) ? rawTransactions : [];
+            const fixedExpenses = Array.isArray(rawFixedExpenses) ? rawFixedExpenses : [];
 
             const isTeacher = currentUser?.role === 'teacher';
             const teacherName = currentUser?.teacherName || currentUser?.name;
@@ -136,9 +140,19 @@ export const useDashboardData = (currentUser: User | null) => {
                 }).length
                 : completedSessionsCount;
 
-            const monthExpensesValue = teacherInvoices
+            // Calculate Expenses
+            const invoicesExpenses = teacherInvoices
                 .filter((inv: TeacherInvoice) => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
                 .reduce((sum: number, inv: TeacherInvoice) => sum + (Number(inv.amount) || 0), 0);
+
+            const manualExpenses = transactions
+                .filter((t: any) => t.type === 'expense' && t.date?.startsWith(currentMonth))
+                .reduce((sum: number, t: any) => sum + (Number(t.amount) || 0), 0);
+
+            const fixedExpensesTotal = fixedExpenses
+                .reduce((sum: number, e: any) => sum + (Number(e.amount) || 0), 0);
+
+            const monthExpensesValue = invoicesExpenses + manualExpenses + fixedExpensesTotal;
 
             const monthRevenueValue = monthCompletedSessions
                 .reduce((sum: number, s: Session) => sum + getSessionEffectivePrice(s), 0);
