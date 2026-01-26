@@ -30,7 +30,7 @@ export const MaintenanceScreen = () => {
                     <h1 className="text-2xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight">
                         {academyName}
                     </h1>
-                    <p className="text-sm md:text-xl text-gray-600 dark:text-gray-400 font-bold leading-relaxed max-w-xl mx-auto">
+                    <p className="text-[13px] md:text-base text-gray-500 dark:text-gray-400 font-bold leading-relaxed max-w-lg mx-auto">
                         تخضع المنصة حالياً لأعمال تحديث وتطوير شاملة لضمان تقديم أفضل تجربة تعليمية ممكنة. سنعود للعمل بكامل طاقتنا خلال وقت وجيز.
                     </p>
                 </div>
