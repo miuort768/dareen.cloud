@@ -197,7 +197,11 @@ export const useFinance = () => {
                 description: `فاتورة: ${inv.teacher}`,
                 status: inv.status === 'مدفوعة' ? 'completed' : inv.status === 'قيد المعالجة' ? 'pending' : 'cancelled' as any
             }))
-        ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        ].sort((a, b) => {
+            const dateA = a.date ? new Date(a.date).getTime() : 0;
+            const dateB = b.date ? new Date(b.date).getTime() : 0;
+            return dateB - dateA;
+        });
 
         return combined;
     }, [manualTransactions, sessions, invoices]);
@@ -223,13 +227,25 @@ export const useFinance = () => {
         const months = uniqueMonths.slice(0, 6).reverse();
         const monthlyData = months.map(month => {
             const inc = allTransactions
-                .filter(t => t.type === 'income' && t.status === 'completed' && t.date.startsWith(month))
+                .filter(t => t.type === 'income' && t.status === 'completed' && (t.date || '').startsWith(month))
                 .reduce((sum, t) => sum + t.amount, 0);
             const exp = allTransactions
-                .filter(t => t.type === 'expense' && t.status === 'completed' && t.date.startsWith(month))
+                .filter(t => t.type === 'expense' && t.status === 'completed' && (t.date || '').startsWith(month))
                 .reduce((sum, t) => sum + t.amount, 0);
+
+            // Safe Date Formatting
+            let monthLabel = month;
+            try {
+                const dateObj = new Date(month + '-01');
+                if (!isNaN(dateObj.getTime())) {
+                    monthLabel = dateObj.toLocaleDateString('ar-EG', { month: 'short' });
+                }
+            } catch (e) {
+                console.warn("Invalid date for chart:", month);
+            }
+
             return {
-                month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
+                month: monthLabel,
                 income: inc,
                 expense: exp
             };
