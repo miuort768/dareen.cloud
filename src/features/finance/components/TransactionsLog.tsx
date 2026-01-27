@@ -8,9 +8,10 @@ interface TransactionsLogProps {
     transactions: Transaction[];
     totalCount: number;
     onDeleteAll: () => void;
+    onDelete: (id: string) => void;
 }
 
-export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, totalCount, onDeleteAll }) => {
+export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, totalCount, onDeleteAll, onDelete }) => {
     return (
         <div className="bg-white border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-800">
             <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between dark:border-gray-800">
@@ -46,59 +47,74 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                             <th className="px-6 py-4 text-xs font-bold text-center">التاريخ</th>
                             <th className="px-6 py-4 text-xs font-bold text-center">المبلغ</th>
                             <th className="px-6 py-4 text-xs font-bold text-center">الحالة</th>
+                            <th className="px-6 py-4 text-xs font-bold text-center">إجراءات</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {transactions.length > 0 ? (
-                            transactions.slice(0, 5).map((tx) => (
-                                <tr key={tx.id} className="hover:bg-primary-50 dark:hover:bg-gray-800/50 transition-colors">
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="flex justify-center">
-                                            {tx.type === 'income' ? (
-                                                <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center dark:bg-emerald-900/30">
-                                                    <ArrowUpRight size={18} />
-                                                </div>
-                                            ) : (
-                                                <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center dark:bg-red-900/30">
-                                                    <ArrowDownRight size={18} />
-                                                </div>
+                            transactions.map((tx) => {
+                                const isManual = !tx.id.startsWith('session-') && !tx.id.startsWith('invoice-');
+                                return (
+                                    <tr key={tx.id} className="hover:bg-primary-50 dark:hover:bg-gray-800/50 transition-colors">
+                                        <td className="px-6 py-4 text-center">
+                                            <div className="flex justify-center">
+                                                {tx.type === 'income' ? (
+                                                    <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center dark:bg-emerald-900/30">
+                                                        <ArrowUpRight size={18} />
+                                                    </div>
+                                                ) : (
+                                                    <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center dark:bg-red-900/30">
+                                                        <ArrowDownRight size={18} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <span className={`text-xs font-bold px-3 py-1 rounded-full ${tx.type === 'income'
+                                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
+                                                : 'bg-red-100 text-red-700 dark:bg-red-900/30'
+                                                }`}>
+                                                {tx.category}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <p className="text-sm font-bold text-gray-900 dark:text-white truncate max-w-xs mx-auto">
+                                                {tx.description || '-'}
+                                            </p>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <span className="text-sm text-gray-600 dark:text-gray-400 font-mono" dir="ltr">
+                                                {new Date(tx.date).toLocaleDateString('ar-EG')}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <span className={`text-base font-bold font-mono ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
+                                                }`} dir="ltr">
+                                                {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span>
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600"><CheckCircle2 size={12} /> مكتمل</span>}
+                                            {tx.status === 'pending' && <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600"><Clock size={12} /> معلق</span>}
+                                            {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400"><X size={12} /> ملغي</span>}
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            {isManual && (
+                                                <button
+                                                    onClick={() => onDelete(tx.id)}
+                                                    className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all mx-auto"
+                                                    title="حذف المعاملة"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
                                             )}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${tx.type === 'income'
-                                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
-                                            : 'bg-red-100 text-red-700 dark:bg-red-900/30'
-                                            }`}>
-                                            {tx.category}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <p className="text-sm font-bold text-gray-900 dark:text-white truncate max-w-xs mx-auto">
-                                            {tx.description || '-'}
-                                        </p>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <span className="text-sm text-gray-600 dark:text-gray-400 font-mono" dir="ltr">
-                                            {new Date(tx.date).toLocaleDateString('ar-EG')}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <span className={`text-base font-bold font-mono ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
-                                            }`} dir="ltr">
-                                            {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600"><CheckCircle2 size={12} /> مكتمل</span>}
-                                        {tx.status === 'pending' && <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600"><Clock size={12} /> معلق</span>}
-                                        {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400"><X size={12} /> ملغي</span>}
-                                    </td>
-                                </tr>
-                            ))
+                                        </td>
+                                    </tr>
+                                );
+                            })
                         ) : (
                             <tr>
-                                <td colSpan={6} className="px-6 py-12 text-center">
+                                <td colSpan={7} className="px-6 py-12 text-center">
                                     <div className="flex flex-col items-center justify-center gap-3">
                                         <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400">
                                             <DollarSign size={32} />
@@ -117,50 +133,59 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
             <div className="md:hidden">
                 {transactions.length > 0 ? (
                     <div className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {transactions.slice(0, 5).map((tx) => (
-                            <div key={tx.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-3">
-                                        {tx.type === 'income' ? (
-                                            <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center dark:bg-emerald-900/30">
-                                                <ArrowUpRight size={20} />
+                        {transactions.map((tx) => {
+                            const isManual = !tx.id.startsWith('session-') && !tx.id.startsWith('invoice-');
+                            return (
+                                <div key={tx.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className="flex items-center gap-3">
+                                            {tx.type === 'income' ? (
+                                                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center dark:bg-emerald-900/30">
+                                                    <ArrowUpRight size={20} />
+                                                </div>
+                                            ) : (
+                                                <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center dark:bg-red-900/30">
+                                                    <ArrowDownRight size={20} />
+                                                </div>
+                                            )}
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-sm ${tx.type === 'income'
+                                                        ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
+                                                        : 'bg-red-100 text-red-700 dark:bg-red-900/30'
+                                                        }`}>
+                                                        {tx.category}
+                                                    </span>
+                                                    <span className="text-[10px] text-gray-400 font-mono" dir="ltr">
+                                                        {new Date(tx.date).toLocaleDateString('ar-EG')}
+                                                    </span>
+                                                </div>
+                                                <h3 className="font-bold text-sm text-gray-900 dark:text-white truncate max-w-[180px]">
+                                                    {tx.description || '-'}
+                                                </h3>
                                             </div>
-                                        ) : (
-                                            <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center dark:bg-red-900/30">
-                                                <ArrowDownRight size={20} />
-                                            </div>
-                                        )}
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-sm ${tx.type === 'income'
-                                                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
-                                                    : 'bg-red-100 text-red-700 dark:bg-red-900/30'
-                                                    }`}>
-                                                    {tx.category}
-                                                </span>
-                                                <span className="text-[10px] text-gray-400 font-mono" dir="ltr">
-                                                    {new Date(tx.date).toLocaleDateString('ar-EG')}
-                                                </span>
-                                            </div>
-                                            <h3 className="font-bold text-sm text-gray-900 dark:text-white truncate max-w-[180px]">
-                                                {tx.description || '-'}
-                                            </h3>
                                         </div>
-                                    </div>
-                                    <div className="text-left">
-                                        <span className={`text-base font-black font-mono block ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
-                                            }`} dir="ltr">
-                                            {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
-                                        </span>
-                                        <div className="mt-1 flex justify-end">
-                                            {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
-                                            {tx.status === 'pending' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600"><Clock size={10} /> معلق</span>}
-                                            {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-400"><X size={10} /> ملغي</span>}
+                                        <div className="text-left flex flex-col items-end gap-2">
+                                            <span className={`text-base font-black font-mono block ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
+                                                }`} dir="ltr">
+                                                {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
+                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
+                                                {isManual && (
+                                                    <button
+                                                        onClick={() => onDelete(tx.id)}
+                                                        className="p-1 rounded bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                                                    >
+                                                        <Trash2 size={12} />
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 ) : (
                     <div className="py-12 text-center">

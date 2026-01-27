@@ -93,6 +93,16 @@ export const useFinance = () => {
         }
     };
 
+    const handleDeleteTransaction = async (id: string) => {
+        if (!window.confirm('هل أنت متأكد من حذف هذه المعاملة؟')) return;
+        try {
+            await financeService.deleteTransaction(id);
+            setManualTransactions(prev => prev.filter(t => t.id !== id));
+        } catch (error) {
+            console.error("Error deleting transaction", error);
+        }
+    };
+
     // Derived Data
     const currentMonth = new Date().toISOString().slice(0, 7);
 
@@ -248,6 +258,7 @@ export const useFinance = () => {
             handleConvertAllFixedExpenses,
             handleClearAllFixedExpenses,
             handleDeleteAllTransactions,
+            handleDeleteTransaction,
             refresh: fetchData
         }
     };

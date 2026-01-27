@@ -54,5 +54,9 @@ export const financeService = {
 
     async deleteAllTransactions() {
         return api.delete('/finance/transactions');
+    },
+
+    async deleteTransaction(id: string) {
+        return api.delete(`/finance/transactions/${id}`);
     }
 };

@@ -166,6 +166,7 @@ export const Finance = () => {
                 transactions={state.filteredTransactions}
                 totalCount={state.filteredTransactions.length}
                 onDeleteAll={actions.handleDeleteAllTransactions}
+                onDelete={actions.handleDeleteTransaction}
             />
         </div>
     );
