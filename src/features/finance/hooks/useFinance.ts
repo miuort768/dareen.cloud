@@ -85,12 +85,16 @@ export const useFinance = () => {
     };
 
     const handleDeleteAllTransactions = async () => {
-        if (!window.confirm('هل أنت متأكد من حذف جميع المعاملات اليدوية؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+        const confirmMsg = 'تحذير! هذا الإجراء سيقوم بحذف جميع المعاملات اليدوية نهائياً. هل أنت متأكد؟';
+        if (!window.confirm(confirmMsg)) return;
         try {
             await financeService.deleteAllTransactions();
             setManualTransactions([]);
+            alert('تم حذف جميع المعاملات اليدوية بنجاح');
+            fetchData(); // Refresh all data to stay in sync
         } catch (error) {
             console.error("Error deleting all transactions", error);
+            alert('حدث خطأ أثناء مسح السجل المالي');
         }
     };
 
@@ -118,9 +122,10 @@ export const useFinance = () => {
                 await financeService.deleteTransaction(id);
                 setManualTransactions(prev => prev.filter(t => t.id !== id));
             }
+            alert('تم الحذف بنجاح');
         } catch (error) {
             console.error("Error deleting transaction", error);
-            alert('حدث خطأ أثناء الحذف. يرجى التأكد من صلاحياتك.');
+            alert('حدث خطأ أثناء الحذف. يرجى التأكد من صلاحياتك أو اتصال السيرفر.');
         }
     };
 
