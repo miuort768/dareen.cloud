@@ -625,11 +625,9 @@ export const StudentInvoices = () => {
                         <thead>
                             <tr>
                                 <th className="text-center">اسم الطالب</th>
-                                <th className="text-center">البيان</th>
+                                <th className="text-center">عدد الحصص</th>
                                 <th className="text-center">المبلغ</th>
                                 <th className="text-center">تاريخ الإصدار</th>
-                                <th className="text-center">تاريخ الاستحقاق</th>
-                                <th className="text-center">وسيلة الدفع</th>
                                 <th className="text-center">الحالة</th>
                                 <th className="text-center">إجراءات</th>
                             </tr>
@@ -656,11 +654,16 @@ export const StudentInvoices = () => {
                                                 <div className="w-10 h-10 bg-primary-100 text-primary-700 flex items-center justify-center font-black text-sm dark:bg-primary-900/40 dark:text-primary-300 shadow-sm border border-primary-100 dark:border-primary-800">
                                                     {(inv.studentName || '?').charAt(0)}
                                                 </div>
-                                                <p className="font-bold text-gray-900 dark:text-white">{inv.studentName || 'اسم غير معروف'}</p>
+                                                <div className="text-right">
+                                                    <p className="font-bold text-gray-900 dark:text-white">{inv.studentName || 'اسم غير معروف'}</p>
+                                                    <p className="text-[10px] text-gray-400 font-bold truncate max-w-[150px]">{inv.description}</p>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td className="text-center text-xs font-bold font-mono italic text-gray-500">
-                                            {inv.description}
+                                        <td className="text-center">
+                                            <span className="bg-slate-100 dark:bg-slate-800 px-3 py-1 font-black text-xs border border-slate-200 dark:border-slate-700">
+                                                {inv.items?.length || 0}
+                                            </span>
                                         </td>
                                         <td className="text-center">
                                             <div className="inline-flex items-center gap-1 font-black text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-3 py-1 border border-slate-100 dark:border-slate-700 font-mono">
@@ -670,12 +673,6 @@ export const StudentInvoices = () => {
                                         </td>
                                         <td className="text-center font-mono text-xs font-black tracking-tighter" dir="ltr">
                                             {new Date(inv.date).toLocaleDateString('ar-EG')}
-                                        </td>
-                                        <td className="text-center font-mono text-xs font-black tracking-tighter" dir="ltr">
-                                            {new Date(inv.dueDate).toLocaleDateString('ar-EG')}
-                                        </td>
-                                        <td className="text-center">
-                                            <span className="text-[10px] font-black uppercase tracking-widest bg-gray-50 dark:bg-gray-800 px-2 py-1 border border-gray-100 dark:border-gray-700">{inv.paymentMethod || '-'}</span>
                                         </td>
                                         <td className="text-center">
                                             <button
