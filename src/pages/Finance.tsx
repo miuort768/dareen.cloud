@@ -32,21 +32,24 @@ export const Finance = () => {
         });
     };
 
-    const triggerDeleteOne = async (id: string) => {
-        // Find if it's a session or manual to customize message
-        const isSession = id.startsWith('session-');
-        const isInvoice = id.startsWith('invoice-');
+    const triggerDeleteOne = (id: string) => {
+        try {
+            const isSession = String(id || '').startsWith('session-');
+            const isInvoice = String(id || '').startsWith('invoice-');
 
-        let msg = 'هل أنت متأكد من حذف هذه المعاملة؟';
-        if (isSession) msg = 'هذه معاملة ناتجة عن "حصة دراسية". حذفها سيؤدي لحذف تسجيل الحصة من النظام بالكامل. هل أنت متأكد؟';
-        if (isInvoice) msg = 'هذه معاملة ناتجة عن "فاتورة معلمة". حذف المعاملة سيحذف الفاتورة. هل أنت متأكد؟';
+            let msg = 'هل أنت متأكد من حذف هذه المعاملة؟';
+            if (isSession) msg = 'هذه معاملة ناتجة عن "حصة دراسية". حذفها سيؤدي لحذف تسجيل الحصة من النظام بالكامل. هل أنت متأكد؟';
+            if (isInvoice) msg = 'هذه معاملة ناتجة عن "فاتورة معلمة". حذف المعاملة سيحذف الفاتورة. هل أنت متأكد؟';
 
-        setConfirmState({
-            isOpen: true,
-            title: 'تأكيد الحذف',
-            message: msg,
-            onConfirm: () => actions.handleDeleteTransaction(id)
-        });
+            setConfirmState({
+                isOpen: true,
+                title: 'تأكيد الحذف',
+                message: msg,
+                onConfirm: () => actions.handleDeleteTransaction(id)
+            });
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     if (state.loading) {

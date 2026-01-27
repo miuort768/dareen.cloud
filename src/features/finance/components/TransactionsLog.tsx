@@ -91,7 +91,11 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <span className="text-sm text-gray-600 dark:text-gray-400 font-mono" dir="ltr">
-                                                {new Date(tx.date).toLocaleDateString('ar-EG')}
+                                                {(() => {
+                                                    try {
+                                                        return tx.date ? new Date(tx.date).toLocaleDateString('ar-EG') : '-';
+                                                    } catch (e) { return '-'; }
+                                                })()}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
@@ -161,7 +165,11 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                                         {tx.category}
                                                     </span>
                                                     <span className="text-[10px] text-gray-400 font-mono" dir="ltr">
-                                                        {new Date(tx.date).toLocaleDateString('ar-EG')}
+                                                        {(() => {
+                                                            try {
+                                                                return tx.date ? new Date(tx.date).toLocaleDateString('ar-EG') : '-';
+                                                            } catch (e) { return '-'; }
+                                                        })()}
                                                     </span>
                                                 </div>
                                                 <h3 className="font-bold text-sm text-gray-900 dark:text-white truncate max-w-[180px]">
