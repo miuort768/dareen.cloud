@@ -134,10 +134,10 @@ export const useFinance = () => {
         const totalIncome = automatedIncome + manualIncome;
 
         const monthIncome = sessions
-            .filter(s => s.status === 'completed' && s.date?.startsWith(currentMonth))
+            .filter(s => s.status === 'completed' && (s.date || '').startsWith(currentMonth))
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
             manualTransactions
-                .filter(t => t.type === 'income' && t.date.startsWith(currentMonth))
+                .filter(t => t.type === 'income' && (t.date || '').startsWith(currentMonth))
                 .reduce((sum, t) => sum + t.amount, 0);
 
         const automatedExpenses = invoices
@@ -151,10 +151,10 @@ export const useFinance = () => {
         const totalExpenses = automatedExpenses + manualExpenses;
 
         const monthExpenses = invoices
-            .filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && inv.date?.startsWith(currentMonth))
+            .filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && (inv.date || '').startsWith(currentMonth))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0) +
             manualTransactions
-                .filter(t => t.type === 'expense' && t.date.startsWith(currentMonth))
+                .filter(t => t.type === 'expense' && (t.date || '').startsWith(currentMonth))
                 .reduce((sum, t) => sum + t.amount, 0);
 
         const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + item.amount, 0);
@@ -207,13 +207,16 @@ export const useFinance = () => {
             const matchesSearch = t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 t.category.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesType = filterType === 'all' || t.type === filterType;
-            const matchesMonth = filterMonth === 'all' || t.date.startsWith(filterMonth);
+            const matchesMonth = filterMonth === 'all' || (t.date || '').startsWith(filterMonth);
             return matchesSearch && matchesType && matchesMonth;
         });
     }, [allTransactions, searchTerm, filterType, filterMonth]);
 
     const uniqueMonths = useMemo(() => {
-        return Array.from(new Set(allTransactions.map(t => t.date.slice(0, 7)))).sort().reverse();
+        return Array.from(new Set(allTransactions.map(t => (t.date || '').slice(0, 7))))
+            .filter(m => m.length === 7)
+            .sort()
+            .reverse();
     }, [allTransactions]);
 
     const chartData = useMemo(() => {

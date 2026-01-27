@@ -215,7 +215,7 @@ export const Finance = () => {
                 onConfirm={confirmState.onConfirm}
                 title={confirmState.title}
                 message={confirmState.message}
-                confirmText="نعم، حذف الجميل"
+                confirmText="نعم، حذف الكل"
                 cancelText="إلغاء"
                 isDestructive={true}
             />
