@@ -128,3 +128,16 @@ self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (event) => {
     event.waitUntil(self.clients.claim());
 });
+
+// Basic fetch handler (Network-first)
+// This ensures the PWA is considered 'offline-capable' by browsers
+self.addEventListener('fetch', (event) => {
+    // Basic network-first strategy for main assets
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).catch(() => {
+                return caches.match('/');
+            })
+        );
+    }
+});
