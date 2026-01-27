@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { financeService } from '../services/financeService';
+import { api } from '../../../lib/api';
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types';
 import { CHART_COLORS } from '../types';
 
@@ -94,13 +95,32 @@ export const useFinance = () => {
     };
 
     const handleDeleteTransaction = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذه المعاملة؟')) return;
+        const isSession = id.startsWith('session-');
+        const isInvoice = id.startsWith('invoice-');
+        const actualId = id.replace('session-', '').replace('invoice-', '');
+
+        const confirmMsg = isSession
+            ? 'هذه معاملة ناتجة عن "حصة دراسية". حذفها سيؤدي لحذف تسجيل الحصة من النظام بالكامل. هل أنت متأكد؟'
+            : isInvoice
+                ? 'هذه معاملة ناتجة عن "فاتورة معلمة". حذف المعاملة سيحذف الفاتورة. هل أنت متأكد؟'
+                : 'هل أنت متأكد من حذف هذه المعاملة؟';
+
+        if (!window.confirm(confirmMsg)) return;
+
         try {
-            await financeService.deleteTransaction(id);
-            setManualTransactions(prev => prev.filter(t => t.id !== id));
+            if (isSession) {
+                await api.delete(`/sessions/${actualId}`);
+                setSessions(prev => prev.filter(s => s.id !== actualId));
+            } else if (isInvoice) {
+                await api.delete(`/invoices/teacher/${actualId}`);
+                setInvoices(prev => prev.filter(inv => inv.id !== actualId));
+            } else {
+                await financeService.deleteTransaction(id);
+                setManualTransactions(prev => prev.filter(t => t.id !== id));
+            }
         } catch (error) {
             console.error("Error deleting transaction", error);
-            alert('حدث خطأ أثناء الاتصال بالسيرفر لحذف المعاملة');
+            alert('حدث خطأ أثناء الحذف. يرجى التأكد من صلاحياتك.');
         }
     };
 

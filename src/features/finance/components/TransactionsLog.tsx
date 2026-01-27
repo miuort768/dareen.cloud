@@ -61,8 +61,6 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {transactions.length > 0 ? (
                             transactions.map((tx) => {
-                                const txIdStr = String(tx.id || '');
-                                const isManual = !txIdStr.startsWith('session-') && !txIdStr.startsWith('invoice-');
                                 return (
                                     <tr key={tx.id} className="hover:bg-primary-50 dark:hover:bg-gray-800/50 transition-colors">
                                         <td className="px-6 py-4 text-center">
@@ -108,15 +106,13 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                             {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400"><X size={12} /> ملغي</span>}
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            {isManual && (
-                                                <button
-                                                    onClick={() => handleDelete(tx.id)}
-                                                    className="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all mx-auto shadow-sm"
-                                                    title="حذف المعاملة"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            )}
+                                            <button
+                                                onClick={() => handleDelete(tx.id)}
+                                                className="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all mx-auto shadow-sm"
+                                                title="حذف المعاملة"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
                                         </td>
                                     </tr>
                                 );
@@ -143,8 +139,6 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                 {transactions.length > 0 ? (
                     <div className="divide-y divide-gray-100 dark:divide-gray-800">
                         {transactions.map((tx) => {
-                            const txIdStr = String(tx.id || '');
-                            const isManual = !txIdStr.startsWith('session-') && !txIdStr.startsWith('invoice-');
                             return (
                                 <div key={tx.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                                     <div className="flex items-center justify-between mb-3">
@@ -182,14 +176,12 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                             </span>
                                             <div className="flex items-center gap-2">
                                                 {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
-                                                {isManual && (
-                                                    <button
-                                                        onClick={() => handleDelete(tx.id)}
-                                                        className="p-2.5 rounded bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-100"
-                                                    >
-                                                        <Trash2 size={16} />
-                                                    </button>
-                                                )}
+                                                <button
+                                                    onClick={() => handleDelete(tx.id)}
+                                                    className="p-2.5 rounded bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-100"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
