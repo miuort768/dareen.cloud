@@ -71,28 +71,15 @@ export const InstallPWA = () => {
 
     return (
         <>
-            {/* Premium Sophisticated Trigger */}
+            {/* Reverting to the original Pulsing Bell Trigger as requested */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-6 right-6 z-[100] group"
-                aria-label="تثبيت التطبيق"
+                className="fixed bottom-6 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow transition-all duration-500 hover:scale-110"
+                title="تثبيت المنصة"
             >
-                <div className="relative flex items-center justify-center">
-                    {/* Glowing background effect */}
-                    <div className="absolute inset-0 bg-blue-600 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
-
-                    {/* The actual button */}
-                    <div className="relative w-12 h-12 bg-white dark:bg-gray-900 border border-blue-100 dark:border-blue-900/50 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <Smartphone size={18} className="text-blue-600 dark:text-blue-400 group-hover:rotate-12 transition-transform duration-500" />
-
-                        {/* Little download arrow */}
-                        <div className="absolute top-2 right-2 flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                        </div>
-                    </div>
-                </div>
+                <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20"></div>
+                <Bell size={20} className="relative z-10 group-hover:rotate-12 transition-transform" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full border-2 border-white"></span>
             </button>
 
             {/* Premium Installation Modal */}
