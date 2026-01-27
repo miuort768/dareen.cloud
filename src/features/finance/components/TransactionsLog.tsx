@@ -8,10 +8,18 @@ interface TransactionsLogProps {
     transactions: Transaction[];
     totalCount: number;
     onDeleteAll: () => void;
-    onDelete: (id: string) => void;
+    onDelete: (id: string) => Promise<void>;
 }
 
 export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, totalCount, onDeleteAll, onDelete }) => {
+    const handleDelete = async (id: string) => {
+        try {
+            await onDelete(id);
+        } catch (error) {
+            alert('حدث خطأ أثناء الحذف');
+        }
+    };
+
     return (
         <div className="bg-white border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-800">
             <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between dark:border-gray-800">
@@ -53,7 +61,8 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {transactions.length > 0 ? (
                             transactions.map((tx) => {
-                                const isManual = !tx.id.startsWith('session-') && !tx.id.startsWith('invoice-');
+                                const txIdStr = String(tx.id || '');
+                                const isManual = !txIdStr.startsWith('session-') && !txIdStr.startsWith('invoice-');
                                 return (
                                     <tr key={tx.id} className="hover:bg-primary-50 dark:hover:bg-gray-800/50 transition-colors">
                                         <td className="px-6 py-4 text-center">
@@ -101,11 +110,11 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                         <td className="px-6 py-4 text-center">
                                             {isManual && (
                                                 <button
-                                                    onClick={() => onDelete(tx.id)}
-                                                    className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all mx-auto"
+                                                    onClick={() => handleDelete(tx.id)}
+                                                    className="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all mx-auto shadow-sm"
                                                     title="حذف المعاملة"
                                                 >
-                                                    <Trash2 size={14} />
+                                                    <Trash2 size={16} />
                                                 </button>
                                             )}
                                         </td>
@@ -134,7 +143,8 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                 {transactions.length > 0 ? (
                     <div className="divide-y divide-gray-100 dark:divide-gray-800">
                         {transactions.map((tx) => {
-                            const isManual = !tx.id.startsWith('session-') && !tx.id.startsWith('invoice-');
+                            const txIdStr = String(tx.id || '');
+                            const isManual = !txIdStr.startsWith('session-') && !txIdStr.startsWith('invoice-');
                             return (
                                 <div key={tx.id} className="p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                                     <div className="flex items-center justify-between mb-3">
@@ -174,10 +184,10 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                                 {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
                                                 {isManual && (
                                                     <button
-                                                        onClick={() => onDelete(tx.id)}
-                                                        className="p-1 rounded bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all"
+                                                        onClick={() => handleDelete(tx.id)}
+                                                        className="p-2.5 rounded bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm border border-red-100"
                                                     >
-                                                        <Trash2 size={12} />
+                                                        <Trash2 size={16} />
                                                     </button>
                                                 )}
                                             </div>

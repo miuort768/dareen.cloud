@@ -100,6 +100,7 @@ export const useFinance = () => {
             setManualTransactions(prev => prev.filter(t => t.id !== id));
         } catch (error) {
             console.error("Error deleting transaction", error);
+            alert('حدث خطأ أثناء الاتصال بالسيرفر لحذف المعاملة');
         }
     };
 
