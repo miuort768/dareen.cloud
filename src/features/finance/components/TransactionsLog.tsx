@@ -8,16 +8,12 @@ interface TransactionsLogProps {
     transactions: Transaction[];
     totalCount: number;
     onDeleteAll: () => void;
-    onDelete: (id: string) => Promise<void>;
+    onDelete: (id: string) => void;
 }
 
 export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, totalCount, onDeleteAll, onDelete }) => {
-    const handleDelete = async (id: string) => {
-        try {
-            await onDelete(id);
-        } catch (error) {
-            alert('حدث خطأ أثناء الحذف');
-        }
+    const handleDelete = (id: string) => {
+        onDelete(id);
     };
 
     return (
