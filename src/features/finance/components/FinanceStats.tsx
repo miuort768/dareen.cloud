@@ -15,42 +15,48 @@ interface FinanceStatsProps {
 }
 
 export const FinanceStats: React.FC<FinanceStatsProps> = ({
-    totalIncome,
-    monthIncome,
-    totalExpenses,
-    monthExpenses,
-    totalFixedExpenses,
-    netProfit,
-    monthProfit
+    totalIncome = 0,
+    monthIncome = 0,
+    totalExpenses = 0,
+    monthExpenses = 0,
+    totalFixedExpenses = 0,
+    netProfit = 0,
+    monthProfit = 0
 }) => {
+    // Helper for safe number formatting
+    const format = (val: any) => {
+        const num = Number(val);
+        return isNaN(num) ? '0' : num.toLocaleString();
+    };
+
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <StatsCard
                 title="إجمالي الإيرادات"
-                value={totalIncome.toLocaleString() + ' ' + CURRENCY_SYMBOL}
+                value={format(totalIncome) + ' ' + CURRENCY_SYMBOL}
                 icon={TrendingUp}
                 color="emerald"
-                trend={'هذا الشهر: ' + monthIncome.toLocaleString()}
+                trend={'هذا الشهر: ' + format(monthIncome)}
             />
             <StatsCard
                 title="مصاريف المعلمات"
-                value={totalExpenses.toLocaleString() + ' ' + CURRENCY_SYMBOL}
+                value={format(totalExpenses) + ' ' + CURRENCY_SYMBOL}
                 icon={TrendingDown}
                 color="rose"
-                trend={'هذا الشهر: ' + monthExpenses.toLocaleString()}
+                trend={'هذا الشهر: ' + format(monthExpenses)}
             />
             <StatsCard
                 title="مصاريف ثابتة"
-                value={totalFixedExpenses.toLocaleString() + ' ' + CURRENCY_SYMBOL}
+                value={format(totalFixedExpenses) + ' ' + CURRENCY_SYMBOL}
                 icon={Wallet}
                 color="amber"
             />
             <StatsCard
                 title="صافي الربح"
-                value={netProfit.toLocaleString() + ' ' + CURRENCY_SYMBOL}
+                value={format(netProfit) + ' ' + CURRENCY_SYMBOL}
                 icon={DollarSign}
                 color="indigo"
-                trend={'هذا الشهر: ' + monthProfit.toLocaleString()}
+                trend={'هذا الشهر: ' + format(monthProfit)}
             />
         </div>
     );
