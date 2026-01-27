@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { X, Printer } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSettings } from '../../../context/AppContext';
 
