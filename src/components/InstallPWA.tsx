@@ -71,114 +71,131 @@ export const InstallPWA = () => {
 
     return (
         <>
-            {/* Pulsing Bell Trigger */}
+            {/* Premium Sophisticated Trigger */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-4 lg:bottom-5 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow hover:scale-110 transition-all duration-500"
-                title="تثبيت المنصة"
+                className="fixed bottom-6 right-6 z-[100] group"
+                aria-label="تثبيت التطبيق"
             >
-                <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20"></div>
-                <Bell size={20} className="relative z-10 group-hover:rotate-12 transition-transform" />
-                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 rounded-full border-2 border-white"></span>
+                <div className="relative flex items-center justify-center">
+                    {/* Glowing background effect */}
+                    <div className="absolute inset-0 bg-blue-600 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
+
+                    {/* The actual button */}
+                    <div className="relative w-12 h-12 bg-white dark:bg-gray-900 border border-blue-100 dark:border-blue-900/50 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Smartphone size={18} className="text-blue-600 dark:text-blue-400 group-hover:rotate-12 transition-transform duration-500" />
+
+                        {/* Little download arrow */}
+                        <div className="absolute top-2 right-2 flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </div>
+                    </div>
+                </div>
             </button>
 
             {/* Premium Installation Modal */}
             <div className={cn(
-                "fixed inset-0 z-[110] flex items-center justify-center p-4 transition-all duration-500",
-                showModal ? "opacity-100 pointer-events-auto backdrop-blur-md bg-gray-950/40" : "opacity-0 pointer-events-none"
+                "fixed inset-0 z-[110] flex items-center justify-center p-6 transition-all duration-500",
+                showModal ? "opacity-100 pointer-events-auto backdrop-blur-sm bg-gray-950/20" : "opacity-0 pointer-events-none"
             )}>
+                <div
+                    className="absolute inset-0 cursor-pointer"
+                    onClick={() => setShowModal(false)}
+                />
+
                 <div className={cn(
-                    "bg-white dark:bg-gray-900 w-full max-w-sm rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 transform",
-                    showModal ? "translate-y-0 scale-100" : "translate-y-12 scale-95"
+                    "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl w-full max-w-[340px] rounded-[2.5rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-white/20 dark:border-white/5 transition-all duration-700 transform",
+                    showModal ? "translate-y-0 scale-100 rotate-0" : "translate-y-20 scale-90 rotate-2"
                 )}>
-                    {/* Header with Background Decorative elements */}
-                    <div className="relative h-32 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 p-6 flex flex-col justify-end overflow-hidden">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-xl"></div>
+                    {/* Sleek Header */}
+                    <div className="relative p-6 pt-10 flex flex-col items-center text-center overflow-hidden">
+                        {/* Decorative background circle */}
+                        <div className="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+                        <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl"></div>
 
-                        <button
-                            onClick={() => setShowModal(false)}
-                            className="absolute top-4 left-4 p-1.5 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-                        >
-                            <X size={18} />
-                        </button>
-
-                        <div className="relative z-10 inline-flex items-center gap-2 px-2.5 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 w-fit mb-2">
-                            <Sparkles size={12} className="text-gold" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.1em] text-white">تطبيق معهد دارين</span>
+                        <div className="relative mb-4">
+                            <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 transform -rotate-3 group-hover:rotate-0 transition-transform">
+                                <Download size={28} className="text-white" />
+                            </div>
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-white dark:bg-gray-800 rounded-lg shadow-md flex items-center justify-center">
+                                <ShieldCheck size={14} className="text-emerald-500" />
+                            </div>
                         </div>
-                        <h2 className="text-lg md:text-xl font-black text-white leading-tight">تثبيت المنصة على جهازك</h2>
+
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-3">
+                            <Sparkles size={10} className="text-blue-600" />
+                            <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 dark:text-blue-400">تطبيق الموبايل</span>
+                        </div>
+
+                        <h2 className="text-xl font-black text-gray-900 dark:text-white mb-2 leading-tight">تثبيت معهد دارين</h2>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+                            استمتع بتجربة أسرع، إشعارات فورية، ووصول دائم لدروسك بلمسة واحدة.
+                        </p>
                     </div>
 
-                    <div className="p-5 space-y-4">
-                        <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm leading-relaxed font-medium text-right">
-                            استمتع بتجربة تعليمية أسرع وأفضل من خلال تثبيت تطبيق معهد دارين. ستحصل على وصول فوري، إشعارات فورية، وأداء أكثر استقراراً.
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-2xl border border-blue-100/50 dark:border-blue-800/30 flex flex-col items-center gap-2 text-center">
-                                <div className="p-1.5 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-blue-600">
-                                    <Smartphone size={20} />
+                    <div className="px-6 pb-8 space-y-5">
+                        {/* Feature Tags */}
+                        <div className="flex flex-wrap justify-center gap-2">
+                            {[
+                                { icon: Smartphone, label: 'خفيف جداً' },
+                                { icon: Bell, label: 'إشعارات' },
+                                { icon: ShieldCheck, label: 'آمن تماماً' }
+                            ].map((feature, i) => (
+                                <div key={i} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800">
+                                    <feature.icon size={12} className="text-blue-500" />
+                                    <span className="text-[10px] font-bold text-gray-600 dark:text-gray-400">{feature.label}</span>
                                 </div>
-                                <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">للهواتف</span>
-                            </div>
-                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100/50 dark:border-emerald-800/30 flex flex-col items-center gap-2 text-center">
-                                <div className="p-1.5 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-emerald-600">
-                                    <Monitor size={20} />
-                                </div>
-                                <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300">للكمبيوتر</span>
-                            </div>
+                            ))}
                         </div>
 
-                        <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
-                            <ShieldCheck className="text-emerald-500 shrink-0" size={16} />
-                            <p className="text-[9px] text-gray-500 font-bold">تطبيق آمن ومعتمد وخفيف المساحة على الذاكرة</p>
-                        </div>
-
-                        <div className="flex flex-col gap-2 pt-1">
-                            {isIOS ? (
-                                <div className="space-y-3">
-                                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
-                                        <p className="text-xs font-bold text-blue-900 dark:text-blue-300 mb-3 text-right">خطوات التثبيت على iPhone/iPad:</p>
-                                        <ol className="text-xs text-blue-800 dark:text-blue-400 space-y-2 text-right">
-                                            <li className="flex items-start gap-2">
-                                                <span className="font-black">1.</span>
-                                                <span>اضغط على زر <strong>المشاركة</strong> 📤 في شريط Safari السفلي</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="font-black">2.</span>
-                                                <span>اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong> ➕</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="font-black">3.</span>
-                                                <span>اضغط <strong>"إضافة"</strong> في الزاوية العلوية ✅</span>
-                                            </li>
-                                        </ol>
+                        {isIOS ? (
+                            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                <div className="bg-blue-50/50 dark:bg-blue-900/10 p-5 rounded-3xl border border-blue-100 dark:border-blue-800/30 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 p-3 opacity-10">
+                                        <Smartphone size={40} />
                                     </div>
-                                    <button
-                                        onClick={() => setShowModal(false)}
-                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-                                    >
-                                        <span>فهمت، شكراً!</span>
-                                    </button>
+                                    <p className="text-xs font-black text-blue-900 dark:text-blue-300 mb-3 flex items-center gap-2 justify-end">
+                                        خطوات التثبيت للآيفون
+                                    </p>
+                                    <div className="space-y-2.5">
+                                        {[
+                                            { t: 'اضغط على زر المشاركة', i: '📤' },
+                                            { t: 'اختر "إضافة للشاشة الرئيسية"', i: '➕' },
+                                            { t: 'اضغط "إضافة" في الأعلى', i: '✅' }
+                                        ].map((step, i) => (
+                                            <div key={i} className="flex items-center justify-end gap-3 text-[11px] font-bold text-blue-700/80 dark:text-blue-400/80">
+                                                <span>{step.t} {step.i}</span>
+                                                <span className="w-5 h-5 flex items-center justify-center bg-white dark:bg-gray-800 rounded-full shadow-sm text-[9px] font-black">{i + 1}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            ) : (
-                                <>
-                                    <button
-                                        onClick={handleInstall}
-                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-                                    >
-                                        <Download size={18} />
-                                        <span>تثبيت الآن مجاناً</span>
-                                    </button>
-                                    <button
-                                        onClick={() => setShowModal(false)}
-                                        className="w-full py-2 text-gray-400 hover:text-gray-600 font-bold text-[11px] transition-colors"
-                                    >
-                                        ربما لاحقاً
-                                    </button>
-                                </>
-                            )}
-                        </div>
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-300 text-sm"
+                                >
+                                    حسناً، بدأت التنفيذ
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-3">
+                                <button
+                                    onClick={handleInstall}
+                                    className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-black rounded-2xl shadow-lg shadow-blue-500/20 hover:scale-[1.02] hover:shadow-blue-500/30 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <Download size={18} />
+                                    <span>تثبيت التطبيق الآن</span>
+                                </button>
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="w-full py-2 text-gray-400 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-300 font-bold text-xs transition-colors"
+                                >
+                                    ليس الآن، شكراً
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -186,23 +203,8 @@ export const InstallPWA = () => {
     );
 };
 
-// Helper for icons used in the modal
 const Sparkles = ({ size, className }: { size: number, className?: string }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
         <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-        <path d="m5 3 1 1" />
-        <path d="m19 17 1 1" />
-        <path d="m19 3 1 1" />
-        <path d="m5 17 1 1" />
     </svg>
 );
