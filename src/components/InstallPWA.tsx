@@ -20,6 +20,7 @@ export const InstallPWA = () => {
         setIsIOS(isIOSDevice);
 
         const handler = (e: any) => {
+            console.log('PWA: beforeinstallprompt event fired');
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
             // Stash the event so it can be triggered later.
@@ -31,10 +32,16 @@ export const InstallPWA = () => {
 
         // Check if already installed
         if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('PWA: App is already in standalone mode');
             setShowTrigger(false);
         } else if (isIOSDevice && !(window.navigator as any).standalone) {
+            console.log('PWA: Running on iOS and not standalone');
             // For iOS, show trigger if not already installed
             setShowTrigger(true);
+        } else {
+            // For testing/fallback: if we want to force show for now, we can.
+            // But usually we wait for the event.
+            console.log('PWA: Waiting for install prompt event...');
         }
 
         return () => window.removeEventListener('beforeinstallprompt', handler);
@@ -43,23 +50,23 @@ export const InstallPWA = () => {
     const handleInstall = async () => {
         if (isIOS) {
             // For iOS, just show the modal with instructions
-            // The modal will display manual steps
             return;
         }
 
-        if (!deferredPrompt) return;
+        if (!deferredPrompt) {
+            console.error('PWA: No install prompt available');
+            return;
+        }
 
         // Show the prompt
         deferredPrompt.prompt();
 
         // Wait for the user to respond to the prompt
         const { outcome } = await deferredPrompt.userChoice;
+        console.log(`PWA: User choice outcome: ${outcome}`);
 
         if (outcome === 'accepted') {
-            // console.log('User accepted the install prompt');
             setShowTrigger(false);
-        } else {
-            // console.log('User dismissed the install prompt');
         }
 
         // We've used the prompt, and can't use it again, throw it away
@@ -74,7 +81,7 @@ export const InstallPWA = () => {
             {/* Reverting to the original Pulsing Bell Trigger as requested */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-6 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce-slow transition-all duration-500 hover:scale-110"
+                className="fixed bottom-6 right-6 z-[100] w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-full shadow-[0_8px_32px_rgba(37,99,235,0.4)] flex items-center justify-center group animate-bounce transition-all duration-500 hover:scale-110"
                 title="تثبيت المنصة"
             >
                 <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20"></div>
