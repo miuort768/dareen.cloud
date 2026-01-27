@@ -77,7 +77,7 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                                 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
                                                 : 'bg-red-100 text-red-700 dark:bg-red-900/30'
                                                 }`}>
-                                                {tx.category}
+                                                {tx.category || 'غير مصنف'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
@@ -97,13 +97,14 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                         <td className="px-6 py-4 text-center">
                                             <span className={`text-base font-bold font-mono ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
                                                 }`} dir="ltr">
-                                                {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span>
+                                                {tx.type === 'income' ? '+' : '-'}{(Number(tx.amount) || 0).toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span>
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600"><CheckCircle2 size={12} /> مكتمل</span>}
                                             {tx.status === 'pending' && <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600"><Clock size={12} /> معلق</span>}
                                             {tx.status === 'cancelled' && <span className="inline-flex items-center gap-1 text-xs font-bold text-gray-400"><X size={12} /> ملغي</span>}
+                                            {!tx.status && <span className="text-xs text-gray-400">-</span>}
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <button
@@ -158,7 +159,7 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                                         ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30'
                                                         : 'bg-red-100 text-red-700 dark:bg-red-900/30'
                                                         }`}>
-                                                        {tx.category}
+                                                        {tx.category || 'غير مصنف'}
                                                     </span>
                                                     <span className="text-[10px] text-gray-400 font-mono" dir="ltr">
                                                         {(() => {
@@ -176,7 +177,7 @@ export const TransactionsLog: React.FC<TransactionsLogProps> = ({ transactions, 
                                         <div className="text-left flex flex-col items-end gap-2">
                                             <span className={`text-base font-black font-mono block ${tx.type === 'income' ? 'text-emerald-600' : 'text-red-600'
                                                 }`} dir="ltr">
-                                                {tx.type === 'income' ? '+' : '-'}{tx.amount.toLocaleString()}
+                                                {tx.type === 'income' ? '+' : '-'}{(Number(tx.amount) || 0).toLocaleString()}
                                             </span>
                                             <div className="flex items-center gap-2">
                                                 {tx.status === 'completed' && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={10} /> مكتمل</span>}
