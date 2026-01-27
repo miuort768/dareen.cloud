@@ -85,8 +85,6 @@ export const useFinance = () => {
     };
 
     const handleDeleteAllTransactions = async () => {
-        const confirmMsg = 'تحذير! هذا الإجراء سيقوم بحذف جميع المعاملات اليدوية نهائياً. هل أنت متأكد؟';
-        if (!window.confirm(confirmMsg)) return;
         try {
             await financeService.deleteAllTransactions();
             setManualTransactions([]);
@@ -102,14 +100,6 @@ export const useFinance = () => {
         const isSession = id.startsWith('session-');
         const isInvoice = id.startsWith('invoice-');
         const actualId = id.replace('session-', '').replace('invoice-', '');
-
-        const confirmMsg = isSession
-            ? 'هذه معاملة ناتجة عن "حصة دراسية". حذفها سيؤدي لحذف تسجيل الحصة من النظام بالكامل. هل أنت متأكد؟'
-            : isInvoice
-                ? 'هذه معاملة ناتجة عن "فاتورة معلمة". حذف المعاملة سيحذف الفاتورة. هل أنت متأكد؟'
-                : 'هل أنت متأكد من حذف هذه المعاملة؟';
-
-        if (!window.confirm(confirmMsg)) return;
 
         try {
             if (isSession) {

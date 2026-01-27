@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { DollarSign, TrendingUp, Search, Filter, Calendar } from 'lucide-react';
 import { Skeleton } from '../components/ui/Skeleton';
+import { ConfirmModal } from '../components/ui/ConfirmModal';
 import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
@@ -9,6 +11,43 @@ import { useFinance } from '../features/finance/hooks/useFinance';
 
 export const Finance = () => {
     const { state, actions } = useFinance();
+    const [confirmState, setConfirmState] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
+
+    const triggerDeleteAll = () => {
+        setConfirmState({
+            isOpen: true,
+            title: 'تأكيد مسح السجل',
+            message: 'هل أنت متأكد من حذف جميع المعاملات اليدوية؟ لا يمكن التراجع عن هذا الإجراء وسيتم تصفير السجل المالي.',
+            onConfirm: actions.handleDeleteAllTransactions
+        });
+    };
+
+    const triggerDeleteOne = async (id: string) => {
+        // Find if it's a session or manual to customize message
+        const isSession = id.startsWith('session-');
+        const isInvoice = id.startsWith('invoice-');
+
+        let msg = 'هل أنت متأكد من حذف هذه المعاملة؟';
+        if (isSession) msg = 'هذه معاملة ناتجة عن "حصة دراسية". حذفها سيؤدي لحذف تسجيل الحصة من النظام بالكامل. هل أنت متأكد؟';
+        if (isInvoice) msg = 'هذه معاملة ناتجة عن "فاتورة معلمة". حذف المعاملة سيحذف الفاتورة. هل أنت متأكد؟';
+
+        setConfirmState({
+            isOpen: true,
+            title: 'تأكيد الحذف',
+            message: msg,
+            onConfirm: () => actions.handleDeleteTransaction(id)
+        });
+    };
 
     if (state.loading) {
         return (
@@ -165,8 +204,20 @@ export const Finance = () => {
             <TransactionsLog
                 transactions={state.filteredTransactions}
                 totalCount={state.filteredTransactions.length}
-                onDeleteAll={actions.handleDeleteAllTransactions}
-                onDelete={actions.handleDeleteTransaction}
+                onDeleteAll={triggerDeleteAll}
+                onDelete={triggerDeleteOne}
+            />
+
+            {/* Premium Confirm Modal */}
+            <ConfirmModal
+                isOpen={confirmState.isOpen}
+                onClose={() => setConfirmState(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={confirmState.onConfirm}
+                title={confirmState.title}
+                message={confirmState.message}
+                confirmText="نعم، حذف الجميل"
+                cancelText="إلغاء"
+                isDestructive={true}
             />
         </div>
     );
