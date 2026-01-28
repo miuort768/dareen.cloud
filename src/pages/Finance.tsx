@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DollarSign, TrendingUp, Search, Filter, Calendar } from 'lucide-react';
-import { Skeleton } from '../components/ui/Skeleton';
+// import { Skeleton } from '../components/ui/Skeleton'; // Removed for now
 import { ConfirmModal } from '../components/ui/ConfirmModal';
 import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
