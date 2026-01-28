@@ -139,12 +139,12 @@ export const Finance = () => {
                 onAdd={actions.handleAddTransaction}
             />
 
-            {/* Charts Section */}
-            <FinanceCharts
+            {/* Charts Section - Temporarily Disabled for Debugging */}
+            {/* <FinanceCharts
                 monthlyData={state.monthlyData}
                 pieData={state.pieData}
                 totalExpenses={state.totalExpenses}
-            />
+            /> */}
 
             {/* Filters */}
             <div className="bg-white p-4 shadow-sm border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
