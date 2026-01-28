@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import { financeService } from '../services/financeService';
-import { api } from '../../../lib/api';
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types';
 import { CHART_COLORS } from '../types';
 
@@ -85,37 +84,12 @@ export const useFinance = () => {
     };
 
     const handleDeleteAllTransactions = async () => {
+        if (!window.confirm('هل أنت متأكد من حذف جميع المعاملات اليدوية؟ لا يمكن التراجع عن هذا الإجراء.')) return;
         try {
             await financeService.deleteAllTransactions();
             setManualTransactions([]);
-            alert('تم حذف جميع المعاملات اليدوية بنجاح');
-            fetchData(); // Refresh all data to stay in sync
         } catch (error) {
             console.error("Error deleting all transactions", error);
-            alert('حدث خطأ أثناء مسح السجل المالي');
-        }
-    };
-
-    const handleDeleteTransaction = async (id: string) => {
-        const isSession = id.startsWith('session-');
-        const isInvoice = id.startsWith('invoice-');
-        const actualId = id.replace('session-', '').replace('invoice-', '');
-
-        try {
-            if (isSession) {
-                await api.delete(`/sessions/${actualId}`);
-                setSessions(prev => prev.filter(s => s.id !== actualId));
-            } else if (isInvoice) {
-                await api.delete(`/invoices/teacher/${actualId}`);
-                setInvoices(prev => prev.filter(inv => inv.id !== actualId));
-            } else {
-                await financeService.deleteTransaction(id);
-                setManualTransactions(prev => prev.filter(t => t.id !== id));
-            }
-            alert('تم الحذف بنجاح');
-        } catch (error) {
-            console.error("Error deleting transaction", error);
-            alert('حدث خطأ أثناء الحذف. يرجى التأكد من صلاحياتك أو اتصال السيرفر.');
         }
     };
 
@@ -134,10 +108,10 @@ export const useFinance = () => {
         const totalIncome = automatedIncome + manualIncome;
 
         const monthIncome = sessions
-            .filter(s => s.status === 'completed' && (s.date || '').startsWith(currentMonth))
+            .filter(s => s.status === 'completed' && s.date?.startsWith(currentMonth))
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
             manualTransactions
-                .filter(t => t.type === 'income' && (t.date || '').startsWith(currentMonth))
+                .filter(t => t.type === 'income' && t.date.startsWith(currentMonth))
                 .reduce((sum, t) => sum + t.amount, 0);
 
         const automatedExpenses = invoices
@@ -151,10 +125,10 @@ export const useFinance = () => {
         const totalExpenses = automatedExpenses + manualExpenses;
 
         const monthExpenses = invoices
-            .filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && (inv.date || '').startsWith(currentMonth))
+            .filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && inv.date?.startsWith(currentMonth))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0) +
             manualTransactions
-                .filter(t => t.type === 'expense' && (t.date || '').startsWith(currentMonth))
+                .filter(t => t.type === 'expense' && t.date.startsWith(currentMonth))
                 .reduce((sum, t) => sum + t.amount, 0);
 
         const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + item.amount, 0);
@@ -197,11 +171,7 @@ export const useFinance = () => {
                 description: `فاتورة: ${inv.teacher}`,
                 status: inv.status === 'مدفوعة' ? 'completed' : inv.status === 'قيد المعالجة' ? 'pending' : 'cancelled' as any
             }))
-        ].sort((a, b) => {
-            const dateA = a.date ? new Date(a.date).getTime() : 0;
-            const dateB = b.date ? new Date(b.date).getTime() : 0;
-            return dateB - dateA;
-        });
+        ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
         return combined;
     }, [manualTransactions, sessions, invoices]);
@@ -211,41 +181,26 @@ export const useFinance = () => {
             const matchesSearch = t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 t.category.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesType = filterType === 'all' || t.type === filterType;
-            const matchesMonth = filterMonth === 'all' || (t.date || '').startsWith(filterMonth);
+            const matchesMonth = filterMonth === 'all' || t.date.startsWith(filterMonth);
             return matchesSearch && matchesType && matchesMonth;
         });
     }, [allTransactions, searchTerm, filterType, filterMonth]);
 
     const uniqueMonths = useMemo(() => {
-        return Array.from(new Set(allTransactions.map(t => (t.date || '').slice(0, 7))))
-            .filter(m => m.length === 7)
-            .sort()
-            .reverse();
+        return Array.from(new Set(allTransactions.map(t => t.date.slice(0, 7)))).sort().reverse();
     }, [allTransactions]);
 
     const chartData = useMemo(() => {
         const months = uniqueMonths.slice(0, 6).reverse();
         const monthlyData = months.map(month => {
             const inc = allTransactions
-                .filter(t => t.type === 'income' && t.status === 'completed' && (t.date || '').startsWith(month))
+                .filter(t => t.type === 'income' && t.status === 'completed' && t.date.startsWith(month))
                 .reduce((sum, t) => sum + t.amount, 0);
             const exp = allTransactions
-                .filter(t => t.type === 'expense' && t.status === 'completed' && (t.date || '').startsWith(month))
+                .filter(t => t.type === 'expense' && t.status === 'completed' && t.date.startsWith(month))
                 .reduce((sum, t) => sum + t.amount, 0);
-
-            // Safe Date Formatting
-            let monthLabel = month;
-            try {
-                const dateObj = new Date(month + '-01');
-                if (!isNaN(dateObj.getTime())) {
-                    monthLabel = dateObj.toLocaleDateString('ar-EG', { month: 'short' });
-                }
-            } catch (e) {
-                console.warn("Invalid date for chart:", month);
-            }
-
             return {
-                month: monthLabel,
+                month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
                 income: inc,
                 expense: exp
             };
@@ -254,8 +209,7 @@ export const useFinance = () => {
         const expenseByCategory = allTransactions
             .filter(t => t.type === 'expense' && t.status === 'completed')
             .reduce((acc, t) => {
-                const category = t.category || 'أخرى';
-                acc[category] = (acc[category] || 0) + (Number(t.amount) || 0);
+                acc[t.category] = (acc[t.category] || 0) + t.amount;
                 return acc;
             }, {} as Record<string, number>);
 
@@ -294,7 +248,6 @@ export const useFinance = () => {
             handleConvertAllFixedExpenses,
             handleClearAllFixedExpenses,
             handleDeleteAllTransactions,
-            handleDeleteTransaction,
             refresh: fetchData
         }
     };

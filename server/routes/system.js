@@ -81,18 +81,20 @@ router.post('/restore', async (req, res) => {
 
     try {
         await withTransaction(req.db, async (tx) => {
-            // 1. Clear Tables (Clean Slate - Delete in dependency order)
+            // Delete existing data in reverse order of dependencies
             await tx.run('DELETE FROM messages');
             await tx.run('DELETE FROM conversation_members');
             await tx.run('DELETE FROM conversations');
             await tx.run('DELETE FROM chat_profiles');
             await tx.run('DELETE FROM announcements');
-            await tx.run('DELETE FROM enrollments');
+            await tx.run('DELETE FROM enrollments'); // Depends on students/teachers
             await tx.run('DELETE FROM student_invoices');
             await tx.run('DELETE FROM sessions');
+
             await tx.run('DELETE FROM students');
             await tx.run('DELETE FROM teachers');
             await tx.run('DELETE FROM parents');
+
             await tx.run('DELETE FROM teacher_invoices');
             await tx.run('DELETE FROM notifications');
             await tx.run('DELETE FROM tasks');
@@ -101,19 +103,25 @@ router.post('/restore', async (req, res) => {
             await tx.run('DELETE FROM completed_sessions');
             await tx.run('DELETE FROM dismissed_notifications');
             await tx.run('DELETE FROM system_settings');
-            await tx.run('DELETE FROM users');
+
+            // We keep the primary 'admin' to avoid locking out, but clear others
+            // Only if we are restoring users, otherwise keep existing
+            if (data.users && data.users.length > 0) {
+                await tx.run("DELETE FROM users WHERE username != 'admin'");
+            }
 
             // --- RESTORE PROCESS ---
 
-            // 1. Users first
-            if (data.users && data.users.length > 0) {
+            // 1. Users first (as other tables might refer to them)
+            if (data.users) {
                 for (const u of data.users) {
-                    await tx.run(`INSERT INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
-                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions || [])]);
+                    if (u.username === 'admin') continue;
+                    await tx.run(`INSERT OR REPLACE INTO users (id, name, username, password, role, permissions) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [u.id, u.name, u.username, u.password, u.role, typeof u.permissions === 'string' ? u.permissions : JSON.stringify(u.permissions)]);
                 }
             }
 
-            // 2. Teachers & Parents
+            // 2. Teachers & Parents (independent entities)
             if (data.teachers) {
                 for (const t of data.teachers) {
                     await tx.run(`INSERT INTO teachers (id, name, phone1, phone2, subject, price, email, username, password, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -143,7 +151,7 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            // 4. Sessions
+            // 4. Sessions (Added all columns like teacherPrice)
             if (data.sessions) {
                 for (const s of data.sessions) {
                     await tx.run(`INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -180,7 +188,7 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            // 6. Tasks, Notifications & Others
+            // 6. Tasks & Notifications & Settings
             if (data.tasks) {
                 for (const t of data.tasks) {
                     await tx.run(`INSERT INTO tasks (id, title, description, status, priority, dueDate) VALUES (?, ?, ?, ?, ?, ?)`,
@@ -202,7 +210,7 @@ router.post('/restore', async (req, res) => {
 
             if (data.notifications) {
                 for (const n of data.notifications) {
-                    await tx.run(`INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    await tx.run(`INSERT OR IGNORE INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [n.id, n.senderId || 'system', n.receiverId, n.senderName || 'System', n.title, n.message, n.type, n.time, n.read, n.conversationId || null]);
                 }
             }
@@ -220,16 +228,18 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            // 7. Announcements & Chat
+            // 7. New Tables: Announcements & Chat
             if (data.announcements) {
                 for (const a of data.announcements) {
+                    // Check column naming carefully: isActive vs active, created_at vs date
                     await tx.run(`INSERT INTO announcements (id, title, content, type, date, isActive, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                        [a.id, a.title, a.content, a.type || a.targetAudience || 'general', a.date || new Date().toISOString().split('T')[0], a.isActive !== undefined ? a.isActive : (a.active !== undefined ? a.active : 1), a.created_at || a.date || new Date().toISOString()]);
+                        [a.id, a.title, a.content, a.type || a.targetAudience || 'general', a.date, a.isActive !== undefined ? a.isActive : (a.active !== undefined ? a.active : 1), a.created_at || a.date || new Date().toISOString()]);
                 }
             }
 
             if (data.conversations) {
                 for (const c of data.conversations) {
+                    // Schema columns: id, name, isGroup, createdBy, createdAt
                     await tx.run(`INSERT INTO conversations (id, name, isGroup, createdBy, createdAt) VALUES (?, ?, ?, ?, ?)`,
                         [c.id, c.name || null, c.isGroup !== undefined ? c.isGroup : (c.type === 'group' ? 1 : 0), c.createdBy || 'system', c.createdAt || c.updatedAt || new Date().toISOString()]);
                 }
@@ -244,13 +254,14 @@ router.post('/restore', async (req, res) => {
 
             if (data.messages) {
                 for (const m of data.messages) {
+                    // Schema columns: id, conversationId, senderId, senderName, content, timestamp
                     await tx.run(`INSERT INTO messages (id, conversationId, senderId, senderName, content, timestamp) VALUES (?, ?, ?, ?, ?, ?)`,
                         [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.timestamp]);
                 }
             }
         });
 
-        res.json({ message: 'Restore successful. The application will refresh to apply changes.' });
+        res.json({ message: 'Restore successful, system completely updated.' });
     } catch (err) {
         console.error("CRITICAL RESTORE ERROR:", err);
         res.status(500).json({ error: 'Restore failed: ' + err.message });

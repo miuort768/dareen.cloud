@@ -54,7 +54,6 @@ export interface Session {
     id: string;
     studentId: string;
     studentName: string;
-    teacherId?: string;
     teacherName: string;
     subject: string;
     date: string;

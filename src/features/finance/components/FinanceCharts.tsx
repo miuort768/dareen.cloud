@@ -225,9 +225,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({ monthlyData, pieDa
                             >
                                 <span className="text-[9px] font-black text-gray-400 uppercase tracking-tighter text-center">{entry.name}</span>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-lg font-black text-gray-900 dark:text-white font-mono leading-none">
-                                        %{totalExpenses > 0 ? ((entry.value / totalExpenses) * 100).toFixed(0) : '0'}
-                                    </span>
+                                    <span className="text-lg font-black text-gray-900 dark:text-white font-mono leading-none">%{((entry.value / totalExpenses) * 100).toFixed(0)}</span>
                                 </div>
                                 <div className="w-full h-0.5 bg-gray-100 dark:bg-gray-700 mt-1 opacity-20"></div>
                             </div>

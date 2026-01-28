@@ -221,24 +221,29 @@ export const Settings = () => {
 
     const handleExport = async () => {
         try {
-            showNotification('جاري إنشاء نسخة احتياطية كاملة...');
             // Fetch complete backup from server using settingsService
             const backupData = await settingsService.getBackup();
 
-            // The backupData already contains everything: data.{students, teachers, users, systemSettings, etc.}
-            // We just add a descriptive filename and meta
+            // Add settings data
             const completeBackup = {
                 ...backupData,
-                exportedBy: user.username,
-                exportDate: new Date().toISOString()
+                settings: {
+                    user: { ...user, name: localName, username: localUsername },
+                    academy: { name: localAcademyName },
+                    appSettings: {
+                        notifications: notificationsEnabled,
+                        autoBackup,
+                        themeColor
+                    },
+                    users: users
+                }
             };
 
             const blob = new Blob([JSON.stringify(completeBackup, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            const academyInitial = localAcademyName.split(' ')[0] || 'academy';
-            a.download = `${academyInitial}_full_backup_${new Date().toISOString().slice(0, 10)}.json`;
+            a.download = `academy_full_backup_${new Date().toISOString().slice(0, 10)}_${Date.now()}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -255,27 +260,49 @@ export const Settings = () => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        if (!window.confirm('⚠️ تحذير: استيراد نسخة احتياطية سيؤدي إلى مسح كافة البيانات الحالية واستبدالها ببيانات الملف. هل تريد المتابعة؟')) {
-            e.target.value = '';
-            return;
-        }
-
         const reader = new FileReader();
         reader.onload = async (event) => {
-            setIsSaving(true);
+            setIsSaving(true); // Reuse isSaving for import too
             try {
                 const backupData = JSON.parse(event.target?.result as string);
 
-                // 1. Restore database data (Students, Teachers, Users, Financials, Settings)
-                // The new server-side restore logic handles everything including Users and system_settings
+                // Restore database data if available using settingsService
                 if (backupData.data) {
-                    showNotification('جاري استعادة قواعد البيانات والحسابات... يرجى الانتظار');
+                    showNotification('جاري استعادة قواعد البيانات... يرجى الانتظار');
                     await settingsService.restoreBackup(backupData.data);
                 }
 
-                showNotification('تم استيراد البيانات بنجاح! جاري تحديث التطبيق...');
+                // Restore settings
+                if (backupData.settings) {
+                    const settings = backupData.settings;
 
-                // 2. Final reload to refresh all context states from the new DB
+                    if (settings.academy) {
+                        setLocalAcademyName(settings.academy.name);
+                        await setAcademyName(settings.academy.name);
+                    }
+
+                    if (settings.user) {
+                        setLocalName(settings.user.name);
+                        setLocalUsername(settings.user.username);
+                        // No password restore for security
+                    }
+
+                    if (settings.appSettings) {
+                        setNotificationsEnabled(settings.appSettings.notifications);
+                        setAutoBackup(settings.appSettings.autoBackup);
+                        if (settings.appSettings.themeColor) {
+                            setThemeColor(settings.appSettings.themeColor);
+                        }
+                    }
+
+                    if (settings.users && Array.isArray(settings.users)) {
+                        localStorage.setItem('app_users', JSON.stringify(settings.users));
+                    }
+                }
+
+                showNotification('تم استيراد النسخة الاحتياطية بنجاح! سيتم إعادة تحميل الصفحة...');
+
+                // Final save attempt of context state to be extra safe
                 setTimeout(() => window.location.reload(), 1500);
             } catch (err: any) {
                 console.error('Import error:', err);
