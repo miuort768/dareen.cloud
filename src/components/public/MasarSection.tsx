@@ -1,123 +1,66 @@
-import { ArrowLeft, BookOpen, GraduationCap, Laptop, Library, LineChart } from 'lucide-react';
+import { ArrowLeft, BookOpen } from 'lucide-react';
 
 export const MasarSection = () => {
-    // Brand Colors based on the uploaded logo:
-    // Navy Blue (Primary)
-    // Teal/Green (Secondary) 
-
     return (
         <section className="py-12 bg-white relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
-                {/* Header */}
-                <div className="text-center mb-10">
-                    <h2 className="text-2xl md:text-3xl font-black text-[#1e3a8a] mb-2 font-heading">
-                        بوابتك نحو <span className="text-[#0d9488]">التميز والتطوير</span>
-                    </h2>
-                    <div className="h-1 w-20 bg-[#c5a47e] mx-auto rounded-full"></div>
-                </div>
 
-                {/* Grid Content - Horizontal Cards */}
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* The Single Big Rectangle */}
+                <div className="max-w-6xl mx-auto bg-gradient-to-r from-[#1e3a8a] to-[#0f286e] rounded-3xl shadow-2xl overflow-hidden border border-[#1e3a8a]/20 relative">
 
-                    {/* Item 1 - Navy Theme */}
-                    <div className="group flex bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-[#1e3a8a]/30 cursor-pointer h-32">
-                        {/* Side Square Icon/Image Area */}
-                        <div className="w-32 bg-[#1e3a8a] flex items-center justify-center shrink-0 group-hover:bg-[#172554] transition-colors relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-                            <GraduationCap className="w-12 h-12 text-white relative z-10" strokeWidth={1.5} />
-                        </div>
-
-                        {/* Content Area */}
-                        <div className="flex-1 p-5 flex flex-col justify-center">
-                            <h3 className="text-lg font-bold text-[#1e3a8a] mb-1">التطوير المهني</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-2">
-                                برامج متخصصة لرفع كفاءة المعلمين والطلاب وتنمية المهارات.
-                            </p>
-                            <div className="flex items-center text-[#c5a47e] text-xs font-bold mt-auto group-hover:gap-2 transition-all">
-                                <span>عرض المسارات</span>
-                                <ArrowLeft className="w-3 h-3 mr-1" />
-                            </div>
-                        </div>
+                    {/* Background Pattern */}
+                    <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+                        <div className="absolute right-0 top-0 w-64 h-64 bg-white rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3"></div>
+                        <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#0d9488] rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3"></div>
                     </div>
 
-                    {/* Item 2 - Teal Theme */}
-                    <div className="group flex bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-[#0d9488]/30 cursor-pointer h-32">
-                        <div className="w-32 bg-[#0d9488] flex items-center justify-center shrink-0 group-hover:bg-[#0f766e] transition-colors relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-                            <Library className="w-12 h-12 text-white relative z-10" strokeWidth={1.5} />
+                    <div className="flex flex-col lg:flex-row items-center">
+
+                        {/* Image Side (The Logo at the edge) */}
+                        <div className="w-full lg:w-1/3 h-64 lg:h-auto bg-white flex items-center justify-center p-8 relative shrink-0">
+                            {/* Decorative slant for Desktop - Fixed for RTL: removed skew to keep it simple rectangle or slant from left */}
+                            <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-12 bg-white skew-x-[-6deg] translate-x-6 z-10"></div>
+
+                            <div className="relative z-20 w-48 h-48 flex items-center justify-center">
+                                {/* Using the logo as requested */}
+                                <img
+                                    src="/logo.png"
+                                    alt="شعار دارين"
+                                    className="w-full h-full object-contain drop-shadow-lg"
+                                />
+                            </div>
                         </div>
-                        <div className="flex-1 p-5 flex flex-col justify-center">
-                            <h3 className="text-lg font-bold text-[#0d9488] mb-1">المكتبة الرقمية</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-2">
-                                مصادر تعليمية شاملة وكتب إلكترونية تدعم المنهج الدراسي.
+
+                        {/* Text Content Side */}
+                        <div className="w-full lg:w-2/3 p-8 lg:p-12 text-white relative z-20 text-center lg:text-right">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full mb-4 backdrop-blur-sm">
+                                <span className="w-2 h-2 rounded-full bg-[#0d9488] animate-pulse"></span>
+                                <span className="text-xs font-bold text-gray-100">بوابة المستقبل</span>
+                            </div>
+
+                            <h2 className="text-3xl md:text-5xl font-black mb-4 font-heading leading-tight">
+                                منصة <span className="text-[#0d9488] bg-white px-2 rounded-lg inline-block transform -rotate-1 shadow-lg mx-1">مسار</span>
+                            </h2>
+
+                            <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
+                                بوابتك نحو التميز والتطوير.. نجمع لك أحدث الأدوات التعليمية، المصادر الرقمية، وبرامج التطوير المهني في مكان واحد لضمان مستقبل تعليمي مشرق.
                             </p>
-                            <div className="flex items-center text-[#c5a47e] text-xs font-bold mt-auto group-hover:gap-2 transition-all">
-                                <span>تصفح المكتبة</span>
-                                <ArrowLeft className="w-3 h-3 mr-1" />
+
+                            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                                <button className="px-8 py-4 bg-[#0d9488] hover:bg-[#0f766e] text-white rounded-xl font-bold shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-1 transition-all flex items-center gap-2 group">
+                                    <BookOpen className="w-5 h-5" />
+                                    <span>تصفح المنصة</span>
+                                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                                </button>
+
+                                <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-xl font-bold backdrop-blur-sm transition-all flex items-center gap-2">
+                                    <span>اعرف المزيد</span>
+                                </button>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Item 3 - Navy Theme */}
-                    <div className="group flex bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-[#1e3a8a]/30 cursor-pointer h-32">
-                        <div className="w-32 bg-[#1e3a8a] flex items-center justify-center shrink-0 group-hover:bg-[#172554] transition-colors relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-                            <LineChart className="w-12 h-12 text-white relative z-10" strokeWidth={1.5} />
-                        </div>
-                        <div className="flex-1 p-5 flex flex-col justify-center">
-                            <h3 className="text-lg font-bold text-[#1e3a8a] mb-1">قياس الأداء</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-2">
-                                تقارير دقيقة لمتابعة مستوى التحصيل الدراسي والتقدم.
-                            </p>
-                            <div className="flex items-center text-[#c5a47e] text-xs font-bold mt-auto group-hover:gap-2 transition-all">
-                                <span>عرض التقارير</span>
-                                <ArrowLeft className="w-3 h-3 mr-1" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Item 4 - Teal Theme */}
-                    <div className="group flex bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:border-[#0d9488]/30 cursor-pointer h-32">
-                        <div className="w-32 bg-[#0d9488] flex items-center justify-center shrink-0 group-hover:bg-[#0f766e] transition-colors relative overflow-hidden">
-                            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent"></div>
-                            <Laptop className="w-12 h-12 text-white relative z-10" strokeWidth={1.5} />
-                        </div>
-                        <div className="flex-1 p-5 flex flex-col justify-center">
-                            <h3 className="text-lg font-bold text-[#0d9488] mb-1">الخدمات الإلكترونية</h3>
-                            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-2">
-                                بوابة شاملة للخدمات الطلابية والإدارية عن بعد.
-                            </p>
-                            <div className="flex items-center text-[#c5a47e] text-xs font-bold mt-auto group-hover:gap-2 transition-all">
-                                <span>الدخول للخدمات</span>
-                                <ArrowLeft className="w-3 h-3 mr-1" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                {/* Banner/CTA - Matching Brand */}
-                <div className="max-w-4xl mx-auto mt-10">
-                    <div className="relative overflow-hidden rounded-2xl bg-[#1e3a8a] px-6 py-8 shadow-lg">
-                        <div className="absolute right-0 top-0 h-full w-1/3 bg-[#0d9488] skew-x-12 translate-x-12 opacity-80"></div>
-                        <div className="absolute left-0 bottom-0 h-32 w-32 bg-[#c5a47e] rounded-full blur-3xl opacity-20"></div>
-
-                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div className="text-center md:text-right">
-                                <h3 className="text-xl font-bold text-white mb-2">
-                                    هل تحتاج للمزيد من المصادر؟
-                                </h3>
-                                <p className="text-blue-100 text-sm">
-                                    تصفح المكتبة الشاملة لجميع المراحل الدراسية الآن.
-                                </p>
-                            </div>
-                            <button className="shrink-0 rounded-lg bg-white px-6 py-3 text-sm font-bold text-[#1e3a8a] shadow hover:bg-gray-50 transition-colors flex items-center gap-2">
-                                <BookOpen className="w-4 h-4" />
-                                <span>تصفح الدليل</span>
-                            </button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
     );
