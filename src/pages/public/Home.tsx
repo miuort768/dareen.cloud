@@ -5,6 +5,7 @@ import { PublicFooter } from '../../components/public/PublicFooter';
 import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
+import { MasarSection } from '../../components/public/MasarSection';
 
 export const Home = () => {
     const { adminPhone } = useSettings();
@@ -457,6 +458,8 @@ export const Home = () => {
                     </div>
                 </div>
             </section>
+
+            <MasarSection />
 
             {/* FAQ Section */}
             <section className="py-6 md:py-8 bg-[#FDFCF8] relative overflow-hidden">
