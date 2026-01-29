@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, GraduationCap, Laptop, Library, LineChart, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, BookOpen, GraduationCap, Laptop, Library, LineChart } from 'lucide-react';
 
 export const MasarSection = () => {
     return (
