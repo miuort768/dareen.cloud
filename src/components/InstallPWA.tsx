@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, X, Download, Smartphone, Monitor } from 'lucide-react';
+import { Bell, X, Download, Smartphone, Monitor, Tablet } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const InstallPWA = () => {
@@ -140,6 +140,7 @@ export const InstallPWA = () => {
                         {/* Device Icons */}
                         <div className="flex justify-center gap-8 py-2 grayscale opacity-60">
                             <Smartphone size={32} strokeWidth={1} />
+                            <Tablet size={32} strokeWidth={1} />
                             <Monitor size={32} strokeWidth={1} />
                         </div>
 
