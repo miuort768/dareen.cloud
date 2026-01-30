@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart } from 'lucide-react';
@@ -210,9 +211,22 @@ export const About = () => {
                             <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-medium">
                                 انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز مع معهد دارين. مستقبلك المشرق يبدأ من هنا.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a href="/courses" className="px-10 py-5 bg-gold hover:bg-gold-hover text-white font-black rounded-2xl shadow-lg transition-all transform hover:-translate-y-1">تصفح الدورات</a>
-                                <a href="/login" className="px-10 py-5 bg-white/10 hover:bg-white/20 text-white font-black rounded-2xl backdrop-blur-md transition-all">سجل دخولك الآن</a>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                <Link
+                                    to="/courses"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className="w-full sm:w-auto px-12 py-5 bg-gold hover:bg-gold-hover text-white font-black text-lg rounded-full shadow-[0_10px_20px_rgba(212,175,55,0.3)] transition-all transform hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2"
+                                >
+                                    تصفح الدورات
+                                    <Sparkles size={20} className="animate-pulse" />
+                                </Link>
+                                <Link
+                                    to="/login"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className="w-full sm:w-auto px-12 py-5 bg-white/10 hover:bg-white text-white hover:text-blue-900 font-black text-lg rounded-full backdrop-blur-md border-2 border-white/20 hover:border-white transition-all transform hover:-translate-y-1"
+                                >
+                                    سجل دخولك الآن
+                                </Link>
                             </div>
                         </div>
                     </div>
