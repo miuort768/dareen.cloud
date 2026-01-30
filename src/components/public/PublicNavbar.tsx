@@ -120,7 +120,7 @@ export const PublicNavbar = () => {
                         ) : (
                             <Link
                                 to="/login"
-                                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                className="hidden md:flex bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
                             >
                                 تسجيل الدخول
                             </Link>
