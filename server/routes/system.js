@@ -50,7 +50,10 @@ router.get('/backup', async (req, res) => {
                 parents,
                 sessions,
                 invoices: teacherInvoices,
-                studentInvoices,
+                studentInvoices: studentInvoices.map(inv => ({
+                    ...inv,
+                    items: inv.items ? JSON.parse(inv.items) : []
+                })),
                 manualTransactions,
                 fixedExpenses,
                 tasks,
@@ -169,8 +172,9 @@ router.post('/restore', async (req, res) => {
 
             if (data.studentInvoices) {
                 for (const i of data.studentInvoices) {
-                    await tx.run(`INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [i.id, i.studentId, i.studentName, i.amount, i.description, i.date, i.dueDate, i.status, i.paymentMethod || '', i.notes || '']);
+                    const items = i.items ? (typeof i.items === 'string' ? i.items : JSON.stringify(i.items)) : null;
+                    await tx.run(`INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes, items) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [i.id, i.studentId, i.studentName, i.amount, i.description, i.date, i.dueDate, i.status, i.paymentMethod || '', i.notes || '', items]);
                 }
             }
 

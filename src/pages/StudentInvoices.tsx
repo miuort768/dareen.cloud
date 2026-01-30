@@ -48,6 +48,7 @@ export const StudentInvoices = () => {
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
+    const [allSessions, setAllSessions] = useState<any[]>([]);
 
     // Form State
     const [showForm, setShowForm] = useState(false);
@@ -78,21 +79,24 @@ export const StudentInvoices = () => {
         dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
         status: 'pending' as 'paid' | 'pending' | 'overdue',
         paymentMethod: 'نقدي',
-        notes: ''
+        notes: '',
+        items: [] as { description: string; date?: string; amount: number }[]
     });
 
     const fetchData = async () => {
         setLoading(true);
         try {
             // console.log('Fetching invoices...');
-            const [invoicesData, studentsData] = await Promise.all([
+            const [invoicesData, studentsData, sessionsData] = await Promise.all([
                 api.get<StudentInvoice[]>('/studentInvoices'),
-                api.get<Student[]>('/students')
+                api.get<Student[]>('/students'),
+                api.get<any[]>('/sessions')
             ]);
 
             // console.log('Invoices fetched:', invoicesData);
             setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as any).data || []);
             setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as any).data || []);
+            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as any).data || []);
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
@@ -124,7 +128,8 @@ export const StudentInvoices = () => {
             dueDate: invoice.dueDate || invoice.date,
             status: invoice.status,
             paymentMethod: invoice.paymentMethod || '',
-            notes: invoice.notes || ''
+            notes: invoice.notes || '',
+            items: invoice.items || []
         });
         setShowForm(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -140,7 +145,8 @@ export const StudentInvoices = () => {
             dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
             status: 'pending',
             paymentMethod: 'نقدي',
-            notes: ''
+            notes: '',
+            items: []
         });
         setShowForm(false);
     };
@@ -155,14 +161,27 @@ export const StudentInvoices = () => {
                 return sum;
             }, 0) || 0;
 
+            // Fetch sessions for this student to include dates
+            const studentSessions = allSessions.filter((sess: any) =>
+                sess.studentId === studentId &&
+                (sess.status === 'completed' || sess.status === 'absent')
+            );
+
+            const items = studentSessions.map((sess: any) => ({
+                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'حضور' : 'غياب'})`,
+                amount: sess.price || student.sessionPrice || 0,
+                date: sess.date
+            }));
+
             setFormData({
                 ...formData,
                 studentId,
                 description: subjects ? `رسوم: ${subjects}` : 'رسوم شهرية',
-                amount: totalAmount > 0 ? totalAmount.toString() : ''
+                amount: (items.length > 0 ? items.reduce((s, i) => s + i.amount, 0) : totalAmount).toString(),
+                items: items
             });
         } else {
-            setFormData({ ...formData, studentId });
+            setFormData({ ...formData, studentId, items: [] });
         }
     };
 
@@ -192,7 +211,8 @@ export const StudentInvoices = () => {
             dueDate: formData.dueDate,
             status: formData.status,
             paymentMethod: formData.paymentMethod,
-            notes: formData.notes
+            notes: formData.notes,
+            items: formData.items
         };
 
         try {

@@ -123,8 +123,13 @@ router.get('/student', async (req, res) => {
             const invoices = await req.db.all(sql, [...params, limit, offset]);
             const count = await req.db.get(countSql, params);
 
+            const parsed = invoices.map(inv => ({
+                ...inv,
+                items: inv.items ? JSON.parse(inv.items) : []
+            }));
+
             res.json({
-                data: invoices,
+                data: parsed,
                 total: count.total,
                 page,
                 limit,
@@ -132,7 +137,11 @@ router.get('/student', async (req, res) => {
             });
         } else {
             const invoices = await req.db.all('SELECT * FROM student_invoices ORDER BY date DESC, dueDate ASC, id DESC');
-            res.json(invoices);
+            const parsed = invoices.map(inv => ({
+                ...inv,
+                items: inv.items ? JSON.parse(inv.items) : []
+            }));
+            res.json(parsed);
         }
     } catch (err) {
         logger.error('Error fetching student invoices', err);
@@ -147,11 +156,15 @@ router.post('/student', validate(createStudentInvoiceSchema), async (req, res) =
     }
     const id = body.id || `inv_s_${Math.random().toString(36).substr(2, 7)}`;
     try {
+        const description = body.description || '';
+        const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;
+
         await req.db.run(
-            `INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, body.studentId, body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes]
+            `INSERT INTO student_invoices (id, studentId, studentName, amount, description, date, dueDate, status, paymentMethod, notes, items) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [id, body.studentId, body.studentName, body.amount, description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes, items]
         );
         const newItem = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
+        if (newItem && newItem.items) newItem.items = JSON.parse(newItem.items);
         res.status(201).json(newItem);
     } catch (err) {
         logger.error('Error adding student invoice', err);
@@ -163,13 +176,15 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
     const { id } = req.params;
     const body = req.body;
     try {
+        const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;
         const result = await req.db.run(
-            `UPDATE student_invoices SET studentId = ?, studentName = ?, amount = ?, description = ?, date = ?, dueDate = ?, status = ?, paymentMethod = ?, notes = ? WHERE id = ?`,
-            [body.studentId, body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes, id]
+            `UPDATE student_invoices SET studentId = ?, studentName = ?, amount = ?, description = ?, date = ?, dueDate = ?, status = ?, paymentMethod = ?, notes = ?, items = ? WHERE id = ?`,
+            [body.studentId, body.studentName, body.amount, body.description, body.date, body.dueDate, body.status, body.paymentMethod, body.notes, items, id]
         );
         if (result.changes === 0) return res.status(404).json({ error: 'Invoice not found' });
 
         const updated = await req.db.get('SELECT * FROM student_invoices WHERE id = ?', [id]);
+        if (updated && updated.items) updated.items = JSON.parse(updated.items);
         res.json(updated);
     } catch (err) {
         logger.error('Error updating student invoice', err, { id });
