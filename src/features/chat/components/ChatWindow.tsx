@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, CheckCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
 import { useChatContext } from '../../../context/ChatContext';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -43,6 +44,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { typingUsers } = useChatContext();
     const isChatOnly = currentUser?.role === 'chat_user';
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const emojiPickerRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,6 +54,20 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+                setShowEmojiPicker(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const onEmojiClick = (emojiData: any) => {
+        setNewMessage(newMessage + emojiData.emoji);
+    };
 
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
@@ -77,7 +94,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <h2 className="font-extrabold text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-sm lg:text-base">
+                        <h2 className="font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-sm lg:text-base">
                             {selectedConv.displayName}
                         </h2>
                         <div className="flex items-center gap-1.5 h-4">
@@ -191,10 +208,28 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </div>
 
             {/* Input Area */}
-            <div className="p-3 lg:p-4 bg-[#f0f2f5] dark:bg-[#111b21] shrink-0 border-t border-gray-100 dark:border-gray-800/50">
+            <div className="p-3 lg:p-4 bg-[#f0f2f5] dark:bg-[#111b21] shrink-0 border-t border-gray-100 dark:border-gray-800/50 relative">
+                {showEmojiPicker && (
+                    <div className="absolute bottom-full left-4 mb-2 z-[200]" ref={emojiPickerRef}>
+                        <EmojiPicker
+                            onEmojiClick={onEmojiClick}
+                            theme={document.documentElement.classList.contains('dark') ? Theme.DARK : Theme.LIGHT}
+                            autoFocusSearch={false}
+                            searchPlaceholder="ابحث عن ايموجي..."
+                            previewConfig={{ showPreview: false }}
+                        />
+                    </div>
+                )}
                 <form onSubmit={handleSendMessage} className="flex items-center gap-3 lg:gap-4 max-w-[1000px] mx-auto relative">
                     <div className="flex-1 flex items-center gap-2 bg-white dark:bg-[#2a3942] pl-4 pr-2 py-2 rounded-2xl shadow-lg border border-transparent focus-within:border-primary-500/30 transition-all">
-                        <button type="button" className="p-2 text-gray-400 hover:text-primary-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full transition-colors">
+                        <button
+                            type="button"
+                            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                            className={cn(
+                                "p-2 rounded-full transition-colors",
+                                showEmojiPicker ? "text-primary-600 bg-primary-50 dark:bg-primary-900/20" : "text-gray-400 hover:text-primary-600 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            )}
+                        >
                             <Smile size={24} />
                         </button>
                         <input
