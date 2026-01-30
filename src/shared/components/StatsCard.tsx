@@ -23,7 +23,7 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden",
+            "relative p-4 md:p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden",
             className,
             "rounded-none"
         )}>

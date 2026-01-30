@@ -30,7 +30,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     color = 'primary'
 }) => {
     return (
-        <div className={cn("relative p-8 shadow-xl overflow-hidden border-b-4 rounded-none mb-6", colorMap[color])}>
+        <div className={cn("relative p-4 md:p-6 shadow-xl overflow-hidden border-b-4 rounded-none mb-6", colorMap[color])}>
             {/* Background Geometric Enhancement - Richer & Larger Shapes */}
             {/* Major Glows & Blobs */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>

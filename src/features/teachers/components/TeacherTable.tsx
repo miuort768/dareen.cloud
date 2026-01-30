@@ -118,7 +118,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                             key={teacher.id}
                             onClick={() => onSelect(teacher)}
                             className={cn(
-                                "bg-white dark:bg-gray-900 rounded-none border p-5 shadow-sm",
+                                "bg-white dark:bg-gray-900 rounded-none border p-4 shadow-sm",
                                 isSelected
                                     ? "border-primary-500 ring-4 ring-primary-500/10 shadow-lg"
                                     : "border-gray-100 dark:border-gray-800"

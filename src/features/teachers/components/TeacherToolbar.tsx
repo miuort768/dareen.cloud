@@ -12,7 +12,7 @@ interface TeacherToolbarProps {
 
 export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExport, onDeleteAll }: TeacherToolbarProps) => {
     return (
-        <div className="bg-white p-4 border border-gray-100 dark:bg-gray-900 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4 rounded-none shadow-sm">
+        <div className="bg-white p-4 border border-gray-100 dark:bg-gray-900 dark:border-gray-800 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 rounded-none shadow-sm">
             <div className="relative w-full md:max-w-md">
                 <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500" size={18} />
                 <input

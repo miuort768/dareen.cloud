@@ -84,7 +84,7 @@ export const TeacherDetails = ({
                 </div>
             </div>
 
-            <div className="p-4 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
                 {/* Statistics Simplified */}
                 <div className="grid grid-cols-2 gap-3">
                     <div className="bg-gray-50 p-3 rounded-none dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
