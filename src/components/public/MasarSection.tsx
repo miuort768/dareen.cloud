@@ -17,17 +17,15 @@ export const MasarSection = () => {
 
 
                     <div className="flex flex-col lg:flex-row items-stretch">
-                        {/* Image Side - Optimized for Mobile Branding */}
-                        <div className="w-full lg:w-1/3 bg-white relative shrink-0 h-40 lg:h-auto overflow-hidden">
-                            <div className="absolute inset-0 z-10 flex items-center justify-center p-4 lg:p-0">
+                        {/* Image Side - Removed the white block and slant that caused the 'white line' */}
+                        <div className="w-full lg:w-1/3 relative shrink-0 h-48 lg:h-auto overflow-hidden bg-[#f8f9fa]">
+                            <div className="absolute inset-0 z-10 flex items-center justify-center">
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-full h-full object-contain lg:object-cover"
+                                    className="w-full h-full object-cover lg:object-cover"
                                 />
                             </div>
-                            {/* Decorative slant - only on desktop */}
-                            <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-12 bg-white skew-x-[-6deg] translate-x-6 z-20"></div>
                         </div>
 
                         {/* Text Content Side */}
