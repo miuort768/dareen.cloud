@@ -107,7 +107,7 @@ export const PublicFooter = () => {
                                 تواصل معنا
                             </a>
                             <a
-                                href={`https://wa.me/${adminPhone}`}
+                                href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين لتعليم و التدريب')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block w-full text-center bg-gradient-to-r from-gold to-gold-hover text-white font-bold py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
