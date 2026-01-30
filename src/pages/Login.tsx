@@ -117,7 +117,7 @@ export const Login = () => {
                             )}
                         </svg>
                     </div>
-                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-black drop-shadow-sm" style={{ fontFamily: 'Aref Ruqaa, serif' }}>دارين للتعليم والتدريب</h1>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-primary-900 via-primary-700 to-primary-900 drop-shadow-md tracking-tight" style={{ fontFamily: 'Tajawal, sans-serif' }}>دارين للتعليم والتدريب</h1>
                     <p className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 drop-shadow-sm" style={{ fontFamily: 'Great Vibes, cursive' }}>
                         Mr. Ahmed Abdullah
                     </p>
