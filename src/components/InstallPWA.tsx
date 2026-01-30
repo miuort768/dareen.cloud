@@ -9,7 +9,6 @@ export const InstallPWA = () => {
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isIOS, setIsIOS] = useState(false);
-    const [isFirefox, setIsFirefox] = useState(false);
 
     // This ensures that even if we are inside the dashboard, we re-evaluate showing the bell
     useEffect(() => {
@@ -25,7 +24,6 @@ export const InstallPWA = () => {
             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
         setIsIOS(!!isIOSDevice);
-        setIsFirefox(userAgent.includes('firefox'));
 
         // Check if already installed
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
@@ -50,13 +48,12 @@ export const InstallPWA = () => {
     }, []);
 
     const handleInstall = async () => {
-        if (isIOS || (isFirefox && !deferredPrompt)) {
-            // Manual instructions shown in modal
-            return;
-        }
-
         if (!deferredPrompt) {
-            // Fallback for browsers without prompt: just guide them in the modal
+            if (isIOS) {
+                alert('لتثبيت التطبيق على آيفون: اضغط على زر المشاركة 📤 ثم اختر "إضافة للشاشة الرئيسية" ➕');
+            } else {
+                alert('متصفحك لا يدعم التثبيت الفوري التلقائي. يرجى استخدام متصفح Chrome أو إضافة الموقع للشاشة الرئيسية يدوياً من قائمة المتصفح.');
+            }
             return;
         }
 
@@ -124,72 +121,31 @@ export const InstallPWA = () => {
                             <Sparkles size={12} className="text-[#D4AF37]" />
                             <span className="text-[10px] font-black uppercase tracking-[2px] text-[#D4AF37]">تطبيق معهد دارين</span>
                         </div>
-                        <h2 className="text-2xl font-black text-white leading-none uppercase tracking-tighter">تثبيت التطبيق الفوري</h2>
+                        <h2 className="text-2xl font-black text-white leading-none uppercase tracking-tighter text-right">تثبيت منصة دارين</h2>
                     </div>
 
                     <div className="p-6 space-y-6">
                         <div className="border-r-4 border-[#D4AF37] pr-4">
                             <p className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed font-bold text-right">
-                                يمكنك الآن الوصول للمنصة بضغطة واحدة من خلال تثبيتها على جهازك كأي تطبيق آخر.
-                            </p>
-                            <p className="text-[10px] text-gray-500 dark:text-gray-500 mt-1 font-medium text-right uppercase">
-                                يدعم جميع المتصفحات والأجهزة حول العالم
+                                يمكنك الآن الوصول للمنصة بضغطة واحدة من خلال تثبيتها على جهازك كأي تطبيق آخر للوصول السريع والسهل.
                             </p>
                         </div>
 
                         {/* Device Icons */}
-                        <div className="flex justify-center gap-8 py-2 grayscale opacity-60">
+                        <div className="flex justify-center gap-8 py-2 grayscale opacity-40">
                             <Smartphone size={32} strokeWidth={1} />
                             <Tablet size={32} strokeWidth={1} />
                             <Monitor size={32} strokeWidth={1} />
                         </div>
 
                         <div className="space-y-4">
-                            {isIOS ? (
-                                /* iOS Specific Instructions */
-                                <div className="bg-gray-50 dark:bg-white/5 p-5 border border-gray-100 dark:border-white/10">
-                                    <p className="text-[11px] font-black text-gray-900 dark:text-white mb-4 text-center bg-[#D4AF37] text-white py-2 uppercase tracking-widest">متصفح Safari (iOS)</p>
-                                    <ol className="text-[11px] text-gray-700 dark:text-gray-400 space-y-4 text-right font-bold">
-                                        <li className="flex items-center justify-end gap-3">
-                                            <span>اضغط على أيقونة <strong>المشاركة</strong> بالأسفل 📤</span>
-                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">1</span>
-                                        </li>
-                                        <li className="flex items-center justify-end gap-3">
-                                            <span>اختر <strong>إضافة للشاشة الرئيسية</strong> ➕</span>
-                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">2</span>
-                                        </li>
-                                        <li className="flex items-center justify-end gap-3">
-                                            <span>اضغط على <strong>إضافة</strong> في الأعلى ✅</span>
-                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">3</span>
-                                        </li>
-                                    </ol>
-                                </div>
-                            ) : isFirefox || !deferredPrompt ? (
-                                /* Firefox or Other Manual Browsers (Desktop Safari, Firefox Android, etc.) */
-                                <div className="bg-gray-50 dark:bg-white/5 p-5 border border-gray-100 dark:border-white/10">
-                                    <p className="text-[11px] font-black text-gray-900 dark:text-white mb-4 text-center bg-gray-800 text-white py-2 uppercase tracking-widest">طريقة التثبيت اليدوي</p>
-                                    <p className="text-[10px] text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">متصفحك الحالي يتطلب خطوة واحدة:</p>
-                                    <ol className="text-[11px] text-gray-700 dark:text-gray-400 space-y-4 text-right font-bold">
-                                        <li className="flex items-center justify-end gap-3">
-                                            <span>افتح <strong>قائمة المتصفح</strong> (3 نقاط أو خطوط) ☰</span>
-                                            <span className="w-6 h-6 bg-gray-100 dark:bg-white/10 flex items-center justify-center text-[9px]">1</span>
-                                        </li>
-                                        <li className="flex items-center justify-end gap-3">
-                                            <span>اختر <strong>"تثبيت التطبيق"</strong> أو <strong>"إضافة للهاتف"</strong> 📲</span>
-                                            <span className="w-6 h-6 bg-gray-100 dark:bg-white/10 flex items-center justify-center text-[9px]">2</span>
-                                        </li>
-                                    </ol>
-                                </div>
-                            ) : (
-                                /* Standard Chrome/Android/Edge (Official Prompt) */
-                                <button
-                                    onClick={handleInstall}
-                                    className="w-full py-5 bg-gray-900 text-white font-black hover:bg-black transition-all flex items-center justify-center gap-4 group border-b-[5px] border-[#D4AF37] active:transform active:translate-y-1"
-                                >
-                                    <Download size={22} className="group-hover:animate-bounce" />
-                                    <span className="uppercase tracking-[3px] text-xs">تثبيت التطبيق مجاناً</span>
-                                </button>
-                            )}
+                            <button
+                                onClick={handleInstall}
+                                className="w-full py-5 bg-gray-900 text-white font-black hover:bg-black transition-all flex items-center justify-center gap-4 group border-b-[5px] border-[#D4AF37] active:transform active:translate-y-1"
+                            >
+                                <Download size={22} className="group-hover:animate-bounce" />
+                                <span className="uppercase tracking-[3px] text-xs">تثبيت التطبيق الآن</span>
+                            </button>
 
                             <button
                                 onClick={() => setShowModal(false)}
