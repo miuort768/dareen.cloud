@@ -153,13 +153,13 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto no-scrollbar">
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
-                                "flex items-center gap-3 px-3 py-2 rounded-none transition-all duration-200 group relative",
+                                "flex items-center gap-3 px-3 py-1.5 rounded-none transition-all duration-200 group relative",
                                 isActive
                                     ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
@@ -199,7 +199,7 @@ export const Sidebar = () => {
                 <div className="px-4 pt-4 pb-1 border-t border-gray-100 dark:border-gray-800">
                     <button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
+                        className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
                     >
                         {collapsed ? <ChevronRight size={20} className="mx-auto" /> : <ChevronLeft size={20} />}
                         <span className={cn(
@@ -216,7 +216,7 @@ export const Sidebar = () => {
                     <button
                         onClick={handleLogout}
                         className={cn(
-                            "w-full flex items-center gap-3 px-4 py-3 rounded-none text-red-500 hover:bg-red-50 transition-colors dark:hover:bg-red-900/20",
+                            "w-full flex items-center gap-3 px-4 py-2 rounded-none text-red-500 hover:bg-red-50 transition-colors dark:hover:bg-red-900/20",
                             collapsed && "justify-center"
                         )}
                     >
