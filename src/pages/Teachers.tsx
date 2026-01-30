@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useTeachers } from '../features/teachers/hooks/useTeachers';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -22,6 +23,7 @@ import { TeacherDetails } from '../features/teachers/components/TeacherDetails';
 import type { Teacher, Session, Student, Enrollment } from '../types';
 
 export const Teachers = () => {
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const { showNotification, currentUser } = useApp();
     const isTeacher = currentUser?.role === 'teacher';
@@ -377,6 +379,7 @@ export const Teachers = () => {
                         onEdit={handleEditTeacher}
                         onDelete={setDeletingTeacherId}
                         onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
+                        onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
                         selectedId={selectedTeacher?.id}
                         studentCounts={studentCounts}
                     />

@@ -6,11 +6,12 @@ interface TeacherTableProps {
     onEdit: (teacher: Teacher) => void;
     onDelete: (id: string) => void;
     onSelect: (teacher: Teacher) => void;
+    onChat: (id: string) => void;
     selectedId?: string;
     studentCounts: Record<string, number>;
 }
 
-export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, selectedId, studentCounts }: TeacherTableProps) => {
+export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, selectedId, studentCounts }: TeacherTableProps) => {
     return (
         <div className="bg-white border border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-800">
             <div className="overflow-x-auto">
@@ -69,7 +70,7 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, selectedId,
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        window.location.hash = `#/chat?userId=${teacher.id}`;
+                                                        onChat(teacher.id);
                                                     }}
                                                     className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
                                                     title="مراسلة"
