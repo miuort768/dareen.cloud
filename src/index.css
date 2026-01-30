@@ -55,6 +55,8 @@
   #root {
     width: 100%;
     min-height: 100vh;
+    min-height: 100svh;
+    /* Modern mobile viewport height */
     isolation: isolate;
   }
 
@@ -198,7 +200,28 @@
   }
 
   .backdrop-blur-sm {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-lg {
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  .backdrop-blur-xl {
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
   }
 
   /* Smooth transitions */

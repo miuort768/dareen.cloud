@@ -46,7 +46,7 @@ export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'b
                         <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{title}</p>
                     </div>
 
-                    <h3 className="text-base md:text-lg lg:text-xl font-black text-gray-900 dark:text-white tracking-tight md:truncate">
+                    <h3 className="text-base md:text-lg lg:text-xl font-black text-gray-900 dark:text-white tracking-tight">
                         {value}
                     </h3>
 
