@@ -9,8 +9,8 @@ import {
     Server
 } from 'lucide-react';
 import { useDarkMode } from '../hooks/useDarkMode';
-import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
+import { useDashboardData } from '../hooks/useDashboardData';
 
 const AVAILABLE_PERMISSIONS = [
     { id: 'dashboard', label: 'الرئيسية' },
@@ -65,6 +65,11 @@ export const Settings = () => {
         maintenanceMode,
         setMaintenanceMode
     } = useApp();
+
+    const { stats } = useDashboardData(user);
+
+    // Sum all users: System Users (Admins) + Teachers + Students + Parents
+    const totalPlatformUsers = users.length + (stats.studentsCount || 0) + (stats.teachersCount || 0) + (stats.parentsCount || 0);
 
     const [theme, setTheme] = useDarkMode();
 
@@ -417,9 +422,10 @@ export const Settings = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard
                     title="المستخدمين النشطين"
-                    value={users.length}
+                    value={totalPlatformUsers}
                     icon={Users}
                     color="blue"
+                    trend={`${stats.studentsCount} طلاب، ${stats.teachersCount} معلمين`}
                 />
                 <StatsCard
                     title="حالة النظام"
