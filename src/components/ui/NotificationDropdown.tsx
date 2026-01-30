@@ -134,18 +134,18 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
+                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
             >
-                <Bell size={20} />
+                <Bell size={20} className={unreadCount > 0 ? "animate-pulse text-indigo-600" : ""} />
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-500 rounded-full text-white text-xs font-bold flex items-center justify-center border-2 border-white dark:border-gray-900">
+                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-gray-900">
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
             </button>
 
             {isOpen && (
-                <div className="absolute left-[-50px] sm:left-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50 origin-top-right">
+                <div className="absolute left-0 lg:left-[-50px] mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50 origin-top-right">
                     {/* Header */}
                     <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                         <div className="flex items-center gap-2">

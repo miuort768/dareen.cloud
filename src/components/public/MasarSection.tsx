@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, MessageCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, MessageCircle, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -35,7 +35,7 @@ export const MasarSection = () => {
 
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
-                                    <span className="w-2 h-2 rounded-full bg-[#0d9488] animate-pulse"></span>
+                                    <Bell className="w-3 h-3 text-[#0d9488] animate-pulse" />
                                     <span className="text-[10px] md:text-xs font-bold text-gray-100 uppercase tracking-wider">بوابة التميز الرقمي</span>
                                 </div>
                             </div>

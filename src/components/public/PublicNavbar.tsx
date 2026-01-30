@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, Bell } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { NotificationDropdown } from '../ui/NotificationDropdown';
 
 export const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,18 +75,24 @@ export const PublicNavbar = () => {
                         ))}
                     </div>
 
-                    {/* Desktop Auth */}
-                    <div className="hidden md:flex items-center gap-4">
+                    {/* Right Side: Auth & Notifications */}
+                    <div className="flex items-center gap-2 md:gap-4">
+                        {isAuthenticated && (
+                            <div className="hidden md:block border-l border-gray-100 pl-4 h-8 flex items-center">
+                                <NotificationDropdown />
+                            </div>
+                        )}
+
                         {isAuthenticated ? (
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-4 py-2"
+                                    className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-2 md:px-4 py-2"
                                 >
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-hover text-white flex items-center justify-center font-bold shadow-md">
+                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-gold to-gold-hover text-white flex items-center justify-center font-bold shadow-md">
                                         {currentUser?.name.charAt(0)}
                                     </div>
-                                    <span className="font-bold">{currentUser?.name}</span>
+                                    <span className="font-bold hidden sm:block">{currentUser?.name}</span>
                                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
                                 <div className={`absolute left-0 mt-4 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
@@ -113,20 +120,20 @@ export const PublicNavbar = () => {
                         ) : (
                             <Link
                                 to="/login"
-                                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold"
+                                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
                             >
                                 تسجيل الدخول
                             </Link>
                         )}
-                    </div>
 
-                    {/* Mobile Toggle */}
-                    <button
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="md:hidden p-2.5 text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-90"
-                    >
-                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                    </button>
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="md:hidden p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-90"
+                        >
+                            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile Menu - Floating Card Style */}
