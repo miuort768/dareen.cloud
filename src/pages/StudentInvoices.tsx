@@ -164,7 +164,7 @@ export const StudentInvoices = () => {
             // Fetch sessions for this student to include dates
             const studentSessions = allSessions.filter((sess: any) =>
                 sess.studentId === studentId &&
-                (sess.status === 'completed' || sess.status === 'absent')
+                (sess.status === 'completed' || sess.status === 'cancelled')
             );
 
             const items = studentSessions.map((sess: any) => ({
@@ -288,9 +288,16 @@ export const StudentInvoices = () => {
                 api.get<any[]>('/sessions')
             ]);
 
-            // 2. Identify missing students in current invoices
+            // 2. Identify students who don't have invoices yet AND have recorded sessions
             const currentStudentIds = new Set(invoices.map(inv => inv.studentId));
-            const studentsToImport = studentsList.filter((s: any) => !currentStudentIds.has(s.id));
+            const studentsToImport = studentsList.filter((s: any) => {
+                const hasNoInvoice = !currentStudentIds.has(s.id);
+                const hasSessions = allSessions.some((sess: any) =>
+                    sess.studentId === s.id &&
+                    (sess.status === 'completed' || sess.status === 'cancelled')
+                );
+                return hasNoInvoice && hasSessions;
+            });
 
             if (studentsToImport.length === 0) {
                 setConfirmModal({
@@ -312,10 +319,9 @@ export const StudentInvoices = () => {
                     try {
                         setLoading(true);
                         const importPromises = studentsToImport.map((s: any) => {
-                            // Only take sessions that were recorded (completed or absent)
                             const studentSessions = allSessions.filter((sess: any) =>
                                 sess.studentId === s.id &&
-                                (sess.status === 'completed' || sess.status === 'absent')
+                                (sess.status === 'completed' || sess.status === 'cancelled')
                             );
 
                             const items = studentSessions.map((sess: any) => ({
