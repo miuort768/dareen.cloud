@@ -1,157 +1,190 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, X, Download, Smartphone, Monitor, ShieldCheck } from 'lucide-react';
+import { Bell, X, Download, Smartphone, Monitor } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const InstallPWA = () => {
-    const location = useLocation();
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isIOS, setIsIOS] = useState(false);
-
-    // Show only on specific public pages as requested
-    const allowedPaths = ['/', '/home', '/about', '/courses', '/login'];
-    const isPublicPage = allowedPaths.includes(location.pathname);
+    const [isFirefox, setIsFirefox] = useState(false);
 
     useEffect(() => {
-        // Advanced iOS/iPadOS detection
+        // Advanced Browser Detection
+        const userAgent = navigator.userAgent.toLowerCase();
+
         const isIOSDevice =
-            /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            /ipad|iphone|ipod/.test(userAgent) ||
             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
         setIsIOS(!!isIOSDevice);
+        setIsFirefox(userAgent.includes('firefox'));
+
+        // Check if already installed
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+
+        if (isStandalone) {
+            setShowTrigger(false);
+        } else {
+            // SHOW BY DEFAULT on all browsers/devices if not installed
+            setShowTrigger(true);
+        }
 
         const handler = (e: any) => {
             e.preventDefault();
             setDeferredPrompt(e);
+            // If beforeinstallprompt fires, we definitely want to show it (Chrome/Edge/Android)
             setShowTrigger(true);
         };
 
         window.addEventListener('beforeinstallprompt', handler);
 
-        // Check if already installed
-        if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) {
-            setShowTrigger(false);
-        } else if (isIOSDevice) {
-            // For iOS, show trigger if not already installed
-            setShowTrigger(true);
-        }
-
         return () => window.removeEventListener('beforeinstallprompt', handler);
     }, []);
 
     const handleInstall = async () => {
-        if (isIOS) {
-            // Modal shows manual steps
+        if (isIOS || (isFirefox && !deferredPrompt)) {
+            // Manual instructions shown in modal
             return;
         }
 
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            setShowTrigger(false);
+        if (!deferredPrompt) {
+            // Fallback for browsers without prompt: just guide them in the modal
+            return;
         }
-        setDeferredPrompt(null);
-        setShowModal(false);
+
+        try {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                setShowTrigger(false);
+            }
+            setDeferredPrompt(null);
+            setShowModal(false);
+        } catch (err) {
+            console.error('Install error:', err);
+        }
     };
 
     if (!showTrigger) return null;
 
     return (
         <>
-            {/* Sharp Pulsing Bell Trigger */}
+            {/* Universal Sharp Pulsing Bell Trigger */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-4 right-4 z-[100] w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-110 transition-all duration-300 border-2 border-white/20"
-                style={{ borderRadius: '0' }} // Explicitly sharp
+                className="fixed bottom-4 right-4 z-[100] w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-[1.15] transition-all duration-300 border-2 border-white/30"
+                style={{ borderRadius: '0' }}
                 title="تثبيت المنصة"
             >
-                <div className="absolute inset-0 bg-white animate-ping opacity-20"></div>
-                <Bell size={20} className="relative z-10 group-hover:rotate-12 transition-transform" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 border border-white"></span>
+                <div className="absolute inset-0 bg-white animate-ping opacity-25"></div>
+                <Bell size={24} className="relative z-10 group-hover:rotate-12 transition-transform" />
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-600 border-2 border-white"></span>
             </button>
 
-            {/* Sharp Premium Installation Modal */}
+            {/* Universal Installation Modal */}
             <div className={cn(
                 "fixed inset-0 z-[110] flex items-center justify-center p-4 transition-all duration-500",
-                showModal ? "opacity-100 pointer-events-auto bg-gray-950/60" : "opacity-0 pointer-events-none"
+                showModal ? "opacity-100 pointer-events-auto bg-black/70" : "opacity-0 pointer-events-none"
             )}>
-                {/* Backdrop with Safari support */}
-                <div className="absolute inset-0 -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);" onClick={() => setShowModal(false)}></div>
+                {/* Backdrop blur with Safari support */}
+                <div className="absolute inset-0"
+                    style={{ backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+                    onClick={() => setShowModal(false)}
+                ></div>
 
                 <div className={cn(
-                    "relative bg-white dark:bg-gray-900 w-full max-w-sm rounded-none border-4 border-[#D4AF37] shadow-[0_0_50px_rgba(212,175,55,0.3)] overflow-hidden transition-all duration-500 transform",
-                    showModal ? "translate-y-0 scale-100" : "translate-y-12 scale-95"
+                    "relative bg-white dark:bg-gray-900 w-full max-w-sm rounded-none border-[3px] border-[#D4AF37] shadow-[0_0_60px_rgba(212,175,55,0.4)] overflow-hidden transition-all duration-500 transform",
+                    showModal ? "translate-y-0 scale-100" : "translate-y-20 scale-90"
                 )}>
                     {/* Header */}
-                    <div className="relative h-28 bg-gray-900 p-6 flex flex-col justify-end">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/10 -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+                    <div className="relative h-32 bg-gray-950 p-6 flex flex-col justify-end">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-[#D4AF37]/10 -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                        <div className="absolute top-0 left-0 w-20 h-20 bg-blue-600/5 -translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
 
                         <button
                             onClick={() => setShowModal(false)}
-                            className="absolute top-4 left-4 p-2 bg-white/5 hover:bg-white/10 text-white transition-colors"
+                            className="absolute top-4 left-4 p-2 bg-white/10 hover:bg-white/20 text-white transition-colors"
                         >
                             <X size={20} />
                         </button>
 
-                        <div className="relative z-10 inline-flex items-center gap-2 px-2 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-none w-fit mb-2">
-                            <Monitor size={10} className="text-[#D4AF37]" />
-                            <span className="text-[9px] font-black uppercase tracking-widest text-[#D4AF37]">تطبيق منصة دارين الجاهز</span>
+                        <div className="relative z-10 inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 rounded-none w-fit mb-2">
+                            <Sparkles size={12} className="text-[#D4AF37]" />
+                            <span className="text-[10px] font-black uppercase tracking-[2px] text-[#D4AF37]">تطبيق معهد دارين</span>
                         </div>
-                        <h2 className="text-xl font-black text-white leading-tight uppercase tracking-tighter">تثبيت التطبيق الفوري</h2>
+                        <h2 className="text-2xl font-black text-white leading-none uppercase tracking-tighter">تثبيت التطبيق الفوري</h2>
                     </div>
 
-                    <div className="p-6 space-y-5">
-                        <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed font-bold text-right border-r-4 border-[#D4AF37] pr-4">
-                            هل تود تثبيت المنصة على جهازك؟ ستحصل على سرعة فائقة في التصفح وإشعارات فورية لآخر التحديثات.
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-none border border-gray-100 dark:border-gray-700 flex flex-col items-center gap-2 text-center group hover:bg-[#D4AF37]/5 transition-colors">
-                                <Smartphone size={24} className="text-[#D4AF37]" />
-                                <span className="text-[10px] font-black text-gray-900 dark:text-gray-100 uppercase tracking-widest">للهواتف</span>
-                            </div>
-                            <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-none border border-gray-100 dark:border-gray-700 flex flex-col items-center gap-2 text-center group hover:bg-[#D4AF37]/5 transition-colors">
-                                <Monitor size={24} className="text-[#D4AF37]" />
-                                <span className="text-[10px] font-black text-gray-900 dark:text-gray-100 uppercase tracking-widest">للكمبيوتر</span>
-                            </div>
+                    <div className="p-6 space-y-6">
+                        <div className="border-r-4 border-[#D4AF37] pr-4">
+                            <p className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed font-bold text-right">
+                                يمكنك الآن الوصول للمنصة بضغطة واحدة من خلال تثبيتها على جهازك كأي تطبيق آخر.
+                            </p>
+                            <p className="text-[10px] text-gray-500 dark:text-gray-500 mt-1 font-medium text-right uppercase">
+                                يدعم جميع المتصفحات والأجهزة حول العالم
+                            </p>
                         </div>
 
-                        <div className="space-y-3">
+                        {/* Device Icons */}
+                        <div className="flex justify-center gap-8 py-2 grayscale opacity-60">
+                            <Smartphone size={32} strokeWidth={1} />
+                            <Monitor size={32} strokeWidth={1} />
+                        </div>
+
+                        <div className="space-y-4">
                             {isIOS ? (
-                                <div className="bg-[#D4AF37]/5 p-5 border border-[#D4AF37]/20">
-                                    <p className="text-xs font-black text-gray-900 dark:text-white mb-4 text-center bg-white dark:bg-gray-800 py-2 shadow-sm uppercase tracking-tighter">خطوات التثبيت (آيفون/آيباد)</p>
-                                    <ol className="text-[11px] text-gray-700 dark:text-gray-300 space-y-3 text-right font-bold">
-                                        <li className="flex items-center gap-3">
-                                            <span className="w-5 h-5 bg-[#D4AF37] text-white flex items-center justify-center text-[10px]">1</span>
-                                            <span>اضغط على أيقونة <strong>المشاركة</strong> 📤</span>
+                                /* iOS Specific Instructions */
+                                <div className="bg-gray-50 dark:bg-white/5 p-5 border border-gray-100 dark:border-white/10">
+                                    <p className="text-[11px] font-black text-gray-900 dark:text-white mb-4 text-center bg-[#D4AF37] text-white py-2 uppercase tracking-widest">متصفح Safari (iOS)</p>
+                                    <ol className="text-[11px] text-gray-700 dark:text-gray-400 space-y-4 text-right font-bold">
+                                        <li className="flex items-center justify-end gap-3">
+                                            <span>اضغط على أيقونة <strong>المشاركة</strong> بالأسفل 📤</span>
+                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">1</span>
                                         </li>
-                                        <li className="flex items-center gap-3">
-                                            <span className="w-5 h-5 bg-[#D4AF37] text-white flex items-center justify-center text-[10px]">2</span>
+                                        <li className="flex items-center justify-end gap-3">
                                             <span>اختر <strong>إضافة للشاشة الرئيسية</strong> ➕</span>
+                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">2</span>
                                         </li>
-                                        <li className="flex items-center gap-3">
-                                            <span className="w-5 h-5 bg-[#D4AF37] text-white flex items-center justify-center text-[10px]">3</span>
-                                            <span>اضغط على <strong>إضافة</strong> بالزاوية ✅</span>
+                                        <li className="flex items-center justify-end gap-3">
+                                            <span>اضغط على <strong>إضافة</strong> في الأعلى ✅</span>
+                                            <span className="w-5 h-5 border border-gray-900 dark:border-white flex items-center justify-center text-[9px]">3</span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            ) : isFirefox || !deferredPrompt ? (
+                                /* Firefox or Other Manual Browsers (Desktop Safari, Firefox Android, etc.) */
+                                <div className="bg-gray-50 dark:bg-white/5 p-5 border border-gray-100 dark:border-white/10">
+                                    <p className="text-[11px] font-black text-gray-900 dark:text-white mb-4 text-center bg-gray-800 text-white py-2 uppercase tracking-widest">طريقة التثبيت اليدوي</p>
+                                    <p className="text-[10px] text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">متصفحك الحالي يتطلب خطوة واحدة:</p>
+                                    <ol className="text-[11px] text-gray-700 dark:text-gray-400 space-y-4 text-right font-bold">
+                                        <li className="flex items-center justify-end gap-3">
+                                            <span>افتح <strong>قائمة المتصفح</strong> (3 نقاط أو خطوط) ☰</span>
+                                            <span className="w-6 h-6 bg-gray-100 dark:bg-white/10 flex items-center justify-center text-[9px]">1</span>
+                                        </li>
+                                        <li className="flex items-center justify-end gap-3">
+                                            <span>اختر <strong>"تثبيت التطبيق"</strong> أو <strong>"إضافة للهاتف"</strong> 📲</span>
+                                            <span className="w-6 h-6 bg-gray-100 dark:bg-white/10 flex items-center justify-center text-[9px]">2</span>
                                         </li>
                                     </ol>
                                 </div>
                             ) : (
+                                /* Standard Chrome/Android/Edge (Official Prompt) */
                                 <button
                                     onClick={handleInstall}
-                                    className="w-full py-4 bg-gray-900 text-white font-black hover:bg-black transition-all flex items-center justify-center gap-3 group border-b-4 border-[#D4AF37] active:translate-y-1"
+                                    className="w-full py-5 bg-gray-900 text-white font-black hover:bg-black transition-all flex items-center justify-center gap-4 group border-b-[5px] border-[#D4AF37] active:transform active:translate-y-1"
                                 >
-                                    <Download size={20} className="group-hover:animate-bounce" />
-                                    <span className="uppercase tracking-[0.2em] text-xs">تثبيت الآن مجاناً</span>
+                                    <Download size={22} className="group-hover:animate-bounce" />
+                                    <span className="uppercase tracking-[3px] text-xs">تثبيت التطبيق مجاناً</span>
                                 </button>
                             )}
 
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="w-full py-3 text-gray-400 hover:text-gray-900 font-black text-[10px] uppercase tracking-widest transition-colors"
+                                className="w-full py-3 text-gray-400 hover:text-black dark:hover:text-white font-black text-[10px] uppercase tracking-[3px] transition-colors"
                             >
-                                إغلاق النافذة
+                                ربما في وقت لاحق
                             </button>
                         </div>
                     </div>
