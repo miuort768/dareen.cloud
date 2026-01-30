@@ -22,7 +22,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
     onClose
 }) => {
     return (
-        <div className="bg-white border border-slate-200 flex flex-col h-fit dark:bg-gray-900 dark:border-gray-800 animate-in slide-in-from-left-4 sticky top-6 rounded-none overflow-hidden shadow-2xl">
+        <div className="bg-white border border-slate-200 flex flex-col h-fit dark:bg-gray-900 dark:border-gray-800 sticky top-6 rounded-none overflow-hidden shadow-2xl">
             {/* Header Section */}
             <div className="relative p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-100 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 overflow-hidden">
                 <div className="absolute top-0 right-0 w-full h-1 bg-primary-600"></div>
@@ -30,13 +30,13 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
 
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-slate-400 hover:text-red-600 transition-colors p-2 hover:bg-red-50"
+                    className="absolute left-4 top-4 text-slate-400 hover:text-red-600 p-2 hover:bg-red-50 rounded-none"
                 >
                     <X size={20} />
                 </button>
 
                 <div className="text-center pt-2 relative z-10">
-                    <div className="w-20 h-20 mx-auto mb-4 bg-primary-600 flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-700">
+                    <div className="w-20 h-20 mx-auto mb-4 bg-primary-600 flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-700 rounded-none">
                         <User size={40} className="text-white" />
                     </div>
                     <h3 className="font-black text-2xl text-slate-900 dark:text-white mb-2 tracking-tight uppercase">
@@ -44,12 +44,12 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                     </h3>
 
                     <div className="flex flex-col gap-2 max-w-[260px] mx-auto">
-                        <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-black text-primary-600 font-mono shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-black text-primary-600 font-mono shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-none">
                             <Phone size={14} />
                             {parent.phone}
                         </div>
                         {parent.email && (
-                            <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-bold text-slate-400 font-mono italic shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                            <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-bold text-slate-400 font-mono italic shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-none">
                                 <Mail size={14} />
                                 {parent.email}
                             </div>
@@ -67,7 +67,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                         { label: 'تحصيل الحصص', value: `${details.completedSessions}/${details.totalSessions}`, icon: Calendar, color: 'emerald' },
                         { label: 'نسبة الإنجاز', value: `${details.completionRate}%`, icon: TrendingUp, color: 'amber' },
                     ].map((stat, idx) => (
-                        <div key={idx} className={`bg-${stat.color}-50/50 p-4 border border-${stat.color}-100 dark:bg-${stat.color}-900/10 dark:border-${stat.color}-900/20`}>
+                        <div key={idx} className={`bg-${stat.color}-50/50 p-4 border border-${stat.color}-100 dark:bg-${stat.color}-900/10 dark:border-${stat.color}-900/20 rounded-none`}>
                             <div className="flex items-center gap-2 mb-2">
                                 <stat.icon size={16} className={`text-${stat.color}-600`} />
                                 <p className={`text-[10px] font-black uppercase text-${stat.color}-600 tracking-widest`}>{stat.label}</p>
@@ -81,15 +81,15 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 <div className="space-y-4">
                     <div className="flex items-center justify-between border-r-4 border-r-primary-600 pr-4">
                         <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">الأبناء المسجلين</h4>
-                        <span className="text-[10px] font-black bg-primary-100 text-primary-700 px-2 py-0.5 dark:bg-primary-900/30 dark:text-primary-400">
+                        <span className="text-[10px] font-black bg-primary-100 text-primary-700 px-2 py-0.5 dark:bg-primary-900/30 dark:text-primary-400 rounded-none">
                             {details.children.length} أبناء
                         </span>
                     </div>
 
                     <div className="grid gap-3">
                         {details.children.length > 0 ? details.children.map(child => (
-                            <div key={child.id} className="group bg-slate-50 border border-slate-100 p-4 transition-all hover:border-primary-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden">
-                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-primary-600 transition-colors"></div>
+                            <div key={child.id} className="group bg-slate-50 border border-slate-100 p-4 hover:border-primary-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden rounded-none">
+                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-primary-600"></div>
                                 <div className="flex justify-between items-start mb-3">
                                     <div>
                                         <p className="font-black text-base text-slate-900 dark:text-white mb-0.5">{child.name}</p>
@@ -101,10 +101,10 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                         {child.enrollments.map((en, idx) => (
                                             <div key={idx} className="flex items-center justify-between text-[11px] font-bold">
                                                 <div className="flex items-center gap-2 text-slate-600 dark:text-gray-400">
-                                                    <div className="w-1.5 h-1.5 bg-primary-500"></div>
+                                                    <div className="w-1.5 h-1.5 bg-primary-500 rounded-none"></div>
                                                     {en.subject}
                                                 </div>
-                                                <div className="bg-white px-2 py-0.5 border border-slate-200 font-mono text-primary-600 dark:bg-gray-900 dark:border-gray-700">
+                                                <div className="bg-white px-2 py-0.5 border border-slate-200 font-mono text-primary-600 dark:bg-gray-900 dark:border-gray-700 rounded-none">
                                                     {en.sessionsUsed}/{en.sessionsTotal}
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800">
+                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800 rounded-none">
                                 <Users size={32} className="mx-auto text-slate-200 mb-2" />
                                 <p className="text-slate-400 text-xs font-bold">لا يوجد أبناء مرتبطين</p>
                             </div>
@@ -125,7 +125,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 <div className="space-y-4">
                     <div className="flex items-center justify-between border-r-4 border-r-amber-500 pr-4">
                         <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">الجدول العائلي</h4>
-                        <span className="text-[10px] font-black bg-amber-100 text-amber-700 px-2 py-0.5 dark:bg-amber-900/30 dark:text-amber-400">
+                        <span className="text-[10px] font-black bg-amber-100 text-amber-700 px-2 py-0.5 dark:bg-amber-900/30 dark:text-amber-400 rounded-none">
                             إدارة الحصص
                         </span>
                     </div>
@@ -146,7 +146,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                             }, {} as Record<string, { student: string, subject: string, times: FamilyScheduleItem[] }>);
 
                             return Object.values(grouped).map((group, idx) => (
-                                <div key={idx} className="bg-slate-50 border border-slate-100 p-4 transition-all hover:border-amber-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden">
+                                <div key={idx} className="bg-slate-50 border border-slate-100 p-4 hover:border-amber-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden rounded-none">
                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
@@ -165,7 +165,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                 </div>
                             ));
                         })() : (
-                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800">
+                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800 rounded-none">
                                 <Calendar size={32} className="mx-auto text-slate-200 mb-2" />
                                 <p className="text-slate-400 text-xs font-bold">لا توجد حصص مجدولة لعائلتكم</p>
                             </div>

@@ -26,7 +26,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
 
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
             {/* Desktop View */}
-            <div className="hidden md:block bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+            <div className="hidden md:block bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 rounded-none">
                 <div className="overflow-x-auto overflow-y-auto max-h-[700px]">
                     <table className="premium-table w-full">
                         <thead>
@@ -66,7 +66,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                         </td>
                                         <td className="text-center">
                                             <div className="flex justify-center">
-                                                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-600 font-black text-[10px] dark:bg-gray-800 dark:text-gray-400">
+                                                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-600 font-black text-[10px] rounded-none dark:bg-gray-800 dark:text-gray-400">
                                                     <Users size={12} />
                                                     {children.length}
                                                 </div>
@@ -113,8 +113,8 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                             key={parent.id}
                             onClick={() => onSelectParent(parent)}
                             className={cn(
-                                "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-none shadow-sm relative overflow-hidden transition-all active:scale-[0.98]",
-                                isSelected ? 'ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-950 border-primary-500' : 'border-r-4 border-r-primary-500'
+                                "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-none shadow-sm relative overflow-hidden",
+                                isSelected ? 'ring-2 ring-primary-500 border-primary-500' : 'border-r-4 border-r-primary-500'
                             )}
                         >
                             <div className="flex items-start justify-between mb-3">
@@ -127,13 +127,13 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                 <div className="flex gap-1">
                                     <button
                                         onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
-                                        className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center"
+                                        className="w-8 h-8 rounded-none bg-blue-50 text-blue-600 flex items-center justify-center"
                                     >
                                         <Edit size={14} />
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                        className="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"
+                                        className="w-8 h-8 rounded-none bg-rose-50 text-rose-600 flex items-center justify-center"
                                     >
                                         <Trash2 size={14} />
                                     </button>
@@ -159,7 +159,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                     );
                 })}
                 {parents.length === 0 && (
-                    <div className="py-20 text-center bg-white dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-800">
+                    <div className="py-20 text-center bg-white dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-800 rounded-none">
                         <Users size={48} className="mx-auto mb-4 text-gray-200" />
                         <p className="text-gray-400 font-bold">لا يوجد سجلات متاحة</p>
                     </div>
