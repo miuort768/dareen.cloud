@@ -1,6 +1,10 @@
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { ArrowLeft, BookOpen, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useSettings } from '../../context/SettingsContext';
 
 export const MasarSection = () => {
+    const { adminPhone } = useSettings();
+
     return (
         <section className="py-8 bg-white relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
@@ -14,22 +18,20 @@ export const MasarSection = () => {
                         <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#0d9488] rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3"></div>
                     </div>
 
-
-
                     <div className="flex flex-col lg:flex-row items-stretch">
-                        {/* Image Side - Removed the white block and slant that caused the 'white line' */}
-                        <div className="w-full lg:w-1/3 relative shrink-0 h-48 lg:h-auto overflow-hidden bg-[#f8f9fa]">
+                        {/* Image Side - Hidden on Mobile */}
+                        <div className="hidden lg:block lg:w-1/3 relative shrink-0 overflow-hidden bg-[#f8f9fa]">
                             <div className="absolute inset-0 z-10 flex items-center justify-center">
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-full h-full object-cover lg:object-cover"
+                                    className="w-full h-full object-cover"
                                 />
                             </div>
                         </div>
 
                         {/* Text Content Side */}
-                        <div className="w-full lg:w-2/3 p-6 md:p-8 lg:p-10 text-white relative z-20 text-center lg:text-right flex flex-col justify-center bg-gradient-to-b from-transparent to-[#0f286e]/50 lg:to-transparent">
+                        <div className="w-full lg:w-2/3 p-6 md:p-8 lg:p-10 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
 
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
@@ -47,15 +49,24 @@ export const MasarSection = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                                <button className="px-8 py-3.5 bg-[#0d9488] hover:bg-[#0f766e] text-white rounded-lg font-bold shadow-xl hover:shadow-[#0d9488]/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3 group">
+                                <Link
+                                    to="/courses"
+                                    className="px-8 py-3.5 bg-[#0d9488] hover:bg-[#0f766e] text-white rounded-none font-bold shadow-xl hover:shadow-[#0d9488]/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3 group"
+                                >
                                     <BookOpen className="w-5 h-5 transition-transform group-hover:scale-110" />
-                                    <span>ابدأ التعلم الآن</span>
+                                    <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                                </button>
+                                </Link>
 
-                                <button className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-lg font-bold backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 hover:border-white/50">
-                                    <span>اكتشف المنصة</span>
-                                </button>
+                                <a
+                                    href={`https://wa.me/${adminPhone}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-none font-bold backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 hover:border-white/50"
+                                >
+                                    <MessageCircle className="w-5 h-5" />
+                                    <span>تواصل مع الادارة</span>
+                                </a>
                             </div>
                         </div>
                     </div>
