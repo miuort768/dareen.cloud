@@ -784,7 +784,6 @@ export const Settings = () => {
                                     value={localName}
                                     onChange={(e) => setLocalName(e.target.value)}
                                     className="w-full bg-gray-50 border border-gray-200 rounded-none px-3 py-2 text-sm focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                    disabled={true}
                                 />
                                 <p className="text-[10px] text-gray-400 mt-1">يمكنك تحديث بياناتك من خلال زر "حفظ جميع التغييرات"</p>
                             </div>
