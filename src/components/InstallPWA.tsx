@@ -73,7 +73,11 @@ export const InstallPWA = () => {
         }
     };
 
-    if (!showTrigger) return null;
+    // Restricted pages as requested by the user
+    const allowedPaths = ['/', '/about', '/courses', '/login', '/home'];
+    const isPublicPage = allowedPaths.includes(location.pathname);
+
+    if (!showTrigger || !isPublicPage) return null;
 
     return (
         <>
