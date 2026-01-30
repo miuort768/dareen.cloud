@@ -14,8 +14,7 @@ export const MasarSection = () => {
                         <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#0d9488] rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3"></div>
                     </div>
 
-// Remove section parsing and padding reduction from here as it is better targeted in separate ReplaceFileContent or by just targeting the section wrapper separately if needed.
-                    // This replacement focuses on the inner content structure (Image + Text).
+
 
                     <div className="flex flex-col lg:flex-row items-stretch">
                         {/* Changed items-center to items-stretch to make image fill height */}
