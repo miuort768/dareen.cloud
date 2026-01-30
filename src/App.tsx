@@ -63,7 +63,7 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
 const DashboardRedirect = () => {
   const { currentUser } = useApp();
   if (currentUser?.role === 'parent') return <Navigate to="/parent-dashboard" replace />;
-  if (currentUser?.role === 'teacher') return <Navigate to="/attendance" replace />;
+  if (currentUser?.role === 'teacher') return <Navigate to="/admin-dashboard" replace />;
   if (currentUser?.role === 'chat_user') return <Navigate to="/chat" replace />;
   return <Navigate to="/admin-dashboard" replace />;
 };
