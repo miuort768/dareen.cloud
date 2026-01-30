@@ -43,7 +43,7 @@ export const MasarSection = () => {
                             </h2>
 
                             <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
-                                بوابتك نحو التميز والتطوير.. نجمع لك أحدث الأدوات التعليمية، المصادر الرقمية، وبرامج التطوير المهني في مكان واحد لضمان مستقبل تعليمي مشرق.
+                                نجمع لك أحدث الأدوات التعليمية، المصادر الرقمية، وبرامج التطوير المهني في مكان واحد لضمان مستقبل تعليمي مشرق.
                             </p>
 
                             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
