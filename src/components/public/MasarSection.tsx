@@ -41,7 +41,7 @@ export const MasarSection = () => {
                             </div>
 
                             <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black mb-4 font-heading leading-tight">
-                                <span className="text-[#d4af37]">منصة</span> <span className="text-[#0d9488] bg-white px-2 py-0.5 md:px-4 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(0,0,0,0.2)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للتعليم والتدريب</span>
+                                <span className="text-[#d4af37]">منصة</span> <span className="text-[#0d9488] bg-white px-2 py-0.5 md:px-4 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(0,0,0,0.2)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-[#d4af37]">للتعليم والتدريب</span>
                             </h2>
 
                             <p className="text-gray-200 text-sm md:text-base lg:text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
