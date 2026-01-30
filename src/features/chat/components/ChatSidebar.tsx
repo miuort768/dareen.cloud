@@ -185,7 +185,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             <div className="flex-1 min-w-0 text-right">
                                 <div className="flex items-center justify-between mb-1.5">
                                     <h3 className={cn(
-                                        "font-black truncate text-sm lg:text-base transition-colors",
+                                        "font-medium truncate text-sm lg:text-base transition-colors",
                                         selectedConv?.id === conv.id ? "text-primary-700 dark:text-primary-400" : "text-gray-900 dark:text-[#e9edef]"
                                     )}>
                                         {conv.displayName}
