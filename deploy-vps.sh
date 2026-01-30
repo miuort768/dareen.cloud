@@ -10,7 +10,8 @@ echo "📥 سحب الكود الجديد من GitHub..."
 git pull origin main
 
 # 2. بناء وتشغيل الحاويات باستخدام Docker Compose (V2)
-echo "🏗️ بناء وتشغيل الحاويات..."
+echo "🏗️ إيقاف وبناء وتشغيل الحاويات..."
+docker compose down
 docker compose up -d --build
 
 # 3. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
