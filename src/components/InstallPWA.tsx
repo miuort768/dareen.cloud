@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Bell, X, Download, Smartphone, Monitor } from 'lucide-react';
 import { cn } from '../lib/utils';
 
