@@ -66,9 +66,10 @@ const createStudentInvoiceSchema = z.object({
     description: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional(),
-    status: z.enum(['pending', 'paid', 'overdue', 'partially_paid', 'unpaid']).default('pending'),
+    status: z.enum(['pending', 'paid', 'overdue', 'partially_paid', 'unpaid', 'absent']).default('pending'),
     paymentMethod: z.string().optional(),
-    notes: z.string().optional()
+    notes: z.string().optional(),
+    items: z.array(z.any()).optional()
 });
 
 // Teacher Invoice
