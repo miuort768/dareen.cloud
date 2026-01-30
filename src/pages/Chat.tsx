@@ -257,10 +257,9 @@ export const Chat = () => {
 
     return (
         <div className={cn(
-            "flex overflow-hidden bg-gray-50/50 dark:bg-gray-950/50",
-            // Mobile: Fixed Full Screen Overlay (Treat as separate app view)
+            "flex overflow-hidden bg-[#f0f2f5] dark:bg-[#0b141a]",
             "fixed inset-0 z-50 lg:static lg:z-auto",
-            "h-[100dvh] lg:h-screen lg:py-4 lg:px-4 lg:gap-4"
+            "h-[100dvh] lg:h-screen lg:py-6 lg:px-8 lg:gap-6"
         )}>
             <ChatSidebar
                 conversations={conversations}
