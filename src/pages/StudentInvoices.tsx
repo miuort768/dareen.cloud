@@ -391,7 +391,7 @@ export const StudentInvoices = () => {
     return (
         <div className="space-y-6 pb-32">
             {/* ... Header Part omitted for brevity ... */}
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
+            <div className="relative bg-primary-600 p-4 md:p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
                 {/* ... Background stuff ... */}
 
                 <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
@@ -411,14 +411,14 @@ export const StudentInvoices = () => {
                     <div className="flex items-center gap-4 flex-wrap no-print">
                         <button
                             onClick={handleImportStudents}
-                            className="bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-primary-900/60 transition-all font-black shadow-lg h-14"
+                            className="bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-primary-900/50 font-black shadow-lg h-14"
                         >
                             <UserPlus size={20} />
                             <span>استيراد الكل</span>
                         </button>
                         <button
                             onClick={handlePrint}
-                            className="bg-white text-primary-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14"
+                            className="bg-white text-primary-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white active:bg-white font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] h-14"
                         >
                             <Printer size={20} />
                             <span>تصدير التقرير</span>
@@ -428,7 +428,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
                 <StatsCard
                     title="إجمالي التحصيلات"
                     value={totalRevenue.toLocaleString() + ' ج.م'}
@@ -470,7 +470,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="bg-white p-6 border border-slate-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800">
+            <div className="bg-white p-4 md:p-6 border border-slate-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800 rounded-none">
                 <div className="flex flex-wrap gap-5 items-center">
                     <div className="relative flex-1 min-w-[280px]">
                         <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -479,7 +479,7 @@ export const StudentInvoices = () => {
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                             placeholder="بحث باسم الطالب أو البيان..."
-                            className="w-full pl-6 pr-12 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-bold rounded-none focus:bg-white transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="w-full pl-6 pr-12 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-bold rounded-none focus:bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         />
                     </div>
 
@@ -487,7 +487,7 @@ export const StudentInvoices = () => {
                         <select
                             value={filterStatus}
                             onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
-                            className="px-6 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-black rounded-none transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="px-6 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-black rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                         >
                             <option value="all">جميع الحالات</option>
                             <option value="paid">مدفوعة</option>
@@ -498,7 +498,7 @@ export const StudentInvoices = () => {
                         <button
                             onClick={toggleForm}
                             className={cn(
-                                "flex items-center gap-3 px-8 h-12 rounded-none transition-all font-black text-sm uppercase tracking-widest relative overflow-hidden group",
+                                "flex items-center gap-3 px-8 h-12 rounded-none font-black text-sm uppercase tracking-widest relative overflow-hidden group",
                                 showForm
                                     ? "bg-slate-800 text-white hover:bg-black"
                                     : "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20"
@@ -510,7 +510,7 @@ export const StudentInvoices = () => {
 
                         <button
                             onClick={() => setDeleteAllModalOpen(true)}
-                            className="h-12 w-12 bg-red-50 border border-red-100 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 shadow-sm dark:bg-red-900/20 dark:border-red-900/30 no-print"
+                            className="h-12 w-12 bg-red-50 border border-red-100 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white shadow-sm dark:bg-red-900/20 dark:border-red-900/30 no-print rounded-none"
                             title="حذف الكل"
                         >
                             <Trash2 size={18} />
