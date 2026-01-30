@@ -21,7 +21,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
 }) => {
     return (
         <div className="space-y-6">
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
+            <div className="relative bg-primary-600 p-4 md:p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
                 {/* Background Geometric Enhancement */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
@@ -38,7 +38,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                 {/* Pattern Layer */}
                 <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
 
-                <div className="relative flex items-center justify-between flex-wrap gap-6 px-2">
+                <div className="relative flex items-center justify-between flex-wrap gap-4 md:gap-6 px-2">
                     <div className="flex items-center gap-5">
                         <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
                             <Users size={36} className="text-white relative z-10" />
@@ -52,7 +52,7 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-wrap no-print w-full md:w-auto mt-4 md:mt-0">
+                    <div className="flex items-center gap-2 flex-wrap no-print w-full md:w-auto mt-2 md:mt-0">
                         <div className="flex gap-2 w-full md:w-auto">
                             <button
                                 onClick={onToggleAddForm}

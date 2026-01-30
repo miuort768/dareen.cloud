@@ -15,7 +15,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     onSubmit
 }) => {
     return (
-        <div className="bg-white p-8 rounded-none shadow-xl border-x-4 border-x-primary-600 dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800 relative overflow-hidden">
+        <div className="bg-white p-4 md:p-8 rounded-none shadow-xl border-x-4 border-x-primary-600 dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-32 h-32 bg-primary-50/50 -translate-x-16 -translate-y-16 rotate-45 pointer-events-none dark:opacity-5"></div>
 
             <div className="flex items-center gap-3 mb-6 relative">

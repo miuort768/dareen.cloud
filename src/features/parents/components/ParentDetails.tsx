@@ -24,7 +24,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
     return (
         <div className="bg-white border border-slate-200 flex flex-col h-fit dark:bg-gray-900 dark:border-gray-800 sticky top-6 rounded-none overflow-hidden shadow-2xl">
             {/* Header Section */}
-            <div className="relative p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-100 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 overflow-hidden">
+            <div className="relative p-4 md:p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-100 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 overflow-hidden">
                 <div className="absolute top-0 right-0 w-full h-1 bg-primary-600"></div>
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary-500/5 rotate-45 pointer-events-none"></div>
 
@@ -58,7 +58,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 </div>
             </div>
 
-            <div className="p-8 space-y-8">
+            <div className="p-4 md:p-8 space-y-8">
                 {/* Quick Stats Grid */}
                 <div className="grid grid-cols-2 gap-4">
                     {[

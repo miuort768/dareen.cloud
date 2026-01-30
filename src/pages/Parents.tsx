@@ -53,7 +53,7 @@ export const Parents = () => {
                 />
             )}
 
-            <div className="bg-white p-5 shadow-sm border border-slate-100 dark:bg-gray-900 dark:border-gray-800 flex items-center gap-4">
+            <div className="bg-white p-3 md:p-5 shadow-sm border border-slate-100 dark:bg-gray-900 dark:border-gray-800 flex items-center gap-4 rounded-none">
                 <div className="relative flex-1 group">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors" size={18} />
                     <input
