@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { Skeleton } from '../components/ui/Skeleton';
+import { StatsCard } from '../shared/components/StatsCard';
 import { useDashboardData } from '../hooks/useDashboardData';
 
 const AVAILABLE_PERMISSIONS = [
