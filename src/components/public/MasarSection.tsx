@@ -6,7 +6,7 @@ export const MasarSection = () => {
             <div className="container mx-auto px-4 relative z-10">
 
                 {/* The Single Big Rectangle */}
-                <div className="max-w-6xl mx-auto bg-gradient-to-r from-[#1e3a8a] to-[#0f286e] rounded-3xl shadow-2xl overflow-hidden border border-[#1e3a8a]/20 relative">
+                <div className="max-w-6xl mx-auto bg-gradient-to-r from-[#1e3a8a] to-[#0f286e] shadow-2xl overflow-hidden border border-[#1e3a8a]/20 relative">
 
                     {/* Background Pattern */}
                     <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
@@ -21,10 +21,10 @@ export const MasarSection = () => {
                             {/* Decorative slant for Desktop - Fixed for RTL: removed skew to keep it simple rectangle or slant from left */}
                             <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-12 bg-white skew-x-[-6deg] translate-x-6 z-10"></div>
 
-                            <div className="relative z-20 w-48 h-48 flex items-center justify-center">
+                            <div className="relative z-20 w-full h-full flex items-center justify-center p-4">
                                 {/* Using the logo as requested */}
                                 <img
-                                    src="/logo.png"
+                                    src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
                                     className="w-full h-full object-contain drop-shadow-lg"
                                 />
@@ -39,7 +39,7 @@ export const MasarSection = () => {
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-black mb-4 font-heading leading-tight">
-                                منصة <span className="text-[#0d9488] bg-white px-2 rounded-lg inline-block transform -rotate-1 shadow-lg mx-1">مسار</span>
+                                منصة <span className="text-[#0d9488] bg-white px-2 inline-block transform -rotate-1 shadow-lg mx-1">دارين</span>
                             </h2>
 
                             <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
