@@ -71,7 +71,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                     <div className="relative group cursor-pointer" onClick={() => selectedConv.isGroup && openGroupSettings()}>
                         <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-md border-2 border-white dark:border-gray-700 transition-transform group-hover:scale-105 overflow-hidden">
-                            <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
+                            <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
                     </div>
