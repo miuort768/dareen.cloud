@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 import type { Teacher } from '../types';
 
 interface TeacherFormProps {
@@ -62,115 +63,114 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     };
 
     return (
-        <div className="bg-white mx-1 p-6 border border-primary-200 shadow-lg dark:bg-gray-900 dark:border-gray-800 animate-in slide-in-from-top-4">
-            <div className="flex items-center gap-2 mb-4 text-primary-700 font-bold border-b border-gray-200 pb-3 dark:border-gray-700 dark:text-primary-400">
-                {initialData ? <Edit size={20} /> : <Plus size={20} />}
-                <h3 className="text-lg">{initialData ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
+        <div className="bg-white p-6 border border-gray-100 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-800">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-none bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600">
+                    {initialData ? <Edit size={20} /> : <Plus size={20} />}
+                </div>
+                <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-none">{initialData ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}</h3>
+                    <p className="text-xs text-gray-500 mt-1 font-medium italic">يرجى ملء البيانات المطلوبة للبدء</p>
+                </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">الاسم الكامل *</label>
-                    <input
-                        required
-                        value={formData.name}
-                        onChange={e => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        placeholder="اسم المعلمة"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">رقم الهاتف الأساسي *</label>
-                    <input
-                        required
-                        type="tel"
-                        value={formData.phone1}
-                        onChange={e => setFormData({ ...formData, phone1: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        dir="ltr"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">رقم إضافي (اختياري)</label>
-                    <input
-                        type="tel"
-                        value={formData.phone2}
-                        onChange={e => setFormData({ ...formData, phone2: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        dir="ltr"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">التخصص / المادة *</label>
-                    <input
-                        required
-                        value={formData.subject}
-                        onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        placeholder="مثال: لغة عربية"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">سعر الحصة (ج.م) *</label>
-                    <input
-                        required
-                        type="number"
-                        value={formData.price}
-                        onChange={e => setFormData({ ...formData, price: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    />
-                </div>
-                <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-gray-500">رقم الهاتف الأساسي *</label>
-                    <input
-                        required
-                        type="tel"
-                        value={formData.phone1}
-                        onChange={e => setFormData({ ...formData, phone1: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        dir="ltr"
-                    />
-                </div>
-                {/* Add login fields section */}
-                <div className="md:col-span-2 lg:col-span-3 pt-4 border-t border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-2 mb-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">الاسم الكامل *</label>
                         <input
-                            type="checkbox"
-                            id="enableLogin"
-                            checked={enableLogin}
-                            onChange={() => setEnableLogin(!enableLogin)}
-                            className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
+                            required
+                            value={formData.name}
+                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            placeholder="اسم المعلمة"
                         />
-                        <label htmlFor="enableLogin" className="text-sm font-bold text-gray-700 dark:text-gray-300 select-none cursor-pointer">
-                            تفعيل حساب للنظام (اسم مستخدم وكلمة مرور)
-                        </label>
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">رقم الهاتف الأساسي *</label>
+                        <input
+                            required
+                            type="tel"
+                            value={formData.phone1}
+                            onChange={e => setFormData({ ...formData, phone1: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            dir="ltr"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">رقم إضافي (اختياري)</label>
+                        <input
+                            type="tel"
+                            value={formData.phone2}
+                            onChange={e => setFormData({ ...formData, phone2: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            dir="ltr"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">التخصص / المادة *</label>
+                        <input
+                            required
+                            value={formData.subject}
+                            onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            placeholder="مثال: لغة عربية"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">سعر الحصة (ج.م) *</label>
+                        <input
+                            required
+                            type="number"
+                            value={formData.price}
+                            onChange={e => setFormData({ ...formData, price: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                        />
+                    </div>
+                </div>
+
+                {/* Login fields section */}
+                <div className="pt-4 border-t border-gray-50 dark:border-gray-800">
+                    <div
+                        onClick={() => setEnableLogin(!enableLogin)}
+                        className="flex items-center gap-3 mb-4 cursor-pointer group w-fit"
+                    >
+                        <div className={cn(
+                            "w-5 h-5 rounded-none border flex items-center justify-center",
+                            enableLogin ? "bg-primary-600 border-primary-600 shadow-lg shadow-primary-600/20" : "bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700"
+                        )}>
+                            {enableLogin && <div className="w-2 h-2 rounded-none bg-white" />}
+                        </div>
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-300 select-none">
+                            تفعيل حساب للنظام (دخول المعلمة)
+                        </span>
                     </div>
 
                     {enableLogin && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-primary-50/30 p-4 rounded-none border border-primary-100/50 dark:bg-primary-900/5 dark:border-primary-900/20">
                             <div className="space-y-1.5">
-                                <div className="flex justify-between">
-                                    <label className="text-xs font-bold text-gray-500">اسم المستخدم</label>
-                                    <button type="button" onClick={generateUsername} className="text-[10px] text-primary-600 font-bold hover:underline">توليد تلقائي</button>
+                                <div className="flex justify-between px-1">
+                                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">اسم المستخدم</label>
+                                    <button type="button" onClick={generateUsername} className="text-[10px] text-primary-600 font-black hover:opacity-70">توليد تلقائي ✨</button>
                                 </div>
                                 <input
                                     type="text"
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:border-primary-500 outline-none text-sm font-mono dark:bg-gray-900 dark:border-gray-600 dark:text-white"
+                                    className="w-full px-4 py-2.5 bg-white border border-gray-100 rounded-none focus:border-primary-500 outline-none text-sm font-mono dark:bg-gray-900 dark:border-gray-600 dark:text-white shadow-sm"
                                     dir="ltr"
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <div className="flex justify-between">
-                                    <label className="text-xs font-bold text-gray-500">كلمة المرور</label>
-                                    <button type="button" onClick={generatePassword} className="text-[10px] text-primary-600 font-bold hover:underline">توليد تلقائي</button>
+                                <div className="flex justify-between px-1">
+                                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">كلمة المرور</label>
+                                    <button type="button" onClick={generatePassword} className="text-[10px] text-primary-600 font-black hover:opacity-70">توليد تلقائي ✨</button>
                                 </div>
                                 <input
                                     type="text"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:border-primary-500 outline-none text-sm font-mono dark:bg-gray-900 dark:border-gray-600 dark:text-white"
+                                    className="w-full px-4 py-2.5 bg-white border border-gray-100 rounded-none focus:border-primary-500 outline-none text-sm font-mono dark:bg-gray-900 dark:border-gray-600 dark:text-white shadow-sm"
                                     dir="ltr"
                                 />
                             </div>
@@ -178,13 +178,20 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                     )}
                 </div>
 
-                <div className="md:col-span-2 lg:col-span-3 flex justify-end gap-3 mt-2">
-                    <button type="button" onClick={onCancel} className="px-6 py-2 text-sm font-bold text-gray-500 hover:bg-gray-50 transition-colors">إلغاء</button>
-                    <button type="submit" className="px-8 py-2 bg-primary-600 text-white text-sm font-bold hover:bg-primary-700 shadow-sm transition-all active:scale-95">
-                        {initialData ? 'حفظ التعديلات' : 'حفظ البيانات'}
+                <div className="flex items-center justify-end gap-3 pt-2">
+                    <button
+                        type="button"
+                        onClick={onCancel}
+                        className="px-6 py-3 text-sm font-bold text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-none"
+                    >
+                        إلغاء
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-10 py-3 bg-primary-600 text-white text-sm font-black rounded-none hover:bg-primary-700 shadow-lg shadow-primary-600/20 underline-offset-4"
+                    >
+                        {initialData ? 'حفظ التعديلات' : 'إضافة المعلمة الآن'}
                     </button>
                 </div>
             </form>
         </div>
-    );
-};

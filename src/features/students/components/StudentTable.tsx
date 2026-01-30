@@ -17,7 +17,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
 
         <div className="bg-transparent">
             {/* Desktop View */}
-            <div className="hidden md:block bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+            <div className="hidden md:block bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 rounded-none">
                 <div className="overflow-x-auto">
                     <table className="premium-table w-full">
                         <thead>
@@ -29,7 +29,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                 <th className={cn("text-center", showDetails && "px-2 py-2 text-[10px]")}>الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                             {students.map((student) => {
                                 const hasLowBalance = student.enrollments?.some(en => (en.sessionsTotal - en.sessionsUsed) <= 2);
                                 const isSelected = selectedId === student.id;
@@ -38,8 +38,8 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                     <tr
                                         key={student.id}
                                         className={cn(
-                                            "cursor-pointer transition-colors",
-                                            isSelected ? 'bg-primary-50 dark:bg-primary-900/20 shadow-inner' : '',
+                                            "cursor-pointer",
+                                            isSelected ? 'bg-primary-50 dark:bg-primary-900/20' : '',
                                             hasLowBalance ? 'bg-rose-50/10' : ''
                                         )}
                                         onClick={() => onSelect(student)}
@@ -61,15 +61,15 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                             {isTeacherView ? '••••••••' : student.parentPhone}
                                         </td>
                                         <td className={cn("text-center", showDetails && "px-2 py-2")}>
-                                            <span className={cn("inline-flex items-center justify-center bg-primary-50 text-primary-700 font-black dark:bg-primary-900/40 dark:text-primary-400", showDetails ? "w-6 h-6 text-[10px]" : "w-8 h-8 text-xs")}>
+                                            <span className={cn("inline-flex items-center justify-center bg-primary-50 text-primary-700 font-black dark:bg-primary-900/40 dark:text-primary-400 rounded-none", showDetails ? "w-6 h-6 text-[10px]" : "w-8 h-8 text-xs")}>
                                                 {student.enrollments?.length || 0}
                                             </span>
                                         </td>
                                         <td className={cn("text-center", showDetails && "px-1 py-1")}>
                                             <div className={cn("flex items-center justify-center", showDetails ? "gap-0" : "gap-1")}>
-                                                <button onClick={(e) => { e.stopPropagation(); onSelect(student); }} className={cn("text-primary-600 hover:bg-primary-50", showDetails ? "p-1" : "p-2")}><Eye size={showDetails ? 14 : 16} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className={cn("text-emerald-600 hover:bg-emerald-50", showDetails ? "p-1" : "p-2")}><Edit size={showDetails ? 14 : 16} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className={cn("text-red-600 hover:bg-red-50", showDetails ? "p-1" : "p-2")}><Trash size={showDetails ? 14 : 16} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onSelect(student); }} className={cn("text-primary-600 hover:bg-primary-50 rounded-none", showDetails ? "p-1" : "p-2")}><Eye size={showDetails ? 14 : 16} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className={cn("text-emerald-600 hover:bg-emerald-50 rounded-none", showDetails ? "p-1" : "p-2")}><Edit size={showDetails ? 14 : 16} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className={cn("text-red-600 hover:bg-red-50 rounded-none", showDetails ? "p-1" : "p-2")}><Trash size={showDetails ? 14 : 16} /></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -91,8 +91,8 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                             key={student.id}
                             onClick={() => onSelect(student)}
                             className={cn(
-                                "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-none shadow-sm relative overflow-hidden transition-all active:scale-[0.98]",
-                                isSelected ? 'ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-950' : '',
+                                "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-none shadow-sm relative overflow-hidden",
+                                isSelected ? 'ring-2 ring-primary-500' : '',
                                 hasLowBalance ? 'border-r-4 border-r-rose-500' : 'border-r-4 border-r-primary-500'
                             )}
                         >
@@ -106,13 +106,13 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                 <div className="flex gap-1">
                                     <button
                                         onClick={(e) => { e.stopPropagation(); onEdit(student); }}
-                                        className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center"
+                                        className="w-8 h-8 rounded-none bg-blue-50 text-blue-600 flex items-center justify-center"
                                     >
                                         <Edit size={14} />
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); onDelete(student.id); }}
-                                        className="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"
+                                        className="w-8 h-8 rounded-none bg-rose-50 text-rose-600 flex items-center justify-center"
                                     >
                                         <Trash size={14} />
                                     </button>
@@ -136,7 +136,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
 
                             {hasLowBalance && (
                                 <div className="mt-2 text-[10px] font-black text-rose-600 flex items-center gap-1 bg-rose-50 dark:bg-rose-900/20 p-1.5 rounded-none">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse"></span>
+                                    <span className="w-1.5 h-1.5 rounded-none bg-rose-600"></span>
                                     تنبيه: رصيد الحصص قارب على الانتهاء
                                 </div>
                             )}

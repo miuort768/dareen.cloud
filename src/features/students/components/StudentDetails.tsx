@@ -4,6 +4,7 @@ import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
+import { StudentHistoryModal } from './StudentHistoryModal';
 
 interface StudentDetailsProps {
     student: Student;
@@ -15,8 +16,6 @@ interface StudentDetailsProps {
     onAddSessions: (index: number, amount: number) => void;
     teachers: Teacher[];
 }
-
-import { StudentHistoryModal } from './StudentHistoryModal';
 
 export const StudentDetails = ({
     student,
@@ -32,32 +31,42 @@ export const StudentDetails = ({
     const [showHistory, setShowHistory] = useState(false);
 
     return (
-        <div className="bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 flex flex-col shadow-2xl overflow-hidden rounded-none animate-in slide-in-from-left-4 h-[700px]">
-            <div className="p-6 bg-primary-50/30 border-b border-gray-100 dark:bg-primary-900/10 dark:border-gray-800 relative">
-                <button onClick={onClose} className="absolute left-4 top-4 text-gray-400 hover:text-red-500"><X size={20} /></button>
-                <div className="text-center pt-2">
-                    <h3 className="font-black text-xl text-gray-900 dark:text-white">{student.name}</h3>
-                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">{student.grade}</p>
+        <div className={cn(
+            "bg-white dark:bg-gray-900 shadow-xl overflow-hidden flex flex-col rounded-none",
+            // Mobile: Full screen overlay
+            "fixed inset-0 z-[100] lg:static lg:h-[700px] lg:shadow-sm lg:border lg:border-gray-200 lg:dark:border-gray-800"
+        )}>
+            <div className="p-4 border-b border-gray-100 flex justify-between items-start dark:bg-gray-800/50 dark:border-gray-700">
+                <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-primary-600 text-white flex items-center justify-center rounded-none text-lg font-black shadow-md">
+                        {student.name.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-gray-900 dark:text-white leading-none">{student.name}</h3>
+                        <span className="inline-block px-2 py-0.5 bg-primary-50 text-primary-700 text-xs font-bold rounded-none mt-1 dark:bg-primary-900/20 dark:text-primary-300">
+                            {student.grade}
+                        </span>
+                    </div>
                 </div>
+                <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 rounded-none">
+                    <X size={20} />
+                </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
                 <div className="space-y-4">
-                    <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                        <div className="w-8 h-[1px] bg-primary-200"></div>
+                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
                         الاشتراكات الحالية ({student.enrollments.length})
                     </h4>
 
                     <div className="space-y-4">
                         {student.enrollments.map((en, i) => {
-                            // Use pre-calculated sessionsUsed from backend
                             const actualUsed = en.sessionsUsed;
-
                             const isLow = (en.sessionsTotal - actualUsed) <= 2;
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-4 border border-gray-100 group hover:border-primary-500 transition-all rounded-none",
+                                    "p-4 border border-gray-100 rounded-none",
                                     isLow ? "bg-rose-50/30 border-rose-100" : "bg-white dark:bg-gray-800/50 dark:border-gray-700"
                                 )}>
                                     <div className="flex justify-between items-start mb-4">
@@ -68,66 +77,68 @@ export const StudentDetails = ({
                                                 <span>{en.teacher}</span>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button onClick={() => onSendReminder(en)} className="text-emerald-600" title="إرسال تذكير"><MessageCircle size={14} /></button>
-                                            <button onClick={() => onRenewEnrollment(i)} className="text-blue-600" title="تجديد"><RefreshCw size={14} /></button>
-                                            <button onClick={() => onDeleteEnrollment(i)} className="text-red-600" title="حذف"><Trash size={14} /></button>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => onSendReminder(en)} className="p-1 text-emerald-600" title="إرسال تذكير"><MessageCircle size={14} /></button>
+                                            <button onClick={() => onRenewEnrollment(i)} className="p-1 text-blue-600" title="تجديد"><RefreshCw size={14} /></button>
+                                            <button onClick={() => onDeleteEnrollment(i)} className="p-1 text-red-600" title="حذف"><Trash size={14} /></button>
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center text-[10px] font-black uppercase">
                                             <span className="text-gray-400">
-                                                تم حضور: <strong className="text-gray-900 dark:text-gray-200">{actualUsed}</strong> من أصل {en.sessionsTotal} حصة
+                                                حضور: <strong className="text-gray-900 dark:text-gray-200">{actualUsed}</strong> / {en.sessionsTotal}
                                             </span>
-                                            <span className={isLow ? "text-rose-600 animate-pulse" : "text-primary-600"}>
-                                                المتبقي: {en.sessionsTotal - actualUsed}
+                                            <span className={isLow ? "text-rose-600" : "text-primary-600"}>
+                                                الباقي: {en.sessionsTotal - actualUsed}
                                             </span>
                                         </div>
                                         <div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-none overflow-hidden">
                                             <div
-                                                className={cn("h-full transition-all duration-500", isLow ? "bg-rose-600" : "bg-primary-600")}
+                                                className={cn("h-full", isLow ? "bg-rose-600" : "bg-primary-600")}
                                                 style={{ width: `${(actualUsed / en.sessionsTotal) * 100}%` }}
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2 pt-2">
+                                    <div className="flex items-center gap-2 pt-4">
                                         <button
                                             onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                            className={cn("px-2 py-1.5 border text-[9px] font-black transition-colors flex-1 text-center bg-gray-50", addingSessionsIndex === i ? "bg-primary-600 text-white border-primary-600" : "border-gray-200 text-gray-600 hover:bg-white")}
+                                            className={cn("px-2 py-1.5 border text-[9px] font-black flex-1 text-center bg-gray-50 rounded-none", addingSessionsIndex === i ? "bg-primary-600 text-white border-primary-600" : "border-gray-200 text-gray-600 hover:bg-white")}
                                         >
                                             {addingSessionsIndex === i ? 'إغلاق' : 'إضافة حصص'}
                                         </button>
 
                                         <button
                                             onClick={() => setShowHistory(true)}
-                                            className="px-2 py-1.5 border border-primary-200 text-primary-700 bg-primary-50 text-[9px] font-black hover:bg-primary-100 transition-colors flex-1 text-center"
+                                            className="px-2 py-1.5 border border-primary-200 text-primary-700 bg-primary-50 text-[9px] font-black hover:bg-primary-100 flex-1 text-center rounded-none"
                                         >
-                                            عرض السجل بالكامل
+                                            عرض السجل
                                         </button>
-
-                                        {addingSessionsIndex === i && (
-                                            <div className="flex items-center gap-1 animate-in slide-in-from-right-2 absolute left-4 bg-white shadow-lg p-1 border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
-                                                {[2, 5, 8].map(num => (
-                                                    <button
-                                                        key={num}
-                                                        onClick={() => onAddSessions(i, num)}
-                                                        className="px-2 py-1 bg-emerald-50 border border-emerald-100 text-[8px] font-black text-emerald-700 hover:bg-emerald-100 transition-colors"
-                                                    >
-                                                        +{num}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        )}
                                     </div>
+
+                                    {addingSessionsIndex === i && (
+                                        <div className="flex justify-center gap-2 mt-2 p-2 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-none">
+                                            {[2, 5, 8, 10, 12].map(num => (
+                                                <button
+                                                    key={num}
+                                                    onClick={() => { onAddSessions(i, num); setAddingSessionsIndex(null); }}
+                                                    className="px-3 py-1 bg-white border border-gray-200 text-[10px] font-black hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 rounded-none"
+                                                >
+                                                    +{num}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
                     </div>
                 </div>
 
-                <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
+                <div className="pt-4 border-t border-gray-50 dark:border-gray-800">
+                    <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
+                </div>
             </div>
 
             {showHistory && (

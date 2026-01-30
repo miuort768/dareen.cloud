@@ -35,60 +35,71 @@ export const StudentForm = ({ onSubmit, initialData }: StudentFormProps) => {
     };
 
     return (
-        <div className="bg-white p-6 border border-primary-200 shadow-lg dark:bg-gray-900 dark:border-gray-800 animate-in slide-in-from-top-4 rounded-none">
-            <div className="flex items-center gap-2 mb-4 text-primary-700 font-bold border-b border-gray-200 pb-3 dark:border-gray-700 dark:text-primary-400">
-                {initialData ? <Edit size={20} /> : <UserPlus size={20} />}
-                <h3 className="text-lg">{initialData ? 'تعديل بيانات الطالب' : 'إضافة طالب جديد'}</h3>
+        <div className="bg-white p-6 border border-gray-100 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-800">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-none bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600">
+                    {initialData ? <Edit size={20} /> : <UserPlus size={20} />}
+                </div>
+                <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-none">{initialData ? 'تعديل بيانات الطالب' : 'إضافة طالب جديد'}</h3>
+                    <p className="text-xs text-gray-500 mt-1 font-medium italic">يرجى ملء البيانات المطلوبة للبدء</p>
+                </div>
             </div>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div>
-                    <label className="block text-xs font-bold text-gray-600 mb-1 dark:text-gray-400">اسم الطالب *</label>
-                    <input
-                        required
-                        type="text"
-                        value={formData.name}
-                        onChange={e => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        placeholder="الاسم الثلاثي"
-                    />
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">اسم الطالب *</label>
+                        <input
+                            required
+                            value={formData.name}
+                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            placeholder="الاسم الثلاثي"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">الصف الدراسي *</label>
+                        <input
+                            required
+                            value={formData.grade}
+                            onChange={e => setFormData({ ...formData, grade: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            placeholder="مثال: الخامس"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">رقم ولي الأمر *</label>
+                        <input
+                            required
+                            type="tel"
+                            value={formData.parentPhone}
+                            onChange={e => setFormData({ ...formData, parentPhone: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            dir="ltr"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">سعر الحصة (ج.م) *</label>
+                        <input
+                            required
+                            type="number"
+                            value={formData.sessionPrice}
+                            onChange={e => setFormData({ ...formData, sessionPrice: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label className="block text-xs font-bold text-gray-600 mb-1 dark:text-gray-400">الصف الدراسي *</label>
-                    <input
-                        required
-                        type="text"
-                        value={formData.grade}
-                        onChange={e => setFormData({ ...formData, grade: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        placeholder="مثال: الخامس"
-                    />
+
+                <div className="flex items-center justify-end gap-3 pt-2">
+                    <button
+                        type="submit"
+                        className="px-10 py-3 bg-primary-600 text-white text-sm font-black rounded-none hover:bg-primary-700 shadow-lg shadow-primary-600/20 underline-offset-4"
+                    >
+                        <Save size={18} className="inline-block ml-2" />
+                        {initialData ? 'حفظ التعديلات' : 'إضافة الطالب الآن'}
+                    </button>
                 </div>
-                <div>
-                    <label className="block text-xs font-bold text-gray-600 mb-1 dark:text-gray-400">رقم ولي الأمر *</label>
-                    <input
-                        required
-                        type="tel"
-                        value={formData.parentPhone}
-                        onChange={e => setFormData({ ...formData, parentPhone: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-mono"
-                        placeholder="01xxxxxxxxx"
-                        dir="ltr"
-                    />
-                </div>
-                <div>
-                    <label className="block text-xs font-bold text-gray-600 mb-1 dark:text-gray-400">سعر الحصة (ج.م)</label>
-                    <input
-                        type="number"
-                        value={formData.sessionPrice}
-                        onChange={e => setFormData({ ...formData, sessionPrice: e.target.value })}
-                        className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        placeholder="0"
-                    />
-                </div>
-                <button type="submit" className="bg-primary-600 text-white px-6 py-2 font-bold hover:bg-primary-700 transition-all rounded-none flex items-center justify-center gap-2 h-10 mt-auto shadow-md">
-                    <Save size={18} />
-                    {initialData ? 'حفظ التعديلات' : 'حفظ'}
-                </button>
             </form>
         </div>
     );

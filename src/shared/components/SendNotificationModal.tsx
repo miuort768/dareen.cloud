@@ -30,17 +30,17 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
             <div
-                className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300"
+                className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden rounded-none">
+            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md overflow-hidden rounded-none">
                 <div className="h-1.5 w-full bg-indigo-600"></div>
 
                 <div className="p-8">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                        className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white"
                     >
                         <X size={20} />
                     </button>
@@ -74,14 +74,14 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="flex-1 px-6 h-12 border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-slate-400 font-black text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-gray-800 transition-all rounded-none"
+                                    className="flex-1 px-6 h-12 border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-slate-400 font-black text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-gray-800 rounded-none"
                                 >
                                     إلغاء
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={!message.trim()}
-                                    className="flex-1 px-6 h-12 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm uppercase tracking-widest shadow-lg shadow-indigo-600/20 transition-all transform hover:-translate-y-1 active:translate-y-0 rounded-none disabled:opacity-50 disabled:transform-none"
+                                    className="flex-1 px-6 h-12 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm uppercase tracking-widest shadow-lg shadow-indigo-600/20 rounded-none disabled:opacity-50"
                                 >
                                     <div className="flex items-center justify-center gap-2">
                                         <span>إرسال الآن</span>

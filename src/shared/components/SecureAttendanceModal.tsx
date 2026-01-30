@@ -43,17 +43,17 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
             <div
-                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-300"
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden rounded-lg">
+            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md overflow-hidden rounded-none">
                 <div className="bg-primary-600 p-4 text-white flex justify-between items-center">
                     <div className="flex items-center gap-2 font-bold">
                         <ShieldCheck size={20} />
                         <span>تسجيل حضور مؤكد</span>
                     </div>
-                    <button onClick={onClose} className="text-white/80 hover:text-white transition-colors">
+                    <button onClick={onClose} className="text-white/80 hover:text-white">
                         <X size={20} />
                     </button>
                 </div>
@@ -62,7 +62,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                     <div className="text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400 font-bold mb-1">تسجيل للطالب</p>
                         <h3 className="text-lg font-black text-gray-900 dark:text-white">{studentName}</h3>
-                        <p className="text-xs text-primary-600 font-bold mt-1 bg-primary-50 inline-block px-2 py-1 rounded dark:bg-primary-900/20 dark:text-primary-400">
+                        <p className="text-xs text-primary-600 font-bold mt-1 bg-primary-50 inline-block px-2 py-1 rounded-none dark:bg-primary-900/20 dark:text-primary-400">
                             بتاريخ: {date}
                         </p>
                     </div>
@@ -71,7 +71,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                         <button
                             onClick={() => setStatus('completed')}
                             className={cn(
-                                "flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all",
+                                "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'completed'
                                     ? "border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
                                     : "border-gray-100 bg-white text-gray-400 hover:border-emerald-200 dark:bg-gray-800 dark:border-gray-700"
@@ -83,7 +83,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                         <button
                             onClick={() => setStatus('cancelled')}
                             className={cn(
-                                "flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all",
+                                "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'cancelled'
                                     ? "border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400"
                                     : "border-gray-100 bg-white text-gray-400 hover:border-rose-200 dark:bg-gray-800 dark:border-gray-700"
@@ -107,17 +107,17 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             }}
                             placeholder="أدخل كلمة المرور..."
                             className={cn(
-                                "w-full p-3 bg-gray-50 border rounded-lg outline-none focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-white transition-all text-center font-mono tracking-widest",
-                                error ? "border-red-500 focus:ring-red-500" : "border-gray-200 dark:border-gray-700"
+                                "w-full p-3 bg-gray-50 border rounded-none outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:text-white text-center font-mono tracking-widest",
+                                error ? "border-red-500" : "border-gray-200 dark:border-gray-700"
                             )}
                             autoFocus
                         />
-                        {error && <p className="text-xs text-red-500 font-bold text-center animate-pulse">{error}</p>}
+                        {error && <p className="text-xs text-red-500 font-bold text-center">{error}</p>}
                     </div>
 
                     <button
                         onClick={handleConfirm}
-                        className="w-full bg-primary-600 text-white py-3 rounded-lg font-black shadow-lg shadow-primary-600/20 hover:bg-primary-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+                        className="w-full bg-primary-600 text-white py-3 rounded-none font-black shadow-lg shadow-primary-600/20 hover:bg-primary-700 flex items-center justify-center gap-2"
                     >
                         تأكيد التسجيل
                     </button>

@@ -18,6 +18,7 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                 color="emerald"
                 trend={`${totalTeachers > 0 ? '+1' : '0'}`}
                 trendUp={true}
+                className="rounded-none"
             />
             <StatsCard
                 title="إجمالي الطلاب"
@@ -25,6 +26,7 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                 icon={UserPlus}
                 color="blue"
                 trend="نشط"
+                className="rounded-none"
             />
             <StatsCard
                 title="المواد المقدمة"
@@ -32,6 +34,7 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                 icon={BookOpen}
                 color="purple"
                 trend="تنوع"
+                className="rounded-none"
             />
             <StatsCard
                 title="متوسط السعر"
@@ -39,6 +42,7 @@ export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, ave
                 icon={DollarSign}
                 color="amber"
                 trend="للحصة"
+                className="rounded-none"
             />
         </div>
     );
