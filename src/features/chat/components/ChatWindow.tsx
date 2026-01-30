@@ -57,7 +57,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+            const target = event.target as HTMLElement;
+            // Don't close if clicking the emoji button itself
+            if (target.closest('.emoji-toggle-btn')) return;
+
+            if (emojiPickerRef.current && !emojiPickerRef.current.contains(target)) {
                 setShowEmojiPicker(false);
             }
         };
@@ -210,14 +214,21 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             {/* Input Area */}
             <div className="p-3 lg:p-4 bg-[#f0f2f5] dark:bg-[#111b21] shrink-0 border-t border-gray-100 dark:border-gray-800/50 relative">
                 {showEmojiPicker && (
-                    <div className="absolute bottom-full left-4 mb-2 z-[200]" ref={emojiPickerRef}>
-                        <EmojiPicker
-                            onEmojiClick={onEmojiClick}
-                            theme={document.documentElement.classList.contains('dark') ? Theme.DARK : Theme.LIGHT}
-                            autoFocusSearch={false}
-                            searchPlaceholder="ابحث عن ايموجي..."
-                            previewConfig={{ showPreview: false }}
-                        />
+                    <div
+                        className="absolute bottom-full left-0 right-0 lg:left-4 lg:right-auto mb-2 z-[200] flex justify-center lg:justify-start px-2 lg:px-0"
+                        ref={emojiPickerRef}
+                    >
+                        <div className="w-full max-w-[350px] lg:w-auto shadow-2xl rounded-2xl overflow-hidden">
+                            <EmojiPicker
+                                onEmojiClick={onEmojiClick}
+                                theme={document.documentElement.classList.contains('dark') ? Theme.DARK : Theme.LIGHT}
+                                autoFocusSearch={false}
+                                searchPlaceholder="ابحث عن ايموجي..."
+                                previewConfig={{ showPreview: false }}
+                                width="100%"
+                                height={350}
+                            />
+                        </div>
                     </div>
                 )}
                 <form onSubmit={handleSendMessage} className="flex items-center gap-3 lg:gap-4 max-w-[1000px] mx-auto relative">
@@ -226,7 +237,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             type="button"
                             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                             className={cn(
-                                "p-2 rounded-full transition-colors",
+                                "p-2 rounded-full transition-colors emoji-toggle-btn",
                                 showEmojiPicker ? "text-primary-600 bg-primary-50 dark:bg-primary-900/20" : "text-gray-400 hover:text-primary-600 hover:bg-gray-50 dark:hover:bg-gray-700"
                             )}
                         >
