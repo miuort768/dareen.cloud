@@ -176,8 +176,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             )}
 
                             <div className="relative shrink-0">
-                                <div className="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-[#2a3942] rounded-2xl flex items-center justify-center text-gray-500 dark:text-gray-300 font-black text-xl border-2 border-white dark:border-gray-800 shadow-sm group-hover:scale-105 transition-transform">
-                                    {conv.displayName?.charAt(0)}
+                                <div className="w-14 h-14 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-white dark:border-gray-800 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                                    <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#111b21] rounded-full shadow-sm" />
                             </div>
