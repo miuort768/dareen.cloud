@@ -67,7 +67,6 @@ export const Home = () => {
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative overflow-x-hidden">
             <SEO
-                title="الرئيسية"
                 description="معهد دارين وأكاديمية دارين للتعليم والتدريب - الخيار الأول للتعليم عن بعد في الكويت والخليج. دروس خصوصية لجميع المراحل، تحفيظ قرآن، ولغات."
                 preloadImages={['/hero-child.png']}
             />
