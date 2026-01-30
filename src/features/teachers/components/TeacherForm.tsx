@@ -195,3 +195,5 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 </div>
             </form>
         </div>
+    );
+};
