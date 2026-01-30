@@ -282,14 +282,19 @@ export const StudentInvoices = () => {
     const handleImportStudents = async () => {
         try {
             setLoading(true);
-            // 1. Fetch data
-            const [studentsList, allSessions] = await Promise.all([
+            // 1. Fetch fresh data from server (including current invoices)
+            const [studentsList, allSessions, currentInvoices] = await Promise.all([
                 api.get<any[]>('/students'),
-                api.get<any[]>('/sessions')
+                api.get<any[]>('/sessions'),
+                api.get<StudentInvoice[]>('/studentInvoices')
             ]);
 
             // 2. Identify students who don't have invoices yet AND have recorded sessions
-            const currentStudentIds = new Set(invoices.map(inv => inv.studentId));
+            const currentStudentIds = new Set(
+                (Array.isArray(currentInvoices) ? currentInvoices : (currentInvoices as any).data || [])
+                    .map((inv: any) => inv.studentId)
+            );
+
             const studentsToImport = studentsList.filter((s: any) => {
                 const hasNoInvoice = !currentStudentIds.has(s.id);
                 const hasSessions = allSessions.some((sess: any) =>
