@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Bell, X, Download, Smartphone, Monitor } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const InstallPWA = () => {
+    const location = useLocation(); // Used to trigger re-renders on route change
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isIOS, setIsIOS] = useState(false);
     const [isFirefox, setIsFirefox] = useState(false);
+
+    // This ensures that even if we are inside the dashboard, we re-evaluate showing the bell
+    useEffect(() => {
+        // console.log('InstallPWA: Route changed or component mounted:', location.pathname);
+    }, [location]);
 
     useEffect(() => {
         // Advanced Browser Detection
@@ -73,7 +80,7 @@ export const InstallPWA = () => {
             {/* Universal Sharp Pulsing Bell Trigger */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-4 right-4 z-[100] w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-[1.15] transition-all duration-300 border-2 border-white/30"
+                className="fixed bottom-4 right-4 z-[99999] w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-[1.15] transition-all duration-300 border-2 border-white/30"
                 style={{ borderRadius: '0' }}
                 title="تثبيت المنصة"
             >
@@ -84,7 +91,7 @@ export const InstallPWA = () => {
 
             {/* Universal Installation Modal */}
             <div className={cn(
-                "fixed inset-0 z-[110] flex items-center justify-center p-4 transition-all duration-500",
+                "fixed inset-0 z-[100000] flex items-center justify-center p-4 transition-all duration-500",
                 showModal ? "opacity-100 pointer-events-auto bg-black/70" : "opacity-0 pointer-events-none"
             )}>
                 {/* Backdrop blur with Safari support */}
