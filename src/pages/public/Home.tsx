@@ -103,13 +103,14 @@ export const Home = () => {
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
+                                    onClick={() => window.scrollTo(0, 0)}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-gray-900 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/${adminPhone}`}
+                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
@@ -297,7 +298,11 @@ export const Home = () => {
                                     <span>ابدأ الحفظ الآن</span>
                                     <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                                 </a>
-                                <Link to="/courses" className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center">
+                                <Link
+                                    to="/courses"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center"
+                                >
                                     تصفح المزيد
                                 </Link>
                             </div>
