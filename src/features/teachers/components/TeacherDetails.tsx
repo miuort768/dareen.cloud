@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { X, Bell, CheckCircle2, Trash2, MessageCircle } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
 
@@ -41,7 +42,11 @@ export const TeacherDetails = ({
 
 
     return (
-        <div className="bg-white border border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-800 h-fit sticky top-6 animate-in slide-in-from-left-4">
+        <div className={cn(
+            "bg-white dark:bg-gray-900 shadow-xl overflow-hidden flex flex-col",
+            // Mobile: Full screen overlay
+            "fixed inset-0 z-[100] lg:h-fit lg:sticky lg:top-6 lg:rounded-2xl lg:animate-in lg:slide-in-from-left-4 lg:shadow-sm lg:border lg:border-gray-200 lg:dark:border-gray-800"
+        )}>
             <div className="p-4 border-b border-gray-100 flex justify-between items-start dark:bg-gray-800/50 dark:border-gray-700">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-primary-600 text-white flex items-center justify-center rounded-lg text-lg font-black shadow-md">
