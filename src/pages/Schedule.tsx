@@ -255,7 +255,6 @@ export const Schedule = () => {
 
     const getEventsForSlot = (day: string, hour: number, period: string) => {
         const targetDay = day.trim();
-        const targetHour = String(hour);
         const targetPeriod = period.toLowerCase();
 
         return filteredEvents.filter(
