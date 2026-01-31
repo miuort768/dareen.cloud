@@ -204,23 +204,28 @@ export const Schedule = () => {
         }
     };
 
-    const teacherToMatch = currentUser?.teacherName || currentUser?.name;
+    const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allEvents: ScheduleEvent[] = students.flatMap(student =>
         (student.enrollments || [])
             .filter(enrollment => currentUser?.role !== 'teacher' || enrollment.teacher === teacherToMatch)
             .flatMap(enrollment =>
-                (enrollment.schedule || []).map(slot => ({
-                    id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
-                    studentName: student.name,
-                    studentGrade: student.grade,
-                    teacherName: enrollment.teacher,
-                    subject: enrollment.subject,
-                    curriculum: enrollment.curr,
-                    day: slot.day,
-                    hour: slot.hour,
-                    period: slot.period,
-                    time: `${slot.hour} ${(slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص') ? 'ص' : 'م'}`
-                }))
+                (enrollment.schedule || []).map(slot => {
+                    const normalizedPeriod = (slot.period || '').trim().toLowerCase();
+                    const isAM = normalizedPeriod === 'am' || normalizedPeriod === 'صباحاً' || normalizedPeriod === 'صباحا' || normalizedPeriod === 'ص';
+
+                    return {
+                        id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                        studentName: student.name,
+                        studentGrade: student.grade,
+                        teacherName: (enrollment.teacher || '').trim(),
+                        subject: enrollment.subject,
+                        curriculum: enrollment.curr,
+                        day: (slot.day || '').trim(),
+                        hour: String(slot.hour).trim(),
+                        period: isAM ? 'am' : 'pm',
+                        time: `${slot.hour} ${isAM ? 'ص' : 'م'}`
+                    };
+                })
             )
     );
 
@@ -249,11 +254,17 @@ export const Schedule = () => {
     };
 
     const getEventsForSlot = (day: string, hour: number, period: string) => {
+        const targetDay = day.trim();
+        const targetHour = String(hour);
+        const targetPeriod = period.toLowerCase();
+
         return filteredEvents.filter(
             e => {
-                const eventPeriod = (e.period === 'am' || e.period === 'صباحاً' || e.period === 'صباحا' || e.period === 'ص') ? 'am' : 'pm';
-                const slotPeriod = (period === 'am' || period === 'صباحاً' || period === 'صباحا' || period === 'ص') ? 'am' : 'pm';
-                return e.day === day && Number(e.hour) === hour && eventPeriod === slotPeriod;
+                const eventDay = e.day.trim();
+                const eventHour = Number(e.hour); // Convert to number for safe comparison
+                const eventPeriod = e.period.toLowerCase();
+
+                return eventDay === targetDay && eventHour === hour && eventPeriod === targetPeriod;
             }
         );
     };
