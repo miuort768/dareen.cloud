@@ -224,9 +224,10 @@ export const StudentInvoices = () => {
             fetchData();
             handleCancel();
             showNotification(editingId ? 'تم تحديث الفاتورة بنجاح' : 'تم إصدار الفاتورة بنجاح', 'success');
-        } catch (error) {
-            console.error(error);
-            showNotification('حدث خطأ أثناء حفظ البيانات', 'error');
+        } catch (error: any) {
+            console.error('Error saving invoice:', error);
+            const errorMessage = error.response?.data?.error || error.message || 'حدث خطأ أثناء حفظ البيانات';
+            showNotification(errorMessage, 'error');
         }
     };
 

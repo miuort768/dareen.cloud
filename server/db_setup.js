@@ -107,6 +107,7 @@ async function setupDatabase() {
             status TEXT DEFAULT 'unpaid',
             paymentMethod TEXT,
             notes TEXT,
+            items TEXT,
             FOREIGN KEY(studentId) REFERENCES students(id) ON DELETE CASCADE
         );
 
@@ -269,6 +270,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('student_invoices', 'dueDate', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'paymentMethod', 'TEXT');
     await addColumnIfNotExists('student_invoices', 'notes', 'TEXT');
+    await addColumnIfNotExists('student_invoices', 'items', 'TEXT');
     await addColumnIfNotExists('sessions', 'teacherPrice', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('notifications', 'conversationId', 'TEXT');
     await addColumnIfNotExists('conversations', 'isLive', 'INTEGER DEFAULT 0');
