@@ -134,9 +134,9 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
+                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-none dark:hover:bg-gray-800 dark:text-gray-400"
             >
-                <Bell size={20} className={unreadCount > 0 ? "animate-pulse text-indigo-600" : ""} />
+                <Bell size={20} className={unreadCount > 0 ? "text-indigo-600" : ""} />
                 {notificationsEnabled && unreadCount > 0 && (
                     <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-gray-900">
                         {unreadCount > 9 ? '9+' : unreadCount}
@@ -145,7 +145,7 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="absolute left-0 lg:left-[-50px] mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-xl dark:bg-gray-900 dark:border-gray-700 animate-in slide-in-from-top-4 z-50 origin-top-right">
+                <div className="fixed inset-x-4 top-16 md:absolute md:inset-auto md:left-0 md:lg:left-[-50px] md:mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-2xl dark:bg-gray-900 dark:border-gray-700 z-50 transition-none">
                     {/* Header */}
                     <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -178,7 +178,7 @@ export const NotificationDropdown = () => {
                     </div>
 
                     {/* Notifications List */}
-                    <div className="max-h-96 overflow-y-auto custom-scrollbar">
+                    <div className="max-h-[70vh] md:max-h-96 overflow-y-auto custom-scrollbar">
                         {!notificationsEnabled ? (
                             <div className="p-12 text-center">
                                 <AlertCircle size={48} className="mx-auto mb-3 text-amber-500 opacity-50" />
@@ -189,7 +189,7 @@ export const NotificationDropdown = () => {
                             notifications.map(notification => (
                                 <div
                                     key={notification.id}
-                                    className={`p-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer ${!notification.read ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''
+                                    className={`p-4 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-none cursor-pointer ${!notification.read ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''
                                         }`}
                                     onClick={() => {
                                         markAsRead(notification.id);
@@ -224,7 +224,7 @@ export const NotificationDropdown = () => {
                                                         e.stopPropagation();
                                                         deleteNotification(notification.id);
                                                     }}
-                                                    className="text-gray-400 hover:text-red-500 transition-colors"
+                                                    className="text-gray-400 hover:text-red-500 transition-none"
                                                 >
                                                     <Trash2 size={14} />
                                                 </button>
