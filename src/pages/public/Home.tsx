@@ -79,40 +79,40 @@ export const Home = () => {
             {/* Hero Section */}
             <section className="relative pt-24 pb-6 md:pt-28 md:pb-2 overflow-hidden bg-[#FDFCF8]">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto flex flex-col items-center gap-12 text-center">
+                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
 
                         {/* Text Content */}
-                        <div className="w-full z-10">
+                        <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-1 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
-                                <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">رؤية تعليمية مبتكرة للمستقبل</span>
+                                <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-7xl font-heading font-black text-gray-900 leading-[1.2] mb-4">
-                                <span className="block mb-2">بوابة التميز الرقمي</span>
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.2] mb-1">
+                                <span className="block mb-0">معهد دارين</span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">
-                                    منصة دارين للتعليم والتدريب
+                                    للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
 
-                            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto px-4 font-medium">
-                                وجهتك المتكاملة للتعلم الذكي. نوفر لك بيئة تعليمية تفاعلية تجمع بين جودة المحتوى وأحدث تقنيات التعليم الرقمي لضمان تفوقك.
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
+                                منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="w-full sm:w-auto px-10 py-4 bg-gray-900 text-white font-bold text-lg shadow-xl hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group rounded-none"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gray-900 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن برامج بوابة التميز الرقمي')}`}
+                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-full sm:w-auto px-10 py-4 bg-white text-gray-900 border-2 border-gray-900 font-bold text-lg shadow-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-3 group rounded-none"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-yellow-50 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-gold fill-gold" />
@@ -120,12 +120,37 @@ export const Home = () => {
                                     <span>كيف نعمل؟</span>
                                 </a>
                             </div>
+
+                            {/* Trust Badges */}
+                            <div className="mt-6 pt-6 border-t border-gray-100 flex items-center justify-center gap-6">
+                                <div className="flex -space-x-3 space-x-reverse">
+                                    {[1, 2, 3].map((i) => (
+                                        <img
+                                            key={i}
+                                            src={`https://i.pravatar.cc/100?img=${i + 10}`}
+                                            className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
+                                            alt="User"
+                                            loading="lazy"
+                                        />
+                                    ))}
+                                    <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                                        +2k
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="font-bold text-gray-900 flex items-center gap-1">
+                                        4.9/5
+                                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                                    </div>
+                                    <p className="text-xs text-gray-500 font-medium">تقييم الطلاب وأولياء الأمور</p>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Image Side */}
-                        <div className="w-full max-w-xl justify-center z-10 relative mt-4">
-                            <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[4/2] max-h-[400px]">
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-gold/10 rounded-[2rem] blur-3xl animate-pulse"></div>
+                        <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
+                            <div className="relative w-full max-w-[500px] aspect-[4/5]">
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-gold/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
                                     src="/hero-child.png"
                                     alt="Hero"
