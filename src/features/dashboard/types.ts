@@ -4,6 +4,9 @@ export interface DashboardStats {
     teachersCount: number;
     parentsCount: number;
     totalEnrollments: number;
+    totalRevenue: number;
+    totalExpenses: number;
+    totalNetProfit: number;
     monthRevenue: number;
     monthExpenses: number;
     monthNetProfit: number;

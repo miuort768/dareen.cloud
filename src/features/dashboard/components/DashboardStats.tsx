@@ -21,12 +21,12 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             {!isTeacher && (
                 <>
                     <StatsCard title="إجمالي المعلمين" value={stats.teachersCount} icon={GraduationCap} color="indigo" trendUp={true} />
-                    <StatsCard title="إيراد الشهر" value={stats.monthRevenue.toLocaleString() + ' ج.م'} icon={TrendingUp} color="emerald"
-                        trendUp={true} />
-                    <StatsCard title="مصروفات الشهر" value={stats.monthExpenses.toLocaleString() + ' ج.م'} icon={TrendingDown} color="rose"
-                        trendUp={false} />
-                    <StatsCard title="صافي الربح" value={stats.monthNetProfit.toLocaleString() + ' ج.م'} icon={DollarSign} color="purple"
-                        trendUp={true} />
+                    <StatsCard title="إجمالي الإيرادات" value={stats.totalRevenue.toLocaleString() + ' ج.م'} icon={TrendingUp} color="emerald"
+                        trend={`هذا الشهر: ${stats.monthRevenue}`} trendUp={true} />
+                    <StatsCard title="إجمالي المصروفات" value={stats.totalExpenses.toLocaleString() + ' ج.م'} icon={TrendingDown} color="rose"
+                        trend={`هذا الشهر: ${stats.monthExpenses}`} trendUp={false} />
+                    <StatsCard title="إجمالي الأرباح" value={stats.totalNetProfit.toLocaleString() + ' ج.م'} icon={DollarSign} color="purple"
+                        trend={`هذا الشهر: ${stats.monthNetProfit}`} trendUp={true} />
                 </>
             )}
         </div>
