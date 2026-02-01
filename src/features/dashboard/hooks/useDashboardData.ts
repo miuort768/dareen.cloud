@@ -231,8 +231,8 @@ export const useDashboardData = (currentUser: User | null) => {
             monthExpenses: monthExpensesValue,
             monthNetProfit: isTeacher ? (monthManualIncome - (manualExpensesValue + extraManualExpenses)) : (monthRevenueValue - monthExpensesValue),
             todaySessions: todayScheduledCount,
-            completedSessions: monthCompletedSessions.length, // CHANGED: now reflects current month to avoid confusion with revenue
-            cancelledSessions: monthSessions.filter(s => s.status === 'cancelled').length,
+            completedSessions: filteredSessions.filter(s => s.status === 'completed').length,
+            cancelledSessions: filteredSessions.filter(s => s.status === 'cancelled').length,
             attendanceRate: attendanceRateValue,
             pendingInvoices: studentInvoices.filter(inv => inv.status === 'pending' || inv.status === 'overdue').length,
             paidInvoices: studentInvoices.filter(inv => inv.status === 'paid').length,
