@@ -94,74 +94,91 @@ export const useFinance = () => {
     };
 
     // Derived Data
-    const currentMonth = new Date().toISOString().slice(0, 7);
+    const now = new Date();
+    const currentMonthStr = now.toISOString().slice(0, 7);
+
+    const isSameMonth = (dateStr: string) => {
+        if (!dateStr) return false;
+        try {
+            const d = new Date(dateStr);
+            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+        } catch (e) {
+            return dateStr.startsWith(currentMonthStr);
+        }
+    };
 
     const stats = useMemo(() => {
-        const automatedIncome = sessions
-            .filter(s => s.status === 'completed')
-            .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
+        const completedSessions = sessions.filter(s => s.status === 'completed');
+        const monthSessions = completedSessions.filter(s => isSameMonth(s.date));
 
-        const manualIncome = manualTransactions
-            .filter(t => t.type === 'income')
-            .reduce((sum, t) => sum + t.amount, 0);
-
+        const automatedIncome = completedSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0);
+        const manualIncome = manualTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
         const totalIncome = automatedIncome + manualIncome;
 
-        const monthIncome = sessions
-            .filter(s => s.status === 'completed' && s.date?.startsWith(currentMonth))
-            .reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
-            manualTransactions
-                .filter(t => t.type === 'income' && t.date.startsWith(currentMonth))
-                .reduce((sum, t) => sum + t.amount, 0);
+        const monthIncome = monthSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
+            manualTransactions.filter(t => t.type === 'income' && isSameMonth(t.date)).reduce((sum, t) => sum + t.amount, 0);
 
-        const automatedExpenses = invoices
-            .filter(inv => inv.status === 'مدفوعة' || inv.status === 'paid') // Handle both localized and raw status
-            .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        // Expenses: ACCRUED Labor (sessions) + PAID Invoices (manual)
+        const automatedLaborCost = completedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+        const manualExpenses = invoices.filter(inv => inv.status === 'مدفوعة' || inv.status === 'paid').reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        const extraManualExpenses = manualTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
 
-        const manualExpenses = manualTransactions
-            .filter(t => t.type === 'expense')
-            .reduce((sum, t) => sum + t.amount, 0);
+        const totalExpenses = automatedLaborCost + manualExpenses + extraManualExpenses;
 
-        const totalExpenses = automatedExpenses + manualExpenses;
-
-        const monthExpenses = invoices
-            .filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && inv.date?.startsWith(currentMonth))
-            .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0) +
-            manualTransactions
-                .filter(t => t.type === 'expense' && t.date.startsWith(currentMonth))
-                .reduce((sum, t) => sum + t.amount, 0);
+        const monthLaborCost = monthSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+        const monthManualExpenses = invoices.filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && isSameMonth(inv.date)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        const monthExtraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && isSameMonth(t.date)).reduce((sum, t) => sum + t.amount, 0);
 
         const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + item.amount, 0);
+        const monthExpensesValue = monthLaborCost + monthManualExpenses + monthExtraManualExpenses + totalFixedExpenses;
+
         const netProfit = totalIncome - totalExpenses - totalFixedExpenses;
-        const monthProfit = monthIncome - monthExpenses;
+        const monthProfit = monthIncome - monthExpensesValue;
         const profitMargin = totalIncome > 0 ? ((netProfit / totalIncome) * 100).toFixed(1) : '0';
 
         return {
             totalIncome,
             monthIncome,
             totalExpenses,
-            monthExpenses,
+            monthExpenses: monthExpensesValue,
             totalFixedExpenses,
             netProfit,
             monthProfit,
             profitMargin
         };
-    }, [sessions, invoices, manualTransactions, fixedExpenses, currentMonth]);
+    }, [sessions, invoices, manualTransactions, fixedExpenses]);
 
     const allTransactions = useMemo(() => {
         const combined: Transaction[] = [
             ...manualTransactions,
             ...sessions
                 .filter(s => s.status === 'completed' || s.status === 'scheduled')
-                .map(s => ({
-                    id: `session-${s.id}`,
-                    type: 'income' as const,
-                    category: 'حصة دراسية',
-                    amount: Number(s.price) || 0,
-                    date: s.date || '',
-                    description: `${s.studentName} - ${s.subject}`,
-                    status: s.status === 'completed' ? 'completed' : 'pending' as any
-                })),
+                .flatMap(s => {
+                    const trans = [];
+                    // Revenue
+                    trans.push({
+                        id: `session-rev-${s.id}`,
+                        type: 'income' as const,
+                        category: 'حصة دراسية',
+                        amount: Number(s.price) || 0,
+                        date: s.date || '',
+                        description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
+                        status: s.status === 'completed' ? 'completed' : 'pending' as any
+                    });
+                    // Labor Cost (Accrued) - Only if completed
+                    if (s.status === 'completed') {
+                        trans.push({
+                            id: `session-cost-${s.id}`,
+                            type: 'expense' as const,
+                            category: 'تكلفة المعلمة',
+                            amount: Number(s.teacherPrice) || 0,
+                            date: s.date || '',
+                            description: `(أجر معلمة) ${s.teacherName} - عن ${s.studentName}`,
+                            status: 'completed' as const
+                        });
+                    }
+                    return trans;
+                }),
             ...invoices.map(inv => ({
                 id: `invoice-${inv.id}`,
                 type: 'expense' as const,
@@ -181,8 +198,15 @@ export const useFinance = () => {
             const matchesSearch = t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 t.category.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesType = filterType === 'all' || t.type === filterType;
-            const matchesMonth = filterMonth === 'all' || t.date.startsWith(filterMonth);
-            return matchesSearch && matchesType && matchesMonth;
+
+            const isMatchingMonth = (dateStr: string) => {
+                if (filterMonth === 'all') return true;
+                const [y, m] = filterMonth.split('-').map(Number);
+                const d = new Date(dateStr);
+                return d.getFullYear() === y && (d.getMonth() + 1) === m;
+            };
+
+            return matchesSearch && matchesType && isMatchingMonth(t.date);
         });
     }, [allTransactions, searchTerm, filterType, filterMonth]);
 
@@ -193,14 +217,20 @@ export const useFinance = () => {
     const chartData = useMemo(() => {
         const months = uniqueMonths.slice(0, 6).reverse();
         const monthlyData = months.map(month => {
+            const [y, m] = month.split('-').map(Number);
+            const isMonth = (dateStr: string) => {
+                const d = new Date(dateStr);
+                return d.getFullYear() === y && (d.getMonth() + 1) === m;
+            };
+
             const inc = allTransactions
-                .filter(t => t.type === 'income' && t.status === 'completed' && t.date.startsWith(month))
+                .filter(t => t.type === 'income' && t.status === 'completed' && isMonth(t.date))
                 .reduce((sum, t) => sum + t.amount, 0);
             const exp = allTransactions
-                .filter(t => t.type === 'expense' && t.status === 'completed' && t.date.startsWith(month))
+                .filter(t => t.type === 'expense' && t.status === 'completed' && isMonth(t.date))
                 .reduce((sum, t) => sum + t.amount, 0);
             return {
-                month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
+                month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 income: inc,
                 expense: exp
             };

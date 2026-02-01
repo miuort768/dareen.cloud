@@ -18,12 +18,18 @@ export const financeService = {
             if (price === 0) {
                 const student = students.find(s => s.id === session.studentId);
                 price = Number(student?.sessionPrice) || 0;
-                if (price === 0) {
-                    const teacher = teachers.find(t => t.name === session.teacherName);
-                    price = Number(teacher?.price) || 0;
-                }
             }
-            return { ...session, price };
+
+            let teacherPrice = Number(session.teacherPrice) || 0;
+            if (teacherPrice === 0) {
+                const teacher = teachers.find(t =>
+                    (t.id && session.teacherId === t.id) ||
+                    (t.name.trim().toLowerCase() === session.teacherName.trim().toLowerCase())
+                );
+                teacherPrice = Number(teacher?.price) || 0;
+            }
+
+            return { ...session, price, teacherPrice };
         });
 
         return {
