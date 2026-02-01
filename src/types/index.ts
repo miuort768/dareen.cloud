@@ -3,6 +3,7 @@
 
 export interface Enrollment {
     teacher: string;
+    teacherId?: string;
     subject: string;
     curr: string;
     sessionsTotal: number;
@@ -55,6 +56,7 @@ export interface Session {
     studentId: string;
     studentName: string;
     teacherName: string;
+    teacherId?: string;
     subject: string;
     date: string;
     day: string;
