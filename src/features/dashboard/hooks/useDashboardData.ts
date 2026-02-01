@@ -223,7 +223,7 @@ export const useDashboardData = (currentUser: User | null) => {
             expectedCollection: lowBalance.length * 1000,
             totalSessions: filteredSessions.length,
             monthCompletedSessions: monthComplete.length,
-            monthTotalSessions: filteredSessions.filter(s => isSameMonth(s.date)).length,
+            monthTotalSessions: filteredSessions.filter(s => isSameMonth(s.date) && (s.status === 'scheduled' || s.status === 'completed')).length,
         };
 
         return {
