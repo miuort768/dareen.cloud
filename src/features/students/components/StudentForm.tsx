@@ -12,6 +12,9 @@ export const StudentForm = ({ onSubmit, initialData }: StudentFormProps) => {
         name: '',
         grade: '',
         parentPhone: '',
+        studentPhone: '',
+        curriculum: '',
+        notes: '',
         sessionPrice: ''
     });
 
@@ -21,6 +24,9 @@ export const StudentForm = ({ onSubmit, initialData }: StudentFormProps) => {
                 name: initialData.name,
                 grade: initialData.grade,
                 parentPhone: initialData.parentPhone,
+                studentPhone: initialData.studentPhone || '',
+                curriculum: initialData.curriculum || '',
+                notes: initialData.notes || '',
                 sessionPrice: String(initialData.sessionPrice || 0)
             });
         }
@@ -80,6 +86,26 @@ export const StudentForm = ({ onSubmit, initialData }: StudentFormProps) => {
                         />
                     </div>
                     <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">رقم الطالب</label>
+                        <input
+                            type="tel"
+                            value={formData.studentPhone}
+                            onChange={e => setFormData({ ...formData, studentPhone: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            dir="ltr"
+                            placeholder="اختياري"
+                        />
+                    </div>
+                    <div className="space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">المنهج</label>
+                        <input
+                            value={formData.curriculum}
+                            onChange={e => setFormData({ ...formData, curriculum: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                            placeholder="مثال: سعودي، مصري..."
+                        />
+                    </div>
+                    <div className="space-y-1.5">
                         <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">سعر الحصة (ج.م) *</label>
                         <input
                             required
@@ -87,6 +113,15 @@ export const StudentForm = ({ onSubmit, initialData }: StudentFormProps) => {
                             value={formData.sessionPrice}
                             onChange={e => setFormData({ ...formData, sessionPrice: e.target.value })}
                             className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm"
+                        />
+                    </div>
+                    <div className="lg:col-span-4 space-y-1.5">
+                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">ملاحظات إضافية</label>
+                        <textarea
+                            value={formData.notes}
+                            onChange={e => setFormData({ ...formData, notes: e.target.value })}
+                            className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-none focus:outline-none focus:ring-0 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white font-medium text-sm min-h-[80px]"
+                            placeholder="أي تفاصيل أخرى عن الطالب..."
                         />
                     </div>
                 </div>

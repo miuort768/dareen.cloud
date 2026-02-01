@@ -3,6 +3,9 @@ export interface Student {
     name: string;
     grade: string;
     parentPhone: string;
+    studentPhone?: string;
+    curriculum?: string;
+    notes?: string;
     sessionPrice: number;
     enrollments: Enrollment[];
 }
