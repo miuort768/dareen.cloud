@@ -37,7 +37,16 @@ export const Students = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { students, isLoading: loadingStudents, createStudent, createStudentAsync, updateStudent, deleteStudent, deleteAllStudents } = useStudents(searchTerm);
+    const { students: allStudents, isLoading: loadingStudents, createStudent, createStudentAsync, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
+
+    // Instant Local Filtering
+    const students = allStudents.filter(student =>
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.parentPhone?.includes(searchTerm) ||
+        student.studentPhone?.includes(searchTerm) ||
+        student.grade.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
 
@@ -289,6 +298,8 @@ export const Students = () => {
                 onExport={handleExport}
                 onImport={() => fileInputRef.current?.click()}
                 onDeleteAll={() => setIsDeletingAll(true)}
+                filteredCount={students.length}
+                totalCount={allStudents.length}
             />
 
             <input
