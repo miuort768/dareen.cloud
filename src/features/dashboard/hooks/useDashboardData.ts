@@ -56,12 +56,20 @@ export const useDashboardData = (currentUser: User | null) => {
         const teacherName = currentUser.teacherName || currentUser.name;
 
         // 1. Filter based on role
+        const normalizedCurrentUserTeacherName = teacherName.trim().toLowerCase();
+
         const filteredSessions = isTeacher
-            ? sessions.filter(s => s.teacherName === teacherName)
+            ? sessions.filter(s =>
+                (s.teacherName?.trim().toLowerCase() === normalizedCurrentUserTeacherName) ||
+                (s.teacherId && s.teacherId === currentUser.id)
+            )
             : sessions;
 
         const filteredStudents = isTeacher
-            ? students.filter(s => s.enrollments?.some(e => e.teacher === teacherName))
+            ? students.filter(s => s.enrollments?.some(e =>
+                (e.teacher?.trim().toLowerCase() === normalizedCurrentUserTeacherName) ||
+                (e.teacherId && e.teacherId === currentUser.id)
+            ))
             : students;
 
         // 2. Today's Data
@@ -97,20 +105,30 @@ export const useDashboardData = (currentUser: User | null) => {
             return 0;
         };
 
-        const monthSessions = filteredSessions.filter(s => s.date?.startsWith(currentMonth));
+        const isSameMonth = (dateStr: string) => {
+            if (!dateStr) return false;
+            try {
+                const d = new Date(dateStr);
+                return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+            } catch (e) {
+                return dateStr.startsWith(currentMonth);
+            }
+        };
+
+        const monthSessions = filteredSessions.filter(s => isSameMonth(s.date));
         const monthCompletedSessions = monthSessions.filter(s => s.status === 'completed');
 
         const monthRevenueValue = monthCompletedSessions.reduce((sum, s) => sum + getSessionRevenue(s), 0);
 
         // Expenses Calculation:
-        // We now sum both manual invoices AND the 'teacherPrice' from completed sessions
-        // to get a true picture of total costs/payroll.
         const sessionsExpensesValue = monthCompletedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
 
         const manualExpensesValue = teacherInvoices
-            .filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
+            .filter(inv => inv.status === 'مدفوعة' && isSameMonth(inv.date))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
 
+        // For Admin: Expenses = Session Costs (accrued) + Manual Expenses
+        // Note: This might still double count if invoices overlap, but it's more accurate than before
         const monthExpensesValue = isTeacher ? manualExpensesValue : (sessionsExpensesValue + manualExpensesValue);
 
         const attendanceRateValue = filteredSessions.length > 0
@@ -125,13 +143,23 @@ export const useDashboardData = (currentUser: User | null) => {
         });
 
         const chartData: DashboardMonthData[] = last6Months.map(month => {
-            const mSessions = filteredSessions.filter(s => s.date?.startsWith(month));
+            const [y, m] = month.split('-').map(Number);
+            const mSessions = filteredSessions.filter(s => {
+                if (!s.date) return false;
+                const d = new Date(s.date);
+                return d.getFullYear() === y && (d.getMonth() + 1) === m;
+            });
             const rev = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionRevenue(s), 0);
             const sessExp = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-            const manualExp = teacherInvoices.filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(month)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+            const manualExp = teacherInvoices.filter(inv => {
+                if (!inv.date) return false;
+                const d = new Date(inv.date);
+                return inv.status === 'مدفوعة' && d.getFullYear() === y && (d.getMonth() + 1) === m;
+            }).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+
             const exp = isTeacher ? manualExp : (sessExp + manualExp);
             return {
-                month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
+                month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 revenue: rev,
                 expenses: exp,
                 profit: rev - exp,
@@ -184,8 +212,8 @@ export const useDashboardData = (currentUser: User | null) => {
             monthExpenses: monthExpensesValue,
             monthNetProfit: isTeacher ? sessionsExpensesValue : (monthRevenueValue - monthExpensesValue),
             todaySessions: todayScheduledCount,
-            completedSessions: filteredSessions.filter(s => s.status === 'completed').length,
-            cancelledSessions: filteredSessions.filter(s => s.status === 'cancelled').length,
+            completedSessions: monthCompletedSessions.length, // CHANGED: now reflects current month to avoid confusion with revenue
+            cancelledSessions: monthSessions.filter(s => s.status === 'cancelled').length,
             attendanceRate: attendanceRateValue,
             pendingInvoices: studentInvoices.filter(inv => inv.status === 'pending' || inv.status === 'overdue').length,
             paidInvoices: studentInvoices.filter(inv => inv.status === 'paid').length,
