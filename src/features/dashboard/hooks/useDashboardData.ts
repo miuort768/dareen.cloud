@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQueries, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import type { User } from '../../../types/auth';
-import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice } from '../../../types';
+import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense } from '../../../types';
 import type { DashboardStats, DashboardMonthData, LowBalanceStudent, DashboardTask } from '../types';
 
 export const useDashboardData = (currentUser: User | null) => {
@@ -17,6 +17,8 @@ export const useDashboardData = (currentUser: User | null) => {
             { queryKey: ['teacherInvoices'], queryFn: () => api.get<TeacherInvoice[]>('/invoices/teacher'), staleTime: 5 * 60 * 1000 },
             { queryKey: ['studentInvoices'], queryFn: () => api.get<StudentInvoice[]>('/invoices/student'), staleTime: 5 * 60 * 1000 },
             { queryKey: ['tasks'], queryFn: () => api.get<DashboardTask[]>('/tasks'), staleTime: 1 * 60 * 1000 },
+            { queryKey: ['transactions'], queryFn: () => api.get<Transaction[]>('/finance/transactions'), staleTime: 5 * 60 * 1000 },
+            { queryKey: ['fixedExpenses'], queryFn: () => api.get<FixedExpense[]>('/finance/fixed-expenses'), staleTime: 5 * 60 * 1000 },
         ]
     });
 
@@ -27,7 +29,9 @@ export const useDashboardData = (currentUser: User | null) => {
         sessionsQuery,
         teacherInvoicesQuery,
         studentInvoicesQuery,
-        tasksQuery // Added
+        tasksQuery,
+        transactionsQuery,
+        fixedExpensesQuery
     ] = results;
 
     const isLoading = results.some(r => r.isLoading);
@@ -51,6 +55,8 @@ export const useDashboardData = (currentUser: User | null) => {
         const sessions = (sessionsQuery.data as Session[]) || [];
         const teacherInvoices = (teacherInvoicesQuery.data as TeacherInvoice[]) || [];
         const studentInvoices = (studentInvoicesQuery.data as StudentInvoice[]) || [];
+        const transactions = (transactionsQuery.data as Transaction[]) || [];
+        const fixedExpenses = (fixedExpensesQuery.data as FixedExpense[]) || [];
 
         const isTeacher = currentUser.role === 'teacher';
         const teacherName = currentUser.teacherName || currentUser.name;
@@ -118,7 +124,12 @@ export const useDashboardData = (currentUser: User | null) => {
         const monthSessions = filteredSessions.filter(s => isSameMonth(s.date));
         const monthCompletedSessions = monthSessions.filter(s => s.status === 'completed');
 
-        const monthRevenueValue = monthCompletedSessions.reduce((sum, s) => sum + getSessionRevenue(s), 0);
+        const monthAutomatedIncome = monthCompletedSessions.reduce((sum, s) => sum + getSessionRevenue(s), 0);
+        const monthManualIncome = transactions
+            .filter(t => t.type === 'income' && isSameMonth(t.date))
+            .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+        const monthRevenueValue = monthAutomatedIncome + monthManualIncome;
 
         // Expenses Calculation:
         const sessionsExpensesValue = monthCompletedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
@@ -127,9 +138,15 @@ export const useDashboardData = (currentUser: User | null) => {
             .filter(inv => inv.status === 'مدفوعة' && isSameMonth(inv.date))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
 
-        // For Admin: Expenses = Session Costs (accrued) + Manual Expenses
-        // Note: This might still double count if invoices overlap, but it's more accurate than before
-        const monthExpensesValue = isTeacher ? manualExpensesValue : (sessionsExpensesValue + manualExpensesValue);
+        const extraManualExpenses = transactions
+            .filter(t => t.type === 'expense' && isSameMonth(t.date))
+            .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+        const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+
+        const monthExpensesValue = isTeacher
+            ? manualExpensesValue
+            : (sessionsExpensesValue + manualExpensesValue + extraManualExpenses + totalFixedExpenses);
 
         const attendanceRateValue = filteredSessions.length > 0
             ? Math.round((filteredSessions.filter(s => s.status === 'completed').length / filteredSessions.length) * 100)
@@ -144,20 +161,22 @@ export const useDashboardData = (currentUser: User | null) => {
 
         const chartData: DashboardMonthData[] = last6Months.map(month => {
             const [y, m] = month.split('-').map(Number);
-            const mSessions = filteredSessions.filter(s => {
-                if (!s.date) return false;
-                const d = new Date(s.date);
+            const isMonth = (dateStr: string) => {
+                if (!dateStr) return false;
+                const d = new Date(dateStr);
                 return d.getFullYear() === y && (d.getMonth() + 1) === m;
-            });
-            const rev = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionRevenue(s), 0);
-            const sessExp = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-            const manualExp = teacherInvoices.filter(inv => {
-                if (!inv.date) return false;
-                const d = new Date(inv.date);
-                return inv.status === 'مدفوعة' && d.getFullYear() === y && (d.getMonth() + 1) === m;
-            }).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+            };
 
-            const exp = isTeacher ? manualExp : (sessExp + manualExp);
+            const mSessions = filteredSessions.filter(s => isMonth(s.date));
+            const revAutomated = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + getSessionRevenue(s), 0);
+            const revManual = transactions.filter(t => t.type === 'income' && isMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+            const rev = revAutomated + revManual;
+
+            const sessExp = mSessions.filter(s => s.status === 'completed').reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+            const manualExp = teacherInvoices.filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && isMonth(inv.date)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+            const extraExp = transactions.filter(t => t.type === 'expense' && isMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+            const exp = isTeacher ? (manualExp + extraExp) : (sessExp + manualExp + extraExp + (isMonth(now.toISOString()) ? totalFixedExpenses : 0));
             return {
                 month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 revenue: rev,
@@ -210,7 +229,7 @@ export const useDashboardData = (currentUser: User | null) => {
             totalEnrollments: filteredStudents.reduce((sum, s) => sum + (isTeacher ? (s.enrollments?.filter(e => e.teacher === teacherName).length || 0) : (s.enrollments?.length || 0)), 0),
             monthRevenue: monthRevenueValue,
             monthExpenses: monthExpensesValue,
-            monthNetProfit: isTeacher ? sessionsExpensesValue : (monthRevenueValue - monthExpensesValue),
+            monthNetProfit: isTeacher ? (monthManualIncome - (manualExpensesValue + extraManualExpenses)) : (monthRevenueValue - monthExpensesValue),
             todaySessions: todayScheduledCount,
             completedSessions: monthCompletedSessions.length, // CHANGED: now reflects current month to avoid confusion with revenue
             cancelledSessions: monthSessions.filter(s => s.status === 'cancelled').length,
@@ -231,7 +250,7 @@ export const useDashboardData = (currentUser: User | null) => {
             lowBalanceStudents: lowBalance,
             tasks: loadedTasks
         };
-    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data]);
+    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data]);
 
     return {
         stats: processedData?.stats || {
