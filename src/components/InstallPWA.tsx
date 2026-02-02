@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, X, Download, Smartphone, Monitor, Tablet } from 'lucide-react';
+import { Bell, X, Download, Smartphone, Monitor, Tablet, MessageCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useSettings } from '../context/SettingsContext';
 
 export const InstallPWA = () => {
-    const location = useLocation(); // Used to trigger re-renders on route change
+    const location = useLocation();
+    const { adminPhone } = useSettings();
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isIOS, setIsIOS] = useState(false);
-
-    // This ensures that even if we are inside the dashboard, we re-evaluate showing the bell
-    useEffect(() => {
-        // console.log('InstallPWA: Route changed or component mounted:', location.pathname);
-    }, [location]);
 
     useEffect(() => {
         // Advanced Browser Detection
@@ -31,19 +28,16 @@ export const InstallPWA = () => {
         if (isStandalone) {
             setShowTrigger(false);
         } else {
-            // SHOW BY DEFAULT on all browsers/devices if not installed
             setShowTrigger(true);
         }
 
         const handler = (e: any) => {
             e.preventDefault();
             setDeferredPrompt(e);
-            // If beforeinstallprompt fires, we definitely want to show it (Chrome/Edge/Android)
             setShowTrigger(true);
         };
 
         window.addEventListener('beforeinstallprompt', handler);
-
         return () => window.removeEventListener('beforeinstallprompt', handler);
     }, []);
 
@@ -70,34 +64,50 @@ export const InstallPWA = () => {
         }
     };
 
-    // Restricted pages as requested by the user
-    const allowedPaths = ['/', '/about', '/courses', '/login', '/home'];
-    const isPublicPage = allowedPaths.includes(location.pathname);
+    // Restricted pages: Show on Home, About, Courses
+    const allowedPaths = ['/', '/about', '/courses', '/home'];
+    const isVisiblePage = allowedPaths.includes(location.pathname);
 
-    if (!showTrigger || !isPublicPage) return null;
+    if (!isVisiblePage) return null;
+
+    const whatsappUrl = `https://wa.me/${adminPhone}`;
 
     return (
-        <>
-            {/* Universal Sharp Pulsing Bell Trigger */}
-            <button
-                onClick={() => setShowModal(true)}
-                className="fixed bottom-4 right-4 z-[99999] w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-[1.15] transition-all duration-300 border-2 border-white/30"
+        <div className="fixed bottom-6 right-6 z-[99999] flex flex-col gap-4 items-center">
+            {/* WhatsApp Floating Button */}
+            <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-14 h-14 bg-[#25D366] text-white shadow-[0_10px_20px_rgba(37,211,102,0.3)] flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/50"
                 style={{ borderRadius: '0' }}
-                title="تثبيت المنصة"
+                title="تواصل معنا عبر واتساب"
             >
-                <div className="absolute inset-0 bg-white animate-ping opacity-25"></div>
-                <Bell size={24} className="relative z-10 group-hover:rotate-12 transition-transform" />
-                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-600 border-2 border-white"></span>
-            </button>
+                <div className="absolute inset-0 bg-white animate-pulse opacity-10"></div>
+                <MessageCircle size={30} fill="currentColor" className="text-white" />
+            </a>
+
+            {/* PWA Bell Trigger (Only if not installed) */}
+            {showTrigger && (
+                <button
+                    onClick={() => setShowModal(true)}
+                    className="w-12 h-12 bg-[#D4AF37] text-white shadow-2xl flex items-center justify-center group hover:scale-[1.15] transition-all duration-300 border-2 border-white/30"
+                    style={{ borderRadius: '0' }}
+                    title="تثبيت المنصة"
+                >
+                    <div className="absolute inset-0 bg-white animate-ping opacity-25"></div>
+                    <Bell size={24} className="relative z-10 group-hover:rotate-12 transition-transform" />
+                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-600 border-2 border-white"></span>
+                </button>
+            )}
 
             {/* Universal Installation Modal */}
             <div className={cn(
                 "fixed inset-0 z-[100000] flex items-center justify-center p-4 transition-all duration-500",
                 showModal ? "opacity-100 pointer-events-auto bg-black/70" : "opacity-0 pointer-events-none"
             )}>
-                {/* Backdrop blur with Safari support */}
                 <div className="absolute inset-0"
-                    style={{ backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+                    style={{ backdropFilter: 'blur-10px', WebkitBackdropFilter: 'blur-10px' }}
                     onClick={() => setShowModal(false)}
                 ></div>
 
@@ -131,7 +141,6 @@ export const InstallPWA = () => {
                             </p>
                         </div>
 
-                        {/* Device Icons */}
                         <div className="flex justify-center gap-8 py-2 grayscale opacity-40">
                             <Smartphone size={32} strokeWidth={1} />
                             <Tablet size={32} strokeWidth={1} />
@@ -157,7 +166,7 @@ export const InstallPWA = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
