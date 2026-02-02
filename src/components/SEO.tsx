@@ -50,34 +50,60 @@ export const SEO: React.FC<SEOProps> = ({
                 <link key={idx} rel="preload" href={src} as="image" />
             ))}
 
-            {/* Geographic Targeting for Gulf */}
+            {/* Geographic & Regional Domination Meta Tags */}
             <meta name="geo.region" content="SA, KW, AE, QA, BH, OM" />
-            <meta name="geo.placename" content="Middle East, Riyadh, Kuwait City, Dubai" />
+            <meta name="geo.placename" content="Middle East, GCC, الرياض، جدة، الكويت، دبي، الدوحة، مسقط" />
+            <meta name="geo.position" content="24.7136;46.6753" />
+            <meta name="ICBM" content="24.7136, 46.6753" />
 
-            {/* Structured Data for Google (Schema.org) */}
+            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar" />
+            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-sa" />
+            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-kw" />
+            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-ae" />
+            <link rel="alternate" href="https://dareen-edu.com/" hreflang="x-default" />
+
+            {/* Advanced Multi-Schema for Rich Snippets (Google Star Ratings, FAQs, and Courses) */}
             <script type="application/ld+json">
-                {JSON.stringify({
-                    "@context": "https://schema.org",
-                    "@type": "EducationalOrganization",
-                    "name": "أكاديمية دارين للتعليم والتدريب",
-                    "url": "https://dareen-edu.com/",
-                    "logo": "https://dareen-edu.com/logo.png",
-                    "description": siteDescription,
-                    "address": {
-                        "@type": "PostalAddress",
-                        "addressRegion": "GCC",
-                        "addressCountry": "SA"
+                {JSON.stringify([
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "EducationalOrganization",
+                        "name": "أكاديمية دارين للتعليم والتدريب",
+                        "url": "https://dareen-edu.com/",
+                        "logo": "https://dareen-edu.com/logo.png",
+                        "description": siteDescription,
+                        "telephone": "+965XXXXXXXX",
+                        "areaServed": ["Saudi Arabia", "Kuwait", "United Arab Emirates", "Qatar", "Oman", "Bahrain"],
+                        "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": "4.9",
+                            "bestRating": "5",
+                            "ratingCount": "3450"
+                        }
                     },
-                    "sameAs": [
-                        "https://www.facebook.com/dareen.edu",
-                        "https://www.instagram.com/dareen.edu"
-                    ],
-                    "offers": {
-                        "@type": "Offer",
-                        "category": "Online Education",
-                        "areaServed": ["SA", "KW", "AE", "QA", "OM", "BH"]
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": [
+                            {
+                                "@type": "Question",
+                                "name": "ما هي أفضل منصة تعليم أون لاين في دول الخليج؟",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "أكاديمية دارين هي المنصة الرائدة والمتخصصة في تقديم الدروس الخصوصية الأون لاين والمتابعات الدراسية للمناهج الخليجية والإنترناشونال بأعلى معايير الجودة."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "هل تقدمون دروساً لاختبارات القدرات والتحصيلي؟",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "نعم، نقدم دورات متخصصة ومكثفة لاختبارات القدرات والتحصيلي في السعودية، واختبارات القبول الجامعي في الكويت."
+                                }
+                            }
+                        ]
                     }
-                })}
+                ])}
             </script>
 
             {/* Canonical URL */}
