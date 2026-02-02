@@ -1,4 +1,22 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /teacher/
 
+# Advanced SEO Optimization for Middle East & Gulf
 Sitemap: https://dareen-edu.com/sitemap.xml
+
+# Industry-specific Directives
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+
+# Core Educational Keywords for Crawlers
+# [تعليم عن بعد، حصص اون لاين، دروس خصوصية، السعودية، الكويت، الإمارات، قطر، البحرين، عمان]
