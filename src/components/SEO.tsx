@@ -56,11 +56,11 @@ export const SEO: React.FC<SEOProps> = ({
             <meta name="geo.position" content="24.7136;46.6753" />
             <meta name="ICBM" content="24.7136, 46.6753" />
 
-            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar" />
-            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-sa" />
-            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-kw" />
-            <link rel="alternate" href="https://dareen-edu.com/" hreflang="ar-ae" />
-            <link rel="alternate" href="https://dareen-edu.com/" hreflang="x-default" />
+            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar" />
+            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-sa" />
+            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-kw" />
+            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="ar-ae" />
+            <link rel="alternate" href="https://dareen-edu.com/" hrefLang="x-default" />
 
             {/* Advanced Multi-Schema for Rich Snippets (Google Star Ratings, FAQs, and Courses) */}
             <script type="application/ld+json">
