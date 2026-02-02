@@ -50,6 +50,36 @@ export const SEO: React.FC<SEOProps> = ({
                 <link key={idx} rel="preload" href={src} as="image" />
             ))}
 
+            {/* Geographic Targeting for Gulf */}
+            <meta name="geo.region" content="SA, KW, AE, QA, BH, OM" />
+            <meta name="geo.placename" content="Middle East, Riyadh, Kuwait City, Dubai" />
+
+            {/* Structured Data for Google (Schema.org) */}
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "EducationalOrganization",
+                    "name": "أكاديمية دارين للتعليم والتدريب",
+                    "url": "https://dareen-edu.com/",
+                    "logo": "https://dareen-edu.com/logo.png",
+                    "description": siteDescription,
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressRegion": "GCC",
+                        "addressCountry": "SA"
+                    },
+                    "sameAs": [
+                        "https://www.facebook.com/dareen.edu",
+                        "https://www.instagram.com/dareen.edu"
+                    ],
+                    "offers": {
+                        "@type": "Offer",
+                        "category": "Online Education",
+                        "areaServed": ["SA", "KW", "AE", "QA", "OM", "BH"]
+                    }
+                })}
+            </script>
+
             {/* Canonical URL */}
             <link rel="canonical" href={url} />
         </Helmet>
