@@ -153,6 +153,22 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
             </div>
 
+            {/* Learning Time Action Bar - Elegant & Separate */}
+            <div className="shrink-0 flex justify-center py-2 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/50 dark:to-transparent z-40">
+                <button
+                    className="group relative px-8 py-2.5 bg-white dark:bg-[#202c33] rounded-none border-b-4 border-primary-600 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.2)] dark:shadow-none hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden"
+                >
+                    {/* Animated Glow Background */}
+                    <div className="absolute inset-0 bg-primary-600/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+
+                    <div className="w-2 h-2 bg-primary-600 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-[2px] relative z-10">وقت التعلم</span>
+
+                    {/* Shine Effect */}
+                    <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                </button>
+            </div>
+
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 bg-[#efe7de] dark:bg-[#0b141a] custom-scrollbar relative">
                 <div
