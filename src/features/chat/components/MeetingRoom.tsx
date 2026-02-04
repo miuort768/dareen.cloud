@@ -28,14 +28,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const socket = socketService.getSocket();
 
     const streamRef = useRef<MediaStream | null>(null);
+    const peerRef = useRef<Peer | null>(null);
 
+    // 1. Initialize Peer once
     useEffect(() => {
         const peerInstance = new Peer();
+        peerRef.current = peerInstance;
+        setPeer(peerInstance); // Update state for components that might depend on it
 
         peerInstance.on('open', (id) => {
             console.log('Peer ID initialized:', id);
-            // If teacher is already sharing, let's announce it
-            if (isTeacher && isSharing) {
+            // If I'm late to the party and already sharing (rare but possible), announce
+            // This check uses the current state of isSharing, which might not be fully up-to-date
+            // if the component just mounted and isSharing was true from a previous render.
+            // The primary announcement happens in startSharing.
+            if (isTeacher && isSharing && streamRef.current) {
                 socket.emit('start_meeting', {
                     conversationId,
                     teacherId: currentUser.id,
@@ -46,12 +53,11 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         });
 
         peerInstance.on('call', (call) => {
-            console.log('Receiving call from student...');
-            // IMPORTANT: Teacher must answer with the stream they are sharing
+            console.log('Receiving call...');
             if (isTeacher && streamRef.current) {
                 call.answer(streamRef.current);
             } else {
-                call.answer(); // Just answer if no stream (student-to-teacher cases)
+                call.answer();
             }
 
             call.on('stream', (remote) => {
@@ -59,29 +65,53 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             });
         });
 
-        // Teacher: Listen for students requesting status
-        if (isTeacher) {
-            socket.on('request_meeting_status', (data: any) => {
-                if (data.conversationId === conversationId && streamRef.current && peerInstance.id) {
-                    socket.emit('start_meeting', {
-                        conversationId,
-                        teacherId: currentUser.id,
-                        teacherName: currentUser.name,
-                        peerId: peerInstance.id
-                    });
-                }
-            });
-        }
-
-        setPeer(peerInstance);
-
         return () => {
             peerInstance.destroy();
+            peerRef.current = null;
+        };
+    }, [currentUser.id]); // Only re-init if user changes
+
+    // 2. Handle Socket Listeners and Broadcasts
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleRequestStatus = (data: any) => {
+            if (isTeacher && data.conversationId === conversationId && streamRef.current && peerRef.current?.id) {
+                socket.emit('start_meeting', {
+                    conversationId,
+                    teacherId: currentUser.id,
+                    teacherName: currentUser.name,
+                    peerId: peerRef.current.id
+                });
+            }
+        };
+
+        const handleStarted = (data: any) => {
+            if (!isTeacher && data.conversationId === conversationId && data.peerId && peerRef.current) {
+                console.log('Teacher sharing, calling:', data.peerId);
+                // A MediaStream is needed for the call, even if empty, to establish the connection
+                const call = peerRef.current.call(data.peerId, new MediaStream());
+                call.on('stream', (remote) => {
+                    setRemoteStream(remote);
+                });
+            }
+        };
+
+        socket.on('request_meeting_status', handleRequestStatus);
+        socket.on('meeting_started', handleStarted);
+
+        if (!isTeacher) {
+            // Request status in case it started before I opened the UI
+            socket.emit('request_meeting_status', { conversationId });
+        }
+
+        return () => {
+            socket.off('request_meeting_status', handleRequestStatus);
+            socket.off('meeting_started', handleStarted);
             streamRef.current?.getTracks().forEach(track => track.stop());
             if (isTeacher) socket.emit('end_meeting', { conversationId });
-            socket.off('request_meeting_status');
         };
-    }, [isTeacher, conversationId, currentUser.id, currentUser.name, isSharing]); // Added dependencies for isSharing, currentUser
+    }, [conversationId, isTeacher, socket, currentUser.id, currentUser.name]); // Added currentUser.id/name for handleRequestStatus
 
     const startSharing = async () => {
         try {
@@ -98,12 +128,12 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             }
 
             // Immediately notify everyone that I am now sharing
-            if (peer?.id) {
+            if (peerRef.current?.id) {
                 socket.emit('start_meeting', {
                     conversationId,
                     teacherId: currentUser.id,
                     teacherName: currentUser.name,
-                    peerId: peer.id
+                    peerId: peerRef.current.id
                 });
             }
         } catch (err) {
@@ -123,29 +153,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             remoteVideoRef.current.srcObject = remoteStream;
         }
     }, [remoteStream]);
-
-    useEffect(() => {
-        if (!isTeacher && peer) {
-            const handleStarted = (data: any) => {
-                if (data.peerId && data.conversationId === conversationId) {
-                    console.log('Teacher sharing detected, establishing connection...');
-                    const call = peer.call(data.peerId, new MediaStream());
-                    call.on('stream', (remote) => {
-                        console.log('Remote stream received successfully!');
-                        setRemoteStream(remote);
-                    });
-                }
-            };
-
-            socket.on('meeting_started', handleStarted);
-            // Request status in case it started before I opened the UI
-            socket.emit('request_meeting_status', { conversationId });
-
-            return () => {
-                socket.off('meeting_started', handleStarted);
-            };
-        }
-    }, [peer, isTeacher, conversationId]); // Added conversationId to dependencies
 
     return (
         <div className="fixed inset-0 z-[200000] bg-black/95 flex flex-col">
