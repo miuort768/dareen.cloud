@@ -153,8 +153,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
             </div>
 
-            {/* Learning Time Action Bar - Elegant & Side-aligned */}
-            <div className="shrink-0 flex justify-start px-4 lg:px-6 py-2 bg-transparent z-40">
+            {/* Learning Time Action Bar - Integrated with Chat Theme */}
+            <div className="shrink-0 flex justify-start px-4 lg:px-6 py-3 bg-[#efe7de] dark:bg-[#0b141a] relative z-40">
+                {/* Matching Chat Pattern */}
+                <div
+                    className="absolute inset-0 opacity-[0.06] dark:opacity-[0.08] pointer-events-none"
+                    style={{ backgroundImage: 'url("https://wweb.static.whatsapp.net/img/v2/bg-chat-tile-light_62fc4a2963ad5a1d257b90a6e2e29307.png")', backgroundRepeat: 'repeat', backgroundSize: '400px' }}
+                />
+
                 <button
                     className="group relative px-6 py-2 bg-white dark:bg-[#202c33] rounded-none border-r-4 border-primary-600 shadow-[2px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[5px_15px_25px_-5px_rgba(0,0,0,0.15)] hover:translate-x-[-2px] active:translate-x-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden"
                 >
