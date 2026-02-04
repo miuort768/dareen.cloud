@@ -21,6 +21,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isSharing, setIsSharing] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const socket = socketService.getSocket();
@@ -30,6 +31,20 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const peerRef = useRef<Peer | null>(null);
 
     const activeCallsRef = useRef<Record<string, any>>({});
+
+    // Play video manually (for browser autoplay restrictions)
+    const handlePlayVideo = async () => {
+        if (remoteVideoRef.current) {
+            try {
+                remoteVideoRef.current.volume = 1.0;
+                await remoteVideoRef.current.play();
+                setIsPlaying(true);
+                console.log('🚀 [DARIN-MEETING] Video/Audio playing!');
+            } catch (err) {
+                console.error('🚀 [DARIN-MEETING] Play failed:', err);
+            }
+        }
+    };
 
     // 1. Initialize Peer once with STUN servers
     useEffect(() => {
@@ -294,6 +309,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                                     className="w-full h-full object-contain"
                                 />
                                 <div className="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter shadow-lg">بث مباشر من المعلم</div>
+
+                                {!isPlaying && (
+                                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
+                                        <button
+                                            onClick={handlePlayVideo}
+                                            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-6 px-12 rounded-2xl shadow-2xl transition-all active:scale-95 flex flex-col items-center gap-4"
+                                        >
+                                            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
+                                                <div className="w-0 h-0 border-t-[15px] border-t-transparent border-l-[25px] border-l-white border-b-[15px] border-b-transparent ml-2"></div>
+                                            </div>
+                                            <span className="text-2xl">اضغط لبدء مشاهدة الحصة</span>
+                                            <span className="text-sm opacity-80">(الصوت + الفيديو)</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <div className="text-center space-y-8 max-w-md">
