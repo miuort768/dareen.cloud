@@ -31,10 +31,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         try {
             setStatus('connecting');
             const screenStream = await navigator.mediaDevices.getDisplayMedia({
-                video: {
-                    cursor: 'always',
-                    displaySurface: 'monitor'
-                },
+                video: true,
                 audio: true
             });
 
