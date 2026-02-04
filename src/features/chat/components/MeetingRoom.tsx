@@ -28,16 +28,15 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const socket = socketService.getSocket();
 
+    const streamRef = useRef<MediaStream | null>(null);
+
     useEffect(() => {
-        // Initialize Peer
-        // We use PeerJS cloud for reliability in this version.
-        // If you host your own PeerJS server later, you can configure it here.
         const peerInstance = new Peer();
 
         peerInstance.on('open', (id) => {
-            console.log('My peer ID is: ' + id);
-            if (isTeacher) {
-                // Teacher starts meeting
+            console.log('Peer ID initialized:', id);
+            // If teacher is already sharing, let's announce it
+            if (isTeacher && isSharing) {
                 socket.emit('start_meeting', {
                     conversationId,
                     teacherId: currentUser.id,
@@ -48,33 +47,51 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         });
 
         peerInstance.on('call', (call) => {
-            console.log('Receiving call...');
-            call.answer(); // Automatically answer
+            console.log('Receiving call from student...');
+            // IMPORTANT: Teacher must answer with the stream they are sharing
+            if (isTeacher && streamRef.current) {
+                call.answer(streamRef.current);
+            } else {
+                call.answer(); // Just answer if no stream (student-to-teacher cases)
+            }
+
             call.on('stream', (remote) => {
                 setRemoteStream(remote);
             });
         });
 
+        // Teacher: Listen for students requesting status
+        if (isTeacher) {
+            socket.on('request_meeting_status', (data: any) => {
+                if (data.conversationId === conversationId && streamRef.current && peerInstance.id) {
+                    socket.emit('start_meeting', {
+                        conversationId,
+                        teacherId: currentUser.id,
+                        teacherName: currentUser.name,
+                        peerId: peerInstance.id
+                    });
+                }
+            });
+        }
+
         setPeer(peerInstance);
 
         return () => {
             peerInstance.destroy();
-            stream?.getTracks().forEach(track => track.stop());
-            socket.emit('end_meeting', { conversationId });
+            streamRef.current?.getTracks().forEach(track => track.stop());
+            if (isTeacher) socket.emit('end_meeting', { conversationId });
+            socket.off('request_meeting_status');
         };
-    }, []);
+    }, [isTeacher, conversationId, currentUser.id, currentUser.name, isSharing]); // Added dependencies for isSharing, currentUser
 
     const startSharing = async () => {
         try {
-            // @ts-ignore
             const screenStream = await navigator.mediaDevices.getDisplayMedia({
                 video: true,
                 audio: true
             });
 
-            // Also get microphone if possible to mix? 
-            // Or just audio:true in getDisplayMedia often gets system audio.
-
+            streamRef.current = screenStream;
             setStream(screenStream);
             setIsSharing(true);
 
@@ -82,17 +99,26 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 videoRef.current.srcObject = screenStream;
             }
 
-            // In a group, we might need to call everyone or just wait for them to call us.
-            // Usually in a 1-to-1 or teacher-student, the student calls the teacher.
+            // Immediately notify everyone that I am now sharing
+            if (peer?.id) {
+                socket.emit('start_meeting', {
+                    conversationId,
+                    teacherId: currentUser.id,
+                    teacherName: currentUser.name,
+                    peerId: peer.id
+                });
+            }
         } catch (err) {
             console.error("Error sharing screen:", err);
         }
     };
 
     const stopSharing = () => {
-        stream?.getTracks().forEach(track => track.stop());
+        streamRef.current?.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
         setStream(null);
         setIsSharing(false);
+        socket.emit('end_meeting', { conversationId });
     };
 
     useEffect(() => {
@@ -102,23 +128,27 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     }, [remoteStream]);
 
     useEffect(() => {
-        // Listen for teacher's peer info if I'm a student
-        if (!isTeacher) {
-            socket.on('meeting_started', (data: any) => {
-                if (data.peerId && peer) {
-                    console.log('Teacher started meeting, calling:', data.peerId);
-                    // Optionally wait a bit or auto-call
-                    const call = peer.call(data.peerId, new MediaStream()); // Call with empty stream just to get theirs
+        if (!isTeacher && peer) {
+            const handleStarted = (data: any) => {
+                if (data.peerId && data.conversationId === conversationId) {
+                    console.log('Teacher sharing detected, establishing connection...');
+                    const call = peer.call(data.peerId, new MediaStream());
                     call.on('stream', (remote) => {
+                        console.log('Remote stream received successfully!');
                         setRemoteStream(remote);
                     });
                 }
-            });
+            };
 
-            // If meeting already started before I joined the component
+            socket.on('meeting_started', handleStarted);
+            // Request status in case it started before I opened the UI
             socket.emit('request_meeting_status', { conversationId });
+
+            return () => {
+                socket.off('meeting_started', handleStarted);
+            };
         }
-    }, [peer]);
+    }, [peer, isTeacher, conversationId]); // Added conversationId to dependencies
 
     return (
         <div className="fixed inset-0 z-[200000] bg-black/95 flex flex-col">
