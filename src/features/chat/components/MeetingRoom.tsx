@@ -133,11 +133,28 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             socket.off('meeting_started', handleStarted);
             streamRef.current?.getTracks().forEach(track => track.stop());
             if (isTeacher) {
-                console.log('🚀 [DARIN-MEETING] Ending meeting broadcast');
+                console.log('🚀 [DARIN-MEETING] Cleaning up meeting');
                 socket.emit('end_meeting', { conversationId });
             }
         };
-    }, [conversationId, isTeacher, socket, currentUser.id, currentUser.name]); // Added currentUser.id/name for handleRequestStatus
+    }, [conversationId, isTeacher, isSharing, socket, currentUser.id, currentUser.name]);
+
+    // 3. Student Auto-Retry: Keep requesting until stream received
+    useEffect(() => {
+        if (!isTeacher && !remoteStream && peerRef.current?.id) {
+            console.log('🚀 [DARIN-MEETING] Starting student auto-retry...');
+            const retryInterval = setInterval(() => {
+                console.log('🚀 [DARIN-MEETING] Student auto-requesting status...');
+                socket.emit('request_meeting_status', {
+                    conversationId,
+                    studentPeerId: peerRef.current?.id,
+                    studentName: currentUser.name
+                });
+            }, 2000);
+
+            return () => clearInterval(retryInterval);
+        }
+    }, [isTeacher, remoteStream, conversationId, currentUser.name]);
 
     const startSharing = async () => {
         try {
