@@ -19,7 +19,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     onClose
 }) => {
     const [peer, setPeer] = useState<Peer | null>(null);
-    const [stream, setStream] = useState<MediaStream | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isSharing, setIsSharing] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
@@ -92,7 +91,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             });
 
             streamRef.current = screenStream;
-            setStream(screenStream);
             setIsSharing(true);
 
             if (videoRef.current) {
@@ -116,7 +114,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const stopSharing = () => {
         streamRef.current?.getTracks().forEach(track => track.stop());
         streamRef.current = null;
-        setStream(null);
         setIsSharing(false);
         socket.emit('end_meeting', { conversationId });
     };
