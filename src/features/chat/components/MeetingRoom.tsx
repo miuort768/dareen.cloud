@@ -30,7 +30,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const streamRef = useRef<MediaStream | null>(null);
     const peerRef = useRef<Peer | null>(null);
 
-    // 1. Initialize Peer once with STUN servers for better connectivity
+    const activeCallsRef = useRef<Record<string, any>>({});
+
+    // 1. Initialize Peer once with STUN servers
     useEffect(() => {
         console.log('🚀 [DARIN-MEETING] Initializing PeerJS...');
         const peerInstance = new Peer({
@@ -46,110 +48,79 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         peerRef.current = peerInstance;
 
         peerInstance.on('open', (id) => {
-            console.log('🚀 [DARIN-MEETING] PeerJS Connected. ID:', id);
+            console.log('🚀 [DARIN-MEETING] My Peer ID:', id);
             setConnectionStatus('connecting');
 
-            // If I'm a student, now that I have a Peer ID, I can ask if there's a meeting
+            // If I'm a student, tell teacher I'm ready to receive
             if (!isTeacher) {
-                console.log('🚀 [DARIN-MEETING] Student ID ready, requesting status...');
-                socket.emit('request_meeting_status', { conversationId });
-            }
-
-            // If I'm late to the party and already sharing (rare but possible), announce
-            // This check uses the current state of isSharing, which might not be fully up-to-date
-            // if the component just mounted and isSharing was true from a previous render.
-            // The primary announcement happens in startSharing.
-            if (isTeacher && isSharing && streamRef.current) {
-                socket.emit('start_meeting', {
+                console.log('🚀 [DARIN-MEETING] Student ID ready, asking teacher to CALL ME');
+                socket.emit('request_meeting_status', {
                     conversationId,
-                    teacherId: currentUser.id,
-                    teacherName: currentUser.name,
-                    peerId: id
+                    studentPeerId: id,
+                    studentName: currentUser.name
                 });
             }
         });
 
+        // Listen for incoming calls (Teacher calling Students)
         peerInstance.on('call', (call) => {
-            console.log('🚀 [DARIN-MEETING] Incoming call received');
-            if (isTeacher && streamRef.current) {
-                console.log('🚀 [DARIN-MEETING] Answering with local stream');
-                call.answer(streamRef.current);
-            } else {
-                console.log('🚀 [DARIN-MEETING] Answering without stream');
-                call.answer();
-            }
+            console.log('🚀 [DARIN-MEETING] Incoming call received from:', call.peer);
 
-            call.on('stream', (remote) => {
-                console.log('🚀 [DARIN-MEETING] Received remote stream');
-                setRemoteStream(remote);
-                setConnectionStatus('connected');
-            });
+            if (!isTeacher) {
+                // Student answers teacher's call
+                call.answer();
+                call.on('stream', (remote) => {
+                    console.log('🚀 [DARIN-MEETING] STREAM RECEIVED FROM TEACHER!');
+                    setRemoteStream(remote);
+                    setConnectionStatus('connected');
+                });
+            } else {
+                // If teacher receives a call, answer with stream
+                if (streamRef.current) {
+                    console.log('🚀 [DARIN-MEETING] Answering student call with stream');
+                    call.answer(streamRef.current);
+                } else {
+                    call.answer();
+                }
+            }
         });
 
         peerInstance.on('error', (err) => {
             console.error('❌ [DARIN-MEETING] PeerJS Error:', err.type, err.message);
-            if (err.type === 'peer-unavailable') {
-                console.warn('🚀 [DARIN-MEETING] Teacher peer unavailable. Retrying in 3s...');
-                setTimeout(() => socket.emit('request_meeting_status', { conversationId }), 3000);
-            }
         });
 
         return () => {
+            Object.values(activeCallsRef.current).forEach((call: any) => call.close());
             peerInstance.destroy();
             peerRef.current = null;
         };
-    }, [currentUser.id]); // Only re-init if user changes
+    }, [currentUser.id]);
 
     // 2. Handle Socket Listeners and Broadcasts
     useEffect(() => {
         if (!socket) return;
 
         const handleRequestStatus = (data: any) => {
-            if (isTeacher && data.conversationId === conversationId && streamRef.current && peerRef.current?.id) {
-                console.log('🚀 [DARIN-MEETING] Student requested status. Broadcasting Peer ID.');
-                socket.emit('start_meeting', {
-                    conversationId,
-                    teacherId: currentUser.id,
-                    teacherName: currentUser.name,
-                    peerId: peerRef.current.id
-                });
+            if (isTeacher && isSharing && streamRef.current && peerRef.current) {
+                if (data.studentPeerId && data.conversationId === conversationId) {
+                    console.log(`🚀 [DARIN-MEETING] Student joined, CALLING them: ${data.studentPeerId}`);
+                    const call = peerRef.current.call(data.studentPeerId, streamRef.current);
+                    activeCallsRef.current[data.studentPeerId] = call;
+
+                    call.on('close', () => {
+                        delete activeCallsRef.current[data.studentPeerId];
+                    });
+                }
             }
         };
 
         const handleStarted = (data: any) => {
-            if (!isTeacher && data.conversationId === conversationId && data.peerId) {
-                if (!peerRef.current || !peerRef.current.id) {
-                    console.log('🚀 [DARIN-MEETING] Meeting started but Peer not ready. Waiting...');
-                    return;
-                }
-
-                console.log('🚀 [DARIN-MEETING] Teacher found! Establishing connection to:', data.peerId);
-
-                // Some browsers need at least one track to establish a robust connection.
-                // We create a silent audio track to initiate the call.
-                const silentStream = (() => {
-                    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-                    const oscillator = ctx.createOscillator();
-                    const dst = oscillator.connect(ctx.createMediaStreamDestination()) as any;
-                    oscillator.start();
-                    return dst.stream;
-                })();
-
-                const call = peerRef.current.call(data.peerId, silentStream);
-
-                call.on('stream', (remote) => {
-                    console.log('🚀 [DARIN-MEETING] STREAM RECEIVED SUCCESS!');
-                    setRemoteStream(remote);
-                    setConnectionStatus('connected');
-                });
-
-                call.on('close', () => {
-                    console.log('🚀 [DARIN-MEETING] Call closed');
-                    setConnectionStatus('connecting');
-                });
-
-                call.on('error', (err) => {
-                    console.error('❌ Call error:', err);
+            if (!isTeacher && data.conversationId === conversationId && peerRef.current?.id) {
+                console.log('🚀 [DARIN-MEETING] Teacher active, asking for call...');
+                socket.emit('request_meeting_status', {
+                    conversationId,
+                    studentPeerId: peerRef.current.id,
+                    studentName: currentUser.name
                 });
             }
         };
