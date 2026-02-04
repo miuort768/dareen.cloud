@@ -285,6 +285,30 @@ async function startServer() {
                 socket.to(data.conversationId).emit('typing', data);
             });
 
+            // Meeting Signals
+            socket.on('start_meeting', (data) => {
+                // data: { conversationId, teacherId, teacherName }
+                const meetingData = {
+                    ...data,
+                    startTime: new Date().toISOString(),
+                    socketId: socket.id
+                };
+                socket.to(data.conversationId).emit('meeting_started', meetingData);
+                console.log(`   🚀 Meeting Started in room ${data.conversationId} by ${data.teacherName}`);
+            });
+
+            socket.on('end_meeting', (data) => {
+                socket.to(data.conversationId).emit('meeting_ended', data);
+                console.log(`   🏁 Meeting Ended in room ${data.conversationId}`);
+            });
+
+            socket.on('meeting_signal', (data) => {
+                // data: { targetUserId, signal, senderId, senderName }
+                if (data.targetUserId) {
+                    socket.to(`user_${data.targetUserId}`).emit('meeting_signal', data);
+                }
+            });
+
         });
 
         const serverInstance = server.listen(PORT, () => {

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, CheckCheck } from 'lucide-react';
+import { Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, CheckCheck, Video } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -7,6 +7,8 @@ import { useChatContext } from '../../../context/ChatContext';
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
+import { socketService } from '../../../lib/socket';
+import { MeetingRoom } from './MeetingRoom';
 
 interface ChatWindowProps {
     selectedConv: Conversation;
@@ -45,7 +47,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const { typingUsers } = useChatContext();
     const isChatOnly = currentUser?.role === 'chat_user';
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showMeeting, setShowMeeting] = useState(false);
+    const [activeMeeting, setActiveMeeting] = useState<any>(null);
     const emojiPickerRef = useRef<HTMLDivElement>(null);
+    const socket = socketService.getSocket();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -69,6 +74,32 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Meeting Listeners
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleMeetingStarted = (data: any) => {
+            if (data.conversationId === selectedConv.id) {
+                setActiveMeeting(data);
+            }
+        };
+
+        const handleMeetingEnded = (data: any) => {
+            if (data.conversationId === selectedConv.id) {
+                setActiveMeeting(null);
+                setShowMeeting(false);
+            }
+        };
+
+        socket.on('meeting_started', handleMeetingStarted);
+        socket.on('meeting_ended', handleMeetingEnded);
+
+        return () => {
+            socket.off('meeting_started', handleMeetingStarted);
+            socket.off('meeting_ended', handleMeetingEnded);
+        };
+    }, [selectedConv.id, socket]);
+
     const onEmojiClick = (emojiData: any) => {
         setNewMessage(newMessage + emojiData.emoji);
     };
@@ -80,6 +111,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             "flex-1 flex flex-col bg-white dark:bg-[#0b141a] overflow-hidden lg:rounded-2xl shadow-2xl border border-white/20 dark:border-gray-800/50",
             !isChatOnly && "pb-[80px] lg:pb-0"
         )}>
+            {/* Online Meeting Overlay */}
+            {showMeeting && currentUser && (
+                <MeetingRoom
+                    conversationId={selectedConv.id}
+                    currentUser={currentUser}
+                    isTeacher={currentUser.role === 'admin' || currentUser.role === 'teacher'}
+                    onClose={() => setShowMeeting(false)}
+                />
+            )}
+
             {/* Chat Header */}
             <div className="h-16 lg:h-20 shrink-0 border-b border-gray-100 dark:border-gray-800/50 flex items-center justify-between bg-white/80 dark:bg-[#202c33]/90 backdrop-blur-md sticky top-0 z-50 px-4">
                 <div className="flex items-center gap-3">
@@ -154,25 +195,42 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </div>
 
             {/* Learning Time Action Bar - Integrated with Chat Theme */}
-            <div className="shrink-0 flex justify-start px-4 lg:px-6 py-3 bg-[#efe7de] dark:bg-[#0b141a] relative z-40">
-                {/* Matching Chat Pattern */}
+            <div className="shrink-0 flex justify-start px-4 lg:px-6 py-3 bg-[#efe7de] dark:bg-[#0b141a] relative z-40 border-b border-gray-200/50 dark:border-gray-800/50">
                 <div
                     className="absolute inset-0 opacity-[0.06] dark:opacity-[0.08] pointer-events-none"
                     style={{ backgroundImage: 'url("https://wweb.static.whatsapp.net/img/v2/bg-chat-tile-light_62fc4a2963ad5a1d257b90a6e2e29307.png")', backgroundRepeat: 'repeat', backgroundSize: '400px' }}
                 />
 
-                <button
-                    className="group relative px-6 py-2 bg-white dark:bg-[#202c33] rounded-none border-r-4 border-primary-600 shadow-[2px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[5px_15px_25px_-5px_rgba(0,0,0,0.15)] hover:translate-x-[-2px] active:translate-x-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden"
-                >
-                    {/* Glowing effect inside */}
-                    <div className="absolute inset-0 bg-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={() => setShowMeeting(true)}
+                        className={cn(
+                            "group relative px-6 py-2 bg-white dark:bg-[#202c33] rounded-none border-r-4 shadow-[2px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[5px_15px_25px_-5px_rgba(0,0,0,0.15)] hover:translate-x-[-2px] active:translate-x-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden",
+                            activeMeeting ? "border-emerald-600" : "border-primary-600"
+                        )}
+                    >
+                        {/* Glowing effect inside */}
+                        <div className="absolute inset-0 bg-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                    <div className="w-2.5 h-2.5 bg-primary-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.5)]"></div>
-                    <span className="text-[12px] font-black text-gray-800 dark:text-gray-100 uppercase tracking-[2px] relative z-10">وقت التعلم</span>
+                        <div className={cn(
+                            "w-2.5 h-2.5 rounded-full animate-pulse",
+                            activeMeeting ? "bg-emerald-600 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-primary-600 shadow-[0_0_8px_rgba(79,70,229,0.5)]"
+                        )}></div>
+                        <span className="text-[12px] font-black text-gray-800 dark:text-gray-100 uppercase tracking-[2px] relative z-10">
+                            {activeMeeting ? 'انضم للحصة الآن' : 'وقت التعلم'}
+                        </span>
 
-                    {/* Floating Shimmer */}
-                    <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                </button>
+                        {/* Floating Shimmer */}
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    </button>
+
+                    {activeMeeting && (
+                        <div className="flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1.5 border border-emerald-200 dark:border-emerald-800/50 relative z-10 rounded-lg">
+                            <Video size={14} className="text-emerald-600 animate-bounce" />
+                            <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-400">حصة جارية بدأت بواسطة {activeMeeting.teacherName}</span>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Messages Area */}
