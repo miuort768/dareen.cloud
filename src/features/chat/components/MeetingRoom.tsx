@@ -30,19 +30,9 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
     useEffect(() => {
         // Initialize Peer
-        const newPeer = new Peer(`${currentUser.id}_${conversationId}`, {
-            host: window.location.hostname,
-            port: window.location.port ? parseInt(window.location.port) : 443,
-            path: '/peerjs',
-            secure: window.location.protocol === 'https:'
-        });
-
-        // For simplicity in this demo, since we are on the same origin or a known setup:
-        // If the above custom setup fails (needs server support for PeerJS path), 
-        // we can fallback to default PeerJS cloud for this task if needed, 
-        // but local/self-hosted is better.
-
-        const peerInstance = new Peer(); // Use PeerJS cloud for reliability if custom server isn't setup
+        // We use PeerJS cloud for reliability in this version.
+        // If you host your own PeerJS server later, you can configure it here.
+        const peerInstance = new Peer();
 
         peerInstance.on('open', (id) => {
             console.log('My peer ID is: ' + id);
