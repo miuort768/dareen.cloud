@@ -34,15 +34,27 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
     // Play video manually (for browser autoplay restrictions)
     const handlePlayVideo = async () => {
-        if (remoteVideoRef.current) {
-            try {
-                remoteVideoRef.current.volume = 1.0;
-                await remoteVideoRef.current.play();
-                setIsPlaying(true);
-                console.log('🚀 [DARIN-MEETING] Video/Audio playing!');
-            } catch (err) {
-                console.error('🚀 [DARIN-MEETING] Play failed:', err);
-            }
+        console.log('🚀 [DARIN-MEETING] Play button clicked!');
+        if (!remoteVideoRef.current) {
+            console.error('🚀 [DARIN-MEETING] Video ref is null!');
+            return;
+        }
+
+        if (!remoteVideoRef.current.srcObject) {
+            console.error('🚀 [DARIN-MEETING] No srcObject on video!');
+            return;
+        }
+
+        try {
+            console.log('🚀 [DARIN-MEETING] Setting volume and playing...');
+            remoteVideoRef.current.volume = 1.0;
+            remoteVideoRef.current.muted = false;
+            await remoteVideoRef.current.play();
+            setIsPlaying(true);
+            console.log('🚀 [DARIN-MEETING] ✅ Video/Audio playing successfully!');
+        } catch (err: any) {
+            console.error('🚀 [DARIN-MEETING] ❌ Play failed:', err.message, err);
+            alert('حدثت مشكلة في تشغيل الفيديو: ' + err.message);
         }
     };
 
@@ -209,15 +221,12 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         socket.emit('end_meeting', { conversationId });
     };
 
+    // Update video srcObject when stream arrives (but don't auto-play)
     useEffect(() => {
         if (remoteStream && remoteVideoRef.current) {
-            console.log('🚀 [DARIN-MEETING] Attempting to play remote stream...');
+            console.log('🚀 [DARIN-MEETING] Setting srcObject on video element');
             remoteVideoRef.current.srcObject = remoteStream;
-            remoteVideoRef.current.play().catch(err => {
-                console.error('🚀 [DARIN-MEETING] Autoplay failed:', err);
-                // If it fails, maybe user needs to click something? 
-                // But typically playsInline + autoPlay works if unmuted.
-            });
+            console.log('🚀 [DARIN-MEETING] srcObject set. Ready for manual play.');
         }
     }, [remoteStream]);
 
@@ -304,7 +313,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                             <div className="relative w-full h-full max-w-6xl bg-gray-900 shadow-2xl overflow-hidden border-2 border-emerald-500 rounded-2xl">
                                 <video
                                     ref={remoteVideoRef}
-                                    autoPlay
                                     playsInline
                                     className="w-full h-full object-contain"
                                 />
