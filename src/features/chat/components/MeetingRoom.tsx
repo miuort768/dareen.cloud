@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
-import { X, ScreenShare, ScreenShareOff, Mic, MicOff, Maximize2, Minimize2 } from 'lucide-react';
+import { X, ScreenShare, ScreenShareOff, Mic, MicOff, Maximize2, Minimize2, Share2 } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 import { cn } from '../../../lib/utils';
 import type { User } from '../../../types/auth';
@@ -26,24 +26,35 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const socket = socketService.getSocket();
 
+    const [connectionStatus, setConnectionStatus] = useState<'initializing' | 'connecting' | 'connected' | 'failed'>('initializing');
     const streamRef = useRef<MediaStream | null>(null);
     const peerRef = useRef<Peer | null>(null);
 
     // 1. Initialize Peer once with STUN servers for better connectivity
     useEffect(() => {
+        console.log('🚀 [DARIN-MEETING] Initializing PeerJS...');
         const peerInstance = new Peer({
             config: {
                 'iceServers': [
                     { urls: 'stun:stun.l.google.com:19302' },
                     { urls: 'stun:stun1.l.google.com:19302' },
                     { urls: 'stun:stun2.l.google.com:19302' },
+                    { urls: 'stun:stun.services.mozilla.com' }
                 ]
             }
         });
         peerRef.current = peerInstance;
 
         peerInstance.on('open', (id) => {
-            console.log('✅ PeerJS Connected. ID:', id);
+            console.log('🚀 [DARIN-MEETING] PeerJS Connected. ID:', id);
+            setConnectionStatus('connecting');
+
+            // If I'm a student, now that I have a Peer ID, I can ask if there's a meeting
+            if (!isTeacher) {
+                console.log('🚀 [DARIN-MEETING] Student ID ready, requesting status...');
+                socket.emit('request_meeting_status', { conversationId });
+            }
+
             // If I'm late to the party and already sharing (rare but possible), announce
             // This check uses the current state of isSharing, which might not be fully up-to-date
             // if the component just mounted and isSharing was true from a previous render.
@@ -59,22 +70,28 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         });
 
         peerInstance.on('call', (call) => {
-            console.log('📞 Incoming call from student...');
+            console.log('🚀 [DARIN-MEETING] Incoming call received');
             if (isTeacher && streamRef.current) {
-                console.log('📤 Sending stream to student');
+                console.log('🚀 [DARIN-MEETING] Answering with local stream');
                 call.answer(streamRef.current);
             } else {
+                console.log('🚀 [DARIN-MEETING] Answering without stream');
                 call.answer();
             }
 
             call.on('stream', (remote) => {
-                console.log('📡 Teacher received remote stream (student audio)');
+                console.log('🚀 [DARIN-MEETING] Received remote stream');
                 setRemoteStream(remote);
+                setConnectionStatus('connected');
             });
         });
 
         peerInstance.on('error', (err) => {
-            console.error('❌ PeerJS Error:', err.type, err.message);
+            console.error('❌ [DARIN-MEETING] PeerJS Error:', err.type, err.message);
+            if (err.type === 'peer-unavailable') {
+                console.warn('🚀 [DARIN-MEETING] Teacher peer unavailable. Retrying in 3s...');
+                setTimeout(() => socket.emit('request_meeting_status', { conversationId }), 3000);
+            }
         });
 
         return () => {
@@ -89,7 +106,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
         const handleRequestStatus = (data: any) => {
             if (isTeacher && data.conversationId === conversationId && streamRef.current && peerRef.current?.id) {
-                console.log('🙋 Student requested status. Re-broadcasting peerId.');
+                console.log('🚀 [DARIN-MEETING] Student requested status. Broadcasting Peer ID.');
                 socket.emit('start_meeting', {
                     conversationId,
                     teacherId: currentUser.id,
@@ -100,13 +117,26 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         };
 
         const handleStarted = (data: any) => {
-            if (!isTeacher && data.conversationId === conversationId && data.peerId && peerRef.current) {
-                console.log('🚀 Teacher sharing detected! Calling Teacher ID:', data.peerId);
+            if (!isTeacher && data.conversationId === conversationId && data.peerId) {
+                if (!peerRef.current || !peerRef.current.id) {
+                    console.log('🚀 [DARIN-MEETING] Meeting started but Peer not ready. Waiting...');
+                    return;
+                }
+
+                console.log('🚀 [DARIN-MEETING] Teacher found! Establishing connection to:', data.peerId);
                 // A MediaStream is needed for the call, even if empty, to establish the connection
+                // Some browsers need at least one track to establish a robust connection
                 const call = peerRef.current.call(data.peerId, new MediaStream());
+
                 call.on('stream', (remote) => {
-                    console.log('🎬 GREAT SUCCESS! Remote stream received from teacher.');
+                    console.log('🚀 [DARIN-MEETING] STREAM RECEIVED SUCCESS!');
                     setRemoteStream(remote);
+                    setConnectionStatus('connected');
+                });
+
+                call.on('close', () => {
+                    console.log('🚀 [DARIN-MEETING] Call closed');
+                    setConnectionStatus('connecting');
                 });
 
                 call.on('error', (err) => {
@@ -118,18 +148,12 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         socket.on('request_meeting_status', handleRequestStatus);
         socket.on('meeting_started', handleStarted);
 
-        if (!isTeacher) {
-            console.log('🔍 Requesting meeting status from teacher...');
-            // Request status in case it started before I opened the UI
-            socket.emit('request_meeting_status', { conversationId });
-        }
-
         return () => {
             socket.off('request_meeting_status', handleRequestStatus);
             socket.off('meeting_started', handleStarted);
             streamRef.current?.getTracks().forEach(track => track.stop());
             if (isTeacher) {
-                console.log('⏹️ Ending meeting broadcast');
+                console.log('🚀 [DARIN-MEETING] Ending meeting broadcast');
                 socket.emit('end_meeting', { conversationId });
             }
         };
@@ -172,7 +196,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
     useEffect(() => {
         if (remoteStream && remoteVideoRef.current) {
+            console.log('🚀 [DARIN-MEETING] Attempting to play remote stream...');
             remoteVideoRef.current.srcObject = remoteStream;
+            remoteVideoRef.current.play().catch(err => {
+                console.error('🚀 [DARIN-MEETING] Autoplay failed:', err);
+                // If it fails, maybe user needs to click something? 
+                // But typically playsInline + autoPlay works if unmuted.
+            });
         }
     }, [remoteStream]);
 
@@ -180,9 +210,26 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
         <div className="fixed inset-0 z-[200000] bg-black/95 flex flex-col">
             {/* Header */}
             <div className="h-16 flex items-center justify-between px-6 border-b border-white/10 bg-black/40 backdrop-blur-md">
-                <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                    <span className="text-white font-black uppercase tracking-[2px] text-sm">حصة مباشرة - {isTeacher ? 'المعلم' : 'طالب/ولي أمر'}</span>
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                        <div className={cn(
+                            "w-3 h-3 rounded-full animate-pulse",
+                            connectionStatus === 'connected' ? "bg-emerald-500" : "bg-red-500"
+                        )}></div>
+                        <span className="text-white font-black uppercase tracking-[2px] text-xs">
+                            {isTeacher ? 'بث المعلم' : 'متابعة الحصة'}
+                            <span className="mx-2 opacity-40">|</span>
+                            <span className={cn(
+                                "text-[10px]",
+                                connectionStatus === 'connected' ? "text-emerald-400" : "text-yellow-400"
+                            )}>
+                                {connectionStatus === 'initializing' && 'جاري التهيئة...'}
+                                {connectionStatus === 'connecting' && 'جاري الاتصال...'}
+                                {connectionStatus === 'connected' && 'متصل الآن'}
+                                {connectionStatus === 'failed' && 'فشل الاتصال'}
+                            </span>
+                        </span>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -197,7 +244,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                         className="bg-red-600 hover:bg-red-700 text-white p-2.5 rounded-none transition-all flex items-center gap-2 font-bold px-4"
                     >
                         <X size={20} />
-                        <span>إنهاء الحصة</span>
+                        <span>إنهاء</span>
                     </button>
                 </div>
             </div>
@@ -207,7 +254,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 {isTeacher ? (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-6">
                         {isSharing ? (
-                            <div className="relative w-full h-full max-w-5xl bg-gray-900 shadow-2xl overflow-hidden border-2 border-primary-500 rounded-2xl">
+                            <div className="relative w-full h-full max-w-6xl bg-gray-900 shadow-2xl overflow-hidden border-2 border-primary-500 rounded-2xl">
                                 <video
                                     ref={videoRef}
                                     autoPlay
@@ -215,7 +262,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                                     playsInline
                                     className="w-full h-full object-contain"
                                 />
-                                <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 text-[10px] font-black uppercase">جارِ مشاركة الشاشة</div>
+                                <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter shadow-lg">جارِ مشاركة الشاشة</div>
                             </div>
                         ) : (
                             <div className="text-center space-y-6 animate-in fade-in zoom-in duration-500">
@@ -224,12 +271,13 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-black text-white mb-2">لبدء الحصة، شارك شاشتك</h3>
-                                    <p className="text-gray-400 max-w-sm mx-auto">سيتمكن الطلاب من رؤية ما تشرحه على شاشتك بوضوح تام.</p>
+                                    <p className="text-gray-400 max-w-sm mx-auto">سيتمكن الطلاب من رؤية ما تشرحه على شاشتك بصوت وصورة واضحة.</p>
                                 </div>
                                 <button
                                     onClick={startSharing}
-                                    className="bg-primary-600 hover:bg-primary-700 text-white font-black py-4 px-10 rounded-none shadow-[0_10px_20px_rgba(79,70,229,0.3)] transition-all active:scale-95"
+                                    className="bg-primary-600 hover:bg-primary-700 text-white font-black py-4 px-10 rounded-none shadow-[0_10px_20px_rgba(79,70,229,0.3)] transition-all active:scale-95 flex items-center gap-3 mx-auto"
                                 >
+                                    <ScreenShare size={20} />
                                     ابدأ مشاركة الشاشة الآن
                                 </button>
                             </div>
@@ -238,32 +286,55 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-6">
                         {remoteStream ? (
-                            <div className="relative w-full h-full max-w-5xl bg-gray-900 shadow-2xl overflow-hidden border-2 border-emerald-500 rounded-2xl">
+                            <div className="relative w-full h-full max-w-6xl bg-gray-900 shadow-2xl overflow-hidden border-2 border-emerald-500 rounded-2xl">
                                 <video
                                     ref={remoteVideoRef}
                                     autoPlay
                                     playsInline
                                     className="w-full h-full object-contain"
                                 />
-                                <div className="absolute top-4 left-4 bg-emerald-600 text-white px-3 py-1 text-[10px] font-black uppercase">بث مباشر من المعلم</div>
+                                <div className="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter shadow-lg">بث مباشر من المعلم</div>
+
+                                {isMuted && (
+                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+                                        <div className="bg-red-600 text-white px-6 py-3 font-black flex items-center gap-3 shadow-2xl">
+                                            <MicOff size={24} />
+                                            <span>الصوت مكتوم لديك</span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ) : (
-                            <div className="text-center space-y-8">
-                                <div className="relative w-24 h-24 mx-auto">
-                                    <div className="absolute inset-0 border-4 border-primary-600/20 rounded-full"></div>
-                                    <div className="absolute inset-0 border-4 border-t-primary-600 rounded-full animate-spin"></div>
+                            <div className="text-center space-y-8 max-w-md">
+                                <div className="relative w-32 h-32 mx-auto">
+                                    <div className="absolute inset-0 border-8 border-primary-600/10 rounded-full"></div>
+                                    <div className="absolute inset-0 border-8 border-t-primary-600 rounded-full animate-spin"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <ScreenShare size={40} className="text-primary-600 animate-pulse" />
+                                    </div>
                                 </div>
-                                <div className="animate-pulse space-y-3">
-                                    <h3 className="text-xl font-black text-white">بانتظار بدء المعلم للشرح...</h3>
-                                    <p className="text-gray-400 text-sm">ستظهر الشاشة هنا تلقائياً فور بدء البث.</p>
+                                <div className="space-y-3">
+                                    <h3 className="text-2xl font-black text-white tracking-tight">بانتظار وصول إشارة المعلم...</h3>
+                                    <p className="text-gray-400 font-medium leading-relaxed">
+                                        تأكد أن المعلم قد بدأ بمشاركة شاشته بالفعل. المزامنة تتم تلقائياً فور توفر البث.
+                                    </p>
                                 </div>
 
-                                <button
-                                    onClick={() => socket.emit('request_meeting_status', { conversationId })}
-                                    className="text-[11px] font-black text-primary-500 border border-primary-500/30 px-6 py-2 hover:bg-primary-500/10 transition-all uppercase tracking-widest"
-                                >
-                                    إعادة محاولة الاتصال
-                                </button>
+                                <div className="flex flex-col gap-3">
+                                    <button
+                                        onClick={() => {
+                                            setConnectionStatus('connecting');
+                                            socket.emit('request_meeting_status', { conversationId });
+                                        }}
+                                        className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold py-4 px-8 rounded-none transition-all flex items-center justify-center gap-3"
+                                    >
+                                        <Share2 size={18} />
+                                        إعادة محاولة الربط
+                                    </button>
+                                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest text-center">
+                                        الحالة الحالية: {connectionStatus}
+                                    </p>
+                                </div>
                             </div>
                         )}
                     </div>
