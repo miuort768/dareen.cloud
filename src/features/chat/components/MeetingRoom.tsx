@@ -18,7 +18,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     isTeacher,
     onClose
 }) => {
-    const [peer, setPeer] = useState<Peer | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isSharing, setIsSharing] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
@@ -34,7 +33,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     useEffect(() => {
         const peerInstance = new Peer();
         peerRef.current = peerInstance;
-        setPeer(peerInstance); // Update state for components that might depend on it
 
         peerInstance.on('open', (id) => {
             console.log('Peer ID initialized:', id);
