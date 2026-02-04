@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
-import { X, ScreenShare, ScreenShareOff, Mic, MicOff, Maximize2, Minimize2, Share2 } from 'lucide-react';
+import { X, ScreenShare, ScreenShareOff, Maximize2, Minimize2, Share2 } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 import { cn } from '../../../lib/utils';
 import type { User } from '../../../types/auth';
@@ -20,7 +20,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 }) => {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isSharing, setIsSharing] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -295,15 +294,6 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                                     className="w-full h-full object-contain"
                                 />
                                 <div className="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 text-[10px] font-black uppercase tracking-tighter shadow-lg">بث مباشر من المعلم</div>
-
-                                {isMuted && (
-                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
-                                        <div className="bg-red-600 text-white px-6 py-3 font-black flex items-center gap-3 shadow-2xl">
-                                            <MicOff size={24} />
-                                            <span>الصوت مكتوم لديك</span>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         ) : (
                             <div className="text-center space-y-8 max-w-md">
@@ -343,28 +333,24 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             </div>
 
             {/* Bottom Controls */}
-            <div className="h-20 bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-center gap-8 px-6">
-                <button
-                    onClick={() => setIsMuted(!isMuted)}
-                    className={cn(
-                        "w-12 h-12 rounded-full flex items-center justify-center transition-all",
-                        isMuted ? "bg-red-600 text-white" : "bg-white/10 text-white hover:bg-white/20"
-                    )}
-                >
-                    {isMuted ? <MicOff /> : <Mic />}
-                </button>
-
+            <div className="h-20 bg-black/80 backdrop-blur-xl border-t border-white/10 flex items-center justify-center gap-8 px-6 relative z-10">
                 {isTeacher && (
                     <button
                         onClick={isSharing ? stopSharing : startSharing}
                         className={cn(
-                            "px-8 h-12 font-bold flex items-center gap-3 transition-all",
-                            isSharing ? "bg-red-600 text-white" : "bg-emerald-600 text-white"
+                            "px-8 h-12 font-bold flex items-center gap-3 transition-all rounded-lg",
+                            isSharing ? "bg-red-600 hover:bg-red-700 text-white" : "bg-emerald-600 hover:bg-emerald-700 text-white"
                         )}
                     >
                         {isSharing ? <ScreenShareOff /> : <ScreenShare />}
                         <span>{isSharing ? 'إيقاف المشاركة' : 'مشاركة الشاشة'}</span>
                     </button>
+                )}
+
+                {!isTeacher && remoteStream && (
+                    <div className="text-gray-400 text-sm font-bold">
+                        💡 تأكد من رفع صوت جهازك لسماع الشرح
+                    </div>
                 )}
             </div>
         </div>
