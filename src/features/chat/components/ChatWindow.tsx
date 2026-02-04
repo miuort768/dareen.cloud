@@ -153,19 +153,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
             </div>
 
-            {/* Learning Time Action Bar - Elegant & Separate */}
-            <div className="shrink-0 flex justify-center py-2 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/50 dark:to-transparent z-40">
+            {/* Learning Time Action Bar - Elegant & Side-aligned */}
+            <div className="shrink-0 flex justify-start px-4 lg:px-6 py-2 bg-transparent z-40">
                 <button
-                    className="group relative px-8 py-2.5 bg-white dark:bg-[#202c33] rounded-none border-b-4 border-primary-600 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.2)] dark:shadow-none hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden"
+                    className="group relative px-6 py-2 bg-white dark:bg-[#202c33] rounded-none border-r-4 border-primary-600 shadow-[2px_10px_15px_-3px_rgba(0,0,0,0.1)] hover:shadow-[5px_15px_25px_-5px_rgba(0,0,0,0.15)] hover:translate-x-[-2px] active:translate-x-[1px] transition-all duration-300 flex items-center gap-3 overflow-hidden"
                 >
-                    {/* Animated Glow Background */}
-                    <div className="absolute inset-0 bg-primary-600/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    {/* Glowing effect inside */}
+                    <div className="absolute inset-0 bg-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                    <div className="w-2 h-2 bg-primary-600 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-black text-gray-800 dark:text-gray-100 uppercase tracking-[2px] relative z-10">وقت التعلم</span>
+                    <div className="w-2.5 h-2.5 bg-primary-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.5)]"></div>
+                    <span className="text-[12px] font-black text-gray-800 dark:text-gray-100 uppercase tracking-[2px] relative z-10">وقت التعلم</span>
 
-                    {/* Shine Effect */}
-                    <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    {/* Floating Shimmer */}
+                    <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </button>
             </div>
 
