@@ -124,9 +124,18 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 }
 
                 console.log('🚀 [DARIN-MEETING] Teacher found! Establishing connection to:', data.peerId);
-                // A MediaStream is needed for the call, even if empty, to establish the connection
-                // Some browsers need at least one track to establish a robust connection
-                const call = peerRef.current.call(data.peerId, new MediaStream());
+
+                // Some browsers need at least one track to establish a robust connection.
+                // We create a silent audio track to initiate the call.
+                const silentStream = (() => {
+                    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+                    const oscillator = ctx.createOscillator();
+                    const dst = oscillator.connect(ctx.createMediaStreamDestination()) as any;
+                    oscillator.start();
+                    return dst.stream;
+                })();
+
+                const call = peerRef.current.call(data.peerId, silentStream);
 
                 call.on('stream', (remote) => {
                     console.log('🚀 [DARIN-MEETING] STREAM RECEIVED SUCCESS!');
@@ -161,6 +170,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
     const startSharing = async () => {
         try {
+            console.log('🚀 [DARIN-MEETING] Starting screen share...');
             const screenStream = await navigator.mediaDevices.getDisplayMedia({
                 video: true,
                 audio: true
@@ -168,6 +178,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
             streamRef.current = screenStream;
             setIsSharing(true);
+            setConnectionStatus('connected'); // Teacher is now live
 
             if (videoRef.current) {
                 videoRef.current.srcObject = screenStream;
@@ -175,6 +186,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
 
             // Immediately notify everyone that I am now sharing
             if (peerRef.current?.id) {
+                console.log('🚀 [DARIN-MEETING] Broadcasting start_meeting to all students');
                 socket.emit('start_meeting', {
                     conversationId,
                     teacherId: currentUser.id,
@@ -184,6 +196,7 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             }
         } catch (err) {
             console.error("Error sharing screen:", err);
+            setConnectionStatus('failed');
         }
     };
 

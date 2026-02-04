@@ -302,6 +302,12 @@ async function startServer() {
                 console.log(`   🏁 Meeting Ended in room ${data.conversationId}`);
             });
 
+            socket.on('request_meeting_status', (data) => {
+                // Broadcast request to the room so the teacher can reply with their peerId
+                socket.to(data.conversationId).emit('request_meeting_status', data);
+                console.log(`   🔍 Status requested in room ${data.conversationId}`);
+            });
+
             socket.on('meeting_signal', (data) => {
                 // data: { targetUserId, signal, senderId, senderName }
                 if (data.targetUserId) {
