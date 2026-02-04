@@ -285,34 +285,35 @@ async function startServer() {
                 socket.to(data.conversationId).emit('typing', data);
             });
 
-            // Meeting Signals
-            socket.on('start_meeting', (data) => {
-                // data: { conversationId, teacherId, teacherName }
-                const meetingData = {
-                    ...data,
-                    startTime: new Date().toISOString(),
-                    socketId: socket.id
-                };
-                socket.to(data.conversationId).emit('meeting_started', meetingData);
-                console.log(`   🚀 Meeting Started in room ${data.conversationId} by ${data.teacherName}`);
+            // Simple-Peer Meeting Signals (New System)
+            socket.on('teacher_ready', (data) => {
+                // Teacher started sharing, notify all students in room
+                socket.to(data.conversationId).emit('teacher_ready', data);
+                console.log(`   ✅ Teacher ready in room ${data.conversationId}`);
             });
 
-            socket.on('end_meeting', (data) => {
-                socket.to(data.conversationId).emit('meeting_ended', data);
-                console.log(`   🏁 Meeting Ended in room ${data.conversationId}`);
+            socket.on('teacher_stopped', (data) => {
+                // Teacher stopped sharing
+                socket.to(data.conversationId).emit('teacher_stopped', data);
+                console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
             });
 
-            socket.on('request_meeting_status', (data) => {
-                // Broadcast request to the room so the teacher can reply with their peerId
-                socket.to(data.conversationId).emit('request_meeting_status', data);
-                console.log(`   🔍 Status requested in room ${data.conversationId}`);
+            socket.on('student_joined', (data) => {
+                // Student joined, request teacher status
+                socket.to(data.conversationId).emit('student_joined', data);
+                console.log(`   👋 Student ${data.studentId} joined room ${data.conversationId}`);
             });
 
-            socket.on('meeting_signal', (data) => {
-                // data: { targetUserId, signal, senderId, senderName }
-                if (data.targetUserId) {
-                    socket.to(`user_${data.targetUserId}`).emit('meeting_signal', data);
-                }
+            socket.on('student_request', (data) => {
+                // Student sends WebRTC offer to teacher
+                socket.to(data.conversationId).emit('student_request', data);
+                console.log(`   📞 Student ${data.studentId} requesting connection`);
+            });
+
+            socket.on('teacher_signal', (data) => {
+                // Teacher sends WebRTC answer to specific student
+                socket.to(`user_${data.studentId}`).emit('teacher_signal', data);
+                console.log(`   📡 Teacher sending signal to student ${data.studentId}`);
             });
 
         });
