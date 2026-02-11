@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, X, Download, Smartphone, Monitor, Tablet, Info, Share } from 'lucide-react';
+import { Bell, X, Download, Smartphone, Monitor, Tablet } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const InstallPWA = () => {
