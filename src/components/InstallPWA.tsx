@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell, X, Download, Smartphone, Monitor, Tablet, MessageCircle } from 'lucide-react';
+import { Bell, X, Download, Smartphone, Monitor, Tablet } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { useSettings } from '../context/SettingsContext';
 
 export const InstallPWA = () => {
     const location = useLocation();
-    const { adminPhone } = useSettings();
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showTrigger, setShowTrigger] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -65,7 +63,6 @@ export const InstallPWA = () => {
 
     if (!isVisiblePage) return null;
 
-    const whatsappUrl = `https://wa.me/${adminPhone}`;
 
     return (
         <>
@@ -90,25 +87,6 @@ export const InstallPWA = () => {
             </style>
 
             <div className="fixed bottom-8 right-8 z-[99999] flex flex-col gap-5 items-center">
-                {/* Premium WhatsApp Button */}
-                <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative w-16 h-16 bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-[0_15px_30px_rgba(37,211,102,0.4)] flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-95 animate-float overflow-hidden border border-white/20"
-                    style={{ borderRadius: '0' }}
-                    title="تواصل معنا عبر واتساب"
-                >
-                    {/* Glowing effect */}
-                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-
-                    {/* Inner Pulse */}
-                    <div className="absolute inset-0 bg-white animate-ping opacity-10 rounded-full scale-150"></div>
-
-                    <MessageCircle size={32} fill="currentColor" className="relative z-10 text-white drop-shadow-md group-hover:rotate-[360deg] transition-transform duration-700" />
-                </a>
-
                 {/* Premium PWA Bell Trigger */}
                 {showTrigger && (
                     <button
