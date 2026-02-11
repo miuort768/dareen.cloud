@@ -142,85 +142,40 @@ export const InstallPWA = () => {
                         </div>
 
                         <div className="p-8 space-y-8 bg-white dark:bg-gray-950">
-                            {!deferredPrompt ? (
-                                // Manual Instructions Fallback
-                                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                                    <div className="bg-amber-50 dark:bg-amber-900/20 border-r-4 border-amber-400 p-4">
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <Info size={18} className="text-amber-600 dark:text-amber-400" />
-                                            <h4 className="font-black text-amber-900 dark:text-amber-200 text-sm">تثبيت يدوي مطلوب</h4>
-                                        </div>
-                                        <p className="text-xs text-amber-800 dark:text-amber-300 font-bold leading-relaxed">
-                                            متصفحك لا يدعم التثبيت التلقائي المباشر. يمكنك إضافة المنصة لشاشتك الرئيسية يدوياً:
-                                        </p>
-                                    </div>
+                            <div className="border-r-[6px] border-[#D4AF37] pr-5">
+                                <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed font-black text-right">
+                                    احصل على أفضل تجربة تعليمية! قم بتثبيت التطبيق للوصول السريع، الإشعارات الفورية، وتجربة سلسة في أي وقت.
+                                </p>
+                            </div>
 
-                                    <div className="space-y-4">
-                                        {isIOS ? (
-                                            <div className="space-y-3">
-                                                <div className="flex items-center gap-4 group">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-900 dark:text-white font-black text-xs shrink-0">1</div>
-                                                    <p className="text-xs font-bold text-gray-700 dark:text-gray-300">اضغط على زر المشاركة <Share size={16} className="inline mx-1 text-blue-500" /> في متصفح Safari</p>
-                                                </div>
-                                                <div className="flex items-center gap-4 group">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-900 dark:text-white font-black text-xs shrink-0">2</div>
-                                                    <p className="text-xs font-bold text-gray-700 dark:text-gray-300">اختر "إضافة إلى الشاشة الرئيسية" <div className="inline-flex items-center justify-center w-5 h-5 bg-gray-100 border border-gray-300 rounded-sm mx-1 text-gray-500">+</div></p>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="space-y-3">
-                                                <div className="flex items-center gap-4 group">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-900 dark:text-white font-black text-xs shrink-0">1</div>
-                                                    <p className="text-xs font-bold text-gray-700 dark:text-gray-300">اضغط على زر قائمة المتصفح (⋮) في أعلى الزاوية</p>
-                                                </div>
-                                                <div className="flex items-center gap-4 group">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-900 dark:text-white font-black text-xs shrink-0">2</div>
-                                                    <p className="text-xs font-bold text-gray-700 dark:text-gray-300">اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية"</p>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
+                            <div className="flex justify-center gap-10 py-2 text-gray-400 dark:text-gray-600">
+                                <Smartphone size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
+                                <Tablet size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
+                                <Monitor size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
+                            </div>
 
-                                    <button
-                                        onClick={() => setShowModal(false)}
-                                        className="w-full py-4 bg-gray-900 text-white font-black text-xs uppercase tracking-[3px] hover:bg-black transition-colors"
-                                    >
-                                        فهمت، شكراً
-                                    </button>
-                                </div>
-                            ) : (
-                                // Automatic Install Button
-                                <>
-                                    <div className="border-r-[6px] border-[#D4AF37] pr-5">
-                                        <p className="text-gray-800 dark:text-gray-200 text-sm leading-relaxed font-black text-right">
-                                            احصل على أفضل تجربة تعليمية! قم بتثبيت التطبيق للوصول السريع، الإشعارات الفورية، وتجربة سلسة في أي وقت.
-                                        </p>
-                                    </div>
+                            <div className="space-y-4 pt-4">
+                                <button
+                                    onClick={handleInstall}
+                                    className="relative overflow-hidden w-full py-6 bg-gray-950 dark:bg-black text-white font-black hover:bg-[#D4AF37] hover:text-black transition-all duration-500 flex items-center justify-center gap-4 group border-b-[6px] border-[#D4AF37] active:transform active:translate-y-1 shadow-lg"
+                                >
+                                    <Download size={24} className="group-hover:animate-bounce" />
+                                    <span className="uppercase tracking-[4px] text-xs">تثبيت التطبيق الآن</span>
+                                </button>
 
-                                    <div className="flex justify-center gap-10 py-2 text-gray-400 dark:text-gray-600">
-                                        <Smartphone size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
-                                        <Tablet size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
-                                        <Monitor size={36} strokeWidth={1.5} className="hover:text-[#D4AF37] transition-colors" />
-                                    </div>
+                                {!deferredPrompt && (
+                                    <p className="text-[10px] text-center text-gray-400 font-bold animate-pulse">
+                                        {isIOS ? "اضغط على زر المشاركة ثم إضافة للشاشة الرئيسية" : "سيفتح المتصفح نافذة التثبيت بعد ثوانٍ..."}
+                                    </p>
+                                )}
 
-                                    <div className="space-y-4 pt-4">
-                                        <button
-                                            onClick={handleInstall}
-                                            className="relative overflow-hidden w-full py-6 bg-gray-950 dark:bg-black text-white font-black hover:bg-[#D4AF37] hover:text-black transition-all duration-500 flex items-center justify-center gap-4 group border-b-[6px] border-[#D4AF37] active:transform active:translate-y-1"
-                                        >
-                                            <Download size={24} className="group-hover:animate-bounce" />
-                                            <span className="uppercase tracking-[4px] text-xs">ثبت التطبيق الآن</span>
-                                        </button>
-
-                                        <button
-                                            onClick={() => setShowModal(false)}
-                                            className="w-full py-4 text-gray-500 hover:text-black dark:hover:text-white font-black text-[11px] uppercase tracking-[4px] transition-colors flex items-center justify-center gap-2"
-                                        >
-                                            ربما لاحقاً
-                                        </button>
-                                    </div>
-                                </>
-                            )}
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="w-full py-4 text-gray-500 hover:text-black dark:hover:text-white font-black text-[11px] uppercase tracking-[4px] transition-colors flex items-center justify-center gap-2"
+                                >
+                                    إغلاق
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
