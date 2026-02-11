@@ -27,7 +27,6 @@ import { About } from './pages/public/About';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { TermsOfService } from './pages/public/TermsOfService';
-import { InstallPWA } from './components/InstallPWA';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 // Protected Route Component
@@ -153,8 +152,6 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      {/* Global PWA Install Trigger */}
-      <InstallPWA />
     </>
   );
 }
