@@ -202,14 +202,14 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Redesigned with Creative Touches */}
-            <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+            <section className="py-8 md:py-12 bg-white relative overflow-hidden">
                 {/* Abstract Background Shapes */}
                 <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
                 <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
-                        <div className="bg-[#0f172a] rounded-none p-8 md:p-24 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(15,23,42,0.3)] border-r-[8px] border-gold">
+                        <div className="bg-[#0f172a] rounded-none p-8 md:p-16 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(15,23,42,0.3)] border-r-[8px] border-gold">
                             {/* Inner Decorative Elements */}
                             <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.15),transparent_50%)]"></div>
                             <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.1),transparent_50%)]"></div>
