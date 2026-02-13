@@ -83,7 +83,7 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = location.pathname === '/login' || location.pathname === '/login-q8';
 
   if (maintenanceMode && !isAdmin && !isLoginPage) {
     return <MaintenanceScreen />;
@@ -110,6 +110,7 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/login-q8" element={<Login />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
 
