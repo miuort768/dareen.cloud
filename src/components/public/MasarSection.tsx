@@ -20,12 +20,12 @@ export const MasarSection = () => {
 
                     <div className="flex flex-col lg:flex-row items-stretch">
                         {/* Image Side - Now Visible on Mobile */}
-                        <div className="w-full lg:w-1/3 relative shrink-0 overflow-hidden bg-[#f8f9fa] h-48 sm:h-64 lg:h-auto">
-                            <div className="absolute inset-0 z-10 flex items-center justify-center">
+                        <div className="w-full lg:w-1/3 relative shrink-0 overflow-hidden bg-white/10 backdrop-blur-sm h-56 sm:h-72 lg:h-auto flex items-center justify-center p-6 lg:p-0">
+                            <div className="relative w-full h-full flex items-center justify-center">
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain lg:object-cover rounded-xl lg:rounded-none shadow-lg lg:shadow-none"
                                 />
                             </div>
                         </div>
