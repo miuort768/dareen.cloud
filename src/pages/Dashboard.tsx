@@ -79,21 +79,21 @@ export const Dashboard = () => {
             </div>
 
             {isTeacher ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="space-y-6">
                     {/* Row 1: 3 Primary Squares */}
-                    <TeacherAchievements
-                        stats={stats}
-                        lowBalanceStudents={lowBalanceStudents}
-                        isTeacher={true}
-                    />
-                    <TasksAndRequests tasks={tasks} />
-                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <TeacherAchievements
+                            stats={stats}
+                            lowBalanceStudents={lowBalanceStudents}
+                            isTeacher={true}
+                        />
+                        <TasksAndRequests tasks={tasks} />
+                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    </div>
 
                     {/* Row 2: 2 Main Analysis Blocks */}
-                    <div className="lg:col-span-2 h-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <DashboardCharts isTeacher={true} monthlyData={monthlyData} />
-                    </div>
-                    <div className="lg:col-span-1 h-full">
                         <RenewalAlertsList
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
@@ -101,30 +101,30 @@ export const Dashboard = () => {
                     </div>
 
                     {/* Full width bottom summary */}
-                    <div className="lg:col-span-3">
+                    <div className="w-full">
                         <PerformanceSummary stats={stats} isTeacher={true} />
                     </div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="space-y-6">
                     {/* Row 1: 3 Primary Squares */}
-                    <PerformanceSummary stats={stats} isTeacher={false} />
-                    <TasksAndRequests tasks={tasks} />
-                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <PerformanceSummary stats={stats} isTeacher={false} />
+                        <TasksAndRequests tasks={tasks} />
+                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    </div>
 
                     {/* Row 2: 2 Main Analysis Blocks */}
-                    <div className="lg:col-span-2 h-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <ImportantNotifications
                             tasks={tasks}
                             lowBalanceStudents={lowBalanceStudents}
                         />
-                    </div>
-                    <div className="lg:col-span-1 h-full">
                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </div>
 
-                    {/* Additional Table below if needed, or kept separate to not break the 3+2 look */}
-                    <div className="lg:col-span-3">
+                    {/* Additional Full Width Table */}
+                    <div className="w-full">
                         <RenewalAlertsList
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
