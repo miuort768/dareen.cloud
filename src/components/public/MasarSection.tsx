@@ -1,7 +1,9 @@
-import { ArrowLeft, BookOpen, Bell } from 'lucide-react';
+import { ArrowLeft, BookOpen, Bell, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSettings } from '../../context/SettingsContext';
 
 export const MasarSection = () => {
+    const { adminPhone } = useSettings();
 
     return (
         <section className="py-8 bg-white relative overflow-hidden">
@@ -17,8 +19,8 @@ export const MasarSection = () => {
                     </div>
 
                     <div className="flex flex-col lg:flex-row items-stretch">
-                        {/* Image Side - Hidden on Mobile */}
-                        <div className="hidden lg:block lg:w-1/3 relative shrink-0 overflow-hidden bg-[#f8f9fa]">
+                        {/* Image Side - Now Visible on Mobile */}
+                        <div className="w-full lg:w-1/3 relative shrink-0 overflow-hidden bg-[#f8f9fa] h-48 sm:h-64 lg:h-auto">
                             <div className="absolute inset-0 z-10 flex items-center justify-center">
                                 <img
                                     src="/dareen_logo_new.jpg"
@@ -55,6 +57,16 @@ export const MasarSection = () => {
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                                 </Link>
+
+                                <a
+                                    href={`https://wa.me/2${adminPhone}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-none font-bold backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 hover:border-white/50"
+                                >
+                                    <MessageCircle className="w-5 h-5" />
+                                    <span>تواصل مع الادارة</span>
+                                </a>
 
                             </div>
                         </div>

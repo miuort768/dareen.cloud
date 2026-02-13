@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Dareen Cloud</string>
+    <string name="title_activity_main">Dareen Cloud</string>
+    <string name="package_name">com.dareen.cloud</string>
+    <string name="custom_url_scheme">com.dareen.cloud</string>
+</resources>
