@@ -1,4 +1,4 @@
-import { Moon, Sun, User, Phone } from 'lucide-react';
+import { Moon, Sun, User } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { useApp, useSettings } from '../../context/AppContext';
@@ -71,18 +71,7 @@ export const Header = () => {
                         {user.role === 'teacher' ? 'مرحباً بكِ شريكة النجاح' : 'مرحباً بك شريك النجاح'}
                     </span>
                 </div>
-                {location.pathname === '/chat' && (
-                    <a
-                        href={`https://wa.me/2${adminPhone}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 h-8 lg:h-10 px-3 lg:px-4 rounded-xl hover:bg-green-50 text-green-600 transition-colors dark:hover:bg-green-900/20 dark:text-green-500 shrink-0 border border-green-200 dark:border-green-900/30"
-                        title="تواصل مع الدعم الفني"
-                    >
-                        <Phone size={18} />
-                        <span className="text-xs lg:text-sm font-bold">طلب الدعم</span>
-                    </a>
-                )}
+
                 {title && (
                     <div className="animate-in fade-in slide-in-from-right-4 duration-300 overflow-hidden">
                         <h1 className="text-sm lg:text-xl font-black text-gray-900 dark:text-gray-100 truncate">{title}</h1>
