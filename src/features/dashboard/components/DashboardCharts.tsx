@@ -29,8 +29,12 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                 <span className="text-[10px] font-black text-gray-500 uppercase">الإيرادات</span>
                             </div>
                             <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 bg-indigo-400"></div>
+                                <span className="text-[10px] font-black text-gray-500 uppercase">المجدولة</span>
+                            </div>
+                            <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-emerald-500"></div>
-                                <span className="text-[10px] font-black text-gray-500 uppercase">الحصص</span>
+                                <span className="text-[10px] font-black text-gray-500 uppercase">المنجزة</span>
                             </div>
                         </div>
                     </div>
@@ -49,6 +53,10 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <linearGradient id="areaGradientRose" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="5%" stopColor="#F43F5E" stopOpacity={0.15} />
                                         <stop offset="95%" stopColor="#F43F5E" stopOpacity={0} />
+                                    </linearGradient>
+                                    <linearGradient id="areaGradientIndigo" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#818CF8" stopOpacity={0.1} />
+                                        <stop offset="95%" stopColor="#818CF8" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" opacity={0.3} />
@@ -99,8 +107,18 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                 />
                                 <Area
                                     type="monotone"
+                                    dataKey="sessions"
+                                    name="الحصص المجدولة"
+                                    stroke="#818CF8"
+                                    strokeWidth={2}
+                                    fillOpacity={1}
+                                    fill="url(#areaGradientIndigo)"
+                                    strokeDasharray="3 3"
+                                />
+                                <Area
+                                    type="monotone"
                                     dataKey="completed"
-                                    name="الحصص"
+                                    name="الحصص المنجزة"
                                     stroke="#10B981"
                                     strokeWidth={3}
                                     fillOpacity={1}
