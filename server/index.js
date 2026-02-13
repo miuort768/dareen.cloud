@@ -130,6 +130,8 @@ async function startServer() {
                     ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 'notifications_enabled', 'auto_backup']);
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);
+                // Emergency Force Disable Maintenance Mode
+                settingsMap['maintenance_mode'] = 'false';
                 res.json(settingsMap);
             } catch (err) {
                 res.status(500).json({ error: err.message });
