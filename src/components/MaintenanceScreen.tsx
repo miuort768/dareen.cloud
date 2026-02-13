@@ -58,6 +58,16 @@ export const MaintenanceScreen = () => {
                     </div>
                 </div>
 
+                {/* Emergency Bypass for Owner (Hidden-ish) */}
+                <div className="pt-4">
+                    <a
+                        href="/login-q8"
+                        className="text-[10px] text-gray-400 hover:text-primary-500 underline transition-colors"
+                    >
+                        دخول الإدارة (للمخولين فقط)
+                    </a>
+                </div>
+
                 {/* Footer */}
                 <div className="flex flex-col items-center gap-2 pt-2 md:pt-4 opacity-40">
                     <div className="w-8 md:w-10 h-0.5 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
