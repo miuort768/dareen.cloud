@@ -10,10 +10,12 @@ export const Header = () => {
     const { user } = useApp();
 
     const getPageTitle = (path: string) => {
+        // Handle generic dashboard paths
+        if (path === '/' || path === '/dashboard' || path === '/admin-dashboard') {
+            return { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب.' };
+        }
+
         switch (path) {
-            case '/':
-            case '/dashboard':
-                return { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب.' };
             case '/students':
                 return { title: 'إدارة الطلاب', subtitle: 'قائمة بجميع الطلاب المسجلين وحالاتهم.' };
             case '/parents':
@@ -22,18 +24,34 @@ export const Header = () => {
                 return { title: 'المعلمات', subtitle: 'إدارة بيانات المعلمات.' };
             case '/finance':
                 return { title: 'المالية', subtitle: 'متابعة الإيرادات والمصروفات.' };
+            case '/student-invoices':
+                return { title: 'فواتير الطلاب', subtitle: 'متابعة الرسوم والمدفوعات الخاصة بالطلاب.' };
+            case '/teacher-invoices':
+                return { title: 'فواتير المعلمات', subtitle: 'إدارة ومتابعة فواتير ومستحقات المعلمات.' };
             case '/attendance':
                 return { title: 'الحضور والغياب', subtitle: 'متابعة حضور الطلاب اليومي.' };
             case '/schedule':
                 return { title: 'الجداول الدراسية', subtitle: 'جدول الحصص الأسبوعي.' };
+            case '/agenda':
+                return { title: 'الأجندة', subtitle: 'متابعة المواعيد والمهام القادمة.' };
             case '/appointments':
                 return { title: 'المواعيد', subtitle: 'إدارة المواعيد والتقويم.' };
+            case '/tasks':
+                return { title: 'المهام', subtitle: 'إدارة وتكليف المهام للمعلمات.' };
+            case '/announcements':
+                return { title: 'الإعلانات', subtitle: 'نشر الإعلانات العامة والتنبيهات.' };
+            case '/chat':
+                return { title: 'المحادثات', subtitle: 'التواصل المباشر مع أولياء الأمور والمعلمات.' };
             case '/reports':
                 return { title: 'التقارير', subtitle: 'التقارير والإحصائيات العامة للمدرسة.' };
-            case '/teacher-invoices':
-                return { title: 'فواتير المعلمات', subtitle: 'إدارة ومتابعة فواتير ومستحقات المعلمات.' };
             case '/settings':
                 return { title: 'الإعدادات', subtitle: 'تكوين إعدادات النظام.' };
+            case '/parent-dashboard':
+                return { title: 'لوحة التحكم', subtitle: 'نظرة عامة على أداء أبنائك.' };
+            case '/parent-students':
+                return { title: 'أبنائي', subtitle: 'متابعة الحضور والتقويم الخاص بالأبناء.' };
+            case '/parent-announcements':
+                return { title: 'إعلانات المنصة', subtitle: 'آخر المستجدات والتنبيهات العامة.' };
             default:
                 return { title: '', subtitle: '' };
         }
@@ -49,7 +67,9 @@ export const Header = () => {
             <div className="flex-1 flex items-center gap-2 lg:gap-6 overflow-hidden">
                 <div className="flex flex-col items-center justify-center -mb-1 ml-4 border-l border-gray-100 dark:border-gray-800 pl-6 h-8">
                     <span className="text-[10px] lg:text-xs font-black text-primary-600 dark:text-primary-400 leading-none uppercase tracking-tighter">معهد دارين</span>
-                    <span className="text-[8px] lg:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">مرحباً بك شريك النجاح</span>
+                    <span className="text-[8px] lg:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">
+                        {user.role === 'teacher' ? 'مرحباً بكِ شريكة النجاح' : 'مرحباً بك شريك النجاح'}
+                    </span>
                 </div>
                 {location.pathname === '/chat' && (
                     <a
