@@ -20,7 +20,9 @@ export const About = () => {
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-100 rounded-full shadow-sm mb-8 animate-fade-in group hover:border-gold transition-all duration-500">
+                    <div className="inline-flex i
+                    
+                    tems-center gap-2 px-4 py-2 bg-white border border-gray-100 rounded-full shadow-sm mb-8 animate-fade-in group hover:border-gold transition-all duration-500">
                         <Sparkles size={16} className="text-gold group-hover:rotate-12 transition-transform" />
                         <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900">معهد دارين | ريادة تعليمية</span>
                     </div>
@@ -199,34 +201,78 @@ export const About = () => {
                 </div>
             </section>
 
-            {/* Final Call to Action */}
-            <section className="py-5 md:py-8 bg-white relative">
-                <div className="container mx-auto px-4">
-                    <div className="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-none p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl group">
-                        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                        <div className="relative z-10">
-                            <h2 className="text-xl md:text-5xl font-black mb-8 font-heading text-white leading-tight">
-                                هل أنت مستعد لتكون جزءاً من <span className="text-gold">حكايتنا؟</span>
-                            </h2>
-                            <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-medium">
-                                انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز مع معهد دارين. مستقبلك المشرق يبدأ من هنا.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                <Link
-                                    to="/courses"
-                                    onClick={() => window.scrollTo(0, 0)}
-                                    className="w-full sm:w-auto px-12 py-5 bg-gold hover:bg-gold-hover text-white font-black text-lg rounded-full shadow-[0_10px_20px_rgba(212,175,55,0.3)] transition-all transform hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-2"
-                                >
-                                    تصفح الدورات
-                                    <Sparkles size={20} className="animate-pulse" />
-                                </Link>
-                                <Link
-                                    to="/login"
-                                    onClick={() => window.scrollTo(0, 0)}
-                                    className="w-full sm:w-auto px-12 py-5 bg-white/10 hover:bg-white text-white hover:text-blue-900 font-black text-lg rounded-full backdrop-blur-md border-2 border-white/20 hover:border-white transition-all transform hover:-translate-y-1"
-                                >
-                                    سجل دخولك الآن
-                                </Link>
+            {/* Final Call to Action - Redesigned with Creative Touches */}
+            <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+                {/* Abstract Background Shapes */}
+                <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="max-w-6xl mx-auto">
+                        <div className="bg-[#0f172a] rounded-[3rem] p-8 md:p-24 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(15,23,42,0.3)]">
+                            {/* Inner Decorative Elements */}
+                            <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.15),transparent_50%)]"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.1),transparent_50%)]"></div>
+                            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+
+                            <div className="relative z-20 flex flex-col lg:flex-row items-center gap-16">
+                                {/* Text Content Side */}
+                                <div className="w-full lg:w-2/3 text-center lg:text-right">
+                                    <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/5 border border-white/10 rounded-full mb-8 backdrop-blur-md">
+                                        <div className="w-2 h-2 rounded-full bg-gold animate-pulse"></div>
+                                        <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-white/80">انضم إلى عائلتنا</span>
+                                    </div>
+
+                                    <h2 className="text-3xl md:text-6xl font-black mb-8 font-heading text-white leading-[1.3] md:leading-tight">
+                                        هل أنت مستعد لتكون جزءاً من <br />
+                                        <span className="relative inline-block pb-2">
+                                            حكايتنا الإبداعية؟
+                                            <div className="absolute bottom-0 right-0 w-full h-2 bg-gradient-to-l from-gold to-transparent rounded-full opacity-50"></div>
+                                        </span>
+                                    </h2>
+
+                                    <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-12 font-medium leading-relaxed">
+                                        انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز مع معهد دارين. مستقبلك المشرق يبدأ بقرار اليوم.
+                                    </p>
+
+                                    <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+                                        <Link
+                                            to="/courses"
+                                            onClick={() => window.scrollTo(0, 0)}
+                                            className="px-12 py-5 bg-gold hover:bg-[#c4a02d] text-white font-black text-lg rounded-none shadow-[0_15px_30px_rgba(212,175,55,0.3)] transition-all duration-500 hover:-translate-y-1 hover:scale-105 flex items-center justify-center gap-3 group"
+                                        >
+                                            <BookOpen size={20} className="group-hover:rotate-12 transition-transform" />
+                                            <span>ابدأ رحلتك الآن</span>
+                                            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                                        </Link>
+
+                                        <Link
+                                            to="/login"
+                                            onClick={() => window.scrollTo(0, 0)}
+                                            className="px-12 py-5 bg-transparent hover:bg-white/5 text-white font-black text-lg rounded-none border-2 border-white/10 hover:border-white/30 transition-all duration-500 flex items-center justify-center gap-3 group"
+                                        >
+                                            <span>تسجيل الدخول</span>
+                                            <Zap size={20} className="text-blue-500 group-hover:scale-125 transition-transform" />
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                {/* Graphic Side - Hidden on Small screens, visible on large */}
+                                <div className="hidden lg:block lg:w-1/3 relative">
+                                    <div className="relative w-64 h-64 mx-auto">
+                                        {/* Floating Elements */}
+                                        <div className="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 rounded-full blur-2xl animate-pulse"></div>
+                                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+
+                                        <div className="relative bg-gradient-to-br from-white/10 to-transparent p-12 rounded-[2rem] border border-white/10 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center text-center rotate-3 hover:rotate-0 transition-transform duration-700 group">
+                                            <div className="w-20 h-20 bg-gold rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                                                <Target size={40} />
+                                            </div>
+                                            <span className="text-3xl font-black text-white mb-2 tracking-tighter">100%</span>
+                                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest leading-tight">نسبة نجاح<br />طلابنا</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
