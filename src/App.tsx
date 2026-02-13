@@ -83,8 +83,9 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
+  const isLoginPage = location.pathname === '/login';
 
-  if (maintenanceMode && !isAdmin) {
+  if (maintenanceMode && !isAdmin && !isLoginPage) {
     return <MaintenanceScreen />;
   }
 
