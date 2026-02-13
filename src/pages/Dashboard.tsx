@@ -7,6 +7,7 @@ import { ImportantNotifications } from '../features/dashboard/components/Importa
 import { DashboardCharts } from '../features/dashboard/components/DashboardCharts';
 import { PerformanceSummary } from '../features/dashboard/components/PerformanceSummary';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
+import { SessionAnalysis } from '../features/dashboard/components/SessionAnalysis';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
 
@@ -80,13 +81,14 @@ export const Dashboard = () => {
             {isTeacher ? (
                 <>
                     {/* Row 1: Achievements, Tasks, Session Analysis */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[400px]">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:h-[400px]">
                         <TeacherAchievements
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
                             isTeacher={true}
                         />
                         <TasksAndRequests tasks={tasks} />
+                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                     </div>
 
                     {/* Row 2: Renewal Alerts (Table), Session Activity (Charts) */}
@@ -107,6 +109,7 @@ export const Dashboard = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <PerformanceSummary stats={stats} isTeacher={false} />
                     <TasksAndRequests tasks={tasks} />
+                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                     <div className="lg:col-span-2">
                         <ImportantNotifications
                             tasks={tasks}
