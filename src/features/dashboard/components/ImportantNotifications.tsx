@@ -78,7 +78,9 @@ export const ImportantNotifications = ({
             icon: Phone,
             color: 'rose'
         })) : []),
-        ...(Array.isArray(tasks) ? tasks.filter(t => t.priority === 'high').map(t => ({
+        ...(Array.isArray(tasks) ? tasks.filter(t =>
+            ['high', 'عالية', 'urgent', 'عاجل'].includes(t.priority?.toLowerCase())
+        ).map(t => ({
             id: `task - ${t.id} `,
             type: 'task',
             title: `مهمة عاجلة: ${t.title} `,

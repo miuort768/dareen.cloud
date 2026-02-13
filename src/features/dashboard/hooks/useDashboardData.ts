@@ -96,7 +96,9 @@ export const useDashboardData = (currentUser: User | null) => {
         };
 
         // 3. Sessions & Performance
-        const completedSessions = filteredSessions.filter(s => s.status === 'completed');
+        const completedSessions = filteredSessions.filter(s =>
+            ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
+        );
         const monthComplete = completedSessions.filter(s => isSameMonth(s.date));
 
         // Today's Scheduled via Schedule logic
@@ -120,7 +122,9 @@ export const useDashboardData = (currentUser: User | null) => {
         const getRevenue = (list: Session[]) => list.reduce((sum, s) => sum + getSessionRev(s), 0);
         const getManualInc = (list: Transaction[]) => list.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const getLaborCost = (list: Session[]) => list.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-        const getPaidInv = (list: TeacherInvoice[]) => list.filter(inv => inv.status === 'مدفوعة' || inv.status === 'paid').reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        const getPaidInv = (list: TeacherInvoice[]) => list.filter(inv =>
+            ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
+        ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
         const getManualExp = (list: Transaction[]) => list.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const fixedTotal = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
 
@@ -154,7 +158,9 @@ export const useDashboardData = (currentUser: User | null) => {
             };
 
             const mSess = filteredSessions.filter(s => isTargetMonth(s.date));
-            const mComp = mSess.filter(s => s.status === 'completed');
+            const mComp = mSess.filter(s =>
+                ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
+            );
 
             const rev = getRevenue(mComp) + getManualInc(transactions.filter(t => isTargetMonth(t.date)));
             const expSess = getLaborCost(mComp);
@@ -184,7 +190,7 @@ export const useDashboardData = (currentUser: User | null) => {
                     ss.studentId === s.id &&
                     ss.teacherName === en.teacher &&
                     ss.subject === en.subject &&
-                    ss.status === 'completed'
+                    ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase())
                 ).length;
 
                 const remaining = total - actualUsed;
@@ -215,10 +221,16 @@ export const useDashboardData = (currentUser: User | null) => {
             monthNetProfit: monthNetProfitValue,
             todaySessions: todayScheduledCount,
             completedSessions: completedSessions.length,
-            cancelledSessions: filteredSessions.filter(s => s.status === 'cancelled').length,
+            cancelledSessions: filteredSessions.filter(s =>
+                ['cancelled', 'ملغاة', 'تم الإلغاء'].includes(s.status?.toLowerCase())
+            ).length,
             attendanceRate: filteredSessions.length > 0 ? Math.round((completedSessions.length / filteredSessions.length) * 100) : 0,
-            pendingInvoices: studentInvoices.filter(inv => inv.status === 'pending' || inv.status === 'overdue').length,
-            paidInvoices: studentInvoices.filter(inv => inv.status === 'paid').length,
+            pendingInvoices: studentInvoices.filter(inv =>
+                ['pending', 'overdue', 'معلقة', 'غير مدفوعة', 'متأخرة'].includes(inv.status?.toLowerCase())
+            ).length,
+            paidInvoices: studentInvoices.filter(inv =>
+                ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
+            ).length,
             lowBalanceCount: lowBalance.length,
             expectedCollection: lowBalance.length * 1000,
             totalSessions: filteredSessions.length,
@@ -231,7 +243,9 @@ export const useDashboardData = (currentUser: User | null) => {
             todaySessions: filteredSessions.filter(s => s.date === today),
             monthlyData: chartData,
             lowBalanceStudents: lowBalance,
-            tasks: (tasksQuery.data as DashboardTask[] || []).filter(t => t.status === 'pending')
+            tasks: (tasksQuery.data as DashboardTask[] || []).filter(t =>
+                ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
+            )
         };
     }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data]);
 
