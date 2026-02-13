@@ -1,7 +1,7 @@
 import { Moon, Sun, User } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
-import { useApp, useSettings } from '../../context/AppContext';
+import { useApp } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 
 export const Header = () => {
@@ -58,7 +58,6 @@ export const Header = () => {
     };
 
     const { title, subtitle } = getPageTitle(location.pathname);
-    const { adminPhone } = useSettings();
 
     return (
         <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-gray-900/80 dark:border-gray-800 transition-colors duration-300">
