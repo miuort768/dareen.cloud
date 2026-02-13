@@ -223,7 +223,7 @@ export const About = () => {
                                         <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-white/80">انضم إلى عائلتنا</span>
                                     </div>
 
-                                    <h2 className="text-3xl md:text-6xl font-black mb-8 font-heading text-white leading-[1.3] md:leading-tight">
+                                    <h2 className="text-2xl md:text-4xl font-black mb-8 font-heading text-white leading-normal md:leading-tight">
                                         هل أنت مستعد لتكون جزءاً من <br />
                                         <span className="relative inline-block pb-2">
                                             حكايتنا الإبداعية؟
