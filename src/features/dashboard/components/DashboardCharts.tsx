@@ -28,24 +28,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-6 bg-gray-50/50 dark:bg-gray-800/50 p-3 px-4 backdrop-blur-sm border border-gray-100 dark:border-gray-800">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-primary-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">الإيرادات</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">المجدولة</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">المنجزة</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-tighter">المصروفات</span>
-                                </div>
-                            </div>
+
                         </div>
 
                         <div className="h-[400px] w-full" dir="ltr">
@@ -174,16 +157,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-6 bg-gray-50/50 dark:bg-gray-800/50 p-3 px-4 backdrop-blur-sm border border-gray-100 dark:border-gray-800 self-start md:self-auto">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase">منجزة</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-primary-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-                                    <span className="text-[10px] font-black text-gray-500 uppercase">مجدولة</span>
-                                </div>
-                            </div>
+
                         </div>
 
                         <div className="flex-1 min-h-[350px] w-full" dir="ltr">
