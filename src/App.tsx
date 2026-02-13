@@ -69,6 +69,7 @@ const DashboardRedirect = () => {
 
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
+  const location = useLocation();
 
   if (isLoading || isSettingsLoading) {
     return (
@@ -83,7 +84,7 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
-  const isLoginPage = location.pathname === '/login' || location.pathname === '/login-q8';
+  const isLoginPage = location.pathname.startsWith('/login');
 
   if (maintenanceMode && !isAdmin && !isLoginPage) {
     return <MaintenanceScreen />;
