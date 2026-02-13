@@ -80,24 +80,34 @@ export const Dashboard = () => {
 
             {isTeacher ? (
                 <>
-                    {/* Row 1: Achievements, Tasks, Session Analysis */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:h-[400px]">
-                        <TeacherAchievements
-                            stats={stats}
-                            lowBalanceStudents={lowBalanceStudents}
-                            isTeacher={true}
-                        />
-                        <TasksAndRequests tasks={tasks} />
-                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    {/* Row 1: Metrics (Achievements, Tasks, session Analysis) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:h-[400px]">
+                            <TeacherAchievements
+                                stats={stats}
+                                lowBalanceStudents={lowBalanceStudents}
+                                isTeacher={true}
+                            />
+                        </div>
+                        <div className="lg:h-[400px]">
+                            <TasksAndRequests tasks={tasks} />
+                        </div>
+                        <div className="lg:h-[400px]">
+                            <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                        </div>
                     </div>
 
-                    {/* Row 2: Renewal Alerts (Table), Session Activity (Charts) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[500px]">
-                        <RenewalAlertsList
-                            stats={stats}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
-                        <DashboardCharts isTeacher={true} monthlyData={monthlyData} />
+                    {/* Row 2: Charts (Span 2) and Renewal Alerts (Span 1) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2">
+                            <DashboardCharts isTeacher={true} monthlyData={monthlyData} />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <RenewalAlertsList
+                                stats={stats}
+                                lowBalanceStudents={lowBalanceStudents}
+                            />
+                        </div>
                     </div>
 
                     {/* Row 3: Performance Summary (Full Width) */}
@@ -107,16 +117,35 @@ export const Dashboard = () => {
                 </>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <PerformanceSummary stats={stats} isTeacher={false} />
-                    <TasksAndRequests tasks={tasks} />
-                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    {/* Row 1: Key Metrics */}
+                    <div className="lg:h-[400px]">
+                        <PerformanceSummary stats={stats} isTeacher={false} />
+                    </div>
+                    <div className="lg:h-[400px]">
+                        <TasksAndRequests tasks={tasks} />
+                    </div>
+                    <div className="lg:h-[400px]">
+                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    </div>
+
+                    {/* Row 2: Analysis (Full Width) */}
+                    <div className="lg:col-span-3">
+                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                    </div>
+
+                    {/* Row 3: Alerts and Notifications */}
                     <div className="lg:col-span-2">
                         <ImportantNotifications
                             tasks={tasks}
                             lowBalanceStudents={lowBalanceStudents}
                         />
                     </div>
-                    <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                    <div className="lg:col-span-1">
+                        <RenewalAlertsList
+                            stats={stats}
+                            lowBalanceStudents={lowBalanceStudents}
+                        />
+                    </div>
                 </div>
             )}
         </div>
