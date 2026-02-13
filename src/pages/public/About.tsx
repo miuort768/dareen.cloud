@@ -209,7 +209,7 @@ export const About = () => {
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
-                        <div className="bg-[#0f172a] rounded-[3rem] p-8 md:p-24 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(15,23,42,0.3)]">
+                        <div className="bg-[#0f172a] rounded-none p-8 md:p-24 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(15,23,42,0.3)] border-r-[8px] border-gold">
                             {/* Inner Decorative Elements */}
                             <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.15),transparent_50%)]"></div>
                             <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.1),transparent_50%)]"></div>
@@ -218,7 +218,7 @@ export const About = () => {
                             <div className="relative z-20 flex flex-col lg:flex-row items-center gap-16">
                                 {/* Text Content Side */}
                                 <div className="w-full lg:w-2/3 text-center lg:text-right">
-                                    <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/5 border border-white/10 rounded-full mb-8 backdrop-blur-md">
+                                    <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/5 border border-white/10 rounded-none mb-8 backdrop-blur-md">
                                         <div className="w-2 h-2 rounded-full bg-gold animate-pulse"></div>
                                         <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-white/80">انضم إلى عائلتنا</span>
                                     </div>
@@ -264,8 +264,8 @@ export const About = () => {
                                         <div className="absolute -top-10 -right-10 w-24 h-24 bg-gold/20 rounded-full blur-2xl animate-pulse"></div>
                                         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
 
-                                        <div className="relative bg-gradient-to-br from-white/10 to-transparent p-12 rounded-[2rem] border border-white/10 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center text-center rotate-3 hover:rotate-0 transition-transform duration-700 group">
-                                            <div className="w-20 h-20 bg-gold rounded-2xl flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                                        <div className="relative bg-gradient-to-br from-white/10 to-transparent p-12 rounded-none border border-white/10 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center text-center rotate-3 hover:rotate-0 transition-transform duration-700 group">
+                                            <div className="w-20 h-20 bg-gold rounded-none flex items-center justify-center text-white mb-6 shadow-xl group-hover:scale-110 transition-transform">
                                                 <Target size={40} />
                                             </div>
                                             <span className="text-3xl font-black text-white mb-2 tracking-tighter">100%</span>
