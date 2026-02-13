@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart } from 'lucide-react';
+import { Zap, Shield, BookOpen, Target, Compass, Sparkles, Lightbulb, Award, Users, Heart, ArrowLeft } from 'lucide-react';
 import { SEO } from '../../components/SEO';
 
 export const About = () => {
