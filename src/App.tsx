@@ -69,7 +69,7 @@ const DashboardRedirect = () => {
 
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
-  const location = useLocation();
+  // const location = useLocation();
 
   if (isLoading || isSettingsLoading) {
     return (
