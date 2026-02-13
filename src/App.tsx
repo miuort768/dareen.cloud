@@ -86,9 +86,12 @@ function App() {
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
   const isLoginPage = location.pathname.startsWith('/login');
 
+  // Maintenance Gate: Temporarily disabled per user request to recover access
+  /*
   if (maintenanceMode && !isAdmin && !isLoginPage) {
     return <MaintenanceScreen />;
   }
+  */
 
   return (
     <>
