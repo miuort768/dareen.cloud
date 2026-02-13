@@ -19,8 +19,8 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                         <CalendarCheck size={18} />
                     </div>
                     <div>
-                        <h3 className="font-black text-gray-900 dark:text-white text-[11px] uppercase tracking-tight">تحليل حصص الشهر</h3>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">مقارنة الإنجاز بالفترات</p>
+                        <h3 className="font-black text-gray-900 dark:text-white text-[11px] uppercase tracking-tight">تحليل نشاط الحصص</h3>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">إحصائيات الإنجاز الكلية</p>
                     </div>
                 </div>
             </div>
@@ -28,11 +28,11 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="text-right">
                         <p className="text-[10px] font-black text-gray-400 uppercase mb-1">إجمالي الحصص</p>
-                        <p className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">{stats.monthTotalSessions}</p>
+                        <p className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">{stats.totalSessions}</p>
                     </div>
                     <div className="text-right border-r border-gray-100 dark:border-gray-800 pr-4">
-                        <p className="text-[10px] font-black text-emerald-600/60 uppercase mb-1">تم إنجازها</p>
-                        <p className="text-2xl font-black text-emerald-600 tracking-tighter">{stats.monthCompletedSessions}</p>
+                        <p className="text-[10px] font-black text-emerald-600/60 uppercase mb-1">إجمالي المنجز</p>
+                        <p className="text-2xl font-black text-emerald-600 tracking-tighter">{stats.completedSessions}</p>
                     </div>
                 </div>
                 <div className="h-40 w-full" dir="ltr">
