@@ -134,6 +134,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         updateSchedule,
         stats,
         ...teacherData,
-        uniqueTeachers
+        uniqueTeachers,
+        refresh: fetchAll
     };
 };

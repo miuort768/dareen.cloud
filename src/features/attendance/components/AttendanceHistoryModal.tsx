@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle } from 'lucide-react';
+import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, Save, XSquare } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { Skeleton } from '../../../shared/components/Skeleton';
 import { cn } from '../../../lib/utils';
@@ -14,26 +14,30 @@ interface AttendanceHistoryModalProps {
     studentGrade?: string;
     studentSubject?: string;
     studentCurriculum?: string;
+    onSessionChange?: () => void;
 }
 
-export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum }: AttendanceHistoryModalProps) => {
+export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum, onSessionChange }: AttendanceHistoryModalProps) => {
     const [history, setHistory] = useState<Session[]>([]);
     const [loading, setLoading] = useState(true);
+    const [editingSession, setEditingSession] = useState<Session | null>(null);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
     useEffect(() => {
         if (isOpen) {
             fetchHistory();
+            setEditingSession(null);
+            setDeletingId(null);
         }
     }, [isOpen, studentId, teacherName]);
 
     const fetchHistory = async () => {
         setLoading(true);
         try {
-            // Use server-side filtering for efficiency and accuracy
             const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
             const sessions = Array.isArray(data) ? data : [];
 
-            // Double check filter and sort
+            // Filter and sort
             const studentHistory = sessions.filter(s =>
                 s.studentId === studentId &&
                 s.teacherName === teacherName &&
@@ -46,6 +50,45 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
             console.error("Error fetching attendance history:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+
+        setDeletingId(id);
+        try {
+            await api.delete(`/sessions/${id}`);
+            setHistory(prev => prev.filter(s => s.id !== id));
+            onSessionChange?.();
+        } catch (error) {
+            console.error("Error deleting session:", error);
+            alert('حدث خطأ أثناء الحذف');
+        } finally {
+            setDeletingId(null);
+        }
+    };
+
+    const handleUpdate = async () => {
+        if (!editingSession) return;
+
+        try {
+            await api.patch(`/sessions/${editingSession.id}`, {
+                date: editingSession.date,
+                status: editingSession.status,
+                day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' })
+            });
+
+            const updatedSession = {
+                ...editingSession,
+                day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' })
+            };
+            setHistory(prev => prev.map(s => s.id === editingSession.id ? updatedSession : s));
+            setEditingSession(null);
+            onSessionChange?.();
+        } catch (error) {
+            console.error("Error updating session:", error);
+            alert('حدث خطأ أثناء التحديث');
         }
     };
 
@@ -102,38 +145,94 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                 <div
                                     key={session.id}
                                     className={cn(
-                                        "p-4 border-r-4 flex items-center justify-between transition-all hover:translate-x-1",
+                                        "p-4 border-r-4 flex items-center justify-between transition-all hover:translate-x-1 group",
                                         session.status === 'completed'
                                             ? "bg-emerald-50 border-emerald-500 dark:bg-emerald-900/10"
                                             : "bg-rose-50 border-rose-500 dark:bg-rose-900/10"
                                     )}
                                 >
-                                    <div className="flex items-center gap-4">
-                                        <div className={cn(
-                                            "w-10 h-10 flex items-center justify-center",
-                                            session.status === 'completed' ? "text-emerald-600" : "text-rose-600"
-                                        )}>
-                                            {session.status === 'completed' ? <CheckCircle2 size={24} /> : <XCircle size={24} />}
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <Calendar size={14} className="text-gray-400" />
-                                                <p className="text-sm font-black text-gray-900 dark:text-white">{session.date}</p>
-                                                <p className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold text-gray-500">{session.day}</p>
+                                    {editingSession?.id === session.id ? (
+                                        <div className="flex-1 flex items-center gap-4">
+                                            <input
+                                                type="date"
+                                                value={editingSession.date}
+                                                onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
+                                                className="px-2 py-1 text-sm border rounded bg-white dark:bg-gray-800"
+                                            />
+                                            <select
+                                                value={editingSession.status}
+                                                onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
+                                                className="px-2 py-1 text-sm border rounded bg-white dark:bg-gray-800"
+                                            >
+                                                <option value="completed">حضور</option>
+                                                <option value="cancelled">غياب</option>
+                                            </select>
+                                            <div className="flex gap-2 mr-auto">
+                                                <button
+                                                    onClick={handleUpdate}
+                                                    className="p-1.5 bg-green-100 text-green-700 rounded hover:bg-green-200"
+                                                    title="حفظ"
+                                                >
+                                                    <Save size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => setEditingSession(null)}
+                                                    className="p-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                                                    title="إلغاء"
+                                                >
+                                                    <XSquare size={16} />
+                                                </button>
                                             </div>
-                                            <p className="text-xs font-bold text-gray-500 mt-0.5">{session.subject} - {session.time}</p>
                                         </div>
-                                    </div>
-                                    <div className="text-left">
-                                        <span className={cn(
-                                            "text-[10px] font-black uppercase px-2 py-1",
-                                            session.status === 'completed'
-                                                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400"
-                                                : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-400"
-                                        )}>
-                                            {session.status === 'completed' ? 'حضور' : 'غياب'}
-                                        </span>
-                                    </div>
+                                    ) : (
+                                        <>
+                                            <div className="flex items-center gap-4">
+                                                <div className={cn(
+                                                    "w-10 h-10 flex items-center justify-center",
+                                                    session.status === 'completed' ? "text-emerald-600" : "text-rose-600"
+                                                )}>
+                                                    {session.status === 'completed' ? <CheckCircle2 size={24} /> : <XCircle size={24} />}
+                                                </div>
+                                                <div>
+                                                    <div className="flex items-center gap-2">
+                                                        <Calendar size={14} className="text-gray-400" />
+                                                        <p className="text-sm font-black text-gray-900 dark:text-white">{session.date}</p>
+                                                        <p className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold text-gray-500">{session.day}</p>
+                                                    </div>
+                                                    <p className="text-xs font-bold text-gray-500 mt-0.5">{session.subject} - {session.time}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-3">
+                                                <span className={cn(
+                                                    "text-[10px] font-black uppercase px-2 py-1",
+                                                    session.status === 'completed'
+                                                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400"
+                                                        : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-400"
+                                                )}>
+                                                    {session.status === 'completed' ? 'حضور' : 'غياب'}
+                                                </span>
+
+                                                <div className="flex gap-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <button
+                                                        onClick={() => setEditingSession(session)}
+                                                        className="p-1.5 hover:bg-blue-100 text-blue-600 rounded transition-colors"
+                                                        title="تعديل"
+                                                    >
+                                                        <Edit2 size={16} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(session.id)}
+                                                        className="p-1.5 hover:bg-red-100 text-red-600 rounded transition-colors"
+                                                        title="حذف"
+                                                        disabled={deletingId === session.id}
+                                                    >
+                                                        {deletingId === session.id ? <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div> : <Trash2 size={16} />}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>
