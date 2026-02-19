@@ -7,8 +7,8 @@ const { authMiddleware, checkRole } = require('../middleware/auth');
 // Using req.db from middleware
 
 
-// 1. Get all teachers
-router.get('/', async (req, res) => {
+// 1. Get all teachers (Admin only)
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const teachers = await req.db.all('SELECT id, name, phone1, phone2, subject, price, email, username FROM teachers ORDER BY name ASC');
         res.json(teachers);
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 // 2. Add teacher
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id, name, phone1, phone2, subject, price, email, username, password } = req.body;
     const newId = id || `t_${Math.random().toString(36).substr(2, 7)}`;
 
@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
 
 
 // 3. Update teacher
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     const { name, phone1, phone2, subject, price, email, username, password } = req.body;
     try {
@@ -90,7 +90,7 @@ router.put('/:id', async (req, res) => {
 
 
 // 4. Delete teacher
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         await req.db.run('DELETE FROM teachers WHERE id = ?', [id]);
@@ -100,6 +100,7 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 // 5. Delete all teachers (admin only)
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {

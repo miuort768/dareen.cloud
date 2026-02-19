@@ -7,11 +7,24 @@ const validate = require('../middleware/validation');
 const { createStudentSchema, updateStudentSchema } = require('../utils/validators');
 
 // 1. Get all students
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     try {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
         const q = req.query.q ? req.query.q.trim().toLowerCase() : '';
+        const isTeacher = req.user && req.user.role === 'teacher';
+
+        const mapStudent = (s) => {
+            if (isTeacher) {
+                const { sessionPrice, ...restStudent } = s;
+                const enrollments = (s.enrollments || []).map(en => {
+                    const { price, ...restEnrollment } = en;
+                    return restEnrollment;
+                });
+                return { ...restStudent, sessionPrice: 0, enrollments };
+            }
+            return s;
+        };
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
@@ -36,16 +49,15 @@ router.get('/', async (req, res) => {
                 : [];
 
             res.json({
-                data: studentsWithEnrollments,
+                data: studentsWithEnrollments.map(mapStudent),
                 total: countResult.total,
                 page,
                 limit,
                 totalPages: Math.ceil(countResult.total / limit)
             });
         } else {
-            // Unpaginated - still using the optimized helper
             const studentsWithEnrollments = await getStudentsWithEnrollments(req.db);
-            res.json(studentsWithEnrollments);
+            res.json(studentsWithEnrollments.map(mapStudent));
         }
 
     } catch (err) {

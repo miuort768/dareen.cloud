@@ -34,6 +34,15 @@ router.get('/', async (req, res) => {
         }
 
         const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
+        const isTeacher = req.user && req.user.role === 'teacher';
+
+        const mapSession = (s) => {
+            if (isTeacher) {
+                const { price, ...rest } = s;
+                return { ...rest, price: s.teacherPrice };
+            }
+            return s;
+        };
 
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
@@ -45,7 +54,7 @@ router.get('/', async (req, res) => {
             const count = await req.db.get(countSql, params);
 
             res.json({
-                data: sessions,
+                data: sessions.map(mapSession),
                 total: count.total,
                 page,
                 limit,
@@ -53,7 +62,7 @@ router.get('/', async (req, res) => {
             });
         } else {
             const sessions = await req.db.all(`SELECT * FROM sessions${whereSql} ORDER BY date DESC, time DESC`, params);
-            res.json(sessions);
+            res.json(sessions.map(mapSession));
         }
     } catch (err) {
         logger.error('Error fetching sessions', err);
@@ -62,8 +71,9 @@ router.get('/', async (req, res) => {
 });
 
 // 2. Add session
-router.post('/', validate(createSessionSchema), async (req, res) => {
+router.post('/', authMiddleware, validate(createSessionSchema), async (req, res) => {
     const body = req.body;
+    const isTeacher = req.user && req.user.role === 'teacher';
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
@@ -94,7 +104,13 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
             if (body.status === 'completed') {
                 await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: finalTeacherId, delta: 1 });
             }
-            return tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+            const session = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
+
+            if (isTeacher) {
+                const { price, ...rest } = session;
+                return { ...rest, price: session.teacherPrice };
+            }
+            return session;
         });
 
         res.status(201).json(newItem);
@@ -105,9 +121,10 @@ router.post('/', validate(createSessionSchema), async (req, res) => {
 });
 
 // 3. Update session
-router.patch('/:id', validate(updateSessionSchema), async (req, res) => {
+router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
+    const isTeacher = req.user && req.user.role === 'teacher';
     const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject'];
     const keys = Object.keys(updates).filter(k => allowedFields.includes(k));
 
@@ -133,6 +150,10 @@ router.patch('/:id', validate(updateSessionSchema), async (req, res) => {
                 await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
             }
 
+            if (isTeacher) {
+                const { price, ...rest } = newSession;
+                return { ...rest, price: newSession.teacherPrice };
+            }
             return newSession;
         });
 
