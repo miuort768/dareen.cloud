@@ -21,7 +21,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [academyName, setAcademyNameState] = useState('دارين لتعليم و التدريب');
-    const [adminPhone, setAdminPhoneState] = useState('201152001250');
+    const [adminPhone, setAdminPhoneState] = useState('201015098836');
     const [themeColor, setThemeColorState] = useState(() => localStorage.getItem('app_theme_color') || 'indigo');
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
     const [autoBackup, setAutoBackupState] = useState(false);
