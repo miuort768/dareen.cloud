@@ -41,6 +41,7 @@ export const PublicFooter = () => {
                                 { name: 'الرئيسية', path: '/' },
                                 { name: 'من نحن', path: '/about' },
                                 { name: 'الدورات', path: '/courses' },
+                                { name: 'اتصل بنا', path: '/contact' },
                             ].map((link, idx) => (
                                 <li key={idx}>
                                     <Link

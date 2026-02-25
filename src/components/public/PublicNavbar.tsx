@@ -15,6 +15,7 @@ export const PublicNavbar = () => {
         { name: 'الرئيسية', path: '/' },
         { name: 'الدورات', path: '/courses' },
         { name: 'من نحن', path: '/about' },
+        { name: 'اتصل بنا', path: '/contact' },
     ];
 
     const isActive = (path: string) => location.pathname === path;

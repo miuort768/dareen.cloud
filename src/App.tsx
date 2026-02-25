@@ -24,6 +24,7 @@ import { Announcements } from './pages/Announcements';
 import { Agenda } from './pages/Agenda';
 import { Appointments } from './pages/Appointments';
 import { About } from './pages/public/About';
+import { Contact } from './pages/public/Contact';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { TermsOfService } from './pages/public/TermsOfService';
@@ -113,6 +114,7 @@ function App() {
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login-q8" element={<Login />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
