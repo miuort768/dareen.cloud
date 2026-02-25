@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Globe, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Clock, Globe, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
 
 export const Contact = () => {
-    const { adminPhone, academyName } = useSettings();
+    const { adminPhone } = useSettings();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
 
