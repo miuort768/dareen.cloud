@@ -40,6 +40,7 @@ const CATEGORIES = [
 
 export const Courses = () => {
     const { adminPhone } = useSettings();
+    const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [activeCategory, setActiveCategory] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -180,7 +181,7 @@ export const Courses = () => {
                                         </div>
 
                                         <a
-                                            href={`https://wa.me/${adminPhone}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
+                                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center justify-center gap-2 group/btn bg-gray-900 text-white w-full py-3 rounded-none hover:bg-gold transition-all duration-300"

@@ -9,6 +9,7 @@ import { MasarSection } from '../../components/public/MasarSection';
 
 export const Home = () => {
     const { adminPhone } = useSettings();
+    const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Automatic redirect removed to allow landing page visibility
@@ -109,7 +110,7 @@ export const Home = () => {
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
+                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
@@ -289,7 +290,7 @@ export const Home = () => {
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
                                 <a
-                                    href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
+                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
