@@ -164,22 +164,27 @@ export const Courses = () => {
                                         {course.desc}
                                     </p>
 
-                                    <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-6 h-6 rounded-none bg-gray-50 flex items-center justify-center">
-                                                <Users size={12} className="text-gray-400" />
+                                    <div className="mt-auto pt-6 border-t border-gray-50 space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-6 h-6 rounded-none bg-gray-50 flex items-center justify-center">
+                                                    <Users size={12} className="text-gray-400" />
+                                                </div>
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">3.1k+ طالب</span>
                                             </div>
-                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{course.students} طالب</span>
+                                            <div className="text-[11px] font-black text-gold-hover border-b border-gold/30 pb-0.5">
+                                                8 حصص - 1200 ج
+                                            </div>
                                         </div>
 
                                         <a
                                             href={`https://wa.me/${adminPhone}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 group/btn bg-gray-900 text-white px-4 py-2 rounded-none hover:bg-gold transition-all duration-300"
+                                            className="flex items-center justify-center gap-2 group/btn bg-gray-900 text-white w-full py-3 rounded-none hover:bg-gold transition-all duration-300"
                                         >
-                                            <span className="text-[10px] font-black uppercase tracking-widest">اشترك الآن</span>
-                                            <ArrowLeft size={14} className="group-hover/btn:-translate-x-1 transition-transform" />
+                                            <span className="text-[11px] font-black uppercase tracking-widest">اشترك الآن</span>
+                                            <ArrowLeft size={16} className="group-hover/btn:-translate-x-1 transition-transform" />
                                         </a>
                                     </div>
                                 </div>
