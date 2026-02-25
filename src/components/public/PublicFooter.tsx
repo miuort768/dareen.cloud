@@ -66,17 +66,28 @@ export const PublicFooter = () => {
                                 <MapPin className="w-5 h-5 text-gold shrink-0" />
                                 <span>بني سويف - مصر</span>
                             </li>
-                            <li className="flex items-center gap-3 text-sm text-gray-400">
-                                <Phone className="w-5 h-5 text-gold shrink-0" />
-                                <a
-                                    href={`https://wa.me/2${adminPhone}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:text-gold transition-colors"
-                                    dir="ltr"
-                                >
-                                    +{adminPhone}
-                                </a>
+                            <li className="flex items-start gap-3 text-sm text-gray-400">
+                                <Phone className="w-5 h-5 text-gold shrink-0 mt-1" />
+                                <div className="flex flex-col gap-2">
+                                    <a
+                                        href={`https://wa.me/2${adminPhone}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-gold transition-colors"
+                                        dir="ltr"
+                                    >
+                                        +{adminPhone}
+                                    </a>
+                                    <a
+                                        href="https://wa.me/201015098836"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-gold transition-colors"
+                                        dir="ltr"
+                                    >
+                                        +201015098836
+                                    </a>
+                                </div>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
                                 <Instagram className="w-5 h-5 text-gold shrink-0" />
