@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Phone, Mail, MapPin, Send, Clock, Globe, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Globe, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
@@ -30,15 +30,15 @@ export const Contact = () => {
         {
             icon: Mail,
             title: 'البريد الإلكتروني',
-            content: 'info@dareen.cloud',
-            link: 'mailto:info@dareen.cloud',
+            content: 'miuort768@gmail.com',
+            link: 'mailto:miuort768@gmail.com',
             color: 'bg-blue-50 text-blue-600',
             label: 'راسلنا عبر البريد'
         },
         {
             icon: MapPin,
             title: 'المقر الرئيسي',
-            content: 'الكويت - مدينة الكويت',
+            content: 'بني سويف - مصر',
             link: '#',
             color: 'bg-gold/10 text-gold-hover',
             label: 'تفضل بزيارتنا'
@@ -183,24 +183,7 @@ export const Contact = () => {
                                 ))}
                             </div>
 
-                            {/* Working Hours */}
-                            <div className="bg-white p-8 border border-gray-100 rounded-none">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <Clock className="text-gold" />
-                                    <h3 className="text-xl font-black text-gray-800">ساعات العمل</h3>
-                                </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between pb-4 border-b border-gray-50">
-                                        <span className="font-bold text-gray-600">الفترة الصباحية:</span>
-                                        <span className="font-black text-gray-900">09:00 ص - 01:00 م</span>
-                                    </div>
-                                    <div className="flex items-center justify-between pb-2">
-                                        <span className="font-bold text-gray-600">الفترة المسائية:</span>
-                                        <span className="font-black text-gray-900">04:00 م - 10:00 م</span>
-                                    </div>
-                                    <p className="text-[10px] text-gray-400 font-bold tracking-tight text-center mt-4 uppercase">جميع أيام الأسبوع عدا يوم الجمعة</p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

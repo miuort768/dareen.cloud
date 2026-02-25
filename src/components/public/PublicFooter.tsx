@@ -64,7 +64,7 @@ export const PublicFooter = () => {
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-sm text-gray-400">
                                 <MapPin className="w-5 h-5 text-gold shrink-0" />
-                                <span>بيت كل طالب علم</span>
+                                <span>بني سويف - مصر</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
                                 <Phone className="w-5 h-5 text-gold shrink-0" />
