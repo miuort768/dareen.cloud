@@ -178,7 +178,7 @@ export const Courses = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-2 group/btn bg-gray-900 text-white px-4 py-2 rounded-none hover:bg-gold transition-all duration-300"
                                         >
-                                            <span className="text-[10px] font-black uppercase tracking-widest">عرض التفاصيل</span>
+                                            <span className="text-[10px] font-black uppercase tracking-widest">اشترك الآن</span>
                                             <ArrowLeft size={14} className="group-hover/btn:-translate-x-1 transition-transform" />
                                         </a>
                                     </div>
