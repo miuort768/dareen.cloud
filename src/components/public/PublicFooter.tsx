@@ -135,7 +135,7 @@ export const PublicFooter = () => {
 
                     <div className="flex items-center gap-6 justify-center md:justify-end">
                         <Link to="/privacy-policy" className="text-gray-500 hover:text-gold text-sm transition-colors">سياسة الخصوصية</Link>
-                        <Link to="/terms-of-service" className="text-gray-500 hover:text-gold text-sm transition-colors">الشروط والأحكام</Link>
+                        <Link to="/refund-policy" className="text-gray-500 hover:text-gold text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
                     </div>
                 </div>
             </div>

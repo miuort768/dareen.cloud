@@ -27,7 +27,7 @@ import { About } from './pages/public/About';
 import { Contact } from './pages/public/Contact';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
-import { TermsOfService } from './pages/public/TermsOfService';
+import { RefundPolicy } from './pages/public/RefundPolicy';
 // import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 // Protected Route Component
@@ -118,7 +118,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login-q8" element={<Login />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/terms-of-service" element={<RefundPolicy />} />
 
         {/* Protected App Routes */}
         {/* Protected App Routes */}
