@@ -173,7 +173,9 @@ export const Courses = () => {
                                                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">3.1k+ طالب</span>
                                             </div>
                                             <div className="text-[11px] font-black text-gold-hover border-b border-gold/30 pb-0.5">
-                                                8 حصص - 1200 ج
+                                                {course.category === 'quran' ? '8 حصص - 400 ج' :
+                                                    course.category === 'foundation' ? '8 حصص - 800 ج' :
+                                                        '8 حصص - 1200 ج'}
                                             </div>
                                         </div>
 
