@@ -155,7 +155,7 @@ export const Contact = () => {
                                 <div className="relative z-10">
                                     <div className="h-1 w-24 bg-gold mb-6"></div>
                                     <h3 className="text-2xl font-black mb-4 font-heading leading-tight">سعداء بخدمتكم في كل مكان</h3>
-                                    <p className="text-gray-400 font-medium leading-relaxed">بفضل نظامنا التعليمي المطور، نصلكم أينما كنتم في الكويت ودول الخليج. جودة التعليم لا تعرف حدوداً مع دارين.</p>
+                                    <p className="text-gray-400 font-medium leading-relaxed">بفضل نظامنا التعليمي المطور، نصلكم أينما كنتم في مصر ودول الخليج. جودة التعليم لا تعرف حدوداً مع دارين.</p>
                                 </div>
                             </div>
 
