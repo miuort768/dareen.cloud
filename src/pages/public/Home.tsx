@@ -106,7 +106,7 @@ export const Home = () => {
             <div className="hero-blob bg-green-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-16 pb-0 md:pt-20 md:pb-0 h-fit overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[#FDFCF8]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
                      style={{ 
                          backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
@@ -122,7 +122,7 @@ export const Home = () => {
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full mb-1 mx-auto">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
                                 <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
