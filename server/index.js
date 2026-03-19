@@ -291,8 +291,8 @@ async function startServer() {
             socket.on('teacher_ready', (data) => {
                 // Teacher started sharing, notify all students in room
                 socket.to(data.conversationId).emit('teacher_ready', data);
-                // Also broadcast meeting started event for UI indicators
-                socket.to(data.conversationId).emit('meeting_started', {
+                // Also broadcast meeting started event for UI indicators to EVERYONE (including sender)
+                io.in(data.conversationId).emit('meeting_started', {
                     conversationId: data.conversationId,
                     teacherId: data.teacherId,
                     teacherName: data.teacherName,
@@ -304,8 +304,8 @@ async function startServer() {
             socket.on('teacher_stopped', (data) => {
                 // Teacher stopped sharing
                 socket.to(data.conversationId).emit('teacher_stopped', data);
-                // Also broadcast meeting ended event
-                socket.to(data.conversationId).emit('meeting_ended', {
+                // Also broadcast meeting ended event to EVERYONE
+                io.in(data.conversationId).emit('meeting_ended', {
                     conversationId: data.conversationId
                 });
                 console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);

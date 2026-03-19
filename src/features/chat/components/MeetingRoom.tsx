@@ -146,10 +146,24 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             }
         };
 
+        const handleStudentJoined = (data: { studentId: string }) => {
+            if (isSharing && stream) {
+                console.log('🔄 Teacher: Re-emitting status for new student:', data.studentId);
+                socket.emit('teacher_ready', { 
+                    conversationId, 
+                    teacherId: currentUser.id,
+                    teacherName: currentUser.name,
+                    type: stream.getVideoTracks()[0].label.includes('screen') ? 'screen' : 'video' // Heuristic
+                });
+            }
+        };
+
         socket.on('student_request', handleStudentRequest);
+        socket.on('student_joined', handleStudentJoined);
 
         return () => {
             socket.off('student_request', handleStudentRequest);
+            socket.off('student_joined', handleStudentJoined);
         };
     }, [isTeacher, socket, stream, conversationId]);
 
