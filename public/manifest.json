@@ -9,7 +9,7 @@
     "minimal-ui"
   ],
   "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "theme_color": "#ef4444",
   "orientation": "portrait-primary",
   "categories": [
     "education",
