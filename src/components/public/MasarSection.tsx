@@ -6,66 +6,70 @@ export const MasarSection = () => {
     const { adminPhone } = useSettings();
 
     return (
-        <section className="py-8 bg-white relative overflow-hidden">
+        <section className="py-12 bg-white relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
 
-                {/* The Single Big Rectangle */}
-                <div className="max-w-6xl mx-auto bg-gradient-to-r from-[#1e3a8a] to-[#0f286e] shadow-2xl overflow-hidden border border-[#1e3a8a]/20 relative">
+                {/* The Single Big Rectangle - Redesigned for Watermelon Theme */}
+                <div className="max-w-6xl mx-auto bg-gradient-to-br from-black via-gray-900 to-red-950 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative rounded-none">
 
-                    {/* Background Pattern */}
-                    <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
-                        <div className="absolute right-0 top-0 w-64 h-64 bg-white rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3"></div>
-                        <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#0d9488] rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3"></div>
+                    {/* Background Patterns - Sharper and More Modern */}
+                    <div className="absolute inset-0 opacity-20 pointer-events-none">
+                        <div className="absolute right-0 top-0 w-80 h-80 bg-red-600 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+                        <div className="absolute left-0 bottom-0 w-80 h-80 bg-green-600 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
                     </div>
 
-                    <div className="flex flex-col lg:flex-row items-stretch">
-                        {/* Image Side - Now Visible on Mobile */}
-                        <div className="w-full lg:w-1/3 relative shrink-0 overflow-hidden bg-white/10 backdrop-blur-sm h-56 sm:h-72 lg:h-auto flex items-center justify-center p-6 lg:p-0">
+                    <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
+                        {/* Image Side - Modern and Sharp with a subtle glow */}
+                        <div className="w-full lg:w-[35%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-0 border-b lg:border-b-0 lg:border-l border-white/10 group">
                             <div className="relative w-full h-full flex items-center justify-center">
+                                {/* Decorative Glow behind the image */}
+                                <div className="absolute w-48 h-48 bg-red-600/20 blur-[60px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-full h-full object-contain lg:object-cover rounded-xl lg:rounded-none shadow-lg lg:shadow-none"
+                                    className="w-40 h-40 lg:w-56 lg:h-56 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-red-500/50 transition-all duration-700 group-hover:scale-105"
                                 />
                             </div>
                         </div>
 
                         {/* Text Content Side */}
-                        <div className="w-full lg:w-2/3 p-4 md:p-8 lg:p-10 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
+                        <div className="w-full lg:w-[65%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
 
-                            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
-                                    <Bell className="w-3 h-3 text-[#0d9488] animate-pulse" />
-                                    <span className="text-[10px] md:text-xs font-bold text-gray-100 uppercase tracking-wider">بوابة التميز الرقمي</span>
+                            <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-600/20 border border-red-500/30 rounded-full backdrop-blur-md">
+                                    <Bell className="w-3.5 h-3.5 text-red-500 animate-pulse" />
+                                    <span className="text-xs font-black text-red-50 uppercase tracking-widest">بوابة التميز الرقمي</span>
                                 </div>
                             </div>
 
-                            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black mb-4 font-heading leading-tight">
-                                <span className="text-[#d4af37]">منصة</span> <span className="text-[#0d9488] bg-white px-2 py-0.5 md:px-4 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(0,0,0,0.2)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-[#d4af37]">للتعليم والتدريب</span>
+                            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
+                                <span className="text-white">منصة</span> <span className="text-white bg-green-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(22,163,74,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للتعليم والتدريب</span>
                             </h2>
 
-                            <p className="text-gray-200 text-sm md:text-base lg:text-lg leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
-                                وجهتك المتكاملة للتعلم الذكي. نوفر لك بيئة تعليمية تفاعلية تجمع بين جودة المحتوى وأحدث تقنيات التعليم الرقمي لضمان تفوقك.
+                            <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
+                                وجهتك المتكاملة للتعلم الذكي. نوفر لك بيئة تعليمية تفاعلية تجمع بين جودة المحتوى وأحدث تقنيات التعليم الرقمي لضمان تفوقك الدائم.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Link
                                     to="/courses"
-                                    className="px-8 py-3.5 bg-[#0d9488] hover:bg-[#0f766e] text-white rounded-none font-bold shadow-xl hover:shadow-[#0d9488]/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3 group"
+                                    className="px-10 py-4 bg-red-600 hover:bg-red-700 text-white rounded-none font-black text-lg shadow-2xl shadow-red-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group"
                                 >
-                                    <BookOpen className="w-5 h-5 transition-transform group-hover:scale-110" />
+                                    <BookOpen className="w-6 h-6 transition-transform group-hover:scale-110" />
                                     <span>تصفح الدورات</span>
-                                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                 </Link>
 
                                 <a
                                     href={`https://wa.me/2${adminPhone}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-8 py-3.5 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-none font-bold backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-2 hover:border-white/50"
+                                    className="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-none font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40"
                                 >
-                                    <MessageCircle className="w-5 h-5" />
-                                    <span>تواصل مع الادارة</span>
+                                    <MessageCircle className="w-6 h-6" />
+                                    <span>تواصل معنا</span>
                                 </a>
 
                             </div>

@@ -27,19 +27,19 @@ module.exports = {
           950: 'rgb(var(--color-primary) / 0.4)',
         },
         gold: {
-          DEFAULT: '#D4AF37',
-          light: '#FDFCF8',
-          hover: '#B45309',
+          DEFAULT: '#16a34a',
+          light: '#f0fdf4',
+          hover: '#15803d',
         },
         premium: {
-          blue: '#1E40AF',
-          indigo: '#312E81',
-          gold: '#D4AF37',
+          blue: '#e11d48',
+          indigo: '#9f1239',
+          gold: '#16a34a',
         }
       },
       boxShadow: {
-        'gold': '0 10px 30px -10px rgba(212, 175, 55, 0.3)',
-        'gold-hover': '0 20px 40px -10px rgba(212, 175, 55, 0.4)',
+        'gold': '0 10px 30px -10px rgba(22, 163, 74, 0.3)',
+        'gold-hover': '0 20px 40px -10px rgba(22, 163, 74, 0.4)',
         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.05)',
       }
     },

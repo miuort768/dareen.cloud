@@ -7,10 +7,15 @@ export const PublicFooter = () => {
 
     return (
         <footer className="relative bg-gray-900 text-white overflow-hidden pt-8 pb-6 md:pt-16 md:pb-10">
-            {/* Decorative Overlays */}
-            <div className="absolute inset-0 pointer-events-none opacity-10">
-                <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-gold rounded-full blur-[100px]"></div>
-                <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-gold-hover rounded-full blur-[100px]"></div>
+            {/* Decorative Overlays - Watermelon Theme Shapes */}
+            <div className="absolute inset-0 pointer-events-none opacity-20">
+                <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-red-600 rounded-full blur-[120px]"></div>
+                <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-green-600 rounded-full blur-[120px]"></div>
+                
+                {/* Geometric Floating Elements */}
+                <div className="absolute top-10 left-10 w-20 h-20 border border-white/5 rotate-45 animate-pulse"></div>
+                <div className="absolute bottom-20 right-10 w-32 h-32 border border-white/5 -rotate-12"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -18,14 +23,14 @@ export const PublicFooter = () => {
                     {/* Brand */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-gradient-to-br from-gold to-gold-hover flex items-center justify-center text-white shadow-lg">
-                                <span className="text-2xl font-bold">د</span>
+                            <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white shadow-lg rounded-none">
+                                <span className="text-2xl font-black">د</span>
                             </div>
                             <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 font-heading">
                                 معهد دارين
                             </span>
                         </div>
-                        <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-gold/30 pr-4">
+                        <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-red-600/30 pr-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعلم.
                         </p>
                     </div>
@@ -33,12 +38,11 @@ export const PublicFooter = () => {
                     {/* Links */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-gold"></span>
+                            <span className="w-8 h-0.5 bg-red-600"></span>
                             روابط سريعة
                         </h3>
                         <ul className="space-y-3">
                             {[
-                                { name: 'الرئيسية', path: '/' },
                                 { name: 'من نحن', path: '/about' },
                                 { name: 'الدورات', path: '/courses' },
                                 { name: 'اتصل بنا', path: '/contact' },
@@ -46,9 +50,9 @@ export const PublicFooter = () => {
                                 <li key={idx}>
                                     <Link
                                         to={link.path}
-                                        className="text-gray-400 hover:text-gold hover:translate-x-[-5px] transition-all flex items-center gap-2 text-sm"
+                                        className="text-gray-400 hover:text-red-500 hover:translate-x-[-5px] transition-all flex items-center gap-2 text-sm"
                                     >
-                                        <span className="text-gold">›</span> {link.name}
+                                        <span className="text-red-600">›</span> {link.name}
                                     </Link>
                                 </li>
                             ))}
@@ -58,33 +62,33 @@ export const PublicFooter = () => {
                     {/* Contact */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-gold"></span>
+                            <span className="w-8 h-0.5 bg-red-600"></span>
                             تواصل معنا
                         </h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-sm text-gray-400">
-                                <MapPin className="w-5 h-5 text-gold shrink-0" />
+                                <MapPin className="w-5 h-5 text-red-600 shrink-0" />
                                 <span>بني سويف - مصر</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
-                                <Phone className="w-5 h-5 text-gold shrink-0" />
+                                <Phone className="w-5 h-5 text-red-600 shrink-0" />
                                 <a
                                     href={`https://wa.me/${adminPhone.replace(/\D/g, '')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-gold transition-colors"
+                                    className="hover:text-red-500 transition-colors"
                                     dir="ltr"
                                 >
                                     +{adminPhone.replace(/\D/g, '')}
                                 </a>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
-                                <Instagram className="w-5 h-5 text-gold shrink-0" />
+                                <Instagram className="w-5 h-5 text-red-600 shrink-0" />
                                 <a
                                     href="https://www.instagram.com/daren_school/?hl=ar"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-gold transition-colors"
+                                    className="hover:text-red-500 transition-colors"
                                 >
                                     @daren_school
                                 </a>
@@ -128,14 +132,16 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <p className="text-gray-500 text-xs font-medium tracking-wide">
-                            تصميم وتطوير <span className="text-gold">مستر احمد عبدالله</span>
-                        </p>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-gray-800 to-gray-900 border border-white/10 shadow-lg shadow-black/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span className="text-[10px] font-bold text-gray-400 tracking-wide">تصميم وتطوير</span>
+                            <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-green-400">مستر احمد عبدالله</span>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-6 justify-center md:justify-end">
-                        <Link to="/privacy-policy" className="text-gray-500 hover:text-gold text-sm transition-colors">سياسة الخصوصية</Link>
-                        <Link to="/refund-policy" className="text-gray-500 hover:text-gold text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
+                        <Link to="/privacy-policy" className="text-gray-500 hover:text-red-500 text-sm transition-colors">سياسة الخصوصية</Link>
+                        <Link to="/refund-policy" className="text-gray-500 hover:text-red-500 text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
                     </div>
                 </div>
             </div>

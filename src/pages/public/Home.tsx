@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, GraduationCap, BookOpen, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
@@ -11,8 +11,38 @@ export const Home = () => {
     const { adminPhone } = useSettings();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [typewriterText, setTypewriterText] = useState("");
 
-    // Automatic redirect removed to allow landing page visibility
+    useEffect(() => {
+        const fullText = "منصة معهد دارين";
+        let i = 0;
+        let isDeleting = false;
+        let typingSpeed = 150;
+
+        const type = () => {
+            const currentText = isDeleting 
+                ? fullText.substring(0, i - 1) 
+                : fullText.substring(0, i + 1);
+            
+            setTypewriterText(currentText);
+
+            if (!isDeleting && i === fullText.length) {
+                isDeleting = true;
+                typingSpeed = 2000;
+            } else if (isDeleting && i === 0) {
+                isDeleting = false;
+                typingSpeed = 500;
+            } else {
+                isDeleting ? i-- : i++;
+                typingSpeed = isDeleting ? 75 : 150;
+            }
+
+            setTimeout(type, typingSpeed);
+        };
+
+        const timer = setTimeout(type, typingSpeed);
+        return () => clearTimeout(timer);
+    }, []);
 
     const reviews = [
         {
@@ -63,8 +93,6 @@ export const Home = () => {
     const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % reviews.length);
     const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
-
-
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative overflow-x-hidden">
             <SEO
@@ -74,37 +102,44 @@ export const Home = () => {
             <PublicNavbar />
 
             {/* Blob Backgrounds */}
-            <div className="hero-blob bg-blue-600/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
-            <div className="hero-blob bg-gold/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <div className="hero-blob bg-red-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <div className="hero-blob bg-green-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-28 md:pb-2 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-16 pb-0 md:pt-20 md:pb-0 h-fit overflow-hidden bg-[#FDFCF8]">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
+                     style={{ 
+                         backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                         filter: 'blur(70px)'
+                     }}>
+                </div>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+                     style={{ 
+                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                         backgroundSize: '200px 200px'
+                     }}>
+                </div>
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
-
-                        {/* Text Content */}
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full mb-1 mx-auto">
-                                <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
-                                <span className="text-yellow-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full mb-1 mx-auto">
+                                <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
+                                <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
-
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-gray-900 leading-[1.2] mb-1">
-                                <span className="block mb-0">معهد دارين</span>
-                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-black leading-none mb-0">
+                                <span className="block mb-0 min-h-[1.1em]">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-black ml-1 h-[0.9em] align-middle"></span></span>
+                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 block -mt-1 py-1">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-
                             <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
-                                منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم في جميع المراحل الدراسية.
+                                منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.
                             </p>
-
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-gray-900 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-black text-white font-bold text-base sm:text-lg shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
@@ -113,17 +148,15 @@ export const Home = () => {
                                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-gray-900 border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-black border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                 >
-                                    <div className="w-8 h-8 rounded-full bg-yellow-50 flex items-center justify-center group-hover:scale-110 transition">
-                                        <Play className="w-4 h-4 text-gold fill-gold" />
+                                    <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center group-hover:scale-110 transition">
+                                        <Play className="w-4 h-4 text-green-600 fill-green-600" />
                                     </div>
                                     <span>كيف نعمل؟</span>
                                 </a>
                             </div>
-
-                            {/* Trust Badges */}
-                            <div className="mt-6 pt-6 border-t border-gray-100 flex items-center justify-center gap-6">
+                            <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center gap-6">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map((i) => (
                                         <img
@@ -139,19 +172,17 @@ export const Home = () => {
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="font-bold text-gray-900 flex items-center gap-1">
+                                    <div className="font-bold text-black flex items-center gap-1">
                                         4.9/5
-                                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                                        <Star className="w-4 h-4 text-green-500 fill-green-500" />
                                     </div>
                                     <p className="text-xs text-gray-500 font-medium">تقييم الطلاب وأولياء الأمور</p>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Image Side */}
                         <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
                             <div className="relative w-full max-w-[500px] aspect-[4/5]">
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-gold/20 rounded-[3rem] blur-2xl animate-pulse"></div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-green-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
                                     src="/hero-child.png"
                                     alt="Hero"
@@ -169,39 +200,38 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="py-6 bg-white relative overflow-hidden">
+            <section className="pt-16 pb-2 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-6 max-w-5xl mx-auto">
-                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-gray-900 mb-2 uppercase leading-[1.4] py-2">
-                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold py-1 inline-block">تختارنا؟</span>
+                    <div className="text-center mb-2 max-w-5xl mx-auto">
+                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-black mb-0 uppercase leading-[1.4] py-0">
+                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 py-1 inline-block">تختارنا؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-transparent mx-auto rounded-full mb-4"></div>
+                        <div className="h-1.5 w-24 bg-gradient-to-r from-red-500 to-transparent mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed font-medium">
                             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
-                        {/* Feature 1 */}
-                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-blue-600 to-indigo-800 rounded-none shadow-2xl overflow-hidden group flex items-center gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-2 pb-14 md:pb-20">
+                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-red-500 to-red-900 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                             <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
                                 <Lightbulb className="w-6 h-6 text-white" />
                             </div>
                             <div className="relative z-10">
                                 <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
-                                <p className="text-xs text-blue-50 leading-relaxed">
+                                <p className="text-xs text-red-50 leading-relaxed">
                                     طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
                                 </p>
                             </div>
                         </div>
 
-                        {/* Feature 2 */}
-                        <div className="p-6 bg-gradient-to-br from-gold to-gold-hover rounded-none shadow-xl text-white group flex items-center gap-4">
-                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:rotate-12 transition-transform">
+                        <div className="p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-none shadow-xl text-white relative overflow-hidden flex items-center gap-4">
+                            <div className="absolute top-0 left-0 w-16 h-16 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 animate-bounce-slow">
                                 <Heart className="w-6 h-6 text-white fill-white" />
                             </div>
-                            <div>
+                            <div className="relative z-10">
                                 <h3 className="text-base font-bold mb-1">بيئة آمنة ومحفزة</h3>
                                 <p className="text-xs text-white/90 leading-relaxed">
                                     بيئة تعليمية افتراضية آمنة تشجع الطالب على التفاعل والمشاركة بحرية.
@@ -209,28 +239,32 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        {/* Feature 3 */}
-                        <div className="p-6 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-xl transition-all group flex items-center gap-4">
-                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-none flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                <CheckCircle className="w-6 h-6" />
+                        <div className="relative p-7 bg-white border border-gray-100 rounded-none shadow-sm flex items-center gap-5 group/card overflow-hidden">
+                            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 bg-red-50 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="absolute bottom-2 left-10 opacity-[0.08] rotate-12 transition-transform group-hover/card:-translate-y-2">
+                                <GraduationCap size={44} className="text-black" />
                             </div>
-                            <div className="text-right">
-                                <h3 className="text-base font-bold text-gray-900 mb-1">نتائج مضمونة</h3>
-                                <p className="text-xs text-gray-500 leading-relaxed">
-                                    متابعة دقيقة وتقارير دورية لضمان تحقيق أفضل النتائج التعليمية.
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] transition-transform group-hover/card:scale-110">
+                                <BookOpen size={64} className="text-black" />
+                            </div>
+                            <div className="relative z-10 w-14 h-14 bg-red-50 text-red-500 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
+                                <CheckCircle className="w-7 h-7" />
+                            </div>
+                            <div className="relative z-10 text-right">
+                                <h3 className="text-base font-black text-black mb-1">نتائج مضمونة</h3>
+                                <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                                    متابعة دقيقة لضمان تحقيق أفضل النتائج التعليمية.
                                 </p>
                             </div>
                         </div>
 
-                        {/* Feature 4 */}
-                        <div className="md:col-span-2 p-6 md:p-8 bg-gray-900 rounded-none shadow-2xl text-white relative overflow-hidden group">
-                            {/* Decorative Glow */}
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-
+                        <div className="md:col-span-2 p-6 md:p-8 bg-black rounded-none shadow-2xl text-white relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">
                                 <div className="flex-1 text-center lg:text-right">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full mb-2 border border-white/10 mx-auto lg:mx-0">
-                                        <Award size={16} className="text-gold" />
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/50 border border-white/10 rounded-full mb-2 mx-auto lg:mx-0">
+                                        <Award size={16} className="text-green-600" />
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>
                                     <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
@@ -238,15 +272,14 @@ export const Home = () => {
                                         نخبة من المعلمين المبدعين لضمان تفوق طفلك أكاديمياً وتربوياً بأحدث الوسائل التعليمية.
                                     </p>
                                 </div>
-
                                 <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
-                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-blue-500/30">
-                                        <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-red-400/30">
+                                        <Users className="w-8 h-8 text-red-400 mx-auto mb-3" />
                                         <div className="text-3xl font-black text-white">+70</div>
                                         <div className="text-xs text-gray-400 font-bold">معلم خبير</div>
                                     </div>
-                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-gold/30">
-                                        <Star className="w-8 h-8 text-gold mx-auto mb-3" />
+                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-green-600/30">
+                                        <Star className="w-8 h-8 text-green-600 mx-auto mb-3" />
                                         <div className="text-3xl font-black text-white">+10</div>
                                         <div className="text-xs text-gray-400 font-bold">سنوات خبرة</div>
                                     </div>
@@ -255,45 +288,46 @@ export const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section >
-
+            </section>
 
             {/* Quran Memorization Section */}
-            < section className="pt-6 pb-6 relative overflow-hidden bg-[#FDFCF8]" >
-                {/* Subtle Islamic Pattern Background */}
-                < div className="absolute inset-0 opacity-[0.03]"
-                    style={{ backgroundImage: 'radial-gradient(#10B981 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
-                </div >
-
+            <section className="pt-6 pb-6 relative overflow-hidden bg-[#FDFCF8]">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
+                     style={{ 
+                         backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                         filter: 'blur(70px)'
+                     }}>
+                </div>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+                     style={{ 
+                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                         backgroundSize: '200px 200px'
+                     }}>
+                </div>
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
-
-                        {/* Content Side */}
                         <div className="w-full lg:w-1/2 text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span className="text-emerald-800 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-100 rounded-full mb-6 mx-auto">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                <span className="text-green-800 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
                             </div>
-
-                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-gray-900 leading-tight font-heading">
-                                رحلتك مع <span className="text-emerald-600 relative inline-block">
+                            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
+                                رحلتك مع <span className="text-green-600 relative inline-block">
                                     كتاب الله
-                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-green-200" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
                                     </svg>
                                 </span> تبدأ بخطوة
                             </h2>
-
                             <p className="text-gray-600 text-[10px] sm:text-xs lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
-                                منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">حلقات فردية</span> ومجموعات صغيرة مع نخبة من المقرئين المجازين.
+                                منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                             </p>
-
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
                                 <a
                                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
+                                    className="px-10 py-4 bg-green-600 text-white font-bold text-lg shadow-xl hover:bg-green-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>ابدأ الحفظ الآن</span>
                                     <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
@@ -301,122 +335,109 @@ export const Home = () => {
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center"
+                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-green-200 hover:text-green-700 hover:bg-green-50 transition-all flex items-center justify-center"
                                 >
                                     تصفح المزيد
                                 </Link>
                             </div>
-
-                            {/* Trust Badge (Cleaned) */}
                             <div className="items-center justify-center gap-4 inline-flex">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-green-100 overflow-hidden shadow-sm">
                                             <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Student" />
                                         </div>
                                     ))}
                                     <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm">+5k</div>
                                 </div>
-                                <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
+                                <div className="h-8 w-px bg-green-200/50 mx-2"></div>
                                 <div className="text-right">
-                                    <div className="text-sm font-bold text-gray-900">4.9/5 تقييم ممتاز</div>
+                                    <div className="text-sm font-bold text-black">4.9/5 تقييم ممتاز</div>
                                     <div className="text-xs text-gray-500">من قبل آلاف الطلاب</div>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Visual Side (Modern Grid System) */}
                         <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
                             <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
-                                {/* Feature 1: Flexible Times */}
-                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-blue-50 hover:shadow-md hover:border-blue-100 transition-all flex flex-col items-center text-center group">
-                                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                        <Clock className="w-5 h-5" />
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-red-600 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-all transform group-hover:rotate-12">
+                                        <Clock className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-bold text-gray-900 text-xs mb-1">أوقات مرنة</h3>
+                                    <h3 className="font-black text-black text-xs mb-1">أوقات مرنة</h3>
                                     <p className="text-[10px] text-gray-500 leading-tight">اختر مواعيدك المفضلة</p>
                                 </div>
-
-                                {/* Feature 2: Accurate Follow-up */}
-                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-amber-50 hover:shadow-md hover:border-amber-100 transition-all flex flex-col items-center text-center group">
-                                    <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                                        <ClipboardCheck className="w-5 h-5" />
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-500 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-amber-600 flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-all transform group-hover:-rotate-12">
+                                        <ClipboardCheck className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-bold text-gray-900 text-xs mb-1">متابعة دقيقة</h3>
+                                    <h3 className="font-black text-black text-xs mb-1">متابعة دقيقة</h3>
                                     <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
                                 </div>
-
-                                {/* Feature 3: Certified Teachers */}
-                                <div className="p-4 bg-white rounded-2xl shadow-sm border border-emerald-50 hover:shadow-md hover:border-emerald-100 transition-all flex flex-col items-center text-center group">
-                                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                        <Mic className="w-5 h-5" />
+                                <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-green-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-green-600 flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-all transform group-hover:scale-110">
+                                        <Mic className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-bold text-gray-900 text-xs mb-1">معلمون مجازون</h3>
+                                    <h3 className="font-black text-black text-xs mb-1">معلمون مجازون</h3>
                                     <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
-
-                                {/* Feature 4: Try Free */}
-                                <div className="p-4 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-lg shadow-blue-200 text-white flex flex-col items-center text-center group hover:scale-[1.02] transition-transform cursor-pointer">
-                                    <div className="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center mb-3 backdrop-blur-sm">
-                                        <Zap className="w-5 h-5" />
+                                <div className="relative p-5 bg-gradient-to-br from-red-600 to-red-900 border border-transparent rounded-none shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
+                                    <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform">
+                                        <Zap className="w-6 h-6" />
                                     </div>
-                                    <h3 className="font-bold text-white text-xs mb-1">جرب مجاناً</h3>
+                                    <h3 className="font-black text-white text-xs mb-1">جرب مجاناً</h3>
                                     <p className="text-white/80 text-[10px] leading-tight">حصة تجريبية للمشتركين</p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-            </section >
+            </section>
 
-            {/* Testimonials Section - Refined Light Theme */}
-            < section className="py-6 md:py-8 bg-white relative overflow-hidden" >
+            {/* Testimonials Section */}
+            <section className="py-6 md:py-8 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 md:mb-8">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-100 rounded-full mb-3 mx-auto">
-                            <Quote size={12} className="text-blue-600" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-700">ثقة متبادلة</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-100 rounded-full mb-3 mx-auto">
+                            <Quote size={12} className="text-red-500" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-red-600">ثقة متبادلة</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 font-heading leading-tight">
-                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">أولياء الأمور؟</span>
+                        <h2 className="text-2xl md:text-3xl font-black text-black mb-4 font-heading leading-tight">
+                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1 w-16 bg-gold mx-auto rounded-full"></div>
+                        <div className="h-1 w-16 bg-green-600 mx-auto rounded-full"></div>
                     </div>
-
                     <div className="max-w-7xl mx-auto">
-                        {/* Mobile Slider View (One card at a time) */}
                         <div className="lg:hidden">
                             <div className="relative group">
                                 <div className="p-5 bg-gray-50 border border-gray-100 rounded-none shadow-sm relative overflow-hidden flex flex-col min-h-[250px]">
-                                    <Quote size={30} className="text-blue-600/5 absolute top-4 left-4" />
-
+                                    <Quote size={30} className="text-red-500/5 absolute top-4 left-4" />
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
-                                        <div className="flex gap-1 mb-4 text-gold">
+                                        <div className="flex gap-1 mb-4 text-green-600">
                                             {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                         </div>
-
                                         <div className="flex-grow overflow-y-auto pr-1 mb-4">
                                             <p className="text-gray-600 text-sm leading-relaxed font-medium italic">
                                                 "{reviews[currentIndex].content}"
                                             </p>
                                         </div>
-
                                         <div className="flex items-center justify-between pt-6 border-t border-gray-100 mt-auto">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-gray-200">
-                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" loading="lazy" />
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-black text-gray-900 text-base">{reviews[currentIndex].name}</h4>
-                                                    <p className="text-[10px] text-blue-600 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
+                                                    <h4 className="font-black text-black text-base">{reviews[currentIndex].name}</h4>
+                                                    <p className="text-[10px] text-red-500 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
                                                 </div>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all active:scale-90 border border-gray-100">
                                                     <ChevronRight className="rotate-180" size={18} />
                                                 </button>
-                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all active:scale-90 border border-gray-100">
                                                     <LucideChevronLeft className="rotate-180" size={18} />
                                                 </button>
                                             </div>
@@ -425,61 +446,62 @@ export const Home = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Desktop Wall of Trust (Masonry Grid) */}
                         <div className="hidden lg:grid lg:grid-cols-3 gap-3">
                             {reviews.map((review, index) => (
                                 <div key={index} className="group relative bg-gray-50 p-4 rounded-none border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
-                                    <Quote size={40} className="absolute -top-2 -left-2 text-blue-600/5 group-hover:text-blue-600/10 transition-colors" />
-
-                                    {/* Stars */}
-                                    <div className="flex gap-1 mb-3 text-gold">
+                                    <Quote size={40} className="absolute -top-2 -left-2 text-red-500/5 group-hover:text-red-500/10 transition-colors" />
+                                    <div className="flex gap-1 mb-3 text-green-600">
                                         {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                     </div>
-
-                                    {/* Content */}
                                     <div className="mb-4">
                                         <p className="text-gray-600 text-xs leading-relaxed font-medium italic">
                                             "{review.content}"
                                         </p>
                                     </div>
-
-                                    {/* User Info */}
                                     <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
                                         <div className="w-8 h-8 rounded-none overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
-                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" loading="lazy" />
                                         </div>
                                         <div>
-                                            <h4 className="font-black text-gray-900 text-xs">{review.name}</h4>
-                                            <p className="text-[9px] text-blue-600 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
+                                            <h4 className="font-black text-black text-xs">{review.name}</h4>
+                                            <p className="text-[9px] text-red-500 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
                                         </div>
                                     </div>
-
-                                    {/* Small Tail Accent */}
-                                    <div className="absolute -bottom-1 right-8 w-3 h-3 bg-gray-50 rotate-45 border-r border-b border-gray-100"></div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
 
             <MasarSection />
 
             {/* FAQ Section */}
-            <section className="py-6 md:py-8 bg-[#FDFCF8] relative overflow-hidden">
+            <section className="py-8 md:py-12 bg-[#FDFCF8] relative overflow-hidden" id="faq">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
+                     style={{ 
+                         backgroundImage: 'radial-gradient(circle at 15% 50%, #EF4444 0%, transparent 40%), radial-gradient(circle at 85% 50%, #16A34A 0%, transparent 40%)',
+                         filter: 'blur(80px)'
+                     }}>
+                </div>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
+                     style={{ 
+                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                         backgroundSize: '200px 200px'
+                     }}>
+                </div>
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-100 rounded-full mb-3 mx-auto shadow-sm">
-                            <HelpCircle size={14} className="text-gold" />
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">لديك استفسار؟</span>
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 backdrop-blur-sm border border-gray-100 rounded-full mb-2 mx-auto shadow-sm">
+                            <HelpCircle size={12} className="text-green-600" />
+                            <span className="text-[9px] font-black uppercase tracking-wider text-gray-400">لديك استفسار؟</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-2 font-heading">
-                            الأسئلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gold inline-block py-1">الشائعة</span>
+                        <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading">
+                            الأسئلة <span className="text-red-600">الشائعة</span>
                         </h2>
+                        <div className="h-1 w-16 bg-green-600 mx-auto rounded-full"></div>
                     </div>
-
-                    <div className="max-w-3xl mx-auto space-y-4">
+                    <div className="max-w-2xl mx-auto space-y-3">
                         {[
                             {
                                 q: "كيف يتم الدراسة في المعهد ؟",
@@ -497,30 +519,38 @@ export const Home = () => {
                                 q: "هل توجد حصص تجريبية ؟",
                                 a: "نعم، نقدم حصة تجريبية مجانية لتقييم مستوى الطالب والتعرف على طريقة التدريس قبل الاشتراك الفعلي."
                             }
-                        ].map((item, idx) => (
-                            <div key={idx} className="bg-white border border-gray-100 rounded-2xl overflow-hidden group hover:border-blue-100 transition-colors">
-                                <details className="group">
-                                    <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
-                                        <h3 className="text-sm md:text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                                            {item.q}
-                                        </h3>
-                                        <span className="transform group-open:rotate-180 transition-transform duration-300">
-                                            <ChevronDown size={20} className="text-gray-400 group-open:text-blue-600" />
-                                        </span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-0">
-                                        <p className={`${idx < 2 ? 'text-[10px] md:text-xs' : 'text-xs md:text-sm'} text-gray-600 leading-relaxed border-t border-gray-50 pt-3`}>
-                                            {item.a}
-                                        </p>
+                        ].map((item, idx) => {
+                            const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <GraduationCap size={80} />];
+                            return (
+                                <div key={idx} className="relative bg-white border border-gray-100 rounded-xl overflow-hidden group hover:border-red-100 transition-all duration-500 hover:shadow-md hover:shadow-red-500/5">
+                                    <div className="absolute -bottom-4 -left-4 text-gray-400 opacity-[0.03] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                                        {icons[idx % icons.length]}
                                     </div>
-                                </details>
-                            </div>
-                        ))}
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
+                                    <details className="group relative z-10">
+                                        <summary className="flex items-center justify-between p-4 cursor-pointer list-none">
+                                            <h3 className="text-xs md:text-sm font-black text-black group-hover:text-red-500 transition-colors">
+                                                {item.q}
+                                            </h3>
+                                            <span className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center transform group-open:rotate-180 group-open:bg-red-500 group-open:text-white transition-all duration-300">
+                                                <ChevronDown size={14} className="text-gray-400 group-open:text-white" />
+                                            </span>
+                                        </summary>
+                                        <div className="px-4 pb-4 pt-0">
+                                            <div className="h-px w-full bg-gradient-to-r from-red-500/10 via-gray-100 to-transparent mb-3"></div>
+                                            <p className="text-[10px] md:text-xs text-gray-400 leading-relaxed font-medium">
+                                                {item.a}
+                                            </p>
+                                        </div>
+                                    </details>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
 
             <PublicFooter />
-        </div >
+        </div>
     );
 };

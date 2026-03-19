@@ -43,32 +43,33 @@ export const PublicNavbar = () => {
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 pr-2 group">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-blue-400 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                            <div className="relative w-11 h-11 bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-800 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                        <div className="relative group">
+                            <div className="absolute inset-0 bg-red-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                            <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
                                 <GraduationCap size={22} strokeWidth={2.5} className="relative z-10" />
-                                <Sparkles size={12} className="absolute -top-1 -right-1 text-gold fill-gold animate-pulse" />
                             </div>
+                            <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
                         </div>
-                        <div className="flex flex-col items-start pt-0.5">
-                            <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-900 tracking-tighter">
+                        <div className="flex flex-col items-center pt-0.5 text-center">
+                            <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
                                 معهد دارين
                             </h1>
-                            <span className="text-[8px] md:text-[10px] text-blue-600/80 font-black uppercase tracking-[0.1em] mt-1 bg-blue-50/50 px-1.5 py-0.5 rounded-md">
+                            <span className="text-[10px] md:text-[12px] text-red-500/90 font-bold mt-1.5 bg-red-50/80 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-gray-50/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-gray-100 shadow-sm">
+                    <div className="hidden md:flex items-center gap-2 bg-green-100 backdrop-blur-md px-2 py-1.5 rounded-full border border-green-200 shadow-sm">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30 -translate-y-0.5'
-                                    : 'text-gray-600 hover:bg-white hover:text-blue-600'
+                                    ? 'bg-gradient-to-r from-red-500 to-red-400 text-white shadow-lg shadow-red-400/30 -translate-y-0.5'
+                                    : 'text-gray-600 hover:bg-white hover:text-red-500'
                                     }`}
                             >
                                 {item.name}
@@ -90,7 +91,7 @@ export const PublicNavbar = () => {
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-2 md:px-4 py-2"
                                 >
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-gold to-gold-hover text-white flex items-center justify-center font-bold shadow-md">
+                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-green-600 to-green-600-hover text-white flex items-center justify-center font-bold shadow-md">
                                         {currentUser?.name.charAt(0)}
                                     </div>
                                     <span className="font-bold hidden sm:block">{currentUser?.name}</span>
@@ -104,9 +105,9 @@ export const PublicNavbar = () => {
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-yellow-50 hover:text-gold transition-colors"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-yellow-50 hover:text-green-600 transition-colors"
                                     >
-                                        <Sparkles className="w-5 h-5 text-gold" />
+                                        <Sparkles className="w-5 h-5 text-green-600" />
                                         لوحة التحكم
                                     </Link>
                                     <button
@@ -121,7 +122,7 @@ export const PublicNavbar = () => {
                         ) : (
                             <Link
                                 to="/login"
-                                className="hidden md:flex bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                className="hidden md:flex bg-gradient-to-r from-red-500 to-red-500 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
                             >
                                 تسجيل الدخول
                             </Link>
@@ -130,7 +131,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-red-500 hover:bg-red-50 rounded-full transition-all active:scale-90"
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
@@ -150,11 +151,11 @@ export const PublicNavbar = () => {
                                 to={item.path}
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
-                                    ? 'bg-blue-600 text-white shadow-lg'
+                                    ? 'bg-red-500 text-white shadow-lg'
                                     : 'text-gray-700 hover:bg-gray-50'
                                     }`}
                             >
-                                <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-blue-600'}`}></span>
+                                <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-red-500'}`}></span>
                                 {item.name}
                             </Link>
                         ))}
@@ -167,7 +168,7 @@ export const PublicNavbar = () => {
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-gray-700 hover:bg-gray-50"
                                     >
-                                        <Sparkles className="w-5 h-5 text-gold" />
+                                        <Sparkles className="w-5 h-5 text-green-600" />
                                         لوحة التحكم
                                     </Link>
                                     <button
@@ -182,7 +183,7 @@ export const PublicNavbar = () => {
                                 <Link
                                     to="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
+                                    className="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-500 text-white py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
                                 >
                                     تسجيل الدخول
                                 </Link>
