@@ -65,10 +65,10 @@ export const Contact = () => {
                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-heading font-black text-gray-900 mb-6">
+                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 mb-6">
                             تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span>
                         </h1>
-                        <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
+                        <p className="text-gray-500 text-sm md:text-xl font-medium leading-relaxed px-4">
                             يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.
                             فريقنا جاهز لخدمتكم على مدار الساعة.
                         </p>
