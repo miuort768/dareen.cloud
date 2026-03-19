@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SimplePeer from 'simple-peer';
-import { X, ScreenShare, Volume2, AlertCircle } from 'lucide-react';
+import { X, ScreenShare, Volume2, AlertCircle, Video, Monitor, VideoOff } from 'lucide-react';
 import { socketService } from '../../../lib/socket';
 import type { User } from '../../../types/auth';
 
@@ -26,6 +26,38 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
     const peerRef = useRef<SimplePeer.Instance | null>(null);
     const socket = socketService.getSocket();
 
+    // TEACHER: Start Video Call (Camera)
+    const startVideoCall = async () => {
+        try {
+            setStatus('connecting');
+            const videoStream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+
+            setStream(videoStream);
+            setIsSharing(true);
+
+            if (videoRef.current) {
+                videoRef.current.srcObject = videoStream;
+                videoRef.current.play();
+            }
+
+            setStatus('connected');
+            socket.emit('teacher_ready', { 
+                conversationId, 
+                teacherId: currentUser.id,
+                teacherName: currentUser.name,
+                type: 'video'
+            });
+
+        } catch (err: any) {
+            console.error('Failed to start video call:', err);
+            setStatus('error');
+            setErrorMsg('فشل فتح الكاميرا. تأكد من منح الأذونات.');
+        }
+    };
+
     // TEACHER: Share screen
     const startScreenShare = async () => {
         try {
@@ -49,15 +81,18 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
             };
 
             setStatus('connected');
-            console.log('✅ Teacher: Screen sharing started');
-
             // Notify all students
-            socket.emit('teacher_ready', { conversationId, teacherId: currentUser.id });
+            socket.emit('teacher_ready', { 
+                conversationId, 
+                teacherId: currentUser.id,
+                teacherName: currentUser.name,
+                type: 'screen'
+            });
 
         } catch (err: any) {
             console.error('Failed to start screen share:', err);
             setStatus('error');
-            setErrorMsg('فشل بدء مشاركة الشاشة. تأكد من منح الأذونات.');
+            setErrorMsg('فشل بدء مشاركة الشاشة.');
         }
     };
 
@@ -252,23 +287,37 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                 {isTeacher && (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-6">
                         {!isSharing ? (
-                            <div className="text-center space-y-6">
-                                <div className="w-24 h-24 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto border-4 border-primary-600/40">
-                                    <ScreenShare size={48} className="text-primary-600" />
+                            <div className="text-center space-y-8 animate-in fade-in zoom-in duration-500">
+                                <div className="flex gap-4 justify-center">
+                                    <div className="w-24 h-24 bg-primary-600/20 rounded-full flex items-center justify-center border-4 border-primary-600/40">
+                                        <Video size={48} className="text-primary-600" />
+                                    </div>
+                                    <div className="w-24 h-24 bg-emerald-600/20 rounded-full flex items-center justify-center border-4 border-emerald-600/40">
+                                        <Monitor size={48} className="text-emerald-600" />
+                                    </div>
                                 </div>
                                 <div>
-                                    <h2 className="text-3xl font-black text-white mb-3">ابدأ الحصة الآن</h2>
-                                    <p className="text-gray-400 max-w-md mx-auto leading-relaxed">
-                                        اضغط الزر أدناه لمشاركة شاشتك مع الطلاب
+                                    <h2 className="text-4xl font-black text-white mb-3">مركز البث المباشر</h2>
+                                    <p className="text-gray-400 max-w-md mx-auto leading-relaxed font-bold">
+                                        اختر نوع البث للبدء بالتواصل مع الطلاب فوراً
                                     </p>
                                 </div>
-                                <button
-                                    onClick={startScreenShare}
-                                    className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-black py-4 px-10 rounded-xl shadow-2xl transition-all active:scale-95 flex items-center gap-3 mx-auto text-lg"
-                                >
-                                    <ScreenShare size={24} />
-                                    ابدأ مشاركة الشاشة
-                                </button>
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+                                    <button
+                                        onClick={startVideoCall}
+                                        className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-black py-5 px-8 rounded-2xl shadow-2xl transition-all active:scale-95 flex items-center justify-center gap-3 text-lg group"
+                                    >
+                                        <Video size={24} className="group-hover:animate-bounce" />
+                                        فتح الكاميرا
+                                    </button>
+                                    <button
+                                        onClick={startScreenShare}
+                                        className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-black py-5 px-8 rounded-2xl shadow-2xl transition-all active:scale-95 flex items-center justify-center gap-3 text-lg group"
+                                    >
+                                        <Monitor size={24} className="group-hover:animate-pulse" />
+                                        مشاركة الشاشة
+                                    </button>
+                                </div>
                             </div>
                         ) : (
                             <div className="relative w-full h-full max-w-6xl">
@@ -277,18 +326,21 @@ export const MeetingRoom: React.FC<MeetingRoomProps> = ({
                                     autoPlay
                                     muted
                                     playsInline
-                                    className="w-full h-full object-contain bg-black rounded-xl shadow-2xl border-2 border-emerald-500"
+                                    className="w-full h-full object-contain bg-black/50 rounded-2xl shadow-2xl border-2 border-primary-500/50"
                                 />
-                                <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg flex items-center gap-2 animate-pulse">
-                                    <div className="w-2 h-2 bg-white rounded-full" />
+                                <div className="absolute top-6 left-6 bg-red-600 text-white px-6 py-3 rounded-xl font-black text-sm shadow-2xl flex items-center gap-3 animate-pulse">
+                                    <div className="w-3 h-3 bg-white rounded-full" />
                                     جاري البث المباشر
                                 </div>
-                                <button
-                                    onClick={stopScreenShare}
-                                    className="absolute bottom-4 right-4 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-xl transition-all"
-                                >
-                                    إيقاف المشاركة
-                                </button>
+                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
+                                    <button
+                                        onClick={stopScreenShare}
+                                        className="bg-red-600 hover:bg-red-700 text-white font-black py-4 px-10 rounded-2xl shadow-2xl transition-all flex items-center gap-2"
+                                    >
+                                        <VideoOff size={20} />
+                                        إيقاف البث
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>
