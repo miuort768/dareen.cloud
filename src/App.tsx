@@ -28,6 +28,7 @@ import { Contact } from './pages/public/Contact';
 import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { RefundPolicy } from './pages/public/RefundPolicy';
+import ScrollToTop from './components/ScrollToTop';
 // import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 // Protected Route Component
@@ -108,6 +109,7 @@ function App() {
           </button>
         </div>
       )}
+      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
