@@ -7,6 +7,7 @@ import { Home } from './pages/public/Home';
 import { Dashboard } from './pages/Dashboard';
 import { Settings } from './pages/Settings';
 import { ParentDashboard } from './pages/ParentDashboard';
+import { StudentDashboard } from './pages/StudentDashboard';
 import { ParentStudents } from './pages/ParentStudents';
 import { ParentAnnouncements } from './pages/ParentAnnouncements';
 import { Finance } from './pages/Finance';
@@ -50,9 +51,10 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   if (permission && currentUser) {
     const hasExplicitPermission = currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission);
     const isParentAccess = currentUser.role === 'parent' && (permission.startsWith('parent_') || permission === 'parent_announcements');
+    const isStudentAccess = currentUser.role === 'student' && permission.startsWith('student_');
     const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard';
 
-    if (!hasExplicitPermission && !isParentAccess && !isTeacherDashboard) {
+    if (!hasExplicitPermission && !isParentAccess && !isStudentAccess && !isTeacherDashboard) {
       return <Navigate to="/" replace />;
     }
   }
@@ -64,6 +66,7 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
 const DashboardRedirect = () => {
   const { currentUser } = useApp();
   if (currentUser?.role === 'parent') return <Navigate to="/parent-dashboard" replace />;
+  if (currentUser?.role === 'student') return <Navigate to="/student-dashboard" replace />;
   if (currentUser?.role === 'teacher') return <Navigate to="/admin-dashboard" replace />;
   if (currentUser?.role === 'chat_user') return <Navigate to="/chat" replace />;
   return <Navigate to="/admin-dashboard" replace />;
@@ -139,6 +142,9 @@ function App() {
           <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
           <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
           <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
+
+          {/* Student Routes */}
+          <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
 
           {/* Admin/Teacher Routes */}
           <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />

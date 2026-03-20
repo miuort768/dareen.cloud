@@ -97,7 +97,7 @@ export interface User {
     name: string;
     username: string;
     password?: string; // Only for admins stored in localStorage
-    role: 'admin' | 'teacher';
+    role: 'admin' | 'teacher' | 'parent' | 'student' | 'chat_user';
     teacherName?: string;
     permissions: string[];
     avatar?: string;

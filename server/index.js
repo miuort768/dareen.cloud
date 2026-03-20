@@ -14,6 +14,7 @@ const { authRouter } = require('./routes/auth');
 const { studentRouter } = require('./routes/students');
 const { teacherRouter } = require('./routes/teachers');
 const { parentRouter } = require('./routes/parents');
+const { studentPortalRouter } = require('./routes/studentPortal');
 const { sessionRouter } = require('./routes/sessions');
 const { invoiceRouter } = require('./routes/invoices');
 const { notificationRouter } = require('./routes/notifications');
@@ -148,6 +149,7 @@ async function startServer() {
         apiRouter.use('/students', studentRouter);
         apiRouter.use('/teachers', teacherRouter);
         apiRouter.use('/parents', parentRouter);
+        apiRouter.use('/student-portal', studentPortalRouter);
         apiRouter.use('/sessions', sessionRouter);
         apiRouter.use('/notifications', notificationRouter);
         apiRouter.use('/system', checkRole(['admin']), systemRouter);

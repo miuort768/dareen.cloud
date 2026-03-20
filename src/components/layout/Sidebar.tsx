@@ -50,6 +50,7 @@ export const Sidebar = () => {
     const navigation = [
         { name: 'لوحة التحكم', href: '/admin-dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
+        { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
@@ -75,8 +76,8 @@ export const Sidebar = () => {
 
         // Admin access ('*')
         if (currentUser.permissions?.includes('*')) {
-            // Admin sees EVERYTHING except parent portal specific pages
-            if (['parent_dashboard', 'parent_students', 'parent_announcements'].includes(item.id)) return false;
+            // Admin sees EVERYTHING except portal specific pages
+            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard'].includes(item.id)) return false;
             return true;
         }
 
@@ -85,6 +86,12 @@ export const Sidebar = () => {
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
             if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat'].includes(item.id)) return true;
+        }
+
+        // Student specific access
+        if (currentUser.role === 'student') {
+            if (item.id === 'dashboard') return false;
+            if (['student_dashboard', 'chat'].includes(item.id)) return true;
         }
 
         // Explicitly allow Dashboard for Teachers

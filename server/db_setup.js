@@ -250,6 +250,8 @@ async function setupDatabase() {
     await addColumnIfNotExists('students', 'sessionPrice', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('parents', 'username', 'TEXT');
     await addColumnIfNotExists('parents', 'password', 'TEXT');
+    await addColumnIfNotExists('students', 'username', 'TEXT UNIQUE');
+    await addColumnIfNotExists('students', 'password', 'TEXT');
     await addColumnIfNotExists('sessions', 'created_at', 'TEXT DEFAULT CURRENT_TIMESTAMP');
 
     // Create unique index for parent username separately (SQLite restriction)
@@ -475,6 +477,44 @@ async function setupDatabase() {
         console.log('All parent credentials verified and hashed.');
     } catch (e) {
         console.warn('Could not auto-populate parent credentials:', e.message);
+    }
+
+    // Auto-populate student credentials if missing
+    console.log('Verifying student credentials...');
+    try {
+        const bcrypt = require('bcrypt');
+        const defaultHashed = await bcrypt.hash('123456', 10);
+
+        // Define a fallback for username: use studentPhone, if empty use parentPhone + _S, if still empty use ID
+        const students = await db.all("SELECT id, username, password, studentPhone, parentPhone FROM students");
+        for (const s of students) {
+            let userBase = s.username;
+            if (!userBase || userBase.trim() === '') {
+                if (s.studentPhone && s.studentPhone.trim() !== '') {
+                    userBase = s.studentPhone;
+                } else if (s.parentPhone && s.parentPhone.trim() !== '') {
+                    // Quick hash/suffix to avoid collision with parent username
+                    userBase = s.parentPhone + '_' + s.id.slice(-3);
+                } else {
+                    userBase = s.id;
+                }
+                
+                // Ensure unique
+                const exists = await db.get("SELECT id FROM students WHERE username = ? AND id != ?", [userBase, s.id]);
+                if (exists) {
+                     userBase = userBase + '_' + Math.floor(Math.random() * 1000);
+                }
+                
+                await db.run("UPDATE students SET username = ? WHERE id = ?", [userBase, s.id]);
+            }
+
+            if (!s.password || !s.password.startsWith('$2b$')) {
+                await db.run("UPDATE students SET password = ? WHERE id = ?", [defaultHashed, s.id]);
+            }
+        }
+        console.log('All student credentials verified and hashed.');
+    } catch (e) {
+        console.warn('Could not auto-populate student credentials:', e.message);
     }
 
     console.log('Database setup complete.');

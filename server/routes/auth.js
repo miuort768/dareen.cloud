@@ -63,6 +63,17 @@ router.post('/login', loginLimiter, async (req, res) => {
             }
         }
 
+        // Try Students
+        if (!userData) {
+            userData = await req.db.get(
+                'SELECT * FROM students WHERE username = ? OR studentPhone = ?',
+                [username, username]
+            );
+            if (userData) {
+                role = 'student';
+            }
+        }
+
         if (!userData) {
             logger.warn(`Login failed: User '${username}' not found`);
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -94,6 +105,11 @@ router.post('/login', loginLimiter, async (req, res) => {
         // Default permissions for parents
         if (role === 'parent') {
             tokenPayload.permissions = ['parent_dashboard', 'parent_students', 'parent_attendance', 'chat'];
+        }
+
+        // Default permissions for students
+        if (role === 'student') {
+            tokenPayload.permissions = ['student_dashboard', 'chat'];
         }
 
         if (role === 'teacher' && !teacherName) {
@@ -130,7 +146,9 @@ router.post('/login', loginLimiter, async (req, res) => {
                         ? ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat']
                         : (role === 'parent'
                             ? ['parent_dashboard', 'chat']
-                            : ['chat'])) // Chat users only see chat
+                            : (role === 'student'
+                                ? ['student_dashboard', 'chat']
+                                : ['chat']))) // Chat users only see chat
             }
         });
     } catch (error) {
@@ -170,6 +188,9 @@ router.post('/verify', async (req, res) => {
         } else if (decoded.role === 'parent') {
             userData = await req.db.get('SELECT id, name, username, phone FROM parents WHERE id = ?', [decoded.id]);
             if (userData) userData.role = 'parent';
+        } else if (decoded.role === 'student') {
+            userData = await req.db.get('SELECT id, name, username, studentPhone FROM students WHERE id = ?', [decoded.id]);
+            if (userData) userData.role = 'student';
         }
 
         if (!userData) {
@@ -186,6 +207,8 @@ router.post('/verify', async (req, res) => {
                 userData.permissions = ['chat'];
             } else if (userData.role === 'parent') {
                 userData.permissions = ['parent_dashboard', 'chat'];
+            } else if (userData.role === 'student') {
+                userData.permissions = ['student_dashboard', 'chat'];
             }
         }
 
