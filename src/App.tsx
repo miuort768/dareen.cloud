@@ -31,7 +31,7 @@ import { Courses } from './pages/public/Courses';
 import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { RefundPolicy } from './pages/public/RefundPolicy';
 import ScrollToTop from './components/ScrollToTop';
-// import { MaintenanceScreen } from './components/MaintenanceScreen';
+import { MaintenanceScreen } from './components/MaintenanceScreen';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -90,14 +90,10 @@ function App() {
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
-  // const isLoginPage = location.pathname.startsWith('/login');
-
-  // Maintenance Gate: Temporarily disabled per user request to recover access
-  /*
+  const isLoginPage = window.location.pathname.startsWith('/login');
   if (maintenanceMode && !isAdmin && !isLoginPage) {
     return <MaintenanceScreen />;
   }
-  */
 
   return (
     <>
