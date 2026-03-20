@@ -219,6 +219,22 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS evaluations (
+            id TEXT PRIMARY KEY,
+            studentId TEXT NOT NULL,
+            teacherId TEXT NOT NULL,
+            teacherName TEXT,
+            sessionId TEXT,
+            date TEXT NOT NULL,
+            rating TEXT NOT NULL,
+            notes TEXT,
+            points INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(studentId) REFERENCES students(id) ON DELETE CASCADE,
+            FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL,
+            FOREIGN KEY(sessionId) REFERENCES sessions(id) ON DELETE SET NULL
+        );
+
         -- Tables created above
     `);
 
@@ -248,6 +264,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('teachers', 'password', 'TEXT');
     await addColumnIfNotExists('teachers', 'created_at', 'TEXT DEFAULT CURRENT_TIMESTAMP');
     await addColumnIfNotExists('students', 'sessionPrice', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('students', 'totalPoints', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('parents', 'username', 'TEXT');
     await addColumnIfNotExists('parents', 'password', 'TEXT');
     await addColumnIfNotExists('students', 'username', 'TEXT UNIQUE');
@@ -292,7 +309,9 @@ async function setupDatabase() {
         'CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversationId)',
         'CREATE INDEX IF NOT EXISTS idx_conversation_members_user ON conversation_members(userId)',
         'CREATE INDEX IF NOT EXISTS idx_sessions_sync ON sessions(studentId, teacherName, subject, status)',
-        'CREATE INDEX IF NOT EXISTS idx_enrollments_sync ON enrollments(studentId, teacher, subject)'
+        'CREATE INDEX IF NOT EXISTS idx_enrollments_sync ON enrollments(studentId, teacher, subject)',
+        'CREATE INDEX IF NOT EXISTS idx_evaluations_student ON evaluations(studentId)',
+        'CREATE INDEX IF NOT EXISTS idx_evaluations_teacher ON evaluations(teacherId)'
     ];
 
     for (const idx of indices) {

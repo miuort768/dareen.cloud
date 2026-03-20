@@ -10,6 +10,7 @@ import { ParentDashboard } from './pages/ParentDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { ParentStudents } from './pages/ParentStudents';
 import { ParentAnnouncements } from './pages/ParentAnnouncements';
+import { Evaluations } from './pages/Evaluations';
 import { Finance } from './pages/Finance';
 import { Reports } from './pages/Reports';
 import { StudentInvoices } from './pages/StudentInvoices';
@@ -149,6 +150,7 @@ function App() {
           {/* Admin/Teacher Routes */}
           <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
           <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
+          <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
           <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
           <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
           <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />

@@ -12,7 +12,8 @@ import {
     Clock,
     Headset,
     Activity,
-    XCircle
+    XCircle,
+    Star
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -150,6 +151,16 @@ export const ParentDashboard = () => {
                         <div>
                             <h1 className="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">بوابة المتابعة الذكية</h1>
                             <p className="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 font-bold">أهلاً بك، أ/ {currentUser?.name}</p>
+                            {children.some((c: any) => c.totalPoints > 0) && (
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                    {children.filter((c: any) => c.totalPoints > 0).map((child: any) => (
+                                        <div key={child.id} className="flex items-center gap-1.5 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 font-black px-2 py-1 border border-yellow-200 dark:border-yellow-700/50 shadow-sm text-[10px]">
+                                            <Star size={12} className="fill-current" />
+                                            {child.name}: {child.totalPoints} نقطة
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

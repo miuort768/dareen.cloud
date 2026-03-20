@@ -9,7 +9,7 @@ router.get('/me', authMiddleware, async (req, res) => {
         const studentId = req.user.id;
         
         // Ensure student exists
-        const student = await req.db.get('SELECT id, name, grade, parentPhone, studentPhone, curriculum, notes FROM students WHERE id = ?', [studentId]);
+        const student = await req.db.get('SELECT id, name, grade, parentPhone, studentPhone, curriculum, notes, totalPoints FROM students WHERE id = ?', [studentId]);
         if (!student) return res.status(404).json({ error: 'Student not found' });
 
         // Deep fetch enrollments

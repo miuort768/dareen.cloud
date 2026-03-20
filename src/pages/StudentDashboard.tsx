@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
+    Star,
     AlertCircle,
     Bell,
     TrendingUp,
@@ -137,6 +138,12 @@ export const StudentDashboard = () => {
                             <p className="text-[12px] md:text-sm text-gray-500 dark:text-gray-400 font-bold mt-1">
                                 أهلاً بك، <span className="text-primary-600 dark:text-primary-400 font-black">{studentData?.name}</span> ✨
                             </p>
+                            {(studentData?.totalPoints ?? 0) >= 0 && (
+                                <div className="mt-3 flex items-center gap-2 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 font-black px-3 py-1.5 w-fit border border-yellow-200 dark:border-yellow-700/50 shadow-sm">
+                                    <Star size={16} className="fill-current" />
+                                    مجموع نقاطك: {studentData?.totalPoints || 0} نقطة
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,7 @@ import {
     Megaphone,
     CalendarCheck,
     MessageSquare,
+    Award
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -55,6 +56,7 @@ export const Sidebar = () => {
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
+        { name: 'التقييمات والنقاط', href: '/evaluations', id: 'dashboard', icon: Award },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
         { name: 'المالية', href: '/finance', id: 'finance', icon: Wallet },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
