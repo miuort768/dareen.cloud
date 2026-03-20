@@ -188,5 +188,23 @@ router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     }
 });
 
+// 6. Freeze / Unfreeze enrollment
+router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, async (req, res) => {
+    const { studentId, enrollmentId } = req.params;
+    const { isFrozen, frozenReason } = req.body;
+    try {
+        await req.db.run(
+            'UPDATE enrollments SET isFrozen = ?, frozenReason = ? WHERE id = ? AND studentId = ?',
+            [isFrozen ? 1 : 0, frozenReason || null, enrollmentId, studentId]
+        );
+        const updated = await req.db.get('SELECT * FROM enrollments WHERE id = ?', [enrollmentId]);
+        res.json(updated);
+    } catch (err) {
+        logger.error('Error updating freeze status', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 module.exports = { studentRouter: router };
+
 

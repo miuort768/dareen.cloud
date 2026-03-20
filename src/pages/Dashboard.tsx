@@ -10,6 +10,8 @@ import { TasksAndRequests } from '../features/dashboard/components/TasksAndReque
 import { SessionAnalysis } from '../features/dashboard/components/SessionAnalysis';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
+import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
+import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
 
 
 export const Dashboard = () => {
@@ -21,7 +23,10 @@ export const Dashboard = () => {
         monthlyData,
         lowBalanceStudents,
         tasks,
-        loading
+        loading,
+        rawStudents,
+        rawSessions,
+        rawStudentInvoices
     } = useDashboardData(currentUser);
 
     const isTeacher = currentUser?.role === 'teacher';
@@ -123,11 +128,28 @@ export const Dashboard = () => {
                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </div>
 
+                {/* Smart Alerts */}
+                        <SmartAlerts
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                            lowBalanceStudents={lowBalanceStudents}
+                        />
+
                     {/* Additional Full Width Table */}
                     <div className="w-full">
                         <RenewalAlertsList
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
+                        />
+                    </div>
+
+                    {/* Analytics Section */}
+                    <div className="w-full">
+                        <AnalyticsDashboard
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            monthlyData={monthlyData}
                         />
                     </div>
                 </div>

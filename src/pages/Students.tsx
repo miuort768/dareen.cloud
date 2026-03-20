@@ -132,6 +132,20 @@ export const Students = () => {
         }
     };
 
+    const handleFreezeEnrollment = async (enrollmentId: string, isFrozen: boolean, reason?: string) => {
+        if (!selectedStudent) return;
+        try {
+            await api.patch(`/students/${selectedStudent.id}/enrollments/${enrollmentId}/freeze`, {
+                isFrozen,
+                frozenReason: reason || null
+            });
+            queryClient.invalidateQueries({ queryKey: ['students'] });
+            showNotification(isFrozen ? '✅ تم تجميد الاشتراك بنجاح' : '✅ تم تفعيل الاشتراك مجدداً', 'success');
+        } catch (error) {
+            showNotification('فشل تحديث حالة الاشتراك', 'error');
+        }
+    };
+
     const handleAddSessionsToEnrollment = async (index: number, amount: number) => {
         if (!selectedStudent) return;
         const enrollment = selectedStudent.enrollments[index];
@@ -343,6 +357,7 @@ export const Students = () => {
                         }}
                         onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
                         onAddSessions={handleAddSessionsToEnrollment}
+                        onFreezeEnrollment={handleFreezeEnrollment}
                         onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
                     />
                 )}

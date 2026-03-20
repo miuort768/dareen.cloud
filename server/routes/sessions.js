@@ -104,6 +104,28 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
             if (body.status === 'completed') {
                 await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: finalTeacherId, delta: 1 });
             }
+
+            // 🔔 Auto-notify parent on absence
+            if (body.status === 'cancelled') {
+                const { v4: uuidv4 } = require('uuid');
+                const notifId = uuidv4();
+                const notifTime = new Date().toISOString();
+                await tx.run(
+                    `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)`,
+                    [
+                        notifId,
+                        req.user?.id || 'system',
+                        body.studentId,
+                        req.user?.teacherName || req.user?.name || 'النظام',
+                        `غياب: ${body.studentName}`,
+                        `تم تسجيل غياب الطالب "${body.studentName}" في مادة "${body.subject}" بتاريخ ${body.date}.`,
+                        'warning',
+                        notifTime
+                    ]
+                );
+            }
+
             const session = await tx.get('SELECT * FROM sessions WHERE id = ?', [id]);
 
             if (isTeacher) {
@@ -119,6 +141,7 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 // 3. Update session
 router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, res) => {

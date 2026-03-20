@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
@@ -14,6 +14,7 @@ interface StudentDetailsProps {
     onRenewEnrollment: (index: number) => void;
     onSendReminder: (enrollment: Enrollment) => void;
     onAddSessions: (index: number, amount: number) => void;
+    onFreezeEnrollment?: (enrollmentId: string, isFrozen: boolean, reason?: string) => void;
     teachers: Teacher[];
 }
 
@@ -25,6 +26,7 @@ export const StudentDetails = ({
     onRenewEnrollment,
     onSendReminder,
     onAddSessions,
+    onFreezeEnrollment,
     teachers
 }: StudentDetailsProps) => {
     const [addingSessionsIndex, setAddingSessionsIndex] = useState<number | null>(null);
@@ -66,9 +68,15 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-4 border border-gray-100 rounded-none",
-                                    isLow ? "bg-rose-50/30 border-rose-100" : "bg-white dark:bg-gray-800/50 dark:border-gray-700"
+                                    "p-4 border border-gray-100 rounded-none relative",
+                                    en.isFrozen ? "bg-blue-50/40 border-blue-200 dark:bg-blue-900/10 dark:border-blue-800/30" : isLow ? "bg-rose-50/30 border-rose-100" : "bg-white dark:bg-gray-800/50 dark:border-gray-700"
                                 )}>
+                                    {en.isFrozen && (
+                                        <div className="absolute top-2 left-2 flex items-center gap-1 text-[9px] font-black bg-blue-100 text-blue-700 px-2 py-0.5 border border-blue-200">
+                                            <Snowflake size={10} />
+                                            مجمٍّد
+                                        </div>
+                                    )}
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
                                             <h5 className="font-black text-gray-900 dark:text-white text-sm">{en.subject}</h5>
@@ -78,6 +86,23 @@ export const StudentDetails = ({
                                             </div>
                                         </div>
                                         <div className="flex gap-2">
+                                            {/* Freeze / Unfreeze */}
+                                            {onFreezeEnrollment && en.id && (
+                                                <button
+                                                    onClick={() => {
+                                                        if (en.isFrozen) {
+                                                            onFreezeEnrollment(en.id!, false);
+                                                        } else {
+                                                            const reason = prompt('سبب التجميد (اختياري):');
+                                                            if (reason !== null) onFreezeEnrollment(en.id!, true, reason);
+                                                        }
+                                                    }}
+                                                    className={cn("p-1", en.isFrozen ? "text-emerald-600" : "text-blue-500")}
+                                                    title={en.isFrozen ? 'إلغاء التجميد' : 'تجميد الاشتراك'}
+                                                >
+                                                    {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
+                                                </button>
+                                            )}
                                             <button onClick={() => onSendReminder(en)} className="p-1 text-emerald-600" title="إرسال تذكير"><MessageCircle size={14} /></button>
                                             <button onClick={() => onRenewEnrollment(i)} className="p-1 text-blue-600" title="تجديد"><RefreshCw size={14} /></button>
                                             <button onClick={() => onDeleteEnrollment(i)} className="p-1 text-red-600" title="حذف"><Trash size={14} /></button>

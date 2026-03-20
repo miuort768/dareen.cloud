@@ -282,6 +282,8 @@ async function setupDatabase() {
     await addColumnIfNotExists('enrollments', 'teacherId', 'TEXT REFERENCES teachers(id) ON DELETE SET NULL');
 
     await addColumnIfNotExists('enrollments', 'teacher', 'TEXT');
+    await addColumnIfNotExists('enrollments', 'isFrozen', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('enrollments', 'frozenReason', 'TEXT');
     await addColumnIfNotExists('sessions', 'teacherId', 'TEXT REFERENCES teachers(id) ON DELETE SET NULL');
     await addColumnIfNotExists('teacher_invoices', 'teacherId', 'TEXT REFERENCES teachers(id) ON DELETE SET NULL');
     await addColumnIfNotExists('student_invoices', 'studentId', 'TEXT NOT NULL DEFAULT "unknown"');

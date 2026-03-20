@@ -263,6 +263,9 @@ export const useDashboardData = (currentUser: User | null) => {
         lowBalanceStudents: processedData?.lowBalanceStudents || [],
         tasks: processedData?.tasks || [],
         loading: isLoading,
+        rawStudents: (studentsQuery.data as any[]) || [],
+        rawSessions: (sessionsQuery.data as any[]) || [],
+        rawStudentInvoices: (studentInvoicesQuery.data as any[]) || [],
         fetchDashboardData: () => queryClient.invalidateQueries(), // Or specific keys
         updateSessionStatus: (id: string, status: 'scheduled' | 'completed' | 'cancelled') => updateSessionStatusMutation.mutateAsync({ id, status })
     };
