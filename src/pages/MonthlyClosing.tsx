@@ -1,23 +1,15 @@
-
 import React, { useState } from 'react';
 import { 
-    Calendar, 
-    TrendingUp, 
-    Users, 
+    Calendar, Filter, Download, RefreshCw, Printer, 
     ArrowDownRight,
-    Download,
-    Phone,
-    MessageCircle,
-    CheckCircle2,
-    AlertCircle,
-    Filter,
-    BarChart3,
-    Receipt,
-    X,
-    Printer,
-    Star,
-    RefreshCw
+    TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star
 } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useApp } from '../context/useApp';
+import { attendanceService } from '../features/attendance/services/attendanceService';
+import { teacherService } from '../features/teachers/services/teacherService';
+import { cn } from '../lib/utils';
+import { CURRENCY_SYMBOL } from '../config/constants';
 
 // --- Salary Slip Modal Component ---
 const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
@@ -114,18 +106,30 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
         </div>
     );
 };
-import { useQuery } from '@tanstack/react-query';
-import { attendanceService } from '../features/attendance/services/attendanceService';
-import { teacherService } from '../features/teachers/services/teacherService';
-import { cn } from '../lib/utils';
-import { CURRENCY_SYMBOL } from '../config/constants';
+
 
 type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
 export const MonthlyClosing: React.FC = () => {
+    const { 
+        semesterName, 
+        setSemesterName, 
+        semesters 
+    } = useApp();
+    const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
+
+    const handleRefresh = () => {
+        queryClient.invalidateQueries({ queryKey: ['sessions-closing'] });
+        queryClient.invalidateQueries({ queryKey: ['teachers-closing'] });
+        queryClient.invalidateQueries({ queryKey: ['students-closing'] });
+    };
+
+    // Split semesters string into array for dropdown
+    const semesterList = (semesters || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (!semesterList.includes(semesterName)) semesterList.push(semesterName);
 
     // Fetch data
     const { data: sessions, isLoading: sessionsLoading } = useQuery({
@@ -229,28 +233,59 @@ export const MonthlyClosing: React.FC = () => {
 
     return (
         <div className="p-4 lg:p-10 min-h-screen bg-gray-50/50 dark:bg-gray-950/50" dir="rtl">
-            {/* Header */}
+            {/* Header with Semester & Month Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
                 <div>
                     <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-4 mb-2">
                         <div className="w-1.5 h-12 bg-rose-600 border-2 border-gray-950 dark:border-gray-800"></div>
-                        تقفيل الحسابات والأنشطة الشهرية
+                        تقفيل الحسابات والأنشطة
                     </h1>
-                    <p className="text-gray-500 font-bold flex items-center gap-2">
-                        <Calendar size={16} /> إدارة رواتب المعلمات ومتابعة اشتراكات الطلاب
-                    </p>
+                    <div className="flex items-center gap-2 text-gray-500 font-bold">
+                        <Calendar size={16} /> 
+                        <span>{semesterName}</span>
+                        <span className="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                        <span>{selectedMonth}</span>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                    {/* Semester Selector */}
+                    <div className="bg-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] px-4 py-2 flex items-center gap-2 dark:bg-gray-900 dark:border-gray-800">
+                        <span className="text-[10px] font-black opacity-40 uppercase ml-2 dark:text-gray-400">الفصل:</span>
+                        <select 
+                            value={semesterName} 
+                            onChange={(e) => setSemesterName(e.target.value)}
+                            className="bg-transparent font-black border-none focus:ring-0 text-sm dark:text-white outline-none cursor-pointer"
+                        >
+                            {semesterList.map(s => (
+                                <option key={s} value={s} className="dark:bg-gray-800">{s}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div className="bg-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] px-4 py-2 flex items-center gap-3 dark:bg-gray-900 dark:border-gray-800">
                         <Filter size={18} className="text-gray-400" />
                         <input 
                             type="month" 
-                            className="bg-transparent font-black border-none focus:ring-0 text-sm dark:text-white" 
+                            className="bg-transparent font-black border-none focus:ring-0 text-sm dark:text-white outline-none cursor-pointer" 
                             value={selectedMonth}
                             onChange={(e) => setSelectedMonth(e.target.value)}
                         />
                     </div>
+                    
+                    <button 
+                        onClick={handleRefresh}
+                        className="p-3 bg-gray-950 text-white hover:bg-black transition-all shadow-[4px_4px_0px_0px_#444] border-2 border-gray-950"
+                    >
+                        <RefreshCw size={20} />
+                    </button>
+                    
+                    <button 
+                        onClick={() => window.print()}
+                        className="p-3 bg-rose-600 text-white hover:bg-rose-700 transition-all shadow-[4px_4px_0px_0px_black] border-2 border-gray-950"
+                    >
+                        <Printer size={20} />
+                    </button>
                 </div>
             </div>
 
