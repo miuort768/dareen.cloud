@@ -59,6 +59,7 @@ export const Sidebar = () => {
         { name: 'التقييمات والنقاط', href: '/evaluations', id: 'dashboard', icon: Award },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
         { name: 'المالية', href: '/finance', id: 'finance', icon: Wallet },
+        { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
         { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
         { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
@@ -119,12 +120,12 @@ export const Sidebar = () => {
                         collapsed ? "justify-center px-0" : "justify-between px-6"
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                            <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0" />
+                            <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0 border-2 border-current p-1" />
                             <span className={cn(
-                                "font-bold text-xl text-gray-800 transition-all duration-300 dark:text-gray-100",
+                                "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                             )}>
-                                {academyName}
+                                أكاديمية دارين
                             </span>
                         </div>
                     </div>
@@ -151,12 +152,12 @@ export const Sidebar = () => {
                     collapsed ? "justify-center px-0" : "justify-between px-6"
                 )}>
                     <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0" />
+                        <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0 border-2 border-current p-1" />
                         <span className={cn(
-                            "font-bold text-xl text-gray-800 transition-all duration-300 dark:text-gray-100",
+                            "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                         )}>
-                            {academyName}
+                            نظام أكاديمية دارين
                         </span>
                     </div>
                 </div>

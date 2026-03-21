@@ -1,4 +1,4 @@
-import { DollarSign, TrendingUp, Search, Filter, Calendar } from 'lucide-react';
+import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Plus } from 'lucide-react';
 import { Skeleton } from '../components/ui/Skeleton';
 import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
@@ -6,9 +6,11 @@ import { FinanceCharts } from '../features/finance/components/FinanceCharts';
 import { AddTransactionModal } from '../features/finance/components/AddTransactionModal';
 import { FixedExpensesManager } from '../features/finance/components/FixedExpensesManager';
 import { useFinance } from '../features/finance/hooks/useFinance';
+import { useNavigate } from 'react-router-dom';
 
 export const Finance = () => {
     const { state, actions } = useFinance();
+    const navigate = useNavigate();
 
     if (state.loading) {
         return (
@@ -64,7 +66,19 @@ export const Finance = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 flex-wrap no-print">
+                    <div className="flex flex-wrap gap-2 no-print">
+                        <button
+                            onClick={() => navigate('/monthly-closing')}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-black dark:border-white/20"
+                        >
+                            <CalendarCheck size={16} /> تقفيل الشهر والرواتب
+                        </button>
+                        <button
+                            onClick={() => alert('ميزة التصدير ستكون متاحة قريباً')}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-white text-gray-950 font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-gray-800 dark:text-white dark:border-white/20"
+                        >
+                            <Download size={16} /> تصدير البيانات
+                        </button>
                         <button
                             onClick={() => actions.setShowAddModal(true)}
                             className="bg-white text-primary-600 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-lg transform hover:-translate-y-1 active:translate-y-0 h-14"
