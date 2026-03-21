@@ -62,31 +62,25 @@ export const Dashboard = () => {
                 <div className="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
                 
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-8 relative z-10">
-                    <div className="p-4 bg-blue-500/10 border-2 border-blue-500/20 text-blue-500">
+                    <div className="p-4 bg-primary-600/10 border-2 border-primary-500/20 text-primary-500">
                         <Bell size={28} />
                     </div>
-                    <div className="flex-1">
-                        <h3 className="text-white font-black uppercase text-xs lg:text-sm tracking-[0.4em] mb-4 opacity-40">System Status & Notifications</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="flex-1 w-full">
+                        <h3 className="text-white font-black uppercase text-[10px] lg:text-xs tracking-[0.4em] mb-4 opacity-40">حالة النظام والتنبيهات الذكية</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {!isTeacher && stats.pendingInvoices > 0 && (
-                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
-                                    <div className="w-2 h-2 bg-amber-500"></div>
-                                    <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
-                                        Pending Invoices: <span className="text-amber-500 ml-1">{stats.pendingInvoices}</span>
-                                    </span>
+                                <div className="flex items-center justify-between bg-white/5 border-l-4 border-amber-500 p-4">
+                                    <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">فواتير معلقة</span>
+                                    <span className="text-amber-500 font-black text-lg lg:text-xl tabular-nums">{stats.pendingInvoices}</span>
                                 </div>
                             )}
-                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
-                                <div className="w-2 h-2 bg-emerald-500"></div>
-                                <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
-                                    System Integrity: <span className="text-emerald-500 ml-1">OPTIMIZED</span>
-                                </span>
+                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-emerald-500 p-4">
+                                <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">سلامة النظام</span>
+                                <span className="text-emerald-500 font-black text-xs lg:text-sm tracking-tighter">مُــحـسّـن (100%)</span>
                             </div>
-                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
-                                <div className="w-2 h-2 bg-blue-500"></div>
-                                <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
-                                    Real-time Sync: <span className="text-blue-500 ml-1">ACTIVE</span>
-                                </span>
+                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-primary-500 p-4">
+                                <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">مزامنة البيانات</span>
+                                <span className="text-primary-400 font-black text-[10px] lg:text-xs tracking-widest">نـشـط الآن</span>
                             </div>
                         </div>
                     </div>
