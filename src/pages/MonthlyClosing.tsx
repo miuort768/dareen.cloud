@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { 
     Calendar, Filter, Download, RefreshCw, Printer, 
     ArrowDownRight,
-    TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star
+    TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star,
+    ArrowUpRight, DollarSign, Activity as ActivityIcon
 } from 'lucide-react';
+import { 
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useApp } from '../context/useApp';
 import { attendanceService } from '../features/attendance/services/attendanceService';
@@ -120,6 +124,14 @@ export const MonthlyClosing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
+    const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
+
+    const handleTeacherAdjustment = (teacherId: string, amount: number) => {
+        setTeacherAdjustments(prev => ({
+            ...prev,
+            [teacherId]: amount
+        }));
+    };
 
     const handleRefresh = () => {
         queryClient.invalidateQueries({ queryKey: ['sessions-closing'] });
@@ -158,10 +170,15 @@ export const MonthlyClosing: React.FC = () => {
             s.teacherName?.trim() === teacher.name?.trim() && 
             s.status === 'completed'
         );
-        const totalAmount = teacherSessions.reduce((acc, curr) => acc + (curr.teacherPrice || teacher.price || 0), 0);
+        const baseAmount = teacherSessions.reduce((acc, curr) => acc + (curr.teacherPrice || teacher.price || 0), 0);
+        const adjustment = teacherAdjustments[teacher.id] || 0;
+        const totalAmount = baseAmount + adjustment;
+        
         return {
             ...teacher,
             sessionsCount: teacherSessions.length,
+            baseAmount,
+            adjustment,
             totalAmount,
             sessionsList: teacherSessions
         };
@@ -191,8 +208,6 @@ export const MonthlyClosing: React.FC = () => {
         const completed = teacherMonthSessions.filter(s => s.status === 'completed').length;
         const cancelled = teacherMonthSessions.filter(s => s.status === 'cancelled').length;
         const total = teacherMonthSessions.length;
-        
-        // Quality metric: How many completed sessions have topics/homework written
         const documented = teacherMonthSessions.filter(s => s.status === 'completed' && (s.topics || s.homework)).length;
         
         return {
@@ -208,17 +223,30 @@ export const MonthlyClosing: React.FC = () => {
 
     // --- 4. Student Renewals Logic ---
     const renewalsData = students?.flatMap(student => 
-        (student.enrollments || []).map(enroll => ({
-            studentName: student.name,
-            phone: student.parentPhone || '',
-            subject: enroll.subject,
-            remaining: enroll.sessionsTotal - enroll.sessionsUsed,
-            total: enroll.sessionsTotal,
-            isLow: (enroll.sessionsTotal - enroll.sessionsUsed) <= 2
-        }))
+        (student.enrollments || []).map(enroll => {
+            const remaining = enroll.sessionsTotal - enroll.sessionsUsed;
+            const isLow = remaining <= 2;
+            
+            // Build WhatsApp Link
+            let waLink = '';
+            if (student.parentPhone) {
+                const msg = `تذكير من أكاديمية دارين: المتبقي في رصيد الطالب ${student.name} في مادة ${enroll.subject} هو ${remaining} حصص فقط. يرجى التجديد لضمان استمرار المواعيد.`;
+                waLink = `https://wa.me/${student.parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
+            }
+
+            return {
+                studentName: student.name,
+                phone: student.parentPhone || '',
+                subject: enroll.subject,
+                remaining,
+                total: enroll.sessionsTotal,
+                isLow,
+                waLink
+            };
+        })
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
 
-    // --- 3. Summary Stats ---
+    // --- 5. Summary Stats ---
     const totalIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
     const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + curr.totalAmount, 0);
     const netProfit = totalIncome - totalTeacherPayout;
@@ -290,13 +318,28 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Quick Summary Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
                 <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">صافي ربح الشهر المتوقع</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">صافي الأرباح</p>
+                    <div className="flex items-end justify-between">
+                        <div>
+                            <h3 className="text-3xl font-black text-blue-600 font-mono tracking-tighter">
+                                {netProfit.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            </h3>
+                            <p className="text-[10px] font-bold text-blue-400 mt-1">الهامش: {totalIncome > 0 ? ((netProfit / totalIncome) * 100).toFixed(1) : 0}%</p>
+                        </div>
+                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
+                            <DollarSign size={24} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي الإيرادات</p>
                     <div className="flex items-end justify-between">
                         <div>
                             <h3 className="text-3xl font-black text-emerald-600 font-mono tracking-tighter">
-                                {netProfit.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                                {totalIncome.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
                         </div>
                         <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
@@ -306,7 +349,7 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
                 
                 <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي رواتب المعلمات</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">رواتب المعلمات</p>
                     <div className="flex items-end justify-between">
                         <div>
                             <h3 className="text-3xl font-black text-rose-600 font-mono tracking-tighter">
@@ -320,15 +363,15 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
 
                 <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">طلاب بحاجة للتجديد</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">نشاط الأكاديمية</p>
                     <div className="flex items-end justify-between">
                         <div>
                             <h3 className="text-3xl font-black text-amber-600 font-mono tracking-tighter">
-                                {renewalsData.length} <span className="text-xs uppercase opacity-70">طالب</span>
+                                {filteredSessions.length} <span className="text-xs uppercase opacity-70">حصة</span>
                             </h3>
                         </div>
-                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600 font-black text-xl">
-                            !
+                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600">
+                            <ActivityIcon size={24} />
                         </div>
                     </div>
                 </div>
@@ -414,10 +457,10 @@ export const MonthlyClosing: React.FC = () => {
                                 <thead className="bg-gray-900 text-white dark:bg-black">
                                     <tr>
                                         <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">المعلمة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">المادة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الحصص المكتملة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">سعر الحصة للمعلمة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">المستحقات الإجمالية</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الحصص</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ الأساسي</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">إضافات/خصم</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">المستحق النهائي</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
@@ -428,28 +471,39 @@ export const MonthlyClosing: React.FC = () => {
                                                     <div className="w-10 h-10 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white font-black dark:bg-white dark:text-black">
                                                         {item.name.charAt(0)}
                                                     </div>
-                                                    <span className="font-black text-gray-900 dark:text-white">{item.name}</span>
+                                                    <div>
+                                                        <span className="block font-black text-gray-900 dark:text-white leading-none mb-1">{item.name}</span>
+                                                        <span className="text-[10px] font-bold text-gray-400">{item.subject}</span>
+                                                    </div>
                                                 </div>
-                                            </td>
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
-                                                <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-[10px] font-black border border-gray-200 dark:border-gray-700 dark:text-gray-300">{item.subject}</span>
                                             </td>
                                             <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-lg dark:text-white">
                                                 {item.sessionsCount}
                                             </td>
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black dark:text-white">
-                                                {item.price?.toLocaleString()} <span className="text-[10px] opacity-30">{CURRENCY_SYMBOL}</span>
+                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-gray-400">
+                                                {item.baseAmount.toLocaleString()}
+                                            </td>
+                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <input 
+                                                        type="number"
+                                                        value={item.adjustment || ''}
+                                                        placeholder="0"
+                                                        onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
+                                                        className="w-20 bg-gray-50 border-2 border-gray-200 p-1 text-center font-black text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:border-gray-950 outline-none transition-all"
+                                                    />
+                                                </div>
                                             </td>
                                             <td className="px-6 py-5 text-center">
                                                 <div className="flex flex-col items-center gap-2">
-                                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-950 text-white font-mono font-black text-xl shadow-[4px_4px_0px_0px_rgba(31,41,55,0.2)] dark:bg-white dark:text-gray-950">
+                                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white font-mono font-black text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] dark:bg-emerald-500">
                                                         {item.totalAmount.toLocaleString()} <span className="text-[11px]">{CURRENCY_SYMBOL}</span>
                                                     </div>
                                                     <button 
                                                         onClick={() => setSelectedTeacherForSlip(item)}
-                                                        className="text-[10px] font-black text-emerald-600 hover:text-emerald-700 underline underline-offset-4 flex items-center gap-1"
+                                                        className="text-[10px] font-black text-gray-400 hover:text-emerald-600 underline underline-offset-4 flex items-center gap-1 transition-colors"
                                                     >
-                                                        <Receipt size={10} /> عرض قسيمة الراتب
+                                                        <Receipt size={10} /> التفاصيل والقسيمة
                                                     </button>
                                                 </div>
                                             </td>
@@ -503,12 +557,20 @@ export const MonthlyClosing: React.FC = () => {
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-2 mt-6">
-                                            <button className="flex items-center justify-center gap-2 py-2 bg-emerald-600 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-emerald-700 transition-colors">
+                                            <a 
+                                                href={item.waLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center justify-center gap-2 py-2 bg-emerald-600 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-emerald-700 transition-colors"
+                                            >
                                                 <MessageCircle size={14} /> تذكير واتساب
-                                            </button>
-                                            <button className="flex items-center justify-center gap-2 py-2 bg-gray-900 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-black transition-colors dark:bg-black">
+                                            </a>
+                                            <a 
+                                                href={`tel:${item.phone}`}
+                                                className="flex items-center justify-center gap-2 py-2 bg-gray-900 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-black transition-colors dark:bg-black"
+                                            >
                                                 <Phone size={14} /> اتصال سريع
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -571,6 +633,37 @@ export const MonthlyClosing: React.FC = () => {
                             </div>
                             <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
                                 <BarChart3 size={24} />
+                            </div>
+                        </div>
+
+                        {/* Recharts Visualization */}
+                        <div className="bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-8 mb-10 shadow-[12px_12px_0px_0px_black] dark:border-gray-800">
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-8 flex items-center gap-3">
+                                <div className="w-4 h-4 bg-emerald-600 border-2 border-gray-950"></div>
+                                المخطط المالي التحليلي للمواد
+                            </h3>
+                            <div className="h-[400px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart
+                                        data={subjectAnalysis}
+                                        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+                                        <XAxis dataKey="name" stroke="#666" fontSize={12} tickLine={false} axisLine={false} />
+                                        <YAxis stroke="#666" fontSize={12} tickLine={false} axisLine={false} />
+                                        <Tooltip 
+                                            contentStyle={{ 
+                                                backgroundColor: '#fff', 
+                                                border: '2px solid #000', 
+                                                borderRadius: '0px',
+                                                boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)'
+                                            }} 
+                                        />
+                                        <Legend verticalAlign="top" height={36} />
+                                        <Bar dataKey="income" name="إجمالي الإيرادات" fill="#10b981" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="payout" name="رواتب المعلمات" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
                             </div>
                         </div>
 
