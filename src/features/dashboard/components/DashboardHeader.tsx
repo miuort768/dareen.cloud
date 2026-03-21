@@ -21,99 +21,73 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
     }, []);
 
     return (
-        <div className="relative -mx-4 -mt-4 lg:mx-0 lg:mt-0 bg-primary-600 p-6 lg:p-10 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
-            {/* Background Geometric Enhancement - Richer & Larger Shapes */}
-            {/* Major Glows & Blobs */}
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/10 rounded-full -mr-20 -mt-60 blur-[150px] pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-primary-400/20 rounded-full -ml-40 -mb-80 blur-[180px] pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-[120px] pointer-events-none"></div>
-
-            {/* Large Structural Shapes */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[120%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
-            <div className="absolute top-[-20%] right-[10%] w-[150px] h-[150%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
-
-            {/* Large Geometric Outlines */}
-            <div className="absolute top-1/2 right-10 w-96 h-96 border-[40px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute top-[-50px] left-1/4 w-64 h-64 border-[2px] border-white/10 rounded-[4rem] rotate-45 pointer-events-none"></div>
-            <div className="absolute bottom-[-100px] right-1/4 w-80 h-80 border-[1px] border-white/20 rounded-full pointer-events-none"></div>
+        <div className="relative -mx-4 -mt-4 lg:mx-0 lg:mt-0 bg-primary-600 p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] overflow-hidden border-b-8 border-primary-800 rounded-none">
+            {/* Background Geometric Enhancement - SHARP SHAPES ONLY */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 border-r-[20px] border-white/5 -mr-20 -mt-20 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black/10 border-l-[40px] border-black/5 -ml-20 -mb-20 pointer-events-none"></div>
 
             {/* Pattern Layer */}
-            <div className="absolute inset-0 opacity-[0.15] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+            <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'linear-gradient(45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent 100%)', backgroundSize: '40px 40px' }}></div>
 
-            {/* Foreground Accents */}
-            <div className="absolute top-1/4 right-1/3 w-24 h-24 bg-white/5 rounded-3xl rotate-[35deg] backdrop-blur-md border border-white/10 pointer-events-none hidden lg:block"></div>
-            <div className="absolute bottom-10 left-10 w-32 h-32 bg-gradient-to-tr from-primary-400/20 to-transparent rounded-[3rem] -rotate-12 pointer-events-none"></div>
-
-            {/* Central Geometric Decoration */}
-            <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-40"></div>
-            <div className="absolute top-1/2 left-1/2 w-[700px] h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-[30deg] pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-[700px] h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-[30deg] pointer-events-none"></div>
-
-            <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 lg:w-20 lg:h-20 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner relative group">
+            <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                <div className="flex items-center gap-6">
+                    <div className="w-16 h-16 lg:w-24 lg:h-24 bg-gray-950 flex items-center justify-center border-4 border-white/20 shadow-2xl relative group">
                         <GraduationCap size={24} className="text-white lg:hidden" />
-                        <GraduationCap size={36} className="text-white hidden lg:block" />
+                        <GraduationCap size={48} className="text-white hidden lg:block" />
                     </div>
-                    <div className="space-y-0.5 lg:space-y-1 text-right">
-                        <span className="text-white/80 text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase block mb-1">دارين لتعليم و التدريب</span>
+                    <div className="space-y-1 lg:space-y-2 text-right">
+                        <span className="text-white font-black text-[10px] lg:text-xs tracking-[0.4em] uppercase block mb-1">Darin Institute Management</span>
                         {isTeacher ? (
-                            <>
-
-                                <h1 className="text-xl lg:text-2xl font-black text-white tracking-tight">
-                                    أ. {currentUser?.name}
-                                </h1>
-                            </>
+                            <h1 className="text-2xl lg:text-4xl font-black text-white tracking-tighter uppercase">
+                                أ. {currentUser?.name}
+                            </h1>
                         ) : (
-                            <h1 className="text-2xl md:text-3xl lg:text-5xl font-black text-white tracking-tight">
-                                نظرة عامة
+                            <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase">
+                                Dashboard
                             </h1>
                         )}
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row lg:items-center gap-4">
+                <div className="flex flex-col sm:flex-row lg:items-center gap-6">
                     {isTeacher && (
-                        <div className="group relative flex items-center gap-4 bg-white/5 backdrop-blur-xl px-5 py-3 border border-white/10 rounded-none shadow-2xl overflow-hidden min-w-[160px]">
-                            <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-transparent"></div>
-                            <div className="relative p-2 bg-white/10 text-white rounded-none">
-                                <Wallet size={20} />
+                        <div className="relative flex items-center gap-5 bg-gray-950 px-6 py-4 border-2 border-white/20 rounded-none shadow-xl min-w-[200px]">
+                            <div className="p-2.5 bg-primary-600 text-white border-2 border-white/20">
+                                <Wallet size={24} />
                             </div>
-                            <div className="relative text-right">
-                                <p className="text-white/90 text-[9px] font-black uppercase tracking-[0.2em] leading-none mb-1.5 line-clamp-1">أرباح الشهر</p>
-                                <p className="text-white text-xl font-black leading-none whitespace-nowrap">
+                            <div className="text-right">
+                                <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 line-clamp-1">SALARY / MONTH</p>
+                                <p className="text-white text-2xl font-black leading-none whitespace-nowrap tabular-nums">
                                     {stats.monthNetProfit.toLocaleString()}
-                                    <span className="text-[10px] opacity-80 mr-1">ج.م</span>
+                                    <span className="text-xs opacity-60 mr-1">EGP</span>
                                 </p>
                             </div>
                         </div>
                     )}
 
-                    <Link to="/appointments" className="group relative flex items-center gap-4 bg-white/5 hover:bg-white/10 backdrop-blur-xl px-5 py-3 border border-white/10 rounded-none transition-all active:scale-95 shadow-2xl overflow-hidden w-full sm:w-40">
-                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="relative p-2 bg-white/10 text-white rounded-none group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
-                            <CalendarCheck size={20} />
+                    <Link to="/appointments" className="relative flex items-center gap-5 bg-primary-800 hover:bg-primary-900 px-6 py-4 border-2 border-white/20 rounded-none shadow-xl w-full sm:w-48 group">
+                        <div className="p-2.5 bg-white/10 text-white border-2 border-white/10 group-hover:bg-white group-hover:text-primary-900">
+                            <CalendarCheck size={24} />
                         </div>
-                        <div className="relative text-right">
-                            <p className="text-white/60 text-[9px] font-black uppercase tracking-[0.2em] leading-none mb-1.5 group-hover:text-white/80">حصص اليوم</p>
-                            <p className="text-white text-xl font-black leading-none">{stats.todaySessions}</p>
+                        <div className="text-right">
+                            <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 group-hover:text-white">TODAY</p>
+                            <p className="text-white text-2xl font-black leading-none tabular-nums">{stats.todaySessions}</p>
                         </div>
                     </Link>
 
-                    <div className="group relative flex items-center gap-4 bg-black/40 backdrop-blur-xl px-5 py-3 border border-white/10 rounded-none shadow-2xl w-full sm:w-40 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent"></div>
-                        <div className="relative p-1.5 bg-white/5 text-amber-400 rounded-none border border-white/5">
-                            <Clock size={16} />
+                    <div className="relative flex items-center gap-5 bg-gray-950 px-6 py-4 border-2 border-white/20 rounded-none shadow-xl w-full sm:w-48">
+                        <div className="p-2.5 bg-white/5 text-amber-500 border-2 border-white/10">
+                            <Clock size={20} />
                         </div>
-                        <div className="relative text-right font-mono">
-                            <p className="text-white/50 text-[8px] font-black uppercase tracking-[0.1em] leading-none mb-1 text-center font-sans">الوقت الفعلي</p>
-                            <p className="text-white text-[10px] lg:text-xs font-black leading-none tracking-tight tabular-nums">
+                        <div className="text-right font-mono">
+                            <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.2em] mb-1 text-center font-sans">REAL TIME</p>
+                            <p className="text-white text-sm lg:text-base font-black leading-none tracking-tighter tabular-nums">
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };

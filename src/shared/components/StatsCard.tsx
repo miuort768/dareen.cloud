@@ -23,42 +23,41 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-4 md:p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden",
+            "relative p-5 md:p-6 bg-white dark:bg-gray-950 border-2 border-gray-900 dark:border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] overflow-hidden",
             className,
             "rounded-none"
         )}>
-            {/* Static Background Decorative Accents */}
-            <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-gray-50 dark:bg-gray-800/50 rounded-full pointer-events-none opacity-50"></div>
+            {/* Double Border effect for Premium Sharp feel */}
+            <div className="absolute inset-0 border-[4px] border-white/5 pointer-events-none"></div>
 
-            <div className="relative flex items-start justify-between md:flex-col md:items-center md:justify-center md:text-center z-10 md:gap-3">
+            <div className="relative flex items-start justify-between md:flex-col md:items-center md:justify-center md:text-center z-10 md:gap-4">
                 {/* Icon - right on mobile, top on desktop */}
                 <div className={cn(
-                    "p-2 md:p-3 border-2 shadow-sm rounded-none order-2 md:order-1",
-                    colorStyles[color]
+                    "p-3 md:p-4 border-2 shadow-none rounded-none order-2 md:order-1 border-gray-900 dark:border-gray-700",
+                    colorStyles[color].replace('border-blue-100', '').replace('dark:border-blue-800', '')
                 )}>
-                    <Icon className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+                    <Icon className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
 
                 {/* Content - left on mobile, below icon on desktop */}
-                <div className="space-y-2 md:space-y-2 w-full order-1 md:order-2">
+                <div className="space-y-1 md:space-y-2 w-full order-1 md:order-2">
                     <div className="flex flex-col gap-1 md:items-center">
-                        <span className="w-10 h-1 bg-current opacity-20 rounded-none md:hidden" style={{ color: color === 'blue' ? '#3b82f6' : color === 'emerald' ? '#10b981' : color === 'purple' ? '#a855f7' : color === 'amber' ? '#f59e0b' : color === 'rose' ? '#f43f5e' : '#6366f1' }}></span>
-                        <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{title}</p>
+                        <p className="text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.25em]">{title}</p>
+                        <div className="w-8 h-1 bg-primary-600 rounded-none hidden md:block opacity-50"></div>
                     </div>
 
-                    <h3 className="text-base md:text-lg lg:text-xl font-black text-gray-900 dark:text-white tracking-tight">
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase tabular-nums">
                         {value}
                     </h3>
 
                     {trend && (
                         <div className={cn(
-                            "flex items-center gap-1.5 py-1 px-2.5 rounded-none text-[10px] font-black w-fit md:mx-auto",
+                            "flex items-center gap-1.5 py-1 px-3 border border-gray-900 dark:border-gray-800 rounded-none text-[9px] font-black w-fit md:mx-auto mt-2",
                             trendUp
-                                ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400"
-                                : "bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                                ? "bg-emerald-500 text-white"
+                                : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                         )}>
-                            <span className={cn("inline-flex rounded-full h-1.5 w-1.5", trendUp ? "bg-emerald-500" : "bg-gray-500")}></span>
-                            <span className="uppercase tracking-wider">{trend}</span>
+                            <span className="uppercase tracking-widest leading-none">{trend}</span>
                         </div>
                     )}
                 </div>

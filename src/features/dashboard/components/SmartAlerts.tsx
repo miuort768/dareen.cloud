@@ -99,40 +99,40 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     };
 
     return (
-        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm" dir="rtl">
-            <div className="p-5 border-b border-gray-50 dark:border-gray-800 flex items-center justify-between">
-                <h4 className="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2">
-                    <Zap size={18} className="text-yellow-500" />
+        <div className="bg-white dark:bg-gray-950 border-4 border-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] rounded-none overflow-hidden" dir="rtl">
+            <div className="p-6 border-b-4 border-gray-900 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
+                <h4 className="font-black text-sm lg:text-base uppercase tracking-[0.2em] text-gray-900 dark:text-white flex items-center gap-3">
+                    <Zap size={20} className="text-yellow-500 fill-yellow-500" />
                     مركز التنبيهات الذكية
                 </h4>
-                <span className={cn(
-                    "text-[10px] font-black px-2 py-1 tracking-widest",
-                    alerts.some(a => a.type === 'critical') ? 'bg-rose-100 text-rose-700' :
-                    alerts.some(a => a.type === 'warning') ? 'bg-amber-100 text-amber-700' : 
-                    'bg-emerald-100 text-emerald-700'
+                <div className={cn(
+                    "text-[10px] font-black px-3 py-1.5 tracking-[0.2em] border-2 border-current uppercase",
+                    alerts.some(a => a.type === 'critical') ? 'bg-rose-500 text-white border-rose-600' :
+                    alerts.some(a => a.type === 'warning') ? 'bg-amber-500 text-white border-amber-600' : 
+                    'bg-emerald-500 text-white border-emerald-600'
                 )}>
                     {alerts.filter(a => a.type !== 'success').length > 0 
                         ? `${alerts.filter(a => a.type !== 'success').length} تنبيه` 
                         : 'لا توجد مشاكل'}
-                </span>
+                </div>
             </div>
-            <div className="p-4 space-y-3 max-h-[360px] overflow-y-auto">
+            <div className="p-6 space-y-4 max-h-[480px] overflow-y-auto custom-scrollbar">
                 {alerts.map(alert => {
                     const c = colorMap[alert.color] || colorMap.blue;
                     const Icon = alert.icon;
                     return (
-                        <div key={alert.id} className={cn("p-4 border flex items-start gap-4", c.bg, c.border)}>
-                            <div className={cn("p-2 flex-shrink-0", c.icon)}>
-                                <Icon size={18} />
+                        <div key={alert.id} className={cn("p-5 border-2 flex items-start gap-5 rounded-none shadow-sm transition-none", c.bg, c.border.replace('border-rose-200', 'border-rose-900/20'))}>
+                            <div className={cn("p-3 flex-shrink-0 border-2 border-current rounded-none", c.icon)}>
+                                <Icon size={20} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className={cn("font-black text-sm truncate", c.text)}>{alert.title}</p>
-                                <p className={cn("text-[11px] font-bold mt-1", c.sub)}>{alert.desc}</p>
+                                <p className={cn("font-black text-base tracking-tight uppercase", c.text)}>{alert.title}</p>
+                                <p className={cn("text-xs font-bold mt-1.5 opacity-80", c.sub)}>{alert.desc}</p>
                             </div>
                             {alert.action && (
                                 <button
                                     onClick={alert.action}
-                                    className={cn("flex-shrink-0 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest shadow-sm active:scale-95 transition-all", c.btn)}
+                                    className={cn("flex-shrink-0 px-4 py-2 text-[10px] font-black uppercase tracking-widest border-2 transition-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]", c.btn)}
                                 >
                                     {alert.actionLabel}
                                 </button>

@@ -224,34 +224,29 @@
     backdrop-filter: blur(24px);
   }
 
-  /* Smooth transitions */
-  * {
-    transition-property: background-color, border-color, color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 200ms;
+  /* --- Sharp Premium Design System --- */
+  .sharp-card {
+    @apply bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] transition-none;
   }
 
-  /* Page Transitions */
-  .page-enter {
-    opacity: 0;
-    transform: translateY(10px);
+  .sharp-card-primary {
+    @apply bg-white dark:bg-gray-900 border-2 border-primary-600 rounded-none shadow-[4px_4px_0px_0px_rgba(var(--color-primary),0.2)] transition-none;
   }
 
-  .page-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 300ms, transform 300ms;
+  .sharp-btn {
+    @apply rounded-none transition-none transform-none active:scale-100;
   }
 
-  .page-exit {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* Disable transitions for sharp design if requested */
+  /* * {
+    transition: none !important;
+  } */
 
-  .page-exit-active {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 300ms, transform 300ms;
+  /* Page Transitions - Disabled */
+  .page-enter, .page-enter-active, .page-exit, .page-exit-active {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 
   @keyframes shine {
@@ -302,7 +297,7 @@
   }
 
   .table-action-btn {
-    @apply p-2 rounded-none transition-all duration-200 transform hover:scale-110 active:scale-95 shadow-sm hover:shadow-md;
+    @apply p-2 rounded-none transition-none shadow-none;
   }
 
   /* --- Mobile Optimization (Phone Only) --- */
@@ -326,7 +321,7 @@
     }
 
     .premium-table tbody tr {
-      @apply mb-4 bg-white rounded-2xl border border-gray-100 shadow-sm p-4 dark:bg-gray-900 dark:border-gray-800 translate-y-0 !important;
+      @apply mb-4 bg-white border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] p-4 dark:bg-gray-900 dark:border-gray-800 rounded-none !important;
     }
 
     .premium-table td {

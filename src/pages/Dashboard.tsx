@@ -12,11 +12,10 @@ import { TeacherAchievements } from '../features/dashboard/components/TeacherAch
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
 import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
-
+import { cn } from '../lib/utils';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
-    // currentTime moved to DashboardHeader
 
     const {
         stats,
@@ -31,26 +30,25 @@ export const Dashboard = () => {
 
     const isTeacher = currentUser?.role === 'teacher';
 
-    // The previous handleSendWhatsAppReminder function is removed as per instruction
-    // The imported sendWhatsAppReminder function will be used directly where needed.
-
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard') && currentUser.role !== 'teacher')) {
         return <div className="min-h-screen bg-gray-50 dark:bg-gray-950" />;
     }
 
     if (loading) {
         return (
-            <div className="space-y-6">
-                <div className="h-48 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    {[...Array(8)].map((_, i) => <div key={i} className="h-32 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>)}
+            <div className="space-y-8 p-4 lg:p-8 bg-gray-50 dark:bg-gray-950 min-h-screen">
+                <div className="h-64 bg-gray-200 dark:bg-gray-800 border-4 border-gray-950 dark:border-gray-700"></div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="h-40 bg-gray-200 dark:bg-gray-800 border-4 border-gray-950 dark:border-gray-700"></div>
+                    ))}
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-8 pb-32 max-w-[1600px] mx-auto" dir="rtl">
             <DashboardHeader
                 isTeacher={isTeacher}
                 currentUser={currentUser}
@@ -59,24 +57,37 @@ export const Dashboard = () => {
 
             <DashboardStats stats={stats} isTeacher={isTeacher} />
 
-            {/* General System Notes */}
-            <div className="bg-gradient-to-r from-blue-50 to-primary-50 p-6 border border-blue-200 dark:from-blue-900/20 dark:to-primary-900/20 dark:border-blue-900/30">
-                <div className="flex items-start gap-4">
-                    <div className="p-2 bg-blue-100 rounded-none dark:bg-blue-900/40">
-                        <Bell className="text-blue-600 dark:text-blue-400" size={24} />
+            {/* General System Notes - Sharp Premium Style */}
+            <div className="bg-gray-950 border-4 border-gray-900 p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] relative overflow-hidden group">
+                {/* Decorative Sharp Element */}
+                <div className="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-8 relative z-10">
+                    <div className="p-4 bg-blue-500/10 border-2 border-blue-500/20 text-blue-500">
+                        <Bell size={28} />
                     </div>
                     <div className="flex-1">
-                        <h3 className="text-blue-900 dark:text-blue-200 mb-2 font-black uppercase text-sm tracking-widest">تنبيهات عامة</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <h3 className="text-white font-black uppercase text-xs lg:text-sm tracking-[0.4em] mb-4 opacity-40">System Status & Notifications</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             {!isTeacher && stats.pendingInvoices > 0 && (
-                                <div className="flex items-center gap-2 text-sm">
-                                    <AlertCircle className="text-amber-600" size={18} />
-                                    <span className="text-blue-800 dark:text-blue-300 font-bold">لديك <strong className="text-amber-700">{stats.pendingInvoices}</strong> فاتورة معلقة</span>
+                                <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
+                                    <div className="w-2 h-2 bg-amber-500"></div>
+                                    <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
+                                        Pending Invoices: <span className="text-amber-500 ml-1">{stats.pendingInvoices}</span>
+                                    </span>
                                 </div>
                             )}
-                            <div className="flex items-center gap-2 text-sm">
-                                <Activity className="text-primary-600" size={18} />
-                                <span className="text-blue-800 dark:text-blue-300 font-bold uppercase">النظام يعمل بكفاءة عالية</span>
+                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
+                                <div className="w-2 h-2 bg-emerald-500"></div>
+                                <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
+                                    System Integrity: <span className="text-emerald-500 ml-1">OPTIMIZED</span>
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-4">
+                                <div className="w-2 h-2 bg-blue-500"></div>
+                                <span className="text-white font-black text-sm lg:text-base tracking-tight uppercase">
+                                    Real-time Sync: <span className="text-blue-500 ml-1">ACTIVE</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -84,9 +95,9 @@ export const Dashboard = () => {
             </div>
 
             {isTeacher ? (
-                <div className="space-y-6">
-                    {/* Row 1: 3 Primary Squares */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="space-y-8">
+                    {/* Teacher Specific Sharp Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <TeacherAchievements
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
@@ -96,8 +107,7 @@ export const Dashboard = () => {
                         <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                     </div>
 
-                    {/* Row 2: 2 Main Analysis Blocks */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <DashboardCharts isTeacher={true} monthlyData={monthlyData} />
                         <RenewalAlertsList
                             stats={stats}
@@ -105,22 +115,20 @@ export const Dashboard = () => {
                         />
                     </div>
 
-                    {/* Full width bottom summary */}
                     <div className="w-full">
                         <PerformanceSummary stats={stats} isTeacher={true} />
                     </div>
                 </div>
             ) : (
-                <div className="space-y-6">
-                    {/* Row 1: 3 Primary Squares */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="space-y-8">
+                    {/* Admin Specific Sharp Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <PerformanceSummary stats={stats} isTeacher={false} />
                         <TasksAndRequests tasks={tasks} />
                         <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                     </div>
 
-                    {/* Row 2: 2 Main Analysis Blocks */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <ImportantNotifications
                             tasks={tasks}
                             lowBalanceStudents={lowBalanceStudents}
@@ -128,15 +136,13 @@ export const Dashboard = () => {
                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </div>
 
-                {/* Smart Alerts */}
-                        <SmartAlerts
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            studentInvoices={rawStudentInvoices}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
+                    <SmartAlerts
+                        students={rawStudents}
+                        sessions={rawSessions}
+                        studentInvoices={rawStudentInvoices}
+                        lowBalanceStudents={lowBalanceStudents}
+                    />
 
-                    {/* Additional Full Width Table */}
                     <div className="w-full">
                         <RenewalAlertsList
                             stats={stats}
@@ -144,7 +150,6 @@ export const Dashboard = () => {
                         />
                     </div>
 
-                    {/* Analytics Section */}
                     <div className="w-full">
                         <AnalyticsDashboard
                             students={rawStudents}
@@ -157,4 +162,3 @@ export const Dashboard = () => {
         </div>
     );
 };
-
