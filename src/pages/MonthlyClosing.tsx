@@ -16,7 +16,8 @@ import {
     BarChart3,
     Receipt,
     X,
-    Printer
+    Printer,
+    Star
 } from 'lucide-react';
 
 // --- Salary Slip Modal Component ---

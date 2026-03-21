@@ -1,4 +1,4 @@
-import { Bell, Megaphone } from 'lucide-react';
+import { Megaphone } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
