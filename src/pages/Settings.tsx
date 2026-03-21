@@ -32,6 +32,9 @@ const THEME_COLORS = [
 const Settings = () => {
     const {
         academyName, setAcademyName,
+        academyLogo, setAcademyLogo,
+        academyTagline, setAcademyTagline,
+        academyAddress, setAcademyAddress,
         adminPhone, setAdminPhone,
         themeColor, setThemeColor,
         notificationsEnabled, setNotificationsEnabled,
@@ -39,6 +42,8 @@ const Settings = () => {
         whatsappAutoNotify, setWhatsappAutoNotify,
         whatsappTemplate, setWhatsappTemplate,
         defaultSessionPrice, setDefaultSessionPrice,
+        defaultTeacherPrice, setDefaultTeacherPrice,
+        currencySymbol, setCurrencySymbol,
         semesterName, setSemesterName,
         semesters, setSemesters,
         balanceWarningThreshold, setBalanceWarningThreshold,
@@ -53,11 +58,16 @@ const Settings = () => {
 
     // Local form states
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
+    const [localAcademyLogo, setLocalAcademyLogo] = useState(academyLogo);
+    const [localAcademyTagline, setLocalAcademyTagline] = useState(academyTagline);
+    const [localAcademyAddress, setLocalAcademyAddress] = useState(academyAddress);
     const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone);
     const [localSemesterName, setLocalSemesterName] = useState(semesterName);
     const [localSemesters, setLocalSemesters] = useState(semesters);
     const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
+    const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
+    const [localCurrency, setLocalCurrency] = useState(currencySymbol);
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
 
     // Users form state
@@ -85,9 +95,14 @@ const Settings = () => {
         try {
             await Promise.all([
                 setAcademyName(localAcademyName),
+                setAcademyLogo(localAcademyLogo),
+                setAcademyTagline(localAcademyTagline),
+                setAcademyAddress(localAcademyAddress),
                 setAdminPhone(localAdminPhone),
                 setSemesterName(localSemesterName),
                 setDefaultSessionPrice(Number(localPrice)),
+                setDefaultTeacherPrice(Number(localTeacherPrice)),
+                setCurrencySymbol(localCurrency),
                 setBalanceWarningThreshold(Number(localThreshold))
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
@@ -159,14 +174,28 @@ const Settings = () => {
                 {activeTab === 'general' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Building2 size={18} className="text-primary-600"/> الهوية الأساسية</h2>
-                            <div>
-                                <label className="block text-xs font-black mb-2 opacity-60">اسم الأكاديمية</label>
-                                <input value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-black mb-2 opacity-60">رقم هاتف المسؤول</label>
-                                <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Building2 size={18} className="text-primary-600"/> الهوية الأساسية للأكاديمية</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">اسم الأكاديمية</label>
+                                    <input value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">رابط الشعار (URL)</label>
+                                    <input value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">الشعار اللفظي (Tagline)</label>
+                                    <input value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">العنوان الجغرافي</label>
+                                    <input value={localAcademyAddress} onChange={e => setLocalAcademyAddress(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">رقم هاتف المسؤول الرئيسي</label>
+                                    <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                </div>
                             </div>
                             <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 flex items-center justify-between">
                                 <div><p className="text-sm font-black">وضع الصيانة</p><p className="text-[10px] opacity-60">تعطيل وصول المستخدمين العاديين</p></div>
@@ -177,15 +206,23 @@ const Settings = () => {
                         </section>
 
                         <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Wallet size={18} className="text-emerald-600"/> الإعدادات الأكاديمية والمالية</h2>
+                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Wallet size={18} className="text-emerald-600"/> الإعدادات الأكاديمية والمالية الافتراضية</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="col-span-2">
                                     <label className="block text-xs font-black mb-1 opacity-60">تسمية الفصل الدراسي المنشط</label>
                                     <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-black mb-1 opacity-60">سعر الحصة الافتراضي</label>
+                                    <label className="block text-xs font-black mb-1 opacity-60">سعر الطالب (افتراضي)</label>
                                     <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-black mb-1 opacity-60">سعر المعلمة (افتراضي)</label>
+                                    <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-black mb-1 opacity-60">رمز العملة (مثال: ج.م)</label>
+                                    <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-black mb-1 opacity-60">حد تنبيه الرصيد المنخفض</label>
@@ -193,7 +230,7 @@ const Settings = () => {
                                 </div>
                             </div>
                             <button onClick={handleSaveGeneral} className="w-full py-4 bg-primary-600 text-white font-black uppercase tracking-widest hover:bg-primary-700 shadow-lg shadow-primary-500/20">
-                                {isSaving ? <RefreshCw className="animate-spin mx-auto" /> : 'حفظ الإعدادات العامة'}
+                                {isSaving ? <RefreshCw className="animate-spin mx-auto" /> : 'حفظ الإعدادات الكاملة'}
                             </button>
                         </section>
                     </div>

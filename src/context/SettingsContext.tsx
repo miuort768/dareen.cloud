@@ -3,6 +3,9 @@ import { api } from '../lib/api';
 
 interface SettingsContextType {
     academyName: string;
+    academyLogo: string;
+    academyTagline: string;
+    academyAddress: string;
     adminPhone: string;
     themeColor: string;
     notificationsEnabled: boolean;
@@ -10,12 +13,17 @@ interface SettingsContextType {
     maintenanceMode: boolean;
     whatsappAutoNotify: boolean;
     defaultSessionPrice: number;
+    defaultTeacherPrice: number;
+    currencySymbol: string;
     semesterName: string;
-    semesters: string; // Stored as comma separated string for simplicity or JSON
+    semesters: string;
     whatsappTemplate: string;
     balanceWarningThreshold: number;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
+    setAcademyLogo: (logo: string) => Promise<void>;
+    setAcademyTagline: (tagline: string) => Promise<void>;
+    setAcademyAddress: (address: string) => Promise<void>;
     setAdminPhone: (phone: string) => Promise<void>;
     setThemeColor: (color: string) => Promise<void>;
     setNotificationsEnabled: (enabled: boolean) => Promise<void>;
@@ -23,6 +31,8 @@ interface SettingsContextType {
     setMaintenanceMode: (enabled: boolean) => Promise<void>;
     setWhatsappAutoNotify: (enabled: boolean) => Promise<void>;
     setDefaultSessionPrice: (price: number) => Promise<void>;
+    setDefaultTeacherPrice: (price: number) => Promise<void>;
+    setCurrencySymbol: (symbol: string) => Promise<void>;
     setSemesterName: (name: string) => Promise<void>;
     setSemesters: (semesters: string) => Promise<void>;
     setWhatsappTemplate: (template: string) => Promise<void>;
@@ -33,6 +43,9 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [academyName, setAcademyNameState] = useState('دارين لتعليم و التدريب');
+    const [academyLogo, setAcademyLogoState] = useState('');
+    const [academyTagline, setAcademyTaglineState] = useState('مستقبل أفضل لأبنائنا');
+    const [academyAddress, setAcademyAddressState] = useState('');
     const [adminPhone, setAdminPhoneState] = useState('201015098836');
     const [themeColor, setThemeColorState] = useState(() => localStorage.getItem('app_theme_color') || 'indigo');
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
@@ -40,6 +53,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [maintenanceMode, setMaintenanceModeState] = useState(false);
     const [whatsappAutoNotify, setWhatsappAutoNotifyState] = useState(false);
     const [defaultSessionPrice, setDefaultSessionPriceState] = useState(0);
+    const [defaultTeacherPrice, setDefaultTeacherPriceState] = useState(0);
+    const [currencySymbol, setCurrencySymbolState] = useState('ج.م');
     const [semesterName, setSemesterNameState] = useState('الفصل الدراسي');
     const [semesters, setSemestersState] = useState('الفصل الأول,الفصل الثاني');
     const [whatsappTemplate, setWhatsappTemplateState] = useState('تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}');
@@ -52,6 +67,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                 const settings = await api.get<any>('/system/public-settings');
                 if (settings) {
                     if (settings.academy_name) setAcademyNameState(settings.academy_name);
+                    if (settings.academy_logo) setAcademyLogoState(settings.academy_logo);
+                    if (settings.academy_tagline) setAcademyTaglineState(settings.academy_tagline);
+                    if (settings.academy_address) setAcademyAddressState(settings.academy_address);
                     if (settings.admin_phone) setAdminPhoneState(settings.admin_phone);
                     if (settings.theme_color) setThemeColorState(settings.theme_color);
                     if (settings.notifications_enabled) setNotificationsEnabledState(settings.notifications_enabled === 'true');
@@ -59,6 +77,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.maintenance_mode) setMaintenanceModeState(settings.maintenance_mode === 'true');
                     if (settings.whatsapp_auto_notify) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
                     if (settings.default_session_price) setDefaultSessionPriceState(Number(settings.default_session_price));
+                    if (settings.default_teacher_price) setDefaultTeacherPriceState(Number(settings.default_teacher_price));
+                    if (settings.currency_symbol) setCurrencySymbolState(settings.currency_symbol);
                     if (settings.semester_name) setSemesterNameState(settings.semester_name);
                     if (settings.semesters) setSemestersState(settings.semesters);
                     if (settings.whatsapp_template) setWhatsappTemplateState(settings.whatsapp_template);
@@ -85,6 +105,21 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const setAcademyName = async (name: string) => {
         setAcademyNameState(name);
         await updateSetting('academy_name', name);
+    };
+
+    const setAcademyLogo = async (logo: string) => {
+        setAcademyLogoState(logo);
+        await updateSetting('academy_logo', logo);
+    };
+
+    const setAcademyTagline = async (tagline: string) => {
+        setAcademyTaglineState(tagline);
+        await updateSetting('academy_tagline', tagline);
+    };
+
+    const setAcademyAddress = async (address: string) => {
+        setAcademyAddressState(address);
+        await updateSetting('academy_address', address);
     };
 
     const setAdminPhone = async (phone: string) => {
@@ -124,6 +159,16 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('default_session_price', String(price));
     };
 
+    const setDefaultTeacherPrice = async (price: number) => {
+        setDefaultTeacherPriceState(price);
+        await updateSetting('default_teacher_price', String(price));
+    };
+
+    const setCurrencySymbol = async (symbol: string) => {
+        setCurrencySymbolState(symbol);
+        await updateSetting('currency_symbol', symbol);
+    };
+
     const setSemesterName = async (name: string) => {
         setSemesterNameState(name);
         await updateSetting('semester_name', name);
@@ -157,11 +202,14 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <SettingsContext.Provider value={{
-            academyName, adminPhone, themeColor, notificationsEnabled, autoBackup, maintenanceMode,
-            whatsappAutoNotify, defaultSessionPrice, semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
+            academyName, academyLogo, academyTagline, academyAddress, adminPhone, themeColor, notificationsEnabled, 
+            autoBackup, maintenanceMode, whatsappAutoNotify, defaultSessionPrice, defaultTeacherPrice, currencySymbol,
+            semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
             isSettingsLoading,
-            setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup, setMaintenanceMode,
-            setWhatsappAutoNotify, setDefaultSessionPrice, setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold
+            setAcademyName, setAcademyLogo, setAcademyTagline, setAcademyAddress, setAdminPhone, setThemeColor, 
+            setNotificationsEnabled, setAutoBackup, setMaintenanceMode, setWhatsappAutoNotify, 
+            setDefaultSessionPrice, setDefaultTeacherPrice, setCurrencySymbol,
+            setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold
         }}>
             {children}
         </SettingsContext.Provider>
