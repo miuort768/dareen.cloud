@@ -17,7 +17,8 @@ import {
     Receipt,
     X,
     Printer,
-    Star
+    Star,
+    RefreshCw
 } from 'lucide-react';
 
 // --- Salary Slip Modal Component ---
@@ -121,7 +122,7 @@ import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
 
-type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis' | 'teachers';
+type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
 export const MonthlyClosing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
@@ -346,6 +347,15 @@ export const MonthlyClosing: React.FC = () => {
                     )}
                 >
                     <Users size={18} /> تحليل المعلمات
+                </button>
+                <button 
+                    onClick={() => setActiveTab('compensation')}
+                    className={cn(
+                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        activeTab === 'compensation' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                    )}
+                >
+                    <RefreshCw size={18} /> حصص التعويض
                 </button>
             </div>
 
@@ -647,6 +657,64 @@ export const MonthlyClosing: React.FC = () => {
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'compensation' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                            <div>
+                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">جدول حصص التعويضات المعلقة</h2>
+                                <p className="text-sm font-bold text-gray-400 mt-1">الحصص التي تم إلغاؤها وبانتظار تحديد موعد بديل</p>
+                            </div>
+                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+                                <RefreshCw size={24} />
+                            </div>
+                        </div>
+
+                        <div className="overflow-x-auto bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
+                            <table className="w-full text-right border-collapse">
+                                <thead>
+                                    <tr className="bg-gray-950 text-white text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-gray-950">
+                                        <th className="px-6 py-4">اسم الطالب</th>
+                                        <th className="px-6 py-4">المادة</th>
+                                        <th className="px-6 py-4">المعلمة</th>
+                                        <th className="px-6 py-4">تاريخ الإلغاء</th>
+                                        <th className="px-6 py-4 text-center">الخيار</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-700">
+                                    {filteredSessions.filter(s => s.needsCompensation && !s.isCompensation && s.status === 'cancelled').map((session, idx) => (
+                                        <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                            <td className="px-6 py-4">
+                                                <div className="font-black text-gray-950 dark:text-white">{session.studentName}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-xs font-bold text-gray-500">{session.subject}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-xs font-bold text-gray-500">{session.teacherName}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-xs font-bold text-rose-500 font-mono">{session.date}</div>
+                                            </td>
+                                            <td className="px-6 py-4 text-center">
+                                                <div className="text-[10px] font-black bg-rose-50 text-rose-600 px-3 py-1 inline-block border border-rose-100 uppercase">
+                                                    بانتظار التعويض
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {filteredSessions.filter(s => s.needsCompensation && !s.isCompensation && s.status === 'cancelled').length === 0 && (
+                                        <tr>
+                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold italic text-sm italic">
+                                                لا توجد حصص تعويضية معلقة حالياً
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 )}

@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 interface SecureAttendanceModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string) => void;
+    onConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => void;
     studentName: string;
     date: string;
 }
@@ -21,6 +21,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     const [status, setStatus] = useState<'completed' | 'cancelled'>('completed');
     const [topics, setTopics] = useState('');
     const [homework, setHomework] = useState('');
+    const [needsCompensation, setNeedsCompensation] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             setStatus('completed');
             setTopics('');
             setHomework('');
+            setNeedsCompensation(false);
             setError('');
         }
     }, [isOpen]);
@@ -40,7 +42,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             setError('كلمة المرور غير صحيحة');
             return;
         }
-        onConfirm(status, topics, homework);
+        onConfirm(status, topics, homework, needsCompensation);
         onClose();
     };
 
@@ -124,6 +126,23 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     onChange={(e) => setHomework(e.target.value)}
                                 />
                             </div>
+                        </div>
+                    )}
+
+                    {status === 'cancelled' && (
+                        <div className="animate-in fade-in slide-in-from-top-4 duration-300">
+                            <label className="flex items-center gap-3 p-4 bg-rose-50 border-2 border-rose-100 cursor-pointer hover:bg-rose-100/50 transition-colors">
+                                <input 
+                                    type="checkbox"
+                                    checked={needsCompensation}
+                                    onChange={(e) => setNeedsCompensation(e.target.checked)}
+                                    className="w-5 h-5 rounded-none accent-rose-600 cursor-pointer"
+                                />
+                                <div>
+                                    <p className="text-sm font-black text-rose-700 uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
+                                    <p className="text-[10px] font-bold text-rose-500">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
+                                </div>
+                            </label>
                         </div>
                     )}
 

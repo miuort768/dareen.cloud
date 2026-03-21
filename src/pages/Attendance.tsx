@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users, Search, BookOpen, TrendingUp } from 'lucide-react';
+import { Users, Search, BookOpen, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useApp } from '../context/AppContext';
@@ -54,7 +54,7 @@ export const Attendance = () => {
         return studentName.charAt(0);
     };
 
-    const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string) => {
+    const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
         if (!secureModalData || !logDate) return;
         const { student, enrollment } = secureModalData;
 
@@ -77,7 +77,9 @@ export const Attendance = () => {
             status: status,
             day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
             topics,
-            homework
+            homework,
+            needsCompensation,
+            price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
         });
 
         if (success) {
@@ -154,10 +156,46 @@ export const Attendance = () => {
                 <div className="space-y-4">
                     <div className="bg-transparent no-print">
                         <div className="px-1 border-b border-gray-100 dark:border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4">
-                            <h3 className="text-base lg:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
-                                <Users size={20} className="text-primary-600" />
-                                إدارة طلابك وموادهم
-                            </h3>
+                            <div className="flex items-center gap-4">
+                                <h3 className="text-base lg:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+                                    <Users size={20} className="text-primary-600" />
+                                    إدارة طلابك وموادهم
+                                </h3>
+                                <button
+                                    onClick={async () => {
+                                        if (!window.confirm(`هل أنت متأكد من تحضير جميع الطلاب (${matchedEnrollments.length}) كحضور؟`)) return;
+                                        
+                                        const now = new Date();
+                                        const currentTime = now.toLocaleTimeString('ar-EG', {
+                                            hour: 'numeric',
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                            hour12: true
+                                        });
+
+                                        let successCount = 0;
+                                        for (const { student, enrollment } of (matchedEnrollments || [])) {
+                                            const success = await logAttendance({
+                                                studentId: student.id,
+                                                studentName: student.name,
+                                                teacherName: enrollment.teacher,
+                                                teacherId: enrollment.teacherId,
+                                                subject: enrollment.subject,
+                                                date: logDate,
+                                                time: currentTime,
+                                                status: 'completed',
+                                                day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
+                                                price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
+                                            });
+                                            if (success) successCount++;
+                                        }
+                                        showNotification(`تم تسجيل حضور ${successCount} طلاب بنجاح`, 'success');
+                                    }}
+                                    className="bg-emerald-600 text-white px-4 py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-lg shadow-emerald-600/20"
+                                >
+                                    <CheckCircle2 size={14} /> تحضير جماعي (حضور الكل)
+                                </button>
+                            </div>
                             <div className="relative w-full md:w-64">
                                 <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                                 <input

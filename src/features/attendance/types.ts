@@ -22,6 +22,8 @@ export interface Session {
     teacherPrice?: number;
     topics?: string;
     homework?: string;
+    needsCompensation?: boolean; // Flag for cancelled sessions that should be made up
+    isCompensation?: boolean;    // Flag for the session that is the make-up session
 }
 
 export interface Enrollment {
@@ -32,12 +34,14 @@ export interface Enrollment {
     sessionsUsed: number;
     schedule: ScheduleSlot[];
     price?: number;
+    discount?: number; // Optional discount amount or percentage
 }
 
 export interface Student extends Omit<GlobalStudent, 'enrollments'> {
     id: string;
     name: string;
     grade: string;
+    parentId?: string; // To link siblings
     curriculum?: string;
     enrollments: Enrollment[];
 }
