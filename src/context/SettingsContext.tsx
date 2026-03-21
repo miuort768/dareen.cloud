@@ -8,6 +8,10 @@ interface SettingsContextType {
     notificationsEnabled: boolean;
     autoBackup: boolean;
     maintenanceMode: boolean;
+    whatsappAutoNotify: boolean;
+    defaultSessionPrice: number;
+    semesterName: string;
+    balanceWarningThreshold: number;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAdminPhone: (phone: string) => Promise<void>;
@@ -15,6 +19,10 @@ interface SettingsContextType {
     setNotificationsEnabled: (enabled: boolean) => Promise<void>;
     setAutoBackup: (enabled: boolean) => Promise<void>;
     setMaintenanceMode: (enabled: boolean) => Promise<void>;
+    setWhatsappAutoNotify: (enabled: boolean) => Promise<void>;
+    setDefaultSessionPrice: (price: number) => Promise<void>;
+    setSemesterName: (name: string) => Promise<void>;
+    setBalanceWarningThreshold: (threshold: number) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -26,6 +34,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [notificationsEnabled, setNotificationsEnabledState] = useState(() => localStorage.getItem('app_notifications') !== 'false');
     const [autoBackup, setAutoBackupState] = useState(false);
     const [maintenanceMode, setMaintenanceModeState] = useState(false);
+    const [whatsappAutoNotify, setWhatsappAutoNotifyState] = useState(false);
+    const [defaultSessionPrice, setDefaultSessionPriceState] = useState(0);
+    const [semesterName, setSemesterNameState] = useState('الفصل الدراسي');
+    const [balanceWarningThreshold, setBalanceWarningThresholdState] = useState(2);
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
@@ -39,6 +51,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.notifications_enabled) setNotificationsEnabledState(settings.notifications_enabled === 'true');
                     if (settings.auto_backup) setAutoBackupState(settings.auto_backup === 'true');
                     if (settings.maintenance_mode) setMaintenanceModeState(settings.maintenance_mode === 'true');
+                    if (settings.whatsapp_auto_notify) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
+                    if (settings.default_session_price) setDefaultSessionPriceState(Number(settings.default_session_price));
+                    if (settings.semester_name) setSemesterNameState(settings.semester_name);
+                    if (settings.balance_warning_threshold) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
@@ -90,6 +106,26 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('maintenance_mode', String(enabled));
     };
 
+    const setWhatsappAutoNotify = async (enabled: boolean) => {
+        setWhatsappAutoNotifyState(enabled);
+        await updateSetting('whatsapp_auto_notify', String(enabled));
+    };
+
+    const setDefaultSessionPrice = async (price: number) => {
+        setDefaultSessionPriceState(price);
+        await updateSetting('default_session_price', String(price));
+    };
+
+    const setSemesterName = async (name: string) => {
+        setSemesterNameState(name);
+        await updateSetting('semester_name', name);
+    };
+
+    const setBalanceWarningThreshold = async (threshold: number) => {
+        setBalanceWarningThresholdState(threshold);
+        await updateSetting('balance_warning_threshold', String(threshold));
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -103,8 +139,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <SettingsContext.Provider value={{
-            academyName, adminPhone, themeColor, notificationsEnabled, autoBackup, maintenanceMode, isSettingsLoading,
-            setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup, setMaintenanceMode
+            academyName, adminPhone, themeColor, notificationsEnabled, autoBackup, maintenanceMode,
+            whatsappAutoNotify, defaultSessionPrice, semesterName, balanceWarningThreshold,
+            isSettingsLoading,
+            setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup, setMaintenanceMode,
+            setWhatsappAutoNotify, setDefaultSessionPrice, setSemesterName, setBalanceWarningThreshold
         }}>
             {children}
         </SettingsContext.Provider>

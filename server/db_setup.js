@@ -235,6 +235,23 @@ async function setupDatabase() {
             FOREIGN KEY(sessionId) REFERENCES sessions(id) ON DELETE SET NULL
         );
 
+        CREATE TABLE IF NOT EXISTS audit_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            userId TEXT,
+            username TEXT,
+            action TEXT NOT NULL,
+            details TEXT,
+            timestamp TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS whatsapp_templates (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            content TEXT NOT NULL,
+            isActive INTEGER DEFAULT 1,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         -- Tables created above
     `);
 
@@ -457,7 +474,11 @@ async function setupDatabase() {
             { key: 'admin_phone', value: '201152001250' },
             { key: 'theme_color', value: 'indigo' },
             { key: 'notifications_enabled', value: 'true' },
-            { key: 'maintenance_mode', value: 'false' }
+            { key: 'maintenance_mode', value: 'false' },
+            { key: 'whatsapp_auto_notify', value: 'false' },
+            { key: 'default_session_price', value: '0' },
+            { key: 'semester_name', value: 'الفصل الدراسي' },
+            { key: 'balance_warning_threshold', value: '2' }
         ];
         for (const s of defaultSettings) {
             await db.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);

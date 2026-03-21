@@ -13,7 +13,8 @@ router.get('/backup', async (req, res) => {
             students, teachers, parents, sessions, teacherInvoices,
             studentInvoices, manualTransactions, fixedExpenses,
             tasks, completedSessions, dismissedNotifications, systemSettings, users,
-            announcements, conversations, messages, notifications, chatProfiles, conversationMembers
+            announcements, conversations, messages, notifications, chatProfiles, conversationMembers,
+            auditLogs, whatsappTemplates
         ] = await Promise.all([
             req.db.all('SELECT * FROM students'),
             req.db.all('SELECT * FROM teachers'),
@@ -33,7 +34,9 @@ router.get('/backup', async (req, res) => {
             req.db.all('SELECT * FROM messages'),
             req.db.all('SELECT * FROM notifications'),
             req.db.all('SELECT * FROM chat_profiles'),
-            req.db.all('SELECT * FROM conversation_members')
+            req.db.all('SELECT * FROM conversation_members'),
+            req.db.all('SELECT * FROM audit_logs'),
+            req.db.all('SELECT * FROM whatsapp_templates')
         ]);
 
         const studentsWithEnrollments = await Promise.all(students.map(async (s) => {
@@ -67,7 +70,9 @@ router.get('/backup', async (req, res) => {
                 conversations,
                 messages,
                 chatProfiles,
-                conversationMembers
+                conversationMembers,
+                auditLogs,
+                whatsappTemplates
             }
         };
 
@@ -105,6 +110,8 @@ router.post('/restore', async (req, res) => {
             await tx.run('DELETE FROM fixed_expenses');
             await tx.run('DELETE FROM completed_sessions');
             await tx.run('DELETE FROM dismissed_notifications');
+            await tx.run('DELETE FROM audit_logs');
+            await tx.run('DELETE FROM whatsapp_templates');
             await tx.run('DELETE FROM system_settings');
 
             // We keep the primary 'admin' to avoid locking out, but clear others
@@ -263,6 +270,20 @@ router.post('/restore', async (req, res) => {
                         [m.id, m.conversationId, m.senderId, m.senderName, m.content, m.timestamp]);
                 }
             }
+
+            if (data.auditLogs) {
+                for (const al of data.auditLogs) {
+                    await tx.run(`INSERT INTO audit_logs (id, userId, username, action, details, timestamp) VALUES (?, ?, ?, ?, ?, ?)`,
+                        [al.id, al.userId, al.username, al.action, al.details, al.timestamp]);
+                }
+            }
+
+            if (data.whatsappTemplates) {
+                for (const wt of data.whatsappTemplates) {
+                    await tx.run(`INSERT INTO whatsapp_templates (id, name, content, isActive, created_at) VALUES (?, ?, ?, ?, ?)`,
+                        [wt.id, wt.name, wt.content, wt.isActive, wt.created_at]);
+                }
+            }
         });
 
         res.json({ message: 'Restore successful, system completely updated.' });
@@ -291,6 +312,8 @@ router.post('/system-reset', async (req, res) => {
             await tx.run('DELETE FROM fixed_expenses');
             await tx.run('DELETE FROM completed_sessions');
             await tx.run('DELETE FROM dismissed_notifications');
+            await tx.run('DELETE FROM audit_logs');
+            await tx.run('DELETE FROM whatsapp_templates');
 
             // Delete non-admin users if any exist (safety measure)
             // But per requirements, we keep "admins" and "supervisors"
@@ -305,7 +328,11 @@ router.post('/system-reset', async (req, res) => {
                 { key: 'admin_phone', value: '201152001250' },
                 { key: 'theme_color', value: 'indigo' },
                 { key: 'notifications_enabled', value: 'true' },
-                { key: 'maintenance_mode', value: 'false' }
+                { key: 'maintenance_mode', value: 'false' },
+                { key: 'whatsapp_auto_notify', value: 'false' },
+                { key: 'default_session_price', value: '0' },
+                { key: 'semester_name', value: 'الفصل الدراسي' },
+                { key: 'balance_warning_threshold', value: '2' }
             ];
             for (const s of defaultSettings) {
                 await tx.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);
@@ -444,6 +471,71 @@ router.delete('/dismissed-notifications/reset', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// 8. Audit Logs
+router.get('/audit-logs', async (req, res) => {
+    try {
+        const logs = await req.db.all('SELECT * FROM audit_logs ORDER BY timestamp DESC LIMIT 500');
+        res.json(logs);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.post('/audit-logs', async (req, res) => {
+    const { action, details, userId, username } = req.body;
+    try {
+        await req.db.run('INSERT INTO audit_logs (userId, username, action, details) VALUES (?, ?, ?, ?)',
+            [userId || 'system', username || 'System', action, details]);
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 9. WhatsApp Templates
+router.get('/whatsapp-templates', async (req, res) => {
+    try {
+        const templates = await req.db.all('SELECT * FROM whatsapp_templates');
+        res.json(templates);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.post('/whatsapp-templates', async (req, res) => {
+    const { id, name, content, isActive } = req.body;
+    try {
+        await req.db.run('INSERT INTO whatsapp_templates (id, name, content, isActive) VALUES (?, ?, ?, ?)',
+            [id || require('uuid').v4(), name, content, isActive !== undefined ? isActive : 1]);
+        res.status(201).json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.put('/whatsapp-templates/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, content, isActive } = req.body;
+    try {
+        await req.db.run('UPDATE whatsapp_templates SET name = ?, content = ?, isActive = ? WHERE id = ?',
+            [name, content, isActive, id]);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.delete('/whatsapp-templates/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await req.db.run('DELETE FROM whatsapp_templates WHERE id = ?', id);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 module.exports = { systemRouter: router };
 

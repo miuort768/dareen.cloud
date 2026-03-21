@@ -5,7 +5,7 @@ import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
 import { Home } from './pages/public/Home';
 import { Dashboard } from './pages/Dashboard';
-import { Settings } from './pages/Settings';
+import Settings from './pages/Settings';
 import { ParentDashboard } from './pages/ParentDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
 import { ParentStudents } from './pages/ParentStudents';

@@ -1,125 +1,123 @@
 import { useState, useEffect, useRef } from 'react';
-import { useApp } from '../context/AppContext';
-import { settingsService } from '../features/settings/services/settingsService';
-import { cn } from '../lib/utils';
-import {
-    Save, User, Building2, Lock, Download, Upload, Database, Check,
-    Settings as SettingsIcon, Bell, Moon, Sun, Shield,
-    Calendar, Palette, UserPlus, Users, Edit, Trash2, AlertCircle, X,
-    Server
+import { 
+    Settings as SettingsIcon, 
+    Save, 
+    Building2, 
+    AlertCircle, 
+    Check, 
+    Users, 
+    UserPlus, 
+    Edit,
+    Wallet,
+    Trash2,
+    FileText,
+    Activity
 } from 'lucide-react';
-import { useDarkMode } from '../hooks/useDarkMode';
+import { useApp } from '../context/useApp';
 import { Skeleton } from '../components/ui/Skeleton';
-import { StatsCard } from '../shared/components/StatsCard';
-import { useDashboardData } from '../hooks/useDashboardData';
+import { cn } from '../lib/utils';
+import { settingsService } from '../features/settings/services/settingsService';
 
 const AVAILABLE_PERMISSIONS = [
-    { id: 'dashboard', label: 'الرئيسية' },
-    { id: 'students', label: 'الطلاب' },
-    { id: 'attendance', label: 'الحضور والغياب' },
-    { id: 'finance', label: 'المالية العامة' },
-    { id: 'student-invoices', label: 'فواتير الطلاب' },
-    { id: 'teacher-invoices', label: 'فواتير المعلمين' },
-    { id: 'reports', label: 'التقارير' },
-    { id: 'schedule', label: 'الجدول الدراسي' },
-    { id: 'teachers', label: 'المعلمين' },
-    { id: 'parents', label: 'أولياء الأمور' },
-    { id: 'appointments', label: 'المواعيد' },
-    { id: 'settings', label: 'الإعدادات' },
+    { id: '*', label: 'وصول كامل (Admin)' },
+    { id: 'view_students', label: 'عرض الطلاب' },
+    { id: 'manage_students', label: 'إدارة الطلاب' },
+    { id: 'view_teachers', label: 'عرض المعلمين' },
+    { id: 'manage_teachers', label: 'إدارة المعلمين' },
+    { id: 'view_finance', label: 'عرض المالية' },
+    { id: 'manage_finance', label: 'إدارة المالية' },
+    { id: 'manage_system', label: 'إدارة النظام' }
 ];
 
-const THEME_PRESETS = [
-    { id: 'indigo', color: '#4f46e5', label: 'نيلي' },
-    { id: 'blue', color: '#2563eb', label: 'أزرق' },
-    { id: 'emerald', color: '#10b981', label: 'زمردي' },
-    { id: 'rose', color: '#e11d48', label: 'وردي' },
-    { id: 'amber', color: '#d97706', label: 'عسلي' },
-    { id: 'purple', color: '#7c3aed', label: 'بنفسجي' },
-    { id: 'cyan', color: '#0891b2', label: 'سماوي' },
-    { id: 'teal', color: '#0d9488', label: 'فيروزي' },
-    { id: 'orange', color: '#ea580c', label: 'برتقالي' },
-    { id: 'slate', color: '#475569', label: 'صخري' },
-    { id: 'pink', color: '#db2777', label: 'زهري' },
-    { id: 'lime', color: '#65a30d', label: 'ليموني' },
-    { id: 'sky', color: '#0284c7', label: 'سماوي فاتح' },
-    { id: 'fuchsia', color: '#c026d3', label: 'أرجواني' },
-];
-
-export const Settings = () => {
+const Settings = () => {
     const {
-        user,
-        users,
         academyName,
         setAcademyName,
-        updateUser,
-        addUser,
-        editUser,
-        deleteUser,
-        themeColor,
-        setThemeColor,
-        notificationsEnabled,
-        setNotificationsEnabled,
         adminPhone,
         setAdminPhone,
-        autoBackup,
-        setAutoBackup,
         maintenanceMode,
-        setMaintenanceMode
+        setMaintenanceMode,
+        whatsappAutoNotify,
+        setWhatsappAutoNotify,
+        defaultSessionPrice,
+        setDefaultSessionPrice,
+        semesterName,
+        setSemesterName,
+        balanceWarningThreshold,
+        setBalanceWarningThreshold,
+        user,
+        updateUser,
+        users,
+        addUser,
+        editUser,
+        deleteUser
     } = useApp();
 
-    const { stats } = useDashboardData(user);
-
-    // Sum all users: System Users (Admins) + Teachers + Students + Parents
-    const totalPlatformUsers = users.length + (stats.studentsCount || 0) + (stats.teachersCount || 0) + (stats.parentsCount || 0);
-
-    const [theme, setTheme] = useDarkMode();
-
-    // User Settings
-    const [localName, setLocalName] = useState(user.name);
-    const [localUsername, setLocalUsername] = useState(user.username);
+    const [localName, setLocalName] = useState(user?.name || '');
+    const [localUsername, setLocalUsername] = useState(user?.username || '');
     const [localPassword, setLocalPassword] = useState('');
+    const [localAcademyName, setLocalAcademyName] = useState(academyName || '');
+    const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone || '');
+    const [localMaintenanceMode, setLocalMaintenanceMode] = useState(maintenanceMode || false);
 
-    // Academy Settings
-    const [localAcademyName, setLocalAcademyName] = useState(academyName);
-    const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone);
-    const [localMaintenanceMode, setLocalMaintenanceMode] = useState(maintenanceMode);
-
-    // New/Edit User State
-    const [editingUserId, setEditingUserId] = useState<string | null>(null);
     const [newUserUsername, setNewUserUsername] = useState('');
     const [newUserPassword, setNewUserPassword] = useState('');
     const [newUserPermissions, setNewUserPermissions] = useState<string[]>([]);
+    const [editingUserId, setEditingUserId] = useState<string | null>(null);
+
     const [userToDelete, setUserToDelete] = useState<{ id: string; username: string } | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
-    const [resetLoading, setResetLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    
+    // Advanced Tools State
+    const [auditLogs, setAuditLogs] = useState<any[]>([]);
+    const [activeTab, setActiveTab] = useState<'settings' | 'audit' | 'tools'>('settings');
+
+    // Category 2 States
+    const [localDefaultPrice, setLocalDefaultPrice] = useState(defaultSessionPrice);
+    const [localSemesterName, setLocalSemesterName] = useState(semesterName);
+    const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
+    const [localWhatsappNotify, setLocalWhatsappNotify] = useState(whatsappAutoNotify);
 
     // Scroll to form ref
     const formRef = useRef<HTMLDivElement>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Notification State
     const [showSuccess, setShowSuccess] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
     useEffect(() => {
-        // Simulate loading for better UX
-        const timer = setTimeout(() => setLoading(false), 500);
+        const timer = setTimeout(() => {
+            setLoading(false);
+            fetchAdvancedData();
+        }, 500);
         return () => clearTimeout(timer);
     }, []);
 
-    // Sync local states when context data is loaded
+    const fetchAdvancedData = async () => {
+        try {
+            const logs = await settingsService.getAuditLogs();
+            setAuditLogs(logs || []);
+        } catch (e) {
+            console.error("Error fetching advanced data:", e);
+        }
+    };
+
     useEffect(() => {
         if (academyName) setLocalAcademyName(academyName);
         if (adminPhone) setLocalAdminPhone(adminPhone);
         if (maintenanceMode !== undefined) setLocalMaintenanceMode(maintenanceMode);
+        setLocalDefaultPrice(defaultSessionPrice);
+        setLocalSemesterName(semesterName);
+        setLocalThreshold(balanceWarningThreshold);
+        setLocalWhatsappNotify(whatsappAutoNotify);
         if (user) {
             setLocalName(user.name);
             setLocalUsername(user.username);
         }
-    }, [academyName, adminPhone, maintenanceMode, user]);
+    }, [academyName, adminPhone, maintenanceMode, user, defaultSessionPrice, semesterName, balanceWarningThreshold, whatsappAutoNotify]);
 
     const showNotification = (message: string) => {
         setNotificationMessage(message);
@@ -130,10 +128,13 @@ export const Settings = () => {
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            // Save Global Context Data
             await Promise.all([
                 setAcademyName(localAcademyName),
-                setAdminPhone(localAdminPhone)
+                setAdminPhone(localAdminPhone),
+                setDefaultSessionPrice(Number(localDefaultPrice)),
+                setSemesterName(localSemesterName),
+                setBalanceWarningThreshold(Number(localThreshold)),
+                setWhatsappAutoNotify(localWhatsappNotify)
             ]);
 
             const updates: { name?: string; username: string; password?: string } = {
@@ -147,22 +148,27 @@ export const Settings = () => {
 
             await updateUser(updates);
 
-            // Show notification
+            await settingsService.createAuditLog({
+                action: 'تعديل الإعدادات',
+                details: 'تم تحديث الإعدادات العامة للنظام',
+                userId: user.id,
+                username: user.username
+            });
+
             showNotification('تم حفظ الإعدادات العامة بنجاح!');
+            fetchAdvancedData();
         } catch (error) {
             console.error('Save settings error:', error);
             alert('حدث خطأ أثناء حفظ الإعدادات');
         } finally {
             setIsSaving(false);
-            setLocalPassword(''); // Clear password field after save
+            setLocalPassword('');
         }
     };
 
     const handleTogglePermission = (id: string) => {
         setNewUserPermissions(prev =>
-            prev.includes(id)
-                ? prev.filter(p => p !== id)
-                : [...prev, id]
+            prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
         );
     };
 
@@ -173,21 +179,16 @@ export const Settings = () => {
         }
 
         if (editingUserId) {
-            // Edit Mode
             const updates: { username: string; name: string; permissions: string[]; password?: string } = {
                 username: newUserUsername,
                 name: newUserUsername,
                 permissions: newUserPermissions
             };
-            if (newUserPassword) {
-                updates.password = newUserPassword;
-            }
-
+            if (newUserPassword) updates.password = newUserPassword;
             editUser(editingUserId, updates);
             setEditingUserId(null);
-            showNotification('تم تحديث بيانات المستخدم وصلاحياته بنجاح');
+            showNotification('تم تحديث بيانات المستخدم بنجاح');
         } else {
-            // Create Mode
             if (!newUserPassword) {
                 alert('يرجى تعبئة كلمة المرور');
                 return;
@@ -199,937 +200,307 @@ export const Settings = () => {
                 permissions: newUserPermissions,
                 role: 'admin'
             });
-            showNotification('تم إنشاء المستخدم الجديد بنجاح');
+            showNotification('تم إضافة المستخدم بنجاح');
         }
-
-        // Reset form
         setNewUserUsername('');
         setNewUserPassword('');
         setNewUserPermissions([]);
     };
 
-    const startEditing = (userToEdit: { id: string; username: string; permissions?: string[] }) => {
-        setEditingUserId(userToEdit.id);
-        setNewUserUsername(userToEdit.username);
-        setNewUserPassword('');
-        setNewUserPermissions(userToEdit.permissions || []);
+    const handleDeleteUser = async () => {
+        if (userToDelete) {
+            deleteUser(userToDelete.id);
+            setShowDeleteModal(false);
+            setUserToDelete(null);
+            showNotification('تم حذف المستخدم بنجاح');
+        }
+    };
 
-        // Scroll to form
+    const startEditing = (u: any) => {
+        setEditingUserId(u.id);
+        setNewUserUsername(u.username);
+        setNewUserPermissions(u.permissions || []);
         formRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const cancelEditing = () => {
-        setEditingUserId(null);
-        setNewUserUsername('');
-        setNewUserPassword('');
-        setNewUserPermissions([]);
-    };
-
-    const handleExport = async () => {
-        try {
-            // Fetch complete backup from server using settingsService
-            const backupData = await settingsService.getBackup();
-
-            // Add settings data
-            const completeBackup = {
-                ...backupData,
-                settings: {
-                    user: { ...user, name: localName, username: localUsername },
-                    academy: { name: localAcademyName },
-                    appSettings: {
-                        notifications: notificationsEnabled,
-                        autoBackup,
-                        themeColor
-                    },
-                    users: users
-                }
-            };
-
-            const blob = new Blob([JSON.stringify(completeBackup, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `academy_full_backup_${new Date().toISOString().slice(0, 10)}_${Date.now()}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showNotification('تم تصدير النسخة الاحتياطية الكاملة بنجاح!');
-        } catch (error) {
-            console.error('Backup error:', error);
-            alert('حدث خطأ أثناء إنشاء النسخة الاحتياطية');
-        }
-    };
-
-    const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-            setIsSaving(true); // Reuse isSaving for import too
-            try {
-                const backupData = JSON.parse(event.target?.result as string);
-
-                // Restore database data if available using settingsService
-                if (backupData.data) {
-                    showNotification('جاري استعادة قواعد البيانات... يرجى الانتظار');
-                    await settingsService.restoreBackup(backupData.data);
-                }
-
-                // Restore settings
-                if (backupData.settings) {
-                    const settings = backupData.settings;
-
-                    if (settings.academy) {
-                        setLocalAcademyName(settings.academy.name);
-                        await setAcademyName(settings.academy.name);
-                    }
-
-                    if (settings.user) {
-                        setLocalName(settings.user.name);
-                        setLocalUsername(settings.user.username);
-                        // No password restore for security
-                    }
-
-                    if (settings.appSettings) {
-                        setNotificationsEnabled(settings.appSettings.notifications);
-                        setAutoBackup(settings.appSettings.autoBackup);
-                        if (settings.appSettings.themeColor) {
-                            setThemeColor(settings.appSettings.themeColor);
-                        }
-                    }
-
-                    if (settings.users && Array.isArray(settings.users)) {
-                        localStorage.setItem('app_users', JSON.stringify(settings.users));
-                    }
-                }
-
-                showNotification('تم استيراد النسخة الاحتياطية بنجاح! سيتم إعادة تحميل الصفحة...');
-
-                // Final save attempt of context state to be extra safe
-                setTimeout(() => window.location.reload(), 1500);
-            } catch (err: any) {
-                console.error('Import error:', err);
-                alert('حدث خطأ أثناء استيراد الملف: ' + (err.response?.data?.error || err.message));
-                setIsSaving(false);
-            }
-        };
-        reader.readAsText(file);
-
-        // Reset file input
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
     const handleSystemReset = async () => {
-        setResetLoading(true);
         try {
             await settingsService.systemReset();
-
-            // Clear Session Data
             localStorage.removeItem('auth_token');
-            localStorage.removeItem('app_current_user');
-            localStorage.removeItem('app_isAuthenticated');
-
-            showNotification('تم تصفير بيانات النظام بنجاح! سيتم إعادة تحميل الصفحة...');
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            window.location.reload();
         } catch (err) {
-            console.error('System reset error:', err);
-            alert('حدث خطأ أثناء تصفير النظام');
+            alert('حدث خطأ أثناء الصيانة');
         } finally {
-            setResetLoading(false);
             setShowResetModal(false);
         }
     };
 
     if (loading) {
-        return (
-            <div className="space-y-6">
-                <Skeleton className="h-48 rounded-none" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => (
-                        <Skeleton key={i} className="h-32 rounded-2xl" />
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Skeleton className="lg:col-span-2 h-96 rounded-none" />
-                    <Skeleton className="h-96 rounded-none" />
-                </div>
-            </div>
-        );
+        return <div className="p-8"><Skeleton className="h-64 mb-6" /><Skeleton className="h-96" /></div>;
     }
 
     return (
         <div className="space-y-6 pb-32">
-            {/* Premium Geometric Header */}
             <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
-                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
-                {/* Major Glows & Blobs */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
-
-                {/* Central Geometric elements */}
-                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
-
-                {/* Large Structural Shapes */}
-                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
-                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
-
-                {/* Large Geometric Outlines */}
-                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
-
-                {/* Pattern Layer */}
-                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
-
-                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
+                <div className="absolute inset-0 opacity-[0.1]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
                     <div className="flex items-center gap-5">
                         <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
                             <SettingsIcon size={36} className="text-white" />
                         </div>
                         <div>
                             <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">إعدادات النظام</h1>
-                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
-                                <Database size={14} className="text-white" />
-                                إدارة تفضيلات الحساب وصلاحيات المستخدمين والبيانات
-                            </p>
+                            <div className="flex items-center gap-4 mt-2">
+                                {['settings', 'audit', 'tools'].map((t) => (
+                                    <button 
+                                        key={t}
+                                        onClick={() => setActiveTab(t as any)}
+                                        className={cn(
+                                            "px-4 py-1 text-[10px] font-black uppercase tracking-widest border transition-all",
+                                            activeTab === t ? "bg-white text-primary-700 border-white" : "text-white/60 border-white/20 hover:text-white"
+                                        )}
+                                    >
+                                        {t === 'settings' ? 'عام' : t === 'audit' ? 'سجل العمليات' : 'أدوات ذكية'}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    <button
-                        onClick={handleSave}
-                        disabled={isSaving}
-                        className={cn(
-                            "bg-white text-primary-700 px-8 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14",
-                            isSaving && "opacity-70 cursor-not-allowed translate-y-0"
-                        )}
-                    >
-                        {isSaving ? (
-                            <div className="w-5 h-5 border-2 border-primary-700 border-t-transparent rounded-full animate-spin"></div>
-                        ) : (
-                            <Save size={20} />
-                        )}
-                        <span>{isSaving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}</span>
-                    </button>
                 </div>
             </div>
 
-            {/* System Overview Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatsCard
-                    title="المستخدمين النشطين"
-                    value={totalPlatformUsers}
-                    icon={Users}
-                    color="blue"
-                    trend={`${stats.studentsCount} طلاب، ${stats.teachersCount} معلمين`}
-                />
-                <StatsCard
-                    title="حالة النظام"
-                    value="متصل"
-                    icon={Server}
-                    color="emerald"
-                    trend="قاعدة البيانات تعمل"
-                />
-                <StatsCard
-                    title="الوضع الليلي"
-                    value={theme === 'dark' ? 'مفعل' : 'معطل'}
-                    icon={Moon}
-                    color="purple"
-                />
-                <StatsCard
-                    title="النسخ الاحتياطي"
-                    value={autoBackup ? 'تلقائي' : 'يدوي'}
-                    icon={Database}
-                    color="amber"
-                />
-            </div>
-
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left Column - Main Settings */}
-                <div className="lg:col-span-2 space-y-6">
-                    {/* Academy Settings */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Building2 size={20} className="text-primary-600 dark:text-primary-400" />
+            {activeTab === 'settings' && (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="lg:col-span-2 space-y-6">
+                        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm">
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-gray-700">
+                                <Building2 size={20} className="text-primary-600" />
+                                <h2 className="text-lg font-bold">إعدادات الأكاديمية</h2>
                             </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                إعدادات الأكاديمية
-                            </h2>
-                        </div>
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
-                                    اسم الأكاديمية
-                                </label>
-                                <input
-                                    type="text"
-                                    value={localAcademyName}
-                                    onChange={(e) => setLocalAcademyName(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                    placeholder="أدخل اسم الأكاديمية"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
-                                    رقم الواتساب (مع كود الدولة - مثال: 201152001250)
-                                </label>
-                                <input
-                                    type="text"
-                                    value={localAdminPhone}
-                                    onChange={(e) => setLocalAdminPhone(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                    placeholder="201xxxxxxxxx"
-                                    dir="ltr"
-                                />
-                            </div>
-
-                            <div className="pt-2">
-                                <label className="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 cursor-pointer group transition-all">
-                                    <div className="flex items-center gap-3">
-                                        <div className={cn(
-                                            "p-2 rounded-full transition-colors",
-                                            localMaintenanceMode ? "bg-amber-500 text-white" : "bg-gray-200 text-gray-400 dark:bg-gray-800"
-                                        )}>
-                                            <AlertCircle size={20} />
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-black text-gray-900 dark:text-white">وضع الصيانة (Maintenance Mode)</p>
-                                            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">عند تفعيله، ستظهر رسالة صيانة لجميع المستخدمين عدا مديري النظام</p>
-                                        </div>
-                                    </div>
-                                    <div className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors">
-                                        <input
-                                            type="checkbox"
-                                            className="sr-only peer"
-                                            checked={localMaintenanceMode}
-                                            onChange={async (e) => {
-                                                const val = e.target.checked;
-                                                setLocalMaintenanceMode(val);
-                                                try {
-                                                    await setMaintenanceMode(val);
-                                                    showNotification(val ? 'تم تفعيل وضع الصيانة بنجاح' : 'تم إيقاف وضع الصيانة');
-                                                } catch (err) {
-                                                    setLocalMaintenanceMode(!val);
-                                                    alert('فشل في تغيير وضع الصيانة');
-                                                }
-                                            }}
-                                        />
-                                        <div className={cn(
-                                            "w-11 h-6 rounded-full transition-colors duration-300",
-                                            localMaintenanceMode ? "bg-amber-500" : "bg-gray-300 dark:bg-gray-700"
-                                        )}></div>
-                                        <div className={cn(
-                                            "absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 shadow-sm",
-                                            localMaintenanceMode ? "translate-x-5" : "translate-x-0"
-                                        )}></div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Create/Edit User Section */}
-                    <section ref={formRef} className={`bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow ${editingUserId ? 'ring-2 ring-primary-500' : ''}`}>
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <UserPlus size={20} className="text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                {editingUserId ? 'تعديل بيانات المستخدم' : 'إنشاء مستخدم جديد'}
-                            </h2>
-                        </div>
-                        <div className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
-                                        اسم المستخدم
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={newUserUsername}
-                                        onChange={(e) => setNewUserUsername(e.target.value)}
-                                        className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                        placeholder="username"
-                                    />
+                                    <label className="block text-sm font-bold mb-2">اسم الأكاديمية</label>
+                                    <input type="text" value={localAcademyName} onChange={(e) => setLocalAcademyName(e.target.value)} className="w-full bg-gray-50 border p-3 dark:bg-gray-800 dark:border-gray-700 font-bold" />
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
-                                        {editingUserId ? 'كلمة المرور الجديدة (اختياري)' : 'كلمة المرور'}
+                                <div className="pt-2">
+                                    <label className="flex items-center justify-between p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 cursor-pointer">
+                                        <div className="flex items-center gap-3">
+                                            <AlertCircle size={20} className={cn(localMaintenanceMode ? "text-amber-500" : "text-gray-400")} />
+                                            <div>
+                                                <p className="text-sm font-black">وضع الصيانة</p>
+                                                <p className="text-[10px] opacity-60">حظر وصول المستخدمين العاديين</p>
+                                            </div>
+                                        </div>
+                                        <button onClick={() => { setLocalMaintenanceMode(!localMaintenanceMode); setMaintenanceMode(!localMaintenanceMode); }} className={cn("w-12 h-6 rounded-full transition-colors relative", localMaintenanceMode ? "bg-amber-500" : "bg-gray-300")}>
+                                            <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-transform", localMaintenanceMode ? "translate-x-6" : "translate-x-1")} />
+                                        </button>
                                     </label>
-                                    <input
-                                        type="password"
-                                        value={newUserPassword}
-                                        onChange={(e) => setNewUserPassword(e.target.value)}
-                                        className="w-full bg-gray-50 border border-gray-200 rounded-none px-4 py-3 focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                        placeholder={editingUserId ? "اتركها فارغة للإبقاء على الحالية" : "••••••••"}
-                                    />
                                 </div>
                             </div>
+                        </section>
 
-                            <div>
-                                <label className="text-sm font-bold text-gray-700 mb-3 dark:text-gray-300 flex items-center gap-2">
-                                    <Shield size={14} />
-                                    صلاحيات الوصول
+                        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm">
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-gray-700">
+                                <Wallet size={20} className="text-emerald-600" />
+                                <h2 className="text-lg font-bold">المنطق الأكاديمي والمالي</h2>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-bold mb-2">تسمية الفصل الدراسي</label>
+                                    <input type="text" value={localSemesterName} onChange={(e) => setLocalSemesterName(e.target.value)} className="w-full bg-gray-50 border p-3 dark:bg-gray-800" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold mb-2">سعر الحصة الافتراضي</label>
+                                    <input type="number" value={localDefaultPrice} onChange={(e) => setLocalDefaultPrice(Number(e.target.value))} className="w-full bg-gray-50 border p-3 dark:bg-gray-800" />
+                                </div>
+                                <div className="md:col-span-2">
+                                <label className="flex items-center justify-between p-4 bg-primary-50 dark:bg-primary-900/10 border border-primary-100 dark:border-primary-900/20">
+                                    <div>
+                                        <p className="text-sm font-black text-gray-900 dark:text-white">حد رصيد التنبيه (Sessions Threshold)</p>
+                                        <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">عدد الحصص المتبقية التي يظهر عندها تنبيه "رصيد منخفض"</p>
+                                    </div>
+                                    <input 
+                                        type="number"
+                                        value={localThreshold}
+                                        onChange={(e) => setLocalThreshold(Number(e.target.value))}
+                                        className="w-20 bg-white border border-primary-200 rounded-none px-3 py-2 text-center font-black dark:bg-gray-800"
+                                    />
                                 </label>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                    {AVAILABLE_PERMISSIONS.map((perm) => (
-                                        <label
-                                            key={perm.id}
-                                            className={`
-                                                flex items-center gap-3 p-3 border cursor-pointer transition-all
-                                                ${newUserPermissions.includes(perm.id)
-                                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                                    : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
-                                                }
-                                            `}
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
-                                                checked={newUserPermissions.includes(perm.id)}
-                                                onChange={() => handleTogglePermission(perm.id)}
-                                            />
-                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                                                {perm.label}
-                                            </span>
+                            </div>
+                            </div>
+                        </section>
+
+                        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 shadow-sm">
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-gray-700">
+                                <Users size={20} className="text-primary-600" />
+                                <h2 className="text-lg font-bold">إدارة المستخديمن</h2>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-right text-xs">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th className="p-3">المستخدم</th>
+                                            <th className="p-3">اسم الدخول</th>
+                                            <th className="p-3">إجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {users.map(u => (
+                                            <tr key={u.id} className="border-b dark:border-gray-800">
+                                                <td className="p-3 font-bold">{u.name}</td>
+                                                <td className="p-3 opacity-70">{u.username}</td>
+                                                <td className="p-3">
+                                                    <div className="flex gap-2">
+                                                        <button onClick={() => startEditing(u)} className="text-primary-600 font-bold flex items-center gap-1"><Edit size={12}/> تعديل</button>
+                                                        {u.id !== user.id && (
+                                                            <button onClick={() => { setUserToDelete(u); setShowDeleteModal(true); }} className="text-red-500 font-bold flex items-center gap-1"><Trash2 size={12}/> حذف</button>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 shadow-sm" ref={formRef}>
+                             <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-gray-700">
+                                <UserPlus size={20} className="text-primary-600" />
+                                <h2 className="text-lg font-bold">{editingUserId ? 'تعديل مستخدم' : 'إضافة مستخدم'}</h2>
+                            </div>
+                            <div className="space-y-4">
+                                <input placeholder="اسم المستخدم" value={newUserUsername} onChange={e => setNewUserUsername(e.target.value)} className="w-full border p-3 bg-gray-50 dark:bg-gray-800" />
+                                <input type="password" placeholder="كلمة المرور" value={newUserPassword} onChange={e => setNewUserPassword(e.target.value)} className="w-full border p-3 bg-gray-50 dark:bg-gray-800" />
+                                <div className="grid grid-cols-2 gap-2 mt-4">
+                                    {AVAILABLE_PERMISSIONS.map(p => (
+                                        <label key={p.id} className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 cursor-pointer hover:bg-gray-100 transition-colors">
+                                            <input type="checkbox" checked={newUserPermissions.includes(p.id)} onChange={() => handleTogglePermission(p.id)} />
+                                            <span className="text-[10px] font-bold">{p.label}</span>
                                         </label>
                                     ))}
                                 </div>
-                            </div>
-
-                            <div className="flex justify-end pt-2 gap-3">
-                                {editingUserId && (
-                                    <button
-                                        onClick={cancelEditing}
-                                        className="bg-gray-100 text-gray-600 px-6 py-2.5 rounded-none font-bold hover:bg-gray-200 transition-colors"
-                                    >
-                                        إلغاء
-                                    </button>
-                                )}
-                                <button
-                                    onClick={handleUserSubmit}
-                                    className="bg-primary-600 text-white px-6 py-2.5 rounded-none font-bold hover:bg-primary-700 transition-colors flex items-center gap-2"
-                                >
-                                    <UserPlus size={18} />
-                                    {editingUserId ? 'حفظ التعديلات' : 'إضافة المستخدم'}
+                                <button onClick={handleUserSubmit} className="w-full py-3 bg-primary-600 text-white font-black hover:bg-primary-700 transition-colors uppercase text-xs tracking-widest">
+                                    {editingUserId ? 'حفظ التغييرات' : 'إضافة المستخدم للنظام'}
                                 </button>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
 
-                    {/* User Management Section */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Users size={20} className="text-primary-600 dark:text-primary-400" />
+                    <div className="space-y-6">
+                        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 shadow-sm">
+                            <div className="flex items-center gap-3 mb-6 pb-4 border-b dark:border-gray-700 text-red-600">
+                                <AlertCircle size={20} />
+                                <h2 className="text-lg font-bold">منطقة الخطر</h2>
                             </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                إدارة المستخدمين
-                            </h2>
+                            <button onClick={() => setShowResetModal(true)} className="w-full py-3 bg-red-50 text-red-600 border border-red-100 font-black hover:bg-red-600 hover:text-white transition-all uppercase text-[10px] tracking-widest">
+                                إعادة ضبط المصنع بالكامل
+                            </button>
+                        </section>
+
+                        <button
+                            onClick={handleSave}
+                            disabled={isSaving}
+                            className="bg-primary-600 text-white px-8 py-3 rounded-none flex items-center justify-center gap-3 hover:bg-primary-700 font-black shadow-lg transition-all h-20 w-full"
+                        >
+                            {isSaving ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Save size={24} />}
+                            <span className="text-xl">{isSaving ? 'جاري الحفظ...' : 'حفظ جميع التغييرات'}</span>
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {activeTab === 'audit' && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <section className="bg-white border border-gray-200 p-8 dark:bg-gray-900 shadow-xl overflow-hidden">
+                        <div className="flex items-center justify-between mb-8 border-b pb-4 dark:border-gray-800">
+                            <h2 className="text-xl font-black">سجل نشاط النظام</h2>
+                            <button onClick={fetchAdvancedData} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800"><Activity size={20} /></button>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-right">
-                                <thead className="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="px-4 py-3">المستخدم</th>
-                                        <th className="px-4 py-3">اسم الدخول</th>
-                                        <th className="px-4 py-3">الصلاحيات</th>
-                                        <th className="px-4 py-3">إجراءات</th>
+                                        <th className="px-4 py-4 text-[10px] font-black uppercase">الوقت</th>
+                                        <th className="px-4 py-4 text-[10px] font-black uppercase">المستخدم</th>
+                                        <th className="px-4 py-4 text-[10px] font-black uppercase">الإجراء</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users.map((u) => (
-                                        <tr key={u.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                            <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                                                {u.name}
-                                            </td>
-                                            <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
-                                                {u.username}
-                                            </td>
-                                            <td className="px-4 py-3 text-xs text-gray-500 max-w-[200px] truncate">
-                                                {u.permissions?.includes('*')
-                                                    ? <span className="text-primary-600 font-bold">وصول كامل (Admin)</span>
-                                                    : u.permissions?.map(p => {
-                                                        const label = AVAILABLE_PERMISSIONS.find(ap => ap.id === p)?.label || p;
-                                                        return label;
-                                                    }).join('، ') || 'بلا صلاحيات'
-                                                }
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-2">
-                                                    <button
-                                                        onClick={() => startEditing(u)}
-                                                        className="text-primary-500 hover:text-primary-700 font-bold text-xs flex items-center gap-1"
-                                                    >
-                                                        <Edit size={14} />
-                                                        تعديل
-                                                    </button>
-                                                    {u.id !== user.id && u.id !== 'admin_1' && (
-                                                        <button
-                                                            onClick={() => {
-                                                                setUserToDelete(u);
-                                                                setShowDeleteModal(true);
-                                                            }}
-                                                            className="text-red-500 hover:text-red-700 font-bold text-xs flex items-center gap-1"
-                                                        >
-                                                            <Trash2 size={14} />
-                                                            حذف
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
+                                    {auditLogs.map(log => (
+                                        <tr key={log.id} className="border-b dark:border-gray-800 text-sm">
+                                            <td className="px-4 py-4 font-mono text-xs opacity-60">{new Date(log.timestamp).toLocaleString('ar-EG')}</td>
+                                            <td className="px-4 py-4 font-bold">{log.username}</td>
+                                            <td className="px-4 py-4"><span className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-black">{log.action}</span></td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                     </section>
-
-                    {/* Data Management */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Database size={20} className="text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <div className="flex-1">
-                                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                    إدارة البيانات والنسخ الاحتياطي
-                                </h2>
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    نسخ احتياطي كامل لقاعدة البيانات والإعدادات
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="bg-blue-50 border-r-4 border-blue-500 p-4 mb-6 dark:bg-blue-900/10 dark:border-blue-700">
-                            <div className="flex items-start gap-3">
-                                <AlertCircle size={20} className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-                                <div>
-                                    <p className="text-sm font-bold text-blue-900 dark:text-blue-300 mb-1">
-                                        النسخة الاحتياطية الكاملة تشمل:
-                                    </p>
-                                    <ul className="text-xs text-blue-800 dark:text-blue-400 space-y-1">
-                                        <li>✓ جميع بيانات الطلاب والتسجيلات</li>
-                                        <li>✓ بيانات المعلمين وأولياء الأمور</li>
-                                        <li>✓ الجلسات والمواعيد</li>
-                                        <li>✓ فواتير الطلاب والمعلمين</li>
-                                        <li>✓ إعدادات النظام والمستخدمين</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <button
-                                onClick={handleExport}
-                                className="flex items-center justify-center gap-3 p-6 rounded-none border-2 border-primary-200 bg-primary-50 hover:bg-primary-100 transition-all text-primary-700 font-bold dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 group"
-                            >
-                                <Download size={24} className="group-hover:animate-bounce" />
-                                <div className="text-right">
-                                    <p className="font-black">تصدير نسخة احتياطية كاملة</p>
-                                    <p className="text-xs font-normal opacity-75">حفظ جميع البيانات والإعدادات</p>
-                                </div>
-                            </button>
-
-                            <button
-                                onClick={() => fileInputRef.current?.click()}
-                                className="flex items-center justify-center gap-3 p-6 rounded-none border-2 border-dashed border-gray-300 hover:border-primary-500 hover:bg-primary-50 transition-all text-gray-600 hover:text-primary-700 font-bold dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 group"
-                            >
-                                <Upload size={24} className="group-hover:animate-bounce" />
-                                <div className="text-right">
-                                    <p className="font-black">استيراد نسخة احتياطية</p>
-                                    <p className="text-xs font-normal opacity-75">استرجاع من ملف JSON</p>
-                                </div>
-                            </button>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleImport}
-                                accept=".json"
-                                className="hidden"
-                            />
-                        </div>
-                    </section>
                 </div>
+            )}
 
-                {/* Right Column - Quick Settings */}
-                <div className="space-y-6">
-                    {/* User Profile */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <User size={20} className="text-primary-600 dark:text-primary-400" />
+            {activeTab === 'tools' && (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="lg:col-span-2">
+                        <section className="bg-white border border-gray-200 p-8 dark:bg-gray-900 shadow-xl">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="p-3 bg-green-50 text-green-600"><FileText size={24} /></div>
+                                <h2 className="text-xl font-black">أدوات الواتساب والأتمتة</h2>
                             </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                الملف الشخصي
-                            </h2>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-2xl font-bold shadow-md">
-                                    {localName.charAt(0)}
-                                </div>
-                                <div className="flex-1">
-                                    <p className="font-bold text-gray-900 dark:text-white truncate">{localName}</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">مدير النظام</p>
+                            <div className="space-y-6">
+                                <div className="flex items-center justify-between p-6 bg-gray-50 dark:bg-gray-800 border">
+                                    <div className="font-bold text-sm">إرسال التنبيهات تلقائياً (Auto-Notify)</div>
+                                    <button onClick={() => setLocalWhatsappNotify(!localWhatsappNotify)} className={cn("w-12 h-6 rounded-full transition-colors relative", localWhatsappNotify ? "bg-green-500" : "bg-gray-300")}>
+                                        <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-transform", localWhatsappNotify ? "translate-x-6" : "translate-x-1")} />
+                                    </button>
                                 </div>
                             </div>
-
-                            <div>
-                                <label className="block text-xs font-bold text-gray-700 mb-1.5 dark:text-gray-300">
-                                    الاسم الظاهر
-                                </label>
-                                <input
-                                    type="text"
-                                    value={localName}
-                                    onChange={(e) => setLocalName(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-none px-3 py-2 text-sm focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                />
-                                <p className="text-[10px] text-gray-400 mt-1">يمكنك تحديث بياناتك من خلال زر "حفظ جميع التغييرات"</p>
-                            </div>
-
-                            <div>
-                                <label className="block text-xs font-bold text-gray-700 mb-1.5 dark:text-gray-300">
-                                    اسم المستخدم
-                                </label>
-                                <input
-                                    type="text"
-                                    value={localUsername}
-                                    onChange={(e) => setLocalUsername(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-none px-3 py-2 text-sm focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-2 dark:text-gray-300">
-                                    <Lock size={12} />
-                                    كلمة المرور الجديدة
-                                </label>
-                                <input
-                                    type="password"
-                                    placeholder="اتركها فارغة للتجاهل"
-                                    value={localPassword}
-                                    onChange={(e) => setLocalPassword(e.target.value)}
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-none px-3 py-2 text-sm focus:outline-none focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-colors"
-                                />
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Appearance */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Palette size={20} className="text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                المظهر
-                            </h2>
-                        </div>
-                        <div className="space-y-6">
-                            {/* Dark Mode Toggle */}
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    {theme === 'dark' ? <Moon size={18} className="text-primary-600" /> : <Sun size={18} className="text-amber-500" />}
-                                    <div>
-                                        <p className="font-bold text-sm text-gray-900 dark:text-white">الوضع الداكن</p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">تفعيل/إلغاء الوضع الليلي</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                    className={`relative w-12 h-7 rounded-full transition-colors ${theme === 'dark' ? 'bg-primary-600' : 'bg-gray-300'
-                                        }`}
-                                >
-                                    <span
-                                        className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform transform duration-300 ${theme === 'dark' ? 'translate-x-[2px]' : '-translate-x-[26px]'
-                                            }`}
-                                        style={{ right: theme === 'dark' ? 'auto' : '2px', left: theme === 'dark' ? '2px' : 'auto' }}
-                                    ></span>
-                                </button>
-                            </div>
-
-                            {/* Theme Color Selector */}
-                            <div>
-                                <p className="font-bold text-sm text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                    <Palette size={14} className="text-primary-500" />
-                                    سمة الألوان
-                                </p>
-                                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-3">
-                                    {THEME_PRESETS.map((preset) => (
-                                        <button
-                                            key={preset.id}
-                                            onClick={() => setThemeColor(preset.id)}
-                                            className="flex flex-col items-center gap-2 group"
-                                        >
-                                            <div className={cn(
-                                                "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
-                                                themeColor === preset.id
-                                                    ? "ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-900 scale-110 shadow-lg shadow-primary-500/20"
-                                                    : "ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-gray-300 dark:hover:ring-gray-600 scale-100"
-                                            )}>
-                                                <div
-                                                    className="w-6 h-6 rounded-full shadow-inner transition-transform group-hover:scale-90"
-                                                    style={{ backgroundColor: preset.color }}
-                                                />
-                                            </div>
-                                            <span className={cn(
-                                                "text-[10px] font-black tracking-tight transition-colors whitespace-nowrap",
-                                                themeColor === preset.id ? "text-primary-600 dark:text-primary-400" : "text-gray-500"
-                                            )}>
-                                                {preset.label}
-                                            </span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Notifications */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Bell size={20} className="text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                الإشعارات
-                            </h2>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="font-bold text-sm text-gray-900 dark:text-white">إشعارات النظام</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">تنبيهات داخل التطبيق</p>
-                                </div>
-                                <button
-                                    onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-                                    className={`relative w-12 h-7 rounded-full transition-colors ${notificationsEnabled ? 'bg-primary-600' : 'bg-gray-300'
-                                        }`}
-                                >
-                                    <span
-                                        className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform transform duration-300 ${notificationsEnabled ? 'translate-x-[2px]' : '-translate-x-[26px]'
-                                            }`}
-                                        style={{ right: notificationsEnabled ? 'auto' : '2px', left: notificationsEnabled ? '2px' : 'auto' }}
-                                    ></span>
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Security */}
-                    <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
-                                <Shield size={20} className="text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                                الأمان
-                            </h2>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="font-bold text-sm text-gray-900 dark:text-white">النسخ الاحتياطي التلقائي</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">حفظ تلقائي يومي</p>
-                                </div>
-                                <button
-                                    onClick={() => setAutoBackup(!autoBackup)}
-                                    className={`relative w-12 h-7 rounded-full transition-colors ${autoBackup ? 'bg-primary-600' : 'bg-gray-300'
-                                        }`}
-                                >
-                                    <span
-                                        className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform transform duration-300 ${autoBackup ? 'translate-x-[2px]' : '-translate-x-[26px]'
-                                            }`}
-                                        style={{ right: autoBackup ? 'auto' : '2px', left: autoBackup ? '2px' : 'auto' }}
-                                    ></span>
-                                </button>
-                            </div>
-                            <div className="bg-primary-50 border border-primary-200 p-4 rounded-none dark:bg-primary-900/10 dark:border-primary-900/30">
-                                <p className="text-xs text-primary-800 dark:text-primary-400 font-bold mb-2">
-                                    آخر نسخة احتياطية
-                                </p>
-                                <p className="text-xs text-primary-600 dark:text-primary-500 flex items-center gap-2">
-                                    <Calendar size={14} />
-                                    {new Date().toLocaleDateString('ar-EG')}
-                                </p>
-                            </div>
-
-                            {/* System Reset Section */}
-                            <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-                                <h3 className="text-sm font-black text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
-                                    <AlertCircle size={16} />
-                                    منطقة الخطر
-                                </h3>
-                                <p className="text-[10px] text-gray-500 mb-4 leading-relaxed">
-                                    سيؤدي هذا الإجراء إلى حذف كافة البيانات التشغيلية (الطلاب، المعلمين، الفواتير، المواعيد) وإعادة النظام إلى حالة المصنع.
-                                    <br />
-                                    <span className="text-red-600 font-bold italic">ملاحظة: سيتم الاحتفاظ بحسابات مديري النظام والمشرفين فقط.</span>
-                                </p>
-                                <button
-                                    onClick={() => {
-                                        setShowResetModal(true);
-                                    }}
-                                    className="w-full py-3 bg-red-50 text-red-600 border border-red-100 font-bold text-xs hover:bg-red-600 hover:text-white transition-all rounded-none shadow-sm flex items-center justify-center gap-2"
-                                >
-                                    <Trash2 size={14} />
-                                    إعادة ضبط المصنع وتطهير النظام
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-
-            {/* Premium Delete Confirmation Modal */}
-            {showDeleteModal && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-                    <div
-                        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"
-                        onClick={() => setShowDeleteModal(false)}
-                    ></div>
-                    <div className="relative bg-white dark:bg-gray-900 w-full max-w-md shadow-2xl border-t-4 border-red-600 animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
-                        <div className="p-8">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-14 h-14 bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600">
-                                    <AlertCircle size={32} />
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-1 uppercase tracking-tight">تأكيد الحذف</h3>
-                                    <p className="text-sm text-slate-500 dark:text-gray-400 font-bold">هذا الإجراء لا يمكن التراجع عنه</p>
-                                </div>
-                                <button
-                                    onClick={() => setShowDeleteModal(false)}
-                                    className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
-                                >
-                                    <X size={20} />
-                                </button>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-gray-800/50 p-6 border-r-4 border-slate-200 dark:border-gray-700 mb-8">
-                                <p className="text-slate-700 dark:text-gray-200 font-medium leading-relaxed">
-                                    هل أنت متأكد من رغبتك في حذف المستخدم <span className="font-black text-red-600 dark:text-red-400">"{userToDelete?.username}"</span>؟ سيفقد كافة صلاحيات الوصول للنظام فوراً.
-                                </p>
-                            </div>
-
-                            <div className="flex gap-4">
-                                <button
-                                    onClick={() => setShowDeleteModal(false)}
-                                    className="flex-1 px-6 py-4 bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-300 font-black hover:bg-slate-200 dark:hover:bg-gray-700 transition-all uppercase tracking-widest text-xs"
-                                >
-                                    تراجع
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        if (userToDelete) {
-                                            deleteUser(userToDelete.id);
-                                            setShowDeleteModal(false);
-                                            setUserToDelete(null);
-                                            showNotification('تم حذف المستخدم بنجاح');
-                                        }
-                                    }}
-                                    className="flex-1 px-6 py-4 bg-red-600 text-white font-black hover:bg-red-700 transition-all shadow-[0_10px_20px_-10px_rgba(220,38,38,0.5)] transform active:scale-95 uppercase tracking-widest text-xs"
-                                >
-                                    تأكيد الحذف
-                                </button>
-                            </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             )}
 
-            {/* System Reset Confirmation Modal */}
             {showResetModal && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-                    <div
-                        className="absolute inset-0 bg-slate-900/80 backdrop-blur-md animate-in fade-in duration-500"
-                        onClick={() => !resetLoading && setShowResetModal(false)}
-                    ></div>
-                    <div className="relative bg-white dark:bg-gray-900 w-full max-w-md shadow-2xl border-t-8 border-red-600 animate-in zoom-in-95 slide-in-from-bottom-8 duration-500">
-                        <div className="p-8">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 shrink-0">
-                                    <AlertCircle size={40} />
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-1 uppercase tracking-tighter">تحذير أمني خطير</h3>
-                                    <p className="text-sm text-red-600 dark:text-red-400 font-bold uppercase tracking-widest">تصفير النظام بالكامل</p>
-                                </div>
-                                <button
-                                    onClick={() => setShowResetModal(false)}
-                                    disabled={resetLoading}
-                                    className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors"
-                                >
-                                    <X size={24} />
-                                </button>
-                            </div>
-
-                            <div className="bg-red-50 dark:bg-red-900/10 p-6 border-r-4 border-red-600 mb-8">
-                                <p className="text-slate-800 dark:text-gray-200 font-bold leading-relaxed text-sm">
-                                    أنت على وشك مسح كافة بيانات النظام بشكل نهائي. سيتم حذف جميع الطلاب، المعلمين، والحسابات المالية.
-                                    <br />
-                                    <span className="text-red-700 dark:text-red-400 underline italic mt-2 block">لن يتم حذف حسابات مدير النظام والمشرفين.</span>
-                                </p>
-                            </div>
-
-                            <div className="flex gap-4">
-                                <button
-                                    onClick={() => setShowResetModal(false)}
-                                    disabled={resetLoading}
-                                    className="flex-1 px-6 py-4 bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-300 font-black hover:bg-slate-200 dark:hover:bg-gray-700 transition-all uppercase tracking-widest text-xs"
-                                >
-                                    إلغاء العملية
-                                </button>
-                                <button
-                                    onClick={handleSystemReset}
-                                    disabled={resetLoading}
-                                    className={cn(
-                                        "flex-[1.5] px-6 py-4 bg-red-600 text-white font-black transition-all shadow-xl transform active:scale-95 uppercase tracking-widest text-xs flex items-center justify-center gap-2",
-                                        resetLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
-                                    )}
-                                >
-                                    {resetLoading ? (
-                                        <>
-                                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                            جاري الحذف...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Trash2 size={16} />
-                                            تأكيد الحذف النهائي
-                                        </>
-                                    )}
-                                </button>
-                            </div>
+                <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 backdrop-blur-md bg-black/40 animate-in fade-in">
+                    <div className="bg-white dark:bg-gray-900 p-8 border-t-8 border-red-600 max-w-md w-full shadow-2xl">
+                        <h2 className="text-2xl font-black mb-4">تحذير أمني خطير</h2>
+                        <p className="text-sm opacity-70 mb-8 font-bold italic">سيتم مسح كافة البيانات التشغيلية للنظام بشكل نهائي وحذف جميع السجلات.</p>
+                        <div className="flex gap-4">
+                            <button onClick={() => setShowResetModal(false)} className="flex-1 py-4 bg-gray-100 font-bold uppercase text-xs">إلغاء</button>
+                            <button onClick={handleSystemReset} className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-xl">تأكيد التصفير</button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Notification Toast */}
-            <div
-                className={`fixed bottom-8 left-8 z-[150] transform transition-all duration-500 ease-in-out ${showSuccess
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-20 opacity-0 pointer-events-none'
-                    }`}
-            >
-                <div className="bg-primary-600/95 backdrop-blur-md text-white px-6 py-4 shadow-2xl flex items-center gap-4 border-r-4 border-primary-400 rounded-l-lg rounded-r-none min-w-[320px]">
-                    <div className="bg-white/20 p-2.5 rounded-full shrink-0 animate-pulse">
-                        <Check size={24} className="text-white" />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="font-bold text-lg">{notificationMessage || 'تمت العملية بنجاح!'}</span>
-                        <span className="text-sm font-normal opacity-90 text-primary-100">تم تحديث النظام وحفظ التغييرات</span>
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 backdrop-blur-md bg-black/40 animate-in fade-in">
+                    <div className="bg-white dark:bg-gray-900 p-8 border-t-8 border-red-600 max-w-md w-full shadow-2xl">
+                        <h2 className="text-2xl font-black mb-4">تأكيد الحذف</h2>
+                        <p className="text-sm opacity-70 mb-8 font-bold italic">هل أنت متأكد من حذف المستخدم "{userToDelete?.username}"؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                        <div className="flex gap-4">
+                            <button onClick={() => setShowDeleteModal(false)} className="flex-1 py-4 bg-gray-100 font-bold uppercase text-xs">إلغاء</button>
+                            <button onClick={handleDeleteUser} className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-xl">حذف نهائي</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
+
+            {showSuccess && (
+                <div className="fixed bottom-8 left-8 bg-black text-white p-6 shadow-2xl border-l-4 border-primary-500 animate-in slide-in-from-left-4 duration-500 min-w-[300px]">
+                    <div className="flex items-center gap-4">
+                        <Check size={28} className="text-primary-500" />
+                        <div>
+                            <p className="font-black uppercase tracking-tighter">{notificationMessage}</p>
+                            <p className="text-[10px] opacity-60">تم تحديث النظام بنجاح</p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
+
+export default Settings;
