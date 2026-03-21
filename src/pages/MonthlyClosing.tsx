@@ -4,7 +4,6 @@ import {
     Calendar, 
     TrendingUp, 
     Users, 
-    ArrowUpRight, 
     ArrowDownRight,
     Download,
     Phone,
