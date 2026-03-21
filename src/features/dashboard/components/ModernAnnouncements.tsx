@@ -55,50 +55,50 @@ export const ModernAnnouncements: React.FC = () => {
     const type = getTypeDetails(current.type);
 
     return (
-        <div className="relative group bg-gray-950 border-4 border-gray-900 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.3)] overflow-hidden">
+        <div className="relative group bg-gray-950 border-2 md:border-4 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.3)] overflow-hidden mx-1 md:mx-0">
             {/* Animated Progress Bar */}
             <div className="absolute bottom-0 right-0 h-1 bg-primary-600 transition-all duration-[8000ms] ease-linear z-20" 
                  style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }} />
             
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Badge - Sharp Sidebar */}
-                <div className={cn("w-full md:w-32 flex flex-col items-center justify-center p-4 gap-2 transition-colors duration-500", type.bg)}>
-                    <type.icon size={28} className={type.color} />
-                    <span className={cn("text-[10px] font-black uppercase tracking-[0.2em]", type.color)}>
+                <div className={cn("w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-3 md:p-4 gap-2 transition-colors duration-500", type.bg)}>
+                    <type.icon size={22} className={type.color} />
+                    <span className={cn("text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]", type.color)}>
                         {type.label}
                     </span>
                 </div>
 
                 {/* Content Area */}
-                <div className="flex-1 p-6 md:p-8 flex flex-col justify-center relative min-h-[120px]">
-                    <div className="absolute top-4 left-6 flex items-center gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
-                        <Bell size={14} className="text-white" />
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
+                <div className="flex-1 p-5 md:p-8 flex flex-col justify-center relative min-h-[100px] md:min-h-[120px]">
+                    <div className="absolute top-3 left-4 md:top-4 md:left-6 flex items-center gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <Bell size={12} className="text-white" />
+                        <span className="text-[9px] md:text-[10px] font-black text-white uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
                     </div>
 
                     <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <h4 className="text-white font-black text-lg md:text-xl mb-2 tracking-tight">
+                        <h4 className="text-white font-black text-base md:text-xl mb-1 md:mb-2 tracking-tight">
                             {current.title}
                         </h4>
-                        <p className="text-gray-400 text-sm font-bold leading-relaxed max-w-3xl">
+                        <p className="text-gray-400 text-[11px] md:text-sm font-bold leading-relaxed max-w-3xl">
                             {current.content}
                         </p>
                     </div>
 
                     {/* Navigation Buttons */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-4 left-6 flex gap-2">
+                        <div className="absolute bottom-3 left-4 md:bottom-4 md:left-6 flex gap-2">
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)}
-                                className="p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5 rounded-none"
+                                className="p-1 md:p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5"
                             >
-                                <ChevronRight size={16} />
+                                <ChevronRight size={14} />
                             </button>
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)}
-                                className="p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5 rounded-none"
+                                className="p-1 md:p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5"
                             >
-                                <ChevronLeft size={16} />
+                                <ChevronLeft size={14} />
                             </button>
                         </div>
                     )}

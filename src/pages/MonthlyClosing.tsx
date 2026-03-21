@@ -11,7 +11,6 @@ import {
     MessageCircle,
     CheckCircle2,
     AlertCircle,
-    Presentation,
     Filter,
     BarChart3,
     Receipt,
@@ -301,48 +300,48 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
             </div>
 
-            {/* Tabs Navigation */}
-            <div className="flex border-2 border-gray-950 p-1 mb-8 bg-white dark:bg-gray-900 dark:border-gray-800 max-w-fit shadow-[4px_4px_0px_0px_black]">
+            {/* Tabs */}
+            <div className="flex overflow-x-auto no-scrollbar bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 mb-8 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] sticky top-0 z-40">
                 <button 
                     onClick={() => setActiveTab('payroll')}
                     className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
                         activeTab === 'payroll' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Presentation size={18} /> رواتب المعلمات
+                    <Receipt size={18} /> رواتب المعلمات
                 </button>
                 <button 
                     onClick={() => setActiveTab('renewals')}
                     className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
                         activeTab === 'renewals' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Users size={18} /> تجديد الاشتراكات
-                </button>
-                <button 
-                    onClick={() => setActiveTab('summary')}
-                    className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
-                        activeTab === 'summary' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
-                    )}
-                >
-                    <ArrowUpRight size={18} /> ملخص الأداء
+                    <AlertCircle size={18} /> انتهاء الرصيد
                 </button>
                 <button 
                     onClick={() => setActiveTab('analysis')}
                     className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
                         activeTab === 'analysis' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
                     <BarChart3 size={18} /> تحليل المواد
                 </button>
                 <button 
+                    onClick={() => setActiveTab('summary')}
+                    className={cn(
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        activeTab === 'summary' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                    )}
+                >
+                    <TrendingUp size={18} /> ملخص الحسابات
+                </button>
+                <button 
                     onClick={() => setActiveTab('teachers')}
                     className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
                         activeTab === 'teachers' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
@@ -351,7 +350,7 @@ export const MonthlyClosing: React.FC = () => {
                 <button 
                     onClick={() => setActiveTab('compensation')}
                     className={cn(
-                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
                         activeTab === 'compensation' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
@@ -673,8 +672,8 @@ export const MonthlyClosing: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="overflow-x-auto bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
-                            <table className="w-full text-right border-collapse">
+                        <div className="overflow-x-auto bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">
+                            <table className="w-full text-right border-collapse min-w-[600px]">
                                 <thead>
                                     <tr className="bg-gray-950 text-white text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-gray-950">
                                         <th className="px-6 py-4">اسم الطالب</th>
