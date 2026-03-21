@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-    Settings as SettingsIcon, Save, Building2, AlertCircle, Check, Users, UserPlus, 
-    Edit, Wallet, Trash2, FileText, Activity, Palette, Bell, Shield, Download, Upload, 
-    RefreshCw, CheckCircle2, Moon, Sun, Monitor
+    Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
+    Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
+    RefreshCw, CheckCircle2, Monitor
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -40,7 +40,7 @@ const Settings = () => {
         defaultSessionPrice, setDefaultSessionPrice,
         semesterName, setSemesterName,
         balanceWarningThreshold, setBalanceWarningThreshold,
-        user, updateUser, users, addUser, editUser, deleteUser
+        user, users, addUser, editUser, deleteUser
     } = useApp();
 
     const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'advanced' | 'audit'>('general');
@@ -91,7 +91,10 @@ const Settings = () => {
         finally { setIsSaving(false); }
     };
 
+    const [notificationMessage, setNotificationMessage] = useState('');
+
     const showNotify = (msg: string) => {
+        setNotificationMessage(msg);
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
     };
@@ -344,7 +347,7 @@ const Settings = () => {
             {showSuccess && (
                 <div className="fixed bottom-10 left-10 z-[1000] bg-black text-white p-6 shadow-2xl border-l-4 border-primary-500 flex items-center gap-4 animate-in slide-in-from-left-4 duration-500">
                     <CheckCircle2 color="var(--color-primary)" size={28} />
-                    <div className="font-black uppercase tracking-tighter">تمت العملية بنجاح</div>
+                    <div className="font-black uppercase tracking-tighter">{notificationMessage || 'تمت العملية بنجاح'}</div>
                 </div>
             )}
         </div>
