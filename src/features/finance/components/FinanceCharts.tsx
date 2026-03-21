@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from 'recharts';
-import { Calendar, Filter, PieChart as PieIcon } from 'lucide-react';
+import { Calendar, Filter } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface MonthlyData {
@@ -179,7 +179,7 @@ export const FinanceCharts: React.FC<FinanceChartsProps> = ({ monthlyData, pieDa
                                             dataKey="value"
                                             animationDuration={1500}
                                         >
-                                            {pieData.map((entry, index) => (
+                                            {pieData.map((_, index) => (
                                                 <Cell 
                                                     key={`cell-${index}`} 
                                                     fill={PIE_COLORS[index % PIE_COLORS.length]} 
