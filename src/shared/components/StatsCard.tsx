@@ -7,7 +7,7 @@ interface StatsCardProps {
     icon: LucideIcon;
     trend?: string;
     trendUp?: boolean;
-    color?: 'blue' | 'emerald' | 'purple' | 'amber' | 'rose' | 'indigo';
+    color?: 'blue' | 'emerald' | 'purple' | 'amber' | 'rose' | 'indigo' | 'green';
     className?: string;
 }
 
@@ -16,8 +16,9 @@ const colorStyles = {
     emerald: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800',
     purple: 'text-purple-600 bg-purple-50 dark:bg-purple-900/20 border-purple-100 dark:border-purple-800',
     amber: 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 border-amber-100 dark:border-amber-800',
-    rose: 'text-rose-600 bg-rose-50 dark:bg-rose-900/20 border-rose-100 dark:border-rose-800',
-    indigo: 'text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800'
+    rose: 'text-[#ef4444] bg-[#ef4444]/10 dark:bg-[#ef4444]/20 border-[#ef4444]/20',
+    indigo: 'text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800',
+    green: 'text-[#10b981] bg-[#10b981]/10 dark:bg-[#10b981]/20 border-[#10b981]/20'
 };
 
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {

@@ -36,7 +36,7 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                         <GraduationCap size={48} className="text-white hidden lg:block" />
                     </div>
                     <div className="space-y-1 lg:space-y-2 text-right">
-                        <span className="text-white font-black text-[10px] lg:text-xs tracking-[0.4em] uppercase block mb-1">إدارة معهد دارين التعليمي</span>
+                        <span className="text-white font-black text-[10px] lg:text-xs tracking-[0.4em] uppercase block mb-1">إدارة أكاديمية دارين التعليمية</span>
                         {isTeacher ? (
                             <h1 className="text-2xl lg:text-4xl font-black text-white tracking-tighter uppercase">
                                 أ. {currentUser?.name}
