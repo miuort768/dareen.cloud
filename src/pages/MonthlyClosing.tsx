@@ -120,7 +120,7 @@ import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
 
-type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis';
+type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis' | 'teachers';
 
 export const MonthlyClosing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
@@ -179,7 +179,30 @@ export const MonthlyClosing: React.FC = () => {
         };
     }).sort((a, b) => b.profit - a.profit);
 
-    // --- 2. Student Renewals Logic ---
+    // --- 3. Teacher Performance Logic ---
+    const teacherPerformance = teachers?.map(teacher => {
+        const teacherMonthSessions = filteredSessions.filter(s => 
+            s.teacherName?.trim() === teacher.name?.trim()
+        );
+        const completed = teacherMonthSessions.filter(s => s.status === 'completed').length;
+        const cancelled = teacherMonthSessions.filter(s => s.status === 'cancelled').length;
+        const total = teacherMonthSessions.length;
+        
+        // Quality metric: How many completed sessions have topics/homework written
+        const documented = teacherMonthSessions.filter(s => s.status === 'completed' && (s.topics || s.homework)).length;
+        
+        return {
+            name: teacher.name,
+            total,
+            completed,
+            cancelled,
+            documented,
+            attendanceRate: total > 0 ? (completed / total) * 100 : 0,
+            documentationRate: completed > 0 ? (documented / completed) * 100 : 0
+        };
+    }).sort((a, b) => b.attendanceRate - a.attendanceRate) || [];
+
+    // --- 4. Student Renewals Logic ---
     const renewalsData = students?.flatMap(student => 
         (student.enrollments || []).map(enroll => ({
             studentName: student.name,
@@ -313,6 +336,15 @@ export const MonthlyClosing: React.FC = () => {
                     )}
                 >
                     <BarChart3 size={18} /> تحليل المواد
+                </button>
+                <button 
+                    onClick={() => setActiveTab('teachers')}
+                    className={cn(
+                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        activeTab === 'teachers' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                    )}
+                >
+                    <Users size={18} /> تحليل المعلمات
                 </button>
             </div>
 
@@ -535,6 +567,82 @@ export const MonthlyClosing: React.FC = () => {
                                         <span className="text-sm font-black text-gray-950 dark:text-white">
                                             {subj.income > 0 ? ((subj.profit / subj.income) * 100).toFixed(1) : 0}%
                                         </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'teachers' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                            <div>
+                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">تحليل كفاءة أداء المعلمات</h2>
+                                <p className="text-sm font-bold text-gray-400 mt-1">قياس الالتزام بالحضور وجودة التوثيق التعليمي</p>
+                            </div>
+                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+                                <Users size={24} />
+                            </div>
+                        </div>
+
+                        <div className="space-y-6">
+                            {teacherPerformance.map((perf, idx) => (
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.05)] p-6">
+                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                                        <div className="flex items-center gap-4 min-w-[250px]">
+                                            <div className="w-14 h-14 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white text-xl font-black dark:bg-white dark:text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.1)]">
+                                                {perf.name.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tighter">{perf.name}</h3>
+                                                <p className="text-[10px] font-black text-gray-400 flex items-center gap-1 uppercase">إجمالي الحصص المجدولة: {perf.total}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-6">
+                                            <div>
+                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">نسبة الالتزام</p>
+                                                <div className="flex items-center gap-3">
+                                                    <span className="text-xl font-black text-emerald-600 font-mono">{perf.attendanceRate.toFixed(1)}%</span>
+                                                    <div className="flex-1 h-2 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
+                                                        <div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">جودة التوثيق</p>
+                                                <div className="flex items-center gap-3">
+                                                    <span className="text-xl font-black text-blue-600 font-mono">{perf.documentationRate.toFixed(1)}%</span>
+                                                    <div className="flex-1 h-2 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
+                                                        <div className="h-full bg-blue-500" style={{ width: `${perf.documentationRate}%` }} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="hidden md:block">
+                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">الحصص المكتملة</p>
+                                                <p className="text-xl font-black text-gray-900 dark:text-white font-mono">{perf.completed}</p>
+                                            </div>
+
+                                            <div className="hidden md:block">
+                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">الدروس الموثقة</p>
+                                                <p className="text-xl font-black text-gray-900 dark:text-white font-mono">{perf.documented}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-2">
+                                            {perf.attendanceRate > 90 && perf.documentationRate > 80 ? (
+                                                <div className="bg-amber-100 text-amber-700 border-2 border-amber-200 px-4 py-2 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">
+                                                    <Star size={12} className="fill-amber-700" /> معلمة متميزة
+                                                </div>
+                                            ) : (
+                                                <div className="bg-gray-100 text-gray-500 border-2 border-gray-200 px-4 py-2 font-black text-[10px] uppercase tracking-widest">
+                                                    تحت التقييم
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
