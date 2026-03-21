@@ -26,7 +26,15 @@ const THEME_COLORS = [
     { id: 'emerald', label: 'زمردي', class: 'bg-emerald-600' },
     { id: 'rose', label: 'وردي', class: 'bg-rose-600' },
     { id: 'amber', label: 'كهرماني', class: 'bg-amber-600' },
-    { id: 'purple', label: 'أرجواني', class: 'bg-purple-600' }
+    { id: 'purple', label: 'أرجواني', class: 'bg-purple-600' },
+    { id: 'cyan', label: 'سيان', class: 'bg-cyan-600' },
+    { id: 'teal', label: 'تركواز', class: 'bg-teal-600' },
+    { id: 'orange', label: 'برتقالي', class: 'bg-orange-600' },
+    { id: 'slate', label: 'صخري', class: 'bg-slate-600' },
+    { id: 'pink', label: 'زهري', class: 'bg-pink-600' },
+    { id: 'lime', label: 'ليموني', class: 'bg-lime-600' },
+    { id: 'sky', label: 'سماوي', class: 'bg-sky-600' },
+    { id: 'fuchsia', label: 'فوشيا', class: 'bg-fuchsia-600' }
 ];
 
 const Settings = () => {
@@ -243,7 +251,7 @@ const Settings = () => {
                             <div className="space-y-6">
                                 <div>
                                     <p className="text-xs font-black mb-4 uppercase opacity-60">لون النظام الأساسي</p>
-                                    <div className="grid grid-cols-6 gap-3">
+                                    <div className="grid grid-cols-7 gap-3">
                                         {THEME_COLORS.map(c => (
                                             <button key={c.id} onClick={() => setThemeColor(c.id)} className={cn("h-10 border-2 transition-all p-1", themeColor === c.id ? "border-black dark:border-white scale-110" : "border-transparent")}>
                                                 <div className={cn("w-full h-full", c.class)} title={c.label} />
