@@ -3,7 +3,7 @@ import {
     Calendar, Filter, Download, RefreshCw, Printer, 
     ArrowDownRight,
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star,
-    ArrowUpRight, DollarSign, Activity as ActivityIcon
+    DollarSign, Activity as ActivityIcon
 } from 'lucide-react';
 import { 
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
