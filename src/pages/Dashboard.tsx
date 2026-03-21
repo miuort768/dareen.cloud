@@ -56,31 +56,31 @@ export const Dashboard = () => {
 
             <DashboardStats stats={stats} isTeacher={isTeacher} />
 
-            {/* General System Notes - Sharp Premium Style */}
-            <div className="bg-gray-950 border-4 border-gray-900 p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] relative overflow-hidden group">
-                {/* Decorative Sharp Element */}
-                <div className="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+            {/* General System Notes - Sharp Premium Style (Watermelon Theme) */}
+            <div className="bg-gray-950 border-4 border-[#ef4444] p-8 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.2)] relative overflow-hidden group">
+                {/* Decorative Sharp Element (Green Rind) */}
+                <div className="absolute top-0 left-0 w-3 h-full bg-[#10b981]"></div>
                 
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-8 relative z-10">
-                    <div className="p-4 bg-primary-600/10 border-2 border-primary-500/20 text-primary-500">
+                    <div className="p-4 bg-[#ef4444]/10 border-2 border-[#ef4444]/20 text-[#ef4444]">
                         <Bell size={28} />
                     </div>
                     <div className="flex-1 w-full">
                         <h3 className="text-white font-black uppercase text-[10px] lg:text-xs tracking-[0.4em] mb-4 opacity-40">حالة النظام والتنبيهات الذكية</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {!isTeacher && stats.pendingInvoices > 0 && (
-                                <div className="flex items-center justify-between bg-white/5 border-l-4 border-amber-500 p-4">
+                                <div className="flex items-center justify-between bg-white/5 border-l-4 border-[#ef4444] p-4">
                                     <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">فواتير معلقة</span>
-                                    <span className="text-amber-500 font-black text-lg lg:text-xl tabular-nums">{stats.pendingInvoices}</span>
+                                    <span className="text-[#ef4444] font-black text-lg lg:text-xl tabular-nums">{stats.pendingInvoices}</span>
                                 </div>
                             )}
-                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-emerald-500 p-4">
+                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-[#10b981] p-4">
                                 <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">سلامة النظام</span>
-                                <span className="text-emerald-500 font-black text-xs lg:text-sm tracking-tighter">مُــحـسّـن (100%)</span>
+                                <span className="text-[#10b981] font-black text-xs lg:text-sm tracking-tighter uppercase whitespace-nowrap">مُــحـسّـن (100%)</span>
                             </div>
-                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-primary-500 p-4">
+                            <div className="flex items-center justify-between bg-white/5 border-l-4 border-[#ef4444] p-4">
                                 <span className="text-white/60 font-black text-[10px] uppercase tracking-widest">مزامنة البيانات</span>
-                                <span className="text-primary-400 font-black text-[10px] lg:text-xs tracking-widest">نـشـط الآن</span>
+                                <span className="text-white/90 font-black text-[10px] lg:text-xs tracking-widest whitespace-nowrap">نـشـط الآن</span>
                             </div>
                         </div>
                     </div>

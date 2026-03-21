@@ -36,14 +36,14 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                         <GraduationCap size={48} className="text-white hidden lg:block" />
                     </div>
                     <div className="space-y-1 lg:space-y-2 text-right">
-                        <span className="text-white font-black text-[10px] lg:text-xs tracking-[0.4em] uppercase block mb-1">Darin Institute Management</span>
+                        <span className="text-white font-black text-[10px] lg:text-xs tracking-[0.4em] uppercase block mb-1">إدارة معهد دارين التعليمي</span>
                         {isTeacher ? (
                             <h1 className="text-2xl lg:text-4xl font-black text-white tracking-tighter uppercase">
                                 أ. {currentUser?.name}
                             </h1>
                         ) : (
                             <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase">
-                                Dashboard
+                                لوحة التحكم
                             </h1>
                         )}
                     </div>
@@ -56,10 +56,10 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                                 <Wallet size={24} />
                             </div>
                             <div className="text-right">
-                                <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 line-clamp-1">SALARY / MONTH</p>
+                                <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 line-clamp-1">الراتب الشهري</p>
                                 <p className="text-white text-2xl font-black leading-none whitespace-nowrap tabular-nums">
                                     {stats.monthNetProfit.toLocaleString()}
-                                    <span className="text-xs opacity-60 mr-1">EGP</span>
+                                    <span className="text-xs opacity-60 mr-1">ج.م</span>
                                 </p>
                             </div>
                         </div>
@@ -70,7 +70,7 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                             <CalendarCheck size={24} />
                         </div>
                         <div className="text-right">
-                            <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 group-hover:text-white">TODAY</p>
+                            <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-1 group-hover:text-white">اليوم</p>
                             <p className="text-white text-2xl font-black leading-none tabular-nums">{stats.todaySessions}</p>
                         </div>
                     </Link>
@@ -80,7 +80,7 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
                             <Clock size={20} />
                         </div>
                         <div className="text-right font-mono">
-                            <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.2em] mb-1 text-center font-sans">REAL TIME</p>
+                            <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.2em] mb-1 text-center font-sans">الوقت الفعلي</p>
                             <p className="text-white text-sm lg:text-base font-black leading-none tracking-tighter tabular-nums">
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
                             </p>
