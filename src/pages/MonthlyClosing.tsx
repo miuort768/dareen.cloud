@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { 
     Calendar, 
     TrendingUp, 
-    Clock, 
     Users, 
     ArrowUpRight, 
     ArrowDownRight,
@@ -66,7 +65,7 @@ export const MonthlyClosing: React.FC = () => {
     const renewalsData = students?.flatMap(student => 
         (student.enrollments || []).map(enroll => ({
             studentName: student.name,
-            phone: student.phone1,
+            phone: student.parentPhone || '',
             subject: enroll.subject,
             remaining: enroll.sessionsTotal - enroll.sessionsUsed,
             total: enroll.sessionsTotal,

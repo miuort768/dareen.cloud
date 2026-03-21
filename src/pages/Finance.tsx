@@ -1,4 +1,4 @@
-import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Plus } from 'lucide-react';
+import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download } from 'lucide-react';
 import { Skeleton } from '../components/ui/Skeleton';
 import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
