@@ -1,4 +1,4 @@
-import { Bell, AlertCircle, Activity } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
@@ -12,7 +12,6 @@ import { TeacherAchievements } from '../features/dashboard/components/TeacherAch
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
 import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
-import { cn } from '../lib/utils';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
