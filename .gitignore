@@ -27,5 +27,7 @@ dist-ssr
 .env
 .env.production
 server/.env
-*.sqlite
-database.sqlite
+*.sqlite*
+database.sqlite*
+server/*.sqlite*
+server/database.sqlite*
