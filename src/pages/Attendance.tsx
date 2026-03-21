@@ -13,9 +13,10 @@ import { TeacherStudentCard } from '../features/attendance/components/TeacherStu
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal';
 import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
+import { generateWhatsAppLink } from '../lib/whatsapp';
 
 export const Attendance = () => {
-    const { currentUser, showNotification } = useApp();
+    const { currentUser, showNotification, whatsappAutoNotify, whatsappTemplate } = useApp();
     const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -66,6 +67,8 @@ export const Attendance = () => {
             hour12: true
         });
 
+        const calculatedPrice = enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined;
+
         const success = await logAttendance({
             studentId: student.id,
             studentName: student.name,
@@ -79,11 +82,24 @@ export const Attendance = () => {
             topics,
             homework,
             needsCompensation,
-            price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
+            price: calculatedPrice
         });
 
         if (success) {
             showNotification(`تم تسجيل ${student.name} (${status === 'completed' ? 'حضور' : 'غياب'})`, 'success');
+            
+            // WhatsApp Notification Logic
+            if (whatsappAutoNotify && status === 'completed' && student.parentPhone) {
+                const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
+                    Student: student.name,
+                    Subject: enrollment.subject,
+                    Teacher: enrollment.teacher,
+                    Date: logDate,
+                    Price: calculatedPrice?.toString() || '0'
+                });
+                window.open(waLink, '_blank');
+            }
+            
             setSecureModalData(null);
         } else {
             showNotification('فشل تسجيل الحضور', 'error');

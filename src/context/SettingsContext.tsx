@@ -11,6 +11,8 @@ interface SettingsContextType {
     whatsappAutoNotify: boolean;
     defaultSessionPrice: number;
     semesterName: string;
+    semesters: string; // Stored as comma separated string for simplicity or JSON
+    whatsappTemplate: string;
     balanceWarningThreshold: number;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
@@ -22,6 +24,8 @@ interface SettingsContextType {
     setWhatsappAutoNotify: (enabled: boolean) => Promise<void>;
     setDefaultSessionPrice: (price: number) => Promise<void>;
     setSemesterName: (name: string) => Promise<void>;
+    setSemesters: (semesters: string) => Promise<void>;
+    setWhatsappTemplate: (template: string) => Promise<void>;
     setBalanceWarningThreshold: (threshold: number) => Promise<void>;
 }
 
@@ -37,6 +41,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [whatsappAutoNotify, setWhatsappAutoNotifyState] = useState(false);
     const [defaultSessionPrice, setDefaultSessionPriceState] = useState(0);
     const [semesterName, setSemesterNameState] = useState('الفصل الدراسي');
+    const [semesters, setSemestersState] = useState('الفصل الأول,الفصل الثاني');
+    const [whatsappTemplate, setWhatsappTemplateState] = useState('تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}');
     const [balanceWarningThreshold, setBalanceWarningThresholdState] = useState(2);
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
@@ -54,6 +60,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.whatsapp_auto_notify) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
                     if (settings.default_session_price) setDefaultSessionPriceState(Number(settings.default_session_price));
                     if (settings.semester_name) setSemesterNameState(settings.semester_name);
+                    if (settings.semesters) setSemestersState(settings.semesters);
+                    if (settings.whatsapp_template) setWhatsappTemplateState(settings.whatsapp_template);
                     if (settings.balance_warning_threshold) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
                 }
             } catch (e) {
@@ -121,6 +129,16 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('semester_name', name);
     };
 
+    const setSemesters = async (val: string) => {
+        setSemestersState(val);
+        await updateSetting('semesters', val);
+    };
+
+    const setWhatsappTemplate = async (val: string) => {
+        setWhatsappTemplateState(val);
+        await updateSetting('whatsapp_template', val);
+    };
+
     const setBalanceWarningThreshold = async (threshold: number) => {
         setBalanceWarningThresholdState(threshold);
         await updateSetting('balance_warning_threshold', String(threshold));
@@ -140,10 +158,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     return (
         <SettingsContext.Provider value={{
             academyName, adminPhone, themeColor, notificationsEnabled, autoBackup, maintenanceMode,
-            whatsappAutoNotify, defaultSessionPrice, semesterName, balanceWarningThreshold,
+            whatsappAutoNotify, defaultSessionPrice, semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
             isSettingsLoading,
             setAcademyName, setAdminPhone, setThemeColor, setNotificationsEnabled, setAutoBackup, setMaintenanceMode,
-            setWhatsappAutoNotify, setDefaultSessionPrice, setSemesterName, setBalanceWarningThreshold
+            setWhatsappAutoNotify, setDefaultSessionPrice, setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold
         }}>
             {children}
         </SettingsContext.Provider>

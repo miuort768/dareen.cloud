@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
-    RefreshCw, CheckCircle2, Monitor
+    RefreshCw, CheckCircle2, Monitor, Calendar
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -37,8 +37,10 @@ const Settings = () => {
         notificationsEnabled, setNotificationsEnabled,
         maintenanceMode, setMaintenanceMode,
         whatsappAutoNotify, setWhatsappAutoNotify,
+        whatsappTemplate, setWhatsappTemplate,
         defaultSessionPrice, setDefaultSessionPrice,
         semesterName, setSemesterName,
+        semesters, setSemesters,
         balanceWarningThreshold, setBalanceWarningThreshold,
         user, users, addUser, editUser, deleteUser
     } = useApp();
@@ -53,6 +55,8 @@ const Settings = () => {
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone);
     const [localSemesterName, setLocalSemesterName] = useState(semesterName);
+    const [localSemesters, setLocalSemesters] = useState(semesters);
+    const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
 
@@ -266,7 +270,24 @@ const Settings = () => {
                                     <input placeholder="اسم الدخول" value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
                                     <input type="password" placeholder={editingUserId ? "تغيير الرقم السري (اختياري)" : "الرقم السري"} value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
                                 </div>
-                                <p className="text-[10px] font-black uppercase opacity-60">صلاحيات الوصول</p>
+                                <div className="flex flex-wrap gap-2 mb-2">
+                                    <p className="text-[10px] font-black uppercase opacity-60 w-full mb-1">قوالب صلاحيات جاهزة</p>
+                                    {[
+                                        { label: 'مدير نظام', perms: ['*'] },
+                                        { label: 'محاسب', perms: ['view_finance', 'manage_finance'] },
+                                        { label: 'مشرف تربوي', perms: ['view_students', 'manage_students', 'view_teachers'] },
+                                        { label: 'موظف استقبال', perms: ['view_students', 'manage_students'] },
+                                    ].map(role => (
+                                        <button 
+                                            key={role.label}
+                                            onClick={() => setNewUser({...newUser, permissions: role.perms})}
+                                            className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-bold border border-gray-200 dark:border-gray-700 hover:bg-primary-50 hover:border-primary-200 transition-all"
+                                        >
+                                            {role.label}
+                                        </button>
+                                    ))}
+                                </div>
+                                <p className="text-[10px] font-black uppercase opacity-60">تخصيص الصلاحيات يدوياً</p>
                                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                                     {AVAILABLE_PERMISSIONS.map(p => (
                                         <button key={p.id} onClick={() => {
@@ -287,21 +308,74 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'advanced' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <section className="lg:col-span-2 bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
                             <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-green-600"><Monitor size={24}/> أتمتة الواتساب والرسائل</h2>
-                            <div className="p-6 bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/20 flex items-center justify-between">
-                                <div><p className="font-black uppercase text-sm">ارسال الفواتير تلقائياً (WhatsApp Auto-Notify)</p><p className="text-[10px] opacity-60">ارسال اشعار فوري لولي الأمر فور تسجيل الحصة</p></div>
+                            <div className="p-6 bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/20 flex items-center justify-between mb-4">
+                                <div><p className="font-black uppercase text-sm">ارسال الفواتير تلقائياً</p><p className="text-[10px] opacity-60">ارسال اشعار فوري لولي الأمر فور تسجيل الحصة</p></div>
                                 <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-12 h-6 rounded-full relative transition-colors", whatsappAutoNotify ? "bg-green-500" : "bg-gray-300")}>
                                     <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", whatsappAutoNotify ? "translate-x-6" : "translate-x-1")} />
                                 </button>
                             </div>
+                            
+                            <div>
+                                <label className="block text-xs font-black mb-2 opacity-60">قالب رسالة الحضور (WhatsApp Template)</label>
+                                <textarea 
+                                    value={localWhatsappTemplate} 
+                                    onChange={e => setLocalWhatsappTemplate(e.target.value)}
+                                    className="w-full bg-gray-50 dark:bg-gray-800 p-4 font-bold border-2 border-transparent focus:border-green-500 outline-none min-h-[100px] text-sm"
+                                    placeholder="مثال: تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}"
+                                />
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                    {['{Student}', '{Subject}', '{Date}', '{Teacher}', '{Price}'].map(tag => (
+                                        <button 
+                                            key={tag}
+                                            onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
+                                            className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-black border border-gray-200 dark:border-gray-700 hover:bg-green-50 hover:border-green-200 transition-all"
+                                        >
+                                            + {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <button onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ قالب الرسالة'))} className="w-full py-3 bg-green-600 text-white font-black uppercase text-xs">حفظ قالب الرسالة</button>
                         </section>
-                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm text-center">
-                            <h2 className="font-black text-lg mb-6 flex items-center justify-center gap-2 uppercase text-red-600"><AlertCircle size={18}/> منطقة الخطر</h2>
-                            <button onClick={() => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })} className="w-full py-4 bg-red-50 text-red-600 border border-red-100 font-black hover:bg-red-600 hover:text-white transition-all text-xs tracking-tighter">
-                                تصفير البرنامج بالكامل (System Reset)
-                            </button>
+
+                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
+                            <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-blue-600"><Calendar size={24}/> إدارة الأرشيف والفصول</h2>
+                            
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-black mb-2 opacity-60">الفصل الدراسي الحالي (نشط)</label>
+                                    <div className="flex gap-2">
+                                        <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="flex-1 bg-gray-50 dark:bg-gray-800 p-3 font-bold outline-none" />
+                                        <button onClick={() => setSemesterName(localSemesterName).then(() => showNotify('تم تحديث الفصل النشط'))} className="bg-blue-600 text-white px-4 font-black text-xs">تحديث</button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-black mb-2 opacity-60">أرشيف الفصول السابقة (مفصولة بفاصلة)</label>
+                                    <textarea 
+                                        value={localSemesters} 
+                                        onChange={e => setLocalSemesters(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-800 p-4 font-bold border-none outline-none min-h-[80px] text-sm"
+                                    />
+                                </div>
+                                
+                                <button 
+                                    onClick={() => setSemesters(localSemesters).then(() => showNotify('تم تحديث الأرشيف'))}
+                                    className="w-full py-3 border-2 border-blue-600 text-blue-600 font-black hover:bg-blue-600 hover:text-white transition-all text-xs"
+                                >
+                                    حفظ سجل الأرشيف
+                                </button>
+                            </div>
+
+                            <div className="pt-6 border-t dark:border-gray-800">
+                                <h3 className="font-black text-xs text-red-600 mb-4 uppercase flex items-center gap-2"><AlertCircle size={14}/> منطقة الخطر</h3>
+                                <button onClick={() => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })} className="w-full py-3 bg-red-50 text-red-600 border border-red-100 font-black hover:bg-red-600 hover:text-white transition-all text-[10px]">
+                                    تصفير البرنامج بالكامل (System Reset)
+                                </button>
+                            </div>
                         </section>
                     </div>
                 )}
