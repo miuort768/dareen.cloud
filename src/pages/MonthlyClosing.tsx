@@ -708,7 +708,7 @@ export const MonthlyClosing: React.FC = () => {
                                     ))}
                                     {filteredSessions.filter(s => s.needsCompensation && !s.isCompensation && s.status === 'cancelled').length === 0 && (
                                         <tr>
-                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold italic text-sm italic">
+                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold italic text-sm">
                                                 لا توجد حصص تعويضية معلقة حالياً
                                             </td>
                                         </tr>
