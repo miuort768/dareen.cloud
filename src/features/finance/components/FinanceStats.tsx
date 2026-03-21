@@ -24,12 +24,12 @@ export const FinanceStats: React.FC<FinanceStatsProps> = ({
     monthProfit
 }) => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             <StatsCard
                 title="إجمالي الإيرادات"
                 value={totalIncome.toLocaleString() + ' ' + CURRENCY_SYMBOL}
                 icon={TrendingUp}
-                color="emerald"
+                color="green"
                 trend={'هذا الشهر: ' + monthIncome.toLocaleString()}
             />
             <StatsCard
@@ -43,13 +43,13 @@ export const FinanceStats: React.FC<FinanceStatsProps> = ({
                 title="مصاريف ثابتة"
                 value={totalFixedExpenses.toLocaleString() + ' ' + CURRENCY_SYMBOL}
                 icon={Wallet}
-                color="amber"
+                color="rose"
             />
             <StatsCard
                 title="صافي الربح"
                 value={netProfit.toLocaleString() + ' ' + CURRENCY_SYMBOL}
                 icon={DollarSign}
-                color="indigo"
+                color="green"
                 trend={'هذا الشهر: ' + monthProfit.toLocaleString()}
             />
         </div>
