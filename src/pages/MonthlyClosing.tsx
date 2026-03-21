@@ -12,19 +12,120 @@ import {
     CheckCircle2,
     AlertCircle,
     Presentation,
-    Filter
+    Filter,
+    BarChart3,
+    Receipt,
+    X,
+    Printer
 } from 'lucide-react';
+
+// --- Salary Slip Modal Component ---
+const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
+    if (!teacher) return null;
+    
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" dir="rtl">
+            <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                {/* Header */}
+                <div className="bg-gray-950 text-white p-6 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <Receipt size={24} className="text-emerald-400" />
+                        <h2 className="text-xl font-black uppercase tracking-tighter">قسيمة راتب المعلمة</h2>
+                    </div>
+                    <button onClick={onClose} className="hover:rotate-90 transition-transform">
+                        <X size={24} />
+                    </button>
+                </div>
+
+                <div className="p-8 space-y-8 overflow-y-auto max-h-[80vh]">
+                    {/* Academy & Teacher Info */}
+                    <div className="flex justify-between items-start border-b-4 border-gray-100 dark:border-gray-800 pb-6">
+                        <div>
+                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">جهة الإصدار</p>
+                            <h3 className="text-2xl font-black text-gray-950 dark:text-white mb-2">أكاديمية دارين التعليمية</h3>
+                            <p className="text-xs font-bold text-gray-500">الفترة: {month}</p>
+                        </div>
+                        <div className="text-left">
+                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">اسم المعلمة</p>
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">{teacher.name}</h3>
+                            <p className="text-xs font-bold text-emerald-600">{teacher.subject}</p>
+                        </div>
+                    </div>
+
+                    {/* Financial Summary Box */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-gray-50 dark:bg-gray-800/50 p-6 border-2 border-gray-950">
+                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">إجمالي عدد الحصص</p>
+                            <p className="text-3xl font-black text-gray-900 dark:text-white font-mono">{teacher.sessionsCount}</p>
+                        </div>
+                        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 border-2 border-gray-950">
+                            <p className="text-[10px] font-black text-emerald-600 uppercase mb-1">صافي المستحق</p>
+                            <p className="text-3xl font-black text-emerald-700 dark:text-emerald-400 font-mono">
+                                {teacher.totalAmount.toLocaleString()} <span className="text-xs uppercase">ج.م</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Detailed Sessions Table (Mini) */}
+                    <div>
+                        <h4 className="text-sm font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                             بيان الحصص المنجزة
+                        </h4>
+                        <div className="border-2 border-gray-100 dark:border-gray-800 rounded-none overflow-hidden text-sm">
+                            <table className="w-full text-right">
+                                <thead className="bg-gray-50 dark:bg-gray-800">
+                                    <tr>
+                                        <th className="p-3 font-black text-xs border-l border-gray-100 dark:border-gray-700">التاريخ</th>
+                                        <th className="p-3 font-black text-xs border-l border-gray-100 dark:border-gray-700">الطالب</th>
+                                        <th className="p-3 font-black text-xs">القيمة</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                                    {teacher.sessionsList?.slice(0, 10).map((s: any, idx: number) => (
+                                        <tr key={idx}>
+                                            <td className="p-3 border-l border-gray-50 dark:border-gray-800 font-mono text-xs">{s.date}</td>
+                                            <td className="p-3 border-l border-gray-50 dark:border-gray-800 font-bold">{s.studentName}</td>
+                                            <td className="p-3 font-bold">{s.teacherPrice || teacher.price} ج.م</td>
+                                        </tr>
+                                    ))}
+                                    {teacher.sessionsList?.length > 10 && (
+                                        <tr>
+                                            <td colSpan={3} className="p-2 text-center text-[10px] text-gray-400 font-bold italic">
+                                                و {teacher.sessionsList.length - 10} حصص أخرى في السجل...
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Footer Actions */}
+                    <div className="flex gap-4 pt-4">
+                        <button 
+                            onClick={() => window.print()}
+                            className="flex-1 bg-gray-900 text-white py-4 font-black flex items-center justify-center gap-3 hover:bg-black transition-all"
+                        >
+                            <Printer size={18} /> طباعة القسيمة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 import { useQuery } from '@tanstack/react-query';
 import { attendanceService } from '../features/attendance/services/attendanceService';
 import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
 
-type TabType = 'payroll' | 'renewals' | 'summary';
+type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis';
 
 export const MonthlyClosing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
+    const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
 
     // Fetch data
     const { data: sessions, isLoading: sessionsLoading } = useQuery({
@@ -57,9 +158,26 @@ export const MonthlyClosing: React.FC = () => {
         return {
             ...teacher,
             sessionsCount: teacherSessions.length,
-            totalAmount
+            totalAmount,
+            sessionsList: teacherSessions
         };
     }).sort((a, b) => b.totalAmount - a.totalAmount) || [];
+
+    // --- 2. Subject Profitability Logic ---
+    const subjectsList = Array.from(new Set(filteredSessions.map(s => s.subject))).filter(Boolean);
+    const subjectAnalysis = subjectsList.map(subj => {
+        const subjectSessions = filteredSessions.filter(s => s.subject === subj && s.status === 'completed');
+        const income = subjectSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
+        const payout = subjectSessions.reduce((acc, curr) => acc + (curr.teacherPrice || 0), 0);
+        const profit = income - payout;
+        return {
+            name: subj,
+            income,
+            payout,
+            profit,
+            sessionsCount: subjectSessions.length
+        };
+    }).sort((a, b) => b.profit - a.profit);
 
     // --- 2. Student Renewals Logic ---
     const renewalsData = students?.flatMap(student => 
@@ -187,7 +305,23 @@ export const MonthlyClosing: React.FC = () => {
                 >
                     <ArrowUpRight size={18} /> ملخص الأداء
                 </button>
+                <button 
+                    onClick={() => setActiveTab('analysis')}
+                    className={cn(
+                        "px-8 py-3 text-sm font-black transition-all flex items-center gap-3",
+                        activeTab === 'analysis' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                    )}
+                >
+                    <BarChart3 size={18} /> تحليل المواد
+                </button>
             </div>
+
+            {/* Salary Slip Modal */}
+            <SalarySlipModal 
+                teacher={selectedTeacherForSlip} 
+                month={selectedMonth} 
+                onClose={() => setSelectedTeacherForSlip(null)} 
+            />
 
             {/* Content Area */}
             <div className="bg-white border-2 border-gray-950 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden min-h-[500px]">
@@ -231,8 +365,16 @@ export const MonthlyClosing: React.FC = () => {
                                                 {item.price?.toLocaleString()} <span className="text-[10px] opacity-30">{CURRENCY_SYMBOL}</span>
                                             </td>
                                             <td className="px-6 py-5 text-center">
-                                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-950 text-white font-mono font-black text-xl shadow-[4px_4px_0px_0px_rgba(31,41,55,0.2)] dark:bg-white dark:text-gray-950">
-                                                    {item.totalAmount.toLocaleString()} <span className="text-[11px]">{CURRENCY_SYMBOL}</span>
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-950 text-white font-mono font-black text-xl shadow-[4px_4px_0px_0px_rgba(31,41,55,0.2)] dark:bg-white dark:text-gray-950">
+                                                        {item.totalAmount.toLocaleString()} <span className="text-[11px]">{CURRENCY_SYMBOL}</span>
+                                                    </div>
+                                                    <button 
+                                                        onClick={() => setSelectedTeacherForSlip(item)}
+                                                        className="text-[10px] font-black text-emerald-600 hover:text-emerald-700 underline underline-offset-4 flex items-center gap-1"
+                                                    >
+                                                        <Receipt size={10} /> عرض قسيمة الراتب
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -340,6 +482,62 @@ export const MonthlyClosing: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'analysis' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                            <div>
+                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">تحليل ربحية المواد الدراسية</h2>
+                                <p className="text-sm font-bold text-gray-400 mt-1">مقارنة الإيرادات بالتكاليف المباشرة لكل مادة</p>
+                            </div>
+                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+                                <BarChart3 size={24} />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {subjectAnalysis.map((subj, idx) => (
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.05)] p-6 relative group overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+                                    <div className="mb-6 flex justify-between items-start">
+                                        <div>
+                                            <h3 className="text-xl font-black text-gray-900 dark:text-white">{subj.name}</h3>
+                                            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">{subj.sessionsCount} حصة مكتملة</p>
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-[10px] font-black text-gray-400 uppercase">الربح الصافي</p>
+                                            <p className="text-xl font-black text-emerald-600 font-mono tracking-tighter">
+                                                {subj.profit.toLocaleString()} {CURRENCY_SYMBOL}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-end">
+                                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">الإيرادات</span>
+                                            <span className="text-sm font-black text-gray-900 dark:text-white font-mono">{subj.income.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 h-1 dark:bg-gray-700">
+                                            <div className="h-full bg-blue-500 w-full" />
+                                        </div>
+                                        <div className="flex justify-between items-end">
+                                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">مستحقات المعلمات</span>
+                                            <span className="text-sm font-black text-gray-900 dark:text-white font-mono">{subj.payout.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 h-1 dark:bg-gray-700">
+                                            <div className="h-full bg-rose-500" style={{ width: `${(subj.payout / (subj.income || 1)) * 100}%` }} />
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 pt-4 border-t-2 border-gray-50 dark:border-gray-700 flex justify-between items-center">
+                                        <span className="text-[10px] font-black text-gray-400 uppercase">نسبة هامش الربح</span>
+                                        <span className="text-sm font-black text-gray-950 dark:text-white">
+                                            {subj.income > 0 ? ((subj.profit / subj.income) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}
