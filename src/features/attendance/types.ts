@@ -20,6 +20,8 @@ export interface Session {
     date: string;
     price?: number;
     teacherPrice?: number;
+    topics?: string;
+    homework?: string;
 }
 
 export interface Enrollment {

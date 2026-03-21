@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, X, CheckCircle2, XCircle, Lock } from 'lucide-react';
+import { ShieldCheck, X, CheckCircle2, XCircle, Lock, BookOpen, Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 interface SecureAttendanceModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (status: 'completed' | 'cancelled') => void;
+    onConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string) => void;
     studentName: string;
     date: string;
 }
@@ -19,12 +19,16 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 }) => {
     const [password, setPassword] = useState('');
     const [status, setStatus] = useState<'completed' | 'cancelled'>('completed');
+    const [topics, setTopics] = useState('');
+    const [homework, setHomework] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (isOpen) {
             setPassword('');
             setStatus('completed');
+            setTopics('');
+            setHomework('');
             setError('');
         }
     }, [isOpen]);
@@ -36,7 +40,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             setError('كلمة المرور غير صحيحة');
             return;
         }
-        onConfirm(status);
+        onConfirm(status, topics, homework);
         onClose();
     };
 
@@ -93,6 +97,35 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             <span className="font-bold text-sm">غياب</span>
                         </button>
                     </div>
+
+                    {status === 'completed' && (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                                    <BookOpen size={12} className="text-emerald-500" /> ما تم إنجازه في الحصة
+                                </label>
+                                <textarea 
+                                    placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
+                                    className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-none focus:border-emerald-500 focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                                    rows={2}
+                                    value={topics}
+                                    onChange={(e) => setTopics(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                                    <Star size={12} className="text-amber-500" /> الواجب المطلوب
+                                </label>
+                                <input 
+                                    type="text"
+                                    placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
+                                    className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-none focus:border-amber-500 focus:bg-white transition-all text-xs font-bold dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                                    value={homework}
+                                    onChange={(e) => setHomework(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     <div className="space-y-2">
                         <label className="text-xs font-bold text-gray-600 dark:text-gray-300 flex items-center gap-1">

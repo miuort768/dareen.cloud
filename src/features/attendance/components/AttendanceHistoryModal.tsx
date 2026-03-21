@@ -200,6 +200,23 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                         <p className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold text-gray-500">{session.day}</p>
                                                     </div>
                                                     <p className="text-xs font-bold text-gray-500 mt-0.5">{session.subject} - {session.time}</p>
+                                                    
+                                                    {(session.topics || session.homework) && (
+                                                        <div className="mt-3 space-y-2 pb-1">
+                                                            {session.topics && (
+                                                                <div className="flex gap-2">
+                                                                    <span className="text-[9px] font-black text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">المنجز</span>
+                                                                    <p className="text-[11px] font-bold text-gray-700 dark:text-gray-300 leading-relaxed border-r-2 border-emerald-100 dark:border-emerald-900/50 pr-2">{session.topics}</p>
+                                                                </div>
+                                                            )}
+                                                            {session.homework && (
+                                                                <div className="flex gap-2">
+                                                                    <span className="text-[9px] font-black text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">الواجب</span>
+                                                                    <p className="text-[11px] font-bold text-gray-600 dark:text-gray-400 leading-relaxed border-r-2 border-amber-100 dark:border-amber-900/50 pr-2">{session.homework}</p>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
 

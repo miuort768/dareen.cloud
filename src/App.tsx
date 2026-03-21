@@ -24,6 +24,7 @@ import { Tasks } from './pages/Tasks';
 import { Chat } from './pages/Chat';
 import { Announcements } from './pages/Announcements';
 import { MonthlyClosing } from './pages/MonthlyClosing';
+import { Leads } from './pages/Leads';
 import { Agenda } from './pages/Agenda';
 import { Appointments } from './pages/Appointments';
 import { About } from './pages/public/About';
@@ -155,6 +156,7 @@ function App() {
           <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
           <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
           <Route path="monthly-closing" element={<ProtectedRoute permission="finance"><MonthlyClosing /></ProtectedRoute>} />
+          <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
           <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
           <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
           <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />

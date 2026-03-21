@@ -54,12 +54,11 @@ export const Attendance = () => {
         return studentName.charAt(0);
     };
 
-    const handleConfirmLog = async (status: 'completed' | 'cancelled') => {
+    const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string) => {
         if (!secureModalData || !logDate) return;
         const { student, enrollment } = secureModalData;
 
         const now = new Date();
-        // Adding seconds ensures uniqueness even if recorded in the same minute
         const currentTime = now.toLocaleTimeString('ar-EG', {
             hour: 'numeric',
             minute: '2-digit',
@@ -76,7 +75,9 @@ export const Attendance = () => {
             date: logDate,
             time: currentTime,
             status: status,
-            day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' })
+            day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
+            topics,
+            homework
         });
 
         if (success) {
