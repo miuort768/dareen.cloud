@@ -23,8 +23,8 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Activity size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-black text-gray-900 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">DATA GROWTH ANALYSIS</h3>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">REVENUE, EXPENSES & PERFORMANCE</p>
+                                    <h3 className="font-black text-gray-900 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">تحليل نمو البيانات</h3>
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">الإيرادات والمصروفات والأداء</p>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                         content={({ active, payload, label }) => {
                                             if (active && payload && payload.length) {
                                                 return (
-                                                    <div className="bg-gray-950 border-2 border-white/20 p-5 shadow-2xl rounded-none min-w-[220px]">
+                                                    <div className="bg-gray-950 border-2 border-white/20 p-5 shadow-2xl rounded-none min-w-[220px]" dir="rtl">
                                                         <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em] mb-4 border-b border-white/10 pb-2">{label}</p>
                                                         <div className="space-y-3">
                                                             {payload.map((entry: any, index: number) => (
@@ -62,7 +62,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                                                     </div>
                                                                     <span className="text-xs font-black text-white tabular-nums">
                                                                         {entry.dataKey === 'revenue' || entry.dataKey === 'expenses'
-                                                                            ? `${entry.value.toLocaleString()} LE`
+                                                                            ? `${entry.value.toLocaleString()} ج.م`
                                                                             : `${entry.value}`}
                                                                     </span>
                                                                 </div>
@@ -77,7 +77,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Area
                                         type="step"
                                         dataKey="revenue"
-                                        name="REVENUE"
+                                        name="الإيرادات"
                                         stroke="#3B82F6"
                                         strokeWidth={4}
                                         fillOpacity={0.1}
@@ -87,7 +87,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Area
                                         type="step"
                                         dataKey="expenses"
-                                        name="EXPENSES"
+                                        name="المصروفات"
                                         stroke="#F43F5E"
                                         strokeWidth={3}
                                         fillOpacity={0.05}
@@ -98,7 +98,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Area
                                         type="step"
                                         dataKey="completed"
-                                        name="COMPLETED"
+                                        name="الحصص المنجزة"
                                         stroke="#10B981"
                                         strokeWidth={4}
                                         fillOpacity={0.15}
@@ -123,8 +123,8 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Activity size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="font-black text-gray-900 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">ACADEMIC ACTIVITY</h3>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">MONTHLY SESSIONS TRACKING</p>
+                                    <h3 className="font-black text-gray-900 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">النشاط الأكاديمي</h3>
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">متابعة الحصص الشهرية</p>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                         content={({ active, payload, label }) => {
                                             if (active && payload && payload.length) {
                                                 return (
-                                                    <div className="bg-gray-950 border-2 border-white/20 p-5 shadow-2xl rounded-none min-w-[200px]">
+                                                    <div className="bg-gray-950 border-2 border-white/20 p-5 shadow-2xl rounded-none min-w-[200px]" dir="rtl">
                                                         <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em] mb-4 border-b border-white/10 pb-2">{label}</p>
                                                         <div className="space-y-3">
                                                             {payload.map((entry: any, index: number) => (
@@ -172,7 +172,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Area
                                         type="step"
                                         dataKey="completed"
-                                        name="COMPLETED"
+                                        name="حصص منجزة"
                                         stroke="#10B981"
                                         strokeWidth={4}
                                         fillOpacity={0.1}
@@ -182,7 +182,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                     <Area
                                         type="step"
                                         dataKey="sessions"
-                                        name="SCHEDULED"
+                                        name="حصص مجدولة"
                                         stroke="#3B82F6"
                                         strokeWidth={2}
                                         fillOpacity={0.05}
