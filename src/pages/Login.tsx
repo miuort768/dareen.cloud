@@ -77,14 +77,14 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FEFDFB] flex font-sans overflow-hidden relative">
+        <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-hidden relative transition-colors duration-500">
             <SEO
                 title="تسجيل الدخول"
                 description="تسجيل الدخول إلى بوابة معهد دارين - طموح لا يعرف الحدود."
             />
 
             {/* Static Background Layer */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[#FEFDFB]">
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-[rgb(var(--bg-surface))]">
             </div>
 
             {/* Header for desktop screens only */}
@@ -116,11 +116,11 @@ export const Login = () => {
                                 <span className="text-[18px] font-black uppercase text-slate-800 tracking-[0.2em]">منصة معهد دارين</span>
                             </div>
                             
-                            <h2 className="text-4xl lg:text-5xl font-black text-slate-900 mb-8 leading-tight border-r-8 border-emerald-600 pr-8 min-h-[6rem]">
+                            <h2 className="text-4xl lg:text-5xl font-black text-[rgb(var(--text-main))] mb-8 leading-tight border-r-8 border-emerald-600 pr-8 min-h-[6rem]">
                                 {typedText}
                                 <span className="inline-block w-[6px] h-10 bg-emerald-600 ml-3 animate-pulse align-middle"></span>
                             </h2>
-                            <p className="text-slate-700 text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
+                            <p className="text-[rgb(var(--text-muted))] text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
                         </div>
 
                         {/* Organized Stats - Sharp & Static */}
@@ -204,8 +204,8 @@ export const Login = () => {
                                 </div>
                             </div>
 
-                            <h1 className="text-2xl sm:text-3xl font-black text-black mb-2 font-heading tracking-tight">أهلاً بك في دارين</h1>
-                            <p className="text-gray-500 font-bold text-sm sm:text-base">يرجى تسجيل الدخول للمتابعة إلى حسابك</p>
+                            <h1 className="text-2xl sm:text-3xl font-black text-[rgb(var(--text-main))] mb-2 font-heading tracking-tight">أهلاً بك في دارين</h1>
+                            <p className="text-[rgb(var(--text-muted))] font-bold text-sm sm:text-base">يرجى تسجيل الدخول للمتابعة إلى حسابك</p>
                         </div>
                         
                         {/* Mobile Background Decoration (visible only on small screens) */}

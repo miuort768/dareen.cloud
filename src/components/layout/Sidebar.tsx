@@ -243,7 +243,7 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 flex items-center justify-around px-2 z-[100] shadow-[0_-10px_30px_rgba(0,0,0,0.08)] pb-safe">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 flex items-center justify-around px-1 z-[100] shadow-[0_-4px_20px_rgba(0,0,0,0.07)]">
                 {[
                     ...filteredNavigation.slice(0, 4),
                     ...(filteredNavigation.find(item => item.id === 'chat' && !filteredNavigation.slice(0, 4).find(i => i.id === 'chat')) ? [filteredNavigation.find(item => item.id === 'chat')!] : [])
@@ -252,34 +252,42 @@ export const Sidebar = () => {
                         key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
-                            "flex flex-col items-center justify-center flex-1 h-full transition-all duration-500 relative",
+                            "flex flex-col items-center justify-center flex-1 h-full gap-0.5 transition-all duration-200 relative px-1",
                             isActive
-                                ? "text-primary-600 dark:text-primary-400 scale-105"
-                                : "text-gray-400 dark:text-gray-500 hover:text-gray-600"
+                                ? "text-primary-600 dark:text-primary-400"
+                                : "text-gray-400 dark:text-gray-500"
                         )}
                     >
                         {({ isActive }) => (
-                            <div className={cn(
-                                "p-3 rounded-none transition-all duration-300",
-                                isActive ? "bg-primary-50 dark:bg-primary-900/40" : ""
-                            )}>
-                                <item.icon
-                                    size={28}
-                                    strokeWidth={2}
-                                    className={cn("transition-transform duration-300", isActive && "scale-110")}
-                                />
-                            </div>
+                            <>
+                                <div className={cn(
+                                    "p-1.5 rounded-xl transition-all duration-200",
+                                    isActive ? "bg-primary-50 dark:bg-primary-900/40" : ""
+                                )}>
+                                    <item.icon
+                                        size={20}
+                                        strokeWidth={isActive ? 2.5 : 2}
+                                    />
+                                </div>
+                                <span className="text-[9px] font-bold truncate max-w-[3.5rem] text-center leading-none">{item.name}</span>
+                                {item.id === 'chat' && totalUnreadCount > 0 && (
+                                    <span className="absolute top-1 right-1 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full">
+                                        {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                    </span>
+                                )}
+                            </>
                         )}
                     </NavLink>
                 ))}
 
                 <button
                     onClick={() => setMobileMenuOpen(true)}
-                    className="flex flex-col items-center justify-center flex-1 h-full text-gray-400 dark:text-gray-500 active:scale-95 transition-all group"
+                    className="flex flex-col items-center justify-center flex-1 h-full gap-0.5 text-gray-400 dark:text-gray-500 active:scale-95 transition-all"
                 >
-                    <div className="p-3 group-active:bg-gray-100 dark:group-active:bg-gray-800 rounded-none transition-colors">
-                        <Menu size={28} />
+                    <div className="p-1.5 rounded-xl transition-colors">
+                        <Menu size={20} />
                     </div>
+                    <span className="text-[9px] font-bold leading-none">المزيد</span>
                 </button>
             </div>
 

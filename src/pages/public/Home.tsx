@@ -94,7 +94,7 @@ export const Home = () => {
     const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative overflow-x-hidden">
+        <div className="min-h-screen bg-[rgb(var(--bg-surface))] font-sans text-[rgb(var(--text-main))] relative overflow-x-hidden transition-colors duration-500">
             <SEO
                 description="معهد دارين وأكاديمية دارين للتعليم والتدريب - الخيار الأول للتعليم عن بعد في الكويت والخليج. دروس خصوصية لجميع المراحل، تحفيظ قرآن، ولغات."
                 preloadImages={['/hero-child.png']}
@@ -106,7 +106,7 @@ export const Home = () => {
             <div className="hero-blob bg-green-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
-            <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
                      style={{ 
                          backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
@@ -200,7 +200,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-16 pb-2 bg-white relative overflow-hidden">
+            <section className="pt-16 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-2 max-w-5xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-black mb-0 uppercase leading-[1.4] py-0">
@@ -291,7 +291,7 @@ export const Home = () => {
             </section>
 
             {/* Quran Memorization Section */}
-            <section className="pt-6 pb-6 relative overflow-hidden bg-[#FDFCF8]">
+            <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
                      style={{ 
                          backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
@@ -397,7 +397,7 @@ export const Home = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-6 md:py-8 bg-white relative overflow-hidden">
+            <section className="py-6 md:py-8 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 md:mb-8">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-100 rounded-full mb-3 mx-auto">
@@ -477,7 +477,7 @@ export const Home = () => {
             <MasarSection />
 
             {/* FAQ Section */}
-            <section className="py-8 md:py-12 bg-[#FDFCF8] relative overflow-hidden" id="faq">
+            <section className="py-8 md:py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
                      style={{ 
                          backgroundImage: 'radial-gradient(circle at 15% 50%, #EF4444 0%, transparent 40%), radial-gradient(circle at 85% 50%, #16A34A 0%, transparent 40%)',

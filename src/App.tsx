@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { PublicThemeToggle } from './components/PublicThemeToggle';
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
@@ -77,7 +78,24 @@ const DashboardRedirect = () => {
 
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
-  // const location = useLocation();
+  const location = useLocation();
+
+  const isInternalPath = location.pathname.startsWith('/admin-dashboard') || 
+                         location.pathname.startsWith('/parent-dashboard') ||
+                         location.pathname.startsWith('/student-dashboard') ||
+                         location.pathname.startsWith('/dashboard') ||
+                         ['/students', '/parents', '/teachers', '/finance', '/attendance', '/schedule', '/chat', '/settings', '/announcements', '/reports', '/agenda', '/appointments', '/monthly-closing', '/leads', '/student-invoices', '/teacher-invoices', '/tasks', '/evaluations'].some(p => location.pathname.startsWith(p));
+
+  useEffect(() => {
+    if (isInternalPath) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      const saved = localStorage.getItem('public-theme');
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, [location.pathname, isInternalPath]);
 
   if (isLoading || isSettingsLoading) {
     return (
@@ -99,6 +117,9 @@ function App() {
 
   return (
     <>
+      {/* Dark/Light Toggle for All Pages (Testing mode) */}
+      <PublicThemeToggle />
+
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
         <div className="fixed top-0 inset-x-0 z-[9999] bg-amber-600 text-white text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">

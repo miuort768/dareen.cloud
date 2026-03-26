@@ -21,7 +21,7 @@ export const Layout = () => {
                 {!isChatOnly && <Header />}
                 <main className={cn(
                     "flex-1 overflow-y-auto custom-scrollbar relative",
-                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "p-3 md:p-6 lg:p-8 pb-24 lg:pb-8"
+                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "p-3 md:p-5 lg:p-8 pb-28 lg:pb-8"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(
