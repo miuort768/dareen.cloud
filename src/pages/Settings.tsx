@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
-    RefreshCw, CheckCircle2, Monitor, Calendar
+    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -55,10 +55,13 @@ const Settings = () => {
         semesterName, setSemesterName,
         semesters, setSemesters,
         balanceWarningThreshold, setBalanceWarningThreshold,
+        backdateLockEnabled, setBackdateLockEnabled,
+        teacherCommissionType, setTeacherCommissionType,
+        autoFreezeThreshold, setAutoFreezeThreshold,
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
-    const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'advanced' | 'audit'>('general');
+    const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'policies' | 'advanced' | 'audit'>('general');
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -161,7 +164,8 @@ const Settings = () => {
                     { id: 'general', label: 'العامة', icon: Building2 },
                     { id: 'appearance', label: 'المظهر', icon: Palette },
                     { id: 'users', label: 'المستخدمين', icon: Users },
-                    { id: 'advanced', label: 'أدوات ذكية', icon: Shield },
+                    { id: 'policies', label: 'سياسات وصلاحيات', icon: Lock },
+                    { id: 'advanced', label: 'أدوات وأرشيف', icon: Shield },
                     { id: 'audit', label: 'سجل العمليات', icon: Activity },
                 ].map((tab: any) => (
                     <button
@@ -420,6 +424,75 @@ const Settings = () => {
                                 <button onClick={() => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })} className="w-full py-3 bg-red-50 text-red-600 border border-red-100 font-black hover:bg-red-600 hover:text-white transition-all text-[10px]">
                                     تصفير البرنامج بالكامل (System Reset)
                                 </button>
+                            </div>
+                        </section>
+                    </div>
+                )}
+
+                {activeTab === 'policies' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
+                            <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-rose-600"><Lock size={24}/> ضوابط وقيود السجلات (Backdate Lock)</h2>
+                            <div className="p-6 bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-900/20 flex flex-col gap-2">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="font-black uppercase text-sm">منع التعديل بأثر رجعي (Backdating)</p>
+                                        <p className="text-[10px] opacity-80 font-bold mt-1">يمنع المعلمين والموظفين من إضافة أو تعديل حصص في تواريخ سابقة لليوم أو تواريخ مستقبلية، مما يمنع التلاعب بالسجلات.</p>
+                                    </div>
+                                    <button onClick={() => {
+                                        setBackdateLockEnabled(!backdateLockEnabled).then(() => showNotify('تـم تحديث الخيار. سيُطبق فوراً.'));
+                                    }} className={cn("w-12 h-6 rounded-full relative transition-colors shrink-0", backdateLockEnabled ? "bg-rose-500" : "bg-gray-300 dark:bg-gray-700")}>
+                                        <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", backdateLockEnabled ? "translate-x-6" : "translate-x-1")} />
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <h2 className="font-black text-xl mb-4 mt-8 flex items-center gap-3 uppercase text-indigo-600 border-t pt-6 dark:border-gray-800"><Wallet size={24}/> سياسة حساب المستحقات المالية</h2>
+                            <div>
+                                <label className="block text-xs font-black mb-2 opacity-60">نوع عمولة المعلم الافتراضية (Commission Type)</label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button 
+                                        onClick={() => setTeacherCommissionType('fixed').then(() => showNotify('تم تغيير الحساب إلى: مبلغ ثابت'))}
+                                        className={cn("p-4 border-2 font-black transition-all", teacherCommissionType === 'fixed' ? "border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400" : "border-gray-100 text-gray-500 hover:border-indigo-200")}
+                                    >مبلغ ثابت / حصة
+                                    </button>
+                                    <button 
+                                        onClick={() => setTeacherCommissionType('percentage').then(() => showNotify('تم تغيير الحساب إلى: نسبة مئوية'))}
+                                        className={cn("p-4 border-2 font-black transition-all", teacherCommissionType === 'percentage' ? "border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400" : "border-gray-100 text-gray-500 hover:border-indigo-200")}
+                                    >نسبة مئوية (%)
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
+                            <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-sky-600"><Snowflake size={24}/> سياسة الحضور والغياب (Auto-Freeze)</h2>
+                            <div>
+                                <label className="block text-xs font-black mb-2 opacity-60">حد الغياب المسموح قبل التجميد التلقائي</label>
+                                <p className="text-[10px] opacity-60 mb-4 font-bold">إذا تجاوز الطالب هذا العدد من مرات الغياب (أو الجلسات المعلقة) المتعاقبة في اشتراك واحد، سيقوم النظام تلقائياً بتغيير حالة اشتراكه إلى "مُجمد" للحفاظ على حصصه وعدم إزعاج المعلم.</p>
+                                <div className="flex items-center gap-4">
+                                    <input type="number" value={autoFreezeThreshold} onChange={(e) => setAutoFreezeThreshold(Number(e.target.value))} className="w-24 bg-gray-50 dark:bg-gray-800 p-3 font-black text-xl text-center border-2 border-transparent focus:border-sky-500 outline-none" min="1" max="10" />
+                                    <button onClick={() => setAutoFreezeThreshold(autoFreezeThreshold).then(() => showNotify('تم حفظ حد الغياب'))} className="bg-sky-600 text-white px-6 py-3 font-black uppercase text-xs">صادق على السياسة</button>
+                                </div>
+                            </div>
+
+                            <div className="pt-8 border-t dark:border-gray-800 mt-8">
+                                <h3 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-red-600"><Archive size={24}/> ترحيل وإقفال الأرصدة (Month Archive)</h3>
+                                <p className="text-xs font-bold opacity-80 mb-4 leading-relaxed">
+                                    تقوم هذه العملية بـ: تجميد سجلات الدفع الحالية وتصفير الإحصائيات (الحصص والأرباح) للوحة التحكم، لتبدأ شهراً جديداً أو ترميزاً جديداً. مع بقاء الأرصدة المستحقة وسجلات الأسماء آمنة في قواعد البيانات كأرشيف للقراءة.
+                                </p>
+                                <button onClick={() => {
+                                    if(window.confirm('🚨 تحذير خطير 🚨\n\nهل أنت متأكد من رغبتك في إقفال الشهر المالي والأكاديمي الحالي؟\nستتم أرشفة كل المعاملات والحصص المسجلة ولن تظهر في الإحصائيات بعد الآن ولن يتم التراجع عن هذا الإجراء بسهولة.')){
+                                        settingsService.archiveMonth().then(() => {
+                                            showNotify('تم تجميد وأرشفة بيانات الشهر المالي بنجاح! يتم الآن إعادة تحميل النظام...');
+                                            setTimeout(() => window.location.reload(), 2000);
+                                        }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'));
+                                    }
+                                }} className="w-full py-4 bg-red-50 dark:bg-red-900/10 text-red-600 border-2 border-red-600 font-black hover:bg-red-600 hover:text-white transition-all text-sm uppercase tracking-widest flex justify-center items-center gap-2 relative overflow-hidden group">
+                                    <span className="relative z-10 flex items-center gap-2"><Lock size={18}/> إقفال الشهر المالي الحالي وبدء فترة جديدة</span>
+                                    <div className="absolute inset-0 w-0 bg-red-600 transition-all duration-500 ease-out group-hover:w-full z-0"></div>
+                                </button>
+                                <p className="text-center text-[10px] font-black text-red-500 mt-2">* يتطلب صلاحيات الأدمن الرئيسي لإتمام العملية.</p>
                             </div>
                         </section>
                     </div>

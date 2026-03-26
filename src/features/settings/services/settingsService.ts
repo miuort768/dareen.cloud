@@ -13,6 +13,10 @@ export const settingsService = {
         return api.post<any>('/system/system-reset');
     },
 
+    async archiveMonth() {
+        return api.post<any>('/system/archive-month');
+    },
+
     async getAuditLogs() {
         return api.get<any[]>('/system/audit-logs');
     },

@@ -356,6 +356,26 @@ router.post('/system-reset', async (req, res) => {
     }
 });
 
+// 3.5 System Archive (Month Close-out)
+router.post('/archive-month', async (req, res) => {
+    try {
+        await withTransaction(req.db, async (tx) => {
+            // Flag all current active financial records as "archived"
+            await tx.run('UPDATE sessions SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
+            await tx.run('UPDATE student_invoices SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
+            await tx.run('UPDATE teacher_invoices SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
+            await tx.run('UPDATE manual_transactions SET is_archived = 1 WHERE is_archived = 0 OR is_archived IS NULL');
+            
+            // Log the action
+            await tx.run("INSERT INTO audit_logs (userId, username, action, details) VALUES (?, ?, ?, ?)", 
+                         ['system', 'System', 'MONTH_ARCHIVE', 'تم إقفال الشهر المالي وأرشفة جميع السجلات.']);
+        });
+        res.json({ message: 'Month archived successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 // 4. Settings Routes
 router.get('/settings', async (req, res) => {

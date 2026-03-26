@@ -19,6 +19,9 @@ interface SettingsContextType {
     semesters: string;
     whatsappTemplate: string;
     balanceWarningThreshold: number;
+    backdateLockEnabled: boolean;
+    teacherCommissionType: 'percentage' | 'fixed';
+    autoFreezeThreshold: number;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAcademyLogo: (logo: string) => Promise<void>;
@@ -37,6 +40,9 @@ interface SettingsContextType {
     setSemesters: (semesters: string) => Promise<void>;
     setWhatsappTemplate: (template: string) => Promise<void>;
     setBalanceWarningThreshold: (threshold: number) => Promise<void>;
+    setBackdateLockEnabled: (enabled: boolean) => Promise<void>;
+    setTeacherCommissionType: (type: 'percentage' | 'fixed') => Promise<void>;
+    setAutoFreezeThreshold: (threshold: number) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -59,6 +65,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [semesters, setSemestersState] = useState('الفصل الأول,الفصل الثاني');
     const [whatsappTemplate, setWhatsappTemplateState] = useState('تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}');
     const [balanceWarningThreshold, setBalanceWarningThresholdState] = useState(2);
+    const [backdateLockEnabled, setBackdateLockEnabledState] = useState(false);
+    const [teacherCommissionType, setTeacherCommissionTypeState] = useState<'percentage' | 'fixed'>('fixed');
+    const [autoFreezeThreshold, setAutoFreezeThresholdState] = useState(3);
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
@@ -83,6 +92,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.semesters) setSemestersState(settings.semesters);
                     if (settings.whatsapp_template) setWhatsappTemplateState(settings.whatsapp_template);
                     if (settings.balance_warning_threshold) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
+                    if (settings.backdate_lock_enabled) setBackdateLockEnabledState(settings.backdate_lock_enabled === 'true');
+                    if (settings.teacher_commission_type) setTeacherCommissionTypeState(settings.teacher_commission_type as any);
+                    if (settings.auto_freeze_threshold) setAutoFreezeThresholdState(Number(settings.auto_freeze_threshold));
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
@@ -189,6 +201,21 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('balance_warning_threshold', String(threshold));
     };
 
+    const setBackdateLockEnabled = async (enabled: boolean) => {
+        setBackdateLockEnabledState(enabled);
+        await updateSetting('backdate_lock_enabled', String(enabled));
+    };
+
+    const setTeacherCommissionType = async (type: 'percentage' | 'fixed') => {
+        setTeacherCommissionTypeState(type);
+        await updateSetting('teacher_commission_type', type);
+    };
+
+    const setAutoFreezeThreshold = async (threshold: number) => {
+        setAutoFreezeThresholdState(threshold);
+        await updateSetting('auto_freeze_threshold', String(threshold));
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -205,11 +232,13 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             academyName, academyLogo, academyTagline, academyAddress, adminPhone, themeColor, notificationsEnabled, 
             autoBackup, maintenanceMode, whatsappAutoNotify, defaultSessionPrice, defaultTeacherPrice, currencySymbol,
             semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
+            backdateLockEnabled, teacherCommissionType, autoFreezeThreshold,
             isSettingsLoading,
             setAcademyName, setAcademyLogo, setAcademyTagline, setAcademyAddress, setAdminPhone, setThemeColor, 
             setNotificationsEnabled, setAutoBackup, setMaintenanceMode, setWhatsappAutoNotify, 
             setDefaultSessionPrice, setDefaultTeacherPrice, setCurrencySymbol,
-            setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold
+            setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold,
+            setBackdateLockEnabled, setTeacherCommissionType, setAutoFreezeThreshold
         }}>
             {children}
         </SettingsContext.Provider>

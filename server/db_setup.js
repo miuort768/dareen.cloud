@@ -314,6 +314,12 @@ async function setupDatabase() {
     await addColumnIfNotExists('conversations', 'isLive', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('conversations', 'meetingUrl', 'TEXT');
 
+    // Archive policies columns
+    await addColumnIfNotExists('sessions', 'is_archived', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('student_invoices', 'is_archived', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('teacher_invoices', 'is_archived', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('manual_transactions', 'is_archived', 'INTEGER DEFAULT 0');
+
     // Create remaining indices
     const indices = [
         'CREATE INDEX IF NOT EXISTS idx_enrollments_student ON enrollments(studentId)',
