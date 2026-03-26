@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { PublicThemeToggle } from './components/PublicThemeToggle';
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
@@ -117,8 +116,7 @@ function App() {
 
   return (
     <>
-      {/* Dark/Light Toggle for All Pages (Testing mode) */}
-      <PublicThemeToggle />
+
 
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
