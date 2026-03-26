@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const PrivacyPolicy = () => {
     const { adminPhone } = useSettings();
     return (
-        <div className="min-h-screen bg-white font-sans text-gray-800">
+        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="سياسة الخصوصية"
                 description="سياسة الخصوصية الخاصة بمعهد دارين - تعرف على كيفية حماية بياناتك الشخصية وضمان خصوصيتك عند استخدام منصتنا التعليمية."
@@ -15,7 +15,7 @@ export const PrivacyPolicy = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-6 md:pt-36 md:pb-24 overflow-hidden bg-white dark:bg-slate-950">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
 
@@ -25,29 +25,29 @@ export const PrivacyPolicy = () => {
                         <span className="text-xs font-black tracking-[0.2em] uppercase">سياسة الخصوصية</span>
                     </div>
 
-                    <h1 className="text-2xl md:text-5xl font-black text-gray-900 mb-3 leading-tight font-heading">
+                    <h1 className="text-2xl md:text-5xl font-black text-gray-900 dark:text-white mb-3 leading-tight font-heading">
                         حماية <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 inline-block py-1">بياناتك</span> أولويتنا
                     </h1>
 
-                    <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
                         نلتزم في معهد دارين بحماية خصوصيتك وأمان معلوماتك الشخصية
                     </p>
                 </div>
             </section>
 
             {/* Content Section */}
-            <section className="py-8 md:py-20 bg-white">
+            <section className="py-8 md:py-20 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 max-w-4xl">
 
                     {/* Introduction */}
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
-                            <div className="w-12 h-12 bg-blue-50 rounded-none flex items-center justify-center shrink-0">
-                                <FileText className="w-6 h-6 text-blue-600" />
+                            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-none flex items-center justify-center shrink-0">
+                                <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">مقدمة</h2>
-                                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-2">مقدمة</h2>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-slate-400 leading-relaxed">
                                     تصف سياسة الخصوصية هذه كيفية جمع معهد دارين للتعليم والتدريب ("نحن" أو "المعهد") واستخدامنا وحمايتنا ومشاركتنا للمعلومات الشخصية التي نجمعها من خلال منصتنا التعليمية. باستخدامك لخدماتنا، فإنك توافق على الممارسات الموضحة في هذه السياسة.
                                 </p>
                             </div>

@@ -126,13 +126,13 @@ export const Home = () => {
                                 <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
                                 <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-black leading-none mb-0">
-                                <span className="block mb-0 min-h-[1.1em]">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-black ml-1 h-[0.9em] align-middle"></span></span>
+                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0">
+                                <span className="block mb-0 min-h-[1.1em]">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-slate-900 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 block -mt-1 py-1">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-gray-600 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -148,7 +148,7 @@ export const Home = () => {
                                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white text-black border border-gray-200 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-green-600 fill-green-600" />
@@ -172,11 +172,11 @@ export const Home = () => {
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="font-bold text-black flex items-center gap-1">
+                                    <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                                         4.9/5
                                         <Star className="w-4 h-4 text-green-500 fill-green-500" />
                                     </div>
-                                    <p className="text-xs text-gray-500 font-medium">تقييم الطلاب وأولياء الأمور</p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">تقييم الطلاب وأولياء الأمور</p>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,7 @@ export const Home = () => {
             <section className="pt-16 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-2 max-w-5xl mx-auto">
-                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-black mb-0 uppercase leading-[1.4] py-0">
+                        <h2 className="text-2xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-0 uppercase leading-[1.4] py-0">
                             لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 py-1 inline-block">تختارنا؟</span>
                         </h2>
                         <div className="h-1.5 w-24 bg-gradient-to-r from-red-500 to-transparent mx-auto rounded-full mb-4"></div>
@@ -239,21 +239,21 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        <div className="relative p-7 bg-white border border-gray-100 rounded-none shadow-sm flex items-center gap-5 group/card overflow-hidden">
+                        <div className="relative p-7 bg-white dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm flex items-center gap-5 group/card overflow-hidden">
                             <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
-                            <div className="absolute top-0 right-0 w-8 h-8 bg-red-50 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
-                            <div className="absolute bottom-2 left-10 opacity-[0.08] rotate-12 transition-transform group-hover/card:-translate-y-2">
-                                <GraduationCap size={44} className="text-black" />
+                            <div className="absolute top-0 right-0 w-8 h-8 bg-red-50 dark:bg-red-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="absolute bottom-2 left-10 opacity-[0.08] dark:opacity-[0.15] rotate-12 transition-transform group-hover/card:-translate-y-2">
+                                <GraduationCap size={44} className="text-black dark:text-white" />
                             </div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] transition-transform group-hover/card:scale-110">
-                                <BookOpen size={64} className="text-black" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
+                                <BookOpen size={64} className="text-black dark:text-white" />
                             </div>
-                            <div className="relative z-10 w-14 h-14 bg-red-50 text-red-500 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
+                            <div className="relative z-10 w-14 h-14 bg-red-50 dark:bg-red-950/50 text-red-500 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
                                 <CheckCircle className="w-7 h-7" />
                             </div>
                             <div className="relative z-10 text-right">
-                                <h3 className="text-base font-black text-black mb-1">نتائج مضمونة</h3>
-                                <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                                <h3 className="text-base font-black text-slate-900 dark:text-white mb-1">نتائج مضمونة</h3>
+                                <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                     متابعة دقيقة لضمان تحقيق أفضل النتائج التعليمية.
                                 </p>
                             </div>

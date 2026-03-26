@@ -68,14 +68,14 @@ export const Courses = () => {
     });
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-800 relative flex flex-col">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
                 title="الدورات والبرامج"
                 description="استكشف مجموعة واسعة من الدورات التعليمية المبتكرة في معهد دارين. كورس التأسيس الشامل، المناهج الخليجية، تحفيظ القرآن، ودورات اللغات."
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-[#FDFCF8]">
+            <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-white dark:bg-slate-950">
                 {/* Background Art - Watermelon Theme */}
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]" 
                      style={{ 
@@ -99,13 +99,13 @@ export const Courses = () => {
                             <Sparkles size={14} className="text-red-500" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">استكشف مستقبل التعلم</span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-black mb-4 leading-tight">
+                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight">
                             <span className="block mb-2 md:mb-3">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
-                            <span className="text-xl md:text-3xl text-gray-400 font-bold block">
+                            <span className="text-xl md:text-3xl text-gray-400 dark:text-slate-400 font-bold block">
                                 استثمر في <span className="text-red-600 underline decoration-green-500/30 decoration-8 underline-offset-8">مستقبل طفلك</span> اليوم
                             </span>
                         </h1>
-                        <p className="text-xs md:text-lg text-black max-w-3xl mx-auto leading-relaxed font-black mt-8">
+                        <p className="text-xs md:text-lg text-slate-900 dark:text-slate-100 max-w-3xl mx-auto leading-relaxed font-black mt-8">
                             نقدم باقة متنوعة من البرامج التعليمية المصممة بعناية لتناسب جميع المستويات والمراحل الدراسية، بأساليب تفاعلية تجعل التعلم متعة حقيقية.
                         </p>
                     </div>
@@ -135,8 +135,8 @@ export const Courses = () => {
                                     key={cat.value}
                                     onClick={() => setActiveCategory(cat.value)}
                                     className={`flex items-center gap-2 px-6 py-3.5 rounded-full font-black text-[10px] md:text-sm transition-all duration-500 border-2 ${activeCategory === cat.value
-                                        ? 'bg-black border-black text-white shadow-xl shadow-black/20 -translate-y-1'
-                                        : 'bg-white text-gray-500 border-gray-100 hover:border-black hover:text-black'
+                                        ? 'bg-slate-900 dark:bg-slate-100 border-slate-900 dark:border-slate-100 text-white dark:text-slate-950 shadow-xl shadow-black/20 dark:shadow-indigo-500/20 -translate-y-1'
+                                        : 'bg-white dark:bg-slate-900/50 dark:backdrop-blur-md text-gray-500 dark:text-slate-400 border-gray-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 hover:text-slate-900 dark:hover:text-slate-100'
                                         }`}
                                 >
                                     <cat.icon size={16} className={`${activeCategory === cat.value ? 'text-green-500' : 'text-gray-300'}`} />
@@ -151,7 +151,7 @@ export const Courses = () => {
                         {filteredCourses.map((course) => (
                             <div
                                 key={course.id}
-                                className="group relative bg-white border border-gray-100 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20"
+                                className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
                             >
                                 {/* Course Header (Clean Image Area) */}
                                 <div className="h-40 relative overflow-hidden bg-gray-50">
@@ -173,12 +173,12 @@ export const Courses = () => {
                                 {/* Course Content */}
                                 <div className="px-5 pt-8 pb-0 flex flex-col flex-grow relative">
                                     {/* Star Rating Badge - half on image, half on content */}
-                                    <div className="absolute -top-4 left-4 bg-white rounded-xl shadow-lg border border-gray-100 px-2.5 py-1.5 flex items-center gap-1">
+                                    <div className="absolute -top-4 left-4 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
                                         <StarRating rating={course.rating} />
                                     </div>
 
                                     <div className="mt-0 mb-1">
-                                        <h3 className="text-base md:text-lg font-black font-heading leading-tight text-black group-hover:text-red-600 transition-colors min-h-[3rem]">
+                                        <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-red-600 transition-colors min-h-[3rem]">
                                             {course.title}
                                         </h3>
                                         <div className="h-1 w-12 bg-green-500/20 rounded-full mt-1 group-hover:w-20 group-hover:bg-red-500/50 transition-all duration-700"></div>
@@ -195,12 +195,12 @@ export const Courses = () => {
                                                     <Users size={12} className="text-red-500" />
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[10px] font-black text-black leading-none">{course.students}</span>
-                                                    <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">طالب مسجل</span>
+                                                    <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 leading-none">{course.students}</span>
+                                                    <span className="text-[8px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">طالب مسجل</span>
                                                 </div>
                                             </div>
-                                            <div className="bg-green-50 px-2.5 py-1 rounded-lg border border-green-100/50">
-                                                <span className="text-[9px] font-black text-green-700">
+                                            <div className="bg-green-50 dark:bg-green-950/30 px-2.5 py-1 rounded-lg border border-green-100/50 dark:border-green-500/20">
+                                                <span className="text-[9px] font-black text-green-700 dark:text-green-400">
                                                     {course.category === 'quran' ? '8 حصص - 400 ج' :
                                                         course.category === 'foundation' ? '8 حصص - 800 ج' :
                                                             '8 حصص - 1200 ج'}

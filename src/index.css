@@ -100,20 +100,39 @@
     background-color: rgb(var(--bg-card)) !important;
   }
 
-  .dark .bg-gray-50, .dark .bg-slate-50 {
+  .dark .bg-gray-50, .dark .bg-slate-50, .dark .bg-gray-100\/50, .dark .bg-slate-100\/50, .dark .bg-gray-50\/50, .dark .bg-slate-50\/50 {
     background-color: rgb(var(--bg-surface)) !important;
   }
 
-  .dark .bg-gray-100, .dark .bg-slate-100 {
+  /* Specific light hex codes found in some components */
+  .dark .bg-\[\#FDFCF8\], .dark .bg-\[\#fafafa\], .dark .bg-\[\#fdfdfd\], .dark .bg-\[\#f9f9f9\] {
+    background-color: rgb(var(--bg-surface)) !important;
+  }
+
+  .dark .bg-gray-100, .dark .bg-slate-100, .dark .bg-gray-200, .dark .bg-slate-200, .dark .bg-gray-200\/50, .dark .bg-slate-200\/50 {
     background-color: rgb(var(--bg-hover)) !important;
   }
 
-  .dark .text-gray-900, .dark .text-slate-900, .dark .text-gray-800 {
+  .dark .bg-gray-200, .dark .bg-slate-200 {
+    background-color: rgb(var(--bg-hover)) !important;
+  }
+
+  /* Handle all gray text scales for readability */
+  .dark .text-gray-950, .dark .text-slate-950, .dark .text-gray-900, .dark .text-slate-900, .dark .text-gray-800, .dark .text-slate-800 {
     color: rgb(var(--text-main)) !important;
   }
 
-  .dark .text-gray-600, .dark .text-slate-600, .dark .text-gray-500 {
+  .dark .text-gray-700, .dark .text-slate-700, .dark .text-gray-600, .dark .text-slate-600, .dark .text-gray-500, .dark .text-slate-500 {
     color: rgb(var(--text-muted)) !important;
+  }
+
+  .dark .text-gray-400, .dark .text-slate-400 {
+    color: rgb(var(--text-dim)) !important;
+  }
+
+  /* Handle backgrounds that might be light primary tints */
+  .dark .bg-primary-50, .dark .bg-indigo-50, .dark .bg-blue-50 {
+    background-color: rgba(var(--color-primary), 0.05) !important;
   }
 
   .dark .border-gray-200, .dark .border-slate-200, .dark .border-gray-100, .dark .border-slate-100 {
@@ -124,8 +143,8 @@
     border-color: rgb(var(--border-accent)) !important;
   }
 
-  .dark .shadow-sm, .dark .shadow, .dark .shadow-md {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+  .dark .shadow-sm, .dark .shadow, .dark .shadow-md, .dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.5) !important;
   }
 
   /* Specific Card Styling for Premium Depth */
@@ -572,9 +591,14 @@
 }
 
 .stat-card-glass {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.1);
+  background: rgba(var(--bg-card), 0.9);
+  border: 1px solid rgba(var(--border-main), 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dark .stat-card-glass {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .glass-widget {
@@ -585,6 +609,12 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+}
+
+.dark .glass-widget {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 }
 
 .glass-widget:hover {

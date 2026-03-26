@@ -6,7 +6,7 @@ import { SEO } from '../../components/SEO';
 
 export const About = () => {
     return (
-        <div className="min-h-screen bg-white font-sans text-gray-800 relative overflow-x-hidden">
+        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO
                 title="عن المعهد"
                 description="تعرف على معهد دارين وتاريخنا في التميز التعليمي. نهدف لبناء القدرات وتنمية المهارات عبر برامج تعليمية مبتكرة تجمع بين الأصالة والمعاصرة."
@@ -14,57 +14,57 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-[#FDFCF8]">
+            <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-white dark:bg-slate-950">
                 {/* Creative Background Elements - Watermelon Theme */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-100 rounded-none shadow-sm mb-8 animate-fade-in group hover:border-red-500 transition-all duration-500">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-8 animate-fade-in group hover:border-red-500 transition-all duration-500">
                         <Sparkles size={16} className="text-red-600 group-hover:rotate-12 transition-transform" />
-                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900">معهد دارين | ريادة تعليمية</span>
+                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">معهد دارين | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight">
+                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight">
                         نحن لا نُدرّس فقط،<br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-700 via-red-600 to-red-900 py-1 inline-block">نحن نبني مستقبلاً</span>
                     </h1>
 
-                    <p className="text-sm md:text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
+                    <p className="text-sm md:text-xl text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
                         في معهد دارين، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي لنخلق بيئة تعليمية لا تعرف الحدود.
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-8 md:gap-16">
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-red-50 rounded-none flex items-center justify-center text-red-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                            <div className="w-14 h-14 bg-red-50 dark:bg-red-900/20 rounded-none flex items-center justify-center text-red-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Award size={28} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900">10+</span>
-                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">سنوات تميز</span>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">10+</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">سنوات تميز</span>
                         </div>
 
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-red-50 rounded-none flex items-center justify-center text-red-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                            <div className="w-14 h-14 bg-red-50 dark:bg-red-900/20 rounded-none flex items-center justify-center text-red-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Users size={28} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900">5k+</span>
-                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">طالب فخور</span>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">5k+</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">طالب فخور</span>
                         </div>
 
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-green-50 rounded-none flex items-center justify-center text-green-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                            <div className="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-none flex items-center justify-center text-green-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
                                 <Heart size={28} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900">100%</span>
-                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">ثقة وتفاني</span>
+                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">100%</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">ثقة وتفاني</span>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Our Story & Impact */}
-            <section className="py-6 md:py-8 relative overflow-hidden bg-white">
+            <section className="py-6 md:py-8 relative overflow-hidden bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
 
@@ -97,34 +97,34 @@ export const About = () => {
 
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2 order-1 lg:order-2 text-right">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-white rounded-none mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-none mb-6">
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em]">تعرف عليـــنا</span>
                             </div>
-                            <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-8 font-heading leading-[1.6] md:leading-[1.6]">
+                            <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-8 font-heading leading-[1.6] md:leading-[1.6]">
                                 ريادة في التعليم،<br />
                                 <span className="text-red-600">نهضة في الفكر</span>
                             </h2>
-                            <p className="text-gray-600 text-base md:text-lg leading-relaxed font-medium mb-10 max-w-xl">
+                            <p className="text-gray-600 dark:text-slate-400 text-base md:text-lg leading-relaxed font-medium mb-10 max-w-xl">
                                 بدأ معهد دارين كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                             </p>
 
                             <div className="space-y-4">
-                                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-none hover:bg-gray-100 transition-colors border border-gray-100">
-                                    <div className="w-12 h-12 bg-white rounded-none shadow-sm flex items-center justify-center text-red-600 shrink-0">
+                                <div className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
+                                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-none shadow-sm flex items-center justify-center text-red-600 shrink-0">
                                         <Zap size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-black text-gray-900 mb-1">رؤية الابتكار</h4>
-                                        <p className="text-sm text-gray-500 font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
+                                        <h4 className="text-lg font-black text-gray-900 dark:text-white mb-1">رؤية الابتكار</h4>
+                                        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-none hover:bg-gray-100 transition-colors border border-gray-100">
-                                    <div className="w-12 h-12 bg-white rounded-none shadow-sm flex items-center justify-center text-green-600 shrink-0">
+                                <div className="flex items-start gap-4 p-6 bg-gray-50 dark:bg-slate-900/50 rounded-none hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors border border-gray-100 dark:border-slate-800">
+                                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-none shadow-sm flex items-center justify-center text-green-600 shrink-0">
                                         <BookOpen size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-black text-gray-900 mb-1">رسالة التمكين</h4>
-                                        <p className="text-sm text-gray-500 font-medium">تقديم تجربة تعليمية قيميّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
+                                        <h4 className="text-lg font-black text-gray-900 dark:text-white mb-1">رسالة التمكين</h4>
+                                        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">تقديم تجربة تعليمية قيميّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-16 bg-[#fafafa] relative overflow-hidden">
+            <section className="py-16 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
                 {/* Visual Separator */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
@@ -154,49 +154,49 @@ export const About = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
                         {/* Value 1 - Honesty */}
-                        <div className="group bg-white p-8 border border-gray-100 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-0 bg-red-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Shield className="w-8 h-8" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 font-heading">الأمانة</h3>
-                            <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الأمانة</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل أبنائكم.
                             </p>
                         </div>
 
                         {/* Value 2 - Innovation */}
-                        <div className="group bg-white p-8 border border-gray-100 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-0 bg-red-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Lightbulb className="w-8 h-8" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 font-heading">الابتكار</h3>
-                            <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">الابتكار</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.
                             </p>
                         </div>
 
                         {/* Value 3 - Excellence */}
-                        <div className="group bg-white p-8 border border-gray-100 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-0 bg-red-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Award className="w-8 h-8" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 font-heading">التميز</h3>
-                            <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">التميز</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.
                             </p>
                         </div>
 
                         {/* Value 4 - Building Generations */}
-                        <div className="group bg-white p-8 border border-gray-100 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
+                        <div className="group bg-white dark:bg-slate-900/40 dark:backdrop-blur-md p-8 border border-gray-100 dark:border-slate-800 hover:border-red-600/30 transition-all duration-500 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-0 bg-red-600 group-hover:h-full transition-all duration-500"></div>
-                            <div className="w-16 h-16 bg-gray-50 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
+                            <div className="w-16 h-16 bg-gray-50 dark:bg-slate-800 text-red-600 flex items-center justify-center mb-8 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-sm">
                                 <Compass className="w-8 h-8" />
                             </div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 font-heading">بناء الجيل</h3>
-                            <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 font-heading">بناء الجيل</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed font-medium">
                                 نركز على صقل شخصية الطالب ومهاراته القيادية ليكون منارة للتغيير الإيجابي في المجتمع.
                             </p>
                         </div>
@@ -205,7 +205,7 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Redesigned with Creative Touches */}
-            <section className="py-20 bg-white relative overflow-hidden">
+            <section className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                     <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-600/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>

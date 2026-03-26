@@ -39,7 +39,7 @@ export const PublicNavbar = () => {
 
     return (
         <header className="fixed top-2 md:top-4 left-0 right-0 z-50 mx-auto w-[92%] md:max-w-[90%] transition-all duration-500">
-            <nav className="bg-white/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 px-4 md:px-6 py-2 md:py-3 relative">
+            <nav className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full md:rounded-[2rem] border border-white/60 dark:border-slate-800/60 px-4 md:px-6 py-2 md:py-3 relative">
                 <div className="flex justify-between items-center h-12 md:h-14">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 pr-2 group">
@@ -55,21 +55,21 @@ export const PublicNavbar = () => {
                             <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
                                 معهد دارين
                             </h1>
-                            <span className="text-[10px] md:text-[12px] text-red-500/90 font-bold mt-1.5 bg-red-50/80 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
+                            <span className="text-[10px] md:text-[12px] text-red-500/90 dark:text-red-400 font-bold mt-1.5 bg-red-50/80 dark:bg-red-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-green-100 backdrop-blur-md px-2 py-1.5 rounded-full border border-green-200 shadow-sm">
+                    <div className="hidden md:flex items-center gap-2 bg-green-100/50 dark:bg-slate-800/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-green-200 dark:border-slate-700 shadow-sm">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
                                     ? 'bg-gradient-to-r from-red-500 to-red-400 text-white shadow-lg shadow-red-400/30 -translate-y-0.5'
-                                    : 'text-gray-600 hover:bg-white hover:text-red-500'
+                                    : 'text-gray-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-red-500'
                                     }`}
                             >
                                 {item.name}
@@ -80,7 +80,7 @@ export const PublicNavbar = () => {
                     {/* Right Side: Auth & Notifications */}
                     <div className="flex items-center gap-2 md:gap-4">
                         {isAuthenticated && (
-                            <div className="hidden md:block border-l border-gray-100 pl-4 h-8 flex items-center">
+                            <div className="hidden md:block border-l border-gray-100 dark:border-slate-800 pl-4 h-8 flex items-center">
                                 <NotificationDropdown />
                             </div>
                         )}
@@ -89,7 +89,7 @@ export const PublicNavbar = () => {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors px-2 md:px-4 py-2"
+                                    className="flex items-center gap-3 text-gray-700 dark:text-slate-200 hover:text-primary transition-colors px-2 md:px-4 py-2"
                                 >
                                     <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-green-600 to-green-600-hover text-white flex items-center justify-center font-bold shadow-md">
                                         {currentUser?.name.charAt(0)}
@@ -97,22 +97,22 @@ export const PublicNavbar = () => {
                                     <span className="font-bold hidden sm:block">{currentUser?.name}</span>
                                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div className={`absolute left-0 mt-4 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
-                                    <div className="p-4 border-b border-gray-50 bg-gray-50/50">
-                                        <p className="text-sm font-bold text-gray-900">{currentUser?.name}</p>
-                                        <p className="text-xs text-gray-500">{currentUser?.username}</p>
+                                <div className={`absolute left-0 mt-4 w-56 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                    <div className="p-4 border-b border-gray-50 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-950/50">
+                                        <p className="text-sm font-bold text-gray-900 dark:text-slate-100">{currentUser?.name}</p>
+                                        <p className="text-xs text-gray-500 dark:text-slate-400">{currentUser?.username}</p>
                                     </div>
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-yellow-50 hover:text-green-600 transition-colors"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 dark:text-slate-200 hover:bg-yellow-50 dark:hover:bg-slate-800 hover:text-green-600 transition-colors"
                                     >
                                         <Sparkles className="w-5 h-5 text-green-600" />
                                         لوحة التحكم
                                     </Link>
                                     <button
                                         onClick={() => { logout(); setIsDropdownOpen(false); }}
-                                        className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                                        className="flex w-full items-center gap-2 text-right px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                                     >
                                         <LogOut className="w-5 h-5" />
                                         تسجيل الخروج
@@ -140,7 +140,7 @@ export const PublicNavbar = () => {
 
                 {/* Mobile Menu - Floating Card Style */}
                 <div className={`
-                    absolute top-full left-0 right-0 mt-3 p-4 bg-white/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 shadow-2xl
+                    absolute top-full left-0 right-0 mt-3 p-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-[2rem] border border-white/60 dark:border-slate-800/60 shadow-2xl
                     transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden
                     ${isMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'}
                 `}>

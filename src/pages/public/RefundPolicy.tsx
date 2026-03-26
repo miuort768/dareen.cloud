@@ -9,7 +9,7 @@ export const RefundPolicy = () => {
     const whatsappNumber = adminPhone.replace(/\D/g, '');
 
     return (
-        <div className="min-h-screen bg-white font-sans text-gray-800">
+        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="سياسة الاسترجاع والإلغاء"
                 description="تعرف على سياسة الاسترجاع والإلغاء الخاصة بمنصة معهد دارين - نضمن حقوقكم ونوضح إجراءات استرداد الرسوم."

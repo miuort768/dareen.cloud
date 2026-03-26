@@ -46,7 +46,7 @@ export const Contact = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50/50 font-sans text-gray-800 relative flex flex-col overflow-x-hidden">
+        <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
             <SEO
                 title="اتصل بنا"
                 description="تواصل مع معهد دارين لتعليم والتدريب. نحن هنا للرد على استفساراتكم ومساعدتكم في اختيار المسار التعليمي الأنسب لأبنائكم."
@@ -65,10 +65,10 @@ export const Contact = () => {
                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 mb-6">
+                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 dark:text-white mb-6">
                             تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span>
                         </h1>
-                        <p className="text-gray-500 text-sm md:text-xl font-medium leading-relaxed px-4">
+                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-xl font-medium leading-relaxed px-4">
                             يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.
                             فريقنا جاهز لخدمتكم على مدار الساعة.
                         </p>
@@ -76,7 +76,7 @@ export const Contact = () => {
 
                     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                         {/* Contact Form Container */}
-                        <div className="bg-white p-8 md:p-12 shadow-2xl shadow-gray-200/50 border border-gray-100 rounded-none relative overflow-hidden group">
+                        <div className="bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl p-8 md:p-12 shadow-2xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-slate-800/50 rounded-none relative overflow-hidden group">
                             {/* Gradient border accent */}
                             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-red-600 via-black to-green-600"></div>
 
@@ -97,25 +97,25 @@ export const Contact = () => {
                             ) : (
                                 <>
                                     <div className="mb-10">
-                                        <h2 className="text-2xl font-black text-gray-800 mb-2">أرسل لنا رسالة</h2>
-                                        <p className="text-gray-400 font-medium">املأ النموذج أدناه وسنتصل بك في غضون 24 ساعة.</p>
+                                        <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-2">أرسل لنا رسالة</h2>
+                                        <p className="text-gray-400 dark:text-slate-500 font-medium">املأ النموذج أدناه وسنتصل بك في غضون 24 ساعة.</p>
                                     </div>
 
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black text-gray-400 uppercase tracking-widest block">الاسم الكامل</label>
-                                                <input required type="text" className="w-full bg-gray-50 border border-gray-100 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold" placeholder="أدخل اسمك هنا..." />
+                                                <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">الاسم الكامل</label>
+                                                <input required type="text" className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold text-gray-900 dark:text-white" placeholder="أدخل اسمك هنا..." />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-xs font-black text-gray-400 uppercase tracking-widest block">رقم الهاتف</label>
-                                                <input required type="tel" className="w-full bg-gray-50 border border-gray-100 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold text-left" placeholder="+965 XXXX XXXX" dir="ltr" />
+                                                <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رقم الهاتف</label>
+                                                <input required type="tel" className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold text-gray-900 dark:text-white text-left" placeholder="+965 XXXX XXXX" dir="ltr" />
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest block">الموضوع</label>
-                                            <select className="w-full bg-gray-50 border border-gray-100 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold appearance-none">
+                                            <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">الموضوع</label>
+                                            <select className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold text-gray-900 dark:text-white appearance-none">
                                                 <option>استفسار عن دورة تعليمية</option>
                                                 <option>طلب حصة تجريبية</option>
                                                 <option>مشكلة تقنية في المنصة</option>
@@ -125,8 +125,8 @@ export const Contact = () => {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest block">رسالتك</label>
-                                            <textarea required rows={5} className="w-full bg-gray-50 border border-gray-100 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold resize-none" placeholder="اكتب استفسارك بالتفصيل هنا..."></textarea>
+                                            <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رسالتك</label>
+                                            <textarea required rows={5} className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-red-500 transition-all rounded-none font-bold text-gray-900 dark:text-white resize-none" placeholder="اكتب استفسارك بالتفصيل هنا..."></textarea>
                                         </div>
 
                                         <button
@@ -166,18 +166,18 @@ export const Contact = () => {
                                         href={info.link}
                                         target={info.link !== '#' ? '_blank' : undefined}
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-6 p-6 bg-white border border-gray-100 hover:border-red-200 transition-all group rounded-none"
+                                        className="flex items-center gap-6 p-6 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md border border-gray-100 dark:border-slate-800 hover:border-red-200 dark:hover:border-red-500/30 transition-all group rounded-none"
                                     >
-                                        <div className={cn("w-16 h-16 shrink-0 flex items-center justify-center rounded-none transition-all group-hover:scale-110", info.color)}>
+                                        <div className={cn("w-16 h-16 shrink-0 flex items-center justify-center rounded-none transition-all group-hover:scale-110", info.color.includes('bg-black/5') ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' : info.color)}>
                                             <info.icon size={28} />
                                         </div>
                                         <div className="flex-grow">
                                             <div className="flex items-center justify-between mb-1">
-                                                <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{info.label}</span>
-                                                <ArrowLeft size={16} className="text-gray-200 group-hover:text-red-500 transition-colors group-hover:-translate-x-1" />
+                                                <span className="text-[10px] font-black uppercase text-gray-400 dark:text-slate-500 tracking-widest">{info.label}</span>
+                                                <ArrowLeft size={16} className="text-gray-200 dark:text-slate-700 group-hover:text-red-500 transition-colors group-hover:-translate-x-1" />
                                             </div>
-                                            <h4 className="text-lg font-black text-gray-800">{info.title}</h4>
-                                            <p className="text-gray-500 font-bold" dir={info.title.includes('الهاتف') ? 'ltr' : 'rtl'}>{info.content}</p>
+                                            <h4 className="text-lg font-black text-gray-800 dark:text-white">{info.title}</h4>
+                                            <p className="text-gray-500 dark:text-slate-400 font-bold" dir={info.title.includes('الهاتف') ? 'ltr' : 'rtl'}>{info.content}</p>
                                         </div>
                                     </a>
                                 ))}
