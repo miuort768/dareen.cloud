@@ -12,7 +12,7 @@ export const Layout = () => {
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
-        <div className="min-h-screen bg-gray-50 flex font-sans dark:bg-gray-950 dark:text-gray-100 transition-colors duration-300 relative" dir="rtl">
+        <div className="min-h-screen bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
             {/* Sidebar - Hidden for chat users */}
             {!isChatOnly && <Sidebar />}
 

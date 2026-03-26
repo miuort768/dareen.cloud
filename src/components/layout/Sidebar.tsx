@@ -113,12 +113,12 @@ export const Sidebar = () => {
                 {/* Desktop Sidebar - Loading State */}
                 <div
                     className={cn(
-                        "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-gray-900 dark:border-gray-800",
+                        "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
                         collapsed ? "w-20" : "w-72"
                     )}
                 >
                     <div className={cn(
-                        "h-16 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
+                        "h-16 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-slate-900",
                         collapsed ? "justify-center px-0" : "justify-between px-6"
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
@@ -144,7 +144,7 @@ export const Sidebar = () => {
             {/* Desktop Sidebar - Hidden on Mobile */}
             <div
                 className={cn(
-                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-gray-900 dark:border-gray-800",
+                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
                     collapsed ? "w-20" : "w-72"
                 )}
             >

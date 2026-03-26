@@ -60,12 +60,12 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-gray-900/80 dark:border-gray-800 transition-colors duration-300">
+        <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-slate-900/80 dark:border-slate-800 transition-colors duration-300">
 
             {/* Search Bar / Quick Search */}
             <div className="flex-1 flex items-center gap-2 lg:gap-6 overflow-hidden">
-                <div className="flex flex-col items-center justify-center -mb-1 ml-4 border-l border-gray-100 dark:border-gray-800 pl-6 h-8">
-                    <span className="text-[10px] lg:text-xs font-black text-primary-600 dark:text-primary-400 leading-none uppercase tracking-tighter">معهد دارين</span>
+                <div className="flex flex-col items-center justify-center -mb-1 ml-4 border-l border-gray-100 dark:border-slate-800 pl-6 h-8">
+                    <span className="text-[10px] lg:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-tighter">معهد دارين</span>
                     <span className="text-[8px] lg:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">
                         {user.role === 'teacher' ? 'مرحباً بكِ شريكة النجاح' : 'مرحباً بك شريك النجاح'}
                     </span>
@@ -95,14 +95,14 @@ export const Header = () => {
                 <NotificationDropdown />
 
                 {/* User Profile */}
-                <div className="flex items-center gap-2 lg:gap-3 pr-2 lg:pr-4 border-r border-gray-100 dark:border-gray-700">
+                <div className="flex items-center gap-2 lg:gap-3 pr-2 lg:pr-4 border-r border-gray-100 dark:border-slate-800">
                     <div className="text-center hidden lg:block">
-                        <p className="text-xs lg:text-sm font-bold text-gray-900 dark:text-gray-100">{user.name}</p>
-                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs lg:text-sm font-bold text-gray-900 dark:text-slate-100">{user.name}</p>
+                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-slate-400">
                             {user.role === 'teacher' ? 'معلمة' : 'مدير النظام'}
                         </p>
                     </div>
-                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 border border-white shadow-sm dark:bg-primary-900 dark:text-primary-300 dark:border-gray-800 overflow-hidden shrink-0">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 border border-white shadow-sm dark:bg-slate-800 dark:text-teal-300 dark:border-slate-700 overflow-hidden shrink-0">
                         <User size={16} />
                     </div>
                 </div>

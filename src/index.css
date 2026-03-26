@@ -15,18 +15,28 @@
     --text-main: 15 23 42;
     --text-muted: 71 85 105;
     --text-dim: 148 163 184;
-    --bg-surface: 249 250 251; /* gray-50 */
+    --bg-surface: 243 244 246; /* Gray-100 for lighter base */
     --bg-card: 255 255 255;
+    --border-main: 226 232 240; /* slate-200 */
+    --border-accent: 15 23 42; /* sharp black border */
   }
 
-  /* Premium Dark Mode for Public Pages */
+  /* Premium Dark Mode for Public & Private Pages */
   .dark {
-    --text-main: 241 245 249; /* slate-100 */
-    --text-muted: 148 163 184; /* slate-400 */
-    --text-dim: 100 116 139; /* slate-500 */
-    --bg-surface: 8 10 18; /* Deep Space Navy */
-    --bg-card: 15 23 42; /* slate-900 */
-    --color-primary: 99 102 241; /* Indigo for better dark contrast */
+    --bg-surface: 2 6 23;      /* Deep midnight blue-black */
+    --bg-card: 15 23 42;       /* Slate-900 for cards */
+    --bg-hover: 30 41 59;      /* Slate-800 for hover states */
+    
+    --text-main: 248 250 252;  /* Slate-50 - Bright and crisp */
+    --text-muted: 148 163 184; /* Slate-400 */
+    --text-dim: 71 85 105;    /* Slate-600 */
+    
+    --color-primary: 94 234 212; /* Teal-300 for premium neon feel */
+    --border-main: 30 41 59;   /* Slate-800 */
+    --border-accent: 51 65 85; /* Slate-700 */
+    
+    /* Global glow for sharp designs in dark mode */
+    --shadow-premium: 0 0 15px rgba(94, 234, 212, 0.1);
   }
 
   html {
@@ -78,6 +88,75 @@
   h6 {
     @apply tracking-tight font-black;
     color: rgb(var(--text-main));
+  }
+
+  /* --- Global Dark Mode Overrides for Premium Navigation --- */
+  .dark body {
+    background: radial-gradient(circle at top left, rgb(15, 23, 42) 0%, rgb(2, 6, 23) 100%);
+    background-attachment: fixed;
+  }
+
+  .dark .bg-white {
+    background-color: rgb(var(--bg-card)) !important;
+  }
+
+  .dark .bg-gray-50, .dark .bg-slate-50 {
+    background-color: rgb(var(--bg-surface)) !important;
+  }
+
+  .dark .bg-gray-100, .dark .bg-slate-100 {
+    background-color: rgb(var(--bg-hover)) !important;
+  }
+
+  .dark .text-gray-900, .dark .text-slate-900, .dark .text-gray-800 {
+    color: rgb(var(--text-main)) !important;
+  }
+
+  .dark .text-gray-600, .dark .text-slate-600, .dark .text-gray-500 {
+    color: rgb(var(--text-muted)) !important;
+  }
+
+  .dark .border-gray-200, .dark .border-slate-200, .dark .border-gray-100, .dark .border-slate-100 {
+    border-color: rgb(var(--border-main)) !important;
+  }
+
+  .dark .border-gray-300, .dark .border-slate-300 {
+    border-color: rgb(var(--border-accent)) !important;
+  }
+
+  .dark .shadow-sm, .dark .shadow, .dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  /* Specific Card Styling for Premium Depth */
+  .dark .bg-card, .dark .sharp-card {
+    background-image: linear-gradient(to bottom right, rgba(255,255,255,0.03), transparent);
+  }
+
+  /* Inputs & Selects in Dark Mode */
+  .dark input, .dark select, .dark textarea {
+    background-color: rgba(2, 6, 23, 0.5) !important;
+    border-color: rgb(var(--border-main)) !important;
+    color: rgb(var(--text-main)) !important;
+  }
+
+  .dark input:focus, .dark select:focus, .dark textarea:focus {
+    border-color: rgb(var(--color-primary)) !important;
+    box-shadow: 0 0 0 2px rgba(var(--color-primary), 0.2) !important;
+  }
+
+  /* Tables in Dark Mode */
+  .dark table thead tr {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+  }
+
+  .dark table tbody tr {
+    border-color: rgb(var(--border-main)) !important;
+    background-color: transparent !important;
+  }
+
+  .dark table tbody tr:hover {
+    background-color: rgba(30, 41, 59, 0.3) !important;
   }
 }
 
@@ -287,11 +366,11 @@
 
   /* --- Sharp Premium Design System --- */
   .sharp-card {
-    @apply bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] transition-none;
+    @apply bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-none transition-none;
   }
 
   .sharp-card-primary {
-    @apply bg-white dark:bg-gray-900 border-2 border-primary-600 rounded-none shadow-[4px_4px_0px_0px_rgba(var(--color-primary),0.2)] transition-none;
+    @apply bg-white dark:bg-slate-900 border-2 border-primary-600 dark:border-teal-400 rounded-none shadow-[4px_4px_0px_0px_rgba(var(--color-primary),0.2)] dark:shadow-[0_0_15px_-5px_rgba(20,184,166,0.3)] transition-none;
   }
 
   .sharp-btn {
