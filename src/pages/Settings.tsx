@@ -211,7 +211,15 @@ const Settings = () => {
                             </div>
                             <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 flex items-center justify-between">
                                 <div><p className="text-sm font-black">وضع الصيانة</p><p className="text-[10px] opacity-60">تعطيل وصول المستخدمين العاديين</p></div>
-                                <button onClick={() => setMaintenanceMode(!maintenanceMode)} className={cn("w-12 h-6 rounded-full relative transition-colors", maintenanceMode ? "bg-amber-500" : "bg-gray-300")}>
+                                <button onClick={() => {
+                                    if (!maintenanceMode) {
+                                        if (window.confirm('🚨 تحذير: إغلاق المنصة 🚨\n\nتفعيل وضع الصيانة سيقوم بطرد جميع الطلاب والمعلمين والمناديب ومنعهم من تسجيل الدخول.\n\nهل أنت متأكد من تفعيل وضع الصيانة؟')) {
+                                            setMaintenanceMode(true).then(() => showNotify('تم تفعيل وضع الصيانة، لا يمكن لأحد سواك الدخول.'));
+                                        }
+                                    } else {
+                                        setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة، المنصة متاحة للجميع الآن.'));
+                                    }
+                                }} className={cn("w-12 h-6 rounded-full relative transition-colors shrink-0", maintenanceMode ? "bg-amber-500" : "bg-gray-300 dark:bg-gray-700")}>
                                     <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", maintenanceMode ? "translate-x-6" : "translate-x-1")} />
                                 </button>
                             </div>
