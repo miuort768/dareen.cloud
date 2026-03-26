@@ -106,10 +106,6 @@ function mountThemeToggle() {
   document.body.appendChild(btn);
 
   // Hide on internal pages, show on public pages
-  const observer = new MutationObserver(() => {
-    btn.style.display = isInternal() ? 'none' : 'flex';
-  });
-
   // Watch for URL changes (SPA navigation)
   let lastPath = window.location.pathname;
   setInterval(() => {
