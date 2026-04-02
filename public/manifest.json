@@ -1,20 +1,26 @@
 {
   "name": "معهد دارين للتعليم والتدريب",
   "short_name": "دارين",
-  "description": "نظام إدارة شامل لأكاديمية دارين لتعليم و التدريب - منصة تعليمية متكاملة",
-  "start_url": "/",
+  "description": "نظام إدارة شامل لأكاديمية دارين لتعليم و التدريب - منصة تعليمية متكاملة للمدربين والطلاب",
+  "start_url": "/?pwa=1",
+  "scope": "/",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
-    "minimal-ui"
+    "minimal-ui",
+    "fullscreen"
   ],
-  "background_color": "#ffffff",
+  "background_color": "#0b141a",
   "theme_color": "#ef4444",
   "orientation": "portrait-primary",
   "categories": [
     "education",
-    "productivity"
+    "productivity",
+    "business"
   ],
+  "lang": "ar-EG",
+  "dir": "rtl",
+  "id": "darin.academy.pwa",
   "icons": [
     {
       "src": "/logo.png",
@@ -33,6 +39,7 @@
     {
       "name": "الجدول الدراسي",
       "url": "/appointments",
+      "description": "عرض مواعيد الحصص والجلسات",
       "icons": [
         {
           "src": "/logo.png",
@@ -41,14 +48,31 @@
       ]
     },
     {
-      "name": "المحادثات",
+      "name": "المحادثات المباشرة",
       "url": "/chat",
+      "description": "تواصل مع الإدارة والطلاب",
       "icons": [
         {
           "src": "/logo.png",
           "sizes": "192x192"
         }
       ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/login-screenshot.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "واجهة تسجيل الدخول"
+    },
+    {
+      "src": "/dashboard-screenshot.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "لوحة التحكم"
     }
   ]
 }
