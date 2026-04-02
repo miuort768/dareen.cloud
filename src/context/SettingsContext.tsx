@@ -22,6 +22,9 @@ interface SettingsContextType {
     backdateLockEnabled: boolean;
     teacherCommissionType: 'percentage' | 'fixed';
     autoFreezeThreshold: number;
+    chatbotEnabled: boolean;
+    chatbotWelcomeMsg: string;
+    chatbotName: string;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAcademyLogo: (logo: string) => Promise<void>;
@@ -43,6 +46,9 @@ interface SettingsContextType {
     setBackdateLockEnabled: (enabled: boolean) => Promise<void>;
     setTeacherCommissionType: (type: 'percentage' | 'fixed') => Promise<void>;
     setAutoFreezeThreshold: (threshold: number) => Promise<void>;
+    setChatbotEnabled: (enabled: boolean) => Promise<void>;
+    setChatbotWelcomeMsg: (msg: string) => Promise<void>;
+    setChatbotName: (name: string) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -68,6 +74,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [backdateLockEnabled, setBackdateLockEnabledState] = useState(false);
     const [teacherCommissionType, setTeacherCommissionTypeState] = useState<'percentage' | 'fixed'>('fixed');
     const [autoFreezeThreshold, setAutoFreezeThresholdState] = useState(3);
+    const [chatbotEnabled, setChatbotEnabledState] = useState(false);
+    const [chatbotWelcomeMsg, setChatbotWelcomeMsgState] = useState('مرحباً بك في معهد دارين! كيف يمكننا مساعدتك اليوم؟');
+    const [chatbotName, setChatbotNameState] = useState('دارين بوت');
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
@@ -95,6 +104,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.backdate_lock_enabled) setBackdateLockEnabledState(settings.backdate_lock_enabled === 'true');
                     if (settings.teacher_commission_type) setTeacherCommissionTypeState(settings.teacher_commission_type as any);
                     if (settings.auto_freeze_threshold) setAutoFreezeThresholdState(Number(settings.auto_freeze_threshold));
+                    if (settings.chatbot_enabled) setChatbotEnabledState(settings.chatbot_enabled === 'true');
+                    if (settings.chatbot_welcome_msg) setChatbotWelcomeMsgState(settings.chatbot_welcome_msg);
+                    if (settings.chatbot_name) setChatbotNameState(settings.chatbot_name);
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
@@ -216,6 +228,21 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('auto_freeze_threshold', String(threshold));
     };
 
+    const setChatbotEnabled = async (enabled: boolean) => {
+        setChatbotEnabledState(enabled);
+        await updateSetting('chatbot_enabled', String(enabled));
+    };
+
+    const setChatbotWelcomeMsg = async (msg: string) => {
+        setChatbotWelcomeMsgState(msg);
+        await updateSetting('chatbot_welcome_msg', msg);
+    };
+
+    const setChatbotName = async (name: string) => {
+        setChatbotNameState(name);
+        await updateSetting('chatbot_name', name);
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -233,12 +260,14 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             autoBackup, maintenanceMode, whatsappAutoNotify, defaultSessionPrice, defaultTeacherPrice, currencySymbol,
             semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
             backdateLockEnabled, teacherCommissionType, autoFreezeThreshold,
+            chatbotEnabled, chatbotWelcomeMsg, chatbotName,
             isSettingsLoading,
             setAcademyName, setAcademyLogo, setAcademyTagline, setAcademyAddress, setAdminPhone, setThemeColor, 
             setNotificationsEnabled, setAutoBackup, setMaintenanceMode, setWhatsappAutoNotify, 
             setDefaultSessionPrice, setDefaultTeacherPrice, setCurrencySymbol,
             setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold,
-            setBackdateLockEnabled, setTeacherCommissionType, setAutoFreezeThreshold
+            setBackdateLockEnabled, setTeacherCommissionType, setAutoFreezeThreshold,
+            setChatbotEnabled, setChatbotWelcomeMsg, setChatbotName
         }}>
             {children}
         </SettingsContext.Provider>

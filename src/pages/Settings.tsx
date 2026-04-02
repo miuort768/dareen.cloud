@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
-    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake
+    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -58,10 +58,13 @@ const Settings = () => {
         backdateLockEnabled, setBackdateLockEnabled,
         teacherCommissionType, setTeacherCommissionType,
         autoFreezeThreshold, setAutoFreezeThreshold,
+        chatbotEnabled, setChatbotEnabled,
+        chatbotWelcomeMsg, setChatbotWelcomeMsg,
+        chatbotName, setChatbotName,
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
-    const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'policies' | 'advanced' | 'audit'>('general');
+    const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit'>('general');
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -76,6 +79,8 @@ const Settings = () => {
     const [localSemesterName, setLocalSemesterName] = useState(semesterName);
     const [localSemesters, setLocalSemesters] = useState(semesters);
     const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
+    const [localChatbotName, setLocalChatbotName] = useState(chatbotName);
+    const [localChatbotWelcomeMsg, setLocalChatbotWelcomeMsg] = useState(chatbotWelcomeMsg);
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
     const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
@@ -93,6 +98,11 @@ const Settings = () => {
         }, 300);
         return () => clearTimeout(timer);
     }, [activeTab]);
+
+    useEffect(() => {
+        setLocalChatbotName(chatbotName);
+        setLocalChatbotWelcomeMsg(chatbotWelcomeMsg);
+    }, [chatbotName, chatbotWelcomeMsg]);
 
     const fetchLogs = async () => {
         try {
@@ -164,6 +174,7 @@ const Settings = () => {
                     { id: 'general', label: 'العامة', icon: Building2 },
                     { id: 'appearance', label: 'المظهر', icon: Palette },
                     { id: 'users', label: 'المستخدمين', icon: Users },
+                    { id: 'chatbot', label: 'شات بوت', icon: MessageSquare },
                     { id: 'policies', label: 'سياسات وصلاحيات', icon: Lock },
                     { id: 'advanced', label: 'أدوات وأرشيف', icon: Shield },
                     { id: 'audit', label: 'سجل العمليات', icon: Activity },
@@ -291,6 +302,106 @@ const Settings = () => {
                                 </button>
                              </div>
                         </section>
+                    </div>
+                )}
+
+                {activeTab === 'chatbot' && (
+                    <div className="space-y-6 max-w-4xl mx-auto">
+                        <section className="bg-white dark:bg-gray-950 p-8 border dark:border-gray-800 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+                            
+                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+                                <div className="flex items-center gap-5">
+                                    <div className="w-16 h-16 bg-primary-600/10 flex items-center justify-center border-2 border-primary-600/20 rounded-none transform group-hover:rotate-6 transition-transform">
+                                        <MessageSquare className="text-primary-600" size={32} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">إعدادات الروبوت الذكي</h2>
+                                        <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">تخصيص ردود ومظهر الشات بوت التلقائي</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 p-4 border dark:border-gray-800">
+                                    <div className="text-left">
+                                        <p className="text-[10px] font-black uppercase opacity-50">حالة الشات بوت</p>
+                                        <p className="text-xs font-bold">{chatbotEnabled ? 'مُفعل حالياً' : 'مُعطل حالياً'}</p>
+                                    </div>
+                                    <button 
+                                        onClick={() => setChatbotEnabled(!chatbotEnabled)} 
+                                        className={cn(
+                                            "w-14 h-7 rounded-full relative transition-all duration-300", 
+                                            chatbotEnabled ? "bg-primary-600" : "bg-gray-400 dark:bg-gray-800"
+                                        )}
+                                    >
+                                        <div className={cn(
+                                            "absolute top-1 w-5 h-5 bg-white rounded-full transition-all shadow-md", 
+                                            chatbotEnabled ? "translate-x-8" : "translate-x-1"
+                                        )} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-8">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
+                                        <Edit size={14} /> اسم الشات بوت الظاهر
+                                    </label>
+                                    <input 
+                                        type="text"
+                                        value={localChatbotName}
+                                        onChange={(e) => setLocalChatbotName(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-primary-500 p-4 font-black transition-all outline-none text-lg"
+                                        placeholder="مثلاً: دارين - المساعد الذكي"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
+                                        <Lock size={14} /> رسالة الترحيب الأولى (Automated)
+                                    </label>
+                                    <textarea 
+                                        rows={4}
+                                        value={localChatbotWelcomeMsg}
+                                        onChange={(e) => setLocalChatbotWelcomeMsg(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-primary-500 p-4 font-bold transition-all outline-none resize-none text-base leading-relaxed"
+                                        placeholder="اكتب الرسالة التي سيراها الزائر بمجرد فتح الشات..."
+                                    />
+                                    <p className="text-[10px] text-gray-500 font-bold uppercase mt-2 italic">* تظهر هذه الرسالة بمجرد تفاعل الزائر مع أيقونة الشات.</p>
+                                </div>
+
+                                <button 
+                                    onClick={async () => {
+                                        setIsSaving(true);
+                                        try {
+                                            await setChatbotName(localChatbotName);
+                                            await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
+                                            showNotify('تم تحديث إعدادات الشات بوت بنجاح');
+                                        } catch (e) {
+                                            showNotify('حدث خطأ أثناء الحفظ');
+                                        } finally {
+                                            setIsSaving(false);
+                                        }
+                                    }}
+                                    className="w-full py-5 bg-black dark:bg-white dark:text-black text-white font-black uppercase tracking-[0.2em] hover:bg-primary-600 hover:text-white transition-all shadow-xl flex items-center justify-center gap-4"
+                                >
+                                    {isSaving ? <RefreshCw className="animate-spin" size={20} /> : (
+                                        <>
+                                            <CheckCircle2 size={20} />
+                                            تحديث إعدادات الروبوت
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </section>
+
+                        <div className="bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 p-6 flex gap-4 items-start">
+                            <AlertCircle className="text-amber-600 shrink-0" size={24} />
+                            <div>
+                                <h4 className="font-black text-sm text-amber-900 dark:text-amber-400 uppercase mb-1">كيف يعمل النظام؟</h4>
+                                <p className="text-xs text-amber-800/80 dark:text-amber-500/80 leading-relaxed font-bold">
+                                    بمجرد تفعيل الشات بوت، ستظهر أيقونة عائمة في كافة الصفحات العامة. عندما يرسل زائر رسالة، ستصلك فوراً في قسم "الدردشة" تحت اسم "زائر جديد". يمكنك الرد عليه كأي عضو آخر في المنصة.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 )}
 

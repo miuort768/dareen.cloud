@@ -9,27 +9,28 @@ class SocketService {
 
     connect() {
         const token = localStorage.getItem('auth_token');
-        if (!token) return null;
-
+        // If no token, we still want to allow guests (e.g. for chatbot)
+        // Note: Protected events on server should still check token if they require auth
+        
         if (!this.socket) {
             const origin = window.location.origin;
             this.socket = io(origin, {
                 path: '/api/socket.io',
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
-                auth: { token: token },
-                query: { token: token }, // Redundant but safer for some proxies
+                auth: { token: token || 'guest' },
+                query: { token: token || 'guest' }, 
                 reconnection: true,
                 reconnectionAttempts: Infinity,
                 timeout: 30000
             });
 
             this.socket.on('connect', () => {
-                // console.log('✅ Connected to WebSocket server as:', this.socket?.id);
-                // Explicitly join personal room just in case server-side join on connection fails
-                const decoded = this.decodeToken(token);
-                if (decoded?.id) {
-                    this.socket?.emit('join_personal_room', decoded.id);
+                if (token) {
+                    const decoded = this.decodeToken(token);
+                    if (decoded?.id) {
+                        this.socket?.emit('join_personal_room', decoded.id);
+                    }
                 }
             });
 

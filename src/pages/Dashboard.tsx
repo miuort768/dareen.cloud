@@ -13,6 +13,8 @@ import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlert
 import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
+import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
+import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -58,6 +60,8 @@ export const Dashboard = () => {
             {/* Modern Announcements Hub */}
             <ModernAnnouncements />
 
+            {!isTeacher && <QuickActionsHub />}
+
             <DashboardStats stats={stats} isTeacher={isTeacher} />
 
             {isTeacher ? (
@@ -100,7 +104,7 @@ export const Dashboard = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <PerformanceSummary stats={stats} isTeacher={false} />
                         <TasksAndRequests tasks={tasks} />
-                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                        <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -108,7 +112,11 @@ export const Dashboard = () => {
                             tasks={tasks}
                             lowBalanceStudents={lowBalanceStudents}
                         />
-                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                    </div>
+
+                    <div className="w-full">
+                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </div>
 
                     <SmartAlerts

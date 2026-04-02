@@ -34,6 +34,7 @@ import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { RefundPolicy } from './pages/public/RefundPolicy';
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
+import { ChatbotWidget } from './components/public/ChatbotWidget';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -131,6 +132,7 @@ function App() {
         </div>
       )}
       <ScrollToTop />
+      <ChatbotWidget />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />

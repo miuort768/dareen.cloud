@@ -23,6 +23,7 @@ const { systemRouter } = require('./routes/system');
 const financeRouter = require('./routes/finance');
 const tasksRouter = require('./routes/tasks');
 const chatRouter = require('./routes/chat');
+const publicChatRouter = require('./routes/publicChat');
 const { announcementsRouter } = require('./routes/announcements');
 const appointmentsRouter = require('./routes/appointments');
 
@@ -128,8 +129,12 @@ async function startServer() {
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {
-                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?)',
-                    ['maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 'notifications_enabled', 'auto_backup']);
+                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [
+                        'maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 
+                        'notifications_enabled', 'auto_backup',
+                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name'
+                    ]);
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);
                 res.json(settingsMap);
@@ -137,6 +142,9 @@ async function startServer() {
                 res.status(500).json({ error: err.message });
             }
         });
+
+        // Public Chat (Guest accessible)
+        apiRouter.use('/public-chat', publicChatRouter);
 
         // Apply authentication to ALL other API routes
         apiRouter.use(authMiddleware);
