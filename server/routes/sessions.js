@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../utils/logger');
-const { getStudentEnrollments, getStudentsWithEnrollments, withTransaction, updateEnrollmentSessions } = require('../utils/dbHelper');
+const { getStudentEnrollments, getStudentsWithEnrollments, withTransaction, updateEnrollmentSessions, awardPoints } = require('../utils/dbHelper');
 const { authMiddleware, checkRole } = require('../middleware/auth');
 const validate = require('../middleware/validation');
 const { createSessionSchema, updateSessionSchema } = require('../utils/validators');
@@ -103,6 +103,7 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
 
             if (body.status === 'completed') {
                 await updateEnrollmentSessions(tx, { studentId: body.studentId, subject: body.subject, teacherName: body.teacherName, teacherId: finalTeacherId, delta: 1 });
+                await awardPoints(tx, { studentId: body.studentId, amount: 10, action: `حضور حصة: ${body.subject}` });
             }
 
             // 🔔 Auto-notify parent on absence
@@ -169,8 +170,10 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
 
             if (wasCompleted && !isCompleted) {
                 await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل حالة حصة: ${oldSession.subject}` });
             } else if (!wasCompleted && isCompleted) {
                 await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة: ${newSession.subject}` });
             }
 
             if (isTeacher) {
@@ -197,6 +200,7 @@ router.delete('/:id', async (req, res) => {
             if (session) {
                 if (session.status === 'completed') {
                     await updateEnrollmentSessions(tx, { studentId: session.studentId, subject: session.subject, teacherName: session.teacherName, teacherId: session.teacherId, delta: -1 });
+                    await awardPoints(tx, { studentId: session.studentId, amount: -10, action: `حذف حصة مكتملة: ${session.subject}` });
                 }
                 await tx.run('DELETE FROM sessions WHERE id = ?', [id]);
             }

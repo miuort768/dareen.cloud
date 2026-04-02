@@ -39,7 +39,20 @@ async function setupDatabase() {
             studentPhone TEXT,
             curriculum TEXT,
             notes TEXT,
-            sessionPrice INTEGER DEFAULT 0
+            sessionPrice INTEGER DEFAULT 0,
+            parentId TEXT,
+            totalPoints INTEGER DEFAULT 0,
+            badges TEXT, -- JSON string
+            FOREIGN KEY(parentId) REFERENCES parents(id) ON DELETE SET NULL
+        );
+        
+        CREATE TABLE IF NOT EXISTS points_log (
+            id TEXT PRIMARY KEY,
+            studentId TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            action TEXT NOT NULL,
+            timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(studentId) REFERENCES students(id) ON DELETE CASCADE
         );
 
         CREATE TABLE IF NOT EXISTS enrollments (
@@ -511,6 +524,15 @@ async function setupDatabase() {
             ['admin_1', 'الشيخ خوارزمي', 'admin', hashedPassword, 'admin', JSON.stringify(['*'])]
         );
     }
+
+    // Migration: Add new columns if they don't exist
+    try { await db.run('ALTER TABLE students ADD COLUMN parentId TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE students ADD COLUMN totalPoints INTEGER DEFAULT 0'); } catch(e) {}
+    try { await db.run('ALTER TABLE students ADD COLUMN badges TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE enrollments ADD COLUMN teacherId TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE sessions ADD COLUMN teacherId TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE teacher_invoices ADD COLUMN teacherId TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE sessions ADD COLUMN teacherPrice INTEGER DEFAULT 0'); } catch(e) {}
 
     // Auto-populate parent credentials if missing
     console.log('Verifying parent credentials...');

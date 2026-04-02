@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
     Users,
     Calendar,
@@ -13,8 +14,13 @@ import {
     Headset,
     Activity,
     XCircle,
-    Star
+    Star,
+    Award,
+    Trophy,
+    History,
+    X
 } from 'lucide-react';
+import { GamificationCard } from '../features/students/components/GamificationCard';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
@@ -137,6 +143,18 @@ export const ParentDashboard = () => {
     }
 
     const totalUsagePercent = stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0;
+    const [selectedStudentAchievements, setSelectedStudentAchievements] = useState<any>(null);
+    const [studentLogs, setStudentLogs] = useState<any[]>([]);
+
+    const fetchLogs = async (studentId: string) => {
+        try {
+            const pointsLogs = await api.get<any[]>(`/student-portal/me/points-log?studentId=${studentId}`);
+            setStudentLogs(pointsLogs);
+        } catch (error) {
+            console.error('Error fetching student logs:', error);
+            setStudentLogs([]);
+        }
+    };
 
     return (
         <div className="space-y-6 pb-32 animate-in fade-in duration-500" dir="rtl">
@@ -210,11 +228,20 @@ export const ParentDashboard = () => {
                     onClick={() => navigate('/parent-students')}
                 />
                 <StatCard
+                    icon={Award}
+                    label="التقارير الدراسية"
+                    value="عرض الكل"
+                    color="blue"
+                    subValue="تقييمات المعلمين"
+                    onClick={() => navigate('/evaluations')}
+                />
+                <StatCard
                     icon={Receipt}
                     label="فواتير معلقة"
                     value={stats.pendingInvoiceCount}
                     color="rose"
                     subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'لا يوجد'}
+                    onClick={() => navigate('/student-invoices')}
                 />
             </div>
 

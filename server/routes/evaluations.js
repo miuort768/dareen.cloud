@@ -3,6 +3,7 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const logger = require('../utils/logger');
 const { checkRole } = require('../middleware/auth');
+const { awardPoints, withTransaction } = require('../utils/dbHelper');
 
 // 1. Get evaluations for a specific student (Used by Parent/Student)
 router.get('/student/:studentId', async (req, res) => {
@@ -35,23 +36,22 @@ router.post('/', async (req, res) => {
     const date = new Date().toISOString().split('T')[0];
 
     try {
-        await req.db.run('BEGIN TRANSACTION');
-
-        await req.db.run(
-            `INSERT INTO evaluations (id, studentId, teacherId, teacherName, sessionId, date, rating, notes, points) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [newId, studentId, teacherId, teacherName || 'معلم', sessionId || null, date, rating, notes || '', points || 0]
-        );
-
-        // Update student's total points
-        if (points && points > 0) {
-            await req.db.run(
-                `UPDATE students SET totalPoints = totalPoints + ? WHERE id = ?`,
-                [points, studentId]
+        await withTransaction(req.db, async (tx) => {
+            await tx.run(
+                `INSERT INTO evaluations (id, studentId, teacherId, teacherName, sessionId, date, rating, notes, points) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [newId, studentId, teacherId, teacherName || 'معلم', sessionId || null, date, rating, notes || '', points || 0]
             );
-        }
 
-        await req.db.run('COMMIT');
+            // Update student's total points via helper
+            if (points && points > 0) {
+                await awardPoints(tx, { 
+                    studentId, 
+                    amount: points, 
+                    action: `تقييم من ${teacherName || 'معلم'}: ${rating}` 
+                });
+            }
+        });
 
         const newEval = await req.db.get('SELECT * FROM evaluations WHERE id = ?', [newId]);
         res.status(201).json(newEval);
@@ -69,19 +69,18 @@ router.delete('/:id', checkRole(['admin', 'teacher']), async (req, res) => {
         const evaluation = await req.db.get('SELECT * FROM evaluations WHERE id = ?', [id]);
         if (!evaluation) return res.status(404).json({ error: 'Not found' });
 
-        await req.db.run('BEGIN TRANSACTION');
+        await withTransaction(req.db, async (tx) => {
+            await tx.run('DELETE FROM evaluations WHERE id = ?', [id]);
 
-        await req.db.run('DELETE FROM evaluations WHERE id = ?', [id]);
-
-        // Revert points
-        if (evaluation.points && evaluation.points > 0) {
-            await req.db.run(
-                `UPDATE students SET totalPoints = MAX(0, totalPoints - ?) WHERE id = ?`,
-                [evaluation.points, evaluation.studentId]
-            );
-        }
-
-        await req.db.run('COMMIT');
+            // Revert points
+            if (evaluation.points && evaluation.points > 0) {
+                await awardPoints(tx, { 
+                    studentId: evaluation.studentId, 
+                    amount: -evaluation.points, 
+                    action: `حذف تقييم: ${evaluation.rating}` 
+                });
+            }
+        });
         res.json({ message: 'Deleted' });
     } catch (err) {
         await req.db.run('ROLLBACK');

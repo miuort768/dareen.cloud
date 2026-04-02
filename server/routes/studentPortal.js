@@ -9,7 +9,7 @@ router.get('/me', authMiddleware, async (req, res) => {
         const studentId = req.user.id;
         
         // Ensure student exists
-        const student = await req.db.get('SELECT id, name, grade, parentPhone, studentPhone, curriculum, notes, totalPoints FROM students WHERE id = ?', [studentId]);
+        const student = await req.db.get('SELECT id, name, grade, parentPhone, studentPhone, curriculum, notes, totalPoints, badges FROM students WHERE id = ?', [studentId]);
         if (!student) return res.status(404).json({ error: 'Student not found' });
 
         // Deep fetch enrollments
@@ -31,22 +31,26 @@ router.get('/me', authMiddleware, async (req, res) => {
     }
 });
 
-// 2. Student Portal: Get My Sessions
-router.get('/me/sessions', authMiddleware, async (req, res) => {
+// 3. Student Portal: Get Points Log
+router.get('/me/points-log', authMiddleware, async (req, res) => {
     try {
-        const studentId = req.user.id;
-
-        const sessions = await req.db.all(`
-            SELECT id, studentId, teacherId, studentName, teacherName, subject, date, day, time, status, created_at
-            FROM sessions 
-            WHERE studentId = ? ORDER BY date DESC
-        `, [studentId]);
+        let studentId = req.user.id;
         
-        // Price is excluded intentionally from SELECT query
+        // If parent is requesting, allow based on studentId query param
+        if (req.user.role === 'parent' && req.query.studentId) {
+            // VERIFY: Does this parent own this student?
+            const relation = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [req.query.studentId, req.user.phone]);
+            if (relation) {
+                studentId = req.query.studentId;
+            } else {
+                return res.status(403).json({ error: 'Access denied to this student data' });
+            }
+        }
         
-        res.json(sessions);
+        const logs = await req.db.all('SELECT * FROM points_log WHERE studentId = ? ORDER BY timestamp DESC LIMIT 50', [studentId]);
+        res.json(logs);
     } catch (err) {
-        logger.error('Error fetching student sessions', err);
+        logger.error('Error fetching points log', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

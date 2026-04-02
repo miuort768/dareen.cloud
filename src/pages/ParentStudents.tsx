@@ -11,8 +11,11 @@ import {
     ChevronLeft,
     ChevronRight,
     AlertCircle,
-    XCircle
+    XCircle,
+    Trophy,
+    Star
 } from 'lucide-react';
+import { GamificationCard } from '../features/students/components/GamificationCard';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -26,8 +29,10 @@ export const ParentStudents = () => {
     // Modal & Session View State
     const [viewingStudent, setViewingStudent] = useState<any | null>(null);
     const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<any | null>(null);
+    const [viewingAchievements, setViewingAchievements] = useState<any | null>(null);
     const [viewingSubject, setViewingSubject] = useState<any | null>(null);
     const [childSessions, setChildSessions] = useState<any[]>([]);
+    const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
 
     useEffect(() => {
@@ -66,6 +71,16 @@ export const ParentStudents = () => {
     const handleViewAttendance = (student: any) => {
         setViewingAttendanceStudent(student);
         fetchChildSessions(student.id);
+    };
+
+    const handleViewAchievements = async (student: any) => {
+        setViewingAchievements(student);
+        try {
+            const logs = await api.get<any[]>(`/student-portal/me/points-log?studentId=${student.id}`);
+            setPointLogs(logs);
+        } catch (error) {
+            console.error('Error fetching student points log', error);
+        }
     };
 
     const filteredStudents = students.filter((s: any) =>
@@ -109,14 +124,22 @@ export const ParentStudents = () => {
                         {/* Kid Profile Header */}
                         <div className="bg-gray-900 p-6 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-24 h-24 bg-primary-600/10 -translate-y-12 translate-x-12 rotate-45 group-hover:scale-110 transition-transform"></div>
-                            <div className="relative z-10 flex items-center gap-4">
-                                <div className="w-14 h-14 bg-white/10 flex items-center justify-center text-white border border-white/20">
-                                    <User size={28} />
+                            <div className="relative z-10 flex items-center justify-between gap-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-14 h-14 bg-white/10 flex items-center justify-center text-white border border-white/20">
+                                        <User size={28} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-black text-white leading-tight">{student.name}</h3>
+                                        <p className="text-primary-400 text-[10px] font-black uppercase tracking-widest mt-1">{student.grade || 'غير محدد'}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-black text-white leading-tight">{student.name}</h3>
-                                    <p className="text-primary-400 text-[10px] font-black uppercase tracking-widest mt-1">{student.grade || 'غير محدد'}</p>
-                                </div>
+                                {Number(student.totalPoints) > 0 && (
+                                    <div className="flex flex-col items-center gap-1 bg-yellow-400 text-black px-2 py-1 shadow-lg transform rotate-2">
+                                        <Star size={16} className="fill-current" />
+                                        <span className="text-[10px] font-black">{student.totalPoints}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -181,20 +204,29 @@ export const ParentStudents = () => {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="p-6 pt-0 mt-auto grid grid-cols-2 gap-2">
+                        <div className="p-6 pt-0 mt-auto grid grid-cols-1 gap-2">
+                            <div className="grid grid-cols-2 gap-2">
+                                <button
+                                    onClick={() => handleViewDates(student)}
+                                    className="py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2"
+                                >
+                                    <Calendar size={14} />
+                                    حصص الطالب
+                                </button>
+                                <button
+                                    onClick={() => handleViewAttendance(student)}
+                                    className="py-2.5 bg-white border-2 border-gray-950 text-gray-900 text-[10px] font-black uppercase tracking-widest hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                                >
+                                    <TrendingUp size={14} />
+                                    نسبة الحضور
+                                </button>
+                            </div>
                             <button
-                                onClick={() => handleViewDates(student)}
-                                className="py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2"
-                            >
-                                <Calendar size={14} />
-                                تواريخ الحصص
-                            </button>
-                            <button
-                                onClick={() => handleViewAttendance(student)}
+                                onClick={() => handleViewAchievements(student)}
                                 className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
                             >
-                                <TrendingUp size={14} />
-                                نسبة الحضور الإجمالية
+                                <Trophy size={14} />
+                                عرض حصاد الإنجازات والأوسمة
                             </button>
                         </div>
                     </div>
@@ -433,6 +465,38 @@ export const ParentStudents = () => {
                             >
                                 إغلاق
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Achievement Harvest Modal */}
+            {viewingAchievements && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-300" dir="rtl">
+                    <div className="bg-white dark:bg-gray-900 w-full max-w-4xl relative shadow-2xl border-t-8 border-primary-600 animate-in slide-in-from-bottom-8">
+                        <button 
+                            onClick={() => setViewingAchievements(null)}
+                            className="absolute -top-4 -right-4 w-10 h-10 bg-primary-600 text-white flex items-center justify-center hover:bg-primary-700 transition-colors z-10"
+                        >
+                            <X size={20} />
+                        </button>
+                        
+                        <div className="p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                            <div className="mb-8 border-b border-gray-100 dark:border-gray-800 pb-6 flex items-center gap-4">
+                                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-primary-600">
+                                    <Star size={32} className="fill-current" />
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">سجل إنجازات {viewingAchievements.name}</h3>
+                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">الأوسمة، النقاط، والنشاط الأكاديمي</p>
+                                </div>
+                            </div>
+
+                            <GamificationCard 
+                                totalPoints={viewingAchievements.totalPoints}
+                                badges={viewingAchievements.badges}
+                                pointLogs={pointLogs}
+                            />
                         </div>
                     </div>
                 </div>

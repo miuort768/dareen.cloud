@@ -117,9 +117,63 @@ const getStudentsWithEnrollments = async (db, studentIds = null) => {
     }
 };
 
+/**
+ * Award points to a student and log the action.
+ * Also checks for and awards badges based on total points.
+ */
+const awardPoints = async (tx, { studentId, amount, action }) => {
+    const logger = require('./logger');
+    const { v4: uuidv4 } = require('uuid');
+
+    try {
+        // 1. Log the points
+        await tx.run(
+            'INSERT INTO points_log (id, studentId, amount, action) VALUES (?, ?, ?, ?)',
+            [uuidv4(), studentId, amount, action]
+        );
+
+        // 2. Update student total
+        await tx.run(
+            'UPDATE students SET totalPoints = totalPoints + ? WHERE id = ?',
+            [amount, studentId]
+        );
+
+        // 3. Check for badges
+        const student = await tx.get('SELECT totalPoints, badges FROM students WHERE id = ?', [studentId]);
+        if (student) {
+            let badges = [];
+            try { badges = JSON.parse(student.badges || '[]'); } catch(e) {}
+            
+            const milestones = [
+                { threshold: 100, name: 'مجتهد', color: 'blue' },
+                { threshold: 500, name: 'بطل المعهد', color: 'amber' },
+                { threshold: 1000, name: 'البروفيسور', color: 'emerald' },
+                { threshold: 2500, name: 'أسطورة دارين', color: 'rose' }
+            ];
+
+            let badgeAdded = false;
+            milestones.forEach(m => {
+                if (student.totalPoints >= m.threshold && !badges.some(b => b.name === m.name)) {
+                    badges.push({ name: m.name, color: m.color, date: new Date().toISOString() });
+                    badgeAdded = true;
+                }
+            });
+
+            if (badgeAdded) {
+                await tx.run('UPDATE students SET badges = ? WHERE id = ?', [JSON.stringify(badges), studentId]);
+            }
+        }
+
+        logger.info(`AWARDED POINTS: student: ${studentId}, amount: ${amount}, action: ${action}`);
+    } catch (err) {
+        logger.error('Failed to award points', err);
+    }
+};
+
 module.exports = {
     getStudentEnrollments,
     getStudentsWithEnrollments,
     withTransaction,
-    updateEnrollmentSessions
+    updateEnrollmentSessions,
+    awardPoints
 };

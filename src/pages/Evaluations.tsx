@@ -39,15 +39,25 @@ export const Evaluations = () => {
     const fetchData = async () => {
         try {
             setIsLoading(true);
-            const studentsRes = await api.get<any[]>('/students');
-            setStudents(studentsRes);
+            
+            if (currentUser?.role === 'parent') {
+                const myChildren = await api.get<any[]>('/parents/my-children');
+                setStudents(myChildren);
+                
+                const evalsPromises = myChildren.map(c => api.get<any[]>(`/evaluations/student/${c.id}`));
+                const allEvalsResults = await Promise.all(evalsPromises);
+                setEvaluations(allEvalsResults.flat());
+            } else {
+                const studentsRes = await api.get<any[]>('/students');
+                setStudents(studentsRes);
 
-            let evalsUrl = '/evaluations';
-            if (currentUser?.role === 'teacher') {
-                evalsUrl = `/evaluations/teacher/${currentUser.id}`;
+                let evalsUrl = '/evaluations';
+                if (currentUser?.role === 'teacher') {
+                    evalsUrl = `/evaluations/teacher/${currentUser.id}`;
+                }
+                const evalsRes = await api.get<any[]>(evalsUrl);
+                setEvaluations(evalsRes);
             }
-            const evalsRes = await api.get<any[]>(evalsUrl);
-            setEvaluations(evalsRes);
         } catch (error) {
             console.error('Error fetching evaluations:', error);
         } finally {
