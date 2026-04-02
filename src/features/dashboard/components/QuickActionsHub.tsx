@@ -1,4 +1,4 @@
-import { UserPlus, FilePlus, Megaphone, Settings, ArrowRight, Activity, Calendar } from 'lucide-react';
+import { UserPlus, FilePlus, Megaphone, ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 
