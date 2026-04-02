@@ -5,6 +5,7 @@ import {
     RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
+import { GuestChatManager } from '../features/chat/components/GuestChatManager';
 import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
 import { settingsService } from '../features/settings/services/settingsService';
@@ -392,16 +393,8 @@ const Settings = () => {
                                 </button>
                             </div>
                         </section>
-
-                        <div className="bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 p-6 flex gap-4 items-start">
-                            <AlertCircle className="text-amber-600 shrink-0" size={24} />
-                            <div>
-                                <h4 className="font-black text-sm text-amber-900 dark:text-amber-400 uppercase mb-1">كيف يعمل النظام؟</h4>
-                                <p className="text-xs text-amber-800/80 dark:text-amber-500/80 leading-relaxed font-bold">
-                                    بمجرد تفعيل الشات بوت، ستظهر أيقونة عائمة في كافة الصفحات العامة. عندما يرسل زائر رسالة، ستصلك فوراً في قسم "الدردشة" تحت اسم "زائر جديد". يمكنك الرد عليه كأي عضو آخر في المنصة.
-                                </p>
-                            </div>
-                        </div>
+                        {/* Guest Conversations Manager */}
+                        {chatbotEnabled && user?.id && <GuestChatManager adminId={user.id} />}
                     </div>
                 )}
 
