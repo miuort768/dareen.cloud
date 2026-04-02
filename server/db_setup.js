@@ -484,14 +484,20 @@ async function setupDatabase() {
             { key: 'whatsapp_auto_notify', value: 'false' },
             { key: 'default_session_price', value: '0' },
             { key: 'semester_name', value: 'الفصل الدراسي' },
-            { key: 'balance_warning_threshold', value: '2' }
+            { key: 'balance_warning_threshold', value: '2' },
+            { key: 'chatbot_enabled', value: 'false' },
+            { key: 'chatbot_welcome_msg', value: 'أهلاً بك في منصة دارين، كيف يمكنني مساعدتك اليوم؟' },
+            { key: 'chatbot_name', value: 'مساعد دارين' }
         ];
         for (const s of defaultSettings) {
             await db.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);
         }
     } else {
-        // Ensure maintenance_mode exists even if table is not empty
+        // Ensure keys exist even if table is not empty
         await db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('maintenance_mode', 'false')");
+        await db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('chatbot_enabled', 'false')");
+        await db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('chatbot_name', 'مساعد دارين')");
+        await db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('chatbot_welcome_msg', 'أهلاً بك في منصة دارين، كيف يمكنني مساعدتك اليوم؟')");
     }
 
     // Seed default admin if empty
