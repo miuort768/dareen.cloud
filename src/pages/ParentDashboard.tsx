@@ -15,12 +15,8 @@ import {
     Activity,
     XCircle,
     Star,
-    Award,
-    Trophy,
-    History,
-    X
+    Award
 } from 'lucide-react';
-import { GamificationCard } from '../features/students/components/GamificationCard';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
@@ -143,18 +139,6 @@ export const ParentDashboard = () => {
     }
 
     const totalUsagePercent = stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0;
-    const [selectedStudentAchievements, setSelectedStudentAchievements] = useState<any>(null);
-    const [studentLogs, setStudentLogs] = useState<any[]>([]);
-
-    const fetchLogs = async (studentId: string) => {
-        try {
-            const pointsLogs = await api.get<any[]>(`/student-portal/me/points-log?studentId=${studentId}`);
-            setStudentLogs(pointsLogs);
-        } catch (error) {
-            console.error('Error fetching student logs:', error);
-            setStudentLogs([]);
-        }
-    };
 
     return (
         <div className="space-y-6 pb-32 animate-in fade-in duration-500" dir="rtl">
