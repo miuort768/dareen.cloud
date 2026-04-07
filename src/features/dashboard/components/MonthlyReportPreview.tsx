@@ -1,5 +1,4 @@
 import { Share2, FileDown, CheckCircle2, Star, Calendar } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface MonthlyReportPreviewProps {
     student: {
