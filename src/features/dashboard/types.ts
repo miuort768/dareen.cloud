@@ -21,6 +21,13 @@ export interface DashboardStats {
     totalSessions: number;
     monthCompletedSessions: number;
     monthTotalSessions: number;
+    teacherPoints?: number;
+    weekTotalSessions?: number;
+    newBadgesRecommended?: number;
+    bestStudentName?: string;
+    todayTimeline?: any[];
+    teacherSessionPrice?: number;
+    evaluationsCompleted?: number;
 }
 
 export interface LowBalanceStudent {
@@ -54,4 +61,6 @@ export interface DashboardData {
     monthlyData: DashboardMonthData[];
     lowBalanceStudents: LowBalanceStudent[];
     tasks: DashboardTask[];
+    topStudents: any[];
+    focusStudents?: any[];
 }

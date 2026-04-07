@@ -15,13 +15,16 @@ import {
     Activity,
     XCircle,
     Star,
-    Award
+    Award,
+    Trophy
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import { ParentExcellenceRadar } from '../features/dashboard/components/ParentExcellenceRadar';
+import { ParentChildVisualProgress } from '../features/dashboard/components/ParentChildVisualProgress';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
@@ -166,6 +169,40 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Suggestion 1: Excellence Radar */}
+            <ParentExcellenceRadar 
+                achievements={children
+                    .filter(c => c.totalPoints > 0)
+                    .slice(0, 2)
+                    .map(c => ({
+                        id: c.id,
+                        studentName: c.name,
+                        achievement: 'إتمام حفظ سورة جديدة بتميز',
+                        date: 'اليوم',
+                        points: c.totalPoints > 50 ? 50 : c.totalPoints
+                    }))
+                }
+            />
+
+            {/* Suggestion 2 & 3: Visual Progress Profiles */}
+            <div className="mb-12">
+                <div className="flex items-center gap-3 mb-6">
+                    <Trophy size={20} className="text-primary-600" />
+                    <h2 className="text-xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">مستويات الأبطال (Heroes Levels)</h2>
+                </div>
+                <ParentChildVisualProgress 
+                    childrenProfiles={children.map(c => ({
+                        id: c.id,
+                        name: c.name,
+                        totalPoints: c.totalPoints || 0,
+                        badges: (c.badges || '').split(',').filter((b: string) => b),
+                        teacherName: (c.enrollments && c.enrollments[0]?.teacher) || 'المعلمة المشرفة',
+                        lastEvaluation: 'امتياز',
+                        adminPhone: adminPhone || ''
+                    }))}
+                />
             </div>
 
             {/* Stats Grid */}

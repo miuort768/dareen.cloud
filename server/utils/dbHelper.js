@@ -170,10 +170,51 @@ const awardPoints = async (tx, { studentId, amount, action }) => {
     }
 };
 
+/**
+ * Award points to a teacher and log the action.
+ */
+const awardTeacherPoints = async (tx, { teacherId, amount, action }) => {
+    const logger = require('./logger');
+    try {
+        await tx.run(
+            'UPDATE teachers SET points = points + ? WHERE id = ?',
+            [amount, teacherId]
+        );
+        logger.info(`AWARDED TEACHER POINTS: teacher: ${teacherId}, amount: ${amount}, action: ${action}`);
+    } catch (err) {
+        logger.error('Failed to award teacher points', err);
+    }
+};
+
+/**
+ * AI-Badge Suggester: Generates a task for the teacher to award a badge
+ * based on student behavior/milestones.
+ */
+const generateBadgeRecommendation = async (tx, { studentId, studentName, teacherId, reason, badgeName }) => {
+    const logger = require('./logger');
+    const { v4: uuidv4 } = require('uuid');
+    try {
+        const taskId = uuidv4();
+        const title = `توصية وسام: ${badgeName} لـ ${studentName}`;
+        const description = `النظام يقترح منح وسام "${badgeName}" للطالب ${studentName} لسبب: ${reason}. هل توافق؟`;
+        
+        await tx.run(
+            'INSERT INTO tasks (id, title, description, status, priority, dueDate) VALUES (?, ?, ?, ?, ?, ?)',
+            [taskId, title, description, 'pending', 'medium', new Date().toISOString().split('T')[0]]
+        );
+        
+        logger.info(`BADGE RECOMMENDATION GENERATED: student: ${studentId}, badge: ${badgeName}`);
+    } catch (err) {
+        logger.error('Failed to generate badge recommendation', err);
+    }
+};
+
 module.exports = {
     getStudentEnrollments,
     getStudentsWithEnrollments,
     withTransaction,
     updateEnrollmentSessions,
-    awardPoints
+    awardPoints,
+    awardTeacherPoints,
+    generateBadgeRecommendation
 };

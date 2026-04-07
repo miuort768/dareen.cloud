@@ -10,6 +10,7 @@ export interface Enrollment {
     sessionsUsed: number;
     schedule: ScheduleSlot[];
     price?: number;
+    nextSessionNotes?: string;
 }
 
 export interface ScheduleSlot {
@@ -28,6 +29,8 @@ export interface Student {
     notes?: string;
     sessionPrice: number;
     enrollments: Enrollment[];
+    totalPoints?: number;
+    badges?: string;
 }
 
 export interface Teacher {
@@ -40,6 +43,7 @@ export interface Teacher {
     email?: string;
     username?: string;
     password?: string;
+    points?: number;
 }
 
 export interface Parent {
@@ -63,6 +67,8 @@ export interface Session {
     time: string;
     price?: number;
     teacherPrice?: number;
+    topics?: string;
+    homework?: string;
     status: 'scheduled' | 'completed' | 'cancelled';
 }
 

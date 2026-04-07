@@ -28,6 +28,7 @@ async function setupDatabase() {
             email TEXT,
             username TEXT UNIQUE,
             password TEXT,
+            points INTEGER DEFAULT 0,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
@@ -65,6 +66,7 @@ async function setupDatabase() {
             sessionsTotal INTEGER DEFAULT 0,
             sessionsUsed INTEGER DEFAULT 0,
             schedule TEXT, -- Stored as JSON string
+            nextSessionNotes TEXT,
             FOREIGN KEY(studentId) REFERENCES students(id) ON DELETE CASCADE,
             FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
         );
@@ -300,6 +302,8 @@ async function setupDatabase() {
     await addColumnIfNotExists('students', 'username', 'TEXT UNIQUE');
     await addColumnIfNotExists('students', 'password', 'TEXT');
     await addColumnIfNotExists('sessions', 'created_at', 'TEXT DEFAULT CURRENT_TIMESTAMP');
+    await addColumnIfNotExists('teachers', 'points', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('enrollments', 'nextSessionNotes', 'TEXT');
 
     // Create unique index for parent username separately (SQLite restriction)
     try {

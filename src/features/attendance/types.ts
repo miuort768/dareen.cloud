@@ -35,6 +35,7 @@ export interface Enrollment {
     schedule: ScheduleSlot[];
     price?: number;
     discount?: number; // Optional discount amount or percentage
+    nextSessionNotes?: string;
 }
 
 export interface Student extends Omit<GlobalStudent, 'enrollments'> {

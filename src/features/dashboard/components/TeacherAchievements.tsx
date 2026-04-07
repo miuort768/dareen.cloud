@@ -21,6 +21,11 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter">
                         {isTeacher ? (stats.monthNetProfit || 0).toLocaleString() : stats.expectedCollection.toLocaleString()} <span className="text-lg opacity-30">ج.م</span>
                     </h2>
+                    {isTeacher && (
+                        <div className="mt-2 flex items-center gap-1.5 px-3 py-1 bg-yellow-400 border-2 border-gray-950 font-black text-[10px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-tighter">
+                            <span>نقاطك المهنية: {stats.teacherPoints || 0}</span>
+                        </div>
+                    )}
                 </div>
                 <div className="space-y-4">
                     <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 border-r-2 border-rose-500">

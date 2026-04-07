@@ -1,0 +1,64 @@
+import { CreditCard, TrendingUp, Info } from 'lucide-react';
+
+interface TeacherSalaryPreviewProps {
+    stats: {
+        totalEarnings: number;
+        completedSessions: number;
+        sessionsGoal: number;
+        pricePerSession: number;
+    };
+}
+
+export const TeacherSalaryPreview = ({ stats }: TeacherSalaryPreviewProps) => {
+    const progress = Math.min((stats.completedSessions / stats.sessionsGoal) * 100, 100);
+
+    return (
+        <div className="bg-emerald-600 border-4 border-gray-950 p-6 flex flex-col justify-between h-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden group">
+            
+            {/* Background pattern */}
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all pointer-events-none"></div>
+            
+            <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-6 text-white/80">
+                    <CreditCard size={18} />
+                    <h3 className="font-black text-xs uppercase tracking-tighter italic">حصالة الأرباح التقديرية</h3>
+                </div>
+
+                <div className="mb-8">
+                    <p className="text-[10px] font-black text-white/60 mb-2 uppercase tracking-widest leading-none">أرباحك المجمعة للآن</p>
+                    <div className="flex items-baseline gap-2">
+                        <h2 className="text-5xl font-black tracking-tighter leading-none italic animate-in slide-in-from-bottom duration-500">
+                            {stats.totalEarnings}
+                        </h2>
+                        <span className="text-xl font-bold opacity-30">ريال</span>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-[10px] font-black uppercase">
+                            <span>هدف الحصص: {stats.completedSessions}/{stats.sessionsGoal}</span>
+                            <span>{Math.round(progress)}%</span>
+                        </div>
+                        <div className="h-4 bg-gray-950 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)]">
+                            <div 
+                                className="h-full bg-yellow-400 transition-all duration-1000 ease-out" 
+                                style={{ width: `${progress}%` }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start gap-2 p-3 bg-emerald-500/30 border-2 border-emerald-400/50 text-[9px] font-black uppercase italic leading-relaxed">
+                        <Info size={14} className="flex-shrink-0" />
+                        <p>بناءً على {stats.completedSessions} حصة منجزة بمعدل {stats.pricePerSession} ريال/للحصة. </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-8 pt-4 border-t-2 border-white/20 text-[9px] font-black uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
+                <TrendingUp size={12} />
+                <span>كلما أنجزتِ حصصاً أكثر، زادت نقاطك المهنية في اللورد كارد!</span>
+            </div>
+        </div>
+    );
+};

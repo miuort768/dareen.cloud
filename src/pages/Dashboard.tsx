@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Megaphone } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
@@ -15,6 +16,14 @@ import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDa
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
 import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
+import { TeacherLeaderboard } from '../features/dashboard/components/TeacherLeaderboard';
+import { TeacherFocusList } from '../features/dashboard/components/TeacherFocusList';
+import { TeacherWeeklySummary } from '../features/dashboard/components/TeacherWeeklySummary';
+import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
+import { TeacherSalaryPreview } from '../features/dashboard/components/TeacherSalaryPreview';
+import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
+import { TeacherRewardsKPIs } from '../features/dashboard/components/TeacherRewardsKPIs';
+import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -27,8 +36,13 @@ export const Dashboard = () => {
         loading,
         rawStudents,
         rawSessions,
-        rawStudentInvoices
+        rawStudentInvoices,
+        topStudents,
+        focusStudents
     } = useDashboardData(currentUser);
+
+    const [briefingStudent, setBriefingStudent] = useState<any | null>(null);
+    const [selectedStudentForReport, setSelectedStudentForReport] = useState<any | null>(null);
 
     const isTeacher = currentUser?.role === 'teacher';
 
@@ -75,12 +89,52 @@ export const Dashboard = () => {
                         </div>
                     </div>
 
+                    {/* NEW: Timeline of Today's Sessions */}
+                    <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
+
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div className="lg:col-span-2">
+                        <div className="lg:col-span-2 space-y-8">
                              <TeacherAchievements
                                 stats={stats}
                                 lowBalanceStudents={lowBalanceStudents}
                                 isTeacher={true}
+                            />
+                            {/* Suggestion 3: Weekly Summary */}
+                            <TeacherWeeklySummary 
+                                stats={{
+                                    weekTotalSessions: stats.weekTotalSessions || 0,
+                                    newBadgesRecommended: stats.newBadgesRecommended || 0,
+                                    bestStudentName: stats.bestStudentName,
+                                    pointsEarnedThisWeek: (stats.weekTotalSessions || 0) * 5
+                                }}
+                            />
+                            {/* Suggestion 4: Salary Preview */}
+                            <TeacherSalaryPreview 
+                                stats={{
+                                    totalEarnings: (stats.completedSessions || 0) * (stats.teacherSessionPrice || 0),
+                                    completedSessions: stats.completedSessions || 0,
+                                    sessionsGoal: 100, // Dynamic goal could be added later
+                                    pricePerSession: stats.teacherSessionPrice || 0
+                                }}
+                            />
+                            {/* Suggestion 4: Rewards KPIs */}
+                            <TeacherRewardsKPIs 
+                                stats={{
+                                    attendanceRate: stats.attendanceRate || 0,
+                                    studentsCount: stats.studentsCount || 0,
+                                    evaluationsCompleted: stats.evaluationsCompleted || 0,
+                                    teacherPoints: stats.teacherPoints || 0
+                                }}
+                            />
+                            {/* NEW: Focus List for Teacher */}
+                            <TeacherFocusList 
+                                students={focusStudents || []} 
+                                onStudentClick={(s) => setBriefingStudent(s)}
+                            />
+                            {/* NEW: Top Students Leaderboard for Teacher */}
+                            <TeacherLeaderboard 
+                                students={topStudents || []} 
+                                onStudentClick={(s) => setBriefingStudent(s)}
                             />
                         </div>
                         <TasksAndRequests tasks={tasks} />
@@ -139,6 +193,62 @@ export const Dashboard = () => {
                             sessions={rawSessions}
                             monthlyData={monthlyData}
                         />
+                    </div>
+                </div>
+            )}
+
+            {/* Suggestion 2: Quick Brief Modal */}
+            {isTeacher && briefingStudent && (
+                <StudentQuickBrief
+                    isOpen={!!briefingStudent}
+                    onClose={() => setBriefingStudent(null)}
+                    onGenerateReport={(student) => {
+                        setSelectedStudentForReport(student);
+                        setBriefingStudent(null);
+                    }}
+                    student={briefingStudent}
+                    enrollment={briefingStudent.enrollments?.find((e: any) => e.teacherId === currentUser.id || e.teacher === (currentUser.teacherName || currentUser.name))}
+                    recentSessions={rawSessions
+                        .filter(s => s.studentId === briefingStudent.id && (s.status === 'completed' || s.status === 'مكتملة'))
+                        .sort((a,b) => (b.date || '').localeCompare(a.date || ''))
+                        .slice(0, 3)
+                        .map(s => ({
+                            date: s.date,
+                            topics: s.topics || 'حصة عادية',
+                            rating: 'ممتاز'
+                        }))
+                    }
+                />
+            )}
+
+            {selectedStudentForReport && (
+                <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-md overflow-y-auto">
+                    <div className="my-8 w-full max-w-lg">
+                        <MonthlyReportPreview 
+                            student={{
+                                id: selectedStudentForReport.id,
+                                name: selectedStudentForReport.name,
+                                grade: selectedStudentForReport.grade,
+                                subject: 'تحفيظ القرآن الكريم',
+                                points: selectedStudentForReport.totalPoints || 0,
+                                attendance: 95,
+                                sessionsCompleted: rawSessions.filter(s => s.studentId === selectedStudentForReport.id && s.status === 'completed').length,
+                                lastNotes: rawSessions
+                                    .filter(s => s.studentId === selectedStudentForReport.id && s.topics)
+                                    .slice(0, 3)
+                                    .map(s => s.topics!)
+                            }}
+                            onShare={(p) => {
+                                console.log(`Sharing via ${p}`);
+                                setSelectedStudentForReport(null);
+                            }}
+                        />
+                        <button 
+                            onClick={() => setSelectedStudentForReport(null)}
+                            className="mt-6 w-full py-4 bg-white text-gray-950 border-4 border-gray-950 font-black text-xs uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                        >
+                            إغلاق المعاينة
+                        </button>
                     </div>
                 </div>
             )}

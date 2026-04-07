@@ -19,6 +19,7 @@ export const useDashboardData = (currentUser: User | null) => {
             { queryKey: ['tasks'], queryFn: () => api.get<DashboardTask[]>('/tasks'), staleTime: 1 * 60 * 1000 },
             { queryKey: ['transactions'], queryFn: () => api.get<Transaction[]>('/finance/transactions'), staleTime: 5 * 60 * 1000 },
             { queryKey: ['fixedExpenses'], queryFn: () => api.get<FixedExpense[]>('/finance/fixed-expenses'), staleTime: 5 * 60 * 1000 },
+            { queryKey: ['evaluations'], queryFn: () => api.get<any[]>('/evaluations'), staleTime: 1 * 60 * 1000 },
         ]
     });
 
@@ -31,7 +32,8 @@ export const useDashboardData = (currentUser: User | null) => {
         studentInvoicesQuery,
         tasksQuery,
         transactionsQuery,
-        fixedExpensesQuery
+        fixedExpensesQuery,
+        evaluationsQuery
     ] = results;
 
     const isLoading = results.some(r => r.isLoading);
@@ -57,6 +59,7 @@ export const useDashboardData = (currentUser: User | null) => {
         const studentInvoices = (studentInvoicesQuery.data as StudentInvoice[]) || [];
         const transactions = (transactionsQuery.data as Transaction[]) || [];
         const fixedExpenses = (fixedExpensesQuery.data as FixedExpense[]) || [];
+        const evaluations = (evaluationsQuery.data as any[]) || [];
 
         const isTeacher = currentUser.role === 'teacher';
         const teacherName = currentUser.teacherName || currentUser.name;
@@ -207,6 +210,28 @@ export const useDashboardData = (currentUser: User | null) => {
             });
         });
 
+        // 6b. Focus List (Students with attendance < 70% or poor evaluations)
+        const focusStudentsList: any[] = [];
+        if (isTeacher) {
+            filteredStudents.forEach(s => {
+                const stuSessions = filteredSessions.filter(ss => ss.studentId === s.id);
+                const stuCompleted = stuSessions.filter(ss => ss.status === 'completed');
+                const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
+                
+                const stuEvals = evaluations.filter(e => e.studentId === s.id && e.teacherId === currentUser.id);
+                const lastEval = [...stuEvals].sort((a,b) => (b.date || '').localeCompare(a.date || ''))[0];
+                const needsEval = stuCompleted.length > 0 && (!lastEval || (now.getTime() - new Date(lastEval.date).getTime()) > 7 * 24 * 60 * 60 * 1000);
+
+                if (attendanceRate < 0.7) {
+                    focusStudentsList.push({ id: s.id, name: s.name, reason: `نسبة الحضور منخفضة (${Math.round(attendanceRate * 100)}%)`, type: 'attendance' });
+                } else if (lastEval && (lastEval.rating === 'ضعيف' || lastEval.rating === 'مقبول')) {
+                    focusStudentsList.push({ id: s.id, name: s.name, reason: `آخر تقييم: ${lastEval.rating}`, type: 'performance' });
+                } else if (needsEval) {
+                    focusStudentsList.push({ id: s.id, name: s.name, reason: 'لم يتم التقييم منذ أسبوع', type: 'engagement' });
+                }
+            });
+        }
+
         // 7. Stats Object
         const stats: DashboardStats = {
             studentsCount: filteredStudents.length,
@@ -236,6 +261,35 @@ export const useDashboardData = (currentUser: User | null) => {
             totalSessions: filteredSessions.length,
             monthCompletedSessions: monthComplete.length,
             monthTotalSessions: filteredSessions.filter(s => isSameMonth(s.date) && (s.status === 'scheduled' || s.status === 'completed')).length,
+            teacherPoints: isTeacher ? teachers.find(t => t.id === currentUser.id)?.points || 0 : undefined,
+            weekTotalSessions: isTeacher ? filteredSessions.filter(s => {
+                const sDate = new Date(s.date);
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                return sDate >= weekAgo && s.status === 'completed';
+            }).length : undefined,
+            newBadgesRecommended: isTeacher ? (tasksQuery.data as any[] || []).filter(t => 
+                t.teacherId === currentUser.id && 
+                t.type === 'badge_suggestion' && 
+                ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
+            ).length : undefined,
+            bestStudentName: isTeacher && filteredStudents.length > 0 ? 
+                [...filteredStudents].sort((a,b) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0))[0]?.name : undefined,
+            todayTimeline: isTeacher ? filteredSessions
+                .filter(s => s.date === new Date().toLocaleDateString('en-CA'))
+                .map(s => ({
+                    id: s.id,
+                    studentName: s.studentName,
+                    time: s.time,
+                    subject: s.subject,
+                    status: s.status
+                })) : undefined,
+            teacherSessionPrice: isTeacher ? teachers.find(t => t.id === currentUser.id)?.price || 0 : undefined,
+            evaluationsCompleted: isTeacher ? filteredSessions.filter(s => 
+                s.status === 'completed' && 
+                s.topics && 
+                s.topics !== ''
+            ).length : undefined
         };
 
         return {
@@ -245,7 +299,9 @@ export const useDashboardData = (currentUser: User | null) => {
             lowBalanceStudents: lowBalance,
             tasks: (tasksQuery.data as DashboardTask[] || []).filter(t =>
                 ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
-            )
+            ),
+            topStudents: isTeacher ? filteredStudents.sort((a, b) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
+            focusStudents: focusStudentsList
         };
     }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data]);
 
@@ -262,6 +318,8 @@ export const useDashboardData = (currentUser: User | null) => {
         monthlyData: processedData?.monthlyData || [],
         lowBalanceStudents: processedData?.lowBalanceStudents || [],
         tasks: processedData?.tasks || [],
+        topStudents: processedData?.topStudents || [],
+        focusStudents: processedData?.focusStudents || [],
         loading: isLoading,
         rawStudents: (studentsQuery.data as any[]) || [],
         rawSessions: (sessionsQuery.data as any[]) || [],

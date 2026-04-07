@@ -11,6 +11,7 @@ import { AttendanceFilters } from '../features/attendance/components/AttendanceF
 import { AdminSessionCard } from '../features/attendance/components/AdminSessionCard';
 import { TeacherStudentCard } from '../features/attendance/components/TeacherStudentCard';
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal';
+import { RescheduleModal } from '../features/attendance/components/RescheduleModal';
 import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
@@ -28,12 +29,16 @@ export const Attendance = () => {
         updateStatus,
         logAttendance,
         updateSchedule,
+        updateEnrollmentNotes,
+        requestReschedule,
         stats,
         matchedEnrollments,
         teacherStats,
         uniqueTeachers,
         refresh
     } = useAttendance(currentUser, date);
+
+    const [rescheduleData, setRescheduleData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
 
     // Modals state
     const [secureModalData, setSecureModalData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
@@ -241,6 +246,8 @@ export const Attendance = () => {
                                         onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
                                         onViewHistory={(id, name, grade, subject, curriculum) => setHistoryStudent({ id, name, grade, subject, curriculum })}
                                         onDeleteSlot={(s, e, i) => setDeletingSlot({ student: s, enrollment: e, slotIndex: i })}
+                                        onUpdateNotes={updateEnrollmentNotes}
+                                        onReschedule={(s, e) => setRescheduleData({ student: s, enrollment: e })}
                                         logDate={logDate}
                                         onDateChange={setLogDate}
                                     />
@@ -406,6 +413,19 @@ export const Attendance = () => {
                 studentCurriculum={historyStudent?.curriculum}
                 onSessionChange={refresh}
             />
+
+            {rescheduleData && (
+                <RescheduleModal
+                    isOpen={!!rescheduleData}
+                    onClose={() => setRescheduleData(null)}
+                    studentName={rescheduleData.student.name}
+                    subject={rescheduleData.enrollment.subject}
+                    onConfirm={(data) => {
+                        requestReschedule(rescheduleData.student.id, rescheduleData.student.name, rescheduleData.enrollment.subject, data);
+                        setRescheduleData(null);
+                    }}
+                />
+            )}
         </div>
     );
 };

@@ -11,6 +11,8 @@ interface TeacherStudentCardProps {
     onLogAttendance: (student: Student, enrollment: Enrollment) => void;
     onViewHistory: (studentId: string, studentName: string, grade: string, subject: string, curriculum?: string) => void;
     onDeleteSlot: (student: Student, enrollment: Enrollment, index: number) => void;
+    onUpdateNotes?: (studentId: string, enrollmentIndex: number, notes: string) => void;
+    onReschedule?: (student: Student, enrollment: Enrollment) => void;
     logDate: string;
     onDateChange: (date: string) => void;
 }
@@ -23,10 +25,37 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     onLogAttendance,
     onViewHistory,
     onDeleteSlot,
+    onUpdateNotes,
+    onReschedule,
     logDate,
     onDateChange
 }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [notes, setNotes] = useState(en.nextSessionNotes || '');
+    const [isSavingNotes, setIsSavingNotes] = useState(false);
+    const [timerRunning, setTimerRunning] = useState(false);
+    const [timerSeconds, setTimerSeconds] = useState(0);
+    const [timerInterval, setTimerInterval] = useState<any>(null);
+
+    const toggleTimer = () => {
+        if (timerRunning) {
+            clearInterval(timerInterval);
+            setTimerRunning(false);
+        } else {
+            const start = Date.now() - timerSeconds * 1000;
+            const interval = setInterval(() => {
+                setTimerSeconds(Math.floor((Date.now() - start) / 1000));
+            }, 1000);
+            setTimerInterval(interval);
+            setTimerRunning(true);
+        }
+    };
+
+    const formatTime = (totalSecs: number) => {
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
     const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'مساءً' });
     const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
 
@@ -91,6 +120,30 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         </div>
                         <p className="text-lg font-black text-gray-900 dark:text-white leading-none">{Math.round(attendancePercent)}%</p>
                     </div>
+                </div>
+
+                {/* THE TIMER (Suggestion 3) */}
+                <div className="flex items-center gap-3 mb-6">
+                    <button 
+                        onClick={toggleTimer}
+                        className={cn(
+                            "flex-1 flex items-center justify-between p-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all",
+                            timerRunning ? "bg-rose-500 text-white" : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/10"
+                        )}
+                    >
+                        <div className="flex items-center gap-2">
+                            <Clock size={16} className={cn(timerRunning && "animate-spin-slow")} />
+                            <span className="text-sm font-black tracking-tighter font-mono">{formatTime(timerSeconds)}</span>
+                        </div>
+                        <span className="text-[9px] font-black uppercase tracking-widest">{timerRunning ? 'إيقاف المؤقت' : 'بدء الحصة'}</span>
+                    </button>
+                    
+                    <button 
+                        onClick={() => onReschedule?.(student, en)}
+                        className="p-3 bg-white border-2 border-gray-950 text-gray-950 hover:bg-amber-100 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                    >
+                        <Calendar size={18} />
+                    </button>
                 </div>
 
                 <div className="mb-2 p-0 space-y-2 rounded-none">
@@ -206,6 +259,34 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             </div>
                         </div>
                     )}
+                </div>
+
+                {/* THE SCRATCHPAD (Suggestions 3) */}
+                <div className="mb-6 p-4 bg-amber-50/50 dark:bg-amber-900/10 border-2 border-dashed border-amber-200 dark:border-amber-800/50 relative group/notes">
+                    <div className="flex items-center justify-between mb-2">
+                        <h5 className="text-[10px] font-black text-amber-700 dark:text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <Edit size={12} />
+                            مفكرة الحصة القادمة
+                        </h5>
+                        {isSavingNotes && <span className="text-[8px] font-black text-amber-600 animate-pulse">جاري الحفظ...</span>}
+                    </div>
+                    <textarea 
+                        value={notes}
+                        onChange={(e) => {
+                            setNotes(e.target.value);
+                            // Auto-save logic could go here or on blur
+                        }}
+                        onBlur={() => {
+                            if (notes !== en.nextSessionNotes) {
+                                setIsSavingNotes(true);
+                                const enIndex = student.enrollments.indexOf(en);
+                                onUpdateNotes?.(student.id, enIndex, notes);
+                                setTimeout(() => setIsSavingNotes(false), 1000);
+                            }
+                        }}
+                        placeholder="اكتبي ملاحظاتك للحصة القادمة هنا... (مثلاً: وصلنا للآية ٢٠)"
+                        className="w-full bg-transparent border-none focus:ring-0 text-xs font-bold text-gray-700 dark:text-gray-300 placeholder:text-amber-300 dark:placeholder:text-amber-900/50 resize-none min-h-[60px] p-0"
+                    />
                 </div>
 
                 <div className="mt-auto pt-6 border-t border-gray-50 dark:border-gray-700/50 space-y-4">

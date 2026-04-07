@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { api } from '../../../lib/api';
 import { attendanceService } from '../services/attendanceService';
 import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser } from '../types';
 
@@ -59,6 +60,40 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
             return true;
         } catch (error) {
             console.error("Error updating schedule", error);
+            return false;
+        }
+    };
+
+    const updateEnrollmentNotes = async (studentId: string, enrollmentIndex: number, notes: string) => {
+        try {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return false;
+            const updatedStudent = { ...student };
+            updatedStudent.enrollments[enrollmentIndex].nextSessionNotes = notes;
+            await attendanceService.updateStudent(updatedStudent);
+            setStudents(prev => prev.map(s => s.id === studentId ? updatedStudent : s));
+            return true;
+        } catch (error) {
+            console.error("Error updating enrollment notes", error);
+            return false;
+        }
+    };
+
+    const requestReschedule = async (studentId: string, studentName: string, subject: string, data: { date: string, time: string, reason: string }) => {
+        try {
+            await api.post('/tasks', {
+                id: crypto.randomUUID(),
+                title: `طلب تأجيل: ${studentName}`,
+                description: `الحصة: ${subject}\nالموعد المقترح: ${data.date} - ${data.time}\nالسبب: ${data.reason}`,
+                status: 'pending',
+                priority: 'medium',
+                dueDate: data.date,
+                teacherId: currentUser?.id,
+                studentId: studentId
+            });
+            return true;
+        } catch (err) {
+            console.error('Reschedule error:', err);
             return false;
         }
     };
@@ -132,6 +167,8 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         updateStatus,
         logAttendance,
         updateSchedule,
+        updateEnrollmentNotes,
+        requestReschedule,
         stats,
         ...teacherData,
         uniqueTeachers,

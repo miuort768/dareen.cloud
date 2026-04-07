@@ -8,6 +8,8 @@ export interface Student {
     notes?: string;
     sessionPrice: number;
     enrollments: Enrollment[];
+    totalPoints?: number;
+    badges?: string;
 }
 
 export interface Enrollment {
@@ -22,6 +24,7 @@ export interface Enrollment {
     price?: number;
     isFrozen?: boolean;
     frozenReason?: string;
+    nextSessionNotes?: string;
 }
 
 export interface ScheduleSlot {
