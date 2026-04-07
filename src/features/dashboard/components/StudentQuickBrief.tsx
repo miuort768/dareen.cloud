@@ -103,7 +103,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 <div className="p-6 bg-gray-50 dark:bg-gray-800 border-t-4 border-gray-950 flex gap-4">
                     <button 
                         onClick={() => onGenerateReport?.(student)}
-                        className="flex-1 py-4 bg-emerald-500 text-gray-950 border-2 border-gray-950 font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 group/btn"
+                        className="flex-1 py-4 bg-emerald-500 text-gray-950 border-2 border-gray-950 font-black text-xs uppercase tracking-widest hover:bg-emerald-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 group/btn"
                     >
                         إصدار تقرير شهري
                     </button>

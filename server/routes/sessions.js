@@ -97,8 +97,8 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
             }
 
             await tx.run(
-                `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [id, body.studentId, body.studentName, finalTeacherId, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status]
+                `INSERT INTO sessions (id, studentId, studentName, teacherId, teacherName, subject, date, day, time, price, teacherPrice, status, topics, homework, needsCompensation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [id, body.studentId, body.studentName, finalTeacherId, body.teacherName, body.subject, body.date, body.day, body.time, studentPrice, teacherPrice, body.status, body.topics || null, body.homework || null, body.needsCompensation ? 1 : 0]
             );
 
             if (body.status === 'completed') {
@@ -149,7 +149,7 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
     const { id } = req.params;
     const updates = req.body;
     const isTeacher = req.user && req.user.role === 'teacher';
-    const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject'];
+    const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject', 'topics', 'homework', 'needsCompensation'];
     const keys = Object.keys(updates).filter(k => allowedFields.includes(k));
 
     if (keys.length === 0) return res.status(400).json({ error: 'No valid fields to update' });

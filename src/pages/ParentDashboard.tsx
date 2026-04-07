@@ -197,7 +197,15 @@ export const ParentDashboard = () => {
                         id: c.id,
                         name: c.name,
                         totalPoints: c.totalPoints || 0,
-                        badges: (c.badges || '').split(',').filter((b: string) => b),
+                        badges: (() => {
+                            if (!c.badges) return [];
+                            try {
+                                const parsed = JSON.parse(c.badges);
+                                return Array.isArray(parsed) ? parsed.map((b: any) => b.name) : [];
+                            } catch (e) {
+                                return c.badges.split(',').filter((b: string) => b);
+                            }
+                        })(),
                         teacherName: (c.enrollments && c.enrollments[0]?.teacher) || 'المعلمة المشرفة',
                         lastEvaluation: 'امتياز',
                         adminPhone: adminPhone || ''
