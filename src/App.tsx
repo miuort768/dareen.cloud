@@ -87,15 +87,13 @@ function App() {
                          ['/students', '/parents', '/teachers', '/finance', '/attendance', '/schedule', '/chat', '/settings', '/announcements', '/reports', '/agenda', '/appointments', '/monthly-closing', '/leads', '/student-invoices', '/teacher-invoices', '/tasks', '/evaluations'].some(p => location.pathname.startsWith(p));
 
   useEffect(() => {
-    if (isInternalPath) {
+    const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
+    if (saved === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (saved === 'light') {
       document.documentElement.classList.remove('dark');
-    } else {
-      const saved = localStorage.getItem('public-theme');
-      if (saved === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
     }
-  }, [location.pathname, isInternalPath]);
+  }, [location.pathname]);
 
   if (isLoading || isSettingsLoading) {
     return (

@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, Moon, Sun } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { useDarkMode } from '../../hooks/useDarkMode';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 
 export const PublicNavbar = () => {
@@ -9,6 +10,7 @@ export const PublicNavbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { isAuthenticated, currentUser, logout } = useApp();
+    const [theme, setTheme] = useDarkMode();
     const location = useLocation();
 
     const navItems = [
@@ -127,6 +129,15 @@ export const PublicNavbar = () => {
                                 تسجيل الدخول
                             </Link>
                         )}
+
+                        {/* Dark Mode Toggle */}
+                        <button
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            className="p-2.5 rounded-full bg-gray-50 dark:bg-slate-800 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all border border-gray-100 dark:border-slate-700 shadow-sm"
+                            title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+                        >
+                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
 
                         {/* Mobile Menu Toggle */}
                         <button
