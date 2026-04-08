@@ -80,11 +80,7 @@ function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
 
-  const isInternalPath = location.pathname.startsWith('/admin-dashboard') || 
-                         location.pathname.startsWith('/parent-dashboard') ||
-                         location.pathname.startsWith('/student-dashboard') ||
-                         location.pathname.startsWith('/dashboard') ||
-                         ['/students', '/parents', '/teachers', '/finance', '/attendance', '/schedule', '/chat', '/settings', '/announcements', '/reports', '/agenda', '/appointments', '/monthly-closing', '/leads', '/student-invoices', '/teacher-invoices', '/tasks', '/evaluations'].some(p => location.pathname.startsWith(p));
+
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
