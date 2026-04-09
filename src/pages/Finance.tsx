@@ -1,6 +1,5 @@
 import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download } from 'lucide-react';
 import { Skeleton } from '../components/ui/Skeleton';
-import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
 import { AddTransactionModal } from '../features/finance/components/AddTransactionModal';
@@ -92,18 +91,54 @@ export const Finance = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Stats Grid */}
-            <FinanceStats
-                totalIncome={state.totalIncome}
-                monthIncome={state.monthIncome}
-                totalExpenses={state.totalExpenses}
-                monthExpenses={state.monthExpenses}
-                totalFixedExpenses={state.totalFixedExpenses}
-                netProfit={state.netProfit}
-                monthProfit={state.monthProfit}
-            />
+                {/* Compact Stats inside Header */}
+                <div className="relative z-10 mt-6 pt-6 border-t border-white/20 grid grid-cols-2 lg:grid-cols-4 gap-4 px-2">
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                        <div>
+                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">الإيرادات الشاملة</p>
+                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalIncome.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-emerald-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthIncome.toLocaleString()}</p>
+                        </div>
+                        <div className="w-10 h-10 border border-emerald-500/30 bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                            <TrendingUp size={20} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                        <div>
+                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">مصاريف المعلمات</p>
+                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-rose-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthExpenses.toLocaleString()}</p>
+                        </div>
+                        <div className="w-10 h-10 border border-rose-500/30 bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                            <TrendingUp size={20} className="rotate-180" />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                        <div>
+                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">مصروفات الإدارة</p>
+                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalFixedExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-rose-400 text-[10px] font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity">اجمالي ثابت</p>
+                        </div>
+                        <div className="w-10 h-10 border border-rose-500/30 bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                            <DollarSign size={20} />
+                        </div>
+                    </div>
+
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                        <div>
+                            <p className="text-emerald-300 text-[10px] font-black uppercase mb-1 tracking-widest">صافي الأرباح</p>
+                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.netProfit.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-emerald-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthProfit.toLocaleString()}</p>
+                        </div>
+                        <div className="w-10 h-10 border border-emerald-400 bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                            <DollarSign size={20} />
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Fixed Expenses Panel */}
             <FixedExpensesManager
