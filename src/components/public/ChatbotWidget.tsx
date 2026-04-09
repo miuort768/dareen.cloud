@@ -21,8 +21,17 @@ export const ChatbotWidget = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
     const [guestInfo, setGuestInfo] = useState<{ guestId: string; conversationId: string; guestName: string } | null>(null);
+    const [registration, setRegistration] = useState({ name: '', phone: '' });
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const QUICK_REPLIES = [
+        "الاستفسار عن الأسعار",
+        "طلب دعم فني",
+        "حجز حصة تجريبية",
+        "متابعة حضور طالبي"
+    ];
 
     // Initial load from localStorage
     useEffect(() => {
@@ -36,7 +45,7 @@ export const ChatbotWidget = () => {
                 localStorage.removeItem('darin_guest_chat');
             }
         }
-    }, []);
+    }, [chatbotWelcomeMsg, chatbotName]); // Re-fetch or add welcome message when context loads
 
     // Socket listeners
     useEffect(() => {
@@ -48,7 +57,11 @@ export const ChatbotWidget = () => {
             if (msg.senderId !== guestInfo.guestId) {
                 setMessages(prev => [...prev, msg]);
                 if (!isOpen) {
-                    // Play notification sound or show badge
+                    setUnreadCount(prev => prev + 1);
+                    try {
+                        const audio = new Audio('/sounds/notification.mp3');
+                        audio.play().catch(() => {});
+                    } catch (e) {}
                 }
             }
         };
@@ -63,6 +76,9 @@ export const ChatbotWidget = () => {
 
     useEffect(() => {
         scrollToBottom();
+        if (isOpen) {
+            setUnreadCount(0);
+        }
     }, [messages, isOpen]);
 
     const scrollToBottom = () => {
@@ -72,17 +88,38 @@ export const ChatbotWidget = () => {
     const fetchMessages = async (convId: string) => {
         try {
             const data = await api.get<Message[]>(`/public-chat/messages/${convId}`);
-            setMessages(data);
+            
+            // Always prepend the welcome message if no real messages exist or for context
+            let allMessages = data;
+            if (chatbotWelcomeMsg) {
+                const botWelcome: Message = {
+                    id: 'welcome',
+                    senderId: 'bot',
+                    senderName: chatbotName || 'دارين بوت',
+                    content: chatbotWelcomeMsg,
+                    timestamp: new Date().toISOString()
+                };
+                // Make sure we don't duplicate it if already exists
+                allMessages = [botWelcome, ...data.filter(m => m.id !== 'welcome')];
+            }
+            
+            setMessages(allMessages);
         } catch (e) {
             console.error('Failed to fetch messages', e);
         }
     };
 
-    const handleInit = async () => {
+    const handleInit = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
         if (guestInfo) return;
+        if (!registration.name.trim() || !registration.phone.trim()) return;
+
         setIsLoading(true);
         try {
-            const data = await api.post<any>('/public-chat/init');
+            const data = await api.post<any>('/public-chat/init', {
+                name: registration.name.trim(),
+                phone: registration.phone.trim()
+            });
             setGuestInfo(data);
             localStorage.setItem('darin_guest_chat', JSON.stringify(data));
             
@@ -103,12 +140,12 @@ export const ChatbotWidget = () => {
         }
     };
 
-    const handleSendMessage = async (e?: React.FormEvent) => {
+    const handleSendMessage = async (e?: React.FormEvent, directText?: string) => {
         e?.preventDefault();
-        if (!inputText.trim() || !guestInfo) return;
+        const text = directText || inputText.trim();
+        if (!text || !guestInfo) return;
 
-        const text = inputText.trim();
-        setInputText('');
+        if (!directText) setInputText('');
 
         const pendingMsg: Message = {
             id: Date.now().toString(),
@@ -180,22 +217,47 @@ export const ChatbotWidget = () => {
                             <>
                                 <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-slate-900/50">
                                     {!guestInfo ? (
-                                        <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-                                            <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center text-primary-600 animate-bounce">
-                                                <MessageCircle size={32} />
+                                        <form onSubmit={handleInit} className="h-full flex flex-col justify-center p-6 space-y-5 animate-in fade-in duration-300">
+                                            <div className="text-center space-y-2 mb-2">
+                                                <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-600 mx-auto mb-4 border border-emerald-100 dark:border-emerald-800/50 shadow-inner">
+                                                    <MessageCircle size={32} className="animate-pulse" />
+                                                </div>
+                                                <h4 className="font-black text-slate-900 dark:text-white text-lg">أهلاً بك في منصة دارين</h4>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">لخدمتك بشكل أفضل، نرجو تزويدنا ببياناتك</p>
                                             </div>
-                                            <div>
-                                                <h4 className="font-black text-slate-900 dark:text-white mb-1">ابدأ المحادثة</h4>
-                                                <p className="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">فريقنا جاهز للرد على استفساراتك فوراً</p>
+                                            
+                                            <div className="space-y-3">
+                                                <div>
+                                                    <input 
+                                                        type="text" 
+                                                        required
+                                                        value={registration.name}
+                                                        onChange={(e) => setRegistration({...registration, name: e.target.value})}
+                                                        placeholder="الاسم الكريم" 
+                                                        className="w-full bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-slate-900 dark:text-white"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <input 
+                                                        type="tel" 
+                                                        required
+                                                        dir="ltr"
+                                                        value={registration.phone}
+                                                        onChange={(e) => setRegistration({...registration, phone: e.target.value})}
+                                                        placeholder="رقم الهاتف / الواتساب" 
+                                                        className="w-full bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-left text-slate-900 dark:text-white"
+                                                    />
+                                                </div>
                                             </div>
+
                                             <button 
-                                                onClick={handleInit}
-                                                disabled={isLoading}
-                                                className="w-full py-3 bg-primary-600 text-white font-black rounded-xl hover:bg-primary-700 transition-all shadow-lg shadow-primary-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                                                type="submit"
+                                                disabled={isLoading || !registration.name.trim() || !registration.phone.trim()}
+                                                className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-white font-black rounded-xl transition-all shadow-lg shadow-emerald-500/25 disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
                                             >
-                                                {isLoading ? <Loader2 className="animate-spin" size={18} /> : 'فتح شات مباشر'}
+                                                {isLoading ? <Loader2 className="animate-spin" size={18} /> : 'ابدأ المحادثة الآن'}
                                             </button>
-                                        </div>
+                                        </form>
                                     ) : (
                                         <>
                                             {messages.map((msg, idx) => (
@@ -207,10 +269,10 @@ export const ChatbotWidget = () => {
                                                     )}
                                                 >
                                                     <div className={cn(
-                                                        "px-4 py-2.5 rounded-2xl text-sm font-bold shadow-sm",
+                                                        "px-4 py-2.5 rounded-2xl text-sm font-bold shadow-sm border border-transparent",
                                                         msg.senderId === guestInfo.guestId 
-                                                            ? "bg-primary-600 text-white rounded-tr-none" 
-                                                            : "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border dark:border-slate-700 rounded-tl-none"
+                                                            ? "bg-gradient-to-br from-emerald-600 to-teal-500 text-white rounded-tr-sm shadow-emerald-500/20" 
+                                                            : "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-gray-100 dark:border-slate-700 rounded-tl-sm"
                                                     )}>
                                                         {msg.content}
                                                     </div>
@@ -225,26 +287,41 @@ export const ChatbotWidget = () => {
                                 </div>
 
                                 {/* Input Area */}
-                                <form 
-                                    onSubmit={handleSendMessage}
-                                    className="p-3 bg-white dark:bg-slate-950 border-t dark:border-slate-800 flex gap-2 items-center"
-                                >
-                                    <input 
-                                        type="text"
-                                        value={inputText}
-                                        onChange={(e) => setInputText(e.target.value)}
-                                        disabled={!guestInfo}
-                                        placeholder="اكتب رسالتك هنا..."
-                                        className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-2.5 text-sm font-bold outline-none focus:ring-2 focus:ring-primary-500/20 dark:text-white disabled:opacity-50"
-                                    />
-                                    <button 
-                                        type="submit"
-                                        disabled={!inputText.trim() || !guestInfo}
-                                        className="w-10 h-10 bg-primary-600 text-white rounded-xl flex items-center justify-center hover:bg-primary-700 transition-all disabled:opacity-50 shadow-lg shadow-primary-500/10"
+                                <div className="bg-white dark:bg-slate-950 border-t dark:border-slate-800/80 p-3 flex flex-col gap-3">
+                                    {guestInfo && (
+                                        <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 pt-0.5">
+                                            {QUICK_REPLIES.map((reply, i) => (
+                                                <button
+                                                    key={i}
+                                                    onClick={() => handleSendMessage(undefined, reply)}
+                                                    className="shrink-0 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/50 rounded-full text-[10px] font-black transition-colors whitespace-nowrap"
+                                                >
+                                                    {reply}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <form 
+                                        onSubmit={(e) => handleSendMessage(e)}
+                                        className="flex gap-2 items-center"
                                     >
-                                        <Send size={18} className="rtl:rotate-180" />
-                                    </button>
-                                </form>
+                                        <input 
+                                            type="text"
+                                            value={inputText}
+                                            onChange={(e) => setInputText(e.target.value)}
+                                            disabled={!guestInfo}
+                                            placeholder="اكتب رسالتك هنا..."
+                                            className="flex-1 bg-slate-50 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-bold outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/30 dark:text-white disabled:opacity-50 transition-all"
+                                        />
+                                        <button 
+                                            type="submit"
+                                            disabled={!inputText.trim() || !guestInfo}
+                                            className="w-11 h-11 shrink-0 bg-gradient-to-r from-emerald-600 to-teal-500 text-white rounded-xl flex items-center justify-center hover:from-emerald-700 hover:to-teal-600 transition-all disabled:opacity-50 shadow-md shadow-emerald-500/20"
+                                        >
+                                            <Send size={18} className="rtl:-scale-x-100" />
+                                        </button>
+                                    </form>
+                                </div>
                             </>
                         )}
                     </motion.div>
@@ -265,7 +342,12 @@ export const ChatbotWidget = () => {
                     className="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center shadow-2xl pointer-events-auto relative group hover:bg-primary-700 transition-colors"
                 >
                     <MessageCircle size={32} />
-                    <span className="absolute -top-2 -left-2 w-6 h-6 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] font-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">!</span>
+                    {unreadCount > 0 && (
+                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] text-white font-black flex items-center justify-center animate-bounce">
+                            {unreadCount}
+                        </span>
+                    )}
+                    <span className="absolute -top-2 -left-2 w-6 h-6 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] font-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">!</span>
                     
                     {/* Tooltip */}
                     <div className="absolute right-20 bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">

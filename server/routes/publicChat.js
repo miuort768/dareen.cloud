@@ -7,9 +7,10 @@ const { getDb } = require('../utils/db');
 // Initializes a guest conversation with the main admin
 router.post('/init', async (req, res) => {
     try {
+        const { name, phone } = req.body || {};
         const db = await getDb();
         const guestId = `guest_${uuidv4().split('-')[0]}`;
-        const guestName = `زائر (${guestId})`;
+        const guestName = name ? `${name} - ${phone || 'بدون رقم'}` : `زائر (${guestId})`;
         
         // Find main admin
         const admin = await db.get("SELECT id FROM users WHERE role = 'admin' ORDER BY id ASC LIMIT 1");
