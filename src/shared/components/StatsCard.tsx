@@ -24,7 +24,7 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-4 md:p-6 bg-white dark:bg-gray-950 border-2 border-gray-950 dark:border-gray-800 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-transform hover:-translate-y-1 rounded-none overflow-hidden",
+            "relative p-4 md:p-6 bg-white dark:bg-gray-950 border-2 border-gray-950 dark:border-gray-800 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] transition-transform hover:-translate-y-1 rounded-none overflow-hidden",
             className
         )}>
             {/* Background Accent Lines */}

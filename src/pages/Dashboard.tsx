@@ -90,54 +90,60 @@ export const Dashboard = () => {
                     </div>
 
                     {/* NEW: Timeline of Today's Sessions */}
-                    <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
+                    <div className="w-full">
+                        <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
+                    </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div className="lg:col-span-2 space-y-8">
-                             <TeacherAchievements
+                            <TeacherAchievements
                                 stats={stats}
                                 lowBalanceStudents={lowBalanceStudents}
                                 isTeacher={true}
                             />
-                            {/* Suggestion 3: Weekly Summary */}
-                            <TeacherWeeklySummary 
-                                stats={{
-                                    weekTotalSessions: stats.weekTotalSessions || 0,
-                                    newBadgesRecommended: stats.newBadgesRecommended || 0,
-                                    bestStudentName: stats.bestStudentName,
-                                    pointsEarnedThisWeek: (stats.weekTotalSessions || 0) * 5
-                                }}
-                            />
-                            {/* Suggestion 4: Salary Preview */}
-                            <TeacherSalaryPreview 
-                                stats={{
-                                    totalEarnings: (stats.completedSessions || 0) * (stats.teacherSessionPrice || 0),
-                                    completedSessions: stats.completedSessions || 0,
-                                    sessionsGoal: 100, // Dynamic goal could be added later
-                                    pricePerSession: stats.teacherSessionPrice || 0
-                                }}
-                            />
-                            {/* Suggestion 4: Rewards KPIs */}
-                            <TeacherRewardsKPIs 
-                                stats={{
-                                    attendanceRate: stats.attendanceRate || 0,
-                                    studentsCount: stats.studentsCount || 0,
-                                    evaluationsCompleted: stats.evaluationsCompleted || 0,
-                                    teacherPoints: stats.teacherPoints || 0
-                                }}
-                            />
-                            {/* NEW: Focus List for Teacher */}
-                            <TeacherFocusList 
-                                students={focusStudents || []} 
-                                onStudentClick={(s) => setBriefingStudent(s)}
-                            />
-                            {/* NEW: Top Students Leaderboard for Teacher */}
-                            <TeacherLeaderboard 
-                                students={topStudents || []} 
-                                onStudentClick={(s) => setBriefingStudent(s)}
-                            />
                         </div>
-                        <TasksAndRequests tasks={tasks} />
+                        <div className="lg:col-span-1">
+                            <TasksAndRequests tasks={tasks} />
+                        </div>
+                    </div>
+
+                    {/* Quick Stats Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                         <TeacherWeeklySummary 
+                            stats={{
+                                weekTotalSessions: stats.weekTotalSessions || 0,
+                                newBadgesRecommended: stats.newBadgesRecommended || 0,
+                                bestStudentName: stats.bestStudentName,
+                                pointsEarnedThisWeek: (stats.weekTotalSessions || 0) * 5
+                            }}
+                        />
+                        <TeacherSalaryPreview 
+                            stats={{
+                                totalEarnings: (stats.completedSessions || 0) * (stats.teacherSessionPrice || 0),
+                                completedSessions: stats.completedSessions || 0,
+                                sessionsGoal: 100, 
+                                pricePerSession: stats.teacherSessionPrice || 0
+                            }}
+                        />
+                        <TeacherRewardsKPIs 
+                            stats={{
+                                attendanceRate: stats.attendanceRate || 0,
+                                studentsCount: stats.studentsCount || 0,
+                                evaluationsCompleted: stats.evaluationsCompleted || 0,
+                                teacherPoints: stats.teacherPoints || 0
+                            }}
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <TeacherFocusList 
+                            students={focusStudents || []} 
+                            onStudentClick={(s) => setBriefingStudent(s)}
+                        />
+                         <TeacherLeaderboard 
+                            students={topStudents || []} 
+                            onStudentClick={(s) => setBriefingStudent(s)}
+                        />
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -147,47 +153,45 @@ export const Dashboard = () => {
                             lowBalanceStudents={lowBalanceStudents}
                         />
                     </div>
-
-                    <div className="w-full">
-                        <PerformanceSummary stats={stats} isTeacher={true} />
-                    </div>
                 </div>
             ) : (
-                <div className="space-y-8">
-                    {/* Admin Specific Sharp Layout */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <PerformanceSummary stats={stats} isTeacher={false} />
-                        <TasksAndRequests tasks={tasks} />
-                        <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                <div className="space-y-8 animate-in fade-in duration-700">
+                    {/* Admin Reorganized Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="space-y-8">
+                            <PerformanceSummary stats={stats} isTeacher={false} />
+                            <ImportantNotifications
+                                tasks={tasks}
+                                lowBalanceStudents={lowBalanceStudents}
+                            />
+                        </div>
+                        <div className="space-y-8">
+                            <TasksAndRequests tasks={tasks} />
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <ImportantNotifications
-                            tasks={tasks}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
                         <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                        <div className="space-y-8">
+                            <SmartAlerts
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                studentInvoices={rawStudentInvoices}
+                                lowBalanceStudents={lowBalanceStudents}
+                            />
+                        </div>
                     </div>
 
                     <div className="w-full">
                          <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                     </div>
 
-                    <SmartAlerts
-                        students={rawStudents}
-                        sessions={rawSessions}
-                        studentInvoices={rawStudentInvoices}
-                        lowBalanceStudents={lowBalanceStudents}
-                    />
-
-                    <div className="w-full">
-                        <RenewalAlertsList
+                    <div className="grid grid-cols-1 gap-8">
+                         <RenewalAlertsList
                             stats={stats}
                             lowBalanceStudents={lowBalanceStudents}
                         />
-                    </div>
-
-                    <div className="w-full">
                         <AnalyticsDashboard
                             students={rawStudents}
                             sessions={rawSessions}
