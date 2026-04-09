@@ -1,5 +1,6 @@
 import { Target, CheckCircle2, Users, Star, Award } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { getRankByPoints, getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks';
 
 interface TeacherRewardsKPIsProps {
     stats: {
@@ -11,6 +12,9 @@ interface TeacherRewardsKPIsProps {
 }
 
 export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
+    const rank = getRankByPoints(stats.teacherPoints || 0, TEACHER_RANKS);
+    const { next, pointsNeeded } = getNextRank(stats.teacherPoints || 0, TEACHER_RANKS);
+
     const goals = [
         { name: 'معدل الحضور', value: stats.attendanceRate, goal: 90, unit: '%', icon: <CheckCircle2 size={14} />, color: 'emerald' },
         { name: 'عدد الطلاب النشطين', value: stats.studentsCount, goal: 10, unit: '', icon: <Users size={14} />, color: 'blue' },
@@ -66,12 +70,12 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                     <Award size={20} className="text-yellow-400 animate-bounce" />
                     <div>
                         <p className="text-[9px] font-black text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
-                        <h4 className="text-xs font-black uppercase tracking-tighter">معلمة النخبة (Elite Teacher)</h4>
+                        <h4 className="text-xs font-black uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
                     </div>
                 </div>
                 <div className="text-right">
                     <p className="text-[8px] font-black opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
-                    <p className="text-lg font-black tracking-tighter italic">{Math.max(0, 500 - stats.teacherPoints)}</p>
+                    <p className="text-lg font-black tracking-tighter italic">{next ? pointsNeeded : 'MAX'}</p>
                 </div>
             </div>
         </div>

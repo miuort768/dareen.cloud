@@ -6,6 +6,7 @@ import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
 import { StudentHistoryModal } from './StudentHistoryModal';
 import { StudentCard } from './StudentCard';
+import { getRankByPoints, STUDENT_RANKS } from '../../../shared/utils/ranks';
 
 interface StudentDetailsProps {
     student: Student;
@@ -34,6 +35,8 @@ export const StudentDetails = ({
     const [showHistory, setShowHistory] = useState(false);
     const [showCard, setShowCard] = useState(false);
 
+    const rank = getRankByPoints(student.totalPoints || 0, STUDENT_RANKS);
+
     return (
         <div className={cn(
             "bg-white dark:bg-gray-950 shadow-[10px_10px_0px_0px_black] overflow-hidden flex flex-col rounded-none",
@@ -41,15 +44,28 @@ export const StudentDetails = ({
         )}>
             <div className="p-6 border-b-4 border-gray-950 flex justify-between items-center bg-gray-50 dark:bg-gray-950/50 dark:border-gray-800">
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-primary-600 text-white flex items-center justify-center border-4 border-gray-950 transform rotate-2 shadow-[4px_4px_0px_0px_black]">
+                    <div className="w-16 h-16 bg-primary-600 text-white flex items-center justify-center border-4 border-gray-950 transform rotate-2 shadow-[4px_4px_0px_0px_black] relative overflow-hidden group">
                         <GraduationCap size={32} />
+                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform"></div>
                     </div>
                     <div className="text-right" dir="rtl">
-                        <h3 className="font-black text-gray-950 dark:text-white text-xl uppercase tracking-tighter leading-none">{student.name}</h3>
+                        <div className="flex items-center gap-3 mb-1">
+                            <h3 className="font-black text-gray-950 dark:text-white text-xl uppercase tracking-tighter leading-none">{student.name}</h3>
+                            <div className={cn(
+                                "flex items-center gap-1.5 px-3 py-1 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] text-[9px] font-black uppercase text-white",
+                                rank.badgeColor
+                            )}>
+                                <span>{rank.icon}</span>
+                                <span>{rank.name}</span>
+                            </div>
+                        </div>
                         <div className="flex items-center gap-2 mt-2">
                             <span className="bg-gray-950 text-white text-[10px] font-black px-2 py-0.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
                                 {student.grade}
                             </span>
+                            <div className="bg-yellow-400 text-gray-950 border-2 border-gray-950 px-2 py-0.5 text-[10px] font-black shadow-[2px_2px_0px_0px_black]">
+                                {student.totalPoints || 0} نقطة
+                            </div>
                             <button 
                                 onClick={() => setShowCard(true)}
                                 className="bg-emerald-50 text-emerald-700 border-2 border-emerald-600 px-2 py-0.5 text-[10px] font-black hover:bg-emerald-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
