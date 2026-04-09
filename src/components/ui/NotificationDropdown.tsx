@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2 } from 'lucide-react';
+import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react';
 import { api } from '../../lib/api';
 
 interface Notification {
@@ -176,6 +176,31 @@ export const NotificationDropdown = () => {
                             )}
                         </div>
                     </div>
+
+                    {/* Push Notification Activation Prompt */}
+                    {Notification.permission !== 'granted' && (
+                        <div className="p-3 bg-indigo-50 border-b border-indigo-100 dark:bg-indigo-900/20 dark:border-indigo-900/30 flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2">
+                                <div className="p-1.5 bg-indigo-600 rounded-lg text-white">
+                                    <Smartphone size={14} />
+                                </div>
+                                <p className="text-[10px] sm:text-xs font-bold text-indigo-900 dark:text-indigo-300">هل تريد ميزة الإشعارات الفورية؟</p>
+                            </div>
+                            <button
+                                onClick={async () => {
+                                    const { pushService } = await import('../../services/pushService');
+                                    const permission = await Notification.requestPermission();
+                                    if (permission === 'granted' && currentUser) {
+                                        await pushService.subscribeUser(currentUser.id);
+                                        showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success');
+                                    }
+                                }}
+                                className="bg-indigo-600 text-white text-[10px] font-black px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                            >
+                                تفعيل الآن
+                            </button>
+                        </div>
+                    )}
 
                     {/* Notifications List */}
                     <div className="max-h-[70vh] md:max-h-96 overflow-y-auto custom-scrollbar">

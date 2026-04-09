@@ -26,6 +26,7 @@ const chatRouter = require('./routes/chat');
 const publicChatRouter = require('./routes/publicChat');
 const { announcementsRouter } = require('./routes/announcements');
 const appointmentsRouter = require('./routes/appointments');
+const { pushRouter, sendPushToUser } = require('./routes/push');
 
 
 
@@ -159,7 +160,11 @@ async function startServer() {
         apiRouter.use('/evaluations', evaluationsRouter);
         apiRouter.use('/student-portal', studentPortalRouter);
         apiRouter.use('/sessions', sessionRouter);
-        apiRouter.use('/notifications', notificationRouter);
+        apiRouter.use('/notifications', (req, res, next) => {
+            // Inject sendPushToUser into notification router context if needed
+            req.sendPushToUser = sendPushToUser;
+            notificationRouter(req, res, next);
+        });
         apiRouter.use('/system', checkRole(['admin']), systemRouter);
         apiRouter.use('/finance', checkRole(['admin']), financeRouter);
         apiRouter.use('/tasks', tasksRouter);
@@ -168,6 +173,7 @@ async function startServer() {
         // Announcements have their own internal role checks (GET public, others Admin)
         apiRouter.use('/announcements', announcementsRouter);
         apiRouter.use('/appointments', appointmentsRouter);
+        apiRouter.use('/push', pushRouter);
 
 
         // Compatibility middleware for invoices inside API

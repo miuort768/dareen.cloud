@@ -35,6 +35,7 @@ import { RefundPolicy } from './pages/public/RefundPolicy';
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { ChatbotWidget } from './components/public/ChatbotWidget';
+import { InstallPWA } from './components/ui/InstallPWA';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -126,6 +127,7 @@ function App() {
         </div>
       )}
       <ScrollToTop />
+      <InstallPWA />
       <ChatbotWidget />
       <Routes>
         {/* Public Routes */}

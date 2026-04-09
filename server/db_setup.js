@@ -270,6 +270,15 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS push_subscriptions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            userId TEXT NOT NULL,
+            subscription TEXT NOT NULL, -- JSON string
+            deviceType TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
+
         -- Tables created above
     `);
 

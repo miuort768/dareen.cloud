@@ -107,6 +107,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    useEffect(() => {
+        if (isAuthenticated && currentUser) {
+            // Silently try to subscribe if permission is already granted
+            import('../services/pushService').then(({ pushService }) => {
+                pushService.checkPermission().then(permission => {
+                    if (permission === 'granted') {
+                        pushService.subscribeUser(currentUser.id);
+                    }
+                });
+            });
+        }
+    }, [isAuthenticated, currentUser]);
+
     return (
         <AuthContext.Provider value={{ currentUser, isAuthenticated, isLoading, login, logout, updateCurrentUser }}>
             {children}

@@ -48,6 +48,12 @@ router.post('/', async (req, res) => {
             `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [id, senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0, body.conversationId || null]
         );
+
+        // Send Real-Time Push Notification if subscription exists
+        if (req.sendPushToUser && body.receiverId) {
+            req.sendPushToUser(req.db, body.receiverId, body.title, body.message, body.url || '/');
+        }
+
         const newItem = await req.db.get('SELECT * FROM notifications WHERE id = ?', [id]);
         if (newItem) {
             newItem.read = newItem.read === 1;
