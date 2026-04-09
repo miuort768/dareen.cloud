@@ -99,8 +99,8 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     };
 
     return (
-        <div className="bg-white dark:bg-gray-950 border-4 border-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] rounded-none overflow-hidden h-full flex flex-col" dir="rtl">
-            <div className="p-6 border-b-4 border-gray-900 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
+        <div className="bg-white dark:bg-gray-950 border-4 border-gray-950 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] rounded-none overflow-hidden h-full flex flex-col min-h-[450px] lg:min-h-[550px]" dir="rtl">
+            <div className="p-6 border-b-4 border-gray-950 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
                 <h4 className="font-black text-sm lg:text-base uppercase tracking-[0.2em] text-gray-900 dark:text-white flex items-center gap-3">
                     <Zap size={20} className="text-yellow-500 fill-yellow-500" />
                     مركز التنبيهات الذكية
@@ -116,7 +116,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                         : 'لا توجد مشاكل'}
                 </div>
             </div>
-            <div className="p-6 space-y-4 max-h-[480px] overflow-y-auto custom-scrollbar flex-1 flex flex-col justify-center">
+            <div className="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 flex flex-col justify-center translate-y-[-10px]">
                 {alerts.map(alert => {
                     const c = colorMap[alert.color] || colorMap.blue;
                     const Icon = alert.icon;

@@ -171,16 +171,14 @@ export const Dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
                         <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                        <div className="space-y-8">
-                            <SmartAlerts
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                studentInvoices={rawStudentInvoices}
-                                lowBalanceStudents={lowBalanceStudents}
-                            />
-                        </div>
+                        <SmartAlerts
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                            lowBalanceStudents={lowBalanceStudents}
+                        />
                     </div>
 
                     <div className="w-full">

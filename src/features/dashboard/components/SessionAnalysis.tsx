@@ -9,53 +9,57 @@ interface SessionAnalysisProps {
 
 export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) => {
     return (
-        <div className="bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800 shadow-xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-2 h-full bg-indigo-600"></div>
-            <div className="absolute top-0 left-0 w-24 h-24 bg-indigo-600/5 blur-3xl -translate-x-12 -translate-y-12"></div>
+        <div className="bg-white border-4 border-gray-950 dark:bg-gray-950 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] relative overflow-hidden group flex flex-col h-full rounded-none">
+            <div className="absolute top-0 right-0 w-2 h-full bg-indigo-600 border-l-2 border-gray-950"></div>
 
-            <div className="p-6 border-b border-gray-50 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/20">
+            <div className="p-6 border-b-4 border-gray-950 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/20">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 rounded-none transform rotate-3 group-hover:rotate-0 transition-transform">
-                        <CalendarCheck size={18} />
+                    <div className="p-2.5 bg-indigo-600 text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_#444]">
+                        <CalendarCheck size={20} />
                     </div>
                     <div>
-                        <h3 className="font-black text-gray-900 dark:text-white text-[11px] uppercase tracking-tight">تحليل نشاط الحصص</h3>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">إحصائيات الإنجاز الكلية</p>
+                        <h3 className="font-black text-gray-950 dark:text-white text-xs lg:text-sm uppercase tracking-tight">تحليل نشاط الحصص</h3>
+                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none mt-1">إحصائيات الإنجاز الشهري</p>
                     </div>
                 </div>
             </div>
-            <div className="p-6">
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="text-right">
-                        <p className="text-[10px] font-black text-gray-400 uppercase mb-1">إجمالي الحصص</p>
-                        <p className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">{stats.totalSessions}</p>
+            <div className="p-8 flex-1 flex flex-col justify-between">
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                    <div className="text-right p-4 bg-gray-50 dark:bg-gray-800 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                        <p className="text-[9px] font-black text-gray-500 uppercase mb-2 tracking-widest">إجمالي الحصص</p>
+                        <p className="text-3xl font-black text-gray-950 dark:text-white tracking-tighter font-mono">{stats.totalSessions}</p>
                     </div>
-                    <div className="text-right border-r border-gray-100 dark:border-gray-800 pr-4">
-                        <p className="text-[10px] font-black text-emerald-600/60 uppercase mb-1">إجمالي المنجز</p>
-                        <p className="text-2xl font-black text-emerald-600 tracking-tighter">{stats.completedSessions}</p>
+                    <div className="text-right p-4 bg-emerald-50 dark:bg-emerald-900/20 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                        <p className="text-[9px] font-black text-emerald-600 uppercase mb-2 tracking-widest">إجمالي المنجز</p>
+                        <p className="text-3xl font-black text-emerald-600 tracking-tighter font-mono">{stats.completedSessions}</p>
                     </div>
                 </div>
-                <div className="h-40 w-full" dir="ltr">
+                <div className="h-48 w-full mt-auto" dir="ltr">
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={monthlyData} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
+                        <AreaChart data={monthlyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                             <defs>
                                 <linearGradient id="areaGradientMonthly" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#6366F1" stopOpacity={0.3} />
+                                    <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2} />
                                     <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.1} stroke="#94A3B8" />
-                            <XAxis dataKey="month" tick={{ fontSize: 9, fontWeight: '900', fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                            <XAxis 
+                                dataKey="month" 
+                                tick={{ fontSize: 10, fontWeight: '900', fill: '#000', fontFamily: 'monospace' }} 
+                                axisLine={{ stroke: '#000', strokeWidth: 2 }}
+                                tickLine={{ stroke: '#000', strokeWidth: 2 }}
+                                dy={10}
+                            />
                             <YAxis hide domain={['auto', 'auto']} />
                             <Tooltip
                                 contentStyle={{
-                                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                                    backdropFilter: 'blur(10px)',
+                                    backgroundColor: '#fff',
+                                    border: '4px solid #000',
                                     borderRadius: '0px',
-                                    border: '1px solid #F1F5F9',
-                                    fontSize: '10px',
+                                    fontSize: '11px',
                                     fontWeight: '900',
-                                    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'
+                                    boxShadow: '8px 8px 0px 0px rgba(0,0,0,1)'
                                 }}
                             />
                             <Area
@@ -65,10 +69,8 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                                 stroke="#6366F1"
                                 fillOpacity={1}
                                 fill="url(#areaGradientMonthly)"
-                                strokeWidth={3}
-                                dot={{ fill: '#6366F1', r: 3, strokeWidth: 0 }}
-                                activeDot={{ r: 5, strokeWidth: 0 }}
-                                strokeDasharray="4 2"
+                                strokeWidth={4}
+                                activeDot={{ r: 6, stroke: '#000', strokeWidth: 2, fill: '#6366F1' }}
                             />
                             <Area
                                 type="monotone"
@@ -76,7 +78,8 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                                 name="منجزة"
                                 stroke="#10B981"
                                 fillOpacity={0}
-                                strokeWidth={3}
+                                strokeWidth={4}
+                                strokeDasharray="5 5"
                             />
                         </AreaChart>
                     </ResponsiveContainer>
