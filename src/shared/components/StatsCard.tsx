@@ -24,40 +24,36 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-3 md:p-5 bg-white dark:bg-gray-950 border-2 border-gray-900 dark:border-gray-800 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] overflow-hidden rounded-none",
+            "relative p-4 md:p-6 bg-white dark:bg-gray-950 border-2 border-gray-950 dark:border-gray-800 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-transform hover:-translate-y-1 rounded-none overflow-hidden",
             className
         )}>
-            <div className="absolute inset-0 border-[3px] border-white/5 pointer-events-none"></div>
+            {/* Background Accent Lines */}
+            <div className="absolute top-0 right-0 w-8 h-8 bg-gray-950/5 -mr-4 -mt-4 rotate-45 pointer-events-none"></div>
 
-            {/* Mobile: horizontal layout | Desktop: vertical layout */}
-            <div className="relative flex items-center gap-3 md:flex-col md:items-center md:justify-center md:text-center z-10 md:gap-4">
-                {/* Icon */}
+            <div className="relative flex flex-col md:items-center md:justify-center text-right md:text-center z-10 gap-4">
+                {/* Icon Circle */}
                 <div className={cn(
-                    "p-2 md:p-4 border-2 shadow-none rounded-none shrink-0 border-gray-900 dark:border-gray-700",
+                    "w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border-2 border-gray-950 dark:border-gray-700 shadow-none rounded-none mx-0 md:mx-auto",
                     colorStyles[color]
                 )}>
-                    <Icon className="w-4 h-4 md:w-6 md:h-6" />
+                    <Icon className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
 
                 {/* Content */}
-                <div className="space-y-0.5 md:space-y-2 w-full min-w-0">
-                    <div className="flex flex-col gap-0 md:items-center">
-                        <p className="text-[9px] md:text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] md:tracking-[0.25em] truncate">{title}</p>
-                        <div className="w-6 h-0.5 bg-primary-600 rounded-none hidden md:block opacity-50 mt-1"></div>
-                    </div>
-
-                    <h3 className="text-base md:text-xl lg:text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase tabular-nums truncate">
+                <div className="w-full min-w-0">
+                    <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">{title}</p>
+                    <h3 className="text-xl md:text-3xl font-black text-gray-950 dark:text-white tracking-tighter tabular-nums mb-2 truncate">
                         {value}
                     </h3>
 
                     {trend && (
                         <div className={cn(
-                            "flex items-center gap-1 py-0.5 px-2 border border-gray-900 dark:border-gray-800 rounded-none text-[8px] md:text-[9px] font-black w-fit md:mx-auto",
+                            "inline-flex items-center gap-1.5 px-3 py-1 border-2 border-gray-950 rounded-none text-[9px] font-black uppercase tracking-widest",
                             trendUp
                                 ? "bg-emerald-500 text-white"
-                                : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
+                                : "bg-rose-500 text-white"
                         )}>
-                            <span className="uppercase tracking-widest leading-none truncate max-w-[8rem]">{trend}</span>
+                            {trend}
                         </div>
                     )}
                 </div>
