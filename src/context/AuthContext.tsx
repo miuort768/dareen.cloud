@@ -113,7 +113,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             import('../services/pushService').then(({ pushService }) => {
                 pushService.checkPermission().then(permission => {
                     if (permission === 'granted') {
-                        pushService.subscribeUser(currentUser.id);
+                        pushService.subscribeUser();
                     }
                 });
             });

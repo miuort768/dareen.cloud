@@ -191,7 +191,7 @@ export const NotificationDropdown = () => {
                                     const { pushService } = await import('../../services/pushService');
                                     const permission = await Notification.requestPermission();
                                     if (permission === 'granted' && currentUser) {
-                                        await pushService.subscribeUser(currentUser.id);
+                                        await pushService.subscribeUser();
                                         showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success');
                                     }
                                 }}

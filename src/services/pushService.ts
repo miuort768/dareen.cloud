@@ -14,7 +14,7 @@ export const pushService = {
   /**
    * Request permission and subscribe user to push
    */
-  async subscribeUser(userId: string) {
+  async subscribeUser() {
     try {
       if (!('serviceWorker' in navigator)) return;
 
