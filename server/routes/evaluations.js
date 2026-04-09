@@ -5,6 +5,17 @@ const logger = require('../utils/logger');
 const { checkRole } = require('../middleware/auth');
 const { awardPoints, withTransaction } = require('../utils/dbHelper');
 
+// 0. Get all evaluations (Admin/Staff view)
+router.get('/', async (req, res) => {
+    try {
+        const evaluations = await req.db.all('SELECT * FROM evaluations ORDER BY created_at DESC LIMIT 200');
+        res.json(evaluations);
+    } catch (err) {
+        logger.error('Error fetching all evaluations', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 // 1. Get evaluations for a specific student (Used by Parent/Student)
 router.get('/student/:studentId', async (req, res) => {
     try {
