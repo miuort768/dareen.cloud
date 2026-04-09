@@ -260,12 +260,12 @@ export const MonthlyClosing: React.FC = () => {
     }
 
     return (
-        <div className="p-4 lg:p-10 min-h-screen bg-gray-50/50 dark:bg-gray-950/50" dir="rtl">
+        <div className="p-3 lg:p-6 min-h-screen bg-gray-50/50 dark:bg-gray-950/50" dir="rtl">
             {/* Header with Semester & Month Switcher */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-4 mb-2">
-                        <div className="w-1.5 h-12 bg-rose-600 border-2 border-gray-950 dark:border-gray-800"></div>
+                    <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-3 mb-1">
+                        <div className="w-1.5 h-8 bg-rose-600 border border-gray-950 dark:border-gray-800"></div>
                         تقفيل الحسابات والأنشطة
                     </h1>
                     <div className="flex items-center gap-2 text-gray-500 font-bold">
@@ -318,120 +318,120 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Quick Summary Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">صافي الأرباح</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-3xl font-black text-blue-600 font-mono tracking-tighter">
-                                {netProfit.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-2xl font-black text-blue-600 font-mono tracking-tighter">
+                                {netProfit.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
                             <p className="text-[10px] font-bold text-blue-400 mt-1">الهامش: {totalIncome > 0 ? ((netProfit / totalIncome) * 100).toFixed(1) : 0}%</p>
                         </div>
-                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
-                            <DollarSign size={24} />
+                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
+                            <DollarSign size={20} />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
+                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي الإيرادات</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-3xl font-black text-emerald-600 font-mono tracking-tighter">
-                                {totalIncome.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">
+                                {totalIncome.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
                         </div>
-                        <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
-                            <TrendingUp size={24} className="text-emerald-600" />
+                        <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
+                            <TrendingUp size={20} className="text-emerald-600" />
                         </div>
                     </div>
                 </div>
                 
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
+                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">رواتب المعلمات</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-3xl font-black text-rose-600 font-mono tracking-tighter">
-                                {totalTeacherPayout.toLocaleString()} <span className="text-xs uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-2xl font-black text-rose-600 font-mono tracking-tighter">
+                                {totalTeacherPayout.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
                         </div>
-                        <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center border-2 border-rose-600 text-rose-600">
-                            <ArrowDownRight size={24} />
+                        <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center border-2 border-rose-600 text-rose-600">
+                            <ArrowDownRight size={20} />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-4px]">
+                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">نشاط الأكاديمية</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-3xl font-black text-amber-600 font-mono tracking-tighter">
-                                {filteredSessions.length} <span className="text-xs uppercase opacity-70">حصة</span>
+                            <h3 className="text-2xl font-black text-amber-600 font-mono tracking-tighter">
+                                {filteredSessions.length} <span className="text-[10px] uppercase opacity-70">حصة</span>
                             </h3>
                         </div>
-                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600">
-                            <ActivityIcon size={24} />
+                        <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600">
+                            <ActivityIcon size={20} />
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Tabs */}
-            <div className="flex overflow-x-auto no-scrollbar bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 mb-8 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] sticky top-0 z-40">
+            <div className="flex overflow-x-auto no-scrollbar bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 mb-6 shadow-[4px_4px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] sticky top-0 z-40">
                 <button 
                     onClick={() => setActiveTab('payroll')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'payroll' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Receipt size={18} /> رواتب المعلمات
+                    <Receipt size={14} /> رواتب المعلمات
                 </button>
                 <button 
                     onClick={() => setActiveTab('renewals')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'renewals' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <AlertCircle size={18} /> انتهاء الرصيد
+                    <AlertCircle size={14} /> انتهاء الرصيد
                 </button>
                 <button 
                     onClick={() => setActiveTab('analysis')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'analysis' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <BarChart3 size={18} /> تحليل المواد
+                    <BarChart3 size={14} /> تحليل المواد
                 </button>
                 <button 
                     onClick={() => setActiveTab('summary')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'summary' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <TrendingUp size={18} /> ملخص الحسابات
+                    <TrendingUp size={14} /> ملخص الحسابات
                 </button>
                 <button 
                     onClick={() => setActiveTab('teachers')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'teachers' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Users size={18} /> تحليل المعلمات
+                    <Users size={14} /> تحليل المعلمات
                 </button>
                 <button 
                     onClick={() => setActiveTab('compensation')}
                     className={cn(
-                        "px-4 md:px-8 py-3 text-xs md:text-sm font-black transition-all flex items-center gap-2 md:gap-3 whitespace-nowrap",
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
                         activeTab === 'compensation' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <RefreshCw size={18} /> حصص التعويض
+                    <RefreshCw size={14} /> حصص التعويض
                 </button>
             </div>
 
@@ -585,38 +585,38 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'summary' && (
-                    <div className="p-10 animate-in fade-in slide-in-from-bottom-5 duration-700">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div className="p-6 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div>
-                                <h1 className="text-7xl font-black text-gray-950 dark:text-white tracking-tighter mb-4">ملخص الأداء الشهري <span className="text-emerald-600">+{((netProfit / (totalIncome || 1)) * 100).toFixed(0)}%</span></h1>
-                                <p className="text-xl font-bold text-gray-500 leading-relaxed max-w-xl">
-                                    لقد حققت الأكاديمية زيادة في الإنتاجية التعليمية هذا الشهر. إجمالي الحصص المنفذة وصل إلى <span className="text-gray-950 dark:text-white border-b-4 border-emerald-400">{filteredSessions.length} حصة مبرمجة</span>.
+                                <h1 className="text-3xl lg:text-4xl font-black text-gray-950 dark:text-white tracking-tighter mb-4">ملخص الأداء الشهري <span className="text-emerald-600">+{((netProfit / (totalIncome || 1)) * 100).toFixed(0)}%</span></h1>
+                                <p className="text-base font-bold text-gray-500 leading-relaxed max-w-xl">
+                                    لقد حققت الأكاديمية زيادة في الإنتاجية التعليمية هذا الشهر. إجمالي الحصص المنفذة وصل إلى <span className="text-gray-950 dark:text-white border-b-2 border-emerald-400">{filteredSessions.length} حصة مبرمجة</span>.
                                 </p>
-                                <div className="mt-10 grid grid-cols-2 gap-6">
-                                    <div className="border-l-4 border-emerald-500 pl-6 py-2">
+                                <div className="mt-6 grid grid-cols-2 gap-4">
+                                    <div className="border-l-4 border-emerald-500 pl-4 py-2">
                                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">معدل الإيرادات</p>
-                                        <p className="text-2xl font-black text-gray-950 dark:text-white font-mono">{totalIncome.toLocaleString()} {CURRENCY_SYMBOL}</p>
+                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalIncome.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
                                     </div>
-                                    <div className="border-l-4 border-rose-500 pl-6 py-2">
+                                    <div className="border-l-4 border-rose-500 pl-4 py-2">
                                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">معدل التكاليف</p>
-                                        <p className="text-2xl font-black text-gray-950 dark:text-white font-mono">{totalTeacherPayout.toLocaleString()} {CURRENCY_SYMBOL}</p>
+                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalTeacherPayout.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-8 border-4 border-gray-950 bg-emerald-50 dark:bg-emerald-900/10 shadow-[20px_20px_0px_0px_rgba(16,185,129,0.1)] dark:border-gray-800">
-                                <h3 className="text-xl font-black text-emerald-900 border-b-2 border-emerald-200 pb-4 mb-6 dark:text-emerald-400">نصيحة المدير الذكي 💡</h3>
-                                <div className="space-y-6">
-                                    <div className="flex gap-4 text-right">
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black">1</div>
-                                        <p className="text-sm font-bold text-emerald-800 dark:text-emerald-500/80">هناك {renewalsData.length} طالب بحاجة لتجديد اشتراكهم فوراً لضمان تدفق السيولة.</p>
+                            <div className="p-6 border-2 border-gray-950 bg-emerald-50 dark:bg-emerald-900/10 shadow-[8px_8px_0px_0px_rgba(16,185,129,0.1)] dark:border-gray-800">
+                                <h3 className="text-lg font-black text-emerald-900 border-b-2 border-emerald-200 pb-3 mb-4 dark:text-emerald-400">نصيحة المدير الذكي 💡</h3>
+                                <div className="space-y-4">
+                                    <div className="flex gap-3 text-right">
+                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">1</div>
+                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">هناك {renewalsData.length} طالب بحاجة لتجديد اشتراكهم فوراً لضمان تدفق السيولة.</p>
                                     </div>
-                                    <div className="flex gap-4 text-right">
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black">2</div>
-                                        <p className="text-sm font-bold text-emerald-800 dark:text-emerald-500/80">المعلمات حققن عائداً قوياً هذا الشهر، يفضل تثبيت مدفوعات الراتب قبل نهاية الأسبوع.</p>
+                                    <div className="flex gap-3 text-right">
+                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">2</div>
+                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">المعلمات حققن عائداً قوياً هذا الشهر، يفضل تثبيت مدفوعات الراتب قبل نهاية الأسبوع.</p>
                                     </div>
-                                    <div className="flex gap-4 text-right">
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black">3</div>
-                                        <p className="text-sm font-bold text-emerald-800 dark:text-emerald-500/80">معدل الربح الصافي لهذا الشهر هو {netProfit.toLocaleString()} {CURRENCY_SYMBOL}، يوصى بإعادة استثمار جزء في تطوير المواد العلمية.</p>
+                                    <div className="flex gap-3 text-right">
+                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">3</div>
+                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">معدل الربح الصافي لهذا الشهر هو {netProfit.toLocaleString()} {CURRENCY_SYMBOL}، يوصى بإعادة استثمار جزء في تطوير المواد العلمية.</p>
                                     </div>
                                 </div>
                             </div>
