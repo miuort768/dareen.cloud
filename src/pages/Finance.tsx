@@ -93,46 +93,50 @@ export const Finance = () => {
 
                 {/* Compact Stats inside Header */}
                 <div className="relative z-10 mt-6 pt-6 border-t border-white/20 grid grid-cols-2 lg:grid-cols-4 gap-4 px-2">
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                    {/* Income */}
+                    <div className="bg-white/10 backdrop-blur-sm border border-emerald-500/30 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[inset_0_0_10px_rgba(16,185,129,0.1)]">
                         <div>
-                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">الإيرادات الشاملة</p>
-                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalIncome.toLocaleString()} <span className="text-xs">ج.م</span></p>
-                            <p className="text-emerald-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthIncome.toLocaleString()}</p>
+                            <p className="text-emerald-200 text-[10px] font-black uppercase mb-1 tracking-widest">الإيرادات الشاملة</p>
+                            <p className="text-emerald-400 text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalIncome.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-emerald-100 text-[10px] font-bold mt-1 opacity-80">هذا الشهر: {state.monthIncome.toLocaleString()}</p>
                         </div>
-                        <div className="w-10 h-10 border border-emerald-500/30 bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 border border-emerald-400 bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
                             <TrendingUp size={20} />
                         </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                    {/* Teacher Expenses */}
+                    <div className="bg-white/10 backdrop-blur-sm border border-rose-500/30 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[inset_0_0_10px_rgba(244,63,94,0.1)]">
                         <div>
-                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">مصاريف المعلمات</p>
-                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
-                            <p className="text-rose-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthExpenses.toLocaleString()}</p>
+                            <p className="text-rose-200 text-[10px] font-black uppercase mb-1 tracking-widest">مصاريف المعلمات</p>
+                            <p className="text-rose-400 text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-rose-100 text-[10px] font-bold mt-1 opacity-80">هذا الشهر: {state.monthExpenses.toLocaleString()}</p>
                         </div>
-                        <div className="w-10 h-10 border border-rose-500/30 bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 border border-rose-400 bg-rose-500/20 text-rose-300 flex items-center justify-center shrink-0">
                             <TrendingUp size={20} className="rotate-180" />
                         </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors">
+                    {/* Fixed Expenses */}
+                    <div className="bg-white/10 backdrop-blur-sm border border-orange-500/30 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[inset_0_0_10px_rgba(249,115,22,0.1)]">
                         <div>
-                            <p className="text-white/60 text-[10px] font-black uppercase mb-1 tracking-widest">مصروفات الإدارة</p>
-                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalFixedExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
-                            <p className="text-rose-400 text-[10px] font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity">اجمالي ثابت</p>
+                            <p className="text-orange-200 text-[10px] font-black uppercase mb-1 tracking-widest">مصروفات الإدارة</p>
+                            <p className="text-orange-400 text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.totalFixedExpenses.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-orange-100 text-[10px] font-bold mt-1 opacity-80">إجمالي ثابت</p>
                         </div>
-                        <div className="w-10 h-10 border border-rose-500/30 bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 border border-orange-400 bg-orange-500/20 text-orange-300 flex items-center justify-center shrink-0">
                             <DollarSign size={20} />
                         </div>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                    {/* Net Profit */}
+                    <div className="bg-white/10 backdrop-blur-sm border border-amber-500/30 p-4 flex justify-between items-center group hover:bg-white/15 transition-colors shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                         <div>
-                            <p className="text-emerald-300 text-[10px] font-black uppercase mb-1 tracking-widest">صافي الأرباح</p>
-                            <p className="text-white text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.netProfit.toLocaleString()} <span className="text-xs">ج.م</span></p>
-                            <p className="text-emerald-400 text-[10px] font-bold mt-1">هذا الشهر: {state.monthProfit.toLocaleString()}</p>
+                            <p className="text-amber-200 text-[10px] font-black uppercase mb-1 tracking-widest">صافي الأرباح</p>
+                            <p className="text-amber-400 text-xl md:text-2xl font-black tabular-nums truncate tracking-tighter">{state.netProfit.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                            <p className="text-amber-100 text-[10px] font-bold mt-1 opacity-80">هذا الشهر: {state.monthProfit.toLocaleString()}</p>
                         </div>
-                        <div className="w-10 h-10 border border-emerald-400 bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                        <div className="w-10 h-10 border border-amber-400 bg-amber-500 text-gray-900 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.5)]">
                             <DollarSign size={20} />
                         </div>
                     </div>
