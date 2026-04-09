@@ -1,5 +1,4 @@
 import { TrendingUp, Download, Activity, Sparkles } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface ReportsHeaderProps {
     onExport: () => void;

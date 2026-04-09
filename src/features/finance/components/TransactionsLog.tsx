@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDownRight, ArrowUpRight, CheckCircle2, Clock, CreditCard, DollarSign, Trash2, X, History } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, CheckCircle2, Clock, DollarSign, X, History } from 'lucide-react';
 import type { Transaction } from '../../../types';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { cn } from '../../../lib/utils';

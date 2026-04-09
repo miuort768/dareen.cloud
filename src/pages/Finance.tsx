@@ -6,7 +6,6 @@ import { AddTransactionModal } from '../features/finance/components/AddTransacti
 import { FixedExpensesManager } from '../features/finance/components/FixedExpensesManager';
 import { useFinance } from '../features/finance/hooks/useFinance';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '../lib/utils';
 
 export const Finance = () => {
     const { state, actions } = useFinance();

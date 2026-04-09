@@ -1,4 +1,4 @@
-import { Users, GraduationCap, Plus, X, Search, Filter } from 'lucide-react';
+import { Users, GraduationCap, Plus, X } from 'lucide-react';
 
 interface StudentHeaderProps {
     count: number;

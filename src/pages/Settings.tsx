@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { 
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
-    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare
+    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare,
+    Sparkles
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { GuestChatManager } from '../features/chat/components/GuestChatManager';

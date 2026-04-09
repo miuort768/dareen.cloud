@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, Circle, GraduationCap } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';

@@ -127,9 +127,6 @@ export const MonthlyClosing: React.FC = () => {
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
     const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
 
-    // Split semesters string into array for dropdown
-    const semesterList = typeof semesters === 'string' ? semesters.split(',') : (Array.isArray(semesters) ? semesters : []);
-
     const handleTeacherAdjustment = (teacherId: string, amount: number) => {
         setTeacherAdjustments(prev => ({
             ...prev,
@@ -137,16 +134,16 @@ export const MonthlyClosing: React.FC = () => {
         }));
     };
 
+    // Split semesters string into array for dropdown
+    const semesterList = (semesters || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (!semesterList.includes(semesterName)) semesterList.push(semesterName);
+
     const handleRefresh = () => {
         queryClient.invalidateQueries({ queryKey: ['sessions-closing'] });
         queryClient.invalidateQueries({ queryKey: ['teachers-closing'] });
         queryClient.invalidateQueries({ queryKey: ['students-closing'] });
         queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
     };
-
-    // Split semesters string into array for dropdown
-    const semesterList = (semesters || '').split(',').map(s => s.trim()).filter(Boolean);
-    if (!semesterList.includes(semesterName)) semesterList.push(semesterName);
 
     // Fetch data
     const { data: sessions, isLoading: sessionsLoading } = useQuery({

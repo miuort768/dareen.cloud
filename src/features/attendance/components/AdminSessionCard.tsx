@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, XCircle, BookOpen, TrendingUp, Clock, GraduationCap } from 'lucide-react';
+import { CheckCircle2, XCircle, BookOpen, Clock, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
 

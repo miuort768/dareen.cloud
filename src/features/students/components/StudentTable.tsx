@@ -1,4 +1,4 @@
-import { Eye, Edit, Trash, GraduationCap, AlertCircle, CheckCircle } from 'lucide-react';
+import { Eye, Edit, Trash, GraduationCap, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
 

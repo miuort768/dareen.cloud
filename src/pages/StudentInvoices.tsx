@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
     Plus, Wallet, TrendingUp, Trash2, CheckCircle, XCircle,
-    Search, Edit, Check, X,
+    Search, Edit, X,
     AlertCircle, FileText, Printer, UserPlus
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { StatsCard } from '../shared/components/StatsCard';
-import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
