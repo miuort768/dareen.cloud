@@ -1,6 +1,6 @@
 import { Target, CheckCircle2, Users, Star, Award } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { getRankByPoints, getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks';
+import { getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks';
 
 interface TeacherRewardsKPIsProps {
     stats: {
@@ -12,7 +12,6 @@ interface TeacherRewardsKPIsProps {
 }
 
 export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
-    const rank = getRankByPoints(stats.teacherPoints || 0, TEACHER_RANKS);
     const { next, pointsNeeded } = getNextRank(stats.teacherPoints || 0, TEACHER_RANKS);
 
     const goals = [

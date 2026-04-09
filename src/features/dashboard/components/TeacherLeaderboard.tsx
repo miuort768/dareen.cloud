@@ -1,4 +1,4 @@
-import { Trophy, Star, Award, TrendingUp } from 'lucide-react';
+import { Trophy, Star, TrendingUp } from 'lucide-react';
 import { getRankByPoints, STUDENT_RANKS } from '../../../shared/utils/ranks';
 import { cn } from '../../../lib/utils';
 
