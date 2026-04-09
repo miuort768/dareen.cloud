@@ -125,23 +125,23 @@ export const Login = () => {
 
                         {/* Organized Stats - Sharp & Static */}
                         <div className="grid grid-cols-1 gap-5 w-full">
-                            <div className="bg-white/60 backdrop-blur-sm border border-slate-100 p-6 rounded-none flex items-center gap-6 border-r-4 border-r-rose-600">
-                                <div className="w-12 h-12 bg-rose-50 rounded-none flex items-center justify-center text-rose-600 border border-rose-100">
+                            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-100 dark:border-slate-800/60 p-6 rounded-none flex items-center gap-6 border-r-4 border-r-rose-600">
+                                <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/30 rounded-none flex items-center justify-center text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-800/50">
                                     <Users size={24} />
                                 </div>
                                 <div className="text-right">
                                     <div className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">ثقة الطلاب</div>
-                                    <div className="text-xl font-black text-slate-800">+5,000 طالب</div>
+                                    <div className="text-xl font-black text-slate-800 dark:text-white">+5,000 طالب</div>
                                 </div>
                             </div>
 
-                            <div className="bg-white/60 backdrop-blur-sm border border-slate-100 p-6 rounded-none flex items-center gap-6 border-r-4 border-r-emerald-600">
-                                <div className="w-12 h-12 bg-emerald-50 rounded-none flex items-center justify-center text-emerald-600 border border-emerald-100">
+                            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-100 dark:border-slate-800/60 p-6 rounded-none flex items-center gap-6 border-r-4 border-r-emerald-600">
+                                <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 rounded-none flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/50">
                                     <Trophy size={24} />
                                 </div>
                                 <div className="text-right">
                                     <div className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">إنجازاتنا</div>
-                                    <div className="text-xl font-black text-slate-800">نخبة الأوائل</div>
+                                    <div className="text-xl font-black text-slate-800 dark:text-white">نخبة الأوائل</div>
                                 </div>
                             </div>
                         </div>
