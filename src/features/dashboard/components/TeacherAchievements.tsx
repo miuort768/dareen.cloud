@@ -1,6 +1,5 @@
 import { TrendingUp } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
-import { cn } from '../../../lib/utils';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 
 interface TeacherAchievementsProps {
@@ -8,6 +7,8 @@ interface TeacherAchievementsProps {
     lowBalanceStudents: LowBalanceStudent[];
     isTeacher: boolean;
 }
+
+import { RankBadge } from '../../../shared/components/RankBadge';
 
 export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: TeacherAchievementsProps) => {
     const rank = getRankByPoints(stats.teacherPoints || 0, TEACHER_RANKS);
@@ -27,13 +28,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         </div>
                     </div>
                     {isTeacher && (
-                        <div className={cn(
-                            "flex items-center gap-1.5 px-3 py-1 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] text-[9px] font-black uppercase text-white",
-                            rank.badgeColor
-                        )}>
-                            <span>{rank.icon}</span>
-                            <span>{rank.name}</span>
-                        </div>
+                        <RankBadge rank={rank} size="md" />
                     )}
                 </div>
                 

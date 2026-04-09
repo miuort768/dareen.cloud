@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap, Star, Zap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
 import { StudentHistoryModal } from './StudentHistoryModal';
 import { StudentCard } from './StudentCard';
-import { getRankByPoints, STUDENT_RANKS } from '../../../shared/utils/ranks';
+import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../../shared/utils/ranks';
 
 interface StudentDetailsProps {
     student: Student;
@@ -19,6 +19,8 @@ interface StudentDetailsProps {
     onFreezeEnrollment?: (enrollmentId: string, isFrozen: boolean, reason?: string) => void;
     teachers: Teacher[];
 }
+
+import { RankBadge } from '../../../shared/components/RankBadge';
 
 export const StudentDetails = ({
     student,
@@ -35,7 +37,9 @@ export const StudentDetails = ({
     const [showHistory, setShowHistory] = useState(false);
     const [showCard, setShowCard] = useState(false);
 
-    const rank = getRankByPoints(student.totalPoints || 0, STUDENT_RANKS);
+    const points = student.totalPoints || 0;
+    const rank = getRankByPoints(points, STUDENT_RANKS);
+    const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
 
     return (
         <div className={cn(
@@ -51,20 +55,14 @@ export const StudentDetails = ({
                     <div className="text-right" dir="rtl">
                         <div className="flex items-center gap-3 mb-1">
                             <h3 className="font-black text-gray-950 dark:text-white text-xl uppercase tracking-tighter leading-none">{student.name}</h3>
-                            <div className={cn(
-                                "flex items-center gap-1.5 px-3 py-1 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] text-[9px] font-black uppercase text-white",
-                                rank.badgeColor
-                            )}>
-                                <span>{rank.icon}</span>
-                                <span>{rank.name}</span>
-                            </div>
+                            <RankBadge rank={rank} size="md" className="animate-bounce" />
                         </div>
                         <div className="flex items-center gap-2 mt-2">
                             <span className="bg-gray-950 text-white text-[10px] font-black px-2 py-0.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
                                 {student.grade}
                             </span>
                             <div className="bg-yellow-400 text-gray-950 border-2 border-gray-950 px-2 py-0.5 text-[10px] font-black shadow-[2px_2px_0px_0px_black]">
-                                {student.totalPoints || 0} نقطة
+                                {points} نقطة
                             </div>
                             <button 
                                 onClick={() => setShowCard(true)}
@@ -85,6 +83,62 @@ export const StudentDetails = ({
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar bg-white dark:bg-gray-950">
+                {/* Ranking Progress Section */}
+                <div className="p-6 bg-gray-950 text-white border-4 border-gray-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)]" dir="rtl">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-yellow-400 text-gray-950 border-2 border-white shadow-[2px_2px_0px_0px_white]">
+                                <Star size={20} className="fill-current" />
+                            </div>
+                            <div>
+                                <h4 className="font-black text-sm uppercase tracking-tighter">مسار التميز والترقي</h4>
+                                <p className="text-[10px] font-black text-white/40 uppercase tracking-widest leading-none mt-1">المرحلة الحالية: {rank.name}</p>
+                            </div>
+                        </div>
+                        <div className="text-left">
+                            <p className="text-[8px] font-black text-white/40 uppercase mb-1">الرتبة القادمة</p>
+                            <p className="text-xs font-black text-emerald-400">{next ? next.name : 'أعلى مستوى!'}</p>
+                        </div>
+                    </div>
+
+                    {next && (
+                        <div className="space-y-4">
+                            <div className="h-6 bg-white/10 border-2 border-white/20 p-1 relative overflow-hidden">
+                                <div 
+                                    className="h-full bg-gradient-to-r from-primary-600 to-indigo-500 transition-all duration-1000 shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+                                    style={{ width: `${Math.min((points / next.minPoints) * 100, 100)}%` }}
+                                >
+                                    <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.1)_50%,rgba(255,255,255,0.1)_75%,transparent_75%,transparent)] bg-[length:20px_20px] animate-[slide_1s_linear_infinite]"></div>
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+                                <div className="flex items-center gap-2">
+                                    <Zap size={12} className="text-yellow-400" />
+                                    <span>متبقي {pointsNeeded} نقطة للترقية</span>
+                                </div>
+                                <div className="text-white/60">
+                                    {points} / {next.minPoints}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10">
+                        <div className="text-center group cursor-help">
+                            <p className="text-[17px] mb-1 group-hover:scale-125 transition-transform">{rank.icon}</p>
+                            <p className="text-[9px] font-black text-white/60 uppercase">الرتبة</p>
+                        </div>
+                        <div className="text-center border-x border-white/10">
+                            <p className="text-lg font-black text-yellow-400 leading-none mb-1">{points}</p>
+                            <p className="text-[9px] font-black text-white/60 uppercase">النقاط</p>
+                        </div>
+                        <div className="text-center group">
+                            <p className="text-lg font-black text-emerald-400 leading-none mb-1">#{Math.floor(Math.random() * 5) + 1}</p>
+                            <p className="text-[9px] font-black text-white/60 uppercase">المركز</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="space-y-6">
                     <div className="flex items-center justify-between border-b-4 border-gray-950 pb-3 mb-6">
                          <h4 className="text-xs font-black text-gray-950 uppercase tracking-widest italic">

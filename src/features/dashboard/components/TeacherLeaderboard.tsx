@@ -1,4 +1,4 @@
-import { Trophy, Star, TrendingUp } from 'lucide-react';
+import { Trophy, Star, TrendingUp, Zap } from 'lucide-react';
 import { getRankByPoints, STUDENT_RANKS } from '../../../shared/utils/ranks';
 import { cn } from '../../../lib/utils';
 
@@ -6,6 +6,8 @@ interface TeacherLeaderboardProps {
     students: any[];
     onStudentClick?: (student: any) => void;
 }
+
+import { RankBadge } from '../../../shared/components/RankBadge';
 
 export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderboardProps) => {
     if (!students || students.length === 0) return null;
@@ -34,11 +36,21 @@ export const TeacherLeaderboard = ({ students, onStudentClick }: TeacherLeaderbo
                                     {index + 1}
                                 </div>
                                 <div>
-                                    <h4 className="text-xs font-black text-gray-900 dark:text-white flex items-center gap-1.5">
-                                        {student.name}
-                                        <span title={rank.name}>{rank.icon}</span>
-                                    </h4>
-                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest">{student.grade} • {rank.name}</p>
+                                    <div className="flex items-center gap-2">
+                                        <h4 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-tighter">
+                                            {student.name}
+                                        </h4>
+                                        {index < 3 && (
+                                            <div className="flex items-center gap-1 bg-yellow-400 text-gray-950 px-1.5 py-0.5 text-[8px] font-black border border-gray-950 shadow-[1px_1px_0px_0px_black] animate-pulse">
+                                                <Zap size={8} className="fill-current" />
+                                                <span>أداء مبهر</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                        <RankBadge rank={rank} size="sm" />
+                                        <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none">{student.grade}</p>
+                                    </div>
                                 </div>
                             </div>
                             
