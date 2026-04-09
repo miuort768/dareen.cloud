@@ -65,29 +65,28 @@ export const Finance = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 no-print">
+                    <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 no-print">
                         <button
                             onClick={() => navigate('/monthly-closing')}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-black dark:border-white/20"
+                            className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-900 text-white font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-black dark:border-white/20 h-10"
                         >
-                            <CalendarCheck size={16} /> تقفيل الشهر والرواتب
+                            <CalendarCheck size={16} /> تقفيل وتسويات
                         </button>
                         <button
                             onClick={() => alert('ميزة التصدير ستكون متاحة قريباً')}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-white text-gray-950 font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-gray-800 dark:text-white dark:border-white/20"
+                            className="flex items-center justify-center gap-2 px-3 py-2 bg-white text-gray-950 font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] transition-all dark:bg-gray-800 dark:text-white dark:border-white/20 h-10"
                         >
-                            <Download size={16} /> تصدير البيانات
+                            <Download size={16} /> تصدير
                         </button>
                         <button
                             onClick={() => actions.setShowAddModal(true)}
-                            className="bg-white text-primary-600 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-lg transform hover:-translate-y-1 active:translate-y-0 h-14"
+                            className="bg-white text-primary-600 px-4 py-2 font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] flex items-center justify-center gap-2 hover:translate-y-[-2px] transition-all h-10"
                         >
-                            <TrendingUp size={20} />
-                            <span>تسجيل معاملة</span>
+                            <TrendingUp size={16} /> تسجيل المعاملة
                         </button>
-                        <div className="bg-primary-900/40 backdrop-blur-md border border-white/20 px-6 py-2 rounded-none min-w-[140px] text-white">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-1">هامش الربح</p>
-                            <p className="text-2xl font-black" dir="ltr">{state.profitMargin}%</p>
+                        <div className="bg-primary-900/40 backdrop-blur-md border-2 border-white/20 px-4 py-2 h-10 flex items-center justify-center gap-2 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
+                            <span className="text-[10px] font-black uppercase text-white/80">هامش الربح</span>
+                            <span className="text-base font-black text-emerald-400" dir="ltr">{state.profitMargin}%</span>
                         </div>
                     </div>
                 </div>
