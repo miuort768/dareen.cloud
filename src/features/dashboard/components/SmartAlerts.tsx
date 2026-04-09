@@ -81,8 +81,8 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 type: 'success',
                 icon: CheckCircle2,
                 color: 'emerald',
-                title: 'كل شيء على ما يرام!',
-                desc: 'لا توجد تنبيهات حرجة تحتاج إلى تدخل الآن.',
+                title: 'كل شيء يسير بمنتهى الدقة!',
+                desc: 'جميع الطلاب ملتزمون بالخطط التعليمية والمواعيد حالياً. عمل رائع!',
                 action: null,
                 actionLabel: ''
             });
@@ -99,7 +99,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     };
 
     return (
-        <div className="bg-white dark:bg-gray-950 border-4 border-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] rounded-none overflow-hidden" dir="rtl">
+        <div className="bg-white dark:bg-gray-950 border-4 border-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] rounded-none overflow-hidden h-full flex flex-col" dir="rtl">
             <div className="p-6 border-b-4 border-gray-900 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
                 <h4 className="font-black text-sm lg:text-base uppercase tracking-[0.2em] text-gray-900 dark:text-white flex items-center gap-3">
                     <Zap size={20} className="text-yellow-500 fill-yellow-500" />
@@ -116,7 +116,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                         : 'لا توجد مشاكل'}
                 </div>
             </div>
-            <div className="p-6 space-y-4 max-h-[480px] overflow-y-auto custom-scrollbar">
+            <div className="p-6 space-y-4 max-h-[480px] overflow-y-auto custom-scrollbar flex-1 flex flex-col justify-center">
                 {alerts.map(alert => {
                     const c = colorMap[alert.color] || colorMap.blue;
                     const Icon = alert.icon;
