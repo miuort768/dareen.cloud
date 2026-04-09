@@ -188,8 +188,8 @@ export const ChatbotWidget = () => {
                         {/* Header */}
                         <div className="bg-primary-600 p-4 flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
-                                    <Bot className="text-white" size={24} />
+                                <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30 overflow-hidden p-1">
+                                    <img src="/chatbot-icon.png" alt="Bot" className="w-full h-full object-contain drop-shadow-md" />
                                 </div>
                                 <div>
                                     <h3 className="text-white font-black text-sm uppercase tracking-tight">{chatbotName || 'دارين بوت'}</h3>
@@ -219,8 +219,8 @@ export const ChatbotWidget = () => {
                                     {!guestInfo ? (
                                         <form onSubmit={handleInit} className="h-full flex flex-col justify-center p-6 space-y-5 animate-in fade-in duration-300">
                                             <div className="text-center space-y-2 mb-2">
-                                                <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-600 mx-auto mb-4 border border-emerald-100 dark:border-emerald-800/50 shadow-inner">
-                                                    <MessageCircle size={32} className="animate-pulse" />
+                                                <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100 dark:border-emerald-800/50 shadow-inner p-2">
+                                                    <img src="/chatbot-icon.png" alt="Chat" className="w-full h-full object-contain drop-shadow-lg animate-pulse" />
                                                 </div>
                                                 <h4 className="font-black text-slate-900 dark:text-white text-lg">أهلاً بك في منصة دارين</h4>
                                                 <p className="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">لخدمتك بشكل أفضل، نرجو تزويدنا ببياناتك</p>
@@ -341,7 +341,7 @@ export const ChatbotWidget = () => {
                     }}
                     className="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center shadow-2xl pointer-events-auto relative group hover:bg-primary-700 transition-colors"
                 >
-                    <MessageCircle size={32} />
+                    <img src="/chatbot-icon.png" alt="Chat" className="w-11 h-11 object-contain drop-shadow-lg" />
                     {unreadCount > 0 && (
                         <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] text-white font-black flex items-center justify-center animate-bounce">
                             {unreadCount}
