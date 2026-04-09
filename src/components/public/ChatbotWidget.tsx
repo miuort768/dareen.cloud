@@ -171,10 +171,10 @@ export const ChatbotWidget = () => {
         }
     };
 
-    const hideInPaths = ['/admin', '/teacher', '/student', '/parent'];
-    const isDashboard = hideInPaths.some(path => location.pathname.startsWith(path));
+    const allowedPaths = ['/', '/courses', '/about', '/contact'];
+    const isAllowedPage = allowedPaths.includes(location.pathname);
 
-    if (!chatbotEnabled || isDashboard) return null;
+    if (!chatbotEnabled || !isAllowedPage) return null;
 
     return (
         <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end pointer-events-none">
@@ -344,7 +344,7 @@ export const ChatbotWidget = () => {
                         setIsOpen(true);
                         setIsMinimized(false);
                     }}
-                    className="w-20 h-20 flex items-center justify-center pointer-events-auto relative group hover:scale-110 transition-transform cursor-pointer"
+                    className="w-14 h-14 flex items-center justify-center pointer-events-auto relative group hover:scale-110 transition-transform cursor-pointer"
                 >
                     <img src="/chatbot-icon.png" alt="Chat" className="w-full h-full object-contain drop-shadow-2xl" />
                     {unreadCount > 0 && (
