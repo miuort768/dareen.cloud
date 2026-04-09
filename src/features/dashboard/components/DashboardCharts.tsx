@@ -11,22 +11,17 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
     return (
         <div className="space-y-6">
             {!isTeacher && (
-                <div className="bg-white border-4 border-gray-950 dark:bg-gray-950 dark:border-gray-800 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] rounded-none relative overflow-hidden group">
-                    {/* Background Sharp Decorations */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 border-r-8 border-primary-500/20 -mr-16 -mt-16 pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 border-l-8 border-emerald-500/20 -ml-16 -mb-16 pointer-events-none"></div>
-
-                    <div className="relative p-8 px-6 md:px-8">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b-2 border-gray-100 dark:border-gray-800 pb-6">
-                            <div className="flex items-center gap-5">
-                                <div className="p-3 bg-gray-900 dark:bg-primary-900/40 text-white rounded-none border-2 border-white/10">
-                                    <Activity size={24} />
-                                </div>
-                                <div>
-                                    <h3 className="font-black text-gray-900 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">تحليل نمو البيانات</h3>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">الإيرادات والمصروفات والأداء</p>
-                                </div>
+                <div className="bg-white border-4 border-gray-950 dark:bg-gray-950 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] rounded-none relative overflow-hidden group">
+                    <div className="relative p-8">
+                        <div className="flex items-center gap-4 mb-8 border-b-4 border-gray-950 dark:border-gray-800 pb-6">
+                            <div className="p-3 bg-gray-950 text-white border-2 border-primary-500 transform rotate-2">
+                                <Activity size={24} />
                             </div>
+                            <div>
+                                <h3 className="font-black text-gray-950 dark:text-white text-xl lg:text-3xl tracking-tighter uppercase leading-none mb-1">تحليل نمو البيانات</h3>
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">إحصائيات الإيرادات والمصروفات والأداء</p>
+                            </div>
+                        </div>     </div>
                         </div>
 
                         <div className="h-[400px] w-full" dir="ltr">
