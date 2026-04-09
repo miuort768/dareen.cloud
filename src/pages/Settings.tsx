@@ -92,6 +92,10 @@ const Settings = () => {
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState<any>(null);
 
+    // Security Modal State
+    const [secureAction, setSecureAction] = useState<{type: 'reset' | 'archive', title: string, description: string, confirmWord: string, actionFn: () => void} | null>(null);
+    const [secureInput, setSecureInput] = useState('');
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -400,21 +404,34 @@ const Settings = () => {
 
                 {activeTab === 'users' && (
                     <div className="space-y-6">
-                        <section className="bg-white dark:bg-gray-900 p-6 border dark:border-gray-800 shadow-sm">
+                        <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm rounded-xl">
                             <h2 className="font-black text-lg mb-6 flex items-center gap-2 uppercase"><Users size={18} className="text-primary-600"/> إدارة مستخدمي النظام</h2>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-right text-xs">
-                                    <thead className="bg-gray-50 dark:bg-gray-800"><tr className="border-b"><th className="p-4">الاسم</th><th className="p-4">اسم الدخول</th><th className="p-4">الصلاحيات</th><th className="p-4 text-center">إجراءات</th></tr></thead>
-                                    <tbody>
+                            <div className="overflow-x-auto rounded-xl border dark:border-slate-800 shadow-inner">
+                                <table className="w-full text-right text-sm whitespace-nowrap">
+                                    <thead className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black">
+                                        <tr>
+                                            <th className="p-4 border-b dark:border-slate-700">الاسم</th>
+                                            <th className="p-4 border-b dark:border-slate-700">اسم الدخول</th>
+                                            <th className="p-4 border-b dark:border-slate-700">الصلاحيات</th>
+                                            <th className="p-4 text-center border-b dark:border-slate-700">إجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
                                         {users.map(u => (
-                                            <tr key={u.id} className="border-b dark:border-gray-800 hover:bg-gray-50/50">
+                                            <tr key={u.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">
                                                 <td className="p-4 font-black">{u.name}</td>
-                                                <td className="p-4 opacity-70 font-mono tracking-tighter">{u.username}</td>
-                                                <td className="p-4"><div className="flex flex-wrap gap-1">{u.permissions?.includes('*') ? <span className="p-1 px-2 bg-red-100 text-red-600 rounded-none font-black text-[9px]">FULL ACCESS</span> : u.permissions?.length}</div></td>
+                                                <td className="p-4 font-mono font-bold text-slate-500 dark:text-slate-400">{u.username}</td>
+                                                <td className="p-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {u.permissions?.includes('*') 
+                                                            ? <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-md font-black text-[10px]">مسؤول شامل (Admin)</span> 
+                                                            : <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md font-black text-[10px]">{u.permissions?.length} صلاحيات محددة</span>}
+                                                    </div>
+                                                </td>
                                                 <td className="p-4">
                                                     <div className="flex justify-center gap-3">
-                                                        <button onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }} className="text-primary-600 font-black"><Edit size={14}/></button>
-                                                        {u.id !== user.id && <button onClick={() => setShowDeleteModal(u)} className="text-red-500 font-black"><Trash2 size={14}/></button>}
+                                                        <button onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }} className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-lg hover:scale-110 transition-transform"><Edit size={16}/></button>
+                                                        {u.id !== user.id && <button onClick={() => setShowDeleteModal(u)} className="p-2 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-lg hover:scale-110 transition-transform"><Trash2 size={16}/></button>}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -532,8 +549,14 @@ const Settings = () => {
                             </div>
 
                             <div className="pt-6 border-t dark:border-gray-800">
-                                <h3 className="font-black text-xs text-red-600 mb-4 uppercase flex items-center gap-2"><AlertCircle size={14}/> منطقة الخطر</h3>
-                                <button onClick={() => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })} className="w-full py-3 bg-red-50 text-red-600 border border-red-100 font-black hover:bg-red-600 hover:text-white transition-all text-[10px]">
+                                <h3 className="font-black text-xs text-red-600 dark:text-red-500 mb-4 uppercase flex items-center gap-2"><AlertCircle size={14}/> منطقة الخطر</h3>
+                                <button onClick={() => setSecureAction({
+                                    type: 'reset',
+                                    title: 'تصفير النظام بالكامل',
+                                    description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب المعلمين الإيرادات والمصروفات بالكامل لبدء دورة جديدة تماماً للمنصة. هذا الإجراء نهائي ولا يمكن التراجع عنه بأي شكل.',
+                                    confirmWord: 'إعادة ضبط المنصة',
+                                    actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
+                                })} className="w-full py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-900/50 font-black hover:bg-red-600 hover:text-white dark:hover:bg-red-600 transition-all text-xs rounded-xl shadow-sm">
                                     تصفير البرنامج بالكامل (System Reset)
                                 </button>
                             </div>
@@ -590,43 +613,51 @@ const Settings = () => {
 
                             <div className="pt-8 border-t dark:border-gray-800 mt-8">
                                 <h3 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-red-600"><Archive size={24}/> ترحيل وإقفال الأرصدة (Month Archive)</h3>
-                                <p className="text-xs font-bold opacity-80 mb-4 leading-relaxed">
-                                    تقوم هذه العملية بـ: تجميد سجلات الدفع الحالية وتصفير الإحصائيات (الحصص والأرباح) للوحة التحكم، لتبدأ شهراً جديداً أو ترميزاً جديداً. مع بقاء الأرصدة المستحقة وسجلات الأسماء آمنة في قواعد البيانات كأرشيف للقراءة.
+                                <p className="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl">
+                                    تقوم هذه العملية بـ: تجميد سجلات الدفع الحالية وتصفير الإحصائيات (الحصص والأرباح) للوحة التحكم، لتبدأ شهراً جديداً أو ترميزاً جديداً. مع بقاء الأرصدة المستحقة آمنة.
                                 </p>
-                                <button onClick={() => {
-                                    if(window.confirm('🚨 تحذير خطير 🚨\n\nهل أنت متأكد من رغبتك في إقفال الشهر المالي والأكاديمي الحالي؟\nستتم أرشفة كل المعاملات والحصص المسجلة ولن تظهر في الإحصائيات بعد الآن ولن يتم التراجع عن هذا الإجراء بسهولة.')){
-                                        settingsService.archiveMonth().then(() => {
-                                            showNotify('تم تجميد وأرشفة بيانات الشهر المالي بنجاح! يتم الآن إعادة تحميل النظام...');
-                                            setTimeout(() => window.location.reload(), 2000);
-                                        }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'));
-                                    }
-                                }} className="w-full py-4 bg-red-50 dark:bg-red-900/10 text-red-600 border-2 border-red-600 font-black hover:bg-red-600 hover:text-white transition-all text-sm uppercase tracking-widest flex justify-center items-center gap-2 relative overflow-hidden group">
+                                <button onClick={() => setSecureAction({
+                                    type: 'archive',
+                                    title: 'إقفال الشهر المالي',
+                                    description: 'سيتم أرشفة الإحصائيات الحالية لتتمكن من بدء فترة مالية وأكاديمية جديدة بأرصدة واضحة ومستقلة. لا يمكن التراجع بسهولة.',
+                                    confirmWord: 'إقفال الشهر',
+                                    actionFn: () => settingsService.archiveMonth().then(() => {
+                                        showNotify('تم تجميد وأرشفة بيانات الشهر المالي بنجاح! يتم الآن التحضير...');
+                                        setTimeout(() => window.location.reload(), 2000);
+                                    }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'))
+                                })} className="w-full py-4 bg-rose-50 dark:bg-rose-900/10 text-rose-600 dark:text-rose-400 border-2 border-rose-600/30 dark:border-rose-500/30 font-black hover:bg-rose-600 hover:border-rose-600 hover:text-white dark:hover:bg-rose-600 transition-all text-sm uppercase tracking-widest flex justify-center items-center gap-3 relative overflow-hidden group rounded-xl shadow-sm">
                                     <span className="relative z-10 flex items-center gap-2"><Lock size={18}/> إقفال الشهر المالي الحالي وبدء فترة جديدة</span>
-                                    <div className="absolute inset-0 w-0 bg-red-600 transition-all duration-500 ease-out group-hover:w-full z-0"></div>
+                                    <div className="absolute inset-0 w-0 bg-rose-600 transition-all duration-500 ease-out group-hover:w-full z-0"></div>
                                 </button>
-                                <p className="text-center text-[10px] font-black text-red-500 mt-2">* يتطلب صلاحيات الأدمن الرئيسي لإتمام العملية.</p>
+                                <p className="text-center text-[11px] font-black text-rose-500 mt-3">* يتطلب صلاحيات الأدمن الرئيسي لإتمام العملية.</p>
                             </div>
                         </section>
                     </div>
                 )}
 
                 {activeTab === 'audit' && (
-                    <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-xl overflow-hidden">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b dark:border-gray-800">
+                    <section className="bg-white dark:bg-gray-900 p-8 border border-gray-100 dark:border-gray-800 shadow-sm rounded-xl overflow-hidden">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b dark:border-slate-800/80">
                              <h2 className="text-xl font-black flex items-center gap-3 uppercase"><Activity size={24} className="text-primary-600"/> الرقابة: سجل النشاط والعمليات</h2>
-                             <button onClick={fetchLogs} className="p-2 hover:bg-gray-100 rounded-none transition-colors"><RefreshCw size={20}/></button>
+                             <button onClick={fetchLogs} className="p-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg transition-colors shadow-sm"><RefreshCw size={20}/></button>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-right">
-                                <thead className="bg-gray-50 dark:bg-gray-800 uppercase text-[10px] font-black tracking-widest"><tr className="border-b"><th className="p-4">التوقيت</th><th className="p-4">الموظف/المسؤول</th><th className="p-4">الإجراء المُنفذ</th></tr></thead>
-                                <tbody>
+                        <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-800 shadow-inner">
+                            <table className="w-full text-right whitespace-nowrap">
+                                <thead className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 uppercase text-[10px] font-black tracking-widest">
+                                    <tr>
+                                        <th className="p-4 border-b dark:border-slate-700">التوقيت (التاريخ والساعة)</th>
+                                        <th className="p-4 border-b dark:border-slate-700">الموظف/المسؤول</th>
+                                        <th className="p-4 border-b dark:border-slate-700">الإجراء المُنفذ</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100 dark:divide-slate-800/80">
                                     {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
-                                        <tr key={idx} className="border-b dark:border-gray-800 text-xs font-bold hover:bg-gray-50/50">
-                                            <td className="p-4 font-mono opacity-60">{new Date(log.timestamp).toLocaleString('ar-EG')}</td>
-                                            <td className="p-4">{log.username}</td>
-                                            <td className="p-4"><span className="p-1 px-3 bg-blue-50 text-blue-600 font-black">{log.action}</span></td>
+                                        <tr key={idx} className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
+                                            <td className="p-4 font-mono text-slate-500 dark:text-slate-400" dir="ltr">{new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}</td>
+                                            <td className="p-4 flex items-center gap-2"><Users size={14} className="text-slate-400" /> {log.username}</td>
+                                            <td className="p-4"><span className="px-3 py-1.5 bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-800/50 rounded-md font-black text-xs">{log.action}</span></td>
                                         </tr>
-                                    )) : <tr><td colSpan={3} className="p-20 text-center opacity-40 font-black">لا يوجد سجلات حالياً</td></tr>}
+                                    )) : <tr><td colSpan={3} className="p-20 text-center text-slate-400 dark:text-slate-500 font-black">لا يوجد سجلات حالياً للعمليات المراقبة</td></tr>}
                                 </tbody>
                             </table>
                         </div>
@@ -635,6 +666,45 @@ const Settings = () => {
             </div>
 
             {/* Modals & Notifications */}
+            {secureAction && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 animate-in fade-in transition-all">
+                    <div className="bg-white dark:bg-slate-900 border-t-8 border-red-600 rounded-2xl p-8 max-w-lg w-full shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
+                            <div className="w-16 h-16 bg-red-50 dark:bg-red-900/30 rounded-2xl flex items-center justify-center text-red-600 shadow-inner mb-2 border border-red-100 dark:border-red-800/50">
+                                <AlertCircle size={32} />
+                            </div>
+                            <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{secureAction.title}</h3>
+                            <p className="text-sm font-bold text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{secureAction.description}</p>
+                            
+                            <div className="w-full bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-700/50 space-y-4 mt-6">
+                                <p className="text-xs font-black text-slate-700 dark:text-slate-300">لتأكيد العملية الخطيرة، يرجى كتابة العبارة التالية في الصندوق أناه:</p>
+                                <div className="text-center font-black text-red-600 bg-red-50 dark:bg-red-900/20 py-2 border border-red-100 dark:border-red-800/30 rounded-lg select-all text-base tracking-widest">{secureAction.confirmWord}</div>
+                                
+                                <input 
+                                    type="text" 
+                                    value={secureInput}
+                                    onChange={(e) => setSecureInput(e.target.value)}
+                                    className="w-full mt-2 bg-white dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-700 p-4 font-black text-center text-slate-800 dark:text-white outline-none focus:border-red-500 focus:ring-4 focus:ring-red-500/10 rounded-xl transition-all"
+                                    placeholder="اكتب العبارة للتحقق..."
+                                />
+                            </div>
+
+                            <div className="flex gap-3 w-full pt-4">
+                                <button onClick={() => { setSecureAction(null); setSecureInput(''); }} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black uppercase text-xs rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">تراجع عن القرار</button>
+                                <button 
+                                    disabled={secureInput !== secureAction.confirmWord}
+                                    onClick={() => { secureAction.actionFn(); setSecureAction(null); setSecureInput(''); }} 
+                                    className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-xl shadow-red-500/20 disabled:bg-slate-300 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:shadow-none disabled:cursor-not-allowed rounded-xl transition-all"
+                                >
+                                    تنفيذ نهائي لـ {secureAction.title.split(' ')[0]}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showDeleteModal && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 animate-in fade-in">
                     <div className="bg-white dark:bg-gray-900 border-t-8 border-red-600 p-8 max-w-md w-full shadow-2xl space-y-4">
