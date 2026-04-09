@@ -134,7 +134,7 @@ export const Contact = () => {
                                             type="submit"
                                             className={cn(
                                                 "w-full py-5 bg-gray-900 text-white font-black text-sm uppercase tracking-[0.2em] rounded-none transition-all flex items-center justify-center gap-3 overflow-hidden group",
-                                                formState === 'submitting' ? 'bg-gray-400' : 'hover:bg-red-600 shadow-xl shadow-gray-200'
+                                                formState === 'submitting' ? 'bg-gray-400' : 'hover:bg-red-600'
                                             )}
                                         >
                                             <span className={cn(formState === 'submitting' && 'animate-pulse')}>
