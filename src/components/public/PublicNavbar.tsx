@@ -91,7 +91,7 @@ export const PublicNavbar = () => {
                         </button>
 
                         {isAuthenticated && (
-                            <div className="hidden md:block border-l border-gray-100 dark:border-slate-800 pl-4 h-8 flex items-center">
+                            <div className="hidden md:flex border-l border-gray-100 dark:border-slate-800 pl-4 h-8 items-center">
                                 <NotificationDropdown />
                             </div>
                         )}
