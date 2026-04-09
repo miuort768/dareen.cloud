@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { X, Send, Loader2, MinusCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -16,6 +17,7 @@ interface Message {
 
 export const ChatbotWidget = () => {
     const { chatbotEnabled, chatbotName, chatbotWelcomeMsg } = useApp();
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
@@ -169,7 +171,10 @@ export const ChatbotWidget = () => {
         }
     };
 
-    if (!chatbotEnabled) return null;
+    const hideInPaths = ['/admin', '/teacher', '/student', '/parent'];
+    const isDashboard = hideInPaths.some(path => location.pathname.startsWith(path));
+
+    if (!chatbotEnabled || isDashboard) return null;
 
     return (
         <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end pointer-events-none">
@@ -339,11 +344,11 @@ export const ChatbotWidget = () => {
                         setIsOpen(true);
                         setIsMinimized(false);
                     }}
-                    className="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center shadow-2xl pointer-events-auto relative group hover:bg-primary-700 transition-colors"
+                    className="w-20 h-20 flex items-center justify-center pointer-events-auto relative group hover:scale-110 transition-transform cursor-pointer"
                 >
-                    <img src="/chatbot-icon.png" alt="Chat" className="w-11 h-11 object-contain drop-shadow-lg" />
+                    <img src="/chatbot-icon.png" alt="Chat" className="w-full h-full object-contain drop-shadow-2xl" />
                     {unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] text-white font-black flex items-center justify-center animate-bounce">
+                        <span className="absolute top-0 right-0 w-6 h-6 bg-red-500 border-2 border-white dark:border-slate-900 rounded-full text-[10px] text-white font-black flex items-center justify-center animate-bounce z-10">
                             {unreadCount}
                         </span>
                     )}
