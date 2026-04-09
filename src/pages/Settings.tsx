@@ -159,40 +159,53 @@ const Settings = () => {
 
     return (
         <div className="space-y-6 pb-20">
-            {/* Header */}
-            <div className="bg-primary-600 p-8 shadow-xl border-b-4 border-primary-500 rounded-none relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_2px_2px,white_1.5px,transparent_0)] bg-[length:24px_24px]"></div>
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30"><SettingsIcon className="text-white" size={30} /></div>
+            {/* Premium Brutalist Header */}
+            <div className="relative bg-white border-4 border-gray-950 p-8 shadow-[12px_12px_0px_0px_black] overflow-hidden mb-10 rounded-none">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+                
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
+                    <div className="flex items-center gap-6">
+                        <div className="w-18 h-18 bg-gray-950 text-white flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] transform rotate-3">
+                            <SettingsIcon size={36} strokeWidth={3} />
+                        </div>
                         <div>
-                            <h1 className="text-2xl font-black text-white uppercase tracking-tight">إعدادات النظام</h1>
-                            <p className="text-white/60 text-xs font-bold mt-1 uppercase tracking-widest">تخصيص كامل للأكاديمية</p>
+                            <div className="flex items-center gap-2 mb-2">
+                                <Sparkles size={14} className="text-amber-500" />
+                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] font-mono italic">SYSTEM CONFIGURATION CONTROL</span>
+                            </div>
+                            <h1 className="text-2xl md:text-5xl font-black text-gray-950 mb-1 tracking-tighter uppercase leading-none">إعدادات المنصة والنظام</h1>
+                            <p className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
+                                <Shield size={14} className="text-primary-600" />
+                                تخصيص كامل للهوية والأدوات والصلاحيات البرمجية
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Tabs Navigation */}
-            <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 border-b dark:border-gray-800">
+            {/* Brutalist Tabs Navigation */}
+            <div className="flex flex-wrap gap-4 mb-10 no-print">
                 {[
-                    { id: 'general', label: 'العامة', icon: Building2 },
-                    { id: 'appearance', label: 'المظهر', icon: Palette },
-                    { id: 'users', label: 'المستخدمين', icon: Users },
-                    { id: 'chatbot', label: 'شات بوت', icon: MessageSquare },
-                    { id: 'policies', label: 'سياسات وصلاحيات', icon: Lock },
-                    { id: 'advanced', label: 'أدوات وأرشيف', icon: Shield },
-                    { id: 'audit', label: 'سجل العمليات', icon: Activity },
+                    { id: 'general', label: 'الإعدادات العامة', icon: Building2 },
+                    { id: 'appearance', label: 'الهوية والمظهر', icon: Palette },
+                    { id: 'users', label: 'إدارة المستخدمين', icon: Users },
+                    { id: 'chatbot', label: 'المساعد الذكي', icon: MessageSquare },
+                    { id: 'policies', label: 'السياسات والقيود', icon: Lock },
+                    { id: 'advanced', label: 'الأرشيف والأدوات', icon: Shield },
+                    { id: 'audit', label: 'سجل الرقابة', icon: Activity },
                 ].map((tab: any) => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                            "flex items-center gap-2 px-6 py-3 font-bold text-sm uppercase transition-all tracking-tighter",
-                            activeTab === tab.id ? "bg-primary-600 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200"
+                            "flex items-center gap-3 px-6 py-4 font-black text-xs uppercase transition-all tracking-widest border-4 shadow-[4px_4px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1",
+                            activeTab === tab.id 
+                                ? "bg-gray-950 text-white border-gray-950" 
+                                : "bg-white text-gray-950 border-gray-950 hover:bg-gray-50"
                         )}
                     >
-                        <tab.icon size={16} />
+                        <tab.icon size={18} strokeWidth={3} className={cn(activeTab === tab.id ? "text-primary-500" : "text-gray-400")} />
                         {tab.label}
                     </button>
                 ))}

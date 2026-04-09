@@ -15,10 +15,17 @@ interface PageHeaderProps {
 }
 
 const colorMap = {
-    primary: 'bg-primary-600 border-primary-500 text-primary-100',
-    indigo: 'bg-indigo-600 border-indigo-500 text-indigo-100',
-    emerald: 'bg-emerald-600 border-emerald-500 text-emerald-100',
-    amber: 'bg-amber-600 border-amber-500 text-amber-100',
+    primary: 'bg-primary-600',
+    indigo: 'bg-indigo-600',
+    emerald: 'bg-emerald-600',
+    amber: 'bg-amber-600',
+};
+
+const lightColorMap = {
+    primary: 'bg-primary-50 text-primary-700 border-primary-600',
+    indigo: 'bg-indigo-50 text-indigo-700 border-indigo-600',
+    emerald: 'bg-emerald-50 text-emerald-700 border-emerald-600',
+    amber: 'bg-amber-50 text-amber-900 border-amber-600',
 };
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -30,52 +37,44 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     color = 'primary'
 }) => {
     return (
-        <div className={cn("relative p-4 md:p-6 shadow-xl overflow-hidden border-b-4 rounded-none mb-6", colorMap[color])}>
-            {/* Background Geometric Enhancement - Richer & Larger Shapes */}
-            {/* Major Glows & Blobs */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-[100px] pointer-events-none"></div>
-
-            {/* Large Structural Shapes */}
-            <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
-            <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
-
-            {/* Large Geometric Outlines */}
-            <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute top-[-40px] left-1/4 w-56 h-56 border-[2px] border-white/10 rounded-[3rem] rotate-45 pointer-events-none"></div>
-            <div className="absolute bottom-[-80px] right-1/4 w-72 h-72 border-[1px] border-white/20 rounded-full pointer-events-none"></div>
-
-            {/* Central Geometric Elements */}
-            <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 w-96 h-96 border-[1px] border-white/20 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-50"></div>
-
-            {/* Pattern Layer */}
-            <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
-
-            <div className="relative flex items-center justify-between flex-wrap gap-6">
-                <div className="flex items-center gap-5">
-                    <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
-                        <Icon size={36} className="text-white relative z-10" />
+        <div className="relative bg-white border-4 border-gray-950 p-6 md:p-8 shadow-[10px_10px_0px_0px_black] overflow-hidden mb-10 rounded-none">
+            {/* Pattern Background */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+            
+            <div className="relative flex items-center justify-between flex-wrap gap-8">
+                <div className="flex items-center gap-6">
+                    <div className={cn(
+                        "w-16 h-16 text-white flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] transform -rotate-2",
+                        colorMap[color]
+                    )}>
+                        <Icon size={32} />
                     </div>
                     <div>
-                        <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">{title}</h1>
-                        {subtitle && <p className="text-[10px] md:text-sm font-bold opacity-80">{subtitle}</p>}
+                        <div className="flex items-center gap-2 mb-1">
+                            <div className={cn("w-2 h-2", colorMap[color])}></div>
+                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">بوابة الأكاديمية الإلكترونية</span>
+                        </div>
+                        <h1 className="text-2xl md:text-4xl font-black text-gray-950 mb-1 tracking-tighter uppercase leading-none">{title}</h1>
+                        {subtitle && <p className="text-xs font-black text-gray-400 uppercase tracking-widest italic">{subtitle}</p>}
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 flex-wrap no-print">
+                <div className="flex items-center gap-6 flex-wrap no-print">
                     {stats && stats.map((stat, i) => (
-                        <div key={i} className="bg-white/10 backdrop-blur-sm px-6 py-2 border-r-4 border-white/30">
-                            <p className="text-white/60 text-[10px] font-black uppercase tracking-widest">{stat.label}</p>
-                            <p className="text-white text-2xl font-black">{stat.value}</p>
+                        <div key={i} className={cn(
+                            "px-6 py-2 border-2 border-gray-950 flex flex-col items-center min-w-[120px] shadow-[4px_4px_0px_0px_black]",
+                            lightColorMap[color]
+                        )}>
+                            <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1 opacity-60">{stat.label}</p>
+                            <p className="text-2xl font-black leading-none">{stat.value}</p>
                         </div>
                     ))}
-                    {actions}
+                    {actions && <div className="flex gap-4">{actions}</div>}
                 </div>
             </div>
+            
+            {/* Bottom Accent Bar */}
+            <div className={cn("absolute bottom-0 left-0 w-full h-2", colorMap[color])}></div>
         </div>
     );
 };

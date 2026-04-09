@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, Circle } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, Circle, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
@@ -36,42 +36,48 @@ export const StudentDetails = ({
 
     return (
         <div className={cn(
-            "bg-white dark:bg-gray-950 shadow-xl overflow-hidden flex flex-col rounded-none",
-            "fixed inset-0 z-[100] lg:static lg:h-[700px] lg:shadow-sm lg:border-2 lg:border-gray-900 lg:dark:border-gray-800"
+            "bg-white dark:bg-gray-950 shadow-[10px_10px_0px_0px_black] overflow-hidden flex flex-col rounded-none",
+            "fixed inset-0 z-[100] lg:static lg:h-[750px] lg:border-4 lg:border-gray-950"
         )}>
-            <div className="p-4 border-b-4 border-gray-900 flex justify-between items-start dark:bg-gray-950/50 dark:border-gray-800">
-                <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-primary-600 text-white flex items-center justify-center rounded-none text-lg font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] border-2 border-gray-950">
-                        {student.name.charAt(0)}
+            <div className="p-6 border-b-4 border-gray-950 flex justify-between items-center bg-gray-50 dark:bg-gray-950/50 dark:border-gray-800">
+                <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-primary-600 text-white flex items-center justify-center border-4 border-gray-950 transform rotate-2 shadow-[4px_4px_0px_0px_black]">
+                        <GraduationCap size={32} />
                     </div>
                     <div className="text-right" dir="rtl">
-                        <h3 className="font-black text-gray-900 dark:text-white leading-none tracking-tighter uppercase">{student.name}</h3>
-                        <div className="flex items-center gap-1 mt-1">
-                            <span className="inline-block px-1.5 py-0.5 bg-gray-950 text-white text-[9px] font-black uppercase tracking-widest rounded-none">
+                        <h3 className="font-black text-gray-950 dark:text-white text-xl uppercase tracking-tighter leading-none">{student.name}</h3>
+                        <div className="flex items-center gap-2 mt-2">
+                            <span className="bg-gray-950 text-white text-[10px] font-black px-2 py-0.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
                                 {student.grade}
                             </span>
                             <button 
                                 onClick={() => setShowCard(true)}
-                                className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-black uppercase tracking-widest border border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-800 hover:bg-emerald-600 hover:text-white transition-colors"
+                                className="bg-emerald-50 text-emerald-700 border-2 border-emerald-600 px-2 py-0.5 text-[10px] font-black hover:bg-emerald-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                             >
-                                <UserCircle2 size={10} />
-                                عرض الكارت
+                                <UserCircle2 size={12} className="inline ml-1" />
+                                بوشاقة الطالب
                             </button>
                         </div>
                     </div>
                 </div>
-                <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-900 rounded-none bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
-                    <X size={20} />
+                <button 
+                    onClick={onClose} 
+                    className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-950 hover:bg-gray-950 hover:text-white transition-all shadow-[4px_4px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                >
+                    <X size={24} />
                 </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar bg-gray-50/30 dark:bg-gray-950/30">
-                <div className="space-y-4">
-                    <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 border-b border-gray-100 pb-2 mb-4">
-                        الاشتراكات النشطة ({student.enrollments.length})
-                    </h4>
+            <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar bg-white dark:bg-gray-950">
+                <div className="space-y-6">
+                    <div className="flex items-center justify-between border-b-4 border-gray-950 pb-3 mb-6">
+                         <h4 className="text-xs font-black text-gray-950 uppercase tracking-widest italic">
+                            الاشتراكات والبرامج التعليمية ({student.enrollments.length})
+                        </h4>
+                        <div className="w-4 h-4 bg-primary-600 border-2 border-gray-950"></div>
+                    </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                         {student.enrollments.map((en, i) => {
                             const actualUsed = en.sessionsUsed;
                             const remaining = en.sessionsTotal - actualUsed;
@@ -79,103 +85,111 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-5 border-2 border-gray-900 rounded-none relative shadow-[6px_6px_0px_0px_rgba(0,0,0,0.05)]",
-                                    en.isFrozen ? "bg-blue-50/40 border-blue-600 dark:bg-blue-900/10" : isLow ? "bg-rose-50/50 border-rose-600" : "bg-white dark:bg-gray-900"
+                                    "p-6 border-4 border-gray-950 relative shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)]",
+                                    en.isFrozen ? "bg-blue-50/50 border-blue-600" : isLow ? "bg-rose-50 border-rose-600" : "bg-gray-50 dark:bg-gray-900"
                                 )}>
                                     {en.isFrozen && (
-                                        <div className="absolute top-2 left-2 flex items-center gap-1 text-[9px] font-black bg-blue-600 text-white px-2 py-0.5 border border-black shadow-[2px_2px_0px_0px_black]">
-                                            <Snowflake size={10} />
-                                            مجمٍّد
+                                        <div className="absolute top-3 left-3 flex items-center gap-2 text-[10px] font-black bg-blue-600 text-white px-3 py-1 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                                            <Snowflake size={14} />
+                                            حساب مجمٍّد
                                         </div>
                                     )}
-                                    <div className="flex justify-between items-start mb-4 text-right" dir="rtl">
-                                        <div>
-                                            <h5 className="font-black text-gray-900 dark:text-white text-base tracking-tighter">{en.subject}</h5>
-                                            <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 mt-1 uppercase tracking-widest">
-                                                <BookOpen size={12} className="text-primary-500" />
-                                                <span>{en.teacher}</span>
+                                    <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6 text-right" dir="rtl">
+                                        <div className="flex-1">
+                                            <h5 className="font-black text-gray-950 dark:text-white text-xl tracking-tighter uppercase mb-2">{en.subject}</h5>
+                                            <div className="flex items-center gap-2 text-xs font-black text-gray-600 uppercase italic">
+                                                <div className="w-2 h-2 bg-primary-600 border border-gray-950"></div>
+                                                <span>المعلمة: {en.teacher}</span>
                                             </div>
                                         </div>
-                                        <div className="flex gap-1.5">
+                                        <div className="flex flex-wrap gap-2">
                                             {onFreezeEnrollment && en.id && (
                                                 <button
                                                     onClick={() => en.isFrozen ? onFreezeEnrollment(en.id!, false) : onFreezeEnrollment(en.id!, true)}
-                                                    className={cn("p-1.5 border border-gray-200 hover:border-black transition-colors", en.isFrozen ? "text-emerald-600" : "text-blue-500")}
+                                                    className="p-3 bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] hover:bg-blue-500 hover:text-white transition-all active:shadow-none translate-y-0"
                                                 >
-                                                    {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
+                                                    {en.isFrozen ? <Play size={18} /> : <Snowflake size={18} />}
                                                 </button>
                                             )}
-                                            <button onClick={() => onSendReminder(en)} className="p-1.5 border border-gray-200 text-emerald-600 hover:border-emerald-600 transition-colors"><MessageCircle size={14} /></button>
-                                            <button onClick={() => onRenewEnrollment(i)} className="p-1.5 border border-gray-200 text-blue-600 hover:border-blue-600 transition-colors"><RefreshCw size={14} /></button>
-                                            <button onClick={() => onDeleteEnrollment(i)} className="p-1.5 border border-gray-200 text-red-600 hover:border-red-600 transition-colors"><Trash size={14} /></button>
+                                            <button onClick={() => onSendReminder(en)} className="p-3 bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all"><MessageCircle size={18} /></button>
+                                            <button onClick={() => onRenewEnrollment(i)} className="p-3 bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] text-blue-600 hover:bg-blue-600 hover:text-white transition-all"><RefreshCw size={18} /></button>
+                                            <button onClick={() => onDeleteEnrollment(i)} className="p-3 bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] text-rose-600 hover:bg-rose-600 hover:text-white transition-all"><Trash size={18} /></button>
                                         </div>
                                     </div>
 
                                     {/* Advanced Attendance Grid */}
-                                    <div className="mb-4">
-                                        <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-2 text-right">شبكة الحضور والمتابعة</label>
-                                        <div className="grid grid-cols-8 gap-1">
+                                    <div className="mb-6">
+                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-3 text-right italic">خارطة تقدم الجلسات</label>
+                                        <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
                                             {[...Array(en.sessionsTotal)].map((_, idx) => (
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "aspect-square border-2 flex items-center justify-center transition-all duration-300",
+                                                        "aspect-square border-2 flex items-center justify-center transition-all duration-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]",
                                                         idx < actualUsed 
-                                                            ? "bg-emerald-500 border-gray-900 text-white shadow-[2px_2px_0px_0px_black]" 
+                                                            ? "bg-emerald-500 border-gray-950 text-white" 
                                                             : idx === actualUsed 
-                                                                ? "bg-amber-400 border-gray-900 animate-pulse" 
-                                                                : "bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                                                                ? "bg-amber-400 border-gray-950 border-4 animate-pulse pt-0.5" 
+                                                                : "bg-white border-gray-200"
                                                     )}
-                                                    title={idx < actualUsed ? 'تم الحضور' : idx === actualUsed ? 'الجلسة القادمة' : 'مخطط لها'}
                                                 >
-                                                    {idx < actualUsed ? <CheckCircle2 size={10} /> : idx === actualUsed ? <Play size={10} /> : <Circle size={8} className="opacity-10" />}
+                                                    {idx < actualUsed ? <CheckCircle2 size={12} strokeWidth={3} /> : idx === actualUsed ? <Play size={14} fill="currentColor" /> : <div className="w-1 h-1 bg-gray-200"></div>}
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
 
-                                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
-                                        <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-tighter" dir="rtl">
-                                            <span className="text-gray-500 flex items-center gap-1">
-                                                حضور: <strong className="text-gray-900 dark:text-gray-200 text-lg">{actualUsed}</strong> / {en.sessionsTotal}
-                                            </span>
-                                            <span className={cn("px-2 py-0.5 border-2", isLow ? "bg-rose-600 text-white border-black shadow-[2px_2px_0px_0px_black]" : "bg-emerald-50 text-emerald-700 border-emerald-200")}>
-                                                الباقي: {remaining}
-                                            </span>
+                                    <div className="border-t-4 border-gray-100 pt-6 mt-4">
+                                        <div className="flex justify-between items-end mb-4" dir="rtl">
+                                            <div className="text-right">
+                                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">معدل الإنجاز</p>
+                                                <p className="text-2xl font-black text-gray-950">%{Math.round((actualUsed / en.sessionsTotal) * 100)}</p>
+                                            </div>
+                                            <div className="text-left">
+                                                <div className={cn("px-4 py-2 border-4 border-gray-950 font-black text-sm uppercase shadow-[4px_4px_0px_0px_black]", isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white")}>
+                                                    المتبقي: {remaining} حصة
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="h-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                        
+                                        <div className="h-4 bg-white border-2 border-gray-950 p-0.5">
                                             <div
-                                                className={cn("h-full transition-all duration-1000", isLow ? "bg-rose-600" : "bg-emerald-500")}
+                                                className={cn("h-full transition-all duration-1000", isLow ? "bg-rose-600" : "bg-primary-600")}
                                                 style={{ width: `${(actualUsed / en.sessionsTotal) * 100}%` }}
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2 pt-4">
+                                    <div className="flex flex-col md:flex-row items-center gap-4 pt-8">
                                         <button
                                             onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                            className={cn("px-2 py-2 border-2 text-[9px] font-black flex-1 text-center bg-gray-50 rounded-none transition-all", addingSessionsIndex === i ? "bg-gray-950 text-white border-black" : "border-gray-950 text-gray-950 hover:bg-gray-950 hover:text-white")}
+                                            className={cn("px-6 py-4 border-4 text-xs font-black flex-1 w-full text-center transition-all uppercase tracking-widest shadow-[4px_4px_0px_0px_black]", 
+                                                addingSessionsIndex === i 
+                                                ? "bg-gray-950 text-white border-gray-950" 
+                                                : "border-gray-950 text-gray-950 bg-white hover:bg-gray-950 hover:text-white"
+                                            )}
                                         >
-                                            {addingSessionsIndex === i ? 'إغلاق' : 'إضافة حصص'}
+                                            {addingSessionsIndex === i ? 'إغلاق نافذة الإضافة' : 'إضافة رصيد حصص'}
                                         </button>
 
                                         <button
                                             onClick={() => setShowHistory(true)}
-                                            className="px-2 py-2 border-2 border-primary-600 text-primary-700 bg-primary-50 text-[9px] font-black hover:bg-primary-600 hover:text-white transition-all rounded-none"
+                                            className="px-6 py-4 border-4 border-gray-950 bg-amber-400 text-gray-950 text-xs font-black flex-1 w-full text-center hover:bg-gray-950 hover:text-white transition-all uppercase tracking-widest shadow-[4px_4px_0px_0px_black]"
                                         >
-                                            عرض السجل بالكامل
+                                            سجل المتابعة بالكامل
                                         </button>
                                     </div>
 
                                     {addingSessionsIndex === i && (
-                                        <div className="flex justify-center gap-2 mt-4 p-3 bg-gray-950 border-2 border-black rounded-none animate-in slide-in-from-top-2 duration-300">
-                                            {[2, 5, 8, 10, 12, 16].map(num => (
+                                        <div className="grid grid-cols-4 gap-3 mt-6 p-6 bg-gray-950 border-4 border-gray-950 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)]">
+                                            {[1, 4, 8, 12].map(num => (
                                                 <button
                                                     key={num}
                                                     onClick={() => { onAddSessions(i, num); setAddingSessionsIndex(null); }}
-                                                    className="w-10 h-10 bg-white border-2 border-black text-xs font-black hover:bg-emerald-500 hover:text-white transition-all shadow-[2px_2px_0px_0px_rgba(255,255,255,0.2)]"
+                                                    className="aspect-square bg-white border-2 border-gray-950 flex flex-col items-center justify-center hover:bg-primary-600 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
                                                 >
-                                                    +{num}
+                                                    <span className="text-lg font-black">{num}</span>
+                                                    <span className="text-[10px] font-black uppercase">حصة</span>
                                                 </button>
                                             ))}
                                         </div>
@@ -186,7 +200,11 @@ export const StudentDetails = ({
                     </div>
                 </div>
 
-                <div className="pt-6 border-t-4 border-gray-900 mt-8">
+                <div className="pt-10 border-t-8 border-gray-100 mt-12 bg-gray-50 -mx-6 px-6 pb-12">
+                     <div className="flex items-center gap-3 mb-6 bg-gray-950 text-white p-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_#444]">
+                        <BookOpen size={20} />
+                        <h4 className="font-black text-sm uppercase tracking-widest">إضافة اشتراك جديد للطالب</h4>
+                    </div>
                     <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
                 </div>
             </div>

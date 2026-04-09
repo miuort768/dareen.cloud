@@ -23,13 +23,13 @@ export const StudentToolbar = ({
     totalCount
 }: StudentToolbarProps) => {
     return (
-        <div className="bg-white p-5 border border-gray-100 dark:bg-gray-900 dark:border-gray-800 flex flex-col lg:flex-row items-center justify-between gap-6 rounded-none shadow-sm transition-all">
+        <div className="bg-white p-6 border-4 border-gray-950 dark:bg-gray-900 dark:border-gray-800 flex flex-col lg:flex-row items-center justify-between gap-8 rounded-none shadow-[8px_8px_0px_0px_black] transition-all mb-8">
 
             {/* Search Group */}
-            <div className="relative w-full lg:max-w-2xl group">
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none transition-colors group-focus-within:text-primary-600">
-                    <Search size={19} className="text-gray-400 group-focus-within:text-primary-500 transition-colors" />
-                    <div className="h-4 w-px bg-gray-200 dark:bg-gray-700 hidden sm:block"></div>
+            <div className="relative w-full lg:max-w-3xl group">
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none transition-colors group-focus-within:text-primary-600">
+                    <Search size={22} className="text-gray-950 group-focus-within:text-primary-600 transition-colors" />
+                    <div className="h-6 w-1 bg-gray-950 hidden sm:block"></div>
                 </div>
 
                 <input
@@ -37,66 +37,66 @@ export const StudentToolbar = ({
                     placeholder="ابحث عن طالب بالاسم، الهاتف أو الصف..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-12 pr-14 py-4 bg-gray-50/50 dark:bg-gray-800/80 border border-gray-100 dark:border-gray-700 rounded-none focus:outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 dark:text-white font-bold text-sm shadow-inner transition-all placeholder:text-gray-400 placeholder:font-medium"
+                    className="w-full pl-16 pr-16 py-5 bg-gray-50 dark:bg-gray-800 border-4 border-gray-950 rounded-none focus:outline-none focus:bg-white dark:focus:bg-gray-700 dark:text-white font-black text-base shadow-inner transition-all placeholder:text-gray-400 placeholder:font-black uppercase tracking-tight"
                 />
 
                 {/* Status Indicator / Clear Button */}
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
                     {searchTerm && (
                         <button
                             onClick={() => onSearchChange('')}
-                            className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                            className="bg-gray-200 p-2 hover:bg-gray-950 hover:text-white border-2 border-gray-950 transition-all font-black"
                             title="مسح البحث"
                         >
-                            <X size={16} />
+                            <X size={18} />
                         </button>
                     )}
 
                     <div className={cn(
-                        "px-2.5 py-1 rounded-none text-[10px] font-black uppercase tracking-tighter transition-all flex items-center gap-1.5 shadow-sm",
+                        "px-4 py-1.5 border-2 border-gray-950 font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2 shadow-[2px_2px_0px_0px_black]",
                         searchTerm
-                            ? "bg-primary-50 text-primary-700 border border-primary-100 animate-in fade-in zoom-in-95"
-                            : "bg-gray-100 text-gray-500 border border-gray-200 hidden sm:flex"
+                            ? "bg-primary-600 text-white"
+                            : "bg-amber-400 text-gray-950"
                     )}>
-                        <Filter size={10} className={searchTerm ? "animate-pulse" : ""} />
+                        <Filter size={12} />
                         <span>
-                            {searchTerm ? `تم العثور على ${filteredCount}` : `${totalCount} طالب`}
+                            {searchTerm ? `نتائج: ${filteredCount}` : `${totalCount} طالب`}
                         </span>
                     </div>
                 </div>
             </div>
 
             {/* Actions Group */}
-            <div className="flex items-center gap-3 w-full lg:w-auto no-print overflow-x-auto pb-1 lg:pb-0 scrollbar-none justify-center lg:justify-end">
+            <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto no-print justify-center lg:justify-end">
                 <button
                     onClick={onPrint}
-                    className="bg-primary-600 text-white px-8 py-4 rounded-none flex items-center justify-center gap-3 hover:bg-primary-700 font-black shadow-[0_10px_20px_-10px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all whitespace-nowrap"
+                    className="bg-emerald-500 text-white px-8 py-5 border-4 border-gray-950 rounded-none flex items-center justify-center gap-3 hover:bg-emerald-600 font-black shadow-[4px_4px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all whitespace-nowrap uppercase tracking-widest"
                 >
-                    <Printer size={19} />
+                    <Printer size={22} />
                     <span>طباعة الكشوف</span>
                 </button>
 
-                <div className="flex items-center gap-2 border-r border-gray-100 dark:border-gray-800 pr-3 mr-1">
+                <div className="flex items-center gap-3 bg-gray-50 p-2 border-2 border-dashed border-gray-300">
                     <button
                         onClick={onExport}
                         title="تصدير البيانات"
-                        className="p-3.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700 rounded-none hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 shadow-sm transition-all"
+                        className="p-3.5 bg-white text-gray-950 border-2 border-gray-950 hover:bg-primary-500 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                     >
-                        <Download size={21} />
+                        <Download size={22} />
                     </button>
                     <button
                         onClick={onImport}
                         title="استيراد بيانات"
-                        className="p-3.5 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700 rounded-none hover:bg-blue-50 hover:text-blue-600 hover:border-blue-100 shadow-sm transition-all"
+                        className="p-3.5 bg-white text-gray-950 border-2 border-gray-950 hover:bg-blue-500 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                     >
-                        <Upload size={21} />
+                        <Upload size={22} />
                     </button>
                     <button
                         onClick={onDeleteAll}
                         title="حذف جميع السجلات"
-                        className="p-3.5 bg-rose-50 dark:bg-rose-900/10 text-rose-600 dark:text-rose-400 border border-rose-100 dark:border-rose-900/20 rounded-none hover:bg-rose-100 shadow-sm transition-all"
+                        className="p-3.5 bg-white text-rose-600 border-2 border-gray-950 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                     >
-                        <Trash2 size={21} />
+                        <Trash2 size={22} />
                     </button>
                 </div>
             </div>

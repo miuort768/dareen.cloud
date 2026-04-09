@@ -3,11 +3,12 @@ import {
     Calendar, Filter, Download, RefreshCw, Printer, 
     ArrowDownRight,
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star,
-    DollarSign, Activity as ActivityIcon
+    DollarSign, Activity as ActivityIcon, Wallet
 } from 'lucide-react';
 import { 
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import { api } from '../lib/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useApp } from '../context/useApp';
 import { attendanceService } from '../features/attendance/services/attendanceService';
@@ -112,7 +113,7 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
 };
 
 
-type TabType = 'payroll' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
+type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
 export const MonthlyClosing: React.FC = () => {
     const { 
@@ -126,6 +127,9 @@ export const MonthlyClosing: React.FC = () => {
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
     const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
 
+    // Split semesters string into array for dropdown
+    const semesterList = typeof semesters === 'string' ? semesters.split(',') : (Array.isArray(semesters) ? semesters : []);
+
     const handleTeacherAdjustment = (teacherId: string, amount: number) => {
         setTeacherAdjustments(prev => ({
             ...prev,
@@ -137,6 +141,7 @@ export const MonthlyClosing: React.FC = () => {
         queryClient.invalidateQueries({ queryKey: ['sessions-closing'] });
         queryClient.invalidateQueries({ queryKey: ['teachers-closing'] });
         queryClient.invalidateQueries({ queryKey: ['students-closing'] });
+        queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
     };
 
     // Split semesters string into array for dropdown
@@ -159,7 +164,15 @@ export const MonthlyClosing: React.FC = () => {
         queryFn: attendanceService.getStudents
     });
 
-    const isLoading = sessionsLoading || teachersLoading || studentsLoading;
+    const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
+        queryKey: ['student-invoices-closing'],
+        queryFn: async () => {
+            const resp = await api.get<any[]>('/studentInvoices');
+            return Array.isArray(resp) ? resp : (resp as any).data || [];
+        }
+    });
+
+    const isLoading = sessionsLoading || teachersLoading || studentsLoading || invoicesLoading;
 
     // Filter sessions by month
     const filteredSessions = sessions?.filter(s => s.date.startsWith(selectedMonth)) || [];
@@ -247,9 +260,13 @@ export const MonthlyClosing: React.FC = () => {
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
 
     // --- 5. Summary Stats ---
-    const totalIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
+    const totalProjectedIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
+    const totalActualCollections = (studentInvoices || [])
+        .filter((inv: any) => inv.date.startsWith(selectedMonth) && inv.status === 'paid')
+        .reduce((acc: number, curr: any) => acc + curr.amount, 0);
     const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + curr.totalAmount, 0);
-    const netProfit = totalIncome - totalTeacherPayout;
+    const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
+    const netActualCashFlow = totalActualCollections - totalTeacherPayout;
 
     if (isLoading) {
         return (
@@ -320,13 +337,13 @@ export const MonthlyClosing: React.FC = () => {
             {/* Quick Summary Bar */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">صافي الأرباح</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">الربح المتوقع</p>
                     <div className="flex items-end justify-between">
                         <div>
                             <h3 className="text-2xl font-black text-blue-600 font-mono tracking-tighter">
-                                {netProfit.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                                {netProjectedProfit.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
-                            <p className="text-[10px] font-bold text-blue-400 mt-1">الهامش: {totalIncome > 0 ? ((netProfit / totalIncome) * 100).toFixed(1) : 0}%</p>
+                            <p className="text-[10px] font-bold text-blue-400 mt-1">الهامش: {totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(1) : 0}%</p>
                         </div>
                         <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
                             <DollarSign size={20} />
@@ -335,15 +352,18 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
 
                 <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي الإيرادات</p>
+                    <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">التحصيلات الفعلية</p>
                     <div className="flex items-end justify-between">
                         <div>
                             <h3 className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">
-                                {totalIncome.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                                {totalActualCollections.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
+                            <p className="text-[10px] font-bold text-emerald-400 mt-1 flex items-center gap-1">
+                                الفائض: {netActualCashFlow.toLocaleString()} {CURRENCY_SYMBOL}
+                            </p>
                         </div>
                         <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
-                            <TrendingUp size={20} className="text-emerald-600" />
+                            <Wallet size={20} className="text-emerald-600" />
                         </div>
                     </div>
                 </div>
@@ -387,6 +407,15 @@ export const MonthlyClosing: React.FC = () => {
                     )}
                 >
                     <Receipt size={14} /> رواتب المعلمات
+                </button>
+                <button 
+                    onClick={() => setActiveTab('collections')}
+                    className={cn(
+                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        activeTab === 'collections' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
+                    )}
+                >
+                    <Wallet size={14} /> تحصيل الطلاب
                 </button>
                 <button 
                     onClick={() => setActiveTab('renewals')}
@@ -444,6 +473,81 @@ export const MonthlyClosing: React.FC = () => {
 
             {/* Content Area */}
             <div className="bg-white border-2 border-gray-950 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden min-h-[500px]">
+                {activeTab === 'collections' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <div className="p-6 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
+                            <h2 className="text-lg font-black tracking-tight text-gray-900 dark:text-white">تحصيل مبالغ الطلاب - {selectedMonth}</h2>
+                            <div className="flex gap-4">
+                                <div className="bg-emerald-50 text-emerald-700 px-4 py-2 border-2 border-emerald-600 font-black text-xs shadow-[4px_4px_0px_0px_black]">
+                                     المحصل: {studentInvoices?.filter((inv: any) => inv.status === 'paid' && inv.date.startsWith(selectedMonth)).reduce((acc: number, curr: any) => acc + curr.amount, 0).toLocaleString()} ج.م
+                                </div>
+                                <div className="bg-rose-50 text-rose-700 px-4 py-2 border-2 border-rose-600 font-black text-xs shadow-[4px_4px_0px_0px_black]">
+                                     المتبقي: {studentInvoices?.filter((inv: any) => inv.status !== 'paid' && inv.date.startsWith(selectedMonth)).reduce((acc: number, curr: any) => acc + curr.amount, 0).toLocaleString()} ج.م
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-right border-collapse">
+                                <thead className="bg-gray-900 text-white dark:bg-black">
+                                    <tr>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">الطالب</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">البيان</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">التاريخ</th>
+                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">الحالة</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
+                                    {(studentInvoices || [])
+                                        .filter((inv: any) => inv.date.startsWith(selectedMonth))
+                                        .map((item: any) => (
+                                            <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
+                                                    <span className="block font-black text-gray-900 dark:text-white leading-none mb-1">{item.studentName}</span>
+                                                    <span className="text-[10px] font-bold text-gray-400">ID: {item.studentId.slice(0, 8)}</span>
+                                                </td>
+                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-xs font-bold text-gray-500">
+                                                    {item.description}
+                                                </td>
+                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-lg text-emerald-600">
+                                                    {item.amount.toLocaleString()} <span className="text-[10px]">ج.م</span>
+                                                </td>
+                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-bold text-xs">
+                                                    {item.date}
+                                                </td>
+                                                <td className="px-6 py-5 text-center">
+                                                    <button
+                                                        onClick={async () => {
+                                                            const newStatus = item.status === 'paid' ? 'pending' : 'paid';
+                                                            await api.patch(`/studentInvoices/${item.id}`, { status: newStatus });
+                                                            queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
+                                                        }}
+                                                        className={cn(
+                                                            "px-4 py-2 border-2 font-black text-[10px] uppercase tracking-widest transition-all shadow-[4px_4px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+                                                            item.status === 'paid' 
+                                                                ? "bg-emerald-600 text-white border-gray-950" 
+                                                                : "bg-white text-rose-600 border-rose-600 hover:bg-rose-50"
+                                                        )}
+                                                    >
+                                                        {item.status === 'paid' ? 'تم التحصيل' : 'انتظار الدفع'}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    {!(studentInvoices || []).some((inv: any) => inv.date.startsWith(selectedMonth)) && (
+                                        <tr>
+                                            <td colSpan={5} className="px-6 py-20 text-center text-gray-400 font-black uppercase tracking-widest text-sm">
+                                                <Wallet className="mx-auto mb-4 opacity-10" size={64} />
+                                                لا توجد فواتير طلاب مسجلة لهذا الشهر
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
                 {activeTab === 'payroll' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <div className="p-6 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
@@ -588,18 +692,26 @@ export const MonthlyClosing: React.FC = () => {
                     <div className="p-6 animate-in fade-in slide-in-from-bottom-5 duration-700">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div>
-                                <h1 className="text-3xl lg:text-4xl font-black text-gray-950 dark:text-white tracking-tighter mb-4">ملخص الأداء الشهري <span className="text-emerald-600">+{((netProfit / (totalIncome || 1)) * 100).toFixed(0)}%</span></h1>
+                                <h1 className="text-3xl lg:text-4xl font-black text-gray-950 dark:text-white tracking-tighter mb-4">ملخص الأداء المالي <span className="text-emerald-600">+{((netProjectedProfit / (totalProjectedIncome || 1)) * 100).toFixed(0)}%</span></h1>
                                 <p className="text-base font-bold text-gray-500 leading-relaxed max-w-xl">
-                                    لقد حققت الأكاديمية زيادة في الإنتاجية التعليمية هذا الشهر. إجمالي الحصص المنفذة وصل إلى <span className="text-gray-950 dark:text-white border-b-2 border-emerald-400">{filteredSessions.length} حصة مبرمجة</span>.
+                                    تحليل التدفق النقدي والأرباح المسجلة لهذا الشهر. يتم التفريق بين الإيرادات المتوقعة من الحصص المنفذة والتحصيلات الفعلية.
                                 </p>
-                                <div className="mt-6 grid grid-cols-2 gap-4">
+                                <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div className="border-l-4 border-emerald-500 pl-4 py-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">معدل الإيرادات</p>
-                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalIncome.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">إيرادات متوقعة</p>
+                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalProjectedIncome.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                    </div>
+                                    <div className="border-l-4 border-emerald-600 pl-4 py-2 bg-emerald-50/30">
+                                        <p className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">تحصيلات فعلية</p>
+                                        <p className="text-xl font-black text-emerald-800 dark:text-emerald-400 font-mono">{totalActualCollections.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
                                     </div>
                                     <div className="border-l-4 border-rose-500 pl-4 py-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">معدل التكاليف</p>
+                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">تكاليف الرواتب</p>
                                         <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalTeacherPayout.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                    </div>
+                                    <div className="border-l-4 border-gray-950 pl-4 py-2">
+                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">إجمالي الحصص</p>
+                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{filteredSessions.length}</p>
                                     </div>
                                 </div>
                             </div>
@@ -616,7 +728,9 @@ export const MonthlyClosing: React.FC = () => {
                                     </div>
                                     <div className="flex gap-3 text-right">
                                         <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">3</div>
-                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">معدل الربح الصافي لهذا الشهر هو {netProfit.toLocaleString()} {CURRENCY_SYMBOL}، يوصى بإعادة استثمار جزء في تطوير المواد العلمية.</p>
+                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">
+                                            السيولة المتوفرة (بعد الرواتب): {netActualCashFlow.toLocaleString()} {CURRENCY_SYMBOL}. الربح المتوقع الإجمالي: {netProjectedProfit.toLocaleString()} {CURRENCY_SYMBOL}.
+                                        </p>
                                     </div>
                                 </div>
                             </div>

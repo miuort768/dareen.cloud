@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { CheckCircle2, XCircle, BookOpen, TrendingUp } from 'lucide-react';
+import { CheckCircle2, XCircle, BookOpen, TrendingUp, Clock, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
 
@@ -33,77 +32,89 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     };
 
     return (
-        <div className="group relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 transition-all rounded-none overflow-hidden shadow-sm hover:shadow-lg">
-            <div className="p-5 space-y-4">
+        <div className="group relative bg-white border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between">
+            {/* Design accents */}
+            <div className="absolute top-0 right-0 w-2 h-full bg-primary-600"></div>
+            
+            <div className="space-y-6">
                 <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-400 font-black text-lg rounded-none">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] transform -rotate-3 text-xl font-black">
                             {getGradeDisplay(studentGrade)}
                         </div>
                         <div>
-                            <div className="flex items-center gap-2 mb-0.5">
-                                <h4 className="font-black text-gray-900 dark:text-white text-base leading-tight">{session.studentName}</h4>
+                            <div className="flex items-center gap-2 mb-1">
+                                <h4 className="font-black text-gray-950 text-xl tracking-tighter uppercase leading-none">{session.studentName}</h4>
                                 {studentGrade && (
-                                    <span className="text-[8px] font-black bg-primary-100 text-primary-600 dark:bg-primary-900/50 dark:text-primary-300 px-1.5 py-0.5 rounded-none uppercase">
+                                    <span className="text-[10px] font-black bg-gray-950 text-white px-2 py-0.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
                                         {studentGrade}
                                     </span>
                                 )}
                             </div>
-                            <p className="text-[10px] font-bold text-gray-500 flex items-center gap-1">
-                                <BookOpen size={10} className="text-primary-500" />
-                                {session.subject}
-                            </p>
+                            <div className="flex items-center gap-2">
+                                <BookOpen size={14} className="text-primary-600" />
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">{session.subject}</p>
+                            </div>
                         </div>
                     </div>
-                    <div className="text-xs font-black bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-gray-600 dark:text-gray-300 font-mono">
+                </div>
+
+                <div className="bg-gray-50 border-2 border-dashed border-gray-300 p-4">
+                     <div className="flex items-center gap-2 mb-3">
+                        <Clock size={16} className="text-gray-950" />
+                        <span className="text-[10px] font-black text-gray-950 uppercase tracking-widest italic">موعد الحصة المجدول</span>
+                    </div>
+                    <div className="text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-4 py-1 inline-block shadow-[2px_2px_0px_0px_black] tracking-tight">
                         {session.time}
                     </div>
                 </div>
 
-                <div className="p-0 space-y-2 rounded-none">
-                    <div className="flex justify-between items-center">
+                <div className="space-y-3">
+                    <div className="flex justify-between items-center px-1">
                         <div className="flex items-center gap-2">
-                            <TrendingUp size={14} className="text-primary-500" />
-                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">تغطية المنهج</span>
+                            <GraduationCap size={16} className="text-primary-600" />
+                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest italic">معدل التقدم</span>
                         </div>
                         <div className="flex items-baseline gap-1">
-                            <span className="text-base font-black text-gray-900 dark:text-white">{used}</span>
-                            <span className="text-[10px] font-bold text-gray-400">/ {total}</span>
+                            <span className="text-xl font-black text-gray-950">{used}</span>
+                            <span className="text-[10px] font-black text-gray-400">/ {total} حواجز</span>
                         </div>
                     </div>
-                    <div className="h-2 bg-gray-200 dark:bg-gray-700 overflow-hidden shadow-inner relative rounded-none">
+                    <div className="h-4 bg-white border-2 border-gray-950 p-0.5 shadow-inner">
                         <div
                             className={cn(
-                                "h-full transition-all duration-1000 ease-out shadow-lg rounded-none relative",
-                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-500' : 'bg-emerald-500'
+                                "h-full transition-all duration-1000 ease-out",
+                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-400' : 'bg-emerald-500'
                             )}
                             style={{ width: `${Math.min(100, progress)}%` }}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
-                        </div>
+                        />
                     </div>
                 </div>
+            </div>
 
-                <div className="flex gap-2 pt-2">
-                    <button
-                        onClick={() => onUpdateStatus(session.id, 'completed')}
-                        className={`flex-1 py-2 rounded-lg font-black text-xs flex items-center justify-center gap-1 transition-colors ${session.status === 'completed'
-                            ? 'bg-emerald-600 text-white shadow-emerald-500/20 shadow-lg'
-                            : 'bg-white border-2 border-emerald-100 text-emerald-600 hover:bg-emerald-50'
-                            }`}
-                    >
-                        <CheckCircle2 size={14} /> حاضر
-                    </button>
-                    <button
-                        onClick={() => onUpdateStatus(session.id, 'cancelled')}
-                        className={`flex-1 py-2 rounded-lg font-black text-xs flex items-center justify-center gap-1 transition-colors ${session.status === 'cancelled'
-                            ? 'bg-rose-600 text-white shadow-rose-500/20 shadow-lg'
-                            : 'bg-white border-2 border-rose-100 text-rose-600 hover:bg-rose-50'
-                            }`}
-                    >
-                        <XCircle size={14} /> غائب
-                    </button>
-                </div>
+            <div className="flex gap-4 pt-8">
+                <button
+                    onClick={() => onUpdateStatus(session.id, 'completed')}
+                    className={cn(
+                        "flex-1 py-4 border-4 font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        session.status === 'completed'
+                            ? 'bg-emerald-500 text-white border-gray-950'
+                            : 'bg-white border-gray-950 text-emerald-600 hover:bg-emerald-50'
+                    )}
+                >
+                    <CheckCircle2 size={18} strokeWidth={3} /> حاضر
+                </button>
+                <button
+                    onClick={() => onUpdateStatus(session.id, 'cancelled')}
+                    className={cn(
+                        "flex-1 py-4 border-4 font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        session.status === 'cancelled'
+                            ? 'bg-rose-600 text-white border-gray-950'
+                            : 'bg-white border-gray-950 text-rose-600 hover:bg-rose-50'
+                    )}
+                >
+                    <XCircle size={18} strokeWidth={3} /> غائب
+                </button>
             </div>
         </div>
     );

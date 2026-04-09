@@ -382,52 +382,47 @@ export const StudentInvoices = () => {
 
     if (loading) {
         return (
-            <div className="space-y-6">
-                <Skeleton className="h-48 rounded-none" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-                    {[...Array(6)].map((_, i) => (
-                        <Skeleton key={i} className="h-28 rounded-2xl" />
-                    ))}
-                </div>
-                <Skeleton className="h-96 rounded-none" />
+            <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
+                <div className="w-12 h-12 border-4 border-gray-200 border-t-gray-950 rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6 pb-32">
-            {/* ... Header Part omitted for brevity ... */}
-            <div className="relative bg-primary-600 p-4 md:p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500 rounded-none">
-                {/* ... Background stuff ... */}
+        <div className="space-y-6 pb-32 px-4 md:px-6">
+            {/* Header Area */}
+            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-10 shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gray-950/5 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-rose-600/10 -ml-12 -mb-12 rounded-full pointer-events-none"></div>
 
-                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
-                    <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
-                            <FileText size={36} className="text-white" />
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6" dir="rtl">
+                    <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 bg-gray-950 text-white flex items-center justify-center border-4 border-gray-950 transform -rotate-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+                            <FileText size={36} />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">فواتير الطلاب</h1>
-                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
-                                <TrendingUp size={14} className="text-white" />
-                                إدارة الرسوم الدراسية والمدفوعات
+                            <h1 className="text-2xl md:text-4xl font-black text-gray-950 dark:text-white mb-1 tracking-tighter uppercase">فواتير وتحصيل الطلاب</h1>
+                            <p className="text-gray-500 text-xs md:text-sm font-bold flex items-center gap-2">
+                                <TrendingUp size={16} className="text-emerald-600" />
+                                إدارة التدفقات النقدية والمستحقات الدراسية
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 flex-wrap no-print">
+                    <div className="flex items-center gap-3 flex-wrap no-print">
                         <button
                             onClick={handleImportStudents}
-                            className="bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-primary-900/50 font-black shadow-lg h-14"
+                            className="bg-emerald-600 text-white border-4 border-gray-950 px-6 py-3 font-black text-sm shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all flex items-center gap-2"
                         >
-                            <UserPlus size={20} />
-                            <span>استيراد الكل</span>
+                            <UserPlus size={18} />
+                            استيراد المديونيات
                         </button>
                         <button
                             onClick={handlePrint}
-                            className="bg-white text-primary-700 px-6 py-3 rounded-none flex items-center gap-3 hover:bg-white active:bg-white font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] h-14"
+                            className="bg-white text-gray-950 border-4 border-gray-950 px-6 py-3 font-black text-sm shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex items-center gap-2"
                         >
-                            <Printer size={20} />
-                            <span>تصدير التقرير</span>
+                            <Printer size={18} />
+                            طباعة الكشف
                         </button>
                     </div>
                 </div>
@@ -476,50 +471,53 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="bg-white p-4 md:p-6 border border-slate-200 shadow-2xl dark:bg-gray-900 dark:border-gray-800 rounded-none">
-                <div className="flex flex-wrap gap-5 items-center">
-                    <div className="relative flex-1 min-w-[280px]">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <div className="bg-white p-6 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8">
+                <div className="flex flex-col lg:flex-row gap-6 items-center" dir="rtl">
+                    <div className="relative flex-1 w-full">
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                             placeholder="بحث باسم الطالب أو البيان..."
-                            className="w-full pl-6 pr-12 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-bold rounded-none focus:bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            className="w-full pr-12 pl-4 py-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
                         />
                     </div>
 
-                    <div className="flex items-center gap-3 flex-wrap">
-                        <select
-                            value={filterStatus}
-                            onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
-                            className="px-6 h-12 bg-slate-50 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-black rounded-none dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        >
-                            <option value="all">جميع الحالات</option>
-                            <option value="paid">مدفوعة</option>
-                            <option value="pending">معلقة</option>
-                            <option value="overdue">متأخرة</option>
-                        </select>
+                    <div className="flex items-center gap-3 w-full lg:w-auto">
+                        <div className="flex items-center bg-gray-50 border-2 border-gray-200 px-4 dark:bg-gray-800 dark:border-gray-700 w-full md:w-auto">
+                            <span className="text-[10px] font-black text-gray-400 ml-2 uppercase">الحالة:</span>
+                            <select
+                                value={filterStatus}
+                                onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
+                                className="bg-transparent py-4 text-sm font-black outline-none dark:text-white cursor-pointer"
+                            >
+                                <option value="all">الكل</option>
+                                <option value="paid">مدفوعة</option>
+                                <option value="pending">معلقة</option>
+                                <option value="overdue">متأخرة</option>
+                            </select>
+                        </div>
 
                         <button
                             onClick={toggleForm}
                             className={cn(
-                                "flex items-center gap-3 px-8 h-12 rounded-none font-black text-sm uppercase tracking-widest relative overflow-hidden group",
+                                "flex items-center justify-center gap-3 px-8 h-[58px] font-black text-sm uppercase tracking-widest border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none whitespace-nowrap",
                                 showForm
-                                    ? "bg-slate-800 text-white hover:bg-black"
-                                    : "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20"
+                                    ? "bg-rose-600 text-white"
+                                    : "bg-gray-950 text-white hover:bg-black"
                             )}
                         >
-                            {showForm ? <X size={18} /> : <Plus size={18} />}
+                            {showForm ? <X size={20} /> : <Plus size={20} />}
                             <span>{showForm ? 'إلغاء' : 'إصدار فاتورة'}</span>
                         </button>
 
                         <button
                             onClick={() => setDeleteAllModalOpen(true)}
-                            className="h-12 w-12 bg-red-50 border border-red-100 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white shadow-sm dark:bg-red-900/20 dark:border-red-900/30 no-print rounded-none"
+                            className="h-[58px] w-14 bg-white border-4 border-gray-950 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                             title="حذف الكل"
                         >
-                            <Trash2 size={18} />
+                            <Trash2 size={24} />
                         </button>
                     </div>
                 </div>
@@ -527,236 +525,236 @@ export const StudentInvoices = () => {
 
             {/* Inline Form */}
             {showForm && (
-                <div className="bg-white p-6 border border-gray-100 shadow-sm dark:bg-gray-900 dark:border-gray-800">
-                    <form onSubmit={handleSubmit} className="bg-gray-50 p-6 border border-gray-200 dark:bg-gray-800/50 dark:border-gray-700">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="animate-in slide-in-from-top-4 duration-300">
+                    <form onSubmit={handleSubmit} className="bg-white border-4 border-gray-950 p-8 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-10">
+                        <div className="flex items-center gap-2 mb-8 border-b-2 border-gray-100 pb-4">
+                            <Plus size={20} className="text-emerald-600" />
+                            <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">تفاصيل الفاتورة الجديدة</h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {/* Student Selection */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">الطالب</label>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">اختيار الطالب</label>
                                 <select
                                     required
                                     value={formData.studentId}
                                     onChange={e => handleStudentChange(e.target.value)}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
+                                    className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
+                                    dir="rtl"
                                 >
-                                    <option value="">اختر الطالب</option>
+                                    <option value="">اختر الطالب...</option>
                                     {students.map(s => (
                                         <option key={s.id} value={s.id}>
-                                            {s.name} - {s.grade}
+                                            {s.name} ({s.grade})
                                         </option>
                                     ))}
                                 </select>
                             </div>
 
                             {/* Amount */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">المبلغ</label>
-                                <input
-                                    type="number"
-                                    required
-                                    min="0"
-                                    value={formData.amount}
-                                    onChange={e => setFormData({ ...formData, amount: e.target.value })}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
-                                    placeholder="المبلغ (ج.م)"
-                                />
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">المبلغ الإجمالي</label>
+                                <div className="relative">
+                                    <input
+                                        type="number"
+                                        required
+                                        min="0"
+                                        value={formData.amount}
+                                        onChange={e => setFormData({ ...formData, amount: e.target.value })}
+                                        className="w-full py-4 pr-4 pl-12 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xl font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all font-mono"
+                                        placeholder="0.00"
+                                        dir="rtl"
+                                    />
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-gray-400 text-xs uppercase">ج.م</span>
+                                </div>
                             </div>
 
                             {/* Description */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">البيان</label>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">بيان الفاتورة / الملاحظات</label>
                                 <input
                                     type="text"
                                     required
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
-                                    placeholder="البيان"
+                                    className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
+                                    placeholder="مثال: رسوم شهر أكتوبر"
+                                    dir="rtl"
                                 />
                             </div>
 
-                            {/* Payment Method */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">وسيلة الدفع</label>
-                                <input
-                                    type="text"
-                                    value={formData.paymentMethod}
-                                    onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
-                                    placeholder="وسيلة الدفع"
-                                />
-                            </div>
-
-                            {/* Issue Date */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">تاريخ الإصدار</label>
-                                <input
-                                    type="date"
-                                    required
-                                    value={formData.date}
-                                    onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
-                                />
-                            </div>
-
-                            {/* Due Date */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">تاريخ الاستحقاق</label>
-                                <input
-                                    type="date"
-                                    required
-                                    value={formData.dueDate}
-                                    onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
-                                    className="w-full h-11 px-3 py-2 bg-white border-2 border-gray-100 focus:outline-none focus:border-primary-500 transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white font-bold"
-                                />
-                            </div>
-
-                            {/* Status Buttons */}
-                            <div className="space-y-0">
-                                <label className="text-[10px] font-black text-gray-400 mb-1 block uppercase">الحالة</label>
-                                <div className="h-11 grid grid-cols-3 gap-1 rounded-none overflow-hidden border-2 border-gray-100 dark:border-gray-700">
-                                    {['paid', 'pending', 'overdue'].map(status => (
+                            {/* Status Selector */}
+                            <div className="space-y-2 lg:col-span-1">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">حالة الدفع</label>
+                                <div className="grid grid-cols-3 border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
+                                    {(['paid', 'pending', 'overdue'] as const).map(status => (
                                         <button
                                             key={status}
                                             type="button"
-                                            onClick={() => setFormData({ ...formData, status: status as 'paid' | 'pending' | 'overdue' })}
-                                            className={`flex items-center justify-center text-[10px] font-bold transition-all h-full ${formData.status === status
-                                                ? 'bg-primary-600 text-white dark:bg-primary-500'
-                                                : 'bg-white text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
-                                                }`}
+                                            onClick={() => setFormData({ ...formData, status })}
+                                            className={cn(
+                                                "py-3 text-[10px] font-black uppercase transition-all",
+                                                formData.status === status
+                                                    ? status === 'paid' ? "bg-emerald-600 text-white" : status === 'pending' ? "bg-amber-500 text-white" : "bg-rose-600 text-white"
+                                                    : "bg-white text-gray-400 hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700"
+                                            )}
                                         >
                                             {status === 'paid' ? 'مدفوعة' : status === 'pending' ? 'معلقة' : 'متأخرة'}
                                         </button>
                                     ))}
                                 </div>
                             </div>
-
-                            {/* Submit Button */}
-                            <div className="space-y-0 flex flex-col justify-end">
-                                <button
-                                    type="submit"
-                                    className={`w-full h-11 text-white font-black uppercase text-xs tracking-widest shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 ${editingId
-                                        ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20'
-                                        : 'bg-primary-600 hover:bg-primary-700 shadow-primary-600/20'
-                                        }`}
-                                >
-                                    {editingId ? <Check size={18} /> : <Plus size={18} />}
-                                    <span>{editingId ? 'حفظ التعديلات' : 'إصدار الفاتورة'}</span>
-                                </button>
+                            
+                            {/* Dates */}
+                            <div className="grid grid-cols-2 gap-4 lg:col-span-2">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الإصدار</label>
+                                    <input 
+                                        type="date"
+                                        value={formData.date}
+                                        onChange={e => setFormData({...formData, date: e.target.value})}
+                                        className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الاستحقاق</label>
+                                    <input 
+                                        type="date"
+                                        value={formData.dueDate}
+                                        onChange={e => setFormData({...formData, dueDate: e.target.value})}
+                                        className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                    />
+                                </div>
                             </div>
+                        </div>
+
+                        <div className="mt-10 pt-6 border-t-2 border-gray-100 flex justify-end gap-3">
+                            <button
+                                type="button"
+                                onClick={handleCancel}
+                                className="px-8 py-4 border-2 border-gray-200 text-gray-400 font-black text-xs uppercase tracking-widest hover:border-gray-950 hover:text-gray-950 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]"
+                                dir="rtl"
+                            >
+                                تراجع
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-12 py-4 bg-emerald-600 text-white border-4 border-gray-950 font-black text-xs uppercase tracking-widest shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                                dir="rtl"
+                            >
+                                {editingId ? 'تحديث الفاتورة' : 'تأكيد وإصدار الفاتورة'}
+                            </button>
                         </div>
                     </form>
                 </div >
             )}
 
             {/* Table */}
-            <div className="bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+            <div className="bg-white border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden">
                 {/* Desktop View */}
                 <div className="hidden md:block overflow-x-auto">
-                    <table className="premium-table w-full">
-                        <thead>
+                    <table className="w-full text-right border-collapse">
+                        <thead className="bg-gray-900 text-white dark:bg-black">
                             <tr>
-                                <th className="text-center">اسم الطالب</th>
-                                <th className="text-center">البيان</th>
-                                <th className="text-center">المبلغ</th>
-                                <th className="text-center">تاريخ الإصدار</th>
-                                <th className="text-center">تاريخ الاستحقاق</th>
-                                <th className="text-center">وسيلة الدفع</th>
-                                <th className="text-center">الحالة</th>
-                                <th className="text-center">إجراءات</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">اسم الطالب</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">البيان</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الإصدار</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الاستحقاق</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الوسيلة</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الحالة</th>
+                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">إجراءات</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                        <tbody className="divide-y-4 divide-gray-50 dark:divide-gray-800">
                             {filteredInvoices.length === 0 ? (
                                 <tr>
-                                    <td colSpan={8} className="py-20 text-center text-gray-400">
-                                        <FileText size={48} className="mx-auto mb-4 text-gray-200" />
-                                        <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">
-                                            {searchTerm ? 'لا توجد نتائج للبحث' : 'لا توجد فواتير مسجلة'}
-                                        </h3>
-                                        <p className="text-sm font-bold">استخدم النموذج أعلاه لإصدار فاتورة جديدة</p>
+                                    <td colSpan={8} className="py-24 text-center text-gray-400">
+                                        <div className="flex flex-col items-center">
+                                            <FileText size={64} className="mb-4 opacity-10" />
+                                            <h3 className="font-black text-xl text-gray-900 dark:text-white mb-2 uppercase tracking-tighter">
+                                                {searchTerm ? 'لا توجد نتائج مطابقة لبحثك' : 'سجل الفواتير فارغ حالياً'}
+                                            </h3>
+                                            <p className="text-sm font-bold opacity-60">يمكنك البدء بإصدار فاتورة جديدة أو استيراد البيانات</p>
+                                        </div>
                                     </td>
                                 </tr>
                             ) : (
                                 filteredInvoices.map(inv => (
                                     <tr
                                         key={inv.id}
-                                        className={editingId === inv.id ? 'bg-amber-50 dark:bg-amber-900/10 shadow-inner' : ''}
+                                        className={cn(
+                                            "hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group",
+                                            editingId === inv.id ? 'bg-amber-50 dark:bg-amber-900/10' : ''
+                                        )}
                                     >
-                                        <td className="text-center">
-                                            <div className="flex items-center justify-center gap-3">
-                                                <div className="w-10 h-10 bg-primary-100 text-primary-700 flex items-center justify-center font-black text-sm dark:bg-primary-900/40 dark:text-primary-300 shadow-sm border border-primary-100 dark:border-primary-800">
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-12 h-12 bg-gray-950 text-white flex items-center justify-center font-black text-sm border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
                                                     {(inv.studentName || '?').charAt(0)}
                                                 </div>
-                                                <p className="font-bold text-gray-900 dark:text-white">{inv.studentName || 'اسم غير معروف'}</p>
+                                                <div>
+                                                    <p className="font-black text-gray-950 dark:text-white uppercase tracking-tighter leading-none mb-1">{inv.studentName || 'غير معرف'}</p>
+                                                    <p className="text-[10px] font-bold text-gray-400">#{inv.id.slice(0, 6)}</p>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td className="text-center text-xs font-bold font-mono italic text-gray-500">
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-xs font-bold text-gray-500 italic max-w-xs truncate">
                                             {inv.description}
                                         </td>
-                                        <td className="text-center">
-                                            <div className="inline-flex items-center gap-1 font-black text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-3 py-1 border border-slate-100 dark:border-slate-700 font-mono">
-                                                <span className="text-sm">{inv.amount.toLocaleString()}</span>
-                                                <span className="text-[10px] text-slate-400">ج.م</span>
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
+                                            <div className="inline-flex items-center gap-1 font-black text-gray-950 dark:text-white font-mono text-lg">
+                                                {inv.amount.toLocaleString()} <span className="text-[10px] opacity-40 uppercase">ج.م</span>
                                             </div>
                                         </td>
-                                        <td className="text-center font-mono text-xs font-black tracking-tighter" dir="ltr">
-                                            {new Date(inv.date).toLocaleDateString('ar-EG')}
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono text-xs font-black text-gray-400">
+                                            {inv.date}
                                         </td>
-                                        <td className="text-center font-mono text-xs font-black tracking-tighter" dir="ltr">
-                                            {new Date(inv.dueDate).toLocaleDateString('ar-EG')}
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono text-xs font-black text-gray-400 italic">
+                                            {inv.dueDate}
                                         </td>
-                                        <td className="text-center">
-                                            <span className="text-[10px] font-black uppercase tracking-widest bg-gray-50 dark:bg-gray-800 px-2 py-1 border border-gray-100 dark:border-gray-700">{inv.paymentMethod || '-'}</span>
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
+                                            <span className="text-[10px] font-black uppercase tracking-widest bg-gray-100 dark:bg-gray-800 px-3 py-1 border-2 border-gray-950">{inv.paymentMethod || 'نقدي'}</span>
                                         </td>
-                                        <td className="text-center">
+                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
                                             <button
                                                 onClick={() => toggleStatus(inv)}
                                                 className={cn(
-                                                    "inline-flex items-center px-4 py-1.5 font-black text-[10px] uppercase tracking-widest border transition-all active:scale-95",
+                                                    "inline-flex items-center px-4 py-2 font-black text-[10px] uppercase tracking-widest border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
                                                     inv.status === 'paid'
-                                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800'
+                                                        ? 'bg-emerald-600 text-white'
                                                         : inv.status === 'pending'
-                                                            ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800'
-                                                            : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 dark:bg-rose-900/20 dark:text-rose-400 dark:border-rose-800'
+                                                            ? 'bg-amber-400 text-gray-950 shadow-[4px_4px_0px_0px_black]'
+                                                            : 'bg-rose-600 text-white'
                                                 )}
                                             >
-                                                <div className="flex items-center gap-2">
-                                                    <div className={cn(
-                                                        "w-1.5 h-1.5 rounded-none",
-                                                        inv.status === 'paid' ? "bg-emerald-500" : inv.status === 'pending' ? "bg-amber-500" : "bg-rose-500"
-                                                    )}></div>
-                                                    {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
-                                                </div>
+                                                {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
                                             </button>
                                         </td>
-                                        <td className="text-center">
-                                            <div className="flex items-center justify-center gap-1">
+                                        <td className="px-6 py-5 text-center">
+                                            <div className="flex items-center justify-center gap-2">
                                                 <button
                                                     onClick={() => setPreviewInvoice(inv)}
-                                                    className="table-action-btn text-emerald-600 hover:bg-emerald-50"
-                                                    title="معاينة وطباعة"
+                                                    className="p-3 bg-white border-2 border-gray-950 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                                                    title="معاينة"
                                                 >
                                                     <Printer size={16} />
                                                 </button>
-
                                                 <button
                                                     onClick={() => handleEdit(inv)}
-                                                    className="table-action-btn text-primary-600 hover:bg-primary-50"
+                                                    className="p-3 bg-white border-2 border-gray-950 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                                                     title="تعديل"
-                                                    aria-label={`تعديل فاتورة ${inv.studentName}`}
                                                 >
                                                     <Edit size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => setDeletingId(inv.id)}
-                                                    className="table-action-btn text-red-600 hover:bg-red-50"
+                                                    className="p-3 bg-white border-2 border-gray-950 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
                                                     title="حذف"
-                                                    aria-label={`حذف فاتورة ${inv.studentName}`}
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
-
                                             </div>
                                         </td>
                                     </tr>
