@@ -9,7 +9,7 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white border-4 border-gray-950 dark:bg-gray-900 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] relative flex flex-col group rounded-none">
+        <div className="bg-white border-4 border-gray-950 dark:bg-gray-900 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] relative flex flex-col group rounded-none h-full">
             <div className="absolute top-0 right-0 w-2 h-full bg-amber-500 border-l-2 border-gray-950"></div>
             <div className="p-6 border-b-4 border-gray-950 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/20">
                 <div className="flex items-center gap-3">
@@ -23,7 +23,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                 </div>
                 <Link to="/tasks" className="bg-gray-950 text-white px-3 py-1.5 border-2 border-gray-950 text-[10px] font-black uppercase tracking-widest hover:bg-black transition-colors">إدارة الكل</Link>
             </div>
-            <div className="flex-1 overflow-y-auto custom-scrollbar min-h-[240px] lg:h-[320px]">
+            <div className="flex-1 overflow-y-auto custom-scrollbar min-h-[240px]">
                 {tasks.length > 0 ? (
                     tasks.slice(0, 8).map((task) => (
                         <div key={task.id} className="p-5 flex items-center gap-4 border-b-2 border-gray-100 dark:border-gray-800/50 last:border-0 hover:bg-amber-50 dark:hover:bg-amber-900/10 transition-all group/item cursor-pointer">
