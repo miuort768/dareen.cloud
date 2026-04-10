@@ -10,6 +10,7 @@ import {
     Bell,
     CheckCircle2,
     CalendarDays,
+    Clock,
     Headset,
     Activity,
     Star,
@@ -144,62 +145,47 @@ export const ParentDashboard = () => {
     return (
         <div className="space-y-8 pb-24" dir="rtl">
 
-            {/* Compact Cyber-Brutalist Dashboard Header */}
-            <div className="relative bg-gray-950 p-6 lg:p-8 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-8">
+            {/* Optimized Cyber-Brutalist Dashboard Header */}
+            <div className="relative bg-gray-950 p-6 lg:p-10 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-8">
                 <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
-                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '30px 20px' }} />
+                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="flex items-center gap-6">
                         <div className="relative">
                             <motion.div 
                                 whileHover={{ rotate: -5, scale: 1.05 }}
-                                className="w-16 h-16 bg-primary-600 text-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_white] flex items-center justify-center transform -rotate-2"
+                                className="w-20 h-20 bg-primary-600 text-white border-[4px] border-gray-950 shadow-[4px_4px_0px_0px_white] flex items-center justify-center transform -rotate-2"
                             >
-                                <Users size={32} strokeWidth={2.5} />
+                                <Users size={40} strokeWidth={2.5} />
                             </motion.div>
-                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-gray-950 animate-pulse" />
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-2 border-gray-950 animate-pulse" />
                         </div>
                         
                         <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="px-2 py-0.5 bg-primary-600 text-white text-[9px] font-black uppercase tracking-widest italic border-b border-white">مركز المتابعة</span>
-                                <div className="flex gap-0.5">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="px-2.5 py-0.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic border-b border-white">مركز المتابعة</span>
+                                <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-ping" style={{ animationDelay: `${i*0.2}s` }} />)}
                                 </div>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase italic leading-none mb-2">بوابة المتابعة الذكية</h1>
-                            <p className="text-gray-400 text-xs font-bold flex items-center gap-2 uppercase tracking-wider">
-                                <ShieldCheck size={14} className="text-primary-500" />
+                            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase italic leading-none mb-3">بوابة المتابعة الذكية</h1>
+                            <p className="text-gray-400 text-sm font-black flex items-center gap-2 uppercase tracking-wider">
+                                <ShieldCheck size={18} className="text-primary-500" />
                                 أهلاً بك، أ/ {currentUser?.name}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-3 w-full md:w-auto">
-                        {children.length > 0 && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {children.map((child: any) => (
-                                    <motion.div 
-                                        key={child.id}
-                                        whileHover={{ x: -3 }}
-                                        className="bg-white/5 border border-white/10 p-2.5 flex items-center justify-between gap-4 backdrop-blur-sm group hover:border-emerald-500 transition-all min-w-[180px]"
-                                    >
-                                        <div className="flex flex-col">
-                                            <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-0.5 italic">{child.grade}</span>
-                                            <span className="text-sm font-black text-white uppercase italic">{child.name}</span>
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="text-lg font-black text-emerald-400 tracking-tighter flex items-center gap-1.5 justify-end">
-                                                {child.totalPoints || 0}
-                                                <Star size={14} className="fill-current" />
-                                            </div>
-                                            <span className="text-[8px] font-black text-emerald-500/50 uppercase tracking-widest">نقطة تميز</span>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        )}
+                    {/* Single Info Square for Children Count */}
+                    <div className="flex items-center gap-8 bg-white/5 border-2 border-white/10 p-6 backdrop-blur-sm shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]">
+                        <div className="text-right">
+                             <span className="block text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-1 italic">إجمالي الأبناء</span>
+                             <div className="text-5xl font-black text-white tracking-tighter italic leading-none">{children.length}</div>
+                        </div>
+                        <div className="w-12 h-12 bg-primary-600 text-white flex items-center justify-center border-2 border-white">
+                             <Users size={24} strokeWidth={3} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,7 +229,7 @@ export const ParentDashboard = () => {
                             <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
                                 <div className="text-[9px] font-black text-white/40 uppercase tracking-widest">تم التحديث: اليوم</div>
                                 <button className="text-[10px] font-black text-yellow-400 hover:text-white uppercase italic flex items-center gap-1 transition-colors">
-                                    عرض كافة الإنجازات <ChevronLeft size={14} />
+                                    عرض كافة الإنجازات <ChevronLeft size={14} className="rtl:rotate-180" />
                                 </button>
                             </div>
                         </div>
@@ -528,5 +514,3 @@ const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) =
         </motion.div>
     );
 };
-
-
