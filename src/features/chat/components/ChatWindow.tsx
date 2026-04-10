@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
     Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, 
-    CheckCheck, Video, Mic, ArrowDown, Sparkles, MessageSquare, RefreshCw,
+    CheckCheck, Mic, ArrowDown, MessageSquare, RefreshCw,
     Zap, Rocket, ShieldCheck, Gamepad2
 } from 'lucide-react';
 import { format } from 'date-fns';

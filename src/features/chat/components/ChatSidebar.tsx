@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
-    Search, Plus, Trash2, Edit2, LogOut, MessageCircle, 
-    Bell, BellOff, UserCircle, ShieldCheck, Activity,
+    Search, Plus, Trash2, Edit2, LogOut, 
+    Bell, BellOff, UserCircle, ShieldCheck,
     Zap, Terminal, LayoutDashboard
 } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
