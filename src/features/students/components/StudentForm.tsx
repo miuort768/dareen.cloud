@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { UserPlus, Edit, Save, Shield, Key } from 'lucide-react';
 import type { Student } from '../types';
 
