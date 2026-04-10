@@ -5,11 +5,10 @@ import { motion } from 'framer-motion';
 import {
     Users,
     Calendar,
-    AlertCircle,
     Receipt,
-    Bell,
     CheckCircle2,
     CalendarDays,
+    Clock,
     Headset,
     Activity,
     Star,
