@@ -147,7 +147,7 @@ export const ParentDashboard = () => {
             {/* Optimized Cyber-Brutalist Dashboard Header */}
             <div className="relative bg-gray-950 p-6 lg:p-10 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-8">
                 <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
-                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '30px 20px' }} />
                 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="flex items-center gap-6">
@@ -176,7 +176,6 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Single Info Square for Children Count */}
                     <div className="flex items-center gap-8 bg-white/5 border-2 border-white/10 p-6 backdrop-blur-sm shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]">
                         <div className="text-right">
                              <span className="block text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-1 italic">إجمالي الأبناء</span>
@@ -189,7 +188,7 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* Unified Strategic Intelligence Unit - Merged Radar & Indicators */}
+            {/* Unified Strategic Intelligence Unit */}
             <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_black] overflow-hidden mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12">
                     {/* Excellence Radar Side */}
@@ -228,7 +227,7 @@ export const ParentDashboard = () => {
                             <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
                                 <div className="text-[9px] font-black text-white/40 uppercase tracking-widest">تم التحديث: اليوم</div>
                                 <button className="text-[10px] font-black text-yellow-400 hover:text-white uppercase italic flex items-center gap-1 transition-colors">
-                                    عرض كافة الإنجازات <ChevronLeft size={14} className="rtl:rotate-180" />
+                                    عرض كافة الإنجازات <ChevronLeft size={14} />
                                 </button>
                             </div>
                         </div>
@@ -310,7 +309,7 @@ export const ParentDashboard = () => {
                 />
             </div>
 
-            {/* Compact Operations Grid */}
+            {/* Operations Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                  <StatCard
                     icon={Calendar}
@@ -346,137 +345,126 @@ export const ParentDashboard = () => {
                 />
             </div>
 
-            {/* Compact Critical Alerts */}
-            {((displayData.students.some(s => (s.enrollments || []).some((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2))) || stats.pendingInvoiceCount > 0) && (
-                <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[6px_6px_0px_0px_#ef4444] relative overflow-hidden">
-                    <h4 className="font-black text-[9px] text-gray-400 uppercase tracking-[3px] mb-6 flex items-center justify-between">
-                        تنبيهات حالة الاستعداد
-                        <Bell size={16} className="text-rose-500 animate-ping" />
-                    </h4>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-                        {displayData.students.map(student => {
-                            const lowBalanceEnrollments = (student.enrollments || []).filter((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2);
-                            return lowBalanceEnrollments.map((en: any, idx: number) => (
-                                <div key={`${student.id}-${idx}`} className="p-4 bg-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] flex items-start gap-4 group hover:translate-x-1 transition-all">
-                                    <AlertCircle size={24} className="text-rose-600 mt-0.5 shrink-0" />
-                                    <div>
-                                        <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter mb-1">تنبيه: {student.name}</p>
-                                        <p className="text-[9px] text-gray-500 font-bold leading-tight">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص في {en.subject}.</p>
-                                    </div>
-                                </div>
-                            ));
-                        })}
-                        {stats.pendingInvoiceCount > 0 && (
-                            <div className="p-4 bg-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_#f59e0b] flex items-start gap-4 group hover:translate-x-1 transition-all">
-                                <AlertCircle size={24} className="text-amber-500 mt-0.5 shrink-0" />
-                                <div>
-                                    <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter mb-1">إجراء مالي</p>
-                                    <p className="text-[9px] text-gray-500 font-bold leading-tight">يوجد {stats.pendingInvoiceCount} فواتير معلقة ({stats.totalPending.toLocaleString()} ج.م).</p>
-                                </div>
-                            </div>
-                        )}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Compact Weekly Schedule - Focused on Task/Day */}
+                <div className="bg-white border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_black] overflow-hidden">
+                    <div className="p-6 border-b-[6px] border-gray-950 flex items-center justify-between bg-gray-50">
+                        <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic leading-none">
+                            <CalendarDays className="text-primary-600" size={24} />
+                            {showAllDays ? 'خريطة المهام' : `مهمات (${todayArabic})`}
+                        </h4>
+                        <button
+                            onClick={() => setShowAllDays(!showAllDays)}
+                            className="px-4 py-1.5 bg-gray-950 text-white border-[3px] border-gray-950 font-black text-[9px] uppercase italic transition-all hover:bg-primary-600"
+                        >
+                            {showAllDays ? 'اليوم' : 'الكل'}
+                        </button>
                     </div>
-                </div>
-            )}
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                    {/* Compact Weekly Schedule */}
-                    <div className="bg-white border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_black] overflow-hidden">
-                        <div className="p-6 border-b-[6px] border-gray-950 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-50">
-                            <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic leading-none">
-                                <CalendarDays className="text-primary-600" size={24} />
-                                {showAllDays ? 'خريطة المهام' : `مهمات (${todayArabic})`}
-                            </h4>
-                            <button
-                                onClick={() => setShowAllDays(!showAllDays)}
-                                className="px-4 py-2 bg-gray-950 text-white border-[3px] border-gray-950 font-black text-[9px] uppercase italic shadow-[3px_3px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
-                            >
-                                {showAllDays ? 'العمليات الحالية' : 'المخطط الكامل'}
-                            </button>
-                        </div>
-                        
-                        <div className="p-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
-                                    <div key={idx} className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_#3b82f6]">
-                                        <div className="flex items-center gap-2 mb-4 font-black text-gray-950 italic">
-                                            <div className="w-7 h-7 bg-gray-950 text-white flex items-center justify-center text-xs">{dayData.day.substring(0, 1)}</div>
-                                            <h5 className="text-sm">{dayData.day}</h5>
-                                        </div>
-                                        <div className="space-y-2">
-                                            {dayData.slots.map((slot, sIdx) => (
-                                                <div key={sIdx} className="bg-gray-50 p-2.5 border border-gray-950 flex items-center justify-between gap-2 group hover:bg-white transition-all text-right">
-                                                    <div className="truncate">
-                                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                                            <User size={12} className="text-primary-600" />
-                                                            <span className="text-[11px] font-black text-gray-950 truncate max-w-[80px]">{slot.studentName}</span>
-                                                        </div>
-                                                        <p className="text-[8px] text-gray-500 font-bold uppercase tracking-wider truncate">{slot.subject}</p>
+                    
+                    <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                        <div className="space-y-4">
+                            {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
+                                <div key={idx} className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_#3b82f6]">
+                                    <div className="flex items-center gap-2 mb-4 font-black text-gray-950 italic border-b-2 border-gray-100 pb-2">
+                                        <div className="w-8 h-8 bg-gray-950 text-white flex items-center justify-center text-xs transform -rotate-3">{dayData.day.substring(0, 1)}</div>
+                                        <h5 className="text-sm">{dayData.day}</h5>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {dayData.slots.map((slot, sIdx) => (
+                                            <div key={sIdx} className="bg-gray-50 p-3 border border-gray-950 flex items-center justify-between gap-4 group hover:bg-white transition-all">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 bg-white border border-gray-950 flex items-center justify-center">
+                                                        <User size={14} className="text-primary-600" />
                                                     </div>
-                                                    <div className="px-1.5 py-0.5 bg-gray-950 text-white text-[9px] font-black italic whitespace-nowrap">
-                                                        {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
+                                                    <div>
+                                                        <span className="text-xs font-black text-gray-950 block">{slot.studentName}</span>
+                                                        <span className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">{slot.subject}</span>
                                                     </div>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="space-y-6">
-                    {/* Compact Pending Invoices */}
-                    <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[8px_8px_0px_0px_#ef4444] relative overflow-hidden">
-                        <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 mb-6 italic flex items-center gap-3 leading-none">
-                            <Receipt className="text-primary-600" size={24} />
-                            المستحقات
-                        </h4>
-                        <div className="space-y-4">
-                            {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
-                                <div key={invoice.id} className="p-4 bg-gray-50 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] group hover:translate-x-0.5 transition-all">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div>
-                                            <p className="text-[11px] font-black text-gray-950 uppercase italic tracking-tighter">كشف {invoice.month}/{invoice.year}</p>
-                                            <p className="text-[9px] text-gray-400 font-bold mt-0.5 uppercase tracking-widest">{invoice.studentName}</p>
-                                        </div>
-                                        <Target size={16} className="text-rose-600" />
-                                    </div>
-                                    <div className="flex items-center justify-between border-t border-gray-200 pt-2">
-                                        <p className="text-lg font-black text-rose-600 tracking-tighter">{invoice.amount} ج.م</p>
-                                        <span className="px-2 py-0.5 bg-rose-100 text-rose-600 text-[8px] font-black uppercase italic">متأخر</span>
+                                                <div className="px-2 py-1 bg-gray-950 text-white text-[9px] font-black italic">
+                                                    {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             ))}
-                            {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
-                                <div className="py-8 text-center border-2 border-dashed border-gray-200 opacity-50">
-                                    <CheckCircle2 size={32} className="mx-auto text-emerald-500 mb-2" />
-                                    <p className="text-[9px] text-gray-400 font-black italic uppercase tracking-widest">السجل مكتمل</p>
+                            {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).length === 0 && (
+                                <div className="py-20 text-center opacity-20 flex flex-col items-center">
+                                    <Clock size={48} className="mb-4" />
+                                    <p className="text-xs font-black italic">لا توجد مهام حالية</p>
                                 </div>
                             )}
                         </div>
                     </div>
+                </div>
 
-                    <a
-                        href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full block bg-gray-950 p-6 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#25d366] text-white group hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
-                    >
-                        <div className="flex flex-col items-center gap-4 text-center">
-                            <div className="w-12 h-12 bg-white/10 flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-                                <Headset size={24} className="text-white" />
-                            </div>
-                            <div>
-                                <h4 className="font-black text-lg uppercase tracking-tighter mb-1 italic leading-none">الدعم المباشر</h4>
-                                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[3px]">تواصل مع الإدارة</p>
-                            </div>
-                            <div className="px-4 py-1.5 bg-white text-gray-950 font-black text-[8px] uppercase tracking-widest italic">واتساب متاح</div>
+                {/* Compact Pending Invoices - Shared Size */}
+                <div className="bg-white border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden">
+                    <div className="p-6 border-b-[6px] border-gray-950 flex items-center bg-gray-50">
+                        <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic leading-none">
+                            <Receipt className="text-rose-600" size={24} />
+                            سجل المستحقات
+                        </h4>
+                    </div>
+                    <div className="p-6 max-h-[400px] overflow-y-auto custom-scrollbar">
+                        <div className="space-y-4">
+                            {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
+                                <div key={invoice.id} className="p-4 bg-gray-50 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] group hover:translate-x-1 transition-all">
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter">كشف {invoice.month}/{invoice.year}</p>
+                                            <p className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-widest">{invoice.studentName}</p>
+                                        </div>
+                                        <Target size={20} className="text-rose-600" />
+                                    </div>
+                                    <div className="flex items-center justify-between border-t border-gray-200 pt-3">
+                                        <div className="text-left font-black tracking-tighter">
+                                            <span className="text-sm text-gray-400 ml-1">ج.م</span>
+                                            <span className="text-2xl text-rose-600">{invoice.amount}</span>
+                                        </div>
+                                        <span className="px-2 py-1 bg-rose-100 text-rose-600 text-[9px] font-black uppercase italic border border-rose-200">بانتظار السداد</span>
+                                    </div>
+                                </div>
+                            ))}
+                            {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
+                                <div className="py-20 text-center opacity-20 flex flex-col items-center">
+                                    <CheckCircle2 size={48} className="mb-4 text-emerald-500" />
+                                    <p className="text-xs font-black italic">الحساب المالي مكتمل</p>
+                                </div>
+                            )}
                         </div>
-                    </a>
+                    </div>
+                </div>
+            </div>
+
+            {/* Secondary CTA / Support */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <a
+                    href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex bg-gray-950 p-6 border-4 border-gray-950 shadow-[8px_8px_0px_0px_#25d366] text-white group hover:translate-x-1 transition-all"
+                >
+                    <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center">
+                            <Headset size={24} className="text-white" />
+                        </div>
+                        <div>
+                            <h4 className="font-black text-sm uppercase tracking-tighter italic">الدعم المباشر</h4>
+                            <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[3px]">تواصل مع الإدارة عبر واتساب</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <div className="bg-white border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_#3b82f6] flex items-center gap-6">
+                    <div className="w-12 h-12 bg-gray-50 flex items-center justify-center border-2 border-gray-950 transform rotate-3">
+                        <Star size={24} className="text-primary-600" />
+                    </div>
+                    <div>
+                        <h4 className="font-black text-sm uppercase tracking-tighter italic">نظام التميز</h4>
+                        <p className="text-[9px] text-gray-500 font-bold uppercase tracking-[3px]">يتم تحديث النقاط كل 24 ساعة</p>
+                    </div>
                 </div>
             </div>
         </div>
