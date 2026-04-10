@@ -104,17 +104,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
 
                 <div className="space-y-6 relative z-10">
-                    <div className="relative">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-950" size={20} />
-                        <input
-                            type="text"
-                            placeholder="ابحث عن زميل أو مجموعة..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white border-4 border-gray-950 px-12 py-4 text-sm font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300"
-                        />
-                    </div>
-                    
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                             <button
@@ -165,6 +154,17 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 </button>
                             </div>
                         )}
+                    </div>
+
+                    <div className="relative">
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-950" size={20} />
+                        <input
+                            type="text"
+                            placeholder="ابحث عن زميل أو مجموعة..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-white border-4 border-gray-950 px-12 py-4 text-sm font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300"
+                        />
                     </div>
                 </div>
             </div>
