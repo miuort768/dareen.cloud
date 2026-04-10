@@ -2,11 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { 
     Calendar, 
     Clock, 
-    X, 
     User, 
     Users, 
-    Download, 
-    GraduationCap, 
     BookOpen, 
     Search,
     Zap,
@@ -94,10 +91,8 @@ export const Schedule = () => {
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
-    const [filterTeacher, setFilterTeacher] = useState<string>('all');
+    const [filterTeacher] = useState<string>('all');
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
-    const [selectedSlotEvents, setSelectedSlotEvents] = useState<ScheduleEvent[]>([]);
-    const [showSlotModal, setShowSlotModal] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [enrollData, setEnrollData] = useState({
