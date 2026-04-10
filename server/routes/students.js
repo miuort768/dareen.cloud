@@ -68,14 +68,20 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // 2. Add student
 router.post('/', validate(createStudentSchema), async (req, res) => {
-    const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments } = req.body;
+    const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
     const newId = id || `std_${Math.random().toString(36).substr(2, 7)}`;
+    const bcrypt = require('bcrypt');
 
     try {
         const newStudent = await withTransaction(req.db, async (tx) => {
+            let hashedPassword = null;
+            if (password) {
+                hashedPassword = await bcrypt.hash(password, 10);
+            }
+
             await tx.run(
-                `INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [newId, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice]
+                `INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [newId, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username || null, hashedPassword]
             );
 
             if (enrollments && enrollments.length > 0) {
@@ -108,15 +114,25 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 // 3. Update student
 router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     const { id } = req.params;
-    const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments } = req.body;
+    const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
+    const bcrypt = require('bcrypt');
 
     try {
         const updatedStudent = await withTransaction(req.db, async (tx) => {
             // 1. Update basic student info
-            await tx.run(
-                `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ? WHERE id = ?`,
-                [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, id]
-            );
+            let query = `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ?, username = ?`;
+            let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username || null];
+
+            if (password && password.trim() !== '') {
+                const hashedPassword = await bcrypt.hash(password, 10);
+                query += `, password = ?`;
+                params.push(hashedPassword);
+            }
+
+            query += ` WHERE id = ?`;
+            params.push(id);
+
+            await tx.run(query, params);
 
             // 2. Fetch existing enrollments to preserve their sessionsUsed
             const existingEnrollments = await tx.all('SELECT teacher, subject, sessionsUsed FROM enrollments WHERE studentId = ?', [id]);

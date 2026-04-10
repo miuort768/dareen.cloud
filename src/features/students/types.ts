@@ -10,6 +10,8 @@ export interface Student {
     enrollments: Enrollment[];
     totalPoints?: number;
     badges?: string;
+    username?: string;
+    password?: string;
 }
 
 export interface Enrollment {
