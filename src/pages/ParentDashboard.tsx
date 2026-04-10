@@ -10,7 +10,6 @@ import {
     Bell,
     CheckCircle2,
     CalendarDays,
-    Clock,
     Headset,
     Activity,
     Star,
