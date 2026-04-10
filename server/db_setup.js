@@ -550,12 +550,19 @@ async function setupDatabase() {
     try { await db.run('ALTER TABLE students ADD COLUMN parentId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE students ADD COLUMN totalPoints INTEGER DEFAULT 0'); } catch(e) {}
     try { await db.run('ALTER TABLE students ADD COLUMN badges TEXT'); } catch(e) {}
-    try { await db.exec("ALTER TABLE students ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
-    try { await db.exec("ALTER TABLE students ADD COLUMN password TEXT"); } catch (e) { }
-    try { await db.exec("ALTER TABLE teachers ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
-    try { await db.exec("ALTER TABLE teachers ADD COLUMN password TEXT"); } catch (e) { }
-    try { await db.exec("ALTER TABLE parents ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
-    try { await db.exec("ALTER TABLE parents ADD COLUMN password TEXT"); } catch (e) { }
+    // Migration: Add username/password columns (WITHOUT UNIQUE - SQLite can't ALTER TABLE ADD COLUMN UNIQUE)
+    try { await db.run('ALTER TABLE students ADD COLUMN username TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE students ADD COLUMN password TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE teachers ADD COLUMN username TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE teachers ADD COLUMN password TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE parents ADD COLUMN username TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE parents ADD COLUMN password TEXT'); } catch(e) {}
+
+    // Now add UNIQUE indexes separately (safe to run multiple times thanks to IF NOT EXISTS)
+    try { await db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_students_username ON students(username) WHERE username IS NOT NULL'); } catch(e) {}
+    try { await db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_teachers_username ON teachers(username) WHERE username IS NOT NULL'); } catch(e) {}
+    try { await db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_parents_username ON parents(username) WHERE username IS NOT NULL'); } catch(e) {}
+
     try { await db.exec("ALTER TABLE enrollments ADD COLUMN isFrozen INTEGER DEFAULT 0"); } catch (e) { }
     try { await db.exec("ALTER TABLE enrollments ADD COLUMN frozenReason TEXT"); } catch (e) { }
     try { await db.run('ALTER TABLE enrollments ADD COLUMN teacherId TEXT'); } catch(e) {}
