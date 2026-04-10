@@ -133,69 +133,69 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="space-y-6">
-                <div className="h-48 bg-gray-100 dark:bg-gray-800 animate-pulse" />
+            <div className="space-y-4">
+                <div className="h-32 bg-gray-100 dark:bg-gray-800 animate-pulse" />
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <div key={i} className="h-32 bg-gray-100 dark:bg-gray-800 animate-pulse" />)}
+                    {[...Array(4)].map((_, i) => <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 animate-pulse" />)}
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-10 pb-32" dir="rtl">
+        <div className="space-y-6 pb-24" dir="rtl">
 
-            {/* Cyber-Brutalist Dashboard Header */}
-            <div className="relative bg-gray-950 p-8 lg:p-12 border-8 border-gray-950 shadow-[12px_12px_0px_0px_#ef4444] overflow-hidden mb-12">
-                <div className="absolute top-0 right-0 w-full h-full opacity-[0.05] pointer-events-none" 
-                     style={{ backgroundImage: 'linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #fff 2px, transparent 2px)', backgroundSize: '40px 40px' }} />
+            {/* Compact Cyber-Brutalist Dashboard Header */}
+            <div className="relative bg-gray-950 p-6 lg:p-8 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-6">
+                <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
+                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-10">
-                    <div className="flex items-center gap-8">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-6">
                         <div className="relative">
                             <motion.div 
                                 whileHover={{ rotate: -5, scale: 1.05 }}
-                                className="w-24 h-24 bg-primary-600 text-white border-4 border-gray-950 shadow-[6px_6px_0px_0px_white] flex items-center justify-center transform -rotate-3"
+                                className="w-16 h-16 bg-primary-600 text-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_white] flex items-center justify-center transform -rotate-2"
                             >
-                                <Users size={48} strokeWidth={3} />
+                                <Users size={32} strokeWidth={2.5} />
                             </motion.div>
-                            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 border-4 border-gray-950 animate-pulse" />
+                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-gray-950 animate-pulse" />
                         </div>
                         
                         <div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="px-4 py-1.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic border-b-2 border-white">بوابة المتابعة الذكية</span>
-                                <div className="flex gap-1">
-                                    {[1,2,3].map(i => <div key={i} className="w-2 h-2 bg-emerald-500 animate-ping" style={{ animationDelay: `${i*0.2}s` }} />)}
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="px-2 py-0.5 bg-primary-600 text-white text-[9px] font-black uppercase tracking-widest italic border-b border-white">مركز المتابعة</span>
+                                <div className="flex gap-0.5">
+                                    {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-ping" style={{ animationDelay: `${i*0.2}s` }} />)}
                                 </div>
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none mb-4">لوحة تحكم الأبطال</h1>
-                            <p className="text-gray-400 text-base font-black flex items-center gap-3 uppercase tracking-wider">
-                                <ShieldCheck size={20} className="text-primary-500" />
+                            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase italic leading-none mb-2">بوابة المتابعة الذكية</h1>
+                            <p className="text-gray-400 text-xs font-bold flex items-center gap-2 uppercase tracking-wider">
+                                <ShieldCheck size={14} className="text-primary-500" />
                                 أهلاً بك، أ/ {currentUser?.name}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 w-full md:w-auto">
+                    <div className="flex flex-col gap-3 w-full md:w-auto">
                         {children.length > 0 && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {children.map((child: any) => (
                                     <motion.div 
                                         key={child.id}
-                                        whileHover={{ x: -5 }}
-                                        className="bg-white/5 border-2 border-white/20 p-4 flex items-center justify-between gap-6 backdrop-blur-sm group hover:border-emerald-500 transition-all"
+                                        whileHover={{ x: -3 }}
+                                        className="bg-white/5 border border-white/10 p-2.5 flex items-center justify-between gap-4 backdrop-blur-sm group hover:border-emerald-500 transition-all min-w-[180px]"
                                     >
                                         <div className="flex flex-col">
-                                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1 italic">المستوى الحالي: {child.grade}</span>
-                                            <span className="text-lg font-black text-white uppercase italic">{child.name}</span>
+                                            <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-0.5 italic">{child.grade}</span>
+                                            <span className="text-sm font-black text-white uppercase italic">{child.name}</span>
                                         </div>
                                         <div className="text-left">
-                                            <div className="text-2xl font-black text-emerald-400 tracking-tighter flex items-center gap-2 justify-end">
+                                            <div className="text-lg font-black text-emerald-400 tracking-tighter flex items-center gap-1.5 justify-end">
                                                 {child.totalPoints || 0}
-                                                <Star size={20} className="fill-current" />
+                                                <Star size={14} className="fill-current" />
                                             </div>
-                                            <span className="text-[9px] font-black text-emerald-500/50 uppercase tracking-widest">نقطة تميز</span>
+                                            <span className="text-[8px] font-black text-emerald-500/50 uppercase tracking-widest">نقطة تميز</span>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -205,8 +205,8 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* Strategic Insights Radar */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Compact Insights Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <ParentExcellenceRadar 
                     achievements={children
                         .filter(c => c.totalPoints > 0)
@@ -214,46 +214,46 @@ export const ParentDashboard = () => {
                         .map(c => ({
                             id: c.id,
                             studentName: c.name,
-                            achievement: 'إتمام المرحلة الدراسية بامتياز',
+                            achievement: 'إتمام المرحلة الدراسية بتميز',
                             date: 'اليوم',
                             points: c.totalPoints > 50 ? 50 : c.totalPoints
                         }))
                     }
                 />
                 
-                <div className="bg-white border-8 border-gray-950 p-8 shadow-[10px_10px_0px_0px_#3b82f6] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-full bg-gray-50 -skew-x-12 translate-x-12 pointer-events-none" />
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="p-3 bg-gray-950 text-white transform -rotate-6">
-                            <Activity size={24} strokeWidth={3} />
+                <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[6px_6px_0px_0px_#3b82f6] relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-16 h-full bg-gray-50 -skew-x-12 translate-x-8 pointer-events-none" />
+                    <div className="flex items-center gap-3 mb-6 relative z-10">
+                        <div className="p-2 bg-gray-950 text-white transform -rotate-3">
+                            <Activity size={18} strokeWidth={2.5} />
                         </div>
-                        <h2 className="text-2xl font-black text-gray-950 uppercase italic tracking-tighter">تحليل الأداء الرقمي</h2>
+                        <h2 className="text-lg font-black text-gray-950 uppercase italic tracking-tighter leading-none">مؤشرات الأداء الرقمي</h2>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="p-6 bg-gray-50 border-r-8 border-primary-600">
-                            <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">معدل الانضباط</span>
-                            <div className="text-4xl font-black text-gray-950 italic">{stats.attendanceRate}%</div>
-                            <div className="w-full h-1 bg-gray-200 mt-3 relative">
+                    <div className="grid grid-cols-2 gap-4 relative z-10">
+                        <div className="p-4 bg-gray-50 border-r-[6px] border-primary-600">
+                            <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">معدل الانضباط</span>
+                            <div className="text-2xl font-black text-gray-950 italic leading-none">{stats.attendanceRate}%</div>
+                            <div className="w-full h-0.5 bg-gray-200 mt-2 relative">
                                 <div className="absolute top-0 right-0 h-full bg-primary-600 transition-all" style={{ width: `${stats.attendanceRate}%` }} />
                             </div>
                         </div>
-                        <div className="p-6 bg-gray-50 border-r-8 border-emerald-500">
-                            <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">الرصيد المتبقي</span>
-                            <div className="text-4xl font-black text-gray-950 italic">{stats.sessionsTotal - stats.sessionsUsed}</div>
-                            <span className="text-[9px] font-bold text-emerald-600 uppercase tracking-widest">حصة متوفرة حالياً</span>
+                        <div className="p-4 bg-gray-50 border-r-[6px] border-emerald-500">
+                            <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">الرصيد المتبقي</span>
+                            <div className="text-2xl font-black text-gray-950 italic leading-none">{stats.sessionsTotal - stats.sessionsUsed}</div>
+                            <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest">حصة متوفرة</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Hero Levels Section */}
-            <div className="mb-12">
-                <div className="flex items-center gap-4 mb-8">
-                    <div className="p-4 bg-gray-950 text-white transform rotate-2">
-                        <Trophy size={28} />
+            {/* Compact Hero Levels Section */}
+            <div>
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-3 bg-gray-950 text-white transform rotate-2">
+                        <Trophy size={20} />
                     </div>
-                    <h2 className="text-3xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">مستويات الأبطال (Heroes Progress)</h2>
+                    <h2 className="text-xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic leading-none">مستويات الأبطال (Progress)</h2>
                 </div>
                 
                 <ParentChildVisualProgress 
@@ -277,72 +277,69 @@ export const ParentDashboard = () => {
                 />
             </div>
 
-            {/* Operations Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Compact Operations Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                  <StatCard
                     icon={Calendar}
-                    label="العمليات الدراسية"
+                    label="العمليات"
                     value={stats.sessionCount}
                     color="amber"
-                    subValue={`${stats.upcomingSessions} مهمة قادمة`}
+                    subValue={`${stats.upcomingSessions} مهمة`}
                     onClick={() => navigate('/parent-attendance')}
                 />
                 <StatCard
                     icon={Users}
-                    label="إجمالي الأبناء"
+                    label="الأبناء"
                     value={stats.childCount}
                     color="emerald"
-                    subValue="قطاع الأبطال"
+                    subValue="قطاع النجاح"
                     onClick={() => navigate('/parent-students')}
                 />
                 <StatCard
                     icon={Award}
-                    label="التقارير النوعية"
+                    label="التقارير"
                     value="عرض الكل"
                     color="blue"
-                    subValue="تقييمات القيادة"
+                    subValue="تقييمات دورية"
                     onClick={() => navigate('/evaluations')}
                 />
                 <StatCard
                     icon={Receipt}
-                    label="لوجستيات مالية"
+                    label="المالية"
                     value={stats.pendingInvoiceCount}
                     color="rose"
-                    subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م معلقة` : 'الرصيد مستقر'}
+                    subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'مستقر'}
                     onClick={() => navigate('/student-invoices')}
                 />
             </div>
 
-            {/* Critical Alerts Section */}
+            {/* Compact Critical Alerts */}
             {((displayData.students.some(s => (s.enrollments || []).some((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2))) || stats.pendingInvoiceCount > 0) && (
-                <div className="bg-white border-8 border-gray-950 p-8 shadow-[10px_10px_0px_0px_#ef4444] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none" 
-                         style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px' }} />
-                    
-                    <h4 className="font-black text-xs text-gray-400 uppercase tracking-[4px] mb-8 flex items-center justify-between">
+                <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[6px_6px_0px_0px_#ef4444] relative overflow-hidden">
+                    <h4 className="font-black text-[9px] text-gray-400 uppercase tracking-[3px] mb-6 flex items-center justify-between">
                         تنبيهات حالة الاستعداد
-                        <Bell size={20} className="text-rose-500 animate-ping" />
+                        <Bell size={16} className="text-rose-500 animate-ping" />
                     </h4>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
                         {displayData.students.map(student => {
                             const lowBalanceEnrollments = (student.enrollments || []).filter((en: any) => (Number(en.sessionsTotal) - Number(en.sessionsUsed)) <= 2);
                             return lowBalanceEnrollments.map((en: any, idx: number) => (
-                                <div key={`${student.id}-${idx}`} className="p-6 bg-white border-4 border-gray-950 shadow-[6px_6px_0px_0px_#ef4444] flex items-start gap-6 group hover:translate-x-1 transition-all">
-                                    <AlertCircle size={32} className="text-rose-600 mt-1 shrink-0" />
+                                <div key={`${student.id}-${idx}`} className="p-4 bg-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] flex items-start gap-4 group hover:translate-x-1 transition-all">
+                                    <AlertCircle size={24} className="text-rose-600 mt-0.5 shrink-0" />
                                     <div>
-                                        <p className="text-sm font-black text-gray-950 uppercase italic tracking-tighter mb-2">تجديد المهمة: {student.name}</p>
-                                        <p className="text-[11px] text-gray-500 font-bold leading-relaxed">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص فقط في مادة {en.subject}. يرجى اتخاذ الإجراء اللازم.</p>
+                                        <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter mb-1">تنبيه: {student.name}</p>
+                                        <p className="text-[9px] text-gray-500 font-bold leading-tight line-clamp-2">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص في {en.subject}.</p>
                                     </div>
                                 </div>
                             ));
                         })}
                         {stats.pendingInvoiceCount > 0 && (
-                            <div className="p-6 bg-white border-4 border-gray-950 shadow-[6px_6px_0px_0px_#f59e0b] flex items-start gap-6 group hover:translate-x-1 transition-all">
-                                <AlertCircle size={32} className="text-amber-500 mt-1 shrink-0" />
+                            <div className="p-4 bg-white border-[3px] border-gray-950 shadow-[4px_4px_0px_0px_#f59e0b] flex items-start gap-4 group hover:translate-x-1 transition-all">
+                                <AlertCircle size={24} className="text-amber-500 mt-0.5 shrink-0" />
                                 <div>
-                                    <p className="text-sm font-black text-gray-950 uppercase italic tracking-tighter mb-2">إجراء مالي مطلوب</p>
-                                    <p className="text-[11px] text-gray-500 font-bold leading-relaxed">يوجد {stats.pendingInvoiceCount} فواتير بانتظار السداد بقيمة إجمالية {stats.totalPending.toLocaleString()} ج.م.</p>
+                                    <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter mb-1">إجراء مالي</p>
+                                    <p className="text-[9px] text-gray-500 font-bold leading-tight">يوجد {stats.pendingInvoiceCount} فواتير معلقة ({stats.totalPending.toLocaleString()} ج.م).</p>
                                 </div>
                             </div>
                         )}
@@ -350,42 +347,42 @@ export const ParentDashboard = () => {
                 </div>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                <div className="lg:col-span-2 space-y-10">
-                    {/* Weekly Schedule Section */}
-                    <div className="bg-white border-8 border-gray-950 shadow-[12px_12px_0px_0px_black] overflow-hidden">
-                        <div className="p-8 border-b-8 border-gray-950 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-gray-50">
-                            <h4 className="font-black text-2xl uppercase tracking-tighter text-gray-950 flex items-center gap-4 italic">
-                                <CalendarDays className="text-primary-600" size={32} />
-                                {showAllDays ? 'خريطة المهام الأسبوعية' : `مهمات اليوم (${todayArabic})`}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Compact Weekly Schedule */}
+                    <div className="bg-white border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_black] overflow-hidden">
+                        <div className="p-6 border-b-[6px] border-gray-950 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-50">
+                            <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic leading-none">
+                                <CalendarDays className="text-primary-600" size={24} />
+                                {showAllDays ? 'خريطة المهام' : `مهمات (${todayArabic})`}
                             </h4>
                             <button
                                 onClick={() => setShowAllDays(!showAllDays)}
-                                className="px-8 py-4 bg-gray-950 text-white border-4 border-gray-950 font-black text-xs uppercase italic shadow-[6px_6px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                className="px-4 py-2 bg-gray-950 text-white border-[3px] border-gray-950 font-black text-[9px] uppercase italic shadow-[3px_3px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
                             >
-                                {showAllDays ? 'إظهار العمليات الحالية' : 'كشف المخطط الأسبوعي'}
+                                {showAllDays ? 'العمليات الحالية' : 'المخطط الكامل'}
                             </button>
                         </div>
                         
-                        <div className="p-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
-                                    <div key={idx} className="bg-white border-4 border-gray-950 p-6 shadow-[6px_6px_0px_0px_#3b82f6]">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="w-10 h-10 bg-gray-950 text-white flex items-center justify-center font-black italic">{dayData.day.substring(0, 1)}</div>
-                                            <h5 className="font-black text-gray-950 uppercase italic tracking-tighter text-xl">{dayData.day}</h5>
+                                    <div key={idx} className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_#3b82f6]">
+                                        <div className="flex items-center gap-2 mb-4 font-black text-gray-950 italic">
+                                            <div className="w-7 h-7 bg-gray-950 text-white flex items-center justify-center text-xs">{dayData.day.substring(0, 1)}</div>
+                                            <h5 className="text-sm">{dayData.day}</h5>
                                         </div>
-                                        <div className="space-y-4">
+                                        <div className="space-y-2">
                                             {dayData.slots.map((slot, sIdx) => (
-                                                <div key={sIdx} className="bg-gray-50 p-4 border-2 border-gray-950 flex items-center justify-between gap-4 group hover:bg-white transition-all">
-                                                    <div>
-                                                        <div className="flex items-center gap-2 mb-1">
-                                                            <User size={14} className="text-primary-600" />
-                                                            <span className="text-sm font-black text-gray-950">{slot.studentName}</span>
+                                                <div key={sIdx} className="bg-gray-50 p-2.5 border border-gray-950 flex items-center justify-between gap-2 group hover:bg-white transition-all text-right">
+                                                    <div className="truncate">
+                                                        <div className="flex items-center gap-1.5 mb-0.5">
+                                                            <User size={12} className="text-primary-600" />
+                                                            <span className="text-[11px] font-black text-gray-950 truncate max-w-[80px]">{slot.studentName}</span>
                                                         </div>
-                                                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{slot.subject} • {slot.teacher}</p>
+                                                        <p className="text-[8px] text-gray-500 font-bold uppercase tracking-wider truncate">{slot.subject}</p>
                                                     </div>
-                                                    <div className="px-3 py-1 bg-gray-950 text-white text-[10px] font-black italic">
+                                                    <div className="px-1.5 py-0.5 bg-gray-950 text-white text-[9px] font-black italic whitespace-nowrap">
                                                         {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
                                                     </div>
                                                 </div>
@@ -393,51 +390,40 @@ export const ParentDashboard = () => {
                                         </div>
                                     </div>
                                 ))}
-                                {((showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).length === 0) && (
-                                    <div className="col-span-full py-24 border-8 border-dashed border-gray-100 flex flex-col items-center justify-center grayscale opacity-30">
-                                        <Clock size={80} className="mb-6" />
-                                        <h3 className="text-3xl font-black text-gray-400 uppercase italic tracking-tighter">قنوات زمنية هادئة</h3>
-                                        <p className="text-xs font-bold mt-4 uppercase tracking-[4px]">لا يوجد مهمات قيد التنفيذ حالياً</p>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="space-y-10">
-                    <div className="bg-white border-8 border-gray-950 p-8 shadow-[12px_12px_0px_0px_#ef4444] relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none" 
-                             style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                        
-                        <div className="relative z-10">
-                            <h4 className="font-black text-2xl uppercase tracking-tighter text-gray-950 mb-8 italic flex items-center gap-4">
-                                <Receipt className="text-primary-600" size={32} />
-                                سجل المستحقات
-                            </h4>
-                            <div className="space-y-6">
-                                {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
-                                    <div key={invoice.id} className="p-6 bg-gray-50 border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] group hover:translate-x-1 transition-all">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div>
-                                                <p className="text-sm font-black text-gray-950 uppercase italic tracking-tighter">كشف {invoice.month}/{invoice.year}</p>
-                                                <p className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-widest">{invoice.studentName}</p>
-                                            </div>
-                                            <Target size={24} className="text-rose-600" />
+                <div className="space-y-6">
+                    {/* Compact Pending Invoices */}
+                    <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[8px_8px_0px_0px_#ef4444] relative overflow-hidden">
+                        <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 mb-6 italic flex items-center gap-3 leading-none">
+                            <Receipt className="text-primary-600" size={24} />
+                            المستحقات
+                        </h4>
+                        <div className="space-y-4">
+                            {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
+                                <div key={invoice.id} className="p-4 bg-gray-50 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] group hover:translate-x-0.5 transition-all">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <div>
+                                            <p className="text-[11px] font-black text-gray-950 uppercase italic tracking-tighter">كشف {invoice.month}/{invoice.year}</p>
+                                            <p className="text-[9px] text-gray-400 font-bold mt-0.5 uppercase tracking-widest">{invoice.studentName}</p>
                                         </div>
-                                        <div className="flex items-center justify-between border-t-2 border-gray-200 pt-4">
-                                            <p className="text-2xl font-black text-rose-600 tracking-tighter">{invoice.amount} ج.م</p>
-                                            <span className="px-3 py-1 bg-rose-100 text-rose-600 text-[9px] font-black uppercase italic">متأخر</span>
-                                        </div>
+                                        <Target size={16} className="text-rose-600" />
                                     </div>
-                                ))}
-                                {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
-                                    <div className="py-12 text-center border-4 border-dashed border-gray-200">
-                                        <CheckCircle2 size={48} className="mx-auto text-emerald-500 mb-4" />
-                                        <p className="text-xs text-gray-400 font-black italic uppercase tracking-widest">السجل المالي مكتمل حالياً</p>
+                                    <div className="flex items-center justify-between border-t border-gray-200 pt-2">
+                                        <p className="text-lg font-black text-rose-600 tracking-tighter">{invoice.amount} ج.م</p>
+                                        <span className="px-2 py-0.5 bg-rose-100 text-rose-600 text-[8px] font-black uppercase italic">متأخر</span>
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            ))}
+                            {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
+                                <div className="py-8 text-center border-2 border-dashed border-gray-200 opacity-50">
+                                    <CheckCircle2 size={32} className="mx-auto text-emerald-500 mb-2" />
+                                    <p className="text-[9px] text-gray-400 font-black italic uppercase tracking-widest">السجل مكتمل</p>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -445,17 +431,17 @@ export const ParentDashboard = () => {
                         href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full block bg-gray-950 p-10 border-8 border-gray-950 shadow-[15px_15px_0px_0px_#25d366] text-white group hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                        className="w-full block bg-gray-950 p-6 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#25d366] text-white group hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
                     >
-                        <div className="flex flex-col items-center gap-6 text-center">
-                            <div className="w-20 h-20 bg-white/10 flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-                                <Headset size={48} className="text-white" />
+                        <div className="flex flex-col items-center gap-4 text-center">
+                            <div className="w-12 h-12 bg-white/10 flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                                <Headset size={24} className="text-white" />
                             </div>
                             <div>
-                                <h4 className="font-black text-2xl uppercase tracking-tighter mb-2 italic">خط الدعم المباشر</h4>
-                                <p className="text-[11px] text-gray-400 font-bold uppercase tracking-[4px]">تواصل مع إدارة المعهد فوراً</p>
+                                <h4 className="font-black text-lg uppercase tracking-tighter mb-1 italic leading-none">الدعم المباشر</h4>
+                                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-[3px]">تواصل مع الإدارة</p>
                             </div>
-                            <div className="px-6 py-2 bg-white text-gray-950 font-black text-[10px] uppercase tracking-widest">متاح الآن عبر واتساب</div>
+                            <div className="px-4 py-1.5 bg-white text-gray-950 font-black text-[8px] uppercase tracking-widest italic">واتساب متاح</div>
                         </div>
                     </a>
                 </div>
@@ -466,29 +452,29 @@ export const ParentDashboard = () => {
 
 const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) => {
     const colors: any = {
-        blue: "bg-blue-600 shadow-[6px_6px_0px_0px_#1e3a8a]",
-        amber: "bg-amber-500 shadow-[6px_6px_0px_0px_#92400e]",
-        emerald: "bg-emerald-500 shadow-[6px_6px_0px_0px_#065f46]",
-        rose: "bg-rose-500 shadow-[6px_6px_0px_0px_#9f1239]",
+        blue: "bg-blue-600 shadow-[4px_4px_0px_0px_#1e3a8a]",
+        amber: "bg-amber-500 shadow-[4px_4px_0px_0px_#92400e]",
+        emerald: "bg-emerald-500 shadow-[4px_4px_0px_0px_#065f46]",
+        rose: "bg-rose-500 shadow-[4px_4px_0px_0px_#9f1239]",
     };
 
     return (
         <motion.div
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -3 }}
             onClick={onClick}
             className={cn(
-                "p-8 bg-white border-8 border-gray-950 shadow-[10px_10px_0px_0px_black] transition-all",
-                onClick && "cursor-pointer hover:shadow-none hover:translate-x-1 hover:translate-y-1"
+                "p-5 bg-white border-[6px] border-gray-950 shadow-[6px_6px_0px_0px_black] transition-all",
+                onClick && "cursor-pointer hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
             )}
         >
-            <div className="flex flex-col gap-6">
-                <div className={cn("w-14 h-14 flex items-center justify-center text-white transform -rotate-6 border-4 border-gray-950", colors[color])}>
-                    <Icon size={32} strokeWidth={3} />
+            <div className="flex flex-col gap-4">
+                <div className={cn("w-10 h-10 flex items-center justify-center text-white transform -rotate-3 border-[3px] border-gray-950", colors[color])}>
+                    <Icon size={20} strokeWidth={2.5} />
                 </div>
                 <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-[3px] mb-2">{label}</p>
-                    <h3 className="text-3xl font-black text-gray-950 tracking-tighter uppercase italic">{value}</h3>
-                    {subValue && <p className="text-[10px] font-black text-primary-600 mt-2 italic uppercase tracking-widest">{subValue}</p>}
+                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-[2px] mb-1 leading-none">{label}</p>
+                    <h3 className="text-xl font-black text-gray-950 tracking-tighter uppercase italic leading-none">{value}</h3>
+                    {subValue && <p className="text-[8px] font-black text-primary-600 mt-2 italic uppercase tracking-widest leading-none">{subValue}</p>}
                 </div>
             </div>
         </motion.div>
