@@ -4,8 +4,7 @@ import {
     Award, 
     Plus, 
     ThumbsUp, 
-    ThumbsDown, 
-    MessageSquare,
+    ThumbsDown,
     CheckCircle2,
     Trash2,
     User,
@@ -18,7 +17,7 @@ import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
+// ar is not used here but could be for date formatting in the future, removing to fix build error
 
 export const Evaluations = () => {
     const { currentUser } = useApp();
