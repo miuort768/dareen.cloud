@@ -135,16 +135,31 @@ export const Dashboard = () => {
                         />
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <TeacherFocusList 
-                            students={focusStudents || []} 
-                            onStudentClick={(s) => setBriefingStudent(s)}
-                        />
-                         <TeacherLeaderboard 
-                            students={topStudents || []} 
-                            onStudentClick={(s) => setBriefingStudent(s)}
-                        />
-                    </div>
+                    {(!focusStudents || focusStudents.length === 0) ? (
+                        <div className="space-y-8">
+                            <TeacherFocusList 
+                                students={[]} 
+                                onStudentClick={(s) => setBriefingStudent(s)}
+                            />
+                            <div className="grid grid-cols-1">
+                                <TeacherLeaderboard 
+                                    students={topStudents || []} 
+                                    onStudentClick={(s) => setBriefingStudent(s)}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <TeacherFocusList 
+                                students={focusStudents || []} 
+                                onStudentClick={(s) => setBriefingStudent(s)}
+                            />
+                             <TeacherLeaderboard 
+                                students={topStudents || []} 
+                                onStudentClick={(s) => setBriefingStudent(s)}
+                            />
+                        </div>
+                    )}
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <SessionAnalysis stats={stats} monthlyData={monthlyData} />

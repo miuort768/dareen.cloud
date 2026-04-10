@@ -1,4 +1,4 @@
-import { AlertTriangle, UserCircle, MessageSquare, Clock } from 'lucide-react';
+import { AlertTriangle, UserCircle, MessageSquare, Clock, CheckCircle2 } from 'lucide-react';
 
 interface FocusStudent {
     id: string;
@@ -14,13 +14,13 @@ interface TeacherFocusListProps {
 
 export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListProps) => {
     if (!students || students.length === 0) return (
-        <div className="bg-emerald-50 dark:bg-emerald-900/10 border-2 border-gray-950 p-6 flex items-center gap-4">
-            <div className="w-10 h-10 bg-emerald-500 flex items-center justify-center text-white">
-                <Clock size={20} />
+        <div className="bg-emerald-50 dark:bg-emerald-900/10 border-4 border-gray-950 p-8 flex items-center justify-center gap-6 shadow-[10px_10px_0px_0px_rgba(16,185,129,0.2)] dark:shadow-none animate-in zoom-in-95 duration-500">
+            <div className="w-16 h-16 bg-emerald-500 border-4 border-gray-950 flex items-center justify-center text-white shadow-[4px_4px_0px_0px_black] transform rotate-3">
+                <CheckCircle2 size={32} />
             </div>
-            <div>
-                <h4 className="font-black text-xs text-emerald-900 dark:text-emerald-400 uppercase tracking-tighter">كل شيء ممتاز!</h4>
-                <p className="text-[10px] text-emerald-700 dark:text-emerald-500 font-bold">جميع طلابك ملتزمون بالخطط والمواعيد حالياً.</p>
+            <div className="text-center">
+                <h4 className="font-black text-lg text-emerald-950 dark:text-emerald-400 uppercase tracking-tighter mb-1">خلي كل شيء ممتاز!</h4>
+                <p className="text-xs text-emerald-700 dark:text-emerald-500 font-black uppercase tracking-widest">جميع طلابك ملتزمون بالخطط والمواعيد حالياً. عمل مذهل!</p>
             </div>
         </div>
     );
