@@ -216,7 +216,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                                     <Zap size={12} className="fill-current" /> جاري التشفير...
                                                 </span>
                                             ) : (
-                                                <span className="truncate opacity-60 text-right truncate w-full">{conv.lastMessage || 'تم فتح القناة. لا توجد رسائل بعد.'}</span>
+                                                <span className="truncate opacity-60 text-right w-full">{conv.lastMessage || 'تم فتح القناة. لا توجد رسائل بعد.'}</span>
                                             )}
                                         </div>
 

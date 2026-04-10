@@ -9,6 +9,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '../lib/utils';
 
 // Interfaces
 interface Student {
