@@ -251,6 +251,8 @@ export const Students = () => {
                             curriculum: item.curriculum || item['المنهج'] || '',
                             notes: item.notes || item['ملاحظات'] || '',
                             sessionPrice: Number(item.sessionPrice || item['سعر الحصة'] || 0),
+                            username: item.username || item['اسم المستخدم'] || '',
+                            password: item.password || item['كلمة المرور'] || '',
                             enrollments: item.enrollments || []
                         };
 

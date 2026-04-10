@@ -27,19 +27,25 @@ const updateStudentSchema = createStudentSchema.partial().extend({
 
 // --- Teacher Schemas ---
 const createTeacherSchema = z.object({
+    id: z.string().optional(),
     name: z.string().min(2, "Name is required").trim(),
     phone: z.string().optional().or(z.literal('')),
     subject: z.string().optional().or(z.literal('')),
     price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
     percentage: z.number().or(z.string().transform(val => Number(val))).optional(),
-    color: z.string().optional()
+    color: z.string().optional(),
+    username: z.string().optional().or(z.literal('')),
+    password: z.string().optional().or(z.literal(''))
 });
 
 // --- Parent Schemas ---
 const createParentSchema = z.object({
+    id: z.string().optional(),
     name: z.string().min(2, "Name is required").trim(),
     phone: z.string().min(1, "Phone is required").trim(), // Parents MUST have a phone as ID often relies on it or it's unique
     email: z.string().email().optional().or(z.literal('')),
+    username: z.string().optional().or(z.literal('')),
+    password: z.string().optional().or(z.literal('')),
     studentCount: z.number().optional()
 });
 

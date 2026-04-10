@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap, Star, Zap } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap, Star, Zap, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
@@ -137,6 +137,46 @@ export const StudentDetails = ({
                             <p className="text-[9px] font-black text-white/60 uppercase">المركز</p>
                         </div>
                     </div>
+                </div>
+                
+                {/* Account Credentials Section */}
+                <div className="p-6 bg-white border-4 border-gray-950 shadow-[8px_8px_0px_0px_#3b82f6] relative overflow-hidden" dir="rtl">
+                    <div className="absolute top-0 left-0 w-16 h-16 bg-primary-500/5 rotate-45 -translate-x-8 -translate-y-8 pointer-events-none"></div>
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="p-2 bg-primary-600 text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
+                            <UserCircle2 size={18} />
+                        </div>
+                        <h4 className="font-black text-sm uppercase tracking-tighter text-gray-900">بيانات الدخول والحساب</h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-gray-50 p-4 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
+                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">اسم المستخدم</span>
+                            {student.username ? (
+                                <span className="font-mono font-black text-sm text-primary-600">@{student.username}</span>
+                            ) : (
+                                <span className="text-xs text-rose-500 font-bold italic">لم يتم تعيينه بعد</span>
+                            )}
+                        </div>
+                        <div className="bg-gray-50 p-4 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
+                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">كلمة المرور</span>
+                            {student.password ? (
+                                <div className="flex items-center gap-2">
+                                    <span className="font-mono font-black text-sm text-gray-700">••••••••</span>
+                                    <span className="text-[9px] bg-gray-950 text-white px-1.5 py-0.5 font-black uppercase tracking-tighter">Hashed</span>
+                                </div>
+                            ) : (
+                                <span className="text-xs text-rose-500 font-bold italic">لا توجد كلمة مرور</span>
+                            )}
+                        </div>
+                    </div>
+                    
+                    {!student.username && (
+                        <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-amber-600 bg-amber-50 p-2 border border-amber-200">
+                            <AlertCircle size={14} />
+                            تنبيـه: هذا الطالب لن يتمكن من الدخول للمنصة حتى يتم تعيين بيانات حسابه من صفحة التعديل.
+                        </div>
+                    )}
                 </div>
 
                 <div className="space-y-6">

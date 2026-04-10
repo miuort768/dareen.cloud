@@ -44,6 +44,8 @@ async function setupDatabase() {
             parentId TEXT,
             totalPoints INTEGER DEFAULT 0,
             badges TEXT, -- JSON string
+            username TEXT UNIQUE,
+            password TEXT,
             FOREIGN KEY(parentId) REFERENCES parents(id) ON DELETE SET NULL
         );
         
@@ -548,68 +550,77 @@ async function setupDatabase() {
     try { await db.run('ALTER TABLE students ADD COLUMN parentId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE students ADD COLUMN totalPoints INTEGER DEFAULT 0'); } catch(e) {}
     try { await db.run('ALTER TABLE students ADD COLUMN badges TEXT'); } catch(e) {}
+    try { await db.exec("ALTER TABLE students ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
+    try { await db.exec("ALTER TABLE students ADD COLUMN password TEXT"); } catch (e) { }
+    try { await db.exec("ALTER TABLE teachers ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
+    try { await db.exec("ALTER TABLE teachers ADD COLUMN password TEXT"); } catch (e) { }
+    try { await db.exec("ALTER TABLE parents ADD COLUMN username TEXT UNIQUE"); } catch (e) { }
+    try { await db.exec("ALTER TABLE parents ADD COLUMN password TEXT"); } catch (e) { }
+    try { await db.exec("ALTER TABLE enrollments ADD COLUMN isFrozen INTEGER DEFAULT 0"); } catch (e) { }
+    try { await db.exec("ALTER TABLE enrollments ADD COLUMN frozenReason TEXT"); } catch (e) { }
     try { await db.run('ALTER TABLE enrollments ADD COLUMN teacherId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE sessions ADD COLUMN teacherId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE teacher_invoices ADD COLUMN teacherId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE sessions ADD COLUMN teacherPrice INTEGER DEFAULT 0'); } catch(e) {}
 
-    // Auto-populate parent credentials if missing
-    console.log('Verifying parent credentials...');
+    // Auto-populate ALL user credentials (Students, Teachers, Parents) in one safe block
+    console.log('Verifying all user credentials...');
     try {
         const bcrypt = require('bcrypt');
         const defaultHashed = await bcrypt.hash('123456', 10);
 
-        // 1. Ensure all parents have a username (fallback to phone)
-        await db.run("UPDATE parents SET username = phone WHERE username IS NULL OR username = ''");
+        // Helper: generate a unique username, checking for collisions
+        const makeUnique = async (table, base, id) => {
+            let candidate = base;
+            const exists = await db.get(`SELECT id FROM ${table} WHERE username = ? AND id != ?`, [candidate, id]);
+            if (exists) candidate = candidate + '_' + Math.floor(Math.random() * 9000 + 1000);
+            return candidate;
+        };
 
-        // 2. Ensure all parents have a hashed password
-        const parents = await db.all("SELECT id, password FROM parents");
+        // 1. Parents
+        const parents = await db.all("SELECT id, name, username, password, phone FROM parents");
         for (const p of parents) {
+            if (!p.username || p.username.trim() === '') {
+                let base = (p.phone && p.phone.trim() !== '') ? p.phone.trim() : 'parent_' + p.id.slice(-4);
+                const uname = await makeUnique('parents', base, p.id);
+                await db.run("UPDATE parents SET username = ? WHERE id = ?", [uname, p.id]);
+            }
             if (!p.password || !p.password.startsWith('$2b$')) {
                 await db.run("UPDATE parents SET password = ? WHERE id = ?", [defaultHashed, p.id]);
             }
         }
-        console.log('All parent credentials verified and hashed.');
-    } catch (e) {
-        console.warn('Could not auto-populate parent credentials:', e.message);
-    }
 
-    // Auto-populate student credentials if missing
-    console.log('Verifying student credentials...');
-    try {
-        const bcrypt = require('bcrypt');
-        const defaultHashed = await bcrypt.hash('123456', 10);
-
-        // Define a fallback for username: use studentPhone, if empty use parentPhone + _S, if still empty use ID
+        // 2. Students
         const students = await db.all("SELECT id, username, password, studentPhone, parentPhone FROM students");
         for (const s of students) {
-            let userBase = s.username;
-            if (!userBase || userBase.trim() === '') {
-                if (s.studentPhone && s.studentPhone.trim() !== '') {
-                    userBase = s.studentPhone;
-                } else if (s.parentPhone && s.parentPhone.trim() !== '') {
-                    // Quick hash/suffix to avoid collision with parent username
-                    userBase = s.parentPhone + '_' + s.id.slice(-3);
-                } else {
-                    userBase = s.id;
-                }
-                
-                // Ensure unique
-                const exists = await db.get("SELECT id FROM students WHERE username = ? AND id != ?", [userBase, s.id]);
-                if (exists) {
-                     userBase = userBase + '_' + Math.floor(Math.random() * 1000);
-                }
-                
-                await db.run("UPDATE students SET username = ? WHERE id = ?", [userBase, s.id]);
+            if (!s.username || s.username.trim() === '') {
+                let base = (s.studentPhone && s.studentPhone.trim() !== '') 
+                    ? s.studentPhone.trim() 
+                    : (s.parentPhone && s.parentPhone.trim() !== '' ? s.parentPhone.trim() + '_' + s.id.slice(-3) : s.id);
+                const uname = await makeUnique('students', base, s.id);
+                await db.run("UPDATE students SET username = ? WHERE id = ?", [uname, s.id]);
             }
-
             if (!s.password || !s.password.startsWith('$2b$')) {
                 await db.run("UPDATE students SET password = ? WHERE id = ?", [defaultHashed, s.id]);
             }
         }
-        console.log('All student credentials verified and hashed.');
+
+        // 3. Teachers
+        const teachers = await db.all("SELECT id, name, username, password, phone1 FROM teachers");
+        for (const t of teachers) {
+            if (!t.username || t.username.trim() === '') {
+                let base = (t.phone1 && t.phone1.trim() !== '') ? t.phone1.trim() : 'teacher_' + t.id.slice(-4);
+                const uname = await makeUnique('teachers', base, t.id);
+                await db.run("UPDATE teachers SET username = ? WHERE id = ?", [uname, t.id]);
+            }
+            if (!t.password || !t.password.startsWith('$2b$')) {
+                await db.run("UPDATE teachers SET password = ? WHERE id = ?", [defaultHashed, t.id]);
+            }
+        }
+
+        console.log('All user credentials verified and hashed.');
     } catch (e) {
-        console.warn('Could not auto-populate student credentials:', e.message);
+        console.warn('Could not auto-populate user credentials:', e.message);
     }
 
     console.log('Database setup complete.');

@@ -35,6 +35,9 @@ router.post('/', async (req, res) => {
         const newItem = await req.db.get('SELECT * FROM parents WHERE id = ?', [newId]);
         res.status(201).json(newItem);
     } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: parents.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.' });
+        }
         logger.error('Error adding parent', err, { parent: name });
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -62,6 +65,9 @@ router.put('/:id', async (req, res) => {
         const updated = await req.db.get('SELECT id, name, phone, email, username FROM parents WHERE id = ?', [id]);
         res.json(updated);
     } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: parents.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.' });
+        }
         console.error('SERVER UPDATE PARENT ERROR:', err);
         logger.error('Error updating parent', err, { id });
         res.status(500).json({ error: 'Internal Server Error', details: err.message });

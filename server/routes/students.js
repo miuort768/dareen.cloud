@@ -106,6 +106,9 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 
         res.status(201).json(newStudent);
     } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: students.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
+        }
         logger.error('Error adding student', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -170,6 +173,9 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 
         res.json(updatedStudent);
     } catch (err) {
+        if (err.message.includes('UNIQUE constraint failed: students.username')) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
+        }
         logger.error('Error updating student', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
