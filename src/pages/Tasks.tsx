@@ -1,25 +1,20 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
     CheckCircle2, 
-    Circle, 
     Plus, 
     Trash2, 
     Calendar,
-    AlertCircle, 
     ListTodo, 
     Clock, 
-    X,
     LayoutGrid,
     LayoutList,
     Trophy,
     Zap,
-    ArrowRight,
     Search,
     Filter,
     Flame,
     Star
 } from 'lucide-react';
-import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 
@@ -34,7 +29,6 @@ interface Task {
 }
 
 export const Tasks = () => {
-    const { currentUser } = useApp();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');
