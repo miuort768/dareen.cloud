@@ -17,14 +17,14 @@ import {
     Trophy,
     ShieldCheck,
     Target,
-    User
+    User,
+    ChevronLeft
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
-import { ParentExcellenceRadar } from '../features/dashboard/components/ParentExcellenceRadar';
 import { ParentChildVisualProgress } from '../features/dashboard/components/ParentChildVisualProgress';
 
 export const ParentDashboard = () => {
@@ -142,12 +142,12 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="space-y-6 pb-24" dir="rtl">
+        <div className="space-y-8 pb-24" dir="rtl">
 
             {/* Compact Cyber-Brutalist Dashboard Header */}
-            <div className="relative bg-gray-950 p-6 lg:p-8 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-6">
+            <div className="relative bg-gray-950 p-6 lg:p-8 border-[6px] border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] overflow-hidden mb-8">
                 <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
-                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '30px 20px' }} />
                 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-6">
@@ -204,55 +204,104 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* Compact Insights Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <ParentExcellenceRadar 
-                    achievements={children
-                        .filter(c => c.totalPoints > 0)
-                        .slice(0, 2)
-                        .map(c => ({
-                            id: c.id,
-                            studentName: c.name,
-                            achievement: 'إتمام المرحلة الدراسية بتميز',
-                            date: 'اليوم',
-                            points: c.totalPoints > 50 ? 50 : c.totalPoints
-                        }))
-                    }
-                />
-                
-                <div className="bg-white border-[6px] border-gray-950 p-6 shadow-[6px_6px_0px_0px_#3b82f6] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-16 h-full bg-gray-50 -skew-x-12 translate-x-8 pointer-events-none" />
-                    <div className="flex items-center gap-3 mb-6 relative z-10">
-                        <div className="p-2 bg-gray-950 text-white transform -rotate-3">
-                            <Activity size={18} strokeWidth={2.5} />
-                        </div>
-                        <h2 className="text-lg font-black text-gray-950 uppercase italic tracking-tighter leading-none">مؤشرات الأداء الرقمي</h2>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4 relative z-10">
-                        <div className="p-4 bg-gray-50 border-r-[6px] border-primary-600">
-                            <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">معدل الانضباط</span>
-                            <div className="text-2xl font-black text-gray-950 italic leading-none">{stats.attendanceRate}%</div>
-                            <div className="w-full h-0.5 bg-gray-200 mt-2 relative">
-                                <div className="absolute top-0 right-0 h-full bg-primary-600 transition-all" style={{ width: `${stats.attendanceRate}%` }} />
+            {/* Unified Strategic Intelligence Unit - Merged Radar & Indicators */}
+            <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_black] overflow-hidden mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12">
+                    {/* Excellence Radar Side */}
+                    <div className="lg:col-span-8 p-6 lg:border-l-[6px] border-gray-950 bg-gray-950 text-white relative">
+                        <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" 
+                             style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+                        
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="p-2 bg-white text-gray-950 transform -rotate-3">
+                                    <Trophy size={18} className="animate-pulse" />
+                                </div>
+                                <h3 className="font-black text-lg uppercase italic tracking-tighter">رادار التميز الأسبوعي (Excellence Radar)</h3>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {children.filter(c => c.totalPoints > 0).slice(0, 2).map((child) => (
+                                    <div key={child.id} className="flex items-center justify-between group">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-white/10 border-2 border-white/20 flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform">
+                                                <Star size={24} className="text-yellow-400 fill-current" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-black uppercase tracking-tighter text-white/90">{child.name}</h4>
+                                                <p className="text-[10px] font-bold text-yellow-400 uppercase leading-none mt-1">إتمام المرحلة الدراسية بتميز</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-left">
+                                            <span className="text-3xl font-black italic tracking-tighter text-emerald-400">+50</span>
+                                            <p className="text-[8px] font-black uppercase opacity-60 tracking-widest leading-none">نقطة ذكاء</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                                <div className="text-[9px] font-black text-white/40 uppercase tracking-widest">تم التحديث: اليوم</div>
+                                <button className="text-[10px] font-black text-yellow-400 hover:text-white uppercase italic flex items-center gap-1 transition-colors">
+                                    عرض كافة الإنجازات <ChevronLeft size={14} />
+                                </button>
                             </div>
                         </div>
-                        <div className="p-4 bg-gray-50 border-r-[6px] border-emerald-500">
-                            <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">الرصيد المتبقي</span>
-                            <div className="text-2xl font-black text-gray-950 italic leading-none">{stats.sessionsTotal - stats.sessionsUsed}</div>
-                            <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest">حصة متوفرة</span>
+                    </div>
+
+                    {/* Digital Indicators Side */}
+                    <div className="lg:col-span-4 p-8 bg-gray-50 flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="p-2 bg-gray-950 text-white">
+                                    <Activity size={20} strokeWidth={3} />
+                                </div>
+                                <h3 className="text-lg font-black text-gray-950 uppercase italic tracking-tighter">مؤشرات الأداء الرقمي</h3>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div>
+                                    <div className="flex justify-between items-end mb-2">
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">معدل الانضباط</span>
+                                        <span className="text-2xl font-black text-gray-950 italic">{stats.attendanceRate}%</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-gray-200 border-2 border-gray-950 relative">
+                                        <div 
+                                            className="absolute top-0 right-0 h-full bg-primary-600 transition-all duration-1000" 
+                                            style={{ width: `${stats.attendanceRate}%` }} 
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="flex justify-between items-end mb-2">
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">كفاءة الرصيد</span>
+                                        <span className="text-2xl font-black text-gray-950 italic">{stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0}%</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-gray-200 border-2 border-gray-950 relative">
+                                        <div 
+                                            className="absolute top-0 right-0 h-full bg-emerald-500 transition-all duration-1000" 
+                                            style={{ width: `${stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0}%` }} 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 p-4 bg-gray-950 text-white border-2 border-gray-950 text-center">
+                            <span className="text-[9px] font-black uppercase tracking-[3px] animate-pulse">الحالة: نشط ومستقر</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Compact Hero Levels Section */}
-            <div>
+            <div className="mb-10">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-gray-950 text-white transform rotate-2">
                         <Trophy size={20} />
                     </div>
-                    <h2 className="text-xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic leading-none">مستويات الأبطال (Progress)</h2>
+                    <h2 className="text-xl font-black text-gray-950 dark:text-white uppercase tracking-tighter italic leading-none">مستويات الأبطال (Heroes Progress)</h2>
                 </div>
                 
                 <ParentChildVisualProgress 
@@ -328,7 +377,7 @@ export const ParentDashboard = () => {
                                     <AlertCircle size={24} className="text-rose-600 mt-0.5 shrink-0" />
                                     <div>
                                         <p className="text-xs font-black text-gray-950 uppercase italic tracking-tighter mb-1">تنبيه: {student.name}</p>
-                                        <p className="text-[9px] text-gray-500 font-bold leading-tight line-clamp-2">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص في {en.subject}.</p>
+                                        <p className="text-[9px] text-gray-500 font-bold leading-tight">تبقى {Number(en.sessionsTotal) - Number(en.sessionsUsed)} حصص في {en.subject}.</p>
                                     </div>
                                 </div>
                             ));
@@ -479,3 +528,5 @@ const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) =
         </motion.div>
     );
 };
+
+
