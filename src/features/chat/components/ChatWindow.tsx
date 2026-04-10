@@ -157,19 +157,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                     <div className="relative group cursor-pointer" onClick={() => selectedConv.isGroup && openGroupSettings()}>
                         <div className="w-12 h-12 lg:w-14 lg:h-14 bg-gray-950 text-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(239,68,68,1)] flex items-center justify-center transform group-hover:rotate-6 transition-transform overflow-hidden">
-                            <img src={selectedConv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="Avatar" className="w-full h-full object-cover" />
+                            <img src={selectedConv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="الصورة الشخصية" className="w-full h-full object-cover" />
                         </div>
                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-white dark:border-[#111b21] rounded-none shadow-[2px_2px_0px_0px_black] animate-pulse"></div>
                     </div>
 
-                    <div className="min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
+                    <div className="min-w-0 text-right">
+                        <div className="flex items-center gap-2 mb-0.5 justify-end">
                             {selectedConv.isGroup && <ShieldCheck size={14} className="text-primary-600" />}
                             <h2 className="font-black text-gray-950 dark:text-white leading-tight truncate text-base lg:text-xl tracking-tighter uppercase italic">
                                 {selectedConv.displayName}
                             </h2>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 justify-end">
                             {typingInThisConv.length > 0 ? (
                                 <motion.div 
                                     initial={{ opacity: 0 }}
@@ -184,7 +184,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             ) : (
                                 <div className="flex items-center gap-2">
                                     <span className="w-2.5 h-2.5 bg-emerald-500 border-2 border-gray-950" />
-                                    <span className="text-[9px] text-gray-400 font-black uppercase tracking-[2px]">Communication Active</span>
+                                    <span className="text-[9px] text-gray-400 font-black uppercase tracking-[2px]">الاتصال آمن ونشط</span>
                                 </div>
                             )}
                         </div>
@@ -193,7 +193,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                 <div className="flex items-center gap-4 relative z-10">
                     <div className="hidden md:flex gap-2">
-                         <div className="px-3 py-1.5 bg-gray-950 text-white text-[9px] font-black uppercase border-b-2 border-primary-500 italic">Secure Line</div>
+                         <div className="px-3 py-1.5 bg-gray-950 text-white text-[9px] font-black uppercase border-b-2 border-primary-500 italic">خط اتصال مشفر</div>
                     </div>
                     <div className="relative" ref={menuRef}>
                         <button
@@ -213,7 +213,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         {selectedConv.isGroup && (currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
                                             <button
                                                 onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                                className="w-full text-right px-4 py-4 text-xs font-black text-gray-950 hover:bg-primary-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase"
+                                                className="w-full text-right px-4 py-4 text-xs font-black text-gray-950 hover:bg-primary-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase flex-row-reverse"
                                             >
                                                 <Edit2 size={16} className="text-primary-600" />
                                                 إعدادات المجموعة
@@ -221,7 +221,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         )}
                                         <button
                                             onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-4 text-xs font-black text-rose-600 hover:bg-rose-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase"
+                                            className="w-full text-right px-4 py-4 text-xs font-black text-rose-600 hover:bg-rose-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase flex-row-reverse"
                                         >
                                             <Trash2 size={16} />
                                             حذف السجل
@@ -249,7 +249,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         )}
                     >
                         {activeMeeting ? <Rocket size={20} className="animate-bounce" /> : <Gamepad2 size={20} />}
-                        {activeMeeting ? 'الالتحاق بالمهمة (حصة مباشرة)' : 'إطلاق حصة تعليمية'}
+                        {activeMeeting ? 'الالتحاق بالحصّة المباشرة' : 'إطلاق حصة تعليمية الآن'}
                         <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
                     </motion.button>
 
@@ -268,11 +268,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 onScroll={handleScroll}
                 className="flex-1 overflow-y-auto p-4 lg:p-10 space-y-8 bg-transparent custom-scrollbar relative z-10"
             >
-                <div className="relative space-y-12">
+                <div className="relative space-y-12 text-right">
                     {messages.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-20 text-gray-300 select-none grayscale opacity-30">
                             <MessageSquare size={120} strokeWidth={4} />
-                            <h2 className="text-4xl font-black uppercase tracking-tighter mt-6 italic">Secure Channel Established</h2>
+                            <h2 className="text-4xl font-black uppercase tracking-tighter mt-6 italic">قناة الاتصال مفتوحة</h2>
                             <p className="font-bold border-2 border-gray-300 px-4 py-1 mt-4">بداية مشفرة للمحادثة</p>
                         </div>
                     ) : (
@@ -284,20 +284,20 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 return (
                                     <motion.div 
                                         layout
-                                        initial={{ opacity: 0, x: isMe ? -20 : 20 }}
+                                        initial={{ opacity: 0, x: isMe ? 20 : -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         key={msg.id || idx} 
                                         className={cn(
                                             "flex flex-col",
-                                            isMe ? "items-start" : "items-end"
+                                            isMe ? "items-end" : "items-start"
                                         )}
                                     >
                                         <div className={cn(
                                             "flex items-start gap-4 max-w-[90%] lg:max-w-[80%]",
-                                            isMe ? "flex-row" : "flex-row-reverse"
+                                            isMe ? "flex-row-reverse" : "flex-row"
                                         )}>
                                             <div className={cn(
-                                                "p-5 border-4 border-gray-950 relative overflow-hidden transition-transform hover:-rotate-1 duration-300",
+                                                "p-5 border-4 border-gray-950 relative overflow-hidden transition-transform hover:-rotate-1 duration-300 text-right",
                                                 isMe
                                                     ? "bg-white text-gray-950 shadow-[6px_6px_0px_0px_#ef4444]"
                                                     : "bg-gray-950 text-white shadow-[6px_6px_0px_0px_#3b82f6]"
@@ -312,7 +312,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                                 )}
                                                 {isMe && showAvatar && (
                                                      <span className="block text-[11px] font-black text-rose-500 mb-2 leading-none uppercase tracking-widest italic border-b border-gray-100 pb-2">
-                                                        SENDER: YOU
+                                                        المرسل: أنت
                                                     </span>
                                                 )}
 
@@ -351,7 +351,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             onClick={() => scrollToBottom()}
-                            className="fixed bottom-36 left-12 w-14 h-14 bg-gray-950 text-white shadow-[6px_6px_0px_0px_#ef4444] flex items-center justify-center border-2 border-white z-[200] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                            className="fixed bottom-36 right-12 w-14 h-14 bg-gray-950 text-white shadow-[6px_6px_0px_0px_#ef4444] flex items-center justify-center border-2 border-white z-[200] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
                         >
                             <ArrowDown size={28} />
                         </motion.button>
@@ -361,7 +361,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
             {/* High-Action Input Area */}
             <div className="p-6 bg-gray-50 border-t-8 border-gray-950 shrink-0 relative z-30">
-                <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
+                <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar flex-row-reverse">
                     {QUICK_REPLIES.map(reply => (
                         <button
                             key={reply}
@@ -374,7 +374,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 {showEmojiPicker && (
-                    <div className="absolute bottom-full left-10 mb-6 z-[200]" ref={emojiPickerRef}>
+                    <div className="absolute bottom-full right-10 mb-6 z-[200]" ref={emojiPickerRef}>
                         <motion.div 
                             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
                             className="border-8 border-gray-950 shadow-[15px_15px_0px_0px_black] overflow-hidden"
@@ -391,8 +391,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
                 )}
 
-                <form onSubmit={handleSendMessage} className="flex items-stretch gap-6 max-w-[1400px] mx-auto h-20">
-                    <div className="flex-1 flex items-center gap-4 bg-white border-8 border-gray-950 px-6 shadow-[10px_10px_0px_0px_black] focus-within:shadow-none focus-within:translate-x-1 focus-within:translate-y-1 transition-all">
+                <form onSubmit={handleSendMessage} className="flex items-stretch gap-6 max-w-[1400px] mx-auto h-20 flex-row-reverse">
+                    <div className="flex-1 flex items-center gap-4 bg-white border-8 border-gray-950 px-6 shadow-[10px_10px_0px_0px_black] focus-within:shadow-none focus-within:translate-x-1 focus-within:translate-y-1 transition-all flex-row-reverse">
                         <button
                             type="button"
                             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -410,8 +410,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 setNewMessage(e.target.value);
                                 if (currentUser) setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
                             }}
-                            placeholder="ارسل تعليماتك أو رسالتك للزملاء..."
-                            className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-black py-4 text-gray-950 placeholder-gray-300 italic"
+                            placeholder="اكتب رسالتك أو تعليماتك هنا..."
+                            className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-black py-4 text-gray-950 placeholder-gray-300 italic text-right"
                         />
                         <button type="button" className="text-gray-400 hover:text-gray-950 hover:rotate-12 transition-all">
                             <Mic size={26} />
@@ -432,7 +432,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         {isSending ? (
                             <RefreshCw className="animate-spin" size={32} />
                         ) : (
-                            <Send size={32} className="transform -rotate-12" />
+                            <Send size={32} className="transform rotate-12" />
                         )}
                     </motion.button>
                 </form>

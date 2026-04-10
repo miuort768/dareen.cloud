@@ -8,7 +8,7 @@ import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
- import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Interfaces
 interface Student {
@@ -206,7 +206,7 @@ export const Appointments = () => {
                         </motion.div>
                         <div>
                             <div className="flex items-center gap-3 mb-2">
-                                <span className="px-3 py-1 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic">Mission Schedule</span>
+                                <span className="px-3 py-1 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic">جدول المهام التعليمية</span>
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-pulse" />)}
                                 </div>
@@ -214,7 +214,7 @@ export const Appointments = () => {
                             <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">إدارة المهمات والمواعيد</h1>
                             <p className="text-gray-400 text-xs md:text-base font-bold mt-4 flex items-center gap-3 uppercase tracking-wider">
                                 <Activity size={18} className="text-primary-500" />
-                                مراقبة وتوجيه الجلسات التعليمية الاستراتيجية لشركاء النجاح
+                                مراقبة وتوجيه الجلسات التعليمية لشركاء النجاح
                             </p>
                         </div>
                     </div>
@@ -229,7 +229,7 @@ export const Appointments = () => {
                         value={totalAppointments}
                         icon={Calendar}
                         color="indigo"
-                        trend="Total Power"
+                        trend="القوة الإجمالية"
                         className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#4f46e5] rounded-none p-8"
                     />
                 </motion.div>
@@ -239,7 +239,7 @@ export const Appointments = () => {
                         value={todayAppointments}
                         icon={Zap}
                         color="blue"
-                        trend="Daily Target"
+                        trend="الهدف اليومي"
                         className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#3b82f6] rounded-none p-8"
                     />
                 </motion.div>
@@ -249,7 +249,7 @@ export const Appointments = () => {
                         value={remainingToday}
                         icon={Target}
                         color="emerald"
-                        trend="Active Ops"
+                        trend="العمليات النشطة"
                         className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#10b981] rounded-none p-8"
                     />
                 </motion.div>
@@ -267,7 +267,7 @@ export const Appointments = () => {
                             placeholder="بحث في السجلات..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic text-right"
                         />
                     </div>
 
@@ -277,9 +277,9 @@ export const Appointments = () => {
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic text-right"
                         >
-                            <option value="all">كل القطاعات (الأيام)</option>
+                            <option value="all">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
                                 <option key={day} value={day}>{day}</option>
                             ))}
@@ -292,7 +292,7 @@ export const Appointments = () => {
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic text-right"
                         >
                             <option value="all">كل الكوادر</option>
                             {uniqueTeachers.map(teacher => (
@@ -318,7 +318,7 @@ export const Appointments = () => {
                                 </div>
                                 <div className="flex items-center gap-2 bg-primary-600 px-4 py-2 border-2 border-white">
                                     <span className="text-white text-lg font-black leading-none">{appointments.length}</span>
-                                    <span className="text-white text-[10px] font-bold uppercase tracking-widest">Ops</span>
+                                    <span className="text-white text-[10px] font-bold uppercase tracking-widest">مهمة</span>
                                 </div>
                             </div>
 
@@ -338,7 +338,7 @@ export const Appointments = () => {
                                                 className="p-6 bg-white border-4 border-gray-500 hover:border-primary-600 transition-all cursor-pointer relative overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
                                             >
                                                 {/* Status Badge */}
-                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-[9px] font-black uppercase italic tracking-tighter">Next Action</div>
+                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-[9px] font-black uppercase italic tracking-tighter">المهمة التالية</div>
                                                 
                                                 <div className="flex items-center justify-between mt-4 mb-6">
                                                     <div className="flex items-center gap-3">
@@ -353,21 +353,21 @@ export const Appointments = () => {
                                                     <div className="flex items-center gap-3 p-2 bg-gray-50 border-r-4 border-gray-950">
                                                         <User size={18} className="text-gray-950" />
                                                         <div className="flex flex-col">
-                                                            <span className="text-sm font-black text-gray-950 uppercase">{nextSession.studentName}</span>
-                                                            <span className="text-[10px] text-primary-600 font-bold tracking-widest uppercase">{nextSession.curriculum} System</span>
+                                                            <span className="text-sm font-black text-gray-950">{nextSession.studentName}</span>
+                                                            <span className="text-[10px] text-primary-600 font-bold tracking-widest uppercase">منهج {nextSession.curriculum}</span>
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-3 px-2">
                                                         <ShieldCheck size={18} className="text-emerald-500" />
-                                                        <span className="text-xs font-black text-gray-400 uppercase italic">Command: {nextSession.teacherName}</span>
+                                                        <span className="text-xs font-black text-gray-400 uppercase italic">القائد: {nextSession.teacherName}</span>
                                                     </div>
                                                 </div>
 
                                                 <button
                                                     onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-600 text-white border-4 border-gray-950 py-3 font-black text-xs uppercase italic shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+                                                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-600 text-white border-4 border-gray-950 py-3 font-black text-xs uppercase italic shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-center"
                                                 >
-                                                    تأكيد الإنجاز (Done)
+                                                    تأكيد الإنجاز
                                                 </button>
                                             </div>
                                         );
@@ -377,7 +377,7 @@ export const Appointments = () => {
                                                 <div className="w-16 h-16 bg-white border-4 border-emerald-500 flex items-center justify-center mb-4 transform rotate-12">
                                                     <CheckCircle2 size={32} className="text-emerald-600" />
                                                 </div>
-                                                <h4 className="text-emerald-950 font-black text-base uppercase tracking-tighter mb-2 italic">Status: Clear</h4>
+                                                <h4 className="text-emerald-950 font-black text-base uppercase tracking-tighter mb-2 italic">الحالة: مكتمل</h4>
                                                 <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">جميع المهمات مكتملة لهذا القطاع</p>
                                             </div>
                                         );
@@ -385,7 +385,7 @@ export const Appointments = () => {
                                 })() : (
                                     <div className="text-center py-12 border-4 border-dashed border-gray-200 opacity-30 grayscale">
                                         <Calendar size={48} className="mx-auto mb-4" />
-                                        <p className="text-xs font-black uppercase tracking-widest italic">No Data Established</p>
+                                        <p className="text-xs font-black uppercase tracking-widest italic">لا يوجد بيانات</p>
                                     </div>
                                 )}
                             </div>
@@ -413,7 +413,7 @@ export const Appointments = () => {
                                     <div className="inline-block p-4 border-4 border-primary-500 mb-6 transform -rotate-6">
                                         <Zap className="text-primary-500" size={40} />
                                     </div>
-                                    <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-2 leading-none">Operation Logistics</h4>
+                                    <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-2 leading-none">لوجستيات المهمة</h4>
                                     <h3 className="font-black text-4xl uppercase italic tracking-tighter mb-2">{selectedAppointment.day}</h3>
                                     <div className="inline-block px-6 py-2 bg-primary-600 text-white border-2 border-white text-2xl font-black italic">
                                         {selectedAppointment.time}
@@ -424,7 +424,7 @@ export const Appointments = () => {
                             <div className="p-8 space-y-6">
                                 <div className="p-6 bg-gray-50 border-r-8 border-primary-600 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Target Personnel</label>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">الطالب المستهدف</label>
                                         <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.studentName}</h4>
                                         <span className="text-[10px] font-bold text-primary-600 uppercase tracking-widest">{selectedAppointment.studentGrade}</span>
                                     </div>
@@ -433,7 +433,7 @@ export const Appointments = () => {
 
                                 <div className="p-6 bg-gray-50 border-r-8 border-emerald-500 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Squad Leader</label>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">قائد المجموعة</label>
                                         <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.teacherName}</h4>
                                     </div>
                                     <ShieldCheck size={32} className="text-gray-200 group-hover:text-emerald-500 transition-colors" />
@@ -441,7 +441,7 @@ export const Appointments = () => {
 
                                 <div className="p-6 bg-gray-50 border-r-8 border-amber-500 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Subject Domain</label>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">نطاق المادة</label>
                                         <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.subject}</h4>
                                         <span className="inline-block mt-2 px-3 py-1 bg-amber-500 text-white text-[9px] font-black uppercase italic">{selectedAppointment.curriculum}</span>
                                     </div>
@@ -452,7 +452,7 @@ export const Appointments = () => {
                                     onClick={() => setShowDetails(false)}
                                     className="w-full flex items-center justify-center gap-4 py-5 bg-gray-950 text-white border-4 border-gray-950 font-black uppercase text-xs italic shadow-[8px_8px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
                                 >
-                                    Dismiss Report <ArrowRight size={18} />
+                                    إغلاق التقرير <ArrowRight size={18} />
                                 </button>
                             </div>
                         </motion.div>
@@ -466,7 +466,7 @@ export const Appointments = () => {
                     <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="inline-block mb-8">
                         <Calendar size={100} strokeWidth={1} className="text-gray-100" />
                     </motion.div>
-                    <h3 className="font-black text-5xl text-gray-900 uppercase italic tracking-tighter mb-4">No Signals Detected</h3>
+                    <h3 className="font-black text-5xl text-gray-900 uppercase italic tracking-tighter mb-4">لا توجد إشارات</h3>
                     <p className="text-gray-400 font-bold uppercase tracking-[4px] max-w-md mx-auto leading-relaxed">لم يتم العثور على أي بيانات مجدولة حالياً في هذا القطاع</p>
                 </div>
             )}
