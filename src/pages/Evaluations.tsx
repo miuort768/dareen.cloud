@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { 
     Star, 
     Award, 
@@ -7,7 +7,12 @@ import {
     ThumbsDown, 
     MessageSquare,
     CheckCircle2,
-    Trash2
+    Trash2,
+    User,
+    History,
+    ChevronDown,
+    ChevronUp,
+    Zap
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -21,6 +26,7 @@ export const Evaluations = () => {
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [expandedStudentId, setExpandedStudentId] = useState<string | null>(null);
     
     // Form state
     const [formData, setFormData] = useState({
@@ -65,6 +71,20 @@ export const Evaluations = () => {
         }
     };
 
+    const teacherStudents = useMemo(() => {
+        if (!currentUser) return [];
+        if (currentUser.role === 'admin') return students;
+        if (currentUser.role === 'teacher') {
+            return students.filter(s => 
+                s.enrollments?.some((e: any) => 
+                    e.teacherId === currentUser.id || 
+                    e.teacher === (currentUser.teacherName || currentUser.name)
+                )
+            );
+        }
+        return students; // For parents/others, show whatever students state has
+    }, [students, currentUser]);
+
     const onSubmit = async (e: any) => {
         e.preventDefault();
         try {
@@ -99,154 +119,197 @@ export const Evaluations = () => {
         { value: 'يحتاج تحسين', icon: ThumbsDown, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200' }
     ];
 
-    if (isLoading) return <div className="p-8 text-center text-gray-500 animate-pulse font-black">جاري تحميل التقييمات...</div>;
+    if (isLoading) return <div className="p-8 text-center text-gray-500 animate-pulse font-black">جاري تحميل سجل التقييمات...</div>;
 
     return (
         <div className="space-y-8 pb-20 animate-in fade-in duration-500" dir="rtl">
-            {/* Header Banner - Premium Style */}
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none shrink-0">
-                {/* Background Shapes */}
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/10 rounded-full -mr-20 -mt-20 blur-[100px] pointer-events-none"></div>
-                <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
-                
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
-                            <Award size={36} className="text-yellow-400 group-hover:scale-110 transition-transform duration-300" />
+            {/* Header Banner */}
+            <div className="relative bg-gray-950 p-10 border-b-8 border-primary-600 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)]">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="flex items-center gap-6">
+                        <div className="w-20 h-20 bg-primary-600 text-white flex items-center justify-center border-4 border-white shadow-[5px_5px_0px_0px_black] transform rotate-3">
+                            <Award size={40} />
                         </div>
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight">سجل التقييمات والتحفيز</h1>
-                            <p className="text-white/80 text-sm font-bold flex items-center gap-2">
-                                <Star size={16} className="text-yellow-400" />
-                                متابعة وتقييم أداء الطلاب لتعزيز المهارات
+                            <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tighter uppercase">تقييم الطلاب والتحفيز</h1>
+                            <p className="text-primary-400 text-sm font-black flex items-center gap-2 uppercase tracking-widest">
+                                <Zap size={16} className="fill-current" />
+                                كافئي طلابك بالنقاط والتقييمات الإيجابية
                             </p>
                         </div>
                     </div>
-                    {/* Add button */}
-                    {(currentUser?.role === 'teacher' || currentUser?.role === 'admin') && (
-                        <button
-                            onClick={() => { resetForm(); setIsModalOpen(true); }}
-                            className="bg-white text-primary-600 px-6 py-3 flex items-center justify-center gap-3 font-black text-sm uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:-translate-y-1 transition-all border-2 border-transparent hover:border-yellow-400 w-full md:w-auto"
-                        >
-                            <Plus size={20} className="text-primary-600" />
-                            تقييم طالب جديد
-                        </button>
-                    )}
                 </div>
             </div>
 
-            <div className="px-4 md:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {evaluations.map((ev) => {
-                        const student = students.find(s => s.id === ev.studentId);
-                        const ratingData = ratingOptions.find(r => r.value === ev.rating) || ratingOptions[0];
-                        const EvIcon = ratingData.icon;
+            <div className="px-6 md:px-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                    {teacherStudents.map((student) => {
+                        const studentEvals = evaluations
+                            .filter(ev => ev.studentId === student.id)
+                            .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime());
                         
+                        const lastEval = studentEvals[0];
+                        const lastRating = lastEval ? ratingOptions.find(r => r.value === lastEval.rating) || ratingOptions[0] : null;
+                        const isExpanded = expandedStudentId === student.id;
+
                         return (
-                            <div key={ev.id} className="relative bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 p-0 shadow-sm hover:shadow-xl transition-all duration-300 group rounded-none overflow-hidden flex flex-col">
-                                {/* Top Accent Line */}
-                                <div className={cn("absolute top-0 inset-x-0 h-1.5", ratingData.bg.replace('bg-', 'bg-').replace('100', '500').replace('50', '500'))} />
-                                
-                                <div className="p-5 flex-1 flex flex-col">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="flex-1 min-w-0 pr-2">
-                                            <h4 className="font-black text-base text-gray-900 dark:text-white truncate">
-                                                {student?.name || 'طالب غير معروف'}
-                                            </h4>
-                                            <p className="text-[11px] text-gray-400 dark:text-gray-500 font-bold mt-1">بواسطة: {ev.teacherName}</p>
+                            <div key={student.id} className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] flex flex-col group transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_black]">
+                                {/* Student Profile Header */}
+                                <div className="p-6 border-b-4 border-gray-950 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between">
+                                    <div className="flex items-center gap-4 min-w-0">
+                                        <div className="w-12 h-12 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400 shrink-0">
+                                            <User size={24} />
                                         </div>
-                                        <div className="flex flex-col items-end gap-2 shrink-0 pl-2">
-                                            <div className={cn("flex items-center gap-1.5 px-3 py-1 text-xs font-black tracking-wider border rounded-none shadow-sm shadow-current/10", ratingData.bg, ratingData.color, ratingData.border)}>
-                                                <EvIcon size={12} strokeWidth={3} />
-                                                {ev.rating}
-                                            </div>
-                                            {Number(ev.points) > 0 && (
-                                                <div className="flex items-center gap-1 text-xs font-black text-amber-600 bg-gradient-to-r from-amber-100 to-yellow-50 px-2.5 py-1 border border-amber-200 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
-                                                    +{ev.points} <Star size={12} className="fill-amber-500 text-amber-500 animate-pulse" />
+                                        <div className="min-w-0">
+                                            <h4 className="font-black text-lg text-gray-950 dark:text-white truncate">{student.name}</h4>
+                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{student.grade}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col items-end gap-1">
+                                        <span className="bg-yellow-400 text-gray-950 px-2 py-1 border-2 border-gray-950 text-[10px] font-black shadow-[2px_2px_0px_0px_black]">
+                                            {student.totalPoints || 0} XP
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Last Evaluation Status */}
+                                <div className="p-6 flex-1 flex flex-col">
+                                    {lastEval ? (
+                                        <div className="space-y-4 mb-6">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">آخر تقييم</span>
+                                                <div className={cn("flex items-center gap-1.5 px-3 py-1 text-[10px] font-black border-2 border-gray-950 transition-none", lastRating?.bg, lastRating?.color)}>
+                                                    {lastRating?.icon && <lastRating.icon size={12} strokeWidth={3} />}
+                                                    {lastEval.rating}
                                                 </div>
+                                            </div>
+                                            <div className="bg-gray-50 dark:bg-gray-800 p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 relative">
+                                                <p className="text-xs font-bold text-gray-700 dark:text-gray-300 italic line-clamp-2">
+                                                    "{lastEval.notes || 'بدون ملاحظات'}"
+                                                </p>
+                                                <History size={14} className="absolute bottom-2 left-2 text-gray-300" />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex-1 flex flex-col items-center justify-center py-6 text-center space-y-3 opacity-40">
+                                            <Award size={32} className="text-gray-300" />
+                                            <p className="text-[10px] font-black uppercase tracking-widest">لم يتم التقييم بعد</p>
+                                        </div>
+                                    )}
+
+                                    {/* Action Buttons */}
+                                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                                        <button
+                                            onClick={() => { setFormData({ ...formData, studentId: student.id }); setIsModalOpen(true); }}
+                                            className="bg-primary-600 text-white border-2 border-gray-950 px-4 py-3 text-xs font-black uppercase tracking-tighter shadow-[4px_4px_0px_0px_black] hover:bg-primary-700 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2"
+                                        >
+                                            <Plus size={16} strokeWidth={3} />
+                                            أضف تقييم
+                                        </button>
+                                        <button
+                                            onClick={() => setExpandedStudentId(isExpanded ? null : student.id)}
+                                            className="bg-white dark:bg-gray-800 text-gray-950 dark:text-white border-2 border-gray-950 px-4 py-3 text-xs font-black uppercase tracking-tighter shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2"
+                                        >
+                                            {isExpanded ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
+                                            السجل ({studentEvals.length})
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Expanded History List */}
+                                {isExpanded && (
+                                    <div className="bg-gray-950 text-white p-4 border-t-4 border-gray-950 max-h-[300px] overflow-y-auto custom-scrollbar-dark">
+                                        <h5 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                            <Star size={12} className="text-yellow-400" />
+                                            تاريخ التقييمات الكامل
+                                        </h5>
+                                        <div className="space-y-4">
+                                            {studentEvals.map((ev) => {
+                                                const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
+                                                return (
+                                                    <div key={ev.id} className="border-l-2 border-gray-800 pl-4 py-1 relative">
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-[14px]">{r.icon && <r.icon size={12} className="text-primary-400" />}</span>
+                                                                <span className="text-xs font-black text-white">{ev.rating}</span>
+                                                                {ev.points > 0 && <span className="text-[9px] font-black text-yellow-400">+{ev.points} XP</span>}
+                                                            </div>
+                                                            <span className="text-[9px] font-black text-gray-600 uppercase">
+                                                                {format(new Date(ev.created_at || ev.date), 'dd/MM/yy')}
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-[10px] font-medium text-gray-400 mb-2 leading-relaxed">{ev.notes}</p>
+                                                        {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
+                                                            <button 
+                                                                onClick={() => handleDelete(ev.id)}
+                                                                className="text-rose-500 hover:text-rose-400 p-1 transition-colors"
+                                                            >
+                                                                <Trash2 size={12} />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                            {studentEvals.length === 0 && (
+                                                <p className="text-[10px] text-gray-600 italic">لا يوجد سجل تاريخي.</p>
                                             )}
                                         </div>
                                     </div>
-                                    
-                                    <div className="mt-auto pt-3 border-t border-gray-50 dark:border-gray-800">
-                                        <div className="relative bg-gray-50 dark:bg-gray-800/80 p-3 text-xs text-gray-700 dark:text-gray-300 font-semibold leading-relaxed border-r-2 border-primary-400">
-                                            <MessageSquare size={14} className="absolute left-3 top-3 text-gray-300 dark:text-gray-600" />
-                                            <span className="pr-1 block min-h-[3rem] whitespace-pre-wrap">{ev.notes || 'لا توجد رسالة أو ملاحظات مرفقة.'}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                {/* Footer */}
-                                <div className="bg-gray-50 dark:bg-gray-900/50 px-5 py-3 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center mt-auto">
-                                    <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
-                                        {format(new Date(ev.created_at || ev.date), 'dd MMM yyyy', { locale: ar })}
-                                    </span>
-                                    {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
-                                        <button onClick={() => handleDelete(ev.id)} className="text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 p-1.5 transition-colors group-hover:opacity-100 lg:opacity-0 focus:opacity-100 rounded-none">
-                                            <Trash2 size={16} />
-                                        </button>
-                                    )}
-                                </div>
+                                )}
                             </div>
                         );
                     })}
 
-                    {evaluations.length === 0 && (
-                        <div className="col-span-full py-20 px-4 text-center bg-gray-50 dark:bg-gray-800/20 border-2 border-dashed border-gray-200 dark:border-gray-700">
-                            <div className="w-24 h-24 mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-full flex items-center justify-center mb-6">
-                                <Award size={48} className="text-primary-400 dark:text-primary-500" />
+                    {teacherStudents.length === 0 && (
+                        <div className="col-span-full py-20 px-4 text-center bg-gray-50 dark:bg-gray-800/20 border-4 border-dashed border-gray-950">
+                            <div className="w-24 h-24 mx-auto bg-white dark:bg-gray-800 shadow-xl border-4 border-gray-950 flex items-center justify-center mb-6">
+                                <User size={48} className="text-gray-300" />
                             </div>
-                            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">لا توجد تقييمات للطلبة حتى الآن</h3>
-                            <p className="text-sm font-bold text-gray-500 max-w-md mx-auto">التقييمات تساعد الطلاب على التحفيز وتوفر لأولياء الأمور نظرة شاملة عن أداء أبنائهم، ابدأ بتقييم طالب الآن!</p>
-                            {(currentUser?.role === 'teacher' || currentUser?.role === 'admin') && (
-                                <button
-                                    onClick={() => { resetForm(); setIsModalOpen(true); }}
-                                    className="mt-8 mx-auto bg-primary-600 text-white px-8 py-3 flex items-center justify-center gap-3 font-black text-sm uppercase tracking-widest hover:bg-primary-700 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:-translate-y-1"
-                                >
-                                    <Plus size={18} /> إضافة التقييم الأول
-                                </button>
-                            )}
+                            <h3 className="text-2xl font-black text-gray-950 dark:text-white mb-2 uppercase tracking-tighter">لا يوجد طلاب مسجلون حالياً</h3>
+                            <p className="text-sm font-black text-gray-500 max-w-md mx-auto uppercase">بمجرد تعيين طلاب لكِ في البرامج التعليمية، سيظهرون هنا تلقائياً لتقييمهم.</p>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Modal */}
+            {/* Modal - Unified Form */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-gray-900 rounded-none shadow-2xl w-full max-w-xl border-2 border-primary-500 flex flex-col max-h-[90vh] overflow-hidden transform scale-100 transition-transform">
-                        <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-primary-50/50 dark:bg-primary-900/20 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl pointer-events-none"></div>
-                            <h3 className="text-xl font-black text-primary-900 dark:text-primary-100 flex items-center gap-3 relative z-10">
-                                <Star className="text-yellow-500 fill-yellow-500" />
-                                تقييم طالب جديد
+                <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                    <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden">
+                        <div className="p-8 border-b-4 border-gray-950 bg-primary-600 text-white flex justify-between items-center relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                            <h3 className="text-2xl font-black flex items-center gap-3 relative z-10 uppercase tracking-tighter">
+                                <Award size={28} />
+                                {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'تقييم طالب جديد'}
                             </h3>
-                            <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 p-2 transition-colors relative z-10">
-                                <Trash2 size={24} className="hidden" />
+                            <button onClick={() => setIsModalOpen(false)} className="bg-white text-gray-950 w-10 h-10 flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-xl">
                                 &times;
                             </button>
                         </div>
                         
-                        <div className="p-6 overflow-y-auto">
+                        <div className="p-8 overflow-y-auto custom-scrollbar">
                             <form id="evaluation-form" onSubmit={onSubmit} className="space-y-8">
-                                <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">الطالب المحدد</label>
-                                    <select
-                                        value={formData.studentId}
-                                        onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
-                                        required
-                                        className="w-full border-2 border-gray-200 dark:border-gray-700 dark:bg-gray-900 rounded-none focus:ring-0 focus:border-primary-500 p-3.5 font-bold text-sm text-gray-900 dark:text-white transition-colors cursor-pointer"
-                                    >
-                                        <option value="">-- اختر الطالب --</option>
-                                        {students.map(s => (
-                                            <option key={s.id} value={s.id}>{s.name}</option>
-                                        ))}
-                                    </select>
-                                </div>
+                                {!formData.studentId && (
+                                    <div>
+                                        <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em]">اختر الطالب</label>
+                                        <select
+                                            value={formData.studentId}
+                                            onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
+                                            required
+                                            className="w-full border-4 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 font-black text-sm text-gray-950 dark:text-white transition-all focus:ring-4 focus:ring-primary-600/20 outline-none appearance-none cursor-pointer"
+                                        >
+                                            <option value="">-- اختر من قائمة طلابك --</option>
+                                            {teacherStudents.map(s => (
+                                                <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-widest">مستوى التقييم</label>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-[0.2em]">مستوى التميز</label>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         {ratingOptions.map((opt) => {
                                             const isSelected = formData.rating === opt.value;
                                             const OptIcon = opt.icon;
@@ -256,15 +319,14 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-4 border-2 flex flex-col items-center justify-center gap-3 rounded-none transition-all duration-200 relative overflow-hidden group",
+                                                        "p-4 border-4 transition-all duration-200 flex flex-col items-center justify-center gap-3",
                                                         isSelected 
-                                                            ? cn(opt.bg, opt.border, opt.color, "shadow-inner") 
-                                                            : "border-gray-100 dark:border-gray-800 text-gray-500 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800"
+                                                            ? cn(opt.bg, "border-gray-950 translate-x-1 translate-y-1 shadow-none", opt.color) 
+                                                            : "border-gray-950 bg-white dark:bg-gray-800 text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-[4px_4px_0px_0px_black]"
                                                     )}
                                                 >
-                                                    {isSelected && <div className="absolute inset-0 bg-white/40 dark:bg-black/20 pointer-events-none" />}
-                                                    <OptIcon size={28} className={cn("relative z-10 transition-transform duration-300 group-hover:scale-110", isSelected && "scale-110")} />
-                                                    <span className="text-sm font-black tracking-wide relative z-10">{opt.value}</span>
+                                                    <OptIcon size={24} strokeWidth={isSelected ? 4 : 2} className={cn(isSelected && "animate-bounce")} />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest">{opt.value}</span>
                                                 </button>
                                             )
                                         })}
@@ -272,9 +334,20 @@ export const Evaluations = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest flex justify-between">
-                                        <span>نقاط المكافأة الإضافية</span>
-                                        <span className="text-yellow-600 text-[10px] bg-yellow-50 px-2 py-0.5 border border-yellow-200">اختياري</span>
+                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em] flex justify-between">
+                                        <span>نقاط المكافأة (XP)</span>
+                                        <div className="flex gap-2">
+                                            {[5, 10, 20, 50].map(p => (
+                                                <button 
+                                                    key={p} 
+                                                    type="button" 
+                                                    onClick={() => setFormData({...formData, points: p})}
+                                                    className="bg-yellow-400 text-gray-950 border-2 border-gray-950 px-2 font-black text-[9px] hover:bg-yellow-500"
+                                                >
+                                                    +{p}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </label>
                                     <div className="flex">
                                         <input
@@ -283,41 +356,42 @@ export const Evaluations = () => {
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
                                             placeholder="0"
                                             min="0"
-                                            className="w-full border-2 border-l-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 rounded-none focus:ring-0 focus:border-yellow-500 p-3.5 font-black text-xl text-yellow-600 text-center transition-colors shadow-inner"
+                                            className="w-full border-4 border-l-0 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 font-black text-2xl text-yellow-600 text-center outline-none focus:bg-yellow-50 transition-colors"
                                         />
-                                        <div className="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-500 px-6 flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 border-r-0 shrink-0">
-                                            <Star size={24} className="fill-yellow-500" />
+                                        <div className="bg-yellow-400 text-gray-950 px-6 flex items-center justify-center border-4 border-gray-950 border-r-0 shrink-0 shadow-[4px_0px_0px_0px_black_inset]">
+                                            <Zap size={24} className="fill-current" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">رسالة إلى ولي الأمر</label>
+                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em]">رسالة الإشادة (تظهر لولي الأمر)</label>
                                     <textarea
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                                         rows={4}
-                                        className="w-full border-2 border-gray-200 dark:border-gray-700 dark:bg-gray-900 rounded-none focus:ring-0 focus:border-primary-500 p-4 shadow-sm text-sm font-semibold transition-colors resize-none placeholder:font-medium placeholder:text-gray-400/80"
-                                        placeholder="اكتب تقريراً تفصيلياً أو ملاحظات دقيقة عن أداء الطالب لتظهر لولي أمره بشكل مباشر..."
+                                        className="w-full border-4 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 shadow-inner text-sm font-bold transition-all focus:bg-gray-50 dark:focus:bg-gray-700 outline-none resize-none placeholder:text-gray-300"
+                                        placeholder="مثال: أداء ممتاز اليوم في حفظ سورة البقرة، استمر يا بطل!"
                                     />
                                 </div>
                             </form>
                         </div>
                         
-                        <div className="p-6 border-t font-black border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex justify-end gap-3 shrink-0">
+                        <div className="p-8 border-t-4 border-gray-950 bg-gray-50 dark:bg-gray-800 flex justify-end gap-4 shrink-0">
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-xs uppercase tracking-widest hover:bg-gray-50 hover:text-gray-900 transition-colors rounded-none"
+                                className="px-8 py-4 bg-white dark:bg-gray-700 border-2 border-gray-950 text-gray-950 dark:text-white text-xs font-black uppercase tracking-widest hover:bg-gray-100 transition-all shadow-[4px_4px_0px_0px_black] active:translate-y-1 active:shadow-none"
                             >
                                 إلغاء
                             </button>
                             <button
                                 type="submit"
                                 form="evaluation-form"
-                                className="px-8 py-3 bg-primary-600 text-white text-xs uppercase tracking-widest hover:bg-primary-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] transition-all rounded-none gap-2 flex items-center"
+                                className="px-10 py-4 bg-primary-600 text-white border-2 border-gray-950 text-xs font-black uppercase tracking-widest hover:bg-primary-700 transition-all shadow-[6px_6px_0px_0px_black] active:translate-y-1 active:shadow-none flex items-center gap-2"
                             >
-                                إرسال واعتماد
+                                <CheckCircle2 size={18} />
+                                إرسال التقييم فوراً
                             </button>
                         </div>
                     </div>
