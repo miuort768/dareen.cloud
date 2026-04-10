@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, Search, User, GraduationCap, BookOpen, Filter, X, CheckCircle2 } from 'lucide-react';
+import { 
+    Calendar, Clock, Search, User, GraduationCap, 
+    BookOpen, Filter, X, CheckCircle2, Zap, Target,
+    ShieldCheck, Activity, ArrowRight
+} from 'lucide-react';
 import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
+ import { motion, AnimatePresence } from 'framer-motion';
 
 // Interfaces
 interface Student {
@@ -55,12 +60,11 @@ export const Appointments = () => {
     const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Simulated 24h reset: Clear completed sessions if the day changes
+    // Simulated 24h reset logic
     useEffect(() => {
         const checkAndReset = async () => {
             try {
                 if (currentUser?.role === 'admin') {
-                    // Only admin can access system settings and perform reset
                     const settings = await api.get<any>('/system/settings');
                     const lastResetDate = settings?.last_appointment_reset;
                     const todayStr = new Date().toDateString();
@@ -74,19 +78,15 @@ export const Appointments = () => {
                         setCompletedSessionIds(sessions || []);
                     }
                 } else {
-                    // Start Update: Teachers just fetch the list, they rely on Admin (or first admin login) to reset.
-                    // Ideally the server should handle reset automatically, but for now this fixes the display issue.
                     const sessions = await api.get<string[]>('/appointments/completed-sessions');
                     setCompletedSessionIds(sessions || []);
                 }
             } catch (error) {
                 console.error("Error managing appointment reset:", error);
-                // Fallback: try to just get sessions if admin check failed? No, safe to just log.
             }
         };
-
         checkAndReset();
-    }, []);
+    }, [currentUser]);
 
     const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
@@ -98,7 +98,6 @@ export const Appointments = () => {
         }
     };
 
-    // Fetch Students Data
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -138,23 +137,18 @@ export const Appointments = () => {
             )
     );
 
-    // Get unique teachers for filter
     const uniqueTeachers = Array.from(new Set(allAppointments.map(a => a.teacherName)));
 
-    // Apply Filters
     const filteredAppointments = allAppointments.filter(appointment => {
         const matchesSearch =
             appointment.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             appointment.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             appointment.subject.toLowerCase().includes(searchTerm.toLowerCase());
-
         const matchesDay = filterDay === 'all' || appointment.day === filterDay;
         const matchesTeacher = filterTeacher === 'all' || appointment.teacherName === filterTeacher;
-
         return matchesSearch && matchesDay && matchesTeacher;
     });
 
-    // Group appointments by day
     const appointmentsByDay = DAYS_OF_WEEK.map(day => ({
         day,
         appointments: filteredAppointments
@@ -166,15 +160,12 @@ export const Appointments = () => {
             })
     })).filter(dayObj => filterDay === 'all' || dayObj.day === filterDay);
 
-    // Statistics
     const totalAppointments = allAppointments.length;
-    // Calculate today's appointments
     const todayAppointments = allAppointments.filter(a => {
         const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
         return a.day === today;
     }).length;
 
-    // Remaining today
     const remainingToday = allAppointments.filter(a => {
         const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
         return a.day === today && !completedSessionIds.includes(a.id);
@@ -183,11 +174,11 @@ export const Appointments = () => {
     if (loading) {
         return (
             <div className="space-y-6">
-                <Skeleton className="h-48 rounded-none" />
+                <Skeleton className="h-64 rounded-none" />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Skeleton className="h-32 rounded-2xl" />
-                    <Skeleton className="h-32 rounded-2xl" />
-                    <Skeleton className="h-32 rounded-2xl" />
+                    <Skeleton className="h-40 rounded-none" />
+                    <Skeleton className="h-40 rounded-none" />
+                    <Skeleton className="h-40 rounded-none" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[...Array(3)].map((_, i) => (
@@ -199,109 +190,111 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32">
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none mb-6">
-                {/* Background Geometric Enhancement - Richer & Larger Shapes */}
-                {/* Major Glows & Blobs */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
-
-                {/* Central Geometric elements */}
-                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
-
-                {/* Large Structural Shapes */}
-                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
-                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
-
-                {/* Large Geometric Outlines */}
-                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
-
-                {/* Pattern Layer */}
-                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
-
-                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
-                    <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group">
-                            <Calendar size={36} className="text-white" />
-                        </div>
+        <div className="space-y-10 pb-32">
+            {/* Ultra-Brutalist Command Header */}
+            <div className="relative bg-gray-950 p-10 shadow-[10px_10px_0px_0px_#ef4444] border-8 border-gray-950 overflow-hidden rounded-none mb-10">
+                <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" 
+                     style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+                
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="flex items-center gap-8">
+                        <motion.div 
+                            whileHover={{ rotate: -5, scale: 1.05 }}
+                            className="w-24 h-24 bg-primary-600 text-white border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] flex items-center justify-center transform -rotate-3"
+                        >
+                            <Calendar size={48} strokeWidth={3} />
+                        </motion.div>
                         <div>
-                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">المواعيد والجدول الأسبوعي</h1>
-                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
-                                <Clock size={14} className="text-white" />
-                                عرض وإدارة جميع المواعيد المجدولة لشركاء النجاح
+                            <div className="flex items-center gap-3 mb-2">
+                                <span className="px-3 py-1 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic">Mission Schedule</span>
+                                <div className="flex gap-1">
+                                    {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-pulse" />)}
+                                </div>
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">إدارة المهمات والمواعيد</h1>
+                            <p className="text-gray-400 text-xs md:text-base font-bold mt-4 flex items-center gap-3 uppercase tracking-wider">
+                                <Activity size={18} className="text-primary-500" />
+                                مراقبة وتوجيه الجلسات التعليمية الاستراتيجية لشركاء النجاح
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-2 md:gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <StatsCard
-                    title="إجمالي المواعيد"
-                    value={totalAppointments}
-                    icon={Calendar}
-                    color="indigo"
-                    trend="أسبوعياً"
-                />
-                <StatsCard
-                    title="مواعيد اليوم"
-                    value={todayAppointments}
-                    icon={Clock}
-                    color="blue"
-                    trend="اليوم"
-                    trendUp={true}
-                />
-                <StatsCard
-                    title="المتبقي اليوم"
-                    value={remainingToday}
-                    icon={CheckCircle2}
-                    color="emerald"
-                    trend="نشط"
-                />
+            {/* High-Impact Insight Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <motion.div whileHover={{ y: -5 }}>
+                    <StatsCard
+                        title="الجلسات المجدولة"
+                        value={totalAppointments}
+                        icon={Calendar}
+                        color="indigo"
+                        trend="Total Power"
+                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#4f46e5] rounded-none p-8"
+                    />
+                </motion.div>
+                <motion.div whileHover={{ y: -5 }}>
+                    <StatsCard
+                        title="عمليات اليوم"
+                        value={todayAppointments}
+                        icon={Zap}
+                        color="blue"
+                        trend="Daily Target"
+                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#3b82f6] rounded-none p-8"
+                    />
+                </motion.div>
+                <motion.div whileHover={{ y: -5 }}>
+                    <StatsCard
+                        title="قيد التنفيذ المتبقي"
+                        value={remainingToday}
+                        icon={Target}
+                        color="emerald"
+                        trend="Active Ops"
+                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#10b981] rounded-none p-8"
+                    />
+                </motion.div>
             </div>
 
-            {/* Filters */}
-            <div className="bg-white p-4 shadow-sm border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {/* Search */}
-                    <div className="relative">
-                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            {/* Operational Filters - Brutalist Panel */}
+            <div className="bg-white border-8 border-gray-950 p-8 shadow-[10px_10px_0px_0px_black] relative">
+                <div className="absolute top-0 right-0 w-24 h-full bg-gray-50 -skew-x-12 translate-x-12 pointer-events-none"></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                    <div className="relative group">
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">البحث الرقمي</label>
+                        <Search className="absolute right-4 top-[42px] text-gray-950" size={20} />
                         <input
                             type="text"
-                            placeholder="ابحث عن طالب، معلمة أو مادة..."
+                            placeholder="بحث في السجلات..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-4 pr-10 py-2.5 border border-gray-200 focus:outline-none focus:border-primary-500 text-sm rounded-none bg-gray-50 focus:bg-white transition-colors dark:bg-gray-800 dark:border-gray-700"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic"
                         />
                     </div>
 
-                    {/* Day Filter */}
                     <div className="relative">
-                        <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">الفلترة الزمنية</label>
+                        <Filter className="absolute right-4 top-[42px] text-gray-950" size={20} />
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pl-4 pr-10 py-2.5 border border-gray-200 focus:outline-none focus:border-primary-500 text-sm rounded-none bg-gray-50 dark:bg-gray-800 dark:border-gray-700 appearance-none cursor-pointer"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic"
                         >
-                            <option value="all">جميع الأيام</option>
+                            <option value="all">كل القطاعات (الأيام)</option>
                             {DAYS_OF_WEEK.map(day => (
                                 <option key={day} value={day}>{day}</option>
                             ))}
                         </select>
                     </div>
 
-                    {/* Teacher Filter */}
                     <div className="relative">
-                        <GraduationCap className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">قائد الفريق</label>
+                        <GraduationCap className="absolute right-4 top-[42px] text-gray-950" size={20} />
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pl-4 pr-10 py-2.5 border border-gray-200 focus:outline-none focus:border-primary-500 text-sm rounded-none bg-gray-50 dark:bg-gray-800 dark:border-gray-700 appearance-none cursor-pointer"
+                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic"
                         >
-                            <option value="all">جميع المعلمات</option>
+                            <option value="all">كل الكوادر</option>
                             {uniqueTeachers.map(teacher => (
                                 <option key={teacher} value={teacher}>{teacher}</option>
                             ))}
@@ -310,25 +303,26 @@ export const Appointments = () => {
                 </div>
             </div>
 
-            {/* Weekly Schedule Grid - Unified Layout */}
-            <div className={`grid gap-6 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                <div className={`${showDetails ? 'lg:col-span-2' : ''} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
+            {/* Main Schedule Grid - Strategic Layout */}
+            <div className={`grid gap-10 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                <div className={`${showDetails ? 'lg:col-span-2' : ''} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`}>
                     {appointmentsByDay.map(({ day, appointments }) => (
-                        <div key={day} className="bg-white border-r-4 border-r-primary-600 border border-gray-100 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
-                            <div className="p-4 border-b border-gray-50 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/50">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-400">
-                                        <Calendar size={18} />
-                                    </div>
-                                    <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-tight">{day}</h3>
+                        <motion.div 
+                            layout
+                            key={day} 
+                            className="bg-white border-8 border-gray-950 shadow-[10px_10px_0px_0px_#ef4444] group hover:-translate-x-1 hover:-translate-y-1 transition-all"
+                        >
+                            <div className="p-6 border-b-8 border-gray-950 flex items-center justify-between bg-gray-950">
+                                <div className="flex items-center gap-4">
+                                    <h3 className="font-black text-white uppercase tracking-tighter text-2xl italic">{day}</h3>
                                 </div>
-                                <div className="flex items-center gap-2 bg-primary-600 px-3 py-1 shadow-lg shadow-primary-600/20">
-                                    <span className="text-white text-xs font-black">{appointments.length}</span>
-                                    <span className="text-primary-100 text-[10px] font-bold">حصة</span>
+                                <div className="flex items-center gap-2 bg-primary-600 px-4 py-2 border-2 border-white">
+                                    <span className="text-white text-lg font-black leading-none">{appointments.length}</span>
+                                    <span className="text-white text-[10px] font-bold uppercase tracking-widest">Ops</span>
                                 </div>
                             </div>
 
-                            <div className="p-4 min-h-[220px] flex flex-col justify-center">
+                            <div className="p-6 min-h-[250px] flex flex-col justify-start">
                                 {appointments.length > 0 ? (() => {
                                     const remainingSessions = appointments.filter(a => !completedSessionIds.includes(a.id));
 
@@ -341,138 +335,139 @@ export const Appointments = () => {
                                                     setSelectedAppointment(nextSession);
                                                     setShowDetails(true);
                                                 }}
-                                                className="group p-5 bg-white dark:bg-gray-800 border-2 border-primary-100 dark:border-primary-900/30 hover:border-primary-500 transition-all cursor-pointer relative overflow-hidden shadow-md animate-in slide-in-from-top-4"
+                                                className="p-6 bg-white border-4 border-gray-500 hover:border-primary-600 transition-all cursor-pointer relative overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
                                             >
-                                                <div className="absolute left-0 top-0 w-1.5 h-full bg-primary-600"></div>
-                                                <div className="flex items-center justify-between mb-4">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="p-2 bg-primary-50 dark:bg-primary-900/50">
-                                                            <Clock size={16} className="text-primary-600 dark:text-primary-400" />
+                                                {/* Status Badge */}
+                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-[9px] font-black uppercase italic tracking-tighter">Next Action</div>
+                                                
+                                                <div className="flex items-center justify-between mt-4 mb-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="p-3 bg-gray-950 text-white border-2 border-gray-950 transform -rotate-3">
+                                                            <Clock size={20} strokeWidth={3} />
                                                         </div>
-                                                        <span className="text-lg font-black text-slate-900 dark:text-white">{nextSession.time}</span>
-                                                    </div>
-                                                    <button
-                                                        onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                        className="relative z-10 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 text-xs font-black shadow-lg shadow-emerald-500/20 active:scale-95 transition-all cursor-pointer"
-                                                    >
-                                                        تم الإنجاز
-                                                    </button>
-                                                </div>
-                                                <div className="space-y-3">
-                                                    <div className="flex items-center gap-3">
-                                                        <User size={16} className="text-slate-400" />
-                                                        <span className="text-sm font-black text-slate-800 dark:text-slate-200">{nextSession.studentName}</span>
-                                                        <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 font-black dark:bg-gray-700 dark:text-gray-300">
-                                                            {nextSession.curriculum}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center gap-3">
-                                                        <GraduationCap size={16} className="text-slate-400" />
-                                                        <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{nextSession.teacherName}</span>
+                                                        <span className="text-2xl font-black text-gray-950 italic tracking-tighter">{nextSession.time}</span>
                                                     </div>
                                                 </div>
-                                                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
-                                                    <p className="text-[10px] text-gray-400 font-bold uppercase">الحصة التالية قيد الانتظار</p>
-                                                    <p className="text-xs text-primary-600 font-black">المتبقي: {remainingSessions.length}</p>
+
+                                                <div className="space-y-4">
+                                                    <div className="flex items-center gap-3 p-2 bg-gray-50 border-r-4 border-gray-950">
+                                                        <User size={18} className="text-gray-950" />
+                                                        <div className="flex flex-col">
+                                                            <span className="text-sm font-black text-gray-950 uppercase">{nextSession.studentName}</span>
+                                                            <span className="text-[10px] text-primary-600 font-bold tracking-widest uppercase">{nextSession.curriculum} System</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-3 px-2">
+                                                        <ShieldCheck size={18} className="text-emerald-500" />
+                                                        <span className="text-xs font-black text-gray-400 uppercase italic">Command: {nextSession.teacherName}</span>
+                                                    </div>
                                                 </div>
+
+                                                <button
+                                                    onClick={(e) => handleCompleteSession(nextSession.id, e)}
+                                                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-600 text-white border-4 border-gray-950 py-3 font-black text-xs uppercase italic shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+                                                >
+                                                    تأكيد الإنجاز (Done)
+                                                </button>
                                             </div>
                                         );
                                     } else {
                                         return (
-                                            <div className="text-center py-10 bg-emerald-50/50 dark:bg-emerald-900/10 border border-dashed border-emerald-200 dark:border-emerald-800 animate-in fade-in">
-                                                <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                                    <CheckCircle2 size={32} className="text-emerald-600 dark:text-emerald-400" />
+                                            <div className="text-center py-12 bg-emerald-50 border-4 border-emerald-500 flex flex-col items-center">
+                                                <div className="w-16 h-16 bg-white border-4 border-emerald-500 flex items-center justify-center mb-4 transform rotate-12">
+                                                    <CheckCircle2 size={32} className="text-emerald-600" />
                                                 </div>
-                                                <h4 className="text-emerald-900 dark:text-emerald-300 font-black text-sm mb-1 uppercase tracking-tight">تم الانتهاء من اليوم بنجاح</h4>
-                                                <p className="text-[10px] text-emerald-600/70 font-bold">ستعود المواعيد للظهور غداً تلقائياً</p>
+                                                <h4 className="text-emerald-950 font-black text-base uppercase tracking-tighter mb-2 italic">Status: Clear</h4>
+                                                <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">جميع المهمات مكتملة لهذا القطاع</p>
                                             </div>
                                         );
                                     }
                                 })() : (
-                                    <div className="text-center py-10">
-                                        <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800 border border-dashed border-gray-200 dark:border-gray-700 flex items-center justify-center mx-auto mb-3 opacity-50">
-                                            <Calendar size={20} className="text-gray-300" />
-                                        </div>
-                                        <p className="text-[11px] text-gray-400 font-bold uppercase tracking-widest">لا توجد حصص مجدولة</p>
+                                    <div className="text-center py-12 border-4 border-dashed border-gray-200 opacity-30 grayscale">
+                                        <Calendar size={48} className="mx-auto mb-4" />
+                                        <p className="text-xs font-black uppercase tracking-widest italic">No Data Established</p>
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                {/* Details Panel */}
-                {showDetails && selectedAppointment && (
-                    <div className="bg-white border border-gray-200 h-fit dark:bg-gray-900 dark:border-gray-800 animate-in slide-in-from-left-4 sticky top-6">
-                        <div className="p-6 bg-gradient-to-br from-gray-50 to-white border-b border-gray-100 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-primary-600"></div>
-                            <button onClick={() => setShowDetails(false)} className="absolute left-4 top-4 text-gray-400 hover:text-red-600 transition-colors hover:bg-red-50 p-1 rounded-none dark:hover:bg-red-900/20">
-                                <X size={20} />
-                            </button>
-
-                            <div className="flex flex-col items-center text-center pt-2">
-                                <div className="p-3 bg-primary-100 rounded-none mb-3 dark:bg-primary-900/30">
-                                    <Clock className="text-primary-600 dark:text-primary-400" size={32} />
-                                </div>
-                                <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-1">{selectedAppointment.day}</h3>
-                                <p className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-4">{selectedAppointment.time}</p>
-                            </div>
-                        </div>
-
-                        <div className="p-6 space-y-4">
-                            {/* Student Info */}
-                            <div className="bg-blue-50 p-4 border border-blue-100 rounded-none dark:bg-blue-900/20 dark:border-blue-900/30">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <User size={16} className="text-blue-600 dark:text-blue-400" />
-                                    <h4 className="font-bold text-sm text-blue-900 dark:text-blue-300">معلومات الطالب</h4>
-                                </div>
-                                <p className="text-base font-bold text-gray-900 dark:text-white mb-1">{selectedAppointment.studentName}</p>
-                                <p className="text-xs text-gray-600 dark:text-gray-400">{selectedAppointment.studentGrade}</p>
-                            </div>
-
-                            {/* Teacher Info */}
-                            <div className="bg-purple-50 p-4 border border-purple-100 rounded-none dark:bg-purple-900/20 dark:border-purple-900/30">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <GraduationCap size={16} className="text-purple-600 dark:text-purple-400" />
-                                    <h4 className="font-bold text-sm text-purple-900 dark:text-purple-300">المعلمة</h4>
-                                </div>
-                                <p className="text-base font-bold text-gray-900 dark:text-white">{selectedAppointment.teacherName}</p>
-                            </div>
-
-                            {/* Subject Info */}
-                            <div className="bg-emerald-50 p-4 border border-emerald-100 rounded-none dark:bg-emerald-900/20 dark:border-emerald-900/30">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <BookOpen size={16} className="text-emerald-600 dark:text-emerald-400" />
-                                    <h4 className="font-bold text-sm text-emerald-900 dark:text-emerald-300">المادة والمنهج</h4>
-                                </div>
-                                <p className="text-base font-bold text-gray-900 dark:text-white mb-1">{selectedAppointment.subject}</p>
-                                <span className="inline-block text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-none font-bold dark:bg-emerald-900/40 dark:text-emerald-400">
-                                    {selectedAppointment.curriculum}
-                                </span>
-                            </div>
-
-                            {/* Time Summary */}
-                            <div className="bg-amber-50 p-4 border border-amber-100 rounded-none dark:bg-amber-900/20 dark:border-amber-900/30">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Clock size={16} className="text-amber-600 dark:text-amber-400" />
-                                    <h4 className="font-bold text-sm text-amber-900 dark:text-amber-300">موعد الحصة</h4>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <span className="text-base font-bold text-gray-900 dark:text-white">{selectedAppointment.day}</span>
-                                    <span className="text-xl font-bold text-amber-600 dark:text-amber-400">{selectedAppointment.time}</span>
+                {/* Details Panel - The Control Bunker */}
+                <AnimatePresence>
+                    {showDetails && selectedAppointment && (
+                        <motion.div 
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 50 }}
+                            className="bg-white border-8 border-gray-950 h-fit shadow-[20px_20px_0px_0px_black] sticky top-6 overflow-hidden"
+                        >
+                            <div className="p-8 bg-gray-950 text-white relative">
+                                <button 
+                                    onClick={() => setShowDetails(false)} 
+                                    className="absolute left-6 top-6 w-10 h-10 border-2 border-white flex items-center justify-center hover:bg-rose-500 hover:border-rose-500 transition-all"
+                                >
+                                    <X size={20} />
+                                </button>
+                                <div className="text-center pt-6">
+                                    <div className="inline-block p-4 border-4 border-primary-500 mb-6 transform -rotate-6">
+                                        <Zap className="text-primary-500" size={40} />
+                                    </div>
+                                    <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-2 leading-none">Operation Logistics</h4>
+                                    <h3 className="font-black text-4xl uppercase italic tracking-tighter mb-2">{selectedAppointment.day}</h3>
+                                    <div className="inline-block px-6 py-2 bg-primary-600 text-white border-2 border-white text-2xl font-black italic">
+                                        {selectedAppointment.time}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                )}
+
+                            <div className="p-8 space-y-6">
+                                <div className="p-6 bg-gray-50 border-r-8 border-primary-600 flex items-center justify-between group">
+                                    <div>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Target Personnel</label>
+                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.studentName}</h4>
+                                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-widest">{selectedAppointment.studentGrade}</span>
+                                    </div>
+                                    <User size={32} className="text-gray-200 group-hover:text-primary-600 transition-colors" />
+                                </div>
+
+                                <div className="p-6 bg-gray-50 border-r-8 border-emerald-500 flex items-center justify-between group">
+                                    <div>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Squad Leader</label>
+                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.teacherName}</h4>
+                                    </div>
+                                    <ShieldCheck size={32} className="text-gray-200 group-hover:text-emerald-500 transition-colors" />
+                                </div>
+
+                                <div className="p-6 bg-gray-50 border-r-8 border-amber-500 flex items-center justify-between group">
+                                    <div>
+                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">Subject Domain</label>
+                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.subject}</h4>
+                                        <span className="inline-block mt-2 px-3 py-1 bg-amber-500 text-white text-[9px] font-black uppercase italic">{selectedAppointment.curriculum}</span>
+                                    </div>
+                                    <BookOpen size={32} className="text-gray-200 group-hover:text-amber-500 transition-colors" />
+                                </div>
+
+                                <button 
+                                    onClick={() => setShowDetails(false)}
+                                    className="w-full flex items-center justify-center gap-4 py-5 bg-gray-950 text-white border-4 border-gray-950 font-black uppercase text-xs italic shadow-[8px_8px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                >
+                                    Dismiss Report <ArrowRight size={18} />
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
 
-            {/* Empty State */}
+            {/* Global Empty State */}
             {filteredAppointments.length === 0 && (
-                <div className="bg-white border border-gray-200 p-12 text-center dark:bg-gray-900 dark:border-gray-800">
-                    <Calendar size={64} className="mx-auto mb-4 text-gray-300" />
-                    <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-2">لا توجد مواعيد</h3>
-                    <p className="text-gray-500 dark:text-gray-400">لم يتم العثور على مواعيد تطابق معايير البحث</p>
+                <div className="bg-white border-8 border-gray-950 p-24 text-center shadow-[15px_15px_0px_0px_black]">
+                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="inline-block mb-8">
+                        <Calendar size={100} strokeWidth={1} className="text-gray-100" />
+                    </motion.div>
+                    <h3 className="font-black text-5xl text-gray-900 uppercase italic tracking-tighter mb-4">No Signals Detected</h3>
+                    <p className="text-gray-400 font-bold uppercase tracking-[4px] max-w-md mx-auto leading-relaxed">لم يتم العثور على أي بيانات مجدولة حالياً في هذا القطاع</p>
                 </div>
             )}
         </div>
