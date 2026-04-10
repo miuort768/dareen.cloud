@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import {
     Users,
@@ -7,19 +8,17 @@ import {
     AlertCircle,
     Receipt,
     Bell,
-    TrendingUp,
     CheckCircle2,
     CalendarDays,
     Clock,
     Headset,
     Activity,
-    XCircle,
     Star,
     Award,
     Trophy,
-    Zap,
     ShieldCheck,
-    Target
+    Target,
+    User
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -142,8 +141,6 @@ export const ParentDashboard = () => {
             </div>
         );
     }
-
-    const totalUsagePercent = stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0;
 
     return (
         <div className="space-y-10 pb-32" dir="rtl">
