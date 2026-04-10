@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
     Send, Smile, MoreVertical, Edit2, Trash2, ChevronRight, 
-    CheckCheck, Video, Mic, ArrowDown, Sparkles, MessageSquare, RefreshCw
+    CheckCheck, Video, Mic, ArrowDown, Sparkles, MessageSquare, RefreshCw,
+    Zap, Rocket, ShieldCheck, Gamepad2
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -122,18 +123,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
     return (
         <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
             className={cn(
-                "flex-1 flex flex-col bg-white dark:bg-[#0b141a] overflow-hidden lg:rounded-3xl shadow-2xl border border-white/20 dark:border-gray-800/50 relative",
+                "flex-1 flex flex-col bg-white dark:bg-[#0b141a] overflow-hidden lg:rounded-none lg:border-l-8 lg:border-y-8 border-gray-950 relative",
                 !isChatOnly && "pb-[80px] lg:pb-0"
             )}
         >
-            {/* Background Decoration */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary-500/5 dark:bg-primary-500/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[120px]" />
-            </div>
+            {/* Brutalist Pattern Background */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.1] z-0" 
+                 style={{ backgroundImage: 'linear-gradient(#000 2px, transparent 2px), linear-gradient(90deg, #000 2px, transparent 2px)', backgroundSize: '40px 40px' }} />
 
             {showMeeting && currentUser && (
                 <MeetingRoom
@@ -144,85 +143,88 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 />
             )}
 
-            {/* Chat Header */}
-            <div className="h-16 lg:h-20 shrink-0 border-b border-gray-100 dark:border-gray-800/20 flex items-center justify-between bg-white/40 dark:bg-[#0b141a]/40 backdrop-blur-xl sticky top-0 z-50 px-6">
-                <div className="flex items-center gap-4">
+            {/* Premium Header - Brutalist Skewed Style */}
+            <div className="h-20 lg:h-24 shrink-0 border-b-4 border-gray-950 flex items-center justify-between bg-white dark:bg-[#111b21] sticky top-0 z-50 px-6 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/10 -skew-x-12 translate-x-10 pointer-events-none"></div>
+                
+                <div className="relative z-10 flex items-center gap-4">
                     <button
                         onClick={() => setSelectedConv(null)}
-                        className="lg:hidden p-2 -mr-2 text-gray-500 hover:text-primary-600 transition-colors active:scale-95"
+                        className="lg:hidden p-2 -mr-2 bg-gray-950 text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_#ef4444]"
                     >
-                        <ChevronRight size={24} />
+                        <ChevronRight size={20} />
                     </button>
 
                     <div className="relative group cursor-pointer" onClick={() => selectedConv.isGroup && openGroupSettings()}>
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 dark:border-gray-700 transition-all group-hover:rotate-3 group-hover:scale-110 overflow-hidden">
+                        <div className="w-12 h-12 lg:w-14 lg:h-14 bg-gray-950 text-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(239,68,68,1)] flex items-center justify-center transform group-hover:rotate-6 transition-transform overflow-hidden">
                             <img src={selectedConv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="Avatar" className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#0b141a] rounded-full shadow-sm animate-pulse"></div>
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-white dark:border-[#111b21] rounded-none shadow-[2px_2px_0px_0px_black] animate-pulse"></div>
                     </div>
 
-                    <div className="min-w-0 flex-1">
-                        <h2 className="font-black text-[#111b21] dark:text-[#e9edef] leading-tight truncate text-sm lg:text-lg tracking-tight">
-                            {selectedConv.displayName}
-                        </h2>
-                        <div className="flex items-center gap-1.5 h-4">
+                    <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                            {selectedConv.isGroup && <ShieldCheck size={14} className="text-primary-600" />}
+                            <h2 className="font-black text-gray-950 dark:text-white leading-tight truncate text-base lg:text-xl tracking-tighter uppercase italic">
+                                {selectedConv.displayName}
+                            </h2>
+                        </div>
+                        <div className="flex items-center gap-2">
                             {typingInThisConv.length > 0 ? (
-                                <motion.p 
-                                    initial={{ opacity: 0, y: 5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="text-[11px] text-emerald-500 font-black italic flex items-center gap-1"
+                                <motion.div 
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 border border-emerald-500 flex items-center gap-2"
                                 >
-                                    <Sparkles size={10} />
-                                    {typingInThisConv.length === 1
-                                        ? `${typingInThisConv[0].userName} يكتب الان...`
-                                        : `${typingInThisConv.length} اشخاص يكتبون...`}
-                                </motion.p>
+                                    <div className="flex gap-1">
+                                        {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-bounce" style={{ animationDelay: `${i*0.1}s` }} />)}
+                                    </div>
+                                    <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-widest italic">جاري الكتابة...</span>
+                                </motion.div>
                             ) : (
-                                <span className="flex items-center gap-1.2">
-                                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_4px_#10b981]" />
-                                    <span className="text-[10px] text-gray-400 font-black uppercase tracking-[1px] ml-1">متصل الآن</span>
-                                </span>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2.5 h-2.5 bg-emerald-500 border-2 border-gray-950" />
+                                    <span className="text-[9px] text-gray-400 font-black uppercase tracking-[2px]">Communication Active</span>
+                                </div>
                             )}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4 relative z-10">
+                    <div className="hidden md:flex gap-2">
+                         <div className="px-3 py-1.5 bg-gray-950 text-white text-[9px] font-black uppercase border-b-2 border-primary-500 italic">Secure Line</div>
+                    </div>
                     <div className="relative" ref={menuRef}>
                         <button
                             onClick={() => setShowMoreMenu(!showMoreMenu)}
-                            className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-primary-600 transition-all rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800"
+                            className="w-12 h-12 flex items-center justify-center bg-white border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
                         >
-                            <MoreVertical size={20} />
+                            <MoreVertical size={24} className="text-gray-950" />
                         </button>
                         <AnimatePresence>
                             {showMoreMenu && (
                                 <motion.div 
-                                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                                    className="absolute top-full left-0 mt-2 w-60 bg-white/90 dark:bg-[#1a2329]/90 backdrop-blur-2xl border border-gray-100 dark:border-gray-800 shadow-2xl z-[100] rounded-2xl overflow-hidden p-2"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="absolute top-full left-0 mt-4 w-64 bg-white border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] z-[100] p-2"
                                 >
                                     <div className="space-y-1">
                                         {selectedConv.isGroup && (currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
                                             <button
                                                 onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                                className="w-full text-right px-4 py-3 text-sm font-black text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl flex items-center gap-3 transition-colors"
+                                                className="w-full text-right px-4 py-4 text-xs font-black text-gray-950 hover:bg-primary-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase"
                                             >
-                                                <div className="w-8 h-8 rounded-lg bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
-                                                    <Edit2 size={16} className="text-primary-600" />
-                                                </div>
-                                                تعديل المجموعة
+                                                <Edit2 size={16} className="text-primary-600" />
+                                                إعدادات المجموعة
                                             </button>
                                         )}
                                         <button
                                             onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                            className="w-full text-right px-4 py-3 text-sm font-black text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-xl flex items-center gap-3 transition-colors"
+                                            className="w-full text-right px-4 py-4 text-xs font-black text-rose-600 hover:bg-rose-50 border-2 border-transparent hover:border-gray-950 transition-all flex items-center gap-3 uppercase"
                                         >
-                                            <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
-                                                <Trash2 size={16} />
-                                            </div>
-                                            حذف المحادثة
+                                            <Trash2 size={16} />
+                                            حذف السجل
                                         </button>
                                     </div>
                                 </motion.div>
@@ -232,32 +234,29 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
             </div>
 
-            {/* Learning Time Action Bar */}
-            <div className="shrink-0 flex justify-start px-6 py-4 bg-transparent relative z-40 border-b border-gray-100 dark:border-gray-800/10">
-                <div className="flex items-center gap-4">
+            {/* Mission Critical Call Bar */}
+            <div className="shrink-0 flex justify-start px-6 py-4 bg-gray-50 border-b-4 border-gray-950 relative z-40">
+                <div className="flex items-center gap-4 w-full md:w-auto">
                     <motion.button
-                        whileHover={{ scale: 1.02 }}
+                        whileHover={{ rotate: -1, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowMeeting(true)}
                         className={cn(
-                            "group relative px-8 py-3 bg-white/60 dark:bg-[#202c33]/60 backdrop-blur-md border-r-4 shadow-xl flex items-center gap-4 overflow-hidden rounded-xl transition-all",
-                            activeMeeting ? "border-emerald-600" : "border-primary-600"
+                            "relative px-10 py-4 border-4 border-gray-950 font-black uppercase text-sm italic tracking-widest flex items-center gap-4 transition-all w-full md:w-auto justify-center",
+                            activeMeeting 
+                                ? "bg-emerald-500 text-white shadow-[6px_6px_0px_0px_#064e3b]" 
+                                : "bg-primary-600 text-white shadow-[6px_6px_0px_0px_#7f1d1d]"
                         )}
                     >
-                        <div className={cn(
-                            "w-3 h-3 rounded-full animate-ping",
-                            activeMeeting ? "bg-emerald-600" : "bg-primary-600"
-                        )}></div>
-                        <span className="text-[13px] font-black text-gray-800 dark:text-gray-100 uppercase tracking-[1.5px] border-b-2 border-transparent group-hover:border-current">
-                            {activeMeeting ? 'انضم للحصة المباشرة' : 'بدء حصة جديدة'}
-                        </span>
-                        <Video size={18} className={activeMeeting ? "text-emerald-600" : "text-primary-600"} />
+                        {activeMeeting ? <Rocket size={20} className="animate-bounce" /> : <Gamepad2 size={20} />}
+                        {activeMeeting ? 'الالتحاق بالمهمة (حصة مباشرة)' : 'إطلاق حصة تعليمية'}
+                        <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
                     </motion.button>
 
                     {activeMeeting && (
-                        <div className="flex items-center gap-3 bg-emerald-100/30 dark:bg-emerald-900/20 px-4 py-2 border border-emerald-200/50 dark:border-emerald-800/30 rounded-2xl">
-                            <Video size={16} className="text-emerald-600 animate-pulse" />
-                            <span className="text-[11px] font-black text-emerald-800 dark:text-emerald-400">حصة جارية بدأت بواسطة {activeMeeting.teacherName}</span>
+                        <div className="hidden lg:flex items-center gap-3 bg-white border-4 border-gray-950 px-6 py-3 shadow-[4px_4px_0px_0px_rgba(16,185,129,1)]">
+                            <Zap size={18} className="text-emerald-500 fill-current animate-pulse" />
+                            <span className="text-xs font-black text-gray-950 uppercase italic tracking-tighter">الحصة مفعلة الآن بواسطة: {activeMeeting.teacherName}</span>
                         </div>
                     )}
                 </div>
@@ -267,17 +266,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6 bg-transparent custom-scrollbar relative z-10"
+                className="flex-1 overflow-y-auto p-4 lg:p-10 space-y-8 bg-transparent custom-scrollbar relative z-10"
             >
-                {/* Patterns Overlay */}
-                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
-                     style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-                
-                <div className="relative space-y-8 pb-4">
+                <div className="relative space-y-12">
                     {messages.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-20 text-gray-400 opacity-20 select-none">
-                            <MessageSquare size={80} strokeWidth={1} />
-                            <p className="font-black uppercase tracking-widest mt-4">بداية المحادثة</p>
+                        <div className="flex flex-col items-center justify-center py-20 text-gray-300 select-none grayscale opacity-30">
+                            <MessageSquare size={120} strokeWidth={4} />
+                            <h2 className="text-4xl font-black uppercase tracking-tighter mt-6 italic">Secure Channel Established</h2>
+                            <p className="font-bold border-2 border-gray-300 px-4 py-1 mt-4">بداية مشفرة للمحادثة</p>
                         </div>
                     ) : (
                         <AnimatePresence initial={false}>
@@ -288,8 +284,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 return (
                                     <motion.div 
                                         layout
-                                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        initial={{ opacity: 0, x: isMe ? -20 : 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         key={msg.id || idx} 
                                         className={cn(
                                             "flex flex-col",
@@ -297,37 +293,47 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         )}
                                     >
                                         <div className={cn(
-                                            "flex items-end gap-3 max-w-[85%] lg:max-w-[75%]",
-                                            isMe ? "flex-row-reverse" : "flex-row"
+                                            "flex items-start gap-4 max-w-[90%] lg:max-w-[80%]",
+                                            isMe ? "flex-row" : "flex-row-reverse"
                                         )}>
                                             <div className={cn(
-                                                "px-4 py-3 rounded-[24px] relative shadow-lg group transition-all duration-300",
+                                                "p-5 border-4 border-gray-950 relative overflow-hidden transition-transform hover:-rotate-1 duration-300",
                                                 isMe
-                                                    ? "bg-primary-600 text-white rounded-tr-none hover:shadow-primary-500/20"
-                                                    : "bg-white/80 dark:bg-[#1a2329]/90 text-[#111b21] dark:text-[#e9edef] rounded-tl-none border border-white/50 dark:border-gray-800 backdrop-blur-md"
+                                                    ? "bg-white text-gray-950 shadow-[6px_6px_0px_0px_#ef4444]"
+                                                    : "bg-gray-950 text-white shadow-[6px_6px_0px_0px_#3b82f6]"
                                             )}>
+                                                {/* Card Accents */}
+                                                <div className={cn("absolute top-0 right-0 w-full h-1", isMe ? "bg-rose-500" : "bg-blue-500")} />
+                                                
                                                 {!isMe && showAvatar && (
-                                                    <span className="block text-[10px] font-black text-primary-600 dark:text-primary-400 mb-2 leading-none uppercase tracking-wider">
+                                                    <span className="block text-[11px] font-black text-blue-400 mb-2 leading-none uppercase tracking-widest italic border-b border-white/20 pb-2">
                                                         {msg.senderName}
                                                     </span>
                                                 )}
-                                                <p className="text-[14px] lg:text-[16px] leading-[1.6] whitespace-pre-wrap font-bold">
+                                                {isMe && showAvatar && (
+                                                     <span className="block text-[11px] font-black text-rose-500 mb-2 leading-none uppercase tracking-widest italic border-b border-gray-100 pb-2">
+                                                        SENDER: YOU
+                                                    </span>
+                                                )}
+
+                                                <p className="text-[15px] lg:text-[17px] leading-[1.6] whitespace-pre-wrap font-black tracking-tight">
                                                     {msg.content.split(/(https?:\/\/[^\s]+)/g).map((part, i) => (
                                                         part.match(/^https?:\/\/[^\s]+$/) ? (
-                                                            <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-inherit underline decoration-2 underline-offset-4 hover:opacity-60 break-all transition-opacity font-black">
+                                                            <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-inherit underline decoration-4 underline-offset-4 hover:opacity-70 break-all transition-opacity">
                                                                 {part}
                                                             </a>
                                                         ) : part
                                                     ))}
                                                 </p>
+                                                
                                                 <div className={cn(
-                                                    "flex items-center gap-2 mt-2 justify-end opacity-50",
-                                                    isMe ? "text-white" : "text-gray-500 dark:text-gray-400"
+                                                    "flex items-center gap-3 mt-4 justify-end",
+                                                    isMe ? "text-gray-400" : "text-gray-500"
                                                 )}>
-                                                    <span className="text-[9px] font-black">
+                                                    <span className="text-[10px] font-black uppercase tracking-widest">
                                                         {format(new Date(msg.timestamp), 'HH:mm', { locale: ar })}
                                                     </span>
-                                                    {isMe && <CheckCheck size={12} className="font-black" />}
+                                                    {isMe && <CheckCheck size={16} className="text-rose-500 font-black" />}
                                                 </div>
                                             </div>
                                         </div>
@@ -345,27 +351,22 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             onClick={() => scrollToBottom()}
-                            className="fixed bottom-32 left-1/2 -translate-x-1/2 lg:left-12 lg:translate-x-0 w-12 h-12 bg-white dark:bg-gray-800 text-primary-600 shadow-2xl rounded-2xl flex items-center justify-center border border-gray-100 dark:border-gray-700 z-[200] hover:scale-110 active:scale-90 transition-transform"
+                            className="fixed bottom-36 left-12 w-14 h-14 bg-gray-950 text-white shadow-[6px_6px_0px_0px_#ef4444] flex items-center justify-center border-2 border-white z-[200] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
                         >
-                            <ArrowDown size={24} />
+                            <ArrowDown size={28} />
                         </motion.button>
                     )}
                 </AnimatePresence>
             </div>
 
-            {/* Input Area */}
-            <div className="p-4 lg:p-6 bg-transparent shrink-0 relative z-30">
-                
-                {/* Quick Replies Pill Bar */}
-                <div className="flex gap-2 overflow-x-auto pb-4 custom-scrollbar no-scrollbar">
+            {/* High-Action Input Area */}
+            <div className="p-6 bg-gray-50 border-t-8 border-gray-950 shrink-0 relative z-30">
+                <div className="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
                     {QUICK_REPLIES.map(reply => (
                         <button
                             key={reply}
-                            onClick={() => {
-                                setNewMessage(reply);
-                                // Trigger focus if needed
-                            }}
-                            className="shrink-0 px-4 py-1.5 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/5 rounded-full text-[11px] font-black text-gray-600 dark:text-gray-400 hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all active:scale-95"
+                            onClick={() => setNewMessage(reply)}
+                            className="shrink-0 px-6 py-2.5 bg-white border-4 border-gray-950 text-[11px] font-black text-gray-950 hover:bg-gray-950 hover:text-white hover:rotate-3 transition-all uppercase italic shadow-[3px_3px_0px_0px_black]"
                         >
                             {reply}
                         </button>
@@ -373,39 +374,34 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 {showEmojiPicker && (
-                    <div
-                        className="absolute bottom-full left-4 mb-4 z-[200]"
-                        ref={emojiPickerRef}
-                    >
+                    <div className="absolute bottom-full left-10 mb-6 z-[200]" ref={emojiPickerRef}>
                         <motion.div 
-                            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            className="shadow-2xl rounded-3xl overflow-hidden border border-white/20"
+                            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+                            className="border-8 border-gray-950 shadow-[15px_15px_0px_0px_black] overflow-hidden"
                         >
                             <EmojiPicker
                                 onEmojiClick={onEmojiClick}
                                 theme={document.documentElement.classList.contains('dark') ? Theme.DARK : Theme.LIGHT}
                                 autoFocusSearch={false}
-                                searchPlaceholder="ابحث عن ايموجي..."
                                 previewConfig={{ showPreview: false }}
-                                width={320}
-                                height={380}
+                                width={350}
+                                height={400}
                             />
                         </motion.div>
                     </div>
                 )}
 
-                <form onSubmit={handleSendMessage} className="flex items-center gap-4 max-w-[1200px] mx-auto">
-                    <div className="flex-1 flex items-center gap-2 bg-white/60 dark:bg-[#1a2329]/80 backdrop-blur-xl pl-5 pr-3 py-3 rounded-[28px] shadow-2xl border border-white/20 dark:border-gray-800 group focus-within:ring-2 ring-primary-500/10 transition-all">
+                <form onSubmit={handleSendMessage} className="flex items-stretch gap-6 max-w-[1400px] mx-auto h-20">
+                    <div className="flex-1 flex items-center gap-4 bg-white border-8 border-gray-950 px-6 shadow-[10px_10px_0px_0px_black] focus-within:shadow-none focus-within:translate-x-1 focus-within:translate-y-1 transition-all">
                         <button
                             type="button"
                             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                             className={cn(
-                                "p-2.5 rounded-2xl transition-all emoji-toggle-btn active:scale-90",
-                                showEmojiPicker ? "text-primary-600 bg-primary-100 dark:bg-primary-900/30" : "text-gray-400 hover:text-primary-600 hover:bg-primary-50"
+                                "w-12 h-12 flex items-center justify-center border-4 border-gray-950 transition-all emoji-toggle-btn",
+                                showEmojiPicker ? "bg-rose-500 text-white" : "text-gray-400 hover:text-gray-950 hover:bg-yellow-400"
                             )}
                         >
-                            <Smile size={24} />
+                            <Smile size={28} />
                         </button>
                         <input
                             type="text"
@@ -414,11 +410,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 setNewMessage(e.target.value);
                                 if (currentUser) setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
                             }}
-                            placeholder="اكتب رسالتك لزملائك..."
-                            className="flex-1 bg-transparent border-none focus:ring-0 text-[16px] font-bold py-1 px-0 text-[#111b21] dark:text-[#e9edef] placeholder-gray-400/70"
+                            placeholder="ارسل تعليماتك أو رسالتك للزملاء..."
+                            className="flex-1 bg-transparent border-none focus:ring-0 text-xl font-black py-4 text-gray-950 placeholder-gray-300 italic"
                         />
-                        <button type="button" className="p-2 text-gray-400 hover:text-primary-600 transition-colors">
-                            <Mic size={22} />
+                        <button type="button" className="text-gray-400 hover:text-gray-950 hover:rotate-12 transition-all">
+                            <Mic size={26} />
                         </button>
                     </div>
                     <motion.button
@@ -427,16 +423,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         type="submit"
                         disabled={!newMessage.trim() || isSending}
                         className={cn(
-                            "w-14 h-14 flex items-center justify-center rounded-full shadow-2xl transition-all",
+                            "w-24 border-8 border-gray-950 flex items-center justify-center transition-all shadow-[10px_10px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
                             newMessage.trim()
-                                ? "bg-primary-600 text-white shadow-primary-500/30"
-                                : "bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
+                                ? "bg-primary-600 text-white"
+                                : "bg-gray-200 text-gray-400 cursor-not-allowed grayscale"
                         )}
                     >
                         {isSending ? (
-                            <RefreshCw className="animate-spin" size={24} />
+                            <RefreshCw className="animate-spin" size={32} />
                         ) : (
-                            <Send size={24} className={cn("transition-transform", newMessage.trim() && "translate-x-0.5 -translate-y-0.5")} />
+                            <Send size={32} className="transform -rotate-12" />
                         )}
                     </motion.button>
                 </form>

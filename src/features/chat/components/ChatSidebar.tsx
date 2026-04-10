@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
     Search, Plus, Trash2, Edit2, LogOut, MessageCircle, 
-    Bell, BellOff, UserCircle, ShieldCheck, Activity
+    Bell, BellOff, UserCircle, ShieldCheck, Activity,
+    Zap, Terminal, LayoutDashboard
 } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
@@ -62,192 +63,193 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
     return (
         <div className={cn(
-            "w-full lg:w-[420px] flex flex-col bg-white dark:bg-[#111b21] lg:rounded-[32px] lg:shadow-2xl border border-white/20 dark:border-gray-800/50 transition-all duration-500 ease-in-out shrink-0 overflow-hidden relative z-20",
+            "w-full lg:w-[420px] flex flex-col bg-white dark:bg-[#0b141a] lg:border-8 border-gray-950 transition-all duration-500 ease-in-out shrink-0 overflow-hidden relative z-20",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
-            {/* Sidebar Header */}
-            <div className="p-6 bg-white/60 dark:bg-[#111b21]/60 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800/20">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
+            {/* Sidebar Header - Brutalist Command Box */}
+            <div className="p-8 bg-white border-b-8 border-gray-950 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
+                
+                <div className="flex items-start justify-between mb-10 relative z-10">
+                    <div className="flex items-center gap-5">
                         <motion.div 
-                            whileHover={{ rotate: 5, scale: 1.05 }}
-                            className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-700 rounded-[20px] flex items-center justify-center text-white shadow-2xl shadow-primary-500/30"
+                            whileHover={{ rotate: -5, scale: 1.05 }}
+                            className="w-16 h-16 bg-gray-950 text-white border-2 border-gray-950 shadow-[6px_6px_0px_0px_#ef4444] flex items-center justify-center transform -rotate-3"
                         >
-                            <MessageCircle size={28} />
+                            <Terminal size={32} />
                         </motion.div>
                         <div>
-                            <h1 className="text-2xl font-black text-[#111b21] dark:text-[#e9edef] tracking-tight uppercase leading-none">محادثاتي</h1>
-                            <div className="flex items-center gap-2 mt-2 leading-none">
+                            <h1 className="text-3xl font-black text-gray-950 tracking-tighter uppercase leading-none italic">الرسائل</h1>
+                            <div className="flex items-center gap-2 mt-3 p-1 bg-emerald-50 border border-emerald-500 w-fit">
                                 <div className={cn(
-                                    "w-2.5 h-2.5 rounded-full",
-                                    isConnected ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-rose-500"
+                                    "w-2 h-2",
+                                    isConnected ? "bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" : "bg-rose-500"
                                 )} />
-                                <span className="text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[1.5px] leading-none">
-                                    {isConnected ? 'متصل بالشبكة' : 'جارٍ الاتصال...'}
+                                <span className="text-[9px] font-black text-emerald-700 uppercase tracking-widest leading-none">
+                                    {isConnected ? 'ONLINE: ACTIVE' : 'DISCONNECTED'}
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={async () => {
-                                const success = await requestDesktopNotifications();
-                                if (success) setIsNotificationGranted(true);
-                            }}
-                            className={cn(
-                                "w-10 h-10 rounded-2xl flex items-center justify-center transition-all bg-gray-50 dark:bg-[#202c33] hover:scale-105 active:scale-95",
-                                isNotificationGranted ? "text-emerald-500" : "text-gray-400"
-                            )}
-                            title={isNotificationGranted ? "التنبيهات مفعلة" : "تفعيل التنبيهات"}
-                        >
-                            {isNotificationGranted ? <Bell size={18} /> : <BellOff size={18} />}
-                        </button>
-
-                        {currentUser?.role === 'admin' && (
-                            <button
-                                onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
-                                className={cn(
-                                    "w-10 h-10 rounded-2xl flex items-center justify-center transition-all shadow-sm",
-                                    view === 'management' ? "bg-primary-600 text-white" : "bg-gray-50 dark:bg-[#202c33] text-gray-400 hover:text-primary-600"
-                                )}
-                                title={view === 'management' ? "العودة للدردشة" : "إعدادات الأمان"}
-                            >
-                                <ShieldCheck size={18} />
-                            </button>
-                        )}
-                        
-                        <button
+                    <div className="flex flex-col gap-2">
+                         <button
                             onClick={logout}
-                            className="w-10 h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-600 rounded-2xl flex items-center justify-center hover:bg-rose-100 dark:hover:bg-rose-900/20 transition-all shadow-sm"
+                            className="w-12 h-12 bg-rose-500 text-white border-4 border-gray-950 flex items-center justify-center hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none shadow-[4px_4px_0px_0px_black] transition-all"
                             title="خروج آمن"
                         >
-                            <LogOut size={18} />
+                            <LogOut size={22} />
                         </button>
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
-                    <div className="relative group">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500 transition-colors" size={18} />
+                <div className="space-y-6 relative z-10">
+                    <div className="relative">
+                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-950" size={20} />
                         <input
                             type="text"
                             placeholder="ابحث عن زميل أو مجموعة..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-gray-50/50 dark:bg-[#2a3942] border-none px-12 py-3.5 text-sm font-black focus:ring-2 ring-primary-500/20 outline-none rounded-2xl dark:text-white dark:placeholder-gray-500 transition-all"
+                            className="w-full bg-white border-4 border-gray-950 px-12 py-4 text-sm font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300"
                         />
                     </div>
                     
-                    {currentUser?.role === 'admin' && (
-                        <div className="flex gap-2">
-                            <motion.button
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => {
-                                    setIsEditingGroup(false);
-                                    setShowNewChatModal(true);
-                                }}
-                                className="flex-1 bg-primary-600 text-white py-3 rounded-2xl flex items-center justify-center gap-2 shadow-xl shadow-primary-500/20 font-black text-xs uppercase tracking-widest transition-all"
-                            >
-                                <Plus size={18} />
-                                محادثة جديدة
-                            </motion.button>
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
                             <button
-                                onClick={confirmDeleteAllConversationsLocal}
-                                className="w-12 h-12 bg-rose-600/10 text-rose-600 rounded-2xl flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all shadow-xl"
-                                title="تصفير القائمة"
+                                onClick={async () => {
+                                    const success = await requestDesktopNotifications();
+                                    if (success) setIsNotificationGranted(true);
+                                }}
+                                className={cn(
+                                    "w-12 h-12 border-4 border-gray-950 flex items-center justify-center transition-all shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
+                                    isNotificationGranted ? "bg-emerald-400 text-gray-950" : "bg-white text-gray-300"
+                                )}
                             >
-                                <Trash2 size={18} />
+                                {isNotificationGranted ? <Bell size={20} /> : <BellOff size={20} />}
                             </button>
+
+                            {currentUser?.role === 'admin' && (
+                                <button
+                                    onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
+                                    className={cn(
+                                        "w-12 h-12 border-4 border-gray-950 flex items-center justify-center transition-all shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
+                                        view === 'management' ? "bg-primary-600 text-white" : "bg-white text-gray-400"
+                                    )}
+                                >
+                                    {view === 'management' ? <LayoutDashboard size={20}/> : <ShieldCheck size={20} />}
+                                </button>
+                            )}
                         </div>
-                    )}
+
+                        {currentUser?.role === 'admin' && (
+                            <div className="flex gap-2 flex-1">
+                                <motion.button
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => {
+                                        setIsEditingGroup(false);
+                                        setShowNewChatModal(true);
+                                    }}
+                                    className="flex-1 bg-gray-950 text-white py-4 border-4 border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                >
+                                    <Plus size={18} />
+                                    محادثة استراتيجية
+                                </motion.button>
+                                <button
+                                    onClick={confirmDeleteAllConversationsLocal}
+                                    className="w-14 h-14 bg-white border-4 border-gray-950 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-[4px_4px_0px_0px_black] flex items-center justify-center"
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
-            {/* Conversations List */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-2">
+            {/* Conversations List - Brutalist Cards */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 bg-gray-50/50">
                 <AnimatePresence>
                     {filteredConversations.length > 0 ? (
                         filteredConversations.map((conv, idx) => (
                             <motion.button
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: idx * 0.05 }}
                                 key={conv.id}
                                 onClick={() => setSelectedConv(conv)}
                                 className={cn(
-                                    "w-full p-4 flex items-center gap-4 rounded-3xl transition-all text-right group relative border-2 border-transparent",
+                                    "w-full p-5 flex items-center gap-5 border-4 border-gray-950 transition-all text-right relative group",
                                     selectedConv?.id === conv.id
-                                        ? "bg-primary-50 dark:bg-primary-900/10 border-primary-100 dark:border-primary-900/30"
-                                        : "hover:bg-gray-50 dark:hover:bg-[#202c33]/50"
+                                        ? "bg-white shadow-[8px_8px_0px_0px_#ef4444] -translate-x-1 -translate-y-1"
+                                        : "bg-white hover:bg-yellow-50 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
                                 )}
                             >
                                 <div className="relative shrink-0">
-                                    <div className="w-14 h-14 bg-white dark:bg-gray-800 rounded-[20px] flex items-center justify-center border-2 border-white dark:border-gray-800 shadow-xl group-hover:scale-105 group-hover:rotate-3 transition-transform overflow-hidden">
-                                        <img src={conv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="Avatar" className="w-full h-full object-cover" />
+                                    <div className="w-16 h-16 bg-gray-950 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] group-hover:rotate-6 transition-transform overflow-hidden">
+                                        <img src={conv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="Avatar" className="w-full h-full object-cover grayscale group-hover:grayscale-0" />
                                     </div>
-                                    <div className="absolute -bottom-1 -left-1 w-4.5 h-4.5 bg-emerald-500 border-[3px] border-white dark:border-[#111b21] rounded-full shadow-sm" />
+                                    <div className="absolute -bottom-1 -left-1 w-5 h-5 bg-emerald-500 border-2 border-gray-950" />
                                 </div>
 
                                 <div className="flex-1 min-w-0 text-right">
-                                    <div className="flex items-center justify-between mb-1.5">
+                                    <div className="flex items-center justify-between mb-2">
                                         <h3 className={cn(
-                                            "font-black truncate text-sm lg:text-[15px] transition-colors tracking-tight",
-                                            selectedConv?.id === conv.id ? "text-primary-700 dark:text-primary-400" : "text-gray-900 dark:text-[#e9edef]"
+                                            "font-black truncate text-base lg:text-lg transition-colors tracking-tighter uppercase italic",
+                                            selectedConv?.id === conv.id ? "text-primary-600" : "text-gray-950"
                                         )}>
                                             {conv.displayName}
                                         </h3>
                                         {conv.lastMessageTime && (
-                                            <span className="text-[9px] text-gray-400 font-black uppercase tracking-wider bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
+                                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">
                                                 {format(new Date(conv.lastMessageTime), 'HH:mm', { locale: ar })}
                                             </span>
                                         )}
                                     </div>
 
-                                    <div className="flex items-center justify-between gap-2">
-                                        <div className="text-[11px] text-gray-500 dark:text-gray-400 truncate font-bold flex-1 leading-tight flex items-center gap-1.5 min-h-[16px]">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div className="text-[12px] text-gray-500 truncate font-bold flex-1 leading-snug flex items-center gap-2 min-h-[20px]">
                                             {typingUsers.filter(u => u.conversationId === conv.id).length > 0 ? (
-                                                <span className="text-emerald-500 animate-pulse italic flex items-center gap-1 font-black">
-                                                    <Activity size={10} /> جاري الكتابة...
+                                                <span className="text-emerald-500 animate-pulse font-black flex items-center gap-2">
+                                                    <Zap size={12} className="fill-current" /> جاري التشفير...
                                                 </span>
                                             ) : (
-                                                <span className="truncate">{conv.lastMessage || 'ابدأ الحديث الآن...'}</span>
+                                                <span className="truncate opacity-60">{conv.lastMessage || 'Channel established. No data yet.'}</span>
                                             )}
                                         </div>
 
-                                        <div className="flex items-center gap-2 shrink-0">
+                                        <div className="flex items-center gap-3 shrink-0">
                                             {(conv.unreadCount ?? 0) > 0 && (
                                                 <motion.div 
-                                                    animate={{ scale: [1, 1.1, 1] }}
-                                                    transition={{ repeat: Infinity, duration: 2 }}
-                                                    className="bg-emerald-500 text-white text-[10px] font-black min-w-[22px] h-[22px] rounded-lg flex items-center justify-center px-1.5 shadow-xl shadow-emerald-500/30"
+                                                    animate={{ rotate: [0, 5, -5, 0] }}
+                                                    transition={{ repeat: Infinity, duration: 1 }}
+                                                    className="bg-primary-600 text-white text-[10px] font-black w-8 h-8 border-2 border-gray-950 flex items-center justify-center shadow-[3px_3px_0px_0px_black]"
                                                 >
-                                                    {(conv.unreadCount ?? 0) > 99 ? '+99' : conv.unreadCount}
+                                                    {(conv.unreadCount ?? 0) > 99 ? 'MAX' : conv.unreadCount}
                                                 </motion.div>
                                             )}
 
                                             {(currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
-                                                <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+                                                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all">
                                                     <button
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             openGroupSettings(conv);
                                                         }}
-                                                        className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-primary-600 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 transition-all active:scale-90"
-                                                        title="تعديل"
+                                                        className="w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-950 hover:bg-primary-50 active:scale-90"
                                                     >
-                                                        <Edit2 size={12} />
+                                                        <Edit2 size={14} />
                                                     </button>
                                                     <button
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             confirmDeleteConversation(conv);
                                                         }}
-                                                        className="w-7 h-7 flex items-center justify-center text-rose-400 hover:text-rose-600 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 transition-all active:scale-90"
-                                                        title="حذف"
+                                                        className="w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-950 text-rose-600 hover:bg-rose-50 active:scale-90"
                                                     >
-                                                        <Trash2 size={12} />
+                                                        <Trash2 size={14} />
                                                     </button>
                                                 </div>
                                             )}
@@ -257,12 +259,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             </motion.button>
                         ))
                     ) : (
-                        <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-gray-50/50 dark:bg-transparent rounded-[32px] m-4 border-2 border-dashed border-gray-200 dark:border-gray-800">
-                            <div className="w-24 h-24 bg-white dark:bg-gray-800 rounded-[28px] flex items-center justify-center mb-6 text-gray-200 dark:text-gray-700 shadow-inner">
-                                <UserCircle size={56} strokeWidth={1} />
-                            </div>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">القائمة خالية</h3>
-                            <p className="text-[11px] text-gray-500 font-bold max-w-[180px] leading-relaxed">لم يبدأ أحد بمحادثتك بعد، كن أنت المبادر بالتواصل!</p>
+                        <div className="py-20 border-8 border-dashed border-gray-200 flex flex-col items-center justify-center text-center opacity-40">
+                            <UserCircle size={80} strokeWidth={4} className="text-gray-200 mb-6" />
+                            <h3 className="text-2xl font-black text-gray-200 uppercase italic tracking-tighter">قنوات مغلقة</h3>
+                            <p className="text-[10px] font-bold mt-2 uppercase tracking-widest">لا توجد محادثات نشطة في القطاع</p>
                         </div>
                     )}
                 </AnimatePresence>
