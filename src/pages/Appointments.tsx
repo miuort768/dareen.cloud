@@ -391,6 +391,34 @@ export const Appointments = () => {
                             </div>
                         </motion.div>
                     ))}
+
+                    {/* Integrated Empty Status / Filler Block */}
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className={cn(
+                            "bg-white border-8 border-gray-950 flex flex-col items-center justify-center shadow-[10px_10px_0px_0px_black] text-center p-8",
+                            appointmentsByDay.length % 3 === 1 ? "lg:col-span-2" : 
+                            appointmentsByDay.length % 3 === 2 ? "lg:col-span-1" :
+                            appointmentsByDay.length === 0 ? "lg:col-span-3 min-h-[400px]" : "hidden lg:flex"
+                        )}
+                    >
+                         <div className="flex flex-col items-center gap-6">
+                            <motion.div 
+                                animate={{ rotate: [0, 5, -5, 0] }} 
+                                transition={{ repeat: Infinity, duration: 5 }}
+                                className="w-20 h-20 bg-gray-50 border-4 border-gray-950 flex items-center justify-center transform rotate-3"
+                            >
+                                <Calendar size={40} strokeWidth={1} className="text-gray-400" />
+                            </motion.div>
+                            <div className="text-center">
+                                <h3 className="font-black text-3xl text-gray-950 uppercase italic tracking-tighter mb-2">لا توجد إشارات</h3>
+                                <p className="text-gray-400 font-bold uppercase tracking-[2px] text-[10px] max-w-[250px] mx-auto leading-relaxed">
+                                    نظام الجدولة يعمل بكفاءة قصوى. لا يوجد مهام إضافية قيد المراقبة حالياً.
+                                </p>
+                            </div>
+                         </div>
+                    </motion.div>
                 </div>
 
                 {/* Details Panel - The Control Bunker */}
@@ -459,17 +487,6 @@ export const Appointments = () => {
                     )}
                 </AnimatePresence>
             </div>
-
-            {/* Global Empty State */}
-            {filteredAppointments.length === 0 && (
-                <div className="bg-white border-8 border-gray-950 p-24 text-center shadow-[15px_15px_0px_0px_black]">
-                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} className="inline-block mb-8">
-                        <Calendar size={100} strokeWidth={1} className="text-gray-100" />
-                    </motion.div>
-                    <h3 className="font-black text-5xl text-gray-900 uppercase italic tracking-tighter mb-4">لا توجد إشارات</h3>
-                    <p className="text-gray-400 font-bold uppercase tracking-[4px] max-w-md mx-auto leading-relaxed">لم يتم العثور على أي بيانات مجدولة حالياً في هذا القطاع</p>
-                </div>
-            )}
         </div>
     );
 };
