@@ -15,15 +15,17 @@ router.get('/', authMiddleware, async (req, res) => {
         const isTeacher = req.user && req.user.role === 'teacher';
 
         const mapStudent = (s) => {
+            // Always strip password hash from API responses
+            const { password: _, ...safeStudent } = s;
             if (isTeacher) {
-                const { sessionPrice, ...restStudent } = s;
+                const { sessionPrice, ...restStudent } = safeStudent;
                 const enrollments = (s.enrollments || []).map(en => {
                     const { price, ...restEnrollment } = en;
                     return restEnrollment;
                 });
                 return { ...restStudent, sessionPrice: 0, enrollments };
             }
-            return s;
+            return safeStudent;
         };
 
         if (!isNaN(page) && !isNaN(limit)) {
@@ -66,6 +68,13 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
+// Helper: strip password from student responses
+const stripPassword = (student) => {
+    if (!student) return student;
+    const { password: _, ...safe } = student;
+    return safe;
+};
+
 // 2. Add student
 router.post('/', validate(createStudentSchema), async (req, res) => {
     const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
@@ -74,20 +83,23 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
 
     try {
         const newStudent = await withTransaction(req.db, async (tx) => {
+            // Only hash if password is a real new value (not empty, not already hashed)
             let hashedPassword = null;
-            if (password) {
+            if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
                 hashedPassword = await bcrypt.hash(password, 10);
             }
 
+            // Treat empty username as NULL for UNIQUE constraint safety
+            const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
+
             await tx.run(
                 `INSERT INTO students (id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [newId, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username || null, hashedPassword]
+                [newId, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername, hashedPassword]
             );
 
             if (enrollments && enrollments.length > 0) {
                 for (const e of enrollments) {
                     let finalTeacherId = e.teacherId || null;
-                    // Fallback: Try to find teacher ID by name if missing
                     if (!finalTeacherId && e.teacher) {
                         const teacherRecord = await tx.get('SELECT id FROM teachers WHERE name = ?', [e.teacher]);
                         if (teacherRecord) finalTeacherId = teacherRecord.id;
@@ -104,9 +116,9 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
             return results[0];
         });
 
-        res.status(201).json(newStudent);
+        res.status(201).json(stripPassword(newStudent));
     } catch (err) {
-        if (err.message.includes('UNIQUE constraint failed: students.username')) {
+        if (err.message && err.message.includes('UNIQUE constraint failed: students.username')) {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
         }
         logger.error('Error adding student', err);
@@ -123,10 +135,12 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     try {
         const updatedStudent = await withTransaction(req.db, async (tx) => {
             // 1. Update basic student info
+            const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
             let query = `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ?, username = ?`;
-            let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, username || null];
+            let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername];
 
-            if (password && password.trim() !== '') {
+            // Only update password if it's a NEW plain-text password (not empty, not an old hash)
+            if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
                 const hashedPassword = await bcrypt.hash(password, 10);
                 query += `, password = ?`;
                 params.push(hashedPassword);
@@ -156,7 +170,6 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
                         if (teacherRecord) finalTeacherId = teacherRecord.id;
                     }
 
-                    // CRITICAL FIX: Preserve sessionsUsed if this (teacher/subject) pair existed
                     const matchKey = `${e.teacher.trim().toLowerCase()}-${e.subject.trim().toLowerCase()}`;
                     const preservedUsed = sessionsMap[matchKey] !== undefined ? sessionsMap[matchKey] : (e.sessionsUsed || 0);
 
@@ -171,9 +184,9 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
             return results[0];
         });
 
-        res.json(updatedStudent);
+        res.json(stripPassword(updatedStudent));
     } catch (err) {
-        if (err.message.includes('UNIQUE constraint failed: students.username')) {
+        if (err.message && err.message.includes('UNIQUE constraint failed: students.username')) {
             return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.' });
         }
         logger.error('Error updating student', err);

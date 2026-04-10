@@ -159,14 +159,17 @@ export const StudentDetails = ({
                             )}
                         </div>
                         <div className="bg-gray-50 p-4 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
-                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">كلمة المرور</span>
-                            {student.password ? (
+                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">حالة الحساب</span>
+                            {student.username ? (
                                 <div className="flex items-center gap-2">
-                                    <span className="font-mono font-black text-sm text-gray-700">••••••••</span>
-                                    <span className="text-[9px] bg-gray-950 text-white px-1.5 py-0.5 font-black uppercase tracking-tighter">Hashed</span>
+                                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                    <span className="font-black text-xs text-emerald-600">الحساب مفعّل</span>
                                 </div>
                             ) : (
-                                <span className="text-xs text-rose-500 font-bold italic">لا توجد كلمة مرور</span>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+                                    <span className="font-black text-xs text-rose-500">غير مفعّل</span>
+                                </div>
                             )}
                         </div>
                     </div>
