@@ -9,12 +9,28 @@ const logger = require('../utils/logger');
  * Automatically trims strings and cleans common injection patterns
  */
 const sanitizeInput = (req, res, next) => {
-    if (req.body) {
-        for (let key in req.body) {
-            if (typeof req.body[key] === 'string') {
-                req.body[key] = req.body[key].trim();
-            }
+    const sanitizeValue = (val) => {
+        if (typeof val === 'string') {
+            // Trim and simple XSS prevention
+            return val.trim()
+                .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, '')
+                .replace(/on\w+="[^"]*"/gmi, '');
         }
+        if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
+            const cleanObj = {};
+            for (let k in val) {
+                cleanObj[k] = sanitizeValue(val[k]);
+            }
+            return cleanObj;
+        }
+        if (Array.isArray(val)) {
+            return val.map(sanitizeValue);
+        }
+        return val;
+    };
+
+    if (req.body) {
+        req.body = sanitizeValue(req.body);
     }
     next();
 };
@@ -28,9 +44,25 @@ const activityAuditor = (req, res, next) => {
     const role = req.user ? req.user.role : 'None';
 
     if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+        // Redact sensitive fields from logs
+        const redact = (obj) => {
+            if (!obj || typeof obj !== 'object') return obj;
+            const clean = Array.isArray(obj) ? [...obj] : { ...obj };
+            const sensitiveKeys = ['password', 'newPassword', 'oldPassword', 'token', 'secret'];
+            
+            for (let key in clean) {
+                if (sensitiveKeys.includes(key.toLowerCase())) {
+                    clean[key] = '***REDACTED***';
+                } else if (typeof clean[key] === 'object') {
+                    clean[key] = redact(clean[key]);
+                }
+            }
+            return clean;
+        };
+
         logger.info(`[AUDIT] ${req.method} ${req.originalUrl} by ${user} (${role})`, {
             params: req.params,
-            body: req.method !== 'DELETE' ? req.body : undefined
+            body: req.method !== 'DELETE' ? redact(req.body) : undefined
         });
     }
     next();

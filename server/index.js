@@ -224,8 +224,17 @@ async function startServer() {
 
         // Global Error Handler
         app.use((err, req, res, next) => {
-            logger.error('Unhandled Server Error', err, { path: req.path });
-            res.status(500).json({ error: 'Internal Server Error', details: err.message });
+            const isDev = process.env.NODE_ENV === 'development';
+            logger.error('Unhandled Server Error', err, { 
+                path: req.path,
+                user: req.user?.username || 'Guest'
+            });
+            
+            res.status(500).json({ 
+                error: 'Internal Server Error', 
+                message: 'حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقاً.',
+                details: isDev ? err.message : undefined 
+            });
         });
 
         // The "catchall" handler

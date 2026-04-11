@@ -169,16 +169,16 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
             const isCompleted = newSession.status === 'completed';
 
             // Check if identifying fields changed (affecting which enrollment it belongs to)
-            const identityChanged = 
-                oldSession.studentId !== newSession.studentId || 
-                oldSession.subject !== newSession.subject || 
+            const identityChanged =
+                oldSession.studentId !== newSession.studentId ||
+                oldSession.subject !== newSession.subject ||
                 oldSession.teacherId !== newSession.teacherId;
 
             if (wasCompleted && isCompleted && identityChanged) {
                 // Return to old enrollment
                 await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
                 await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل بيانات حصة مكتملة: ${oldSession.subject}` });
-                
+
                 // Deduct from new enrollment
                 await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
                 await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة (انتقال): ${newSession.subject}` });

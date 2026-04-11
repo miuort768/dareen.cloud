@@ -396,6 +396,47 @@ export const Home = () => {
                 </div>
             </section>
 
+            {/* How it Works Section */}
+            <section className="py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500">
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-100 rounded-full mb-3 mx-auto">
+                            <Zap size={14} className="text-green-600" />
+                            <span className="text-[10px] font-black uppercase tracking-widest text-green-700">ابدأ الآن</span>
+                        </div>
+                        <h2 className="text-2xl md:text-4xl font-black text-black mb-4 font-heading leading-tight">
+                            كيف تشترك في <span className="text-red-600">المعهد؟</span>
+                        </h2>
+                        <div className="h-1.5 w-20 bg-green-600 mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <div className="max-w-5xl mx-auto">
+                        <div className="relative group p-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl rounded-2xl overflow-hidden">
+                            <img 
+                                src="/images/how-it-works.png" 
+                                alt="خطوات الاشتراك في معهد دارين" 
+                                className="w-full h-auto object-contain rounded-xl"
+                                loading="lazy"
+                            />
+                            {/* Overlay effect on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                        
+                        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                            <a
+                                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحضور حصة تجريبية مجانية')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-10 py-4 bg-black text-white font-bold text-lg shadow-xl hover:bg-gray-800 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                            >
+                                <span>احجز حصتك التجريبية</span>
+                                <ArrowLeft size={20} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Testimonials Section */}
             <section className="py-6 md:py-8 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">

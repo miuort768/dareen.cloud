@@ -15,7 +15,6 @@ const loginLimiter = rateLimit({
 });
 
 router.post('/login', loginLimiter, async (req, res) => {
-    console.log('Login Request Body:', req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {
