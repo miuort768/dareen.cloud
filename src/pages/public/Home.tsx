@@ -396,41 +396,97 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* How it Works Section */}
-            <section className="py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500">
+            {/* How it Works Section - Premium Interactive Implementation */}
+            <section className="py-16 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-10">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-100 rounded-full mb-3 mx-auto">
-                            <Zap size={14} className="text-green-600" />
-                            <span className="text-[10px] font-black uppercase tracking-widest text-green-700">ابدأ الآن</span>
+                    <div className="text-center mb-16">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30 rounded-full mb-4 mx-auto shadow-sm">
+                            <Zap size={14} className="text-red-600 animate-pulse" />
+                            <span className="text-[11px] font-black uppercase tracking-widest text-red-700 dark:text-red-400">ثلاث خطوات بسيطة</span>
                         </div>
-                        <h2 className="text-2xl md:text-4xl font-black text-black mb-4 font-heading leading-tight">
-                            كيف تشترك في <span className="text-red-600">المعهد؟</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 font-heading leading-tight">
+                            كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">المعهد؟</span>
                         </h2>
-                        <div className="h-1.5 w-20 bg-green-600 mx-auto rounded-full"></div>
+                        <div className="h-1.5 w-24 bg-gradient-to-r from-red-600 to-red-400 mx-auto rounded-full"></div>
                     </div>
                     
-                    <div className="max-w-5xl mx-auto">
-                        <div className="relative group p-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl rounded-2xl overflow-hidden">
-                            <img 
-                                src="/images/how-it-works.png" 
-                                alt="خطوات الاشتراك في معهد دارين" 
-                                className="w-full h-auto object-contain rounded-xl"
-                                loading="lazy"
-                            />
-                            {/* Overlay effect on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                    <div className="max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                            {/* Connectors (Visible on desktop) */}
+                            <div className="hidden md:block absolute top-[25%] left-[20%] right-[20%] h-0.5 border-t-2 border-dashed border-red-200 dark:border-red-900/50 -z-0"></div>
+
+                            {/* Step 1 */}
+                            <div className="relative z-10 flex flex-col items-center text-center group">
+                                <div className="mb-4 text-6xl font-black text-red-600/20 group-hover:text-red-600/40 transition-colors">1</div>
+                                <div className="w-48 h-48 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-8 relative border border-slate-100 dark:border-slate-800 transition-transform group-hover:-translate-y-2 group-hover:rotate-3 duration-500">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
+                                    <div className="relative flex flex-col items-center">
+                                        <div className="w-24 h-24 bg-red-50 dark:bg-red-950/30 rounded-full flex items-center justify-center p-4">
+                                            <Users size={48} className="text-red-600" />
+                                        </div>
+                                        <div className="absolute -top-2 -right-2 bg-slate-900 text-white rounded-full p-1 border-2 border-white">
+                                            <HelpCircle size={14} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3">اختر نوع الخدمة</h3>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-bold max-w-[200px]">
+                                    إذا كنت طالب اختر النظام التعليمي المناسب لك
+                                </p>
+                            </div>
+
+                            {/* Step 2 */}
+                            <div className="relative z-10 flex flex-col items-center text-center group">
+                                <div className="mb-4 text-6xl font-black text-slate-200 dark:text-slate-800 group-hover:text-red-600/40 transition-colors">2</div>
+                                <div className="w-48 h-48 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-8 relative border border-slate-100 dark:border-slate-800 transition-transform group-hover:-translate-y-2 duration-500 scale-110">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
+                                    <div className="relative flex flex-col items-center">
+                                        <div className="w-32 h-20 bg-slate-900 rounded-lg flex items-center justify-center p-2 relative">
+                                            <span className="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse whitespace-nowrap">● LIVE</span>
+                                            <div className="w-full h-full border border-white/20 rounded-md"></div>
+                                        </div>
+                                        <div className="w-36 h-2 bg-slate-800 rounded-b mt-0.5"></div>
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3">اشترك في الحصص المباشرة</h3>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-bold max-w-[200px]">
+                                    املأ طلب الاشتراك وفريق خصوصي سيتواصل معك
+                                </p>
+                            </div>
+
+                            {/* Step 3 */}
+                            <div className="relative z-10 flex flex-col items-center text-center group">
+                                <div className="mb-4 text-6xl font-black text-red-600/20 group-hover:text-red-600/40 transition-colors">3</div>
+                                <div className="w-48 h-48 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-8 relative border border-slate-100 dark:border-slate-800 transition-transform group-hover:-translate-y-2 group-hover:-rotate-3 duration-500">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
+                                    <div className="relative flex flex-col items-center">
+                                        <div className="grid grid-cols-2 gap-2 mb-2 p-3 bg-red-50 dark:bg-red-950/20 rounded-xl">
+                                            {[1, 2, 3, 4].map(i => (
+                                                <div key={i} className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border-2 border-white dark:border-slate-700 overflow-hidden">
+                                                    <img src={`https://i.pravatar.cc/100?img=${i+5}`} alt="U" className="grayscale opacity-50" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <span className="absolute -top-4 -right-4 bg-red-500 text-white text-[10px] font-black p-2 rounded-full rotate-12 shadow-md">FREE</span>
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3">احصل على الحصة التجريبية</h3>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-bold max-w-[200px]">
+                                    احضر أول حصة أونلاين مجاناً
+                                </p>
+                            </div>
                         </div>
                         
-                        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                        <div className="mt-16 flex flex-col sm:flex-row gap-4 justify-center">
                             <a
-                                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحضور حصة تجريبية مجانية')}`}
+                                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-10 py-4 bg-black text-white font-bold text-lg shadow-xl hover:bg-gray-800 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                                className="px-12 py-5 bg-gradient-to-r from-red-600 to-red-500 text-white font-black text-xl shadow-2xl shadow-red-500/25 hover:from-red-700 hover:to-red-600 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3 rounded-2xl"
                             >
-                                <span>احجز حصتك التجريبية</span>
-                                <ArrowLeft size={20} />
+                                <Zap size={24} />
+                                <span>احجز حصتك التجريبية الآن</span>
+                                <ArrowLeft size={24} />
                             </a>
                         </div>
                     </div>
