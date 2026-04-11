@@ -38,7 +38,7 @@ export const FloatingActions = () => {
 
     return (
         <>
-            <div className="fixed md:top-[35%] md:bottom-auto bottom-8 right-6 z-[9999] flex flex-col gap-3">
+            <div className="fixed top-1/2 -translate-y-1/2 right-4 md:right-6 z-[9999] flex flex-col gap-2 md:gap-3">
                 <AnimatePresence>
                     {actions.map((action, index) => (
                         <motion.div
@@ -70,32 +70,32 @@ export const FloatingActions = () => {
                                     target={action.isExternal ? "_blank" : "_self"}
                                     rel={action.isExternal ? "noopener noreferrer" : ""}
                                     className={cn(
-                                        "w-12 h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '1.1rem',
+                                        borderRadius: '0.9rem',
                                         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
                                     }}
                                 >
                                     {/* Glass Shine Effect */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
-                                    <div className="relative z-10">{action.icon}</div>
+                                    <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>
                                 </a>
                             ) : (
                                 <button
                                     onClick={action.onClick}
                                     className={cn(
-                                        "w-12 h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '1.1rem',
+                                        borderRadius: '0.9rem',
                                         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
                                     }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
-                                    <div className="relative z-10">{action.icon}</div>
+                                    <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>
                                 </button>
                             )}
                             
