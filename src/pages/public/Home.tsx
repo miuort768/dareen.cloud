@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -500,7 +501,44 @@ export const Home = () => {
                             ))}
                         </div>
                         
-                        <div className="mt-14 flex justify-center">
+                        <div className="mt-16 relative max-w-2xl mx-auto group">
+                            {/* The Banner Image */}
+                            <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+                                <img 
+                                    src="/images/how-it-works-banner.png" 
+                                    alt="بوابة التعلم في معهد دارين" 
+                                    className="w-full h-auto object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            </div>
+
+                            {/* Creative Stickers */}
+                            {/* Sticker 1: Certified */}
+                            <motion.div 
+                                animate={{ y: [0, -10, 0], rotate: [-8, -6, -8] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -top-6 -left-8 bg-yellow-400 text-slate-900 font-black px-6 py-3 rounded-2xl shadow-xl border-4 border-white dark:border-slate-900 -rotate-12 z-20 cursor-default select-none group-hover:scale-110 transition-transform"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <Award size={20} />
+                                    <span className="text-sm">تعليم معتمد 🏆</span>
+                                </div>
+                            </motion.div>
+
+                            {/* Sticker 2: Free Trial */}
+                            <motion.div 
+                                animate={{ y: [0, 10, 0], rotate: [8, 10, 8] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute -bottom-6 -right-8 bg-emerald-500 text-white font-black px-6 py-3 rounded-2xl shadow-xl border-4 border-white dark:border-slate-900 rotate-12 z-20 cursor-default select-none group-hover:scale-110 transition-transform"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <Zap size={20} />
+                                    <span className="text-sm">ابدأ مجاناً ✨</span>
+                                </div>
+                            </motion.div>
+                        </div>
+                        
+                        <div className="mt-20 flex justify-center">
                             <a
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                                 target="_blank"
