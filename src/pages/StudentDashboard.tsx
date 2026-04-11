@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import {
     TrendingUp, CalendarDays, Clock, Headset, Activity,
     GraduationCap, BookOpen, Trophy, MessageSquare, Zap,
-    Star, Award, Target, ChevronLeft, ShieldCheck,
-    CheckCircle2, XCircle, AlertCircle, Play, Snowflake
+    Star, Award, Target, CheckCircle2, XCircle, AlertCircle, Play, Snowflake
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -22,7 +21,6 @@ export const StudentDashboard = () => {
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showAllDays, setShowAllDays] = useState(false);
     const [activeTab, setActiveTab] = useState<'overview' | 'schedule' | 'sessions' | 'subjects'>('overview');
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
