@@ -13,7 +13,7 @@ export const FloatingActions = () => {
     const actions = [
         {
             id: 'whatsapp',
-            icon: <MessageCircle className="w-6 h-6" />,
+            icon: <MessageCircle className="w-5 h-5" />,
             label: 'واتساب',
             color: 'bg-[#25D366]',
             href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات معهد دارين')}`,
@@ -21,7 +21,7 @@ export const FloatingActions = () => {
         },
         {
             id: 'about',
-            icon: <Info className="w-6 h-6" />,
+            icon: <Info className="w-5 h-5" />,
             label: 'من نحن',
             color: 'bg-red-600',
             href: '/about',
@@ -29,7 +29,7 @@ export const FloatingActions = () => {
         },
         {
             id: 'chat',
-            icon: <MessageSquare className="w-6 h-6" />,
+            icon: <MessageSquare className="w-5 h-5" />,
             label: 'مساعدة',
             color: 'bg-emerald-600',
             onClick: () => setShowChat(!showChat)
@@ -70,11 +70,11 @@ export const FloatingActions = () => {
                                     target={action.isExternal ? "_blank" : "_self"}
                                     rel={action.isExternal ? "noopener noreferrer" : ""}
                                     className={cn(
-                                        "w-14 h-14 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-12 h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '1.25rem',
+                                        borderRadius: '1.1rem',
                                         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
                                     }}
                                 >
@@ -86,11 +86,11 @@ export const FloatingActions = () => {
                                 <button
                                     onClick={action.onClick}
                                     className={cn(
-                                        "w-14 h-14 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
+                                        "w-12 h-12 flex items-center justify-center text-white shadow-2xl transition-all duration-500 hover:scale-[1.15] active:scale-90 relative overflow-hidden",
                                         action.color
                                     )}
                                     style={{ 
-                                        borderRadius: '1.25rem',
+                                        borderRadius: '1.1rem',
                                         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
                                     }}
                                 >
