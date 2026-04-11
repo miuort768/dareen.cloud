@@ -67,7 +67,6 @@ router.post('/', async (req, res) => {
         const newEval = await req.db.get('SELECT * FROM evaluations WHERE id = ?', [newId]);
         res.status(201).json(newEval);
     } catch (err) {
-        await req.db.run('ROLLBACK');
         logger.error('Error adding evaluation', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -94,7 +93,6 @@ router.delete('/:id', checkRole(['admin', 'teacher']), async (req, res) => {
         });
         res.json({ message: 'Deleted' });
     } catch (err) {
-        await req.db.run('ROLLBACK');
         logger.error('Error deleting evaluation', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }

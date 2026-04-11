@@ -168,12 +168,37 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
             const wasCompleted = oldSession.status === 'completed';
             const isCompleted = newSession.status === 'completed';
 
-            if (wasCompleted && !isCompleted) {
+            // Check if identifying fields changed (affecting which enrollment it belongs to)
+            const identityChanged = 
+                oldSession.studentId !== newSession.studentId || 
+                oldSession.subject !== newSession.subject || 
+                oldSession.teacherId !== newSession.teacherId;
+
+            if (wasCompleted && isCompleted && identityChanged) {
+                // Return to old enrollment
                 await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
-                await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل حالة حصة: ${oldSession.subject}` });
-            } else if (!wasCompleted && isCompleted) {
+                await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل بيانات حصة مكتملة: ${oldSession.subject}` });
+                
+                // Deduct from new enrollment
                 await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
-                await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة: ${newSession.subject}` });
+                await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة (انتقال): ${newSession.subject}` });
+            } else if (!identityChanged) {
+                if (wasCompleted && !isCompleted) {
+                    await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                    await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `تعديل حالة حصة: ${oldSession.subject}` });
+                } else if (!wasCompleted && isCompleted) {
+                    await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                    await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة: ${newSession.subject}` });
+                }
+            } else {
+                // Identity changed AND status changed
+                if (wasCompleted && !isCompleted) {
+                    await updateEnrollmentSessions(tx, { studentId: oldSession.studentId, subject: oldSession.subject, teacherName: oldSession.teacherName, teacherId: oldSession.teacherId, delta: -1 });
+                    await awardPoints(tx, { studentId: oldSession.studentId, amount: -10, action: `إلغاء حصة مكتملة: ${oldSession.subject}` });
+                } else if (!wasCompleted && isCompleted) {
+                    await updateEnrollmentSessions(tx, { studentId: newSession.studentId, subject: newSession.subject, teacherName: newSession.teacherName, teacherId: newSession.teacherId, delta: 1 });
+                    await awardPoints(tx, { studentId: newSession.studentId, amount: 10, action: `حضور حصة جديدة: ${newSession.subject}` });
+                }
             }
 
             if (isTeacher) {

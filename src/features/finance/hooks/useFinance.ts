@@ -111,28 +111,39 @@ export const useFinance = () => {
         const completedSessions = sessions.filter(s => s.status === 'completed');
         const monthSessions = completedSessions.filter(s => isSameMonth(s.date));
 
+        // Income: Sessions Revenue + Manual Income
         const automatedIncome = completedSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0);
-        const manualIncome = manualTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+        const manualIncome = manualTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const totalIncome = automatedIncome + manualIncome;
 
         const monthIncome = monthSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
-            manualTransactions.filter(t => t.type === 'income' && isSameMonth(t.date)).reduce((sum, t) => sum + t.amount, 0);
+            manualTransactions.filter(t => t.type === 'income' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
 
-        // Expenses: ACCRUED Labor (sessions) + PAID Invoices (manual)
+        // Expenses: 
+        // We use PAID Invoices + Manual Expenses + Fixed Expenses.
+        // We do NOT add automatedLaborCost here because it's already accounted for when we pay the invoice.
+        // If we added both, we would double-count the cost of teaching.
+        const manualExpenses = invoices.filter(inv => 
+            ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
+        ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        
+        const extraManualExpenses = manualTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+
+        const totalExpenses = manualExpenses + extraManualExpenses + totalFixedExpenses;
+
+        const monthManualExpenses = invoices.filter(inv => 
+            ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()) && 
+            isSameMonth(inv.date)
+        ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        
+        const monthExtraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+        // Important: Accrued Cost (for records/transparency, but not subtracted from cash net profit twice)
         const automatedLaborCost = completedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-        const manualExpenses = invoices.filter(inv => inv.status === 'مدفوعة' || inv.status === 'paid').reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
-        const extraManualExpenses = manualTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+        const monthExpensesValue = monthManualExpenses + monthExtraManualExpenses + totalFixedExpenses;
 
-        const totalExpenses = automatedLaborCost + manualExpenses + extraManualExpenses;
-
-        const monthLaborCost = monthSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-        const monthManualExpenses = invoices.filter(inv => (inv.status === 'مدفوعة' || inv.status === 'paid') && isSameMonth(inv.date)).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
-        const monthExtraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && isSameMonth(t.date)).reduce((sum, t) => sum + t.amount, 0);
-
-        const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + item.amount, 0);
-        const monthExpensesValue = monthLaborCost + monthManualExpenses + monthExtraManualExpenses + totalFixedExpenses;
-
-        const netProfit = totalIncome - totalExpenses - totalFixedExpenses;
+        const netProfit = totalIncome - totalExpenses;
         const monthProfit = monthIncome - monthExpensesValue;
         const profitMargin = totalIncome > 0 ? ((netProfit / totalIncome) * 100).toFixed(1) : '0';
 
@@ -142,6 +153,7 @@ export const useFinance = () => {
             totalExpenses,
             monthExpenses: monthExpensesValue,
             totalFixedExpenses,
+            automatedLaborCost, // Still available for reference
             netProfit,
             monthProfit,
             profitMargin
@@ -173,7 +185,7 @@ export const useFinance = () => {
                             category: 'تكلفة المعلمة',
                             amount: Number(s.teacherPrice) || 0,
                             date: s.date || '',
-                            description: `(أجر معلمة) ${s.teacherName} - عن ${s.studentName}`,
+                            description: `(أجر معلمة - مستحق) ${s.teacherName} - عن ${s.studentName}`,
                             status: 'completed' as const
                         });
                     }
@@ -183,10 +195,11 @@ export const useFinance = () => {
                 id: `invoice-${inv.id}`,
                 type: 'expense' as const,
                 category: 'راتب معلمة',
-                amount: (Number(inv.amount) || 0) + (Number(inv.personalExpenses) || 0),
+                amount: (Number(inv.amount) || 0),
                 date: inv.date || '',
-                description: `فاتورة: ${inv.teacher}`,
-                status: inv.status === 'مدفوعة' ? 'completed' : inv.status === 'قيد المعالجة' ? 'pending' : 'cancelled' as any
+                description: `فاتورة مدفوعة: ${inv.teacher} ${inv.personalExpenses ? `(بعد خصم ${inv.personalExpenses} نثريات)` : ''}`,
+                status: ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()) ? 'completed' : 
+                        ['pending', 'معلقة', 'قيد المعالجة'].includes(inv.status?.toLowerCase()) ? 'pending' : 'cancelled' as any
             }))
         ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

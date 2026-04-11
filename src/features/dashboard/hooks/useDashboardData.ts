@@ -117,30 +117,39 @@ export const useDashboardData = (currentUser: User | null) => {
 
         // 4. Financials
         const getSessionRev = (s: Session) => {
-            if (Number(s.price) > 0) return Number(s.price);
+            // If price is explicitly 0, it might be a free session, but check if property exists
+            if (s.hasOwnProperty('price') && s.price !== null && s.price !== undefined) return Number(s.price);
             const stu = students.find(st => st.id === s.studentId);
             return Number(stu?.sessionPrice) || 0;
         };
 
         const getRevenue = (list: Session[]) => list.reduce((sum, s) => sum + getSessionRev(s), 0);
         const getManualInc = (list: Transaction[]) => list.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        
+        // Accurate Labor Cost (Accrued)
         const getLaborCost = (list: Session[]) => list.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
+        
+        // Cash Out (Paid Invoices)
         const getPaidInv = (list: TeacherInvoice[]) => list.filter(inv =>
             ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
         ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        
         const getManualExp = (list: Transaction[]) => list.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const fixedTotal = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
 
         const totalRevenueValue = getRevenue(completedSessions) + getManualInc(transactions);
         const monthRevenueValue = getRevenue(monthComplete) + getManualInc(transactions.filter(t => isSameMonth(t.date)));
 
+        // Admin Expense Logic: Only count Paid Invoices + Manual Expenses + Fixed to avoid double counting with labor cost
+        // Labor cost is "what we owe", not "what we spent". But many admins want to see it as expense.
+        // We will use Paid Invoices + Manual + Fixed for "Expenses", and Labor Cost can be shown as "Accrued".
         const totalExpensesValue = isTeacher
             ? (getPaidInv(teacherInvoices) + getManualExp(transactions))
-            : (getLaborCost(completedSessions) + getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal);
+            : (getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal);
 
         const monthExpensesValue = isTeacher
             ? (getPaidInv(teacherInvoices.filter(inv => isSameMonth(inv.date))) + getManualExp(transactions.filter(t => isSameMonth(t.date))))
-            : (getLaborCost(monthComplete) + getPaidInv(teacherInvoices.filter(inv => isSameMonth(inv.date))) + getManualExp(transactions.filter(t => isSameMonth(t.date))) + fixedTotal);
+            : (getPaidInv(teacherInvoices.filter(inv => isSameMonth(inv.date))) + getManualExp(transactions.filter(t => isSameMonth(t.date))) + fixedTotal);
 
         const totalNetProfitValue = totalRevenueValue - totalExpensesValue;
         const monthNetProfitValue = monthRevenueValue - monthExpensesValue;
@@ -166,12 +175,11 @@ export const useDashboardData = (currentUser: User | null) => {
             );
 
             const rev = getRevenue(mComp) + getManualInc(transactions.filter(t => isTargetMonth(t.date)));
-            const expSess = getLaborCost(mComp);
             const expInv = getPaidInv(teacherInvoices.filter(inv => isTargetMonth(inv.date)));
             const expMan = getManualExp(transactions.filter(t => isTargetMonth(t.date)));
             const expFixed = (y === now.getFullYear() && m === (now.getMonth() + 1)) ? fixedTotal : 0;
 
-            const exp = isTeacher ? (expInv + expMan) : (expSess + expInv + expMan + expFixed);
+            const exp = isTeacher ? (expInv + expMan) : (expInv + expMan + expFixed);
 
             return {
                 month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
@@ -185,19 +193,22 @@ export const useDashboardData = (currentUser: User | null) => {
 
         // 6. Low Balance
         const lowBalance: LowBalanceStudent[] = [];
+        let anticipatedCollection = 0;
+
         filteredStudents.forEach(s => {
             s.enrollments?.forEach(en => {
                 if (isTeacher && en.teacher !== teacherName) return;
                 const total = Number(en.sessionsTotal) || 0;
                 const actualUsed = sessions.filter(ss =>
                     ss.studentId === s.id &&
-                    ss.teacherName === en.teacher &&
+                    (ss.teacherId === en.teacherId || ss.teacherName === en.teacher) &&
                     ss.subject === en.subject &&
                     ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase())
                 ).length;
 
                 const remaining = total - actualUsed;
                 if (remaining <= 2 && remaining >= 0) {
+                    const price = Number(s.sessionPrice) || 0;
                     lowBalance.push({
                         id: s.id,
                         studentName: s.name || '',
@@ -206,11 +217,13 @@ export const useDashboardData = (currentUser: User | null) => {
                         teacherName: en.teacher,
                         parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || ''
                     });
+                    // Anticipated: Collecting for 8 new sessions
+                    anticipatedCollection += (price * 8);
                 }
             });
         });
 
-        // 6b. Focus List (Students with attendance < 70% or poor evaluations)
+        // 6b. Focus List
         const focusStudentsList: any[] = [];
         if (isTeacher) {
             filteredStudents.forEach(s => {
@@ -257,10 +270,11 @@ export const useDashboardData = (currentUser: User | null) => {
                 ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
             ).length,
             lowBalanceCount: lowBalance.length,
-            expectedCollection: lowBalance.length * 1000,
+            expectedCollection: anticipatedCollection,
             totalSessions: filteredSessions.length,
             monthCompletedSessions: monthComplete.length,
             monthTotalSessions: filteredSessions.filter(s => isSameMonth(s.date) && (s.status === 'scheduled' || s.status === 'completed')).length,
+
             teacherPoints: isTeacher ? teachers.find(t => t.id === currentUser.id)?.points || 0 : undefined,
             weekTotalSessions: isTeacher ? filteredSessions.filter(s => {
                 const sDate = new Date(s.date);
