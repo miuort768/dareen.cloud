@@ -38,7 +38,7 @@ export const FloatingActions = () => {
 
     return (
         <>
-            <div className="fixed bottom-8 right-6 z-[9999] flex flex-col gap-3">
+            <div className="fixed md:top-[35%] md:bottom-auto bottom-8 right-6 z-[9999] flex flex-col gap-3">
                 <AnimatePresence>
                     {actions.map((action, index) => (
                         <motion.div
