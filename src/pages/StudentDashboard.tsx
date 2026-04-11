@@ -142,7 +142,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="flex flex-wrap lg:flex-nowrap gap-4 w-full">
                 {[
                     { key: 'overview', label: 'نظرة عامة', icon: Activity },
                     { key: 'schedule', label: 'الجدول الأسبوعي', icon: CalendarDays },
@@ -153,13 +153,13 @@ export const StudentDashboard = () => {
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key as any)}
                         className={cn(
-                            "flex items-center gap-2 px-5 py-3 font-black text-xs uppercase tracking-wider whitespace-nowrap border-4 border-gray-950 transition-all",
+                            "flex-1 flex items-center justify-center gap-3 px-6 py-4 font-black text-sm uppercase tracking-wider border-4 border-gray-950 transition-all min-w-[160px]",
                             activeTab === tab.key
-                                ? "bg-gray-950 text-white shadow-[4px_4px_0px_0px_#3b82f6]"
-                                : "bg-white text-gray-600 hover:bg-gray-50 shadow-[4px_4px_0px_0px_black]"
+                                ? "bg-gray-950 text-white shadow-[6px_6px_0px_0px_#3b82f6] -translate-y-1"
+                                : "bg-white text-gray-600 hover:bg-gray-50 shadow-[6px_6px_0px_0px_black] hover:-translate-y-0.5"
                         )}
                     >
-                        <tab.icon size={16} /> {tab.label}
+                        <tab.icon size={20} /> {tab.label}
                     </button>
                 ))}
             </div>
