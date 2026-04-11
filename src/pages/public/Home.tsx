@@ -22,10 +22,10 @@ export const Home = () => {
         let typingSpeed = 150;
 
         const type = () => {
-            const currentText = isDeleting 
-                ? fullText.substring(0, i - 1) 
+            const currentText = isDeleting
+                ? fullText.substring(0, i - 1)
                 : fullText.substring(0, i + 1);
-            
+
             setTypewriterText(currentText);
 
             if (!isDeleting && i === fullText.length) {
@@ -109,17 +109,17 @@ export const Home = () => {
 
             {/* Hero Section */}
             <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
-                     style={{ 
-                         backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
-                         filter: 'blur(70px)'
-                     }}>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                        filter: 'blur(70px)'
+                    }}>
                 </div>
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                     style={{ 
-                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '200px 200px'
-                     }}>
+                    style={{
+                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                        backgroundSize: '200px 200px'
+                    }}>
                 </div>
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
@@ -294,17 +294,17 @@ export const Home = () => {
 
             {/* Quran Memorization Section */}
             <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
-                     style={{ 
-                         backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
-                         filter: 'blur(70px)'
-                     }}>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                        filter: 'blur(70px)'
+                    }}>
                 </div>
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                     style={{ 
-                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '200px 200px'
-                     }}>
+                    style={{
+                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                        backgroundSize: '200px 200px'
+                    }}>
                 </div>
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
@@ -361,7 +361,7 @@ export const Home = () => {
                         <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
                             <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
                                 <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
                                     <div className="w-12 h-12 bg-gray-50 text-red-600 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-all transform group-hover:rotate-12">
                                         <Clock className="w-6 h-6" />
                                     </div>
@@ -407,20 +407,19 @@ export const Home = () => {
                     {/* Pattern Overlay */}
                     <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
                 </div>
-                
+
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-16">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
                             <Zap size={12} className="text-yellow-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
                         </div>
-                        <h2 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 font-heading">
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
                             كيف تشترك في <span className="text-red-500">المعهد؟</span>
                         </h2>
-                        <p className="text-gray-400 text-[10px] md:text-xs font-bold tracking-widest uppercase">بثلاث خطوات بسيطة وممتعة</p>
                     </div>
                     
-                    <div className="max-w-4xl mx-auto relative">
+                    <div className="max-w-4xl mx-auto relative pt-10">
                         {/* Creative Curved Connectors (Visible on desktop) */}
                         <div className="hidden md:block absolute inset-0 pointer-events-none overflow-visible">
                             {/* Arrow 1 to 2 */}
@@ -500,44 +499,7 @@ export const Home = () => {
                                 </div>
                             ))}
                         </div>
-                        
-                        <div className="mt-16 relative max-w-2xl mx-auto group">
-                            {/* The Banner Image */}
-                            <div className="relative rounded-[2.5rem] overflow-hidden border-8 border-white dark:border-slate-900 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
-                                <img 
-                                    src="/images/how-it-works-banner.png" 
-                                    alt="بوابة التعلم في معهد دارين" 
-                                    className="w-full h-auto object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                            </div>
 
-                            {/* Creative Stickers */}
-                            {/* Sticker 1: Certified */}
-                            <motion.div 
-                                animate={{ y: [0, -10, 0], rotate: [-8, -6, -8] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -top-6 -left-8 bg-yellow-400 text-slate-900 font-black px-6 py-3 rounded-2xl shadow-xl border-4 border-white dark:border-slate-900 -rotate-12 z-20 cursor-default select-none group-hover:scale-110 transition-transform"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <Award size={20} />
-                                    <span className="text-sm">تعليم معتمد 🏆</span>
-                                </div>
-                            </motion.div>
-
-                            {/* Sticker 2: Free Trial */}
-                            <motion.div 
-                                animate={{ y: [0, 10, 0], rotate: [8, 10, 8] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute -bottom-6 -right-8 bg-emerald-500 text-white font-black px-6 py-3 rounded-2xl shadow-xl border-4 border-white dark:border-slate-900 rotate-12 z-20 cursor-default select-none group-hover:scale-110 transition-transform"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <Zap size={20} />
-                                    <span className="text-sm">ابدأ مجاناً ✨</span>
-                                </div>
-                            </motion.div>
-                        </div>
-                        
                         <div className="mt-20 flex justify-center">
                             <a
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
@@ -638,17 +600,17 @@ export const Home = () => {
 
             {/* FAQ Section */}
             <section className="py-8 md:py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]" 
-                     style={{ 
-                         backgroundImage: 'radial-gradient(circle at 15% 50%, #EF4444 0%, transparent 40%), radial-gradient(circle at 85% 50%, #16A34A 0%, transparent 40%)',
-                         filter: 'blur(80px)'
-                     }}>
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 15% 50%, #EF4444 0%, transparent 40%), radial-gradient(circle at 85% 50%, #16A34A 0%, transparent 40%)',
+                        filter: 'blur(80px)'
+                    }}>
                 </div>
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]"
-                     style={{ 
-                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '200px 200px'
-                     }}>
+                    style={{
+                        backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                        backgroundSize: '200px 200px'
+                    }}>
                 </div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-8">
