@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Info, MessageSquare } from 'lucide-react';
+import { MessageCircle, Send, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { ChatbotWidget } from './ChatbotWidget';
@@ -20,12 +20,12 @@ export const FloatingActions = () => {
             isExternal: true
         },
         {
-            id: 'about',
-            icon: <Info className="w-5 h-5" />,
-            label: 'من نحن',
-            color: 'bg-red-600',
-            href: '/about',
-            isExternal: false
+            id: 'telegram',
+            icon: <Send className="w-5 h-5" />,
+            label: 'تليجرام',
+            color: 'bg-[#229ED9]',
+            href: 'https://t.me/dareen_app',
+            isExternal: true
         },
         {
             id: 'chat',
