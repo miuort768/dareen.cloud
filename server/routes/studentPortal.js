@@ -31,6 +31,21 @@ router.get('/me', authMiddleware, async (req, res) => {
     }
 });
 
+// 2. Student Portal: Get Sessions (attendance history)
+router.get('/me/sessions', authMiddleware, async (req, res) => {
+    try {
+        const studentId = req.user.id;
+        const sessions = await req.db.all(
+            'SELECT * FROM sessions WHERE studentId = ? ORDER BY date DESC LIMIT 100',
+            [studentId]
+        );
+        res.json(sessions);
+    } catch (err) {
+        logger.error('Error fetching student sessions', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 // 3. Student Portal: Get Points Log
 router.get('/me/points-log', authMiddleware, async (req, res) => {
     try {
@@ -38,7 +53,6 @@ router.get('/me/points-log', authMiddleware, async (req, res) => {
         
         // If parent is requesting, allow based on studentId query param
         if (req.user.role === 'parent' && req.query.studentId) {
-            // VERIFY: Does this parent own this student?
             const relation = await req.db.get('SELECT id FROM students WHERE id = ? AND parentPhone = ?', [req.query.studentId, req.user.phone]);
             if (relation) {
                 studentId = req.query.studentId;
@@ -51,6 +65,23 @@ router.get('/me/points-log', authMiddleware, async (req, res) => {
         res.json(logs);
     } catch (err) {
         logger.error('Error fetching points log', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// 4. Student Portal: Get Announcements
+router.get('/me/announcements', authMiddleware, async (req, res) => {
+    try {
+        const announcements = await req.db.all(
+            "SELECT * FROM system_settings WHERE key LIKE 'announcement_%' ORDER BY key DESC LIMIT 10"
+        );
+        // Parse stored announcements
+        const parsed = announcements.map(a => {
+            try { return JSON.parse(a.value); } catch(e) { return null; }
+        }).filter(Boolean);
+        res.json(parsed);
+    } catch (err) {
+        logger.error('Error fetching student announcements', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
