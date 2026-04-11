@@ -6,6 +6,7 @@ import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
+import { cn } from '../../lib/utils';
 
 export const Home = () => {
     const { adminPhone } = useSettings();
@@ -442,7 +443,7 @@ export const Home = () => {
                                     icon: <Star size={20} />,
                                     color: 'from-emerald-600 to-emerald-500'
                                 }
-                            ].map((step, idx) => (
+                            ].map((step) => (
                                 <div key={step.id} className="relative group flex flex-col items-center">
                                     {/* Small Floating Number Circle */}
                                     <div className={cn(
