@@ -415,9 +415,30 @@ export const Home = () => {
                     </div>
                     
                     <div className="max-w-4xl mx-auto relative">
-                        {/* Animated Desktop Connector Line */}
-                        <div className="hidden md:block absolute top-[45px] left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500 to-transparent w-20 h-full animate-slide-infinite"></div>
+                        {/* Creative Curved Connectors (Visible on desktop) */}
+                        <div className="hidden md:block absolute inset-0 pointer-events-none overflow-visible">
+                            {/* Arrow 1 to 2 */}
+                            <svg className="absolute top-[30px] left-[25%] w-[25%] h-[60px]" viewBox="0 0 200 60" fill="none">
+                                <path 
+                                    d="M0 30 C 50 0, 150 0, 200 30" 
+                                    stroke="currentColor" 
+                                    strokeWidth="2" 
+                                    strokeDasharray="6 6" 
+                                    className="text-slate-200 dark:text-slate-800"
+                                />
+                                <path d="M195 25 L205 32 L195 39" stroke="currentColor" strokeWidth="2" className="text-slate-200 dark:text-slate-800" />
+                            </svg>
+                            {/* Arrow 2 to 3 */}
+                            <svg className="absolute top-[30px] right-[25%] w-[25%] h-[60px]" viewBox="0 0 200 60" fill="none">
+                                <path 
+                                    d="M0 30 C 50 60, 150 60, 200 30" 
+                                    stroke="currentColor" 
+                                    strokeWidth="2" 
+                                    strokeDasharray="6 6" 
+                                    className="text-slate-200 dark:text-slate-800"
+                                />
+                                <path d="M195 25 L205 32 L195 39" stroke="currentColor" strokeWidth="2" className="text-slate-200 dark:text-slate-800" />
+                            </svg>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
