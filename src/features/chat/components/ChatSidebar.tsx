@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
     Search, Plus, Trash2, Edit2, LogOut, 
-    Bell, BellOff, UserCircle, ShieldCheck,
+    UserCircle, ShieldCheck,
     Zap, Terminal, LayoutDashboard
 } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
@@ -23,7 +23,7 @@ interface ChatSidebarProps {
     confirmDeleteAllConversations: () => void;
     setIsEditingGroup: (val: boolean) => void;
     logout: () => void;
-    requestDesktopNotifications: () => Promise<boolean>;
+
     typingUsers: any[];
     view: ChatView;
     setView: (view: ChatView) => void;
@@ -40,16 +40,14 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     confirmDeleteAllConversations,
     setIsEditingGroup,
     logout,
-    requestDesktopNotifications,
+
     typingUsers,
     view,
     setView
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const { isConnected } = useChatContext();
-    const [isNotificationGranted, setIsNotificationGranted] = React.useState(
-        'Notification' in window && Notification.permission === 'granted'
-    );
+
 
     const confirmDeleteAllConversationsLocal = () => {
         if (window.confirm('هل أنت متأكد من حذف كافة المحادثات؟ لا يمكن التراجع عن هذه الخطوة.')) {
@@ -106,18 +104,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 <div className="space-y-6 relative z-10">
                     <div className="flex items-center gap-4 flex-row-reverse">
                         <div className="flex items-center gap-2 flex-row-reverse">
-                            <button
-                                onClick={async () => {
-                                    const success = await requestDesktopNotifications();
-                                    if (success) setIsNotificationGranted(true);
-                                }}
-                                className={cn(
-                                    "w-12 h-12 border-4 border-gray-950 flex items-center justify-center transition-all shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
-                                    isNotificationGranted ? "bg-emerald-400 text-gray-950" : "bg-white text-gray-300"
-                                )}
-                            >
-                                {isNotificationGranted ? <Bell size={20} /> : <BellOff size={20} />}
-                            </button>
+
 
                             {currentUser?.role === 'admin' && (
                                 <button

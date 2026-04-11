@@ -181,12 +181,7 @@ export const Chat = () => {
         setShowDeleteConfirm(true);
     }, []);
 
-    const requestDesktopNotifications = useCallback(async () => {
-        if (!('Notification' in window)) return false;
-        if (Notification.permission === 'granted') return true;
-        const result = await Notification.requestPermission();
-        return result === 'granted';
-    }, []);
+
 
     // Fetch messages for selected conversation
     const { data: messages = [] } = useMessages(selectedConv?.id);
@@ -272,7 +267,7 @@ export const Chat = () => {
                 confirmDeleteAllConversations={confirmDeleteAllConversations}
                 setIsEditingGroup={setIsEditingGroup}
                 logout={logout}
-                requestDesktopNotifications={requestDesktopNotifications}
+
                 typingUsers={typingUsers}
                 view={view}
                 setView={setView}
