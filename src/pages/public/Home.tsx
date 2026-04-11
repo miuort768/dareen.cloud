@@ -441,48 +441,50 @@ export const Home = () => {
                             </svg>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
+                        <div className="grid grid-cols-3 gap-2 md:gap-4">
                             {[
                                 {
                                     id: '01',
                                     title: 'اختر الخدمة',
-                                    desc: 'حدد النظام التعليمي المناسب لمستواك',
-                                    icon: <Users size={20} />,
+                                    desc: 'حدد النظام التعليمي المناسب',
+                                    icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
                                     color: 'from-slate-900 to-slate-800'
                                 },
                                 {
                                     id: '02',
                                     title: 'اشترك الآن',
-                                    desc: 'تواصل معنا لحجز مكانك في الحصص المباشرة',
-                                    icon: <Zap size={20} />,
+                                    desc: 'تواصل معنا لحجز مكانك',
+                                    icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
                                     color: 'from-red-600 to-red-500'
                                 },
                                 {
                                     id: '03',
-                                    title: 'الحصة التجريبية',
-                                    desc: 'استمتع بأول حصة أونلاين مجاناً تماماً',
-                                    icon: <Star size={20} />,
+                                    title: 'حصة مجانية',
+                                    desc: 'استمتع بأول حصة مجاناً',
+                                    icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
                                     color: 'from-emerald-600 to-emerald-500'
                                 }
                             ].map((step) => (
                                 <div key={step.id} className="relative group flex flex-col items-center">
                                     {/* Small Floating Number Circle */}
                                     <div className={cn(
-                                        "w-[90px] h-[90px] rounded-[30%] flex items-center justify-center text-white shadow-xl mb-6 relative transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br",
+                                        "w-[55px] h-[55px] md:w-[90px] md:h-[90px] rounded-[30%] flex items-center justify-center text-white shadow-xl mb-4 md:mb-6 relative transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br",
                                         step.color
                                     )}>
-                                        {step.icon}
-                                        <span className="absolute -top-2 -right-2 w-6 h-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white rounded-full flex items-center justify-center text-[9px] font-black shadow-lg border border-slate-100 dark:border-slate-800">
+                                        <div className="scale-75 md:scale-100">
+                                            {step.icon}
+                                        </div>
+                                        <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white rounded-full flex items-center justify-center text-[7px] md:text-[9px] font-black shadow-lg border border-slate-100 dark:border-slate-800">
                                             {step.id}
                                         </span>
                                     </div>
 
                                     {/* Glass Content Card */}
-                                    <div className="text-center px-4 max-w-[220px]">
-                                        <h3 className="text-sm font-black text-slate-900 dark:text-white mb-2 group-hover:text-red-600 transition-colors">
+                                    <div className="text-center px-1 md:px-4 w-full">
+                                        <h3 className="text-[9px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-red-600 transition-colors">
                                             {step.title}
                                         </h3>
-                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-bold">
+                                        <p className="hidden sm:block text-[8px] md:text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-bold">
                                             {step.desc}
                                         </p>
                                     </div>
