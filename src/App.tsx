@@ -34,7 +34,7 @@ import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
 import { RefundPolicy } from './pages/public/RefundPolicy';
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
-import { ChatbotWidget } from './components/public/ChatbotWidget';
+import { FloatingActions } from './components/public/FloatingActions';
 import { InstallPWA } from './components/ui/InstallPWA';
 
 // Protected Route Component
@@ -128,7 +128,8 @@ function App() {
       )}
       <ScrollToTop />
       <InstallPWA />
-      <ChatbotWidget />
+      {/* Public Facing Actions */}
+      <FloatingActions />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />

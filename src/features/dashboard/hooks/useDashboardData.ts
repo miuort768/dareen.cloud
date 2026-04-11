@@ -126,9 +126,6 @@ export const useDashboardData = (currentUser: User | null) => {
         const getRevenue = (list: Session[]) => list.reduce((sum, s) => sum + getSessionRev(s), 0);
         const getManualInc = (list: Transaction[]) => list.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         
-        // Accurate Labor Cost (Accrued)
-        const getLaborCost = (list: Session[]) => list.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
-        
         // Cash Out (Paid Invoices)
         const getPaidInv = (list: TeacherInvoice[]) => list.filter(inv =>
             ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())

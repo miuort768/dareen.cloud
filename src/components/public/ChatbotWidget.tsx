@@ -15,7 +15,12 @@ interface Message {
     timestamp: string;
 }
 
-export const ChatbotWidget = () => {
+interface ChatbotProps {
+    forcedOpen?: boolean;
+    onClose?: () => void;
+}
+
+export const ChatbotWidget = ({ forcedOpen, onClose }: ChatbotProps) => {
     const { chatbotEnabled, chatbotName, chatbotWelcomeMsg } = useApp();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
@@ -82,6 +87,13 @@ export const ChatbotWidget = () => {
             setUnreadCount(0);
         }
     }, [messages, isOpen]);
+
+    useEffect(() => {
+        if (forcedOpen) {
+            setIsOpen(true);
+            setIsMinimized(false);
+        }
+    }, [forcedOpen]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -209,7 +221,10 @@ export const ChatbotWidget = () => {
                                     <MinusCircle size={18} />
                                 </button>
                                 <button 
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        if (onClose) onClose();
+                                    }}
                                     className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white"
                                 >
                                     <X size={18} />
