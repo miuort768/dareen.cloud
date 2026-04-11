@@ -398,9 +398,14 @@ export const Home = () => {
             </section>
 
             {/* How it Works Section - Reimagined Creative Design */}
-            <section className="py-20 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500">
-                {/* Artistic background element */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-red-500/[0.03] dark:bg-red-500/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
+            <section className="py-20 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
+                {/* Modern Mesh Gradient Background */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.05] dark:bg-red-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
+                    <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-emerald-500/[0.03] dark:bg-emerald-500/[0.06] blur-[100px] rounded-full"></div>
+                    {/* Pattern Overlay */}
+                    <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+                </div>
                 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-12">
