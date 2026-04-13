@@ -21,8 +21,13 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const queryClient = useQueryClient();
     const [typingUsers, setTypingUsers] = useState<{ conversationId: string; userName: string }[]>([]);
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+    const activeConvRef = React.useRef<string | null>(null);
     const [totalUnreadCount, setTotalUnreadCount] = useState(0);
     const [isConnected, setIsConnected] = useState(false);
+
+    React.useEffect(() => {
+        activeConvRef.current = activeConversationId;
+    }, [activeConversationId]);
 
     const setTyping = useCallback((conversationId: string, isTyping: boolean, userName: string) => {
         if (!isAuthenticated) return;
@@ -106,7 +111,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // 2. Update conversations list cache
             queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
                 const conversations = Array.isArray(old) ? old : [];
-                const isCurrentlyActive = activeConversationId === message.conversationId;
+                const isCurrentlyActive = activeConvRef.current === message.conversationId;
 
                 const updated = conversations.map((conv: any) => {
                     if (conv.id === message.conversationId) {
@@ -132,14 +137,13 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
 
             // 4. Send Native Notification & Play Sound
-            const isCurrentlyActive = activeConversationId === message.conversationId;
+            const isCurrentlyActive = activeConvRef.current === message.conversationId;
             const isFromOthers = String(message.senderId) !== currentUserId;
 
             if (isFromOthers) {
-                // Play strong sound effect immediately
-                playNotificationSound();
-
+                // Play strong sound effect only if we are receiving it
                 if (!isCurrentlyActive || document.visibilityState === 'hidden') {
+                    playNotificationSound();
                     sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
                         body: message.content,
                         tag: message.conversationId, // Group notifications from same chat
