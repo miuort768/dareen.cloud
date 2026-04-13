@@ -413,7 +413,7 @@ export const Home = () => {
                             <Zap size={12} className="text-yellow-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
+                        <h2 className="text-xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
                             كيف تشترك في <span className="text-red-500">المعهد؟</span>
                         </h2>
                     </div>
@@ -456,17 +456,17 @@ export const Home = () => {
                                 },
                                 {
                                     id: '02',
-                                    title: 'اشترك الآن',
-                                    desc: 'تواصل معنا لحجز مكانك',
-                                    icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
-                                    color: 'from-red-600 to-red-500'
+                                    title: 'حصة مجانية',
+                                    desc: 'استمتع بالتجريب أولاً',
+                                    icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
+                                    color: 'from-emerald-600 to-emerald-500'
                                 },
                                 {
                                     id: '03',
-                                    title: 'حصة مجانية',
-                                    desc: 'استمتع بأول حصة مجاناً',
-                                    icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
-                                    color: 'from-emerald-600 to-emerald-500'
+                                    title: 'اشترك الآن',
+                                    desc: 'تواصل لحجز مقعدك',
+                                    icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
+                                    color: 'from-red-600 to-red-500'
                                 }
                             ].map((step) => (
                                 <div key={step.id} className="relative group flex flex-col items-center">
