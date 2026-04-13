@@ -235,10 +235,6 @@ const Settings = () => {
                                     <input value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">العنوان الجغرافي</label>
-                                    <input value={localAcademyAddress} onChange={e => setLocalAcademyAddress(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
-                                </div>
-                                <div className="col-span-2">
                                     <label className="block text-xs font-black mb-1 opacity-60">رقم هاتف المسؤول الرئيسي</label>
                                     <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
                                 </div>
