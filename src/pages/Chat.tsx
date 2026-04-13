@@ -175,13 +175,6 @@ export const Chat = () => {
         setShowDeleteConfirm(true);
     }, [profiles]);
 
-    const confirmDeleteAllConversations = useCallback(() => {
-        setDeleteType('all_conversations');
-        setItemToDelete({ displayName: 'كافة المحادثات' });
-        setShowDeleteConfirm(true);
-    }, []);
-
-
 
     // Fetch messages for selected conversation
     const { data: messages = [] } = useMessages(selectedConv?.id);
