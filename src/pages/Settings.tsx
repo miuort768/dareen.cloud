@@ -588,8 +588,11 @@ const Settings = () => {
                                 </div>
                             </div>
                         </section>
-                        {/* Guest Conversations Manager */}
-                        {chatbotEnabled && user?.id && <GuestChatManager adminId={user.id} />}
+                        
+                        {/* Guest Conversations Manager - Now full width below */}
+                        <div className="col-span-1 lg:col-span-2 mt-4">
+                            {chatbotEnabled && user?.id && <GuestChatManager adminId={user.id} />}
+                        </div>
                     </div>
                 )}
 
