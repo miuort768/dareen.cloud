@@ -8,6 +8,8 @@ import type { ChatMessage, Conversation } from '../types/chat.types';
 interface ChatContextType {
     typingUsers: { conversationId: string; userName: string }[];
     setTyping: (conversationId: string, isTyping: boolean, userName: string) => void;
+    activeConversationId: string | null;
+    setActiveConversationId: (id: string | null) => void;
     totalUnreadCount: number;
     isConnected: boolean;
 }
@@ -18,6 +20,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { currentUser, isAuthenticated } = useApp();
     const queryClient = useQueryClient();
     const [typingUsers, setTypingUsers] = useState<{ conversationId: string; userName: string }[]>([]);
+    const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
     const [totalUnreadCount, setTotalUnreadCount] = useState(0);
     const [isConnected, setIsConnected] = useState(false);
 
@@ -103,8 +106,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             // 2. Update conversations list cache
             queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
                 const conversations = Array.isArray(old) ? old : [];
-                const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
-                const isCurrentlyActive = activeConvId === message.conversationId;
+                const isCurrentlyActive = activeConversationId === message.conversationId;
 
                 const updated = conversations.map((conv: any) => {
                     if (conv.id === message.conversationId) {
@@ -117,8 +119,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     }
                     return conv;
                 });
-
-                // Re-sort: Latest message first
+// ... (omitted sorting logic for brevity in chunk but it stays)
                 return [...updated].sort((a: any, b: any) => {
                     const timeA = new Date(a.lastMessageTime || 0).getTime();
                     const timeB = new Date(b.lastMessageTime || 0).getTime();
@@ -131,8 +132,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
 
             // 4. Send Native Notification
-            const activeConvId = document.querySelector('[data-active-conv-id]')?.getAttribute('data-active-conv-id');
-            const isCurrentlyActive = activeConvId === message.conversationId;
+            const isCurrentlyActive = activeConversationId === message.conversationId;
             const isFromOthers = String(message.senderId) !== currentUserId;
 
             if (isFromOthers && (!isCurrentlyActive || document.visibilityState === 'hidden')) {
@@ -182,7 +182,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [isAuthenticated, currentUser, queryClient, isConnected]);
 
     return (
-        <ChatContext.Provider value={{ typingUsers, setTyping, totalUnreadCount, isConnected }}>
+        <ChatContext.Provider value={{ typingUsers, setTyping, activeConversationId, setActiveConversationId, totalUnreadCount, isConnected }}>
             {children}
         </ChatContext.Provider>
     );

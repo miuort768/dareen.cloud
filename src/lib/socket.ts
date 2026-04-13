@@ -9,8 +9,6 @@ class SocketService {
 
     connect() {
         const token = localStorage.getItem('auth_token');
-        // If no token, we still want to allow guests (e.g. for chatbot)
-        // Note: Protected events on server should still check token if they require auth
         
         if (!this.socket) {
             const origin = window.location.origin;
@@ -38,8 +36,14 @@ class SocketService {
                 console.error('❌ Socket connection error:', err.message);
             });
         } else {
-            // If socket exists but token might be different, update auth
-            this.socket.auth = { token };
+            // Force reconnect if token changed to ensure server updates rooms
+            const currentToken = (this.socket.auth as any)?.token;
+            if (currentToken !== token) {
+                this.socket.auth = { token: token || 'guest' };
+                if (this.socket.connected) {
+                    this.socket.disconnect().connect();
+                }
+            }
         }
         return this.socket;
     }

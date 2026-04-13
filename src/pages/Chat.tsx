@@ -5,6 +5,7 @@ import { ChatManagement } from '../features/chat/components/ChatManagement';
 import { ChatModals } from '../features/chat/components/ChatModals';
 import type { ProfileFormData } from '../features/chat/components/ChatModals';
 import { useApp } from '../context/AppContext';
+import { useChatContext } from '../context/ChatContext';
 import { useChat } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, ChatView, DeleteType, ChatUser } from '../types/chat.types';
@@ -27,10 +28,15 @@ export const Chat: React.FC = () => {
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
+    const { setActiveConversationId } = useChatContext();
     const [newMessage, setNewMessage] = useState('');
     const [view, setView] = useState<ChatView>('chat');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        setActiveConversationId(selectedConv?.id || null);
+    }, [selectedConv, setActiveConversationId]);
 
     // Modal States
     const [showNewChatModal, setShowNewChatModal] = useState(false);
