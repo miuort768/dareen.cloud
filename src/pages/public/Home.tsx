@@ -398,7 +398,7 @@ export const Home = () => {
             </section>
 
             {/* How it Works Section - Reimagined Creative Design */}
-            <section className="py-20 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
+            <section className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.05] dark:bg-red-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
@@ -408,7 +408,7 @@ export const Home = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
                             <Zap size={12} className="text-yellow-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
@@ -418,7 +418,7 @@ export const Home = () => {
                         </h2>
                     </div>
                     
-                    <div className="max-w-4xl mx-auto relative pt-10">
+                    <div className="max-w-4xl mx-auto relative pt-4">
                         {/* Creative Curved Connectors (Visible on desktop) */}
                         <div className="hidden md:block absolute inset-0 pointer-events-none overflow-visible">
                             {/* Arrow 1 to 2 */}
@@ -499,7 +499,7 @@ export const Home = () => {
                             ))}
                         </div>
 
-                        <div className="mt-20 flex justify-center">
+                        <div className="mt-10 flex justify-center">
                             <a
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                                 target="_blank"
