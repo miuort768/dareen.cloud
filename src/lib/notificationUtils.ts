@@ -54,3 +54,18 @@ export const sendNativeNotification = async (title: string, options?: Notificati
         console.error('Error sending native notification:', error);
     }
 };
+
+export const playNotificationSound = () => {
+    try {
+        const audio = new Audio('/notification.ogg');
+        audio.volume = 1.0;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.warn('Audio autoplay prevented by browser:', error);
+            });
+        }
+    } catch (e) {
+        console.error('Error playing sound:', e);
+    }
+};

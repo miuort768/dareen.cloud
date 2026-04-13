@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { useQueryClient } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
 import { useApp } from './AppContext';
-import { sendNativeNotification } from '../lib/notificationUtils';
+import { sendNativeNotification, playNotificationSound } from '../lib/notificationUtils';
 import type { ChatMessage, Conversation } from '../types/chat.types';
 
 interface ChatContextType {
@@ -131,17 +131,22 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
             queryClient.invalidateQueries({ queryKey: ['messages', message.conversationId] });
 
-            // 4. Send Native Notification
+            // 4. Send Native Notification & Play Sound
             const isCurrentlyActive = activeConversationId === message.conversationId;
             const isFromOthers = String(message.senderId) !== currentUserId;
 
-            if (isFromOthers && (!isCurrentlyActive || document.visibilityState === 'hidden')) {
-                sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
-                    body: message.content,
-                    tag: message.conversationId, // Group notifications from same chat
-                    // @ts-ignore
-                    renotify: true
-                });
+            if (isFromOthers) {
+                // Play strong sound effect immediately
+                playNotificationSound();
+
+                if (!isCurrentlyActive || document.visibilityState === 'hidden') {
+                    sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
+                        body: message.content,
+                        tag: message.conversationId, // Group notifications from same chat
+                        // @ts-ignore
+                        renotify: true
+                    });
+                }
             }
         };
 
