@@ -165,17 +165,17 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-1 overflow-y-auto no-scrollbar">
+                <nav className="flex-1 px-4 py-2 space-y-0.5 overflow-y-auto custom-scrollbar">
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
-                                "flex items-center gap-3 px-3 py-1.5 rounded-none transition-all duration-200 group relative",
+                                "flex items-center gap-3 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-sm",
                                 isActive
                                     ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
-                                collapsed && "justify-center"
+                                collapsed && "justify-center py-2"
                             )}
                             title={collapsed ? item.name : ''}
                         >
