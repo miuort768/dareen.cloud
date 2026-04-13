@@ -44,7 +44,6 @@ const Settings = () => {
         academyName, setAcademyName,
         academyLogo, setAcademyLogo,
         academyTagline, setAcademyTagline,
-        academyAddress, setAcademyAddress,
         adminPhone, setAdminPhone,
         themeColor, setThemeColor,
         notificationsEnabled, setNotificationsEnabled,
