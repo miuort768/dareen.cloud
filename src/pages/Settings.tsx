@@ -254,32 +254,85 @@ const Settings = () => {
                             </div>
                         </section>
 
-                        <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Wallet size={18} className="text-emerald-600"/> الإعدادات الأكاديمية والمالية الافتراضية</h2>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">تسمية الفصل الدراسي المنشط</label>
-                                    <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(16,185,129,0.1)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
+                                    <Wallet size={28} className="text-emerald-500" />
+                                    الإعدادات الأكاديمية والمالية
+                                </h2>
+                                <span className="hidden md:block text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1 border-2 border-emerald-500 uppercase">System Core Defaults</span>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {/* Academic Controls */}
+                                <div className="space-y-6">
+                                    <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
+                                        <Calendar size={14} /> الضوابط الأكاديمية
+                                    </h3>
+                                    
+                                    <div className="group">
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-emerald-600 transition-colors">
+                                            تسمية الفصل الدراسي المنشط
+                                        </label>
+                                        <div className="relative">
+                                            <input 
+                                                value={localSemesterName} 
+                                                onChange={e => setLocalSemesterName(e.target.value)} 
+                                                className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all"
+                                                placeholder="مثلاً: الفصل الدراسي الأول 2024"
+                                            />
+                                            <Edit size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none" />
+                                        </div>
+                                        <p className="text-[9px] font-bold text-gray-400 mt-2 italic">* يظهر هذا الاسم في كافة تقارير الطلاب وفواتيرهم.</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-black mb-1 opacity-60">سعر الطالب (افتراضي)</label>
-                                    <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-black mb-1 opacity-60">سعر المعلمة (افتراضي)</label>
-                                    <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-black mb-1 opacity-60">رمز العملة (مثال: ج.م)</label>
-                                    <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-black mb-1 opacity-60">حد تنبيه الرصيد المنخفض</label>
-                                    <input type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
+
+                                {/* Financial Controls */}
+                                <div className="space-y-6">
+                                    <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
+                                        <Activity size={14} /> المعايير المالية الافتراضية
+                                    </h3>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="col-span-1">
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">سعر الطالب</label>
+                                            <div className="relative">
+                                                <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all pl-10" />
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px]">{localCurrency}</span>
+                                            </div>
+                                        </div>
+                                        <div className="col-span-1">
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">سعر المعلمة</label>
+                                            <div className="relative">
+                                                <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all pl-10" />
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px]">{localCurrency}</span>
+                                            </div>
+                                        </div>
+                                        <div className="col-span-1">
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">رمز العملة</label>
+                                            <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all text-center" />
+                                        </div>
+                                        <div className="col-span-1">
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 text-red-500 group">تنبيه الرصيد <AlertCircle size={10} className="inline"/></label>
+                                            <input type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="w-full bg-red-50 dark:bg-red-900/10 border-2 border-red-200 dark:border-red-900/30 focus:border-red-500 p-3.5 font-black outline-none transition-all text-center text-red-600" />
+                                        </div>
+                                    </div>
+                                    <p className="text-[9px] font-bold text-gray-400 italic bg-gray-50 dark:bg-gray-900 p-2 border-r-2 border-emerald-500">
+                                        * هذه القيم يتم تطبيقها تلقائياً عند تسجيل طالب أو معلم جديد لتوفير الوقت.
+                                    </p>
                                 </div>
                             </div>
-                            <button onClick={handleSaveGeneral} className="w-full py-4 bg-primary-600 text-white font-black uppercase tracking-widest hover:bg-primary-700 shadow-lg shadow-primary-500/20">
-                                {isSaving ? <RefreshCw className="animate-spin mx-auto" /> : 'حفظ الإعدادات الكاملة'}
+
+                            <button 
+                                onClick={handleSaveGeneral} 
+                                className="group relative w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                            >
+                                {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
+                                    <>
+                                        <CheckCircle2 size={24} />
+                                        حفظ الضوابط الجوهرية للنظام
+                                    </>
+                                )}
                             </button>
                         </section>
                     </div>
