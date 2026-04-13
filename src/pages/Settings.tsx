@@ -185,8 +185,8 @@ const Settings = () => {
                 </div>
             </div>
 
-            {/* Brutalist Tabs Navigation - 2 columns on mobile, flat line on desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:flex-nowrap gap-2 md:gap-4 mb-10 no-print">
+            {/* Ultra-Compact Tabs Navigation - Ensuring all 7 fit */}
+            <div className="grid grid-cols-2 lg:flex lg:flex-row gap-1.5 md:gap-2 mb-10 no-print">
                 {[
                     { id: 'general', label: 'الإعدادات العامة', icon: Building2 },
                     { id: 'appearance', label: 'الهوية والمظهر', icon: Palette },
@@ -200,13 +200,13 @@ const Settings = () => {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                            "flex items-center justify-center lg:justify-start gap-2 md:gap-3 px-2 md:px-6 py-3 md:py-4 font-black text-[9px] md:text-xs uppercase transition-all tracking-tight lg:tracking-widest border-2 md:border-4 shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 whitespace-nowrap",
+                            "flex flex-1 items-center justify-center lg:justify-center gap-1.5 md:gap-2 px-1.5 lg:px-2 py-2 md:py-3 font-black text-[8px] lg:text-[10px] uppercase transition-all tracking-tighter border-2 shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 whitespace-nowrap overflow-hidden",
                             activeTab === tab.id 
                                 ? "bg-gray-950 text-white border-gray-950" 
                                 : "bg-white text-gray-950 border-gray-950 hover:bg-gray-50"
                         )}
                     >
-                        <tab.icon size={14} md:size={18} strokeWidth={3} className={cn("shrink-0", activeTab === tab.id ? "text-primary-500" : "text-gray-400")} />
+                        <tab.icon size={12} lg:size={14} strokeWidth={3} className={cn("shrink-0", activeTab === tab.id ? "text-primary-500" : "text-gray-400")} />
                         <span className="truncate">{tab.label}</span>
                     </button>
                 ))}
