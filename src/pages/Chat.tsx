@@ -27,6 +27,7 @@ export const Chat: React.FC = () => {
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
+    const [newMessage, setNewMessage] = useState('');
     const [view, setView] = useState<ChatView>('chat');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -60,7 +61,7 @@ export const Chat: React.FC = () => {
             senderName: currentUser.name,
             content
         });
-        input.value = '';
+        setNewMessage('');
     };
 
     const handleCreateConversation = async () => {
@@ -137,8 +138,8 @@ export const Chat: React.FC = () => {
                         <ChatWindow
                             selectedConv={selectedConv}
                             messages={messages}
-                            newMessage=""
-                            setNewMessage={() => {}}
+                            newMessage={newMessage}
+                            setNewMessage={setNewMessage}
                             handleSendMessage={handleSendMessage}
                             isSending={isSending}
                             currentUser={currentUser}
