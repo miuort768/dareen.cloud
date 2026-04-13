@@ -407,16 +407,18 @@ const Settings = () => {
                                                 key={c.id} 
                                                 onClick={() => setThemeColor(c.id)} 
                                                 className={cn(
-                                                    "group relative h-12 w-full transition-all duration-300 p-1 border-2", 
+                                                    "group relative h-12 w-12 rounded-full transition-all duration-300 p-1 border-2 mx-auto", 
                                                     themeColor === c.id 
-                                                        ? "border-black dark:border-white scale-110 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_white]" 
-                                                        : "border-transparent hover:scale-105"
+                                                        ? "border-black dark:border-white scale-110 shadow-lg" 
+                                                        : "border-transparent hover:scale-110"
                                                 )}
                                             >
-                                                <div className={cn("w-full h-full transform transition-transform group-hover:rotate-6", c.class)} title={c.label} />
+                                                <div className={cn("w-full h-full rounded-full transform transition-transform group-hover:rotate-12", c.class)} title={c.label} />
                                                 {themeColor === c.id && (
-                                                    <div className="absolute -top-2 -right-2 w-5 h-5 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center rounded-full border border-white dark:border-black">
-                                                        <CheckCircle2 size={12} strokeWidth={4} />
+                                                    <div className="absolute inset-0 flex items-center justify-center">
+                                                        <div className="w-6 h-6 bg-black/20 dark:bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                                            <CheckCircle2 size={14} className="text-white dark:text-white" strokeWidth={4} />
+                                                        </div>
                                                     </div>
                                                 )}
                                             </button>
