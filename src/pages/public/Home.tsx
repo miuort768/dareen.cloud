@@ -659,7 +659,7 @@ export const Home = () => {
                                         </summary>
                                         <div className="px-4 pb-4 pt-0">
                                             <div className="h-px w-full bg-gradient-to-r from-red-500/10 via-gray-100 to-transparent mb-3"></div>
-                                            <p className="text-[10px] md:text-xs text-gray-400 leading-relaxed font-medium">
+                                            <p className="text-[10px] md:text-xs text-black leading-relaxed font-medium">
                                                 {item.a}
                                             </p>
                                         </div>
