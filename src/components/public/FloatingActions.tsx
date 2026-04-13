@@ -6,7 +6,7 @@ import { ChatbotWidget } from './ChatbotWidget';
 import { cn } from '../../lib/utils';
 
 export const FloatingActions = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone, telegramHandle } = useSettings();
     const [showChat, setShowChat] = useState(false);
     const whatsappNumber = adminPhone.replace(/\D/g, '');
 
@@ -24,7 +24,7 @@ export const FloatingActions = () => {
             icon: <Send className="w-5 h-5" />,
             label: 'تليجرام',
             color: 'bg-[#229ED9]',
-            href: 'https://t.me/dareen_app',
+            href: telegramHandle.startsWith('http') ? telegramHandle : `https://t.me/${telegramHandle}`,
             isExternal: true
         },
         {

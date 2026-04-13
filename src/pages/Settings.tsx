@@ -63,6 +63,7 @@ const Settings = () => {
         chatbotEnabled, setChatbotEnabled,
         chatbotWelcomeMsg, setChatbotWelcomeMsg,
         chatbotName, setChatbotName,
+        telegramHandle, setTelegramHandle,
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
@@ -83,6 +84,7 @@ const Settings = () => {
     const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
     const [localChatbotName, setLocalChatbotName] = useState(chatbotName);
     const [localChatbotWelcomeMsg, setLocalChatbotWelcomeMsg] = useState(chatbotWelcomeMsg);
+    const [localTelegramHandle, setLocalTelegramHandle] = useState(telegramHandle);
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
     const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
@@ -127,6 +129,7 @@ const Settings = () => {
                 setAcademyAddress(localAcademyAddress),
                 setAdminPhone(localAdminPhone),
                 setSemesterName(localSemesterName),
+                setTelegramHandle(localTelegramHandle),
                 setDefaultSessionPrice(Number(localPrice)),
                 setDefaultTeacherPrice(Number(localTeacherPrice)),
                 setCurrencySymbol(localCurrency),
@@ -237,6 +240,10 @@ const Settings = () => {
                                 <div className="col-span-2">
                                     <label className="block text-xs font-black mb-1 opacity-60">رقم هاتف المسؤول الرئيسي</label>
                                     <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                </div>
+                                <div className="col-span-2">
+                                    <label className="block text-xs font-black mb-1 opacity-60">معرف/رابط قناة تليجرام (Telegram Handle)</label>
+                                    <input value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
                                 </div>
                             </div>
                             <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 flex items-center justify-between">

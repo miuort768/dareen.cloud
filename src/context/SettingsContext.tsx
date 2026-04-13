@@ -25,6 +25,7 @@ interface SettingsContextType {
     chatbotEnabled: boolean;
     chatbotWelcomeMsg: string;
     chatbotName: string;
+    telegramHandle: string;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAcademyLogo: (logo: string) => Promise<void>;
@@ -49,6 +50,7 @@ interface SettingsContextType {
     setChatbotEnabled: (enabled: boolean) => Promise<void>;
     setChatbotWelcomeMsg: (msg: string) => Promise<void>;
     setChatbotName: (name: string) => Promise<void>;
+    setTelegramHandle: (handle: string) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -77,6 +79,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [chatbotEnabled, setChatbotEnabledState] = useState(false);
     const [chatbotWelcomeMsg, setChatbotWelcomeMsgState] = useState('مرحباً بك في معهد دارين! كيف يمكننا مساعدتك اليوم؟');
     const [chatbotName, setChatbotNameState] = useState('دارين بوت');
+    const [telegramHandle, setTelegramHandleState] = useState('dareen_app');
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
@@ -107,6 +110,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.chatbot_enabled) setChatbotEnabledState(settings.chatbot_enabled === 'true');
                     if (settings.chatbot_welcome_msg) setChatbotWelcomeMsgState(settings.chatbot_welcome_msg);
                     if (settings.chatbot_name) setChatbotNameState(settings.chatbot_name);
+                    if (settings.telegram_handle) setTelegramHandleState(settings.telegram_handle);
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
@@ -243,6 +247,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('chatbot_name', name);
     };
 
+    const setTelegramHandle = async (handle: string) => {
+        setTelegramHandleState(handle);
+        await updateSetting('telegram_handle', handle);
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -260,14 +269,14 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             autoBackup, maintenanceMode, whatsappAutoNotify, defaultSessionPrice, defaultTeacherPrice, currencySymbol,
             semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
             backdateLockEnabled, teacherCommissionType, autoFreezeThreshold,
-            chatbotEnabled, chatbotWelcomeMsg, chatbotName,
+            chatbotEnabled, chatbotWelcomeMsg, chatbotName, telegramHandle,
             isSettingsLoading,
             setAcademyName, setAcademyLogo, setAcademyTagline, setAcademyAddress, setAdminPhone, setThemeColor, 
             setNotificationsEnabled, setAutoBackup, setMaintenanceMode, setWhatsappAutoNotify, 
             setDefaultSessionPrice, setDefaultTeacherPrice, setCurrencySymbol,
             setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold,
             setBackdateLockEnabled, setTeacherCommissionType, setAutoFreezeThreshold,
-            setChatbotEnabled, setChatbotWelcomeMsg, setChatbotName
+            setChatbotEnabled, setChatbotWelcomeMsg, setChatbotName, setTelegramHandle
         }}>
             {children}
         </SettingsContext.Provider>
