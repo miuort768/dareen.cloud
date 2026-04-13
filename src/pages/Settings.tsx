@@ -36,7 +36,22 @@ const THEME_COLORS = [
     { id: 'pink', label: 'زهري', class: 'bg-pink-600' },
     { id: 'lime', label: 'ليموني', class: 'bg-lime-600' },
     { id: 'sky', label: 'سماوي', class: 'bg-sky-600' },
-    { id: 'fuchsia', label: 'فوشيا', class: 'bg-fuchsia-600' }
+    { id: 'fuchsia', label: 'فوشيا', class: 'bg-fuchsia-600' },
+    // 14 New Vibrant/Gradient-inspired Colors
+    { id: 'sunset', label: 'غروب', class: 'bg-gradient-to-tr from-orange-600 to-rose-600' },
+    { id: 'ocean', label: 'محيط', class: 'bg-gradient-to-tr from-blue-600 to-cyan-500' },
+    { id: 'forest', label: 'غابة', class: 'bg-gradient-to-tr from-emerald-600 to-lime-500' },
+    { id: 'royal', label: 'ملكي', class: 'bg-gradient-to-tr from-purple-700 to-indigo-600' },
+    { id: 'electric', label: 'كهربائي', class: 'bg-gradient-to-tr from-violet-600 to-fuchsia-500' },
+    { id: 'mint', label: 'نعناع', class: 'bg-gradient-to-tr from-teal-500 to-emerald-400' },
+    { id: 'berry', label: 'توت', class: 'bg-gradient-to-tr from-pink-600 to-purple-500' },
+    { id: 'gold', label: 'ذهبي', class: 'bg-gradient-to-tr from-amber-500 to-yellow-400' },
+    { id: 'crimson', label: 'قرمزي', class: 'bg-gradient-to-tr from-red-700 to-rose-600' },
+    { id: 'midnight', label: 'ليل', class: 'bg-gradient-to-tr from-slate-900 to-indigo-900' },
+    { id: 'lava', label: 'حمم', class: 'bg-gradient-to-tr from-red-600 to-orange-500' },
+    { id: 'lavender', label: 'لافندر', class: 'bg-gradient-to-tr from-purple-400 to-indigo-300' },
+    { id: 'spring', label: 'ربيع', class: 'bg-gradient-to-tr from-lime-400 to-emerald-400' },
+    { id: 'flame', label: 'لهب', class: 'bg-gradient-to-tr from-orange-500 to-yellow-500' }
 ];
 
 const Settings = () => {

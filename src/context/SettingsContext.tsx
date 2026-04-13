@@ -258,7 +258,12 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             indigo: '79 70 229', blue: '37 99 235', emerald: '16 185 129', rose: '225 29 72',
             amber: '217 119 6', purple: '147 51 234', cyan: '8 145 178', teal: '13 148 136',
             orange: '234 88 12', slate: '71 85 105', pink: '219 39 119', lime: '101 163 13',
-            sky: '2 132 199', fuchsia: '192 38 211'
+            sky: '2 132 199', fuchsia: '192 38 211',
+            // New 14 colors mapping
+            sunset: '234 88 12', ocean: '37 99 235', forest: '16 185 129', royal: '147 51 234',
+            electric: '139 92 246', mint: '20 184 166', berry: '190 24 93', gold: '234 179 8',
+            crimson: '190 18 60', midnight: '15 23 42', lava: '220 38 38', lavender: '167 139 250',
+            spring: '132 204 22', flame: '249 115 22'
         };
         root.style.setProperty('--color-primary', colors[themeColor] || colors.indigo);
     }, [themeColor]);
