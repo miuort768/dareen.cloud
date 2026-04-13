@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { 
-    Search, Plus, Trash2, Edit2, LogOut, 
-    UserCircle, ShieldCheck,
-    Zap, Terminal, LayoutDashboard
+    Search, LogOut, 
+    ShieldCheck, LayoutDashboard, MessageSquarePlus
 } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
-import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import type { Conversation, ChatView } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
@@ -17,13 +15,9 @@ interface ChatSidebarProps {
     selectedConv: Conversation | null;
     setSelectedConv: (conv: Conversation | null) => void;
     currentUser: User | null;
-    openGroupSettings: (conv: Conversation) => void;
-    confirmDeleteConversation: (conv: Conversation) => void;
     setShowNewChatModal: (val: boolean) => void;
-    confirmDeleteAllConversations: () => void;
     setIsEditingGroup: (val: boolean) => void;
     logout: () => void;
-
     typingUsers: any[];
     view: ChatView;
     setView: (view: ChatView) => void;
@@ -34,13 +28,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     selectedConv,
     setSelectedConv,
     currentUser,
-    openGroupSettings,
-    confirmDeleteConversation,
     setShowNewChatModal,
-    confirmDeleteAllConversations,
     setIsEditingGroup,
     logout,
-
     typingUsers,
     view,
     setView
@@ -48,211 +38,145 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     const [searchQuery, setSearchQuery] = useState('');
     const { isConnected } = useChatContext();
 
-
-    const confirmDeleteAllConversationsLocal = () => {
-        if (window.confirm('هل أنت متأكد من حذف كافة المحادثات؟ لا يمكن التراجع عن هذه الخطوة.')) {
-            confirmDeleteAllConversations();
-        }
-    };
-
     const filteredConversations = conversations.filter(c =>
         (c.displayName || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
     return (
         <div className={cn(
-            "w-full lg:w-[420px] flex flex-col bg-white dark:bg-[#0b141a] lg:border-8 border-gray-950 transition-all duration-500 ease-in-out shrink-0 overflow-hidden relative z-20",
+            "w-full lg:w-[400px] flex flex-col bg-white dark:bg-[#111b21] shrink-0 overflow-hidden relative border-r border-gray-200 dark:border-gray-800",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
-            {/* Sidebar Header - Brutalist Command Box */}
-            <div className="p-8 bg-white border-b-8 border-gray-950 relative overflow-hidden text-right">
-                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
-                
-                <div className="flex items-start justify-between mb-10 relative z-10 flex-row-reverse">
-                    <div className="flex items-center gap-5 flex-row-reverse">
-                        <motion.div 
-                            whileHover={{ rotate: -5, scale: 1.05 }}
-                            className="w-16 h-16 bg-gray-950 text-white border-2 border-gray-950 shadow-[6px_6px_0px_0px_#ef4444] flex items-center justify-center transform -rotate-3"
-                        >
-                            <Terminal size={32} />
-                        </motion.div>
-                        <div className="text-right">
-                            <h1 className="text-3xl font-black text-gray-950 tracking-tighter uppercase leading-none italic">مركز الرسائل</h1>
-                            <div className="flex items-center gap-2 mt-3 p-1 bg-emerald-50 border border-emerald-500 w-fit ml-auto">
-                                <div className={cn(
-                                    "w-2 h-2",
-                                    isConnected ? "bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" : "bg-rose-500"
-                                )} />
-                                <span className="text-[9px] font-black text-emerald-700 uppercase tracking-widest leading-none">
-                                    {isConnected ? 'متصل: نشط' : 'غير متصل'}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                         <button
-                            onClick={logout}
-                            className="w-12 h-12 bg-rose-500 text-white border-4 border-gray-950 flex items-center justify-center hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none shadow-[4px_4px_0px_0px_black] transition-all"
-                            title="خروج آمن"
-                        >
-                            <LogOut size={22} />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="space-y-6 relative z-10">
-                    <div className="flex items-center gap-4 flex-row-reverse">
-                        <div className="flex items-center gap-2 flex-row-reverse">
-
-
-                            {currentUser?.role === 'admin' && (
-                                <button
-                                    onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
-                                    className={cn(
-                                        "w-12 h-12 border-4 border-gray-950 flex items-center justify-center transition-all shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
-                                        view === 'management' ? "bg-primary-600 text-white" : "bg-white text-gray-400"
-                                    )}
-                                >
-                                    {view === 'management' ? <LayoutDashboard size={20}/> : <ShieldCheck size={20} />}
-                                </button>
-                            )}
-                        </div>
-
-                        {currentUser?.role === 'admin' && (
-                            <div className="flex gap-2 flex-1 flex-row-reverse">
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => {
-                                        setIsEditingGroup(false);
-                                        setShowNewChatModal(true);
-                                    }}
-                                    className="flex-1 bg-gray-950 text-white py-4 border-4 border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
-                                >
-                                    <Plus size={18} />
-                                    محادثة استراتيجية
-                                </motion.button>
-                                <button
-                                    onClick={confirmDeleteAllConversationsLocal}
-                                    className="w-14 h-14 bg-white border-4 border-gray-950 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-[4px_4px_0px_0px_black] flex items-center justify-center"
-                                >
-                                    <Trash2 size={20} />
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="relative">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-950" size={20} />
-                        <input
-                            type="text"
-                            placeholder="ابحث عن زميل أو مجموعة..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white border-4 border-gray-950 px-12 py-4 text-sm font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 text-right"
+            <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700">
+                        <img 
+                            src="/chat-avatar.jpg" 
+                            alt="avatar" 
+                            className="w-full h-full object-cover" 
+                            onError={(e) => { (e.target as HTMLImageElement).src = "https://ui-avatars.com/api/?name=" + (currentUser?.name || "User"); }}
                         />
                     </div>
                 </div>
+
+                <div className="flex items-center gap-2 text-[#54656f] dark:text-[#aebac1]">
+                    {currentUser?.role === 'admin' && (
+                        <>
+                            <button 
+                                onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
+                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                title="إدارة الدردشات"
+                            >
+                                <LayoutDashboard size={22} />
+                            </button>
+                            <button 
+                                onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
+                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                            >
+                                <MessageSquarePlus size={22} />
+                            </button>
+                        </>
+                    )}
+                    <button 
+                        onClick={logout}
+                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                        title="خروج"
+                    >
+                        <LogOut size={22} />
+                    </button>
+                </div>
             </div>
 
-            {/* Conversations List - Brutalist Cards */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 bg-gray-50/50">
-                <AnimatePresence>
-                    {filteredConversations.length > 0 ? (
-                        filteredConversations.map((conv, idx) => (
-                            <motion.button
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: idx * 0.05 }}
+            <div className="p-2 bg-white dark:bg-[#111b21] border-b border-gray-100 dark:border-gray-800">
+                <div className="relative flex items-center bg-[#f0f2f5] dark:bg-[#202c33] rounded-lg px-3 py-1.5 focus-within:shadow-sm">
+                    <Search className="text-[#667781] dark:text-[#8696a0]" size={18} />
+                    <input
+                        type="text"
+                        placeholder="البحث أو بدء دردشة جديدة"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="flex-1 bg-transparent border-none focus:ring-0 text-sm py-1 px-4 text-right text-[#111b21] dark:text-[#e9edef]"
+                    />
+                </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto no-scrollbar">
+                {filteredConversations.length > 0 ? (
+                    filteredConversations.map((conv) => {
+                        const isSelected = selectedConv?.id === conv.id;
+                        const isTyping = typingUsers.filter(u => u.conversationId === conv.id).length > 0;
+
+                        return (
+                            <button
                                 key={conv.id}
                                 onClick={() => setSelectedConv(conv)}
                                 className={cn(
-                                    "w-full p-5 flex items-center gap-5 border-4 border-gray-950 transition-all text-right relative group flex-row-reverse",
-                                    selectedConv?.id === conv.id
-                                        ? "bg-white shadow-[8px_8px_0px_0px_#ef4444] translate-x-1 -translate-y-1"
-                                        : "bg-white hover:bg-yellow-50 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
+                                    "w-full flex items-center gap-3 px-3 py-3 transition-colors relative hover:bg-[#f5f6f6] dark:hover:bg-[#202c33]",
+                                    isSelected && "bg-[#f0f2f5] dark:bg-[#2a3942]"
                                 )}
                             >
-                                <div className="relative shrink-0">
-                                    <div className="w-16 h-16 bg-gray-950 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] group-hover:rotate-6 transition-transform overflow-hidden">
-                                        <img src={conv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} alt="الصورة الشخصية" className="w-full h-full object-cover grayscale group-hover:grayscale-0" />
+                                <div className="shrink-0 relative">
+                                    <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                                        <img 
+                                            src={conv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} 
+                                            alt="chat" 
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => { (e.target as HTMLImageElement).src = "https://ui-avatars.com/api/?name=" + conv.displayName; }}
+                                        />
                                     </div>
-                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-gray-950" />
+                                    {isConnected && !isSelected && (
+                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#00a884] border-2 border-white dark:border-[#111b21] rounded-full"></div>
+                                    )}
                                 </div>
 
-                                <div className="flex-1 min-w-0 text-right">
-                                    <div className="flex items-center justify-between mb-2 flex-row-reverse">
-                                        <h3 className={cn(
-                                            "font-black truncate text-base lg:text-lg transition-colors tracking-tighter uppercase italic",
-                                            selectedConv?.id === conv.id ? "text-primary-600" : "text-gray-950"
-                                        )}>
-                                            {conv.displayName}
-                                        </h3>
+                                <div className="flex-1 min-w-0 border-b border-gray-100 dark:border-gray-800 pb-3 mt-1 text-right">
+                                    <div className="flex items-center justify-between mb-0.5">
+                                        <div className="flex items-center gap-1.5 overflow-hidden">
+                                            {conv.isGroup && <ShieldCheck size={14} className="text-[#8696a0] shrink-0" />}
+                                            <h3 className="text-base font-normal text-[#111b21] dark:text-[#e9edef] truncate">
+                                                {conv.displayName}
+                                            </h3>
+                                        </div>
                                         {conv.lastMessageTime && (
-                                            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">
-                                                {format(new Date(conv.lastMessageTime), 'HH:mm', { locale: ar })}
+                                            <span className={cn(
+                                                "text-[12px] font-normal tracking-tight",
+                                                (conv.unreadCount ?? 0) > 0 ? "text-[#00a884]" : "text-[#667781] dark:text-[#8696a0]"
+                                            )}>
+                                                {format(new Date(conv.lastMessageTime), 'h:mm a', { locale: ar })}
                                             </span>
                                         )}
                                     </div>
 
-                                    <div className="flex items-center justify-between gap-4 flex-row-reverse">
-                                        <div className="text-[12px] text-gray-500 truncate font-bold flex-1 leading-snug flex items-center gap-2 min-h-[20px] justify-end">
-                                            {typingUsers.filter(u => u.conversationId === conv.id).length > 0 ? (
-                                                <span className="text-emerald-500 animate-pulse font-black flex items-center gap-2 flex-row-reverse">
-                                                    <Zap size={12} className="fill-current" /> جاري التشفير...
-                                                </span>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex-1 truncate">
+                                            {isTyping ? (
+                                                <span className="text-sm text-[#00a884] font-normal">جاري الكتابة...</span>
                                             ) : (
-                                                <span className="truncate opacity-60 text-right w-full">{conv.lastMessage || 'تم فتح القناة. لا توجد رسائل بعد.'}</span>
+                                                <p className="text-sm text-[#667781] dark:text-[#8696a0] truncate leading-tight opacity-90">
+                                                    {conv.lastMessage || 'لا توجد رسائل'}
+                                                </p>
                                             )}
                                         </div>
 
-                                        <div className="flex items-center gap-3 shrink-0 flex-row-reverse">
-                                            {(conv.unreadCount ?? 0) > 0 && (
-                                                <motion.div 
-                                                    animate={{ rotate: [0, 5, -5, 0] }}
-                                                    transition={{ repeat: Infinity, duration: 1 }}
-                                                    className="bg-primary-600 text-white text-[10px] font-black w-8 h-8 border-2 border-gray-950 flex items-center justify-center shadow-[3px_3px_0px_0px_black]"
-                                                >
-                                                    {(conv.unreadCount ?? 0) > 99 ? 'الأقصى' : conv.unreadCount}
-                                                </motion.div>
-                                            )}
-
-                                            {(currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
-                                                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all flex-row-reverse">
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            openGroupSettings(conv);
-                                                        }}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-950 hover:bg-primary-50 active:scale-90"
-                                                    >
-                                                        <Edit2 size={14} />
-                                                    </button>
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            confirmDeleteConversation(conv);
-                                                        }}
-                                                        className="w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-950 text-rose-600 hover:bg-rose-50 active:scale-90"
-                                                    >
-                                                        <Trash2 size={14} />
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </div>
+                                        {(conv.unreadCount ?? 0) > 0 && (
+                                            <div className="bg-[#00a884] text-white text-[11px] font-medium min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center mr-2">
+                                                {conv.unreadCount}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            </motion.button>
-                        ))
-                    ) : (
-                        <div className="py-20 border-8 border-dashed border-gray-200 flex flex-col items-center justify-center text-center opacity-40">
-                            <UserCircle size={80} strokeWidth={4} className="text-gray-200 mb-6" />
-                            <h3 className="text-2xl font-black text-gray-200 uppercase italic tracking-tighter">قنوات مغلقة</h3>
-                            <p className="text-[10px] font-bold mt-2 uppercase tracking-widest">لا توجد محادثات نشطة في القطاع</p>
-                        </div>
-                    )}
-                </AnimatePresence>
+                            </button>
+                        );
+                    })
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-12 text-[#667781] dark:text-[#8696a0]">
+                        <p className="text-sm">لا توجد محادثات نشطة</p>
+                    </div>
+                )}
+            </div>
+            
+            <div className="bg-[#f0f2f5] dark:bg-[#202c33] p-3 border-t border-gray-200 dark:border-gray-800 text-center">
+                <span className="text-[10px] text-[#667781] font-bold uppercase tracking-widest opacity-30">تواصل آمن ومحمي</span>
             </div>
         </div>
     );

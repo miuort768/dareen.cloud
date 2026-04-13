@@ -252,22 +252,18 @@ export const Chat = () => {
 
     return (
         <div className={cn(
-            "flex overflow-hidden bg-[#f0f2f5] dark:bg-[#0b141a]",
+            "flex overflow-hidden bg-white dark:bg-[#0b141a]",
             "fixed inset-0 z-50 lg:static lg:z-auto",
-            "h-[100dvh] lg:h-screen lg:py-6 lg:px-8 lg:gap-6"
+            "h-[100dvh] lg:h-screen"
         )}>
             <ChatSidebar
                 conversations={conversations}
                 selectedConv={selectedConv}
                 setSelectedConv={setSelectedConv}
                 currentUser={currentUser}
-                openGroupSettings={openGroupSettings}
-                confirmDeleteConversation={confirmDeleteConversation}
                 setShowNewChatModal={setShowNewChatModal}
-                confirmDeleteAllConversations={confirmDeleteAllConversations}
                 setIsEditingGroup={setIsEditingGroup}
                 logout={logout}
-
                 typingUsers={typingUsers}
                 view={view}
                 setView={setView}
