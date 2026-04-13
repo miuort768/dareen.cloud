@@ -425,24 +425,30 @@ const Settings = () => {
                                         ))}
                                     </div>
                                 </div>
-
-                                <div className="p-5 border-4 border-gray-950 bg-slate-50 dark:bg-slate-900 relative overflow-hidden group">
-                                     <div className="relative z-10 flex flex-col items-center gap-4">
-                                         <div className="text-center">
-                                             <h3 className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1 italic">إدارة الأمان والنسخ</h3>
-                                             <p className="text-[8px] font-bold opacity-60">تأمين قاعدة البيانات والملفات</p>
-                                         </div>
-                                         <div className="grid grid-cols-1 w-full gap-2">
-                                            <button className="w-full py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[8px] tracking-widest shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-2">
-                                                <Download size={14} className="text-blue-600" /> تحميل نسخة احتياطية
-                                            </button>
-                                            <button className="w-full py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[8px] tracking-widest shadow-[4px_4px_0px_0px_rgba(16,185,129,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-2">
-                                                <Upload size={14} className="text-emerald-600" /> استيراد بيانات
-                                            </button>
-                                         </div>
-                                     </div>
-                                </div>
                             </div>
+                        </section>
+
+                        {/* Full Width Security & Backup Section */}
+                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-gray-950 p-6 relative overflow-hidden group shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                                 <div className="flex items-center gap-4">
+                                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
+                                         <Shield size={24} strokeWidth={3} />
+                                     </div>
+                                     <div>
+                                         <h3 className="text-sm font-black uppercase tracking-widest text-slate-800 dark:text-white italic">إدارة الأمان والنسخ الاحتياطي</h3>
+                                         <p className="text-[9px] font-bold opacity-60">تأمين قاعدة البيانات والملفات بشكل دوري (System Restore Point)</p>
+                                     </div>
+                                 </div>
+                                 <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
+                                    <button className="px-6 py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[9px] tracking-widest shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                        <Download size={16} className="text-blue-600" /> تحميل نسخة احتياطية
+                                    </button>
+                                    <button className="px-6 py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[9px] tracking-widest shadow-[4px_4px_0px_0px_rgba(16,185,129,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                        <Upload size={16} className="text-emerald-600" /> استيراد بيانات سابقة
+                                    </button>
+                                 </div>
+                             </div>
                         </section>
                     </div>
                 )}
