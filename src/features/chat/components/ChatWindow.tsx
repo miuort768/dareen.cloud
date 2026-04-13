@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
-    Send, Smile, MoreVertical, ChevronRight, 
+    Send, MoreVertical, ChevronRight, 
     CheckCheck, Mic, ArrowDown, Search,
     Video, Phone
 } from 'lucide-react';
@@ -9,7 +9,6 @@ import { ar } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import { useChatContext } from '../../../context/ChatContext';
-import EmojiPicker, { Theme } from 'emoji-picker-react';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -50,8 +49,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
     const { typingUsers } = useChatContext();
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const emojiPickerRef = useRef<HTMLDivElement>(null);
 
     // Voice Recording States
     const [isRecording, setIsRecording] = useState(false);
@@ -75,7 +72,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             setIsRecording(true);
             setRecordingTime(0);
             timerRef.current = setInterval(() => {
-                setRecordingTime(prev => prev + 1);
+                setRecordingTime((prev: number) => prev + 1);
             }, 1000);
         } catch (err) {
             console.error("Error accessing microphone:", err);
@@ -101,8 +98,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             const reader = new FileReader();
             reader.readAsDataURL(audioBlob);
             reader.onloadend = () => {
-                // Here you would call handleSendMessage with the audio data
-                // For now, we simulate by sending a placeholder text
                 const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
                 const originalMsg = newMessage;
                 setNewMessage("🎤 رسالة صوتية (Voice Message)");
@@ -128,22 +123,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
         const isFarUp = scrollHeight - scrollTop - clientHeight > 300;
         setShowScrollBottom(isFarUp);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as HTMLElement;
-            if (target.closest('.emoji-toggle-btn')) return;
-            if (emojiPickerRef.current && !emojiPickerRef.current.contains(target)) {
-                setShowEmojiPicker(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    const onEmojiClick = (emojiData: any) => {
-        setNewMessage(newMessage + emojiData.emoji);
     };
 
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
@@ -262,8 +241,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tl-none ml-2" 
                                     : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tr-none mr-2"
                             )}>
-                                {/* Bubble Tail logic could be added with pseudo-elements if needed */}
-                                
                                 {isGroup && !isMe && (
                                     <span className="block text-[12.5px] font-bold text-[#e542a3] mb-0.5 text-right">
                                         {msg.senderName}
@@ -304,13 +281,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
             {/* Input Bar - WhatsApp Style */}
             <footer className="bg-[#f0f2f5] dark:bg-[#202c33] min-h-[62px] flex items-end px-3 py-2.5 z-10 gap-2">
-                <div className="flex items-center text-[#54656f] dark:text-[#8696a0]">
-                    <button className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors emoji-toggle-btn" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                        <Smile size={26} />
-                    </button>
-                    {/* Removed Paperclip per user request */}
-                </div>
-
                 <div className="flex-1 relative flex items-center">
                     {isRecording ? (
                         <div className="w-full bg-white dark:bg-[#2a3942] rounded-lg px-4 py-2.5 flex items-center justify-between animate-pulse">
@@ -339,20 +309,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-lg px-3 py-2.5 focus:ring-0 max-h-32 resize-none text-right scroll-smooth custom-scrollbar"
                         />
                     )}
-                    
-                    {showEmojiPicker && (
-                        <div className="absolute bottom-full right-0 mb-4 z-[200]" ref={emojiPickerRef}>
-                            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="shadow-2xl rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                                <EmojiPicker
-                                    onEmojiClick={onEmojiClick}
-                                    theme={document.documentElement.classList.contains('dark') ? Theme.DARK : Theme.LIGHT}
-                                    width={320}
-                                    height={400}
-                                    previewConfig={{ showPreview: false }}
-                                />
-                            </motion.div>
-                        </div>
-                    )}
                 </div>
 
                 <div className="flex items-center justify-center">
@@ -373,7 +329,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     )}
                 </div>
             </footer>
-
         </div>
     );
 };
