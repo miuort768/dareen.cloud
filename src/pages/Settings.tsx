@@ -98,6 +98,7 @@ const Settings = () => {
     // Security Modal State
     const [secureAction, setSecureAction] = useState<{type: 'reset' | 'archive', title: string, description: string, confirmWord: string, actionFn: () => void} | null>(null);
     const [secureInput, setSecureInput] = useState('');
+    const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -250,9 +251,7 @@ const Settings = () => {
                                 <div><p className="text-sm font-black">وضع الصيانة</p><p className="text-[10px] opacity-60">تعطيل وصول المستخدمين العاديين</p></div>
                                 <button onClick={() => {
                                     if (!maintenanceMode) {
-                                        if (window.confirm('🚨 تحذير: إغلاق المنصة 🚨\n\nتفعيل وضع الصيانة سيقوم بطرد جميع الطلاب والمعلمين والمناديب ومنعهم من تسجيل الدخول.\n\nهل أنت متأكد من تفعيل وضع الصيانة؟')) {
-                                            setMaintenanceMode(true).then(() => showNotify('تم تفعيل وضع الصيانة، لا يمكن لأحد سواك الدخول.'));
-                                        }
+                                        setShowMaintenanceModal(true);
                                     } else {
                                         setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة، المنصة متاحة للجميع الآن.'));
                                     }
@@ -734,6 +733,52 @@ const Settings = () => {
                         <div className="flex gap-4">
                             <button onClick={() => setShowDeleteModal(null)} className="flex-1 py-4 bg-gray-100 font-black uppercase text-xs">إلغاء</button>
                             <button onClick={() => { deleteUser(showDeleteModal.id); setShowDeleteModal(null); showNotify('تم حذف المستخدم'); }} className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-lg shadow-red-500/20">تأكيد الحذف</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showMaintenanceModal && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 border-4 border-amber-500 p-8 max-w-lg w-full shadow-[16px_16px_0px_0px_rgba(245,158,11,0.2)] dark:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.1)] relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 -mr-16 -mt-16 rounded-full blur-3xl"></div>
+                        
+                        <div className="relative z-10 space-y-6">
+                            <div className="flex items-center gap-4">
+                                <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center border-4 border-amber-500 transform -rotate-3">
+                                    <Snowflake size={32} strokeWidth={3} className="animate-spin-slow" />
+                                </div>
+                                <div>
+                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">تفعيل وضع الصيانة</h3>
+                                    <p className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">System Freeze Protocol</p>
+                                </div>
+                            </div>
+
+                            <div className="bg-amber-50 dark:bg-amber-900/10 p-4 border-r-4 border-amber-500">
+                                <p className="text-sm font-bold text-amber-900 dark:text-amber-200 leading-relaxed">
+                                    ⚠️ <span className="underline">تحذير هام:</span> تفعيل هذا الوضع سيؤدي فوريًا لـ:
+                                </p>
+                                <ul className="mt-3 space-y-2 text-xs font-bold text-amber-800 dark:text-amber-400">
+                                    <li className="flex items-center gap-2">• طرد كافة المستخدمين الحاليين من المنصة.</li>
+                                    <li className="flex items-center gap-2">• منع المعلمين والطلاب من تسجيل الدخول.</li>
+                                    <li className="flex items-center gap-2">• إغلاق كافة الوظائف البرمجية مؤقتًا.</li>
+                                </ul>
+                            </div>
+
+                            <div className="flex gap-3 pt-4">
+                                <button onClick={() => setShowMaintenanceModal(false)} className="flex-1 py-4 bg-gray-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black uppercase text-xs hover:bg-gray-200 transition-colors">إلغاء الأمر</button>
+                                <button 
+                                    onClick={() => {
+                                        setMaintenanceMode(true).then(() => {
+                                            setShowMaintenanceModal(false);
+                                            showNotify('تم تفعيل وضع الصيانة، المنصة مغلقة الآن.');
+                                        });
+                                    }} 
+                                    className="flex-1 py-4 bg-amber-500 text-white font-black uppercase text-xs shadow-xl shadow-amber-500/20 hover:bg-amber-600 transition-all"
+                                >
+                                    تأكيد الإغلاق الآن
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
