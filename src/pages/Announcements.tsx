@@ -10,8 +10,6 @@ import {
     X,
     CheckCircle2,
     LayoutGrid,
-    Clock,
-    User,
     ArrowLeftRight
 } from 'lucide-react';
 import { api } from '../lib/api';
