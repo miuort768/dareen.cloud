@@ -9,7 +9,11 @@ import {
     Info,
     Calendar,
     X,
-    CheckCircle2
+    CheckCircle2,
+    LayoutGrid,
+    Clock,
+    User,
+    ArrowLeftRight
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -55,12 +59,10 @@ export const Announcements = () => {
     const fetchAnnouncements = async () => {
         try {
             setIsLoading(true);
-            // Using a generic settings key or specific endpoint if exists
             const data = await api.get<Announcement[]>('/announcements');
             setAnnouncements(data || []);
         } catch (error) {
             console.error('Error fetching announcements:', error);
-            // Fallback for demo/initial setup
             setAnnouncements([]);
         } finally {
             setIsLoading(false);
@@ -114,198 +116,253 @@ export const Announcements = () => {
         setIsModalOpen(true);
     };
 
-    const getTypeDetails = (type: string) => {
+    const getTypeStyles = (type: string) => {
         switch (type) {
-            case 'urgent': return { icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50', label: 'عاجل' };
-            case 'holiday': return { icon: Calendar, color: 'text-amber-600', bg: 'bg-amber-50', label: 'إجازة' };
-            case 'event': return { icon: Megaphone, color: 'text-indigo-600', bg: 'bg-indigo-50', label: 'فعالية' };
-            default: return { icon: Info, color: 'text-blue-600', bg: 'bg-blue-50', label: 'عام' };
+            case 'urgent': return { 
+                icon: AlertTriangle, 
+                color: 'text-rose-600', 
+                bg: 'bg-rose-50 dark:bg-rose-950/20', 
+                border: 'border-rose-600',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(225,29,72,1)]',
+                label: 'تنبيـه عاجـل' 
+            };
+            case 'holiday': return { 
+                icon: Calendar, 
+                color: 'text-amber-600', 
+                bg: 'bg-amber-50 dark:bg-amber-950/20', 
+                border: 'border-amber-500',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(245,158,11,1)]',
+                label: 'إجـازة رسميـة' 
+            };
+            case 'event': return { 
+                icon: Megaphone, 
+                color: 'text-indigo-600', 
+                bg: 'bg-indigo-50 dark:bg-indigo-950/20', 
+                border: 'border-indigo-600',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]',
+                label: 'فعاليـة جديـدة' 
+            };
+            default: return { 
+                icon: Info, 
+                color: 'text-primary-600', 
+                bg: 'bg-blue-50 dark:bg-blue-950/20', 
+                border: 'border-primary-600',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(37,99,235,1)]',
+                label: 'إعـلان عـام' 
+            };
         }
     };
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
-            {/* Premium Header with Icon */}
-            <div className="relative bg-primary-600 p-8 shadow-xl overflow-hidden mb-6 border-b-4 border-primary-500">
-                {/* Background Decorative Elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+        <div className="space-y-12 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700" dir="rtl">
+            {/* Brutalist Hero Header */}
+            <div className="relative bg-gray-950 p-10 shadow-[16px_16px_0px_0px_rgba(37,99,235,0.2)] overflow-hidden border-4 border-gray-950">
+                <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+                    <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                </div>
 
-                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6 px-2">
-                    <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                            <Megaphone size={36} className="text-white" />
+                <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+                    <div className="flex items-center gap-6">
+                        <div className="w-24 h-24 bg-primary-600 text-white flex items-center justify-center border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)] rotate-3">
+                            <Megaphone size={48} />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">إدارة الإعلانات والتعميمات</h1>
-                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
-                                <Bell size={14} className="text-white" />
-                                نشر رسائل هامة لأولياء الأمور والمعلمات
+                            <h1 className="text-4xl font-black text-white italic tracking-tighter uppercase mb-2">النشرة الإخبارية</h1>
+                            <p className="text-primary-400 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-2 italic">
+                                <span className="w-2 h-2 bg-primary-500 rounded-full animate-ping"></span>
+                                منصة التحكم في الإعلانات المركزية
                             </p>
                         </div>
                     </div>
 
-                    <button
-                        onClick={() => {
-                            setEditingAnnouncement(null);
-                            setFormData({ title: '', content: '', type: 'general', isActive: true });
-                            setIsModalOpen(true);
-                        }}
-                        className="bg-white text-primary-700 px-8 py-3 flex items-center gap-3 hover:bg-white/95 active:bg-primary-50 transition-all font-black shadow-[0_10px_20px_-10px_rgba(0,0,0,0.3)] transform hover:-translate-y-1 active:translate-y-0 h-14 text-xs uppercase tracking-widest"
-                    >
-                        <Plus size={20} />
-                        <span>إضافة إعلان جديد</span>
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="bg-white/5 border-2 border-white/10 p-4 flex flex-col items-center justify-center min-w-[140px]">
+                            <span className="text-3xl font-black text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
+                            <span className="text-[10px] font-black text-gray-500 uppercase mt-2">إعلان نشط</span>
+                        </div>
+                        <button
+                            onClick={() => {
+                                setEditingAnnouncement(null);
+                                setFormData({ title: '', content: '', type: 'general', isActive: true });
+                                setIsModalOpen(true);
+                            }}
+                            className="bg-primary-600 text-white px-10 py-5 flex items-center justify-center gap-4 hover:bg-white hover:text-black transition-all font-black shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] active:translate-x-1 active:translate-y-1 active:shadow-none h-20 group"
+                        >
+                            <Plus size={24} className="group-hover:rotate-90 transition-transform" />
+                            <span className="text-sm uppercase tracking-widest">إصدار تعميم جديد</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Announcements List */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-                <div className="p-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                    <h4 className="font-black text-[10px] text-gray-400 uppercase tracking-widest">قائمة الإعلانات النشطة وغير النشطة</h4>
-                    <Bell size={16} className="text-gray-300" />
-                </div>
-
-                <div className="overflow-x-auto">
-                    <table className="w-full text-right">
-                        <thead>
-                            <tr className="bg-gray-50 dark:bg-gray-800/50 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-700">
-                                <th className="px-6 py-4">الإعلان</th>
-                                <th className="px-6 py-4 text-center">النوع</th>
-                                <th className="px-6 py-4 text-center">التاريخ</th>
-                                <th className="px-6 py-4 text-center">الحالة</th>
-                                <th className="px-6 py-4 text-center">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                            {announcements.map((ann) => {
-                                const type = getTypeDetails(ann.type);
-                                return (
-                                    <tr key={ann.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                                        <td className="px-6 py-4 max-w-md">
-                                            <div className="font-black text-gray-900 dark:text-white text-sm">{ann.title}</div>
-                                            <div className="text-[10px] text-gray-400 font-bold truncate mt-1">{ann.content}</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex justify-center">
-                                                <div className={cn("flex items-center gap-2 px-3 py-1 border text-[9px] font-black uppercase tracking-widest", type.bg, type.color)}>
-                                                    <type.icon size={12} />
-                                                    {type.label}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 text-center">
-                                            <div className="text-[10px] font-bold text-gray-500">
-                                                {format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 text-center">
-                                            <span className={cn(
-                                                "text-[9px] font-black uppercase tracking-widest px-2 py-0.5",
-                                                ann.isActive ? "bg-emerald-50 text-emerald-600" : "bg-gray-100 text-gray-500"
-                                            )}>
-                                                {ann.isActive ? 'نشط' : 'مسودة'}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center justify-center gap-2">
-                                                <button
-                                                    onClick={() => openEdit(ann)}
-                                                    className="p-2 text-gray-400 hover:text-indigo-600 transition-colors"
-                                                >
-                                                    <Edit3 size={16} />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(ann.id)}
-                                                    className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                            {announcements.length === 0 && !isLoading && (
-                                <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold italic text-xs">لا توجد إعلانات منشورة حالياً</td>
-                                </tr>
+            {/* Announcements Grid - News Board Style */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                {announcements.map((ann) => {
+                    const styles = getTypeStyles(ann.type);
+                    return (
+                        <div 
+                            key={ann.id} 
+                            className={cn(
+                                "group bg-white dark:bg-gray-900 border-4 border-gray-950 p-8 transition-all hover:-translate-y-2 relative flex flex-col min-h-[400px]",
+                                styles.shadow,
+                                !ann.isActive && "opacity-60 grayscale border-dashed"
                             )}
-                        </tbody>
-                    </table>
-                </div>
+                        >
+                            {/* Type Badge */}
+                            <div className={cn("absolute -top-5 right-6 px-4 py-2 border-4 border-gray-950 font-black text-[10px] uppercase tracking-widest z-10", styles.bg, styles.color)}>
+                                {styles.label}
+                            </div>
+
+                            {!ann.isActive && (
+                                <div className="absolute top-4 left-4 text-[10px] font-black text-gray-400 uppercase italic flex items-center gap-1">
+                                    <Clock size={12} /> Draft Mode
+                                </div>
+                            )}
+
+                            <div className="flex-1 space-y-6 mt-4">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-3">
+                                        <div className={cn("w-12 h-12 flex items-center justify-center border-4 border-gray-950", styles.bg, styles.color)}>
+                                            <styles.icon size={24} />
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-[10px] font-black text-gray-400 uppercase leading-none mb-1">تاريخ النشر</p>
+                                            <p className="font-black text-xs uppercase italic">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
+                                        </div>
+                                    </div>
+                                    <h3 className="text-2xl font-black text-gray-950 dark:text-white leading-tight uppercase mt-6">{ann.title}</h3>
+                                </div>
+                                <p className="text-gray-600 dark:text-gray-400 font-bold text-sm leading-relaxed line-clamp-6 italic">
+                                    "{ann.content}"
+                                </p>
+                            </div>
+
+                            {/* Action Footer */}
+                            <div className="mt-8 pt-6 border-t-4 border-gray-950 flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        onClick={() => openEdit(ann)}
+                                        className="w-10 h-10 bg-black text-white flex items-center justify-center border-2 border-gray-950 hover:bg-primary-600 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                    >
+                                        <Edit3 size={18} />
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(ann.id)}
+                                        className="w-10 h-10 bg-white text-rose-600 flex items-center justify-center border-2 border-gray-950 hover:bg-rose-600 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(225,29,72,0.1)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                                <div className="text-[10px] font-black text-gray-400 uppercase italic flex items-center gap-2">
+                                    <User size={12} /> Super_Admin_Entry
+                                </div>
+                            </div>
+
+                            <div className={cn("absolute bottom-0 left-0 w-2 h-0 group-hover:h-full transition-all duration-500", styles.color.replace('text-', 'bg-'))}></div>
+                        </div>
+                    );
+                })}
+
+                {announcements.length === 0 && !isLoading && (
+                    <div className="col-span-full py-32 border-8 border-gray-100 dark:border-gray-800 border-dashed flex flex-col items-center justify-center opacity-30 text-center">
+                        <ArrowLeftRight size={64} className="mb-6" />
+                        <h3 className="text-3xl font-black uppercase italic tracking-widest">لا توجد إعلانات مسجلة</h3>
+                        <p className="font-bold text-sm mt-2">سجل الإعلانات المراقبة فارغ تماماً حالياً</p>
+                    </div>
+                )}
             </div>
 
-            {/* Create/Edit Modal */}
+            {/* Premium Create/Edit Modal - Brutalist Style */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
-                    <div className="relative w-full max-w-lg bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800">
-                        <div className="p-6 bg-gray-900 text-white flex items-center justify-between">
-                            <h3 className="font-black text-sm uppercase tracking-widest">
-                                {editingAnnouncement ? 'تعديل إعلان' : 'إضافة إعلان جديد للمركز'}
-                            </h3>
-                            <button onClick={() => setIsModalOpen(false)}><X size={20} /></button>
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-black/60 animate-in fade-in">
+                    <div className="relative w-full max-w-2xl bg-white dark:bg-gray-950 border-8 border-gray-950 shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                        <div className="p-8 bg-gray-950 text-white flex items-center justify-between border-b-8 border-gray-950">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-primary-600 flex items-center justify-center border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]">
+                                    <Megaphone size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="font-black text-xl uppercase tracking-tighter italic">
+                                        {editingAnnouncement ? 'تحديث التعميم' : 'إصدار تعميم جديد'}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest">Announcement Editor v2.0</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 bg-white/10 flex items-center justify-center hover:bg-rose-600 transition-all"><X size={24} /></button>
                         </div>
 
-                        <form onSubmit={handleSave} className="p-6 space-y-4">
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">عنوان الإعلان</label>
+                        <form onSubmit={handleSave} className="p-10 space-y-8">
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic"><LayoutGrid size={14}/> عنوان الإعلان (Master Title)</label>
                                 <input
                                     required
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b-2 border-transparent focus:border-primary-500 focus:outline-none font-bold text-sm transition-all"
-                                    placeholder="أدخل عنواناً جذاباً..."
+                                    className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 font-black text-lg outline-none focus:bg-white focus:border-primary-600 transition-all"
+                                    placeholder="اكتب عنواناً يفرض حضوراً قوياً..."
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">نوع الإعلان</label>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest italic flex items-center gap-2"><ArrowLeftRight size={14}/> الفئة (Categorization)</label>
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
-                                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b-2 border-transparent focus:border-primary-500 focus:outline-none font-bold text-sm"
+                                        className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 font-black text-xs uppercase outline-none focus:bg-white focus:border-primary-600 transition-all cursor-pointer"
                                     >
-                                        <option value="general">عام</option>
-                                        <option value="urgent">عاجل / هام</option>
-                                        <option value="holiday">إجازة رسمية</option>
-                                        <option value="event">فعالية / نشاط</option>
+                                        <option value="general">عام (Public Info)</option>
+                                        <option value="urgent">عاجل (Critical Alert)</option>
+                                        <option value="holiday">إجازة (Calendar Event)</option>
+                                        <option value="event">نشاط (Academy Activity)</option>
                                     </select>
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">حالة النشر</label>
-                                    <select
-                                        value={formData.isActive ? 'true' : 'false'}
-                                        onChange={(e) => setFormData({ ...formData, isActive: e.target.value === 'true' })}
-                                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b-2 border-transparent focus:border-primary-500 focus:outline-none font-bold text-sm"
-                                    >
-                                        <option value="true">نشط (يظهر للجميع)</option>
-                                        <option value="false">تحت المراجعة (مسودة)</option>
-                                    </select>
+                                <div className="space-y-2">
+                                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest italic flex items-center gap-2"><CheckCircle2 size={14}/> حالة النشر (Visibility)</label>
+                                    <div className="flex gap-4">
+                                        <button 
+                                            type="button"
+                                            onClick={() => setFormData({...formData, isActive: true})}
+                                            className={cn(
+                                                "flex-1 py-4 border-4 border-gray-950 font-black text-[10px] uppercase transition-all shadow-[4px_4px_0px_0px_black]",
+                                                formData.isActive ? "bg-emerald-500 text-white" : "bg-gray-50 text-gray-300"
+                                            )}
+                                        >
+                                            نشـط (Online)
+                                        </button>
+                                        <button 
+                                            type="button"
+                                            onClick={() => setFormData({...formData, isActive: false})}
+                                            className={cn(
+                                                "flex-1 py-4 border-4 border-gray-950 font-black text-[10px] uppercase transition-all shadow-[4px_4px_0px_0px_black]",
+                                                !formData.isActive ? "bg-amber-500 text-white" : "bg-gray-50 text-gray-300"
+                                            )}
+                                        >
+                                            مسـودة (Draft)
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">محتوى الإعلان التفصيلي</label>
+                            <div className="space-y-2">
+                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest italic flex items-center gap-2"><Edit3 size={14}/> المحتوى (Core Message)</label>
                                 <textarea
                                     required
-                                    rows={4}
+                                    rows={5}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b-2 border-transparent focus:border-primary-500 focus:outline-none font-bold text-sm resize-none transition-all"
-                                    placeholder="اكتب تفاصيل الإعلان هنا بشكل واضح..."
+                                    className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 font-bold text-sm resize-none outline-none focus:bg-white focus:border-primary-600 transition-all leading-relaxed italic"
+                                    placeholder="اكتب تفاصيل الإعلان هنا بلهجة واثقة ومباشرة..."
                                 />
                             </div>
 
                             <button
                                 type="submit"
-                                className="w-full py-4 bg-primary-600 text-white font-black text-[10px] uppercase tracking-[0.2em] hover:bg-primary-700 transition-all shadow-xl shadow-primary-600/20 active:scale-[0.98] flex items-center justify-center gap-2"
+                                className="w-full py-6 bg-primary-600 text-white font-black text-sm uppercase tracking-[0.3em] hover:bg-black transition-all shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none flex items-center justify-center gap-4 group"
                             >
-                                <CheckCircle2 size={16} />
-                                حفظ ونشر الإعلان الآن
+                                <CheckCircle2 size={24} className="group-hover:scale-125 transition-transform" />
+                                {editingAnnouncement ? 'مزامنة التعديلات الآن' : 'بث الإعلان لكافة المشتركين'}
                             </button>
                         </form>
                     </div>
