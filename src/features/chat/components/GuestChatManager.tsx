@@ -46,9 +46,9 @@ export const GuestChatManager = ({ adminId }: GuestChatManagerProps) => {
                 "w-full md:w-80 border-l-4 border-gray-900 dark:border-gray-800 flex flex-col bg-gray-50/50 dark:bg-gray-900/50",
                 selectedConvId && "hidden md:flex"
             )}>
-                <div className="p-4 border-b-2 border-gray-900 dark:border-gray-800 bg-black text-white">
-                    <h3 className="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                        <MessageSquare size={16} /> محادثات الزوار النشطة
+                <div className="p-5 border-b-2 border-gray-900 dark:border-gray-800 bg-primary-600 text-white shadow-inner">
+                    <h3 className="font-black text-sm uppercase tracking-tighter flex items-center gap-3">
+                        <MessageSquare size={20} strokeWidth={3} /> محادثات الزوار النشطة
                     </h3>
                 </div>
                 <div className="flex-1 overflow-y-auto">
