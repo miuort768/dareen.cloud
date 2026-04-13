@@ -469,90 +469,123 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'chatbot' && (
-                    <div className="space-y-6 max-w-4xl mx-auto">
-                        <section className="bg-white dark:bg-gray-950 p-8 border dark:border-gray-800 shadow-2xl relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
-                            
-                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
-                                <div className="flex items-center gap-5">
-                                    <div className="w-16 h-16 bg-primary-600/10 flex items-center justify-center border-2 border-primary-600/20 rounded-none transform group-hover:rotate-6 transition-transform">
-                                        <MessageSquare className="text-primary-600" size={32} />
-                                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {/* Bot Configuration */}
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
+                                    <MessageSquare size={28} className="text-blue-500" />
+                                    تخصيص المساعد الذكي
+                                </h2>
+                                <button 
+                                    onClick={() => setChatbotEnabled(!chatbotEnabled)} 
+                                    className={cn(
+                                        "px-4 py-2 border-2 border-gray-950 font-black text-[10px] uppercase transition-all flex items-center gap-2",
+                                        chatbotEnabled ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-400"
+                                    )}
+                                >
+                                    {chatbotEnabled ? <CheckCircle2 size={14}/> : <Lock size={14}/>}
+                                    {chatbotEnabled ? "نشط الآن" : "معطل حالياً"}
+                                </button>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-2 border-blue-200 dark:border-blue-900/30 flex items-center justify-between group">
                                     <div>
-                                        <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">إعدادات الروبوت الذكي</h2>
-                                        <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">تخصيص ردود ومظهر الشات بوت التلقائي</p>
+                                        <p className="font-black text-sm text-blue-900 dark:text-blue-100 italic">حوار الزوار التلقائي</p>
+                                        <p className="text-[10px] font-bold text-blue-600/60 uppercase">Enable Automated Concierge</p>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 p-4 border dark:border-gray-800">
-                                    <div className="text-left">
-                                        <p className="text-[10px] font-black uppercase opacity-50">حالة الشات بوت</p>
-                                        <p className="text-xs font-bold">{chatbotEnabled ? 'مُفعل حالياً' : 'مُعطل حالياً'}</p>
-                                    </div>
-                                    <button 
-                                        onClick={() => setChatbotEnabled(!chatbotEnabled)} 
-                                        className={cn(
-                                            "w-14 h-7 rounded-full relative transition-all duration-300", 
-                                            chatbotEnabled ? "bg-primary-600" : "bg-gray-400 dark:bg-gray-800"
-                                        )}
-                                    >
-                                        <div className={cn(
-                                            "absolute top-1 w-5 h-5 bg-white rounded-full transition-all shadow-md", 
-                                            chatbotEnabled ? "translate-x-8" : "translate-x-1"
-                                        )} />
+                                    <button onClick={() => setChatbotEnabled(!chatbotEnabled)} className={cn("w-14 h-7 rounded-full relative transition-all duration-300 border-2 border-gray-950", chatbotEnabled ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-800")}>
+                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full transition-all shadow-md", chatbotEnabled ? "translate-x-7" : "translate-x-0.5")} />
                                     </button>
+                                </div>
+
+                                <div className="space-y-5">
+                                    <div className="group">
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-blue-600">اسم المساعد (Bot Name)</label>
+                                        <div className="relative">
+                                            <input 
+                                                value={localChatbotName} 
+                                                onChange={e => setLocalChatbotName(e.target.value)} 
+                                                className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-blue-500 p-3.5 font-black outline-none transition-all pl-10"
+                                            />
+                                            <Sparkles size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none group-focus-within:text-blue-400 transition-colors" />
+                                        </div>
+                                    </div>
+
+                                    <div className="group">
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-blue-600">رسالة الترحيب الافتتاحية</label>
+                                        <textarea 
+                                            value={localChatbotWelcomeMsg} 
+                                            onChange={e => setLocalChatbotWelcomeMsg(e.target.value)} 
+                                            className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-blue-500 p-3.5 font-black outline-none transition-all h-28 resize-none text-base leading-relaxed"
+                                            placeholder="اكتب رسالة الترحيب هنا..."
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 gap-8">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
-                                        <Edit size={14} /> اسم الشات بوت الظاهر
-                                    </label>
-                                    <input 
-                                        type="text"
-                                        value={localChatbotName}
-                                        onChange={(e) => setLocalChatbotName(e.target.value)}
-                                        className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-primary-500 p-4 font-black transition-all outline-none text-lg"
-                                        placeholder="مثلاً: دارين - المساعد الذكي"
-                                    />
+                            <button 
+                                onClick={async () => {
+                                    setIsSaving(true);
+                                    try {
+                                        await setChatbotName(localChatbotName);
+                                        await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
+                                        showNotify('تم تحديث إعدادات الشات بوت بنجاح');
+                                    } catch (e) {
+                                        showNotify('حدث خطأ أثناء الحفظ');
+                                    } finally {
+                                        setIsSaving(false);
+                                    }
+                                }} 
+                                className="group relative w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[8px_8px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                            >
+                                {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
+                                    <>
+                                        <Shield size={24} />
+                                        تحديث برنامج الذكاء الاصطناعي
+                                    </>
+                                )}
+                            </button>
+                        </section>
+
+                        {/* Live Bot Preview */}
+                        <section className="bg-slate-900 p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] relative overflow-hidden flex flex-col justify-center min-vh-[400px]">
+                            <div className="absolute top-0 right-0 p-4">
+                                <span className="text-[10px] font-black text-blue-500 border border-blue-500/30 px-3 py-1 uppercase tracking-widest">Live Simulator</span>
+                            </div>
+                            
+                            <div className="relative z-10 w-full max-w-sm mx-auto space-y-6">
+                                {/* Simulated Message */}
+                                <div className="flex flex-col gap-2 animate-in slide-in-from-left-4 duration-1000">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white border-2 border-white shadow-lg">
+                                            <MessageSquare size={14} />
+                                        </div>
+                                        <span className="text-[10px] font-black text-white/40 uppercase">{localChatbotName}</span>
+                                    </div>
+                                    <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tr-none border border-white/10 text-white text-sm font-bold leading-relaxed shadow-2xl">
+                                        {localChatbotWelcomeMsg}
+                                    </div>
+                                    <span className="text-[8px] font-black text-white/20 uppercase text-left">Just Now</span>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
-                                        <Lock size={14} /> رسالة الترحيب الأولى (Automated)
-                                    </label>
-                                    <textarea 
-                                        rows={4}
-                                        value={localChatbotWelcomeMsg}
-                                        onChange={(e) => setLocalChatbotWelcomeMsg(e.target.value)}
-                                        className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-primary-500 p-4 font-bold transition-all outline-none resize-none text-base leading-relaxed"
-                                        placeholder="اكتب الرسالة التي سيراها الزائر بمجرد فتح الشات..."
-                                    />
-                                    <p className="text-[10px] text-gray-500 font-bold uppercase mt-2 italic">* تظهر هذه الرسالة بمجرد تفاعل الزائر مع أيقونة الشات.</p>
+                                {/* Simulated Interaction Button */}
+                                <div className="flex justify-end gap-2 animate-in slide-in-from-right-4 duration-1000 delay-300">
+                                    <div className="bg-blue-600 p-3 rounded-2xl rounded-tl-none text-white text-[10px] font-black shadow-xl">
+                                        كيف يمكنني البدء؟
+                                    </div>
                                 </div>
 
-                                <button 
-                                    onClick={async () => {
-                                        setIsSaving(true);
-                                        try {
-                                            await setChatbotName(localChatbotName);
-                                            await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
-                                            showNotify('تم تحديث إعدادات الشات بوت بنجاح');
-                                        } catch (e) {
-                                            showNotify('حدث خطأ أثناء الحفظ');
-                                        } finally {
-                                            setIsSaving(false);
-                                        }
-                                    }}
-                                    className="w-full py-5 bg-black dark:bg-white dark:text-black text-white font-black uppercase tracking-[0.2em] hover:bg-primary-600 hover:text-white transition-all shadow-xl flex items-center justify-center gap-4"
-                                >
-                                    {isSaving ? <RefreshCw className="animate-spin" size={20} /> : (
-                                        <>
-                                            <CheckCircle2 size={20} />
-                                            تحديث إعدادات الروبوت
-                                        </>
-                                    )}
-                                </button>
+                                {/* Simulated Floating Bubble */}
+                                <div className="absolute -bottom-10 right-0 transform translate-y-20 flex flex-col items-center gap-3">
+                                    <div className="bg-white py-2 px-4 rounded-full border-2 border-gray-950 shadow-xl">
+                                        <p className="text-[10px] font-black text-slate-900">أنا متواجد للمساعدة!</p>
+                                    </div>
+                                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white border-4 border-gray-950 shadow-2xl ring-4 ring-blue-500/20 animate-bounce">
+                                        <MessageSquare size={28} />
+                                    </div>
+                                </div>
                             </div>
                         </section>
                         {/* Guest Conversations Manager */}
