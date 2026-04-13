@@ -4,7 +4,6 @@ import {
     Plus,
     Trash2,
     Edit3,
-    Bell,
     AlertTriangle,
     Info,
     Calendar,
