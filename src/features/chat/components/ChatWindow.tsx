@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
     Send, MoreVertical, ChevronRight, 
-    CheckCheck, Mic, ArrowDown, Search,
+    CheckCheck, ArrowDown, Search,
     Video, Phone
 } from 'lucide-react';
 import { format } from 'date-fns';
@@ -49,66 +49,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
     const { typingUsers } = useChatContext();
-
-    // Voice Recording States
-    const [isRecording, setIsRecording] = useState(false);
-    const [recordingTime, setRecordingTime] = useState(0);
-    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-    const audioChunksRef = useRef<Blob[]>([]);
-    const timerRef = useRef<any>(null);
-
-    const startRecording = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const mediaRecorder = new MediaRecorder(stream);
-            mediaRecorderRef.current = mediaRecorder;
-            audioChunksRef.current = [];
-
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) audioChunksRef.current.push(event.data);
-            };
-
-            mediaRecorder.start();
-            setIsRecording(true);
-            setRecordingTime(0);
-            timerRef.current = setInterval(() => {
-                setRecordingTime((prev: number) => prev + 1);
-            }, 1000);
-        } catch (err) {
-            console.error("Error accessing microphone:", err);
-            alert("يرجى السماح بالوصول للميكروفون لتسجيل الصوت");
-        }
-    };
-
-    const stopRecording = () => {
-        if (mediaRecorderRef.current && isRecording) {
-            mediaRecorderRef.current.stop();
-            mediaRecorderRef.current.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-            setIsRecording(false);
-            clearInterval(timerRef.current);
-        }
-    };
-
-    const sendRecording = () => {
-        if (!mediaRecorderRef.current) return;
-        
-        mediaRecorderRef.current.onstop = () => {
-            const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-            // Simulate sending voice message
-            const reader = new FileReader();
-            reader.readAsDataURL(audioBlob);
-            reader.onloadend = () => {
-                const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
-                const originalMsg = newMessage;
-                setNewMessage("🎤 رسالة صوتية (Voice Message)");
-                setTimeout(() => {
-                    handleSendMessage(fakeEvent);
-                    setNewMessage(originalMsg);
-                }, 100);
-            };
-        };
-        stopRecording();
-    };
 
     const scrollToBottom = (behavior: ScrollBehavior = "auto") => {
         messagesEndRef.current?.scrollIntoView({ behavior });
@@ -291,54 +231,35 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Input Bar - WhatsApp Style */}
+            {/* Input Bar - Standardized Style */}
             <footer className="bg-[#f0f2f5] dark:bg-[#202c33] min-h-[62px] flex items-end px-3 py-2.5 z-10 gap-2">
                 <div className="flex-1 relative flex items-center">
-                    {isRecording ? (
-                        <div className="w-full bg-white dark:bg-[#2a3942] rounded-lg px-4 py-2.5 flex items-center justify-between animate-pulse">
-                            <div className="flex items-center gap-3">
-                                <div className="w-3 h-3 bg-rose-500 rounded-full animate-ping" />
-                                <span className="text-rose-500 font-bold text-sm tracking-wider tabular-nums">{recordingTime}s</span>
-                            </div>
-                            <span className="text-gray-400 text-[12px] font-medium">جاري التسجيل...</span>
-                            <button onClick={stopRecording} className="text-rose-500 text-sm font-bold hover:underline">إلغاء</button>
-                        </div>
-                    ) : (
-                        <textarea
-                            rows={1}
-                            value={newMessage}
-                            onChange={(e) => {
-                                setNewMessage(e.target.value);
-                                if (currentUser) setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey) {
-                                    e.preventDefault();
-                                    handleSendMessage(e as any);
-                                }
-                            }}
-                            placeholder="اكتب رسالة"
-                            className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-lg px-3 py-2.5 focus:ring-0 max-h-32 resize-none text-right scroll-smooth custom-scrollbar"
-                        />
-                    )}
+                    <textarea
+                        rows={1}
+                        value={newMessage}
+                        onChange={(e) => {
+                            setNewMessage(e.target.value);
+                            if (currentUser) setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSendMessage(e as any);
+                            }
+                        }}
+                        placeholder="اكتب رسالة"
+                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-lg px-3 py-2.5 focus:ring-0 max-h-32 resize-none text-right scroll-smooth custom-scrollbar"
+                    />
                 </div>
 
-                <div className="flex items-center justify-center">
-                    {newMessage.trim() || isRecording ? (
-                        <button
-                            onClick={isRecording ? sendRecording : handleSendMessage}
-                            className="bg-[#00a884] text-white p-3 rounded-full hover:bg-[#008f6f] transition-all flex-shrink-0"
-                        >
-                            <Send size={24} className={cn("transition-transform", isSending && "animate-pulse")} />
-                        </button>
-                    ) : (
-                        <button 
-                            onClick={startRecording}
-                            className="bg-[#00a884] text-white p-3.5 rounded-full hover:bg-[#008f6f] transition-all flex-shrink-0 shadow-lg active:scale-95"
-                        >
-                            <Mic size={24} />
-                        </button>
-                    )}
+                <div className="flex items-center justify-center self-center">
+                    <button
+                        onClick={handleSendMessage}
+                        className="bg-[#00a884] text-white p-3.5 rounded-xl hover:bg-[#008f6f] transition-all flex-shrink-0 shadow-md active:scale-95 flex items-center justify-center"
+                        title="إرسال"
+                    >
+                        <Send size={24} className={cn("transition-transform", isSending && "animate-pulse")} />
+                    </button>
                 </div>
             </footer>
         </div>
