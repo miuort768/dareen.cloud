@@ -126,22 +126,22 @@ export const Tasks = () => {
     return (
         <div className="space-y-8 pb-32 animate-in fade-in duration-500" dir="rtl">
             {/* Cyber-Brutalist Header */}
-            <div className="relative bg-white border-4 md:border-8 border-gray-950 p-6 md:p-10 shadow-[10px_10px_0px_0px_#ef4444] overflow-hidden group mx-2 md:mx-0">
+            <div className="relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-[6px_6px_0px_0px_#ef4444] overflow-hidden group mx-2 md:mx-0">
                 <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_2px_2px,_#000_1px,_transparent_0)] [background-size:24px_24px] opacity-[0.03]"></div>
-                <div className="absolute -top-20 -left-20 w-64 h-64 bg-rose-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute -top-10 -left-10 w-48 h-48 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex items-center gap-6">
-                        <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-950 text-white border-4 border-rose-500 flex items-center justify-center transform -rotate-3 hover:rotate-0 transition-all shadow-[6px_6px_0px_0px_#ef4444]">
-                            <ListTodo size={48} className="group-hover:scale-110 transition-transform" />
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-rose-500 flex items-center justify-center transform -rotate-2 hover:rotate-0 transition-all shadow-[4px_4px_0px_0px_#ef4444]">
+                            <ListTodo size={32} className="group-hover:scale-110 transition-transform" />
                         </div>
                         <div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="bg-gray-950 text-white text-[10px] font-black px-3 py-1 uppercase tracking-tighter">OPERATIONS HUB</span>
-                                <h1 className="text-3xl md:text-5xl font-black text-gray-950 tracking-tighter uppercase italic">غرفة العمليات</h1>
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="bg-gray-950 text-white text-[9px] font-black px-2 py-0.5 uppercase tracking-tighter">OPERATIONS HUB</span>
+                                <h1 className="text-2xl md:text-3xl font-black text-gray-950 tracking-tighter uppercase italic">غرفة العمليات</h1>
                             </div>
-                            <p className="text-gray-500 font-black text-xs md:text-sm flex items-center gap-3">
-                                <Zap size={18} className="text-yellow-500 fill-yellow-500" />
+                            <p className="text-gray-500 font-black text-xs flex items-center gap-2">
+                                <Zap size={14} className="text-yellow-500 fill-yellow-500" />
                                 أدر مهامك بقوة، دقة، وسرعة فائقة
                             </p>
                         </div>
@@ -149,62 +149,62 @@ export const Tasks = () => {
 
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="bg-gray-950 text-white px-10 py-5 border-4 border-gray-950 shadow-[8px_8px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-4 font-black text-sm md:text-base uppercase group/btn w-full md:w-auto justify-center"
+                        className="bg-gray-950 text-white px-6 py-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-2 font-black text-xs md:text-sm uppercase group/btn w-full md:w-auto justify-center"
                     >
-                        <Plus size={24} className="group-hover/btn:rotate-90 transition-transform" />
+                        <Plus size={20} className="group-hover/btn:rotate-90 transition-transform" />
                         إطلاق مهمة جديدة
                     </button>
                 </div>
             </div>
 
             {/* Gamified Stats Bar */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-0">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-0">
                 {[
                     { label: 'مستوى الإنجاز', val: `${stats.score}%`, icon: Trophy, color: 'bg-yellow-400', shadow: 'shadow-yellow-600' },
                     { label: 'مهام معلقة', val: stats.pending, icon: Clock, color: 'bg-blue-400', shadow: 'shadow-blue-600' },
                     { label: 'قيد التنفيذ', val: stats.inProgress, icon: Flame, color: 'bg-orange-500 text-white', shadow: 'shadow-orange-700' },
                     { label: 'تم الانتهاء', val: stats.completed, icon: CheckCircle2, color: 'bg-emerald-400', shadow: 'shadow-emerald-600' }
                 ].map((stat, i) => (
-                    <div key={i} className={cn("bg-white border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] hover:-translate-y-1 transition-all group", stat.color)}>
-                        <div className="flex items-center justify-between mb-4">
-                            <stat.icon size={24} strokeWidth={3} className="text-gray-950" />
-                            <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center font-black text-[10px]">0{i+1}</div>
+                    <div key={i} className={cn("bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] hover:-translate-y-1 transition-all group", stat.color)}>
+                        <div className="flex items-center justify-between mb-3">
+                            <stat.icon size={20} strokeWidth={3} className="text-gray-950" />
+                            <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center font-black text-[9px]">0{i+1}</div>
                         </div>
-                        <p className="text-[10px] font-black text-black/50 uppercase tracking-widest mb-1">{stat.label}</p>
-                        <h3 className="text-2xl md:text-3xl font-black text-gray-950">{stat.val}</h3>
+                        <p className="text-[9px] font-black text-black/50 uppercase tracking-widest mb-1">{stat.label}</p>
+                        <h3 className="text-xl md:text-2xl font-black text-gray-950">{stat.val}</h3>
                     </div>
                 ))}
             </div>
 
             {/* Smart Toolbar */}
-            <div className="mx-2 md:mx-0 bg-gray-50 border-4 border-gray-950 p-6 flex flex-wrap items-center justify-between gap-6 no-print shadow-[10px_10px_0px_0px_black]">
-                <div className="flex items-center gap-6 flex-1 min-w-[300px]">
+            <div className="mx-2 md:mx-0 bg-gray-50 border-2 border-gray-950 p-4 flex flex-wrap items-center justify-between gap-4 no-print shadow-[4px_4px_0px_0px_black]">
+                <div className="flex items-center gap-4 flex-1 min-w-[250px]">
                     <div className="relative flex-1">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-950" size={20} />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-950" size={16} />
                         <input 
                             type="text" 
-                            placeholder="ابحث عن مهمة، وصف، أو كود المتابعة..." 
+                            placeholder="ابحث عن مهمة، وصف..." 
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-white border-4 border-gray-950 p-4 pr-12 font-black text-gray-950 focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300"
+                            className="w-full bg-white border-2 border-gray-950 p-2 pr-10 text-sm font-black text-gray-950 focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300"
                         />
                     </div>
-                    <div className="flex bg-gray-200 border-4 border-gray-950 p-1">
-                        <button onClick={() => setViewMode('grid')} className={cn("p-2 transition-all", viewMode === 'grid' ? "bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]" : "opacity-40")}><LayoutGrid size={20}/></button>
-                        <button onClick={() => setViewMode('list')} className={cn("p-2 transition-all", viewMode === 'list' ? "bg-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]" : "opacity-40")}><LayoutList size={20}/></button>
+                    <div className="flex bg-gray-200 border-2 border-gray-950 p-0.5">
+                        <button onClick={() => setViewMode('grid')} className={cn("p-1.5 transition-all text-gray-600", viewMode === 'grid' ? "bg-white border border-gray-950 shadow-[1px_1px_0px_0px_black]" : "opacity-50")}><LayoutGrid size={16}/></button>
+                        <button onClick={() => setViewMode('list')} className={cn("p-1.5 transition-all text-gray-600", viewMode === 'list' ? "bg-white border border-gray-950 shadow-[1px_1px_0px_0px_black]" : "opacity-50")}><LayoutList size={16}/></button>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                    <Filter size={20} className="text-gray-400" />
-                    <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                    <Filter size={16} className="text-gray-400" />
+                    <div className="flex gap-1.5">
                         {['all', 'high', 'medium', 'low'].map(p => (
                             <button 
                                 key={p}
                                 onClick={() => setFilterPriority(p as any)}
                                 className={cn(
-                                    "px-4 py-2 border-2 border-gray-950 font-black text-[10px] uppercase transition-all",
-                                    filterPriority === p ? "bg-gray-950 text-white shadow-[3px_3px_0px_0px_#ef4444]" : "bg-white text-gray-400 hover:bg-gray-100"
+                                    "px-3 py-1.5 border border-gray-950 font-black text-[9px] uppercase transition-all",
+                                    filterPriority === p ? "bg-gray-950 text-white shadow-[2px_2px_0px_0px_#ef4444]" : "bg-white text-gray-400 hover:bg-gray-100"
                                 )}
                             >
                                 {p === 'all' ? 'الكل' : p === 'high' ? 'عاجل' : p === 'medium' ? 'متوسط' : 'عادي'}
@@ -229,61 +229,61 @@ export const Tasks = () => {
                             <div 
                                 key={task.id}
                                 className={cn(
-                                    "bg-white border-4 border-gray-950 p-6 relative group transform transition-all hover:-translate-x-1 hover:-translate-y-1 overflow-hidden",
-                                    isHigh && !isCompleted && "shadow-[10px_10px_0px_0px_#ef4444] animate-pulse-subtle",
-                                    !isHigh && !isCompleted && "shadow-[8px_8px_0px_0px_black]",
-                                    isCompleted && "shadow-[4px_4px_0px_0px_black] opacity-70 grayscale",
-                                    isInProgress && "shadow-[8px_8px_0px_0px_#3b82f6]"
+                                    "bg-white border-2 border-gray-950 p-4 w-full relative group transform transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 overflow-hidden",
+                                    isHigh && !isCompleted && "shadow-[4px_4px_0px_0px_#ef4444] animate-pulse-subtle",
+                                    !isHigh && !isCompleted && "shadow-[4px_4px_0px_0px_black]",
+                                    isCompleted && "shadow-[2px_2px_0px_0px_black] opacity-70 grayscale",
+                                    isInProgress && "shadow-[4px_4px_0px_0px_#3b82f6]"
                                 )}
                             >
                                 {/* Priority Badge Overlay */}
                                 <div className={cn(
-                                    "absolute top-0 left-0 px-4 py-1 border-b-2 border-r-2 border-gray-950 font-black text-[9px] uppercase tracking-widest",
+                                    "absolute top-0 left-0 px-2 py-0.5 border-b border-r border-gray-950 font-black text-[8px] uppercase tracking-widest",
                                     isHigh ? "bg-rose-500 text-white" : "bg-gray-100 text-gray-500"
                                 )}>
                                     {task.priority} PRIORITY
                                 </div>
 
-                                <div className="mt-6 flex flex-col h-full">
-                                    <h3 className={cn("text-xl font-black mb-3 leading-tight", isCompleted && "line-through")}>
+                                <div className="mt-4 flex flex-col h-full">
+                                    <h3 className={cn("text-lg font-black mb-2 leading-tight", isCompleted && "line-through")}>
                                         {task.title}
                                     </h3>
-                                    <p className="text-gray-500 font-bold text-sm mb-6 flex-1 line-clamp-3">
+                                    <p className="text-gray-500 font-medium text-xs mb-4 flex-1 line-clamp-2">
                                         {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
                                     </p>
 
-                                    <div className="flex items-center gap-4 mb-6 border-t-2 border-gray-100 pt-4">
-                                        <div className="flex items-center gap-2 text-[10px] font-black text-gray-400">
-                                            <Calendar size={14} />
+                                    <div className="flex items-center gap-3 mb-4 border-t border-gray-100 pt-3">
+                                        <div className="flex items-center gap-1.5 text-[9px] font-black text-gray-400">
+                                            <Calendar size={12} />
                                             {task.dueDate}
                                         </div>
                                         {task.category && (
-                                            <div className="flex items-center gap-2 text-[10px] font-black text-primary-600 bg-primary-50 px-2 py-0.5 border border-primary-200">
-                                                <Star size={10} className="fill-current" />
+                                            <div className="flex items-center gap-1 text-[9px] font-black text-primary-600 bg-primary-50 px-1.5 py-0.5 border border-primary-200">
+                                                <Star size={8} className="fill-current" />
                                                 {task.category}
                                             </div>
                                         )}
                                     </div>
 
                                     {/* Actions Row */}
-                                    <div className="flex items-center justify-between gap-3">
+                                    <div className="flex items-center justify-between gap-2">
                                         <div className="flex gap-2">
                                             {task.status !== 'completed' && (
                                                 <button 
                                                     onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
                                                     className={cn(
-                                                        "px-4 py-2 border-2 border-gray-950 font-black text-[10px] uppercase transition-all flex items-center gap-2",
+                                                        "px-3 py-1.5 border border-gray-950 font-black text-[9px] uppercase transition-all flex items-center gap-1.5",
                                                         task.status === 'pending' ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-emerald-500 text-white hover:bg-emerald-600"
                                                     )}
                                                 >
-                                                    {task.status === 'pending' ? <Flame size={14}/> : <CheckCircle2 size={14}/>}
+                                                    {task.status === 'pending' ? <Flame size={12}/> : <CheckCircle2 size={12}/>}
                                                     {task.status === 'pending' ? 'بدء العمل' : 'إكمال المهمة'}
                                                 </button>
                                             )}
                                             {task.status === 'completed' && (
                                                 <button 
                                                     onClick={() => updateTaskStatus(task.id, 'pending')}
-                                                    className="px-4 py-2 border-2 border-gray-950 bg-gray-100 font-black text-[10px] uppercase hover:bg-white"
+                                                    className="px-3 py-1.5 border border-gray-950 bg-gray-100 font-black text-[9px] uppercase hover:bg-white"
                                                 >
                                                     إعادة فتح
                                                 </button>
@@ -291,56 +291,57 @@ export const Tasks = () => {
                                         </div>
                                         <button 
                                             onClick={() => deleteTask(task.id)}
-                                            className="w-10 h-10 border-2 border-gray-950 flex items-center justify-center text-gray-400 hover:text-rose-500 hover:bg-rose-50 transition-all"
+                                            className="w-8 h-8 border border-gray-950 flex items-center justify-center text-gray-400 hover:text-rose-500 hover:bg-rose-50 transition-all"
                                         >
-                                            <Trash2 size={18} />
+                                            <Trash2 size={14} />
                                         </button>
                                     </div>
                                 </div>
                             </div>
+
                         )
                     })
                 ) : (
-                    <div className="col-span-full py-20 bg-gray-50 border-8 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
-                        <div className="w-20 h-20 bg-gray-200 border-4 border-white flex items-center justify-center animate-bounce mb-6">
-                            <Zap size={40} className="text-gray-400" />
+                    <div className="col-span-full py-12 bg-gray-50 border-4 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
+                        <div className="w-16 h-16 bg-gray-200 border-2 border-white flex items-center justify-center animate-bounce mb-4">
+                            <Zap size={32} className="text-gray-400" />
                         </div>
-                        <h2 className="text-2xl font-black text-gray-300 uppercase italic mb-2 tracking-tighter">لا توجد مهام حالياً</h2>
-                        <p className="text-gray-400 font-bold max-w-sm">قم بإطلاق مهمة جديدة لتبدأ رحلة الإبداع في تنظيم العمل</p>
+                        <h2 className="text-xl font-black text-gray-300 uppercase italic mb-1 tracking-tighter">لا توجد مهام حالياً</h2>
+                        <p className="text-gray-400 font-bold text-sm max-w-sm">قم بإطلاق مهمة جديدة لتبدأ رحلة الإبداع في تنظيم العمل</p>
                     </div>
                 )}
             </div>
 
             {/* Advanced Form Modal */}
             {showAddForm && (
-                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-gray-950/90 backdrop-blur-md animate-in fade-in">
-                    <div className="bg-white border-8 border-gray-950 w-full max-w-xl shadow-[20px_20px_0px_0px_#ef4444] overflow-hidden transform animate-in zoom-in-95">
-                        <div className="p-8 border-b-8 border-gray-950 bg-gray-950 text-white flex justify-between items-center group">
-                            <h3 className="text-2xl font-black uppercase tracking-tighter italic flex items-center gap-3">
-                                <Plus className="text-rose-500" /> تسجيل مهمة استراتيجية
+                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-sm animate-in fade-in">
+                    <div className="bg-white border-4 border-gray-950 w-full max-w-lg shadow-[10px_10px_0px_0px_#ef4444] overflow-hidden transform animate-in zoom-in-95">
+                        <div className="p-4 md:p-6 border-b-4 border-gray-950 bg-gray-950 text-white flex justify-between items-center group">
+                            <h3 className="text-xl font-black uppercase tracking-tighter italic flex items-center gap-2">
+                                <Plus className="text-rose-500" size={20} /> تسجيل مهمة جديدة
                             </h3>
-                            <button onClick={() => setShowAddForm(false)} className="bg-rose-600 text-white w-12 h-12 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_#444] hover:bg-rose-500 transition-colors font-black text-2xl">
+                            <button onClick={() => setShowAddForm(false)} className="bg-rose-600 text-white w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_#444] hover:bg-rose-500 transition-colors font-black text-xl">
                                 &times;
                             </button>
                         </div>
                         
-                        <form onSubmit={handleAddTask} className="p-10 space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="md:col-span-2 space-y-2">
-                                    <label className="text-[10px] font-black text-gray-950 uppercase tracking-widest block">عنوان المهمة الرئيسي</label>
+                        <form onSubmit={handleAddTask} className="p-6 md:p-8 space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="md:col-span-2 space-y-1.5">
+                                    <label className="text-[9px] font-black text-gray-950 uppercase tracking-widest block">عنوان المهمة</label>
                                     <input 
                                         required
                                         type="text" 
                                         placeholder="ما الذي تريد إنجازه؟"
-                                        className="w-full bg-white border-4 border-gray-950 p-4 font-black text-gray-950 focus:bg-rose-50 outline-none transition-all"
+                                        className="w-full bg-white border-2 border-gray-950 p-2.5 text-sm font-black text-gray-950 focus:bg-rose-50 outline-none transition-all"
                                         value={newTask.title}
                                         onChange={e => setNewTask({...newTask, title: e.target.value})}
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-950 uppercase tracking-widest block">الأولوية</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-gray-950 uppercase tracking-widest block">الأولوية</label>
                                     <select 
-                                        className="w-full bg-white border-4 border-gray-950 p-4 font-black outline-none appearance-none cursor-pointer focus:bg-rose-50"
+                                        className="w-full bg-white border-2 border-gray-950 p-2.5 text-sm font-black outline-none appearance-none cursor-pointer focus:bg-rose-50"
                                         value={newTask.priority}
                                         onChange={e => setNewTask({...newTask, priority: e.target.value as any})}
                                     >
@@ -349,29 +350,29 @@ export const Tasks = () => {
                                         <option value="high">عاجلة جداً (High)</option>
                                     </select>
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-950 uppercase tracking-widest block">تاريخ التنفيذ</label>
+                                <div className="space-y-1.5">
+                                    <label className="text-[9px] font-black text-gray-950 uppercase tracking-widest block">تاريخ التنفيذ</label>
                                     <input 
                                         type="date" 
-                                        className="w-full bg-white border-4 border-gray-950 p-4 font-black outline-none focus:bg-rose-50"
+                                        className="w-full bg-white border-2 border-gray-950 p-2.5 text-sm font-black outline-none focus:bg-rose-50"
                                         value={newTask.dueDate}
                                         onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
                                     />
                                 </div>
-                                <div className="md:col-span-2 space-y-2">
-                                    <label className="text-[10px] font-black text-gray-950 uppercase tracking-widest block">التفاصيل والتوجيهات</label>
+                                <div className="md:col-span-2 space-y-1.5">
+                                    <label className="text-[9px] font-black text-gray-950 uppercase tracking-widest block">التفاصيل والتوجيهات</label>
                                     <textarea 
                                         placeholder="اكتب هنا كافة المعلومات اللازمة..."
-                                        className="w-full bg-white border-4 border-gray-950 p-4 font-black text-gray-950 h-32 resize-none focus:bg-rose-50 outline-none"
+                                        className="w-full bg-white border-2 border-gray-950 p-2.5 text-sm font-black text-gray-950 h-24 resize-none focus:bg-rose-50 outline-none"
                                         value={newTask.description}
                                         onChange={e => setNewTask({...newTask, description: e.target.value})}
                                     ></textarea>
                                 </div>
                             </div>
 
-                            <button type="submit" className="w-full bg-rose-500 text-white py-6 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] font-black uppercase tracking-widest text-base hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-4">
-                                <Zap size={24} className="fill-current" />
-                                إدراج المهمة في النظام
+                            <button type="submit" className="w-full bg-rose-500 text-white mt-4 py-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] font-black uppercase tracking-widest text-sm hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                                <Zap size={18} className="fill-current" />
+                                إدراج المهمة
                             </button>
                         </form>
                     </div>
