@@ -338,39 +338,109 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'appearance' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm">
-                            <h2 className="font-black text-lg mb-6 flex items-center gap-2 uppercase"><Palette size={18} className="text-primary-600"/> تخصيص المظهر</h2>
-                            <div className="space-y-6">
-                                <div>
-                                    <p className="text-xs font-black mb-4 uppercase opacity-60">لون النظام الأساسي</p>
-                                    <div className="grid grid-cols-7 gap-3">
-                                        {THEME_COLORS.map(c => (
-                                            <button key={c.id} onClick={() => setThemeColor(c.id)} className={cn("h-10 border-2 transition-all p-1", themeColor === c.id ? "border-black dark:border-white scale-110" : "border-transparent")}>
-                                                <div className={cn("w-full h-full", c.class)} title={c.label} />
-                                            </button>
-                                        ))}
-                                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {/* System Identity & Logo Preview */}
+                        <section className="bg-white dark:bg-gray-950 p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)] space-y-8">
+                            <div className="flex items-center gap-4 border-b-4 border-gray-950 pb-4">
+                                <div className="w-14 h-14 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                                    <Building2 size={28} />
                                 </div>
-                                <div className="p-4 bg-gray-50 dark:bg-gray-800 flex items-center justify-between border">
-                                    <div className="flex items-center gap-3"><Bell size={20}/><p className="font-bold">الإشعارات المكتبية</p></div>
-                                    <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={cn("w-12 h-6 rounded-full relative transition-colors", notificationsEnabled ? "bg-primary-600" : "bg-gray-300")}>
-                                        <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", notificationsEnabled ? "translate-x-6" : "translate-x-1")} />
-                                    </button>
+                                <div>
+                                    <h2 className="text-xl font-black uppercase tracking-tighter">معاينة هوية المنصة</h2>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 italic">Identity & Branding Preview</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="p-6 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center text-center group">
+                                    <div className="w-32 h-32 bg-white dark:bg-slate-950 rounded-2xl border-2 border-gray-950 shadow-xl mb-4 flex items-center justify-center p-4 relative overflow-hidden">
+                                        {academyLogo ? (
+                                            <img src={academyLogo} alt="Logo" className="max-w-full max-h-full object-contain relative z-10" />
+                                        ) : (
+                                            <Monitor size={48} className="text-gray-200" />
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-gray-50 to-transparent opacity-50"></div>
+                                    </div>
+                                    <h3 className="font-black text-lg text-gray-900 dark:text-white uppercase tracking-tighter">{academyName}</h3>
+                                    <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mt-1 italic opacity-80">{academyTagline}</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="p-4 bg-gray-50 dark:bg-gray-900 border-2 border-gray-950 flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-white dark:bg-slate-800 border-2 border-gray-950 flex items-center justify-center">
+                                                <Bell size={18} className="text-amber-500" />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs font-black uppercase">الإشعارات المكتبية</p>
+                                                <p className="text-[9px] font-bold opacity-50 italic">Desktop Push Notifications</p>
+                                            </div>
+                                        </div>
+                                        <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={cn("w-14 h-7 rounded-full relative transition-all duration-300 border-2 border-gray-950", notificationsEnabled ? "bg-primary-600" : "bg-gray-300 dark:bg-gray-800")}>
+                                            <div className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full transition-all shadow-md", notificationsEnabled ? "translate-x-7" : "translate-x-0.5")} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </section>
 
-                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6 text-center">
-                             <h2 className="font-black text-lg mb-6 flex items-center justify-center gap-2 uppercase text-blue-600"><Download size={18}/> إدارة النسخ الاحتياطي</h2>
-                             <div className="grid grid-cols-1 gap-4">
-                                <button className="p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 text-blue-600 font-bold flex items-center justify-center gap-3 hover:bg-blue-600 hover:text-white transition-all">
-                                    <Download size={20}/> تحميل نسخة احتياطية (Backup)
-                                </button>
-                                <button className="p-4 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 text-emerald-600 font-bold flex items-center justify-center gap-3 hover:bg-emerald-600 hover:text-white transition-all">
-                                    <Upload size={20}/> استيراد بيانات (Import)
-                                </button>
-                             </div>
+                        {/* Visual Theme & Color Palette */}
+                        <section className="bg-white dark:bg-gray-950 p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_black] space-y-8">
+                            <div className="flex items-center gap-4 border-b-4 border-gray-950 pb-4">
+                                <div className="w-14 h-14 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                                    <Palette size={28} />
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-black uppercase tracking-tighter">قالب الألوان والسمات</h2>
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 italic">System Skin & Theme Palette</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div>
+                                    <p className="text-[10px] font-black mb-6 uppercase tracking-[0.2em] opacity-60 flex items-center gap-2 italic">
+                                        <Sparkles size={12} className="text-primary-500" /> اختر اللون المميز لنظامك (Active Skin)
+                                    </p>
+                                    <div className="grid grid-cols-7 gap-4">
+                                        {THEME_COLORS.map(c => (
+                                            <button 
+                                                key={c.id} 
+                                                onClick={() => setThemeColor(c.id)} 
+                                                className={cn(
+                                                    "group relative h-12 w-full transition-all duration-300 p-1 border-2", 
+                                                    themeColor === c.id 
+                                                        ? "border-black dark:border-white scale-110 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_white]" 
+                                                        : "border-transparent hover:scale-105"
+                                                )}
+                                            >
+                                                <div className={cn("w-full h-full transform transition-transform group-hover:rotate-6", c.class)} title={c.label} />
+                                                {themeColor === c.id && (
+                                                    <div className="absolute -top-2 -right-2 w-5 h-5 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center rounded-full border border-white dark:border-black">
+                                                        <CheckCircle2 size={12} strokeWidth={4} />
+                                                    </div>
+                                                )}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="p-8 border-4 border-gray-950 bg-slate-50 dark:bg-slate-900 relative overflow-hidden group">
+                                     <div className="relative z-10 flex flex-col items-center gap-6">
+                                         <div className="text-center">
+                                             <h3 className="text-sm font-black uppercase tracking-widest text-blue-600 mb-2 italic">إدارة الأمان والنسخ</h3>
+                                             <p className="text-[10px] font-bold opacity-60">تأمين قاعدة البيانات والملفات بشكل دوري</p>
+                                         </div>
+                                         <div className="grid grid-cols-1 w-full gap-3">
+                                            <button className="w-full py-4 bg-white dark:bg-slate-800 border-4 border-gray-950 font-black uppercase text-[10px] tracking-widest shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                                <Download size={18} className="text-blue-600" /> تحميل نسخة احتياطية كاملة
+                                            </button>
+                                            <button className="w-full py-4 bg-white dark:bg-slate-800 border-4 border-gray-950 font-black uppercase text-[10px] tracking-widest shadow-[6px_6px_0px_0px_rgba(16,185,129,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                                <Upload size={18} className="text-emerald-600" /> استيراد بيانات من نسخة سابقة
+                                            </button>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
                         </section>
                     </div>
                 )}
