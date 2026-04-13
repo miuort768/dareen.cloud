@@ -44,7 +44,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
     return (
         <div className={cn(
-            "w-full lg:w-[400px] flex flex-col bg-white dark:bg-[#111b21] shrink-0 overflow-hidden relative border-r border-gray-200 dark:border-gray-800",
+            "w-full lg:w-[400px] flex flex-col bg-white dark:bg-[#111b21] shrink-0 overflow-hidden relative border-r border-gray-200 dark:border-gray-800 pb-[80px] lg:pb-0",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
             <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
