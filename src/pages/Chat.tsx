@@ -51,8 +51,7 @@ export const Chat: React.FC = () => {
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
-        const input = (e.target as any).querySelector('textarea') || { value: '' };
-        const content = input.value.trim();
+        const content = newMessage.trim();
         if (!content || !selectedConv || !currentUser) return;
 
         sendMessage({
