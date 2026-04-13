@@ -128,8 +128,10 @@ function App() {
       )}
       <ScrollToTop />
       <InstallPWA />
-      {/* Public Facing Actions */}
-      <FloatingActions />
+      {/* Public Facing Actions - Only show on specific public pages */}
+      {['/', '/courses', '/about', '/contact'].includes(location.pathname) && (
+        <FloatingActions />
+      )}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
