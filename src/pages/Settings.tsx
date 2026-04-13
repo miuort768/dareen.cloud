@@ -260,7 +260,6 @@ const Settings = () => {
                                     <Wallet size={28} className="text-emerald-500" />
                                     الإعدادات الأكاديمية والمالية
                                 </h2>
-                                <span className="hidden md:block text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1 border-2 border-emerald-500 uppercase">System Core Defaults</span>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
