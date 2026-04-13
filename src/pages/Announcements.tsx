@@ -212,11 +212,28 @@ export const Announcements = () => {
 
                             <div className="flex-1 space-y-4">
                                 <div className="space-y-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className={cn("w-8 h-8 flex items-center justify-center border-2 border-gray-950", styles.bg, styles.color)}>
-                                            <styles.icon size={16} />
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <div className={cn("w-8 h-8 flex items-center justify-center border-2 border-gray-950", styles.bg, styles.color)}>
+                                                <styles.icon size={16} />
+                                            </div>
+                                            <p className="font-black text-[9px] uppercase italic text-gray-400 tracking-tight">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
                                         </div>
-                                        <p className="font-black text-[9px] uppercase italic text-gray-400 tracking-tight">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
+                                        
+                                        <div className="flex items-center gap-1.5">
+                                            <button 
+                                                onClick={() => openEdit(ann)}
+                                                className="w-7 h-7 bg-gray-50 text-gray-600 flex items-center justify-center border-2 border-gray-950 hover:bg-primary-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                            >
+                                                <Edit3 size={12} />
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDelete(ann.id)}
+                                                className="w-7 h-7 bg-white text-rose-600 flex items-center justify-center border-2 border-gray-950 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_rgba(225,29,72,0.2)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                            >
+                                                <Trash2 size={12} />
+                                            </button>
+                                        </div>
                                     </div>
                                     <h3 className="text-lg font-black text-gray-950 dark:text-white leading-tight uppercase line-clamp-2">{ann.title}</h3>
                                 </div>
@@ -225,24 +242,13 @@ export const Announcements = () => {
                                 </p>
                             </div>
 
-                            {/* Action Footer - Compact */}
-                            <div className="mt-6 pt-4 border-t-2 border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                                <div className="flex items-center gap-1.5">
-                                    <button 
-                                        onClick={() => openEdit(ann)}
-                                        className="w-8 h-8 bg-gray-50 text-gray-600 flex items-center justify-center border-2 border-gray-950 hover:bg-primary-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
-                                    >
-                                        <Edit3 size={14} />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDelete(ann.id)}
-                                        className="w-8 h-8 bg-white text-rose-600 flex items-center justify-center border-2 border-gray-950 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_rgba(225,29,72,0.2)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
-                                    >
-                                        <Trash2 size={14} />
-                                    </button>
+                            {/* Status Footer - Minimal */}
+                            {!ann.isActive && (
+                                <div className="mt-4 pt-2 border-t border-dashed border-gray-200 dark:border-gray-800">
+                                    <span className="text-[7px] font-black text-amber-600 uppercase italic">Draft / Under Review</span>
                                 </div>
-                                {!ann.isActive && <span className="text-[7px] font-black text-amber-600 uppercase italic">Draft</span>}
-                            </div>
+                            )}
+
                         </div>
                     );
                 })}
