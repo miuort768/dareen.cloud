@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatManagement } from '../features/chat/components/ChatManagement';
-import { ChatModals, ProfileFormData } from '../features/chat/components/ChatModals';
+import { ChatModals } from '../features/chat/components/ChatModals';
+import type { ProfileFormData } from '../features/chat/components/ChatModals';
 import { useApp } from '../context/AppContext';
 import { useChat } from '../hooks/useChat';
 import { cn } from '../lib/utils';
@@ -22,8 +23,7 @@ export const Chat: React.FC = () => {
         deleteConversation,
         refetchConversations,
         typingUsers,
-        setTyping,
-        totalUnreadCount
+        setTyping
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
@@ -43,9 +43,10 @@ export const Chat: React.FC = () => {
     const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    // Profile Management (Dummy for UI in this context)
+    // Profile Management
     const [showProfileForm, setShowProfileForm] = useState(false);
-    const [profileData, setProfileData] = useState<ProfileFormData>({ name: '', username: '' });
+    const [editingProfile, setEditingProfile] = useState<ChatUser | null>(null);
+    const [profileData, setProfileData] = useState<ProfileFormData>({ name: '', username: '', password: '' });
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -143,7 +144,7 @@ export const Chat: React.FC = () => {
                             currentUser={currentUser}
                             setSelectedConv={setSelectedConv}
                             openGroupSettings={() => {}}
-                            confirmDeleteConversation={(conv) => {
+                            confirmDeleteConversation={(conv: Conversation) => {
                                 setDeleteType('conversation');
                                 setItemToDelete(conv);
                                 setShowDeleteConfirm(true);
@@ -165,32 +166,19 @@ export const Chat: React.FC = () => {
                                     أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة وبدون انقطاع.
                                 </p>
                             </div>
-                            <div className="absolute bottom-10 text-[12px] text-[#8696a0] font-medium flex items-center gap-2">
-                                <span className="w-2 h-2 bg-[#00a884] rounded-full animate-pulse" />
-                                محمي بتشفير تام بين الطرفين
-                            </div>
                         </div>
                     )
                 ) : (
                     <ChatManagement
                         profiles={profiles}
-                        conversations={conversations}
-                        confirmDeleteProfile={(p) => {
+                        setEditingProfile={setEditingProfile}
+                        setProfileData={(data) => setProfileData({ ...data, password: '' })}
+                        setShowProfileForm={setShowProfileForm}
+                        confirmDeleteProfile={(id: string) => {
                             setDeleteType('profile');
-                            setItemToDelete(p);
+                            const profile = profiles.find(p => p.id === id);
+                            if (profile) setItemToDelete(profile);
                             setShowDeleteConfirm(true);
-                        }}
-                        confirmDeleteConversation={(c) => {
-                            setDeleteType('conversation');
-                            setItemToDelete(c);
-                            setShowDeleteConfirm(true);
-                        }}
-                        onEditGroup={(conv) => {
-                            setSelectedConv(conv);
-                            setGroupName(conv.displayName);
-                            setSelectedUsers(conv.members);
-                            setIsEditingGroup(true);
-                            setShowNewChatModal(true);
                         }}
                     />
                 )}
@@ -213,7 +201,7 @@ export const Chat: React.FC = () => {
                 handleCreateDirectChat={handleCreateDirectChat}
                 showProfileForm={showProfileForm}
                 setShowProfileForm={setShowProfileForm}
-                editingProfile={null}
+                editingProfile={editingProfile}
                 profileData={profileData}
                 setProfileData={setProfileData}
                 isSavingProfile={false}
