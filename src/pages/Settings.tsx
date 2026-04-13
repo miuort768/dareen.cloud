@@ -77,7 +77,6 @@ const Settings = () => {
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAcademyLogo, setLocalAcademyLogo] = useState(academyLogo);
     const [localAcademyTagline, setLocalAcademyTagline] = useState(academyTagline);
-    const [localAcademyAddress, setLocalAcademyAddress] = useState(academyAddress);
     const [localAdminPhone, setLocalAdminPhone] = useState(adminPhone);
     const [localSemesterName, setLocalSemesterName] = useState(semesterName);
     const [localSemesters, setLocalSemesters] = useState(semesters);
@@ -127,7 +126,6 @@ const Settings = () => {
                 setAcademyName(localAcademyName),
                 setAcademyLogo(localAcademyLogo),
                 setAcademyTagline(localAcademyTagline),
-                setAcademyAddress(localAcademyAddress),
                 setAdminPhone(localAdminPhone),
                 setSemesterName(localSemesterName),
                 setTelegramHandle(localTelegramHandle),
