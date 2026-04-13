@@ -680,78 +680,89 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'advanced' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
-                            <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-green-600"><Monitor size={24}/> أتمتة الواتساب والرسائل</h2>
-                            <div className="p-6 bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/20 flex items-center justify-between mb-4">
-                                <div><p className="font-black uppercase text-sm">ارسال الفواتير تلقائياً</p><p className="text-[10px] opacity-60">ارسال اشعار فوري لولي الأمر فور تسجيل الحصة</p></div>
-                                <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-12 h-6 rounded-full relative transition-colors", whatsappAutoNotify ? "bg-green-500" : "bg-gray-300")}>
-                                    <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", whatsappAutoNotify ? "translate-x-6" : "translate-x-1")} />
-                                </button>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {/* WhatsApp Automation Core */}
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(34,197,94,0.1)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
+                                    <Monitor size={28} className="text-green-600" />
+                                    أتمتة الواتساب والرسائل
+                                </h2>
+                                <span className="hidden md:block text-[10px] font-black text-green-600 bg-green-50 dark:bg-green-900/20 px-3 py-1 border-2 border-green-500 uppercase italic">Automation Engine</span>
                             </div>
-                            
-                            <div>
-                                <label className="block text-xs font-black mb-2 opacity-60">قالب رسالة الحضور (WhatsApp Template)</label>
-                                <textarea 
-                                    value={localWhatsappTemplate} 
-                                    onChange={e => setLocalWhatsappTemplate(e.target.value)}
-                                    className="w-full bg-gray-50 dark:bg-gray-800 p-4 font-bold border-2 border-transparent focus:border-green-500 outline-none min-h-[100px] text-sm"
-                                    placeholder="مثال: تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}"
-                                />
-                                <div className="mt-2 flex flex-wrap gap-2">
-                                    {['{Student}', '{Subject}', '{Date}', '{Teacher}', '{Price}'].map(tag => (
-                                        <button 
-                                            key={tag}
-                                            onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
-                                            className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-black border border-gray-200 dark:border-gray-700 hover:bg-green-50 hover:border-green-200 transition-all"
-                                        >
-                                            + {tag}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                            <button onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ قالب الرسالة'))} className="w-full py-3 bg-green-600 text-white font-black uppercase text-xs">حفظ قالب الرسالة</button>
-                        </section>
 
-                        <section className="bg-white dark:bg-gray-900 p-8 border dark:border-gray-800 shadow-sm space-y-6">
-                            <h2 className="font-black text-xl mb-4 flex items-center gap-3 uppercase text-blue-600"><Calendar size={24}/> إدارة الأرشيف والفصول</h2>
-                            
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-xs font-black mb-2 opacity-60">الفصل الدراسي الحالي (نشط)</label>
-                                    <div className="flex gap-2">
-                                        <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="flex-1 bg-gray-50 dark:bg-gray-800 p-3 font-bold outline-none" />
-                                        <button onClick={() => setSemesterName(localSemesterName).then(() => showNotify('تم تحديث الفصل النشط'))} className="bg-blue-600 text-white px-4 font-black text-xs">تحديث</button>
+                            <div className="space-y-6">
+                                <div className="p-5 bg-green-50 dark:bg-green-900/10 border-4 border-gray-950 flex items-center justify-between group">
+                                    <div>
+                                        <p className="font-black text-sm text-green-900 dark:text-green-100 italic">إرسال الفواتير تلقائياً</p>
+                                        <p className="text-[10px] font-bold text-green-600/70 uppercase">Automatic Notifications</p>
                                     </div>
+                                    <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-14 h-7 rounded-full relative transition-all duration-300 border-2 border-gray-950", whatsappAutoNotify ? "bg-green-500" : "bg-gray-300 dark:bg-gray-800")}>
+                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full transition-all shadow-md", whatsappAutoNotify ? "translate-x-7" : "translate-x-0.5")} />
+                                    </button>
                                 </div>
-
-                                <div>
-                                    <label className="block text-xs font-black mb-2 opacity-60">أرشيف الفصول السابقة (مفصولة بفاصلة)</label>
+                                
+                                <div className="space-y-4">
+                                    <label className="flex items-center gap-2 text-[11px] font-black uppercase opacity-70 italic tracking-widest">
+                                        <Edit size={14} /> قالب رسالة الحضور
+                                    </label>
                                     <textarea 
-                                        value={localSemesters} 
-                                        onChange={e => setLocalSemesters(e.target.value)}
-                                        className="w-full bg-gray-50 dark:bg-gray-800 p-4 font-bold border-none outline-none min-h-[80px] text-sm"
+                                        value={localWhatsappTemplate} 
+                                        onChange={e => setLocalWhatsappTemplate(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-bold outline-none focus:border-green-500 transition-all min-h-[120px] text-sm leading-relaxed"
+                                        placeholder="اكتب رسالتك هنا..."
                                     />
+                                    <div className="flex flex-wrap gap-2">
+                                        {['{Student}', '{Subject}', '{Date}', '{Teacher}', '{Price}'].map(tag => (
+                                            <button 
+                                                key={tag}
+                                                onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
+                                                className="px-3 py-1.5 bg-white dark:bg-gray-800 border-2 border-gray-950 text-[10px] font-black hover:bg-green-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                            >
+                                                + {tag}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                                 
                                 <button 
-                                    onClick={() => setSemesters(localSemesters).then(() => showNotify('تم تحديث الأرشيف'))}
-                                    className="w-full py-3 border-2 border-blue-600 text-blue-600 font-black hover:bg-blue-600 hover:text-white transition-all text-xs"
+                                    onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))} 
+                                    className="w-full py-4 bg-green-600 hover:bg-green-700 text-white font-black uppercase tracking-widest transition-all shadow-[6px_6px_0px_0px_black] active:translate-x-1 active:translate-y-1 active:shadow-none"
                                 >
-                                    حفظ سجل الأرشيف
+                                    حفظ وتفعيل القالب
                                 </button>
                             </div>
+                        </section>
 
-                            <div className="pt-6 border-t dark:border-gray-800">
-                                <h3 className="font-black text-xs text-red-600 dark:text-red-500 mb-4 uppercase flex items-center gap-2"><AlertCircle size={14}/> منطقة الخطر</h3>
+                        {/* Archives & Semester Manager */}
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-10">
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4">
+                                    <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
+                                        <Calendar size={24} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-black uppercase tracking-tighter">إدارة الفصول والأرشيف</h2>
+                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 italic">Academic Ledger</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-3 font-black outline-none focus:border-blue-600" placeholder="الفصل الحالي" />
+                                    <textarea value={localSemesters} onChange={e => setLocalSemesters(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-bold outline-none h-24 resize-none italic" placeholder="الأرشيف التاريخي" />
+                                    <button onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))} className="w-full py-3 bg-blue-600 text-white font-black uppercase text-xs shadow-[4px_4px_0px_0px_black]">مزامنة الفصول الدراسية</button>
+                                </div>
+                            </div>
+
+                            {/* Danger Zone */}
+                            <div className="pt-8 border-t-8 border-gray-950/5 text-center">
                                 <button onClick={() => setSecureAction({
                                     type: 'reset',
                                     title: 'تصفير النظام بالكامل',
                                     description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب المعلمين الإيرادات والمصروفات بالكامل لبدء دورة جديدة تماماً للمنصة. هذا الإجراء نهائي ولا يمكن التراجع عنه بأي شكل.',
                                     confirmWord: 'إعادة ضبط المنصة',
                                     actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
-                                })} className="w-full py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-900/50 font-black hover:bg-red-600 hover:text-white dark:hover:bg-red-600 transition-all text-xs rounded-xl shadow-sm">
-                                    تصفير البرنامج بالكامل (System Reset)
+                                })} className="w-full py-4 bg-red-50 text-red-600 border-4 border-red-600 border-dashed font-black hover:bg-red-600 hover:text-white transition-all text-xs rounded-xl">
+                                    إعادة ضبط المصنع (Factory Reset)
                                 </button>
                             </div>
                         </section>
