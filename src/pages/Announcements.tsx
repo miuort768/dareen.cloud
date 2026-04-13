@@ -200,11 +200,12 @@ export const Announcements = () => {
                         <div 
                             key={ann.id} 
                             className={cn(
-                                "group bg-white dark:bg-gray-900 border-4 border-gray-950 p-6 transition-all hover:-translate-y-1 relative flex flex-col min-h-[280px]",
-                                styles.shadow.replace('8px_8px', '6px_6px'),
+                                "group bg-white dark:bg-gray-900 border-4 border-gray-950 p-4 transition-all hover:-translate-y-1 relative flex flex-col",
+                                styles.shadow.replace('8px_8px', '4px_4px'),
                                 !ann.isActive && "opacity-60 grayscale border-dashed"
                             )}
                         >
+
                             {/* Type Badge - Smaller */}
                             <div className={cn("absolute -top-3.5 right-4 px-3 py-1 border-2 border-gray-950 font-black text-[8px] uppercase tracking-widest z-10 shadow-[2px_2px_0px_0px_black]", styles.bg, styles.color)}>
                                 {styles.label}
