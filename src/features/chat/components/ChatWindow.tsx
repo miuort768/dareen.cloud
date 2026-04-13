@@ -168,7 +168,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         {typingInThisConv.length > 0 ? (
                             <span className="text-[12px] text-[#00a884] font-normal">جاري الكتابة...</span>
                         ) : (
-                            <span className="text-[12px] text-[#667781] dark:text-[#8696a0] font-normal">آخر ظهور اليوم</span>
+                            <span className="text-[12px] text-[#00a884] font-normal">
+                                {selectedConv.isGroup ? "نشط الآن" : "متصل الآن"}
+                            </span>
                         )}
                     </div>
                 </div>
@@ -255,7 +257,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
                                         {format(new Date(msg.timestamp), 'h:mm a', { locale: ar })}
                                     </span>
-                                    {isMe && <CheckCheck size={14} className="text-[#53bdeb]" />}
+                                    {isMe && (
+                                        <div className="flex">
+                                            {new Date().getTime() - new Date(msg.timestamp).getTime() > 10000 ? (
+                                                <CheckCheck size={14} className="text-[#53bdeb]" />
+                                            ) : new Date().getTime() - new Date(msg.timestamp).getTime() > 3000 ? (
+                                                <CheckCheck size={14} className="text-[#8696a0]" />
+                                            ) : (
+                                                <CheckCheck size={14} className="text-[#8696a0] opacity-50" />
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
