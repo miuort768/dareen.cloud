@@ -597,82 +597,97 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'users' && (
-                    <div className="space-y-6">
-                        <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm rounded-xl">
-                            <h2 className="font-black text-lg mb-6 flex items-center gap-2 uppercase"><Users size={18} className="text-primary-600"/> إدارة مستخدمي النظام</h2>
-                            <div className="overflow-x-auto rounded-xl border dark:border-slate-800 shadow-inner">
-                                <table className="w-full text-right text-sm whitespace-nowrap">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black">
-                                        <tr>
-                                            <th className="p-4 border-b dark:border-slate-700">الاسم</th>
-                                            <th className="p-4 border-b dark:border-slate-700">اسم الدخول</th>
-                                            <th className="p-4 border-b dark:border-slate-700">الصلاحيات</th>
-                                            <th className="p-4 text-center border-b dark:border-slate-700">إجراءات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
-                                        {users.map(u => (
-                                            <tr key={u.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">
-                                                <td className="p-4 font-black">{u.name}</td>
-                                                <td className="p-4 font-mono font-bold text-slate-500 dark:text-slate-400">{u.username}</td>
-                                                <td className="p-4">
-                                                    <div className="flex flex-wrap gap-1">
-                                                        {u.permissions?.includes('*') 
-                                                            ? <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-md font-black text-[10px]">مسؤول شامل (Admin)</span> 
-                                                            : <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md font-black text-[10px]">{u.permissions?.length} صلاحيات محددة</span>}
-                                                    </div>
-                                                </td>
-                                                <td className="p-4">
-                                                    <div className="flex justify-center gap-3">
-                                                        <button onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }} className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-lg hover:scale-110 transition-transform"><Edit size={16}/></button>
-                                                        {u.id !== user.id && <button onClick={() => setShowDeleteModal(u)} className="p-2 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-lg hover:scale-110 transition-transform"><Trash2 size={16}/></button>}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {/* Users List */}
+                        <div className="xl:col-span-2 space-y-6">
+                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                                <h2 className="font-black text-2xl flex items-center gap-3 uppercase tracking-tighter">
+                                    <Users size={32} className="text-primary-600" />
+                                    الحسابات والمسؤولين
+                                </h2>
+                                <span className="text-[10px] font-black text-primary-600 bg-primary-50 px-3 py-1 border-2 border-primary-500 uppercase italic">Admin Registry</span>
                             </div>
-                        </section>
 
-                        <section className="bg-white dark:bg-gray-900 p-6 border dark:border-gray-800 shadow-sm max-w-2xl mx-auto">
-                            <h2 className="font-black text-lg mb-6 border-b pb-2 flex items-center gap-2 uppercase"><UserPlus size={18} className="text-primary-600"/> {editingUserId ? 'تعديل المستخدم' : 'إضافة مستخدم جديد'}</h2>
-                            <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <input placeholder="اسم الدخول" value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
-                                    <input type="password" placeholder={editingUserId ? "تغيير الرقم السري (اختياري)" : "الرقم السري"} value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="bg-gray-50 dark:bg-gray-800 p-3 font-bold border-none outline-none" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {users.map(u => (
+                                    <div key={u.id} className="bg-white dark:bg-gray-950 border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all group relative overflow-hidden">
+                                        <div className="flex justify-between items-start mb-6">
+                                            <div className="w-12 h-12 bg-gray-950 text-white flex items-center justify-center font-black text-xl border-4 border-primary-500">
+                                                {u.username[0].toUpperCase()}
+                                            </div>
+                                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button onClick={() => { setEditingUserId(u.id); setNewUser({username: u.username, password: '', permissions: u.permissions || []}); }} className="p-2 bg-blue-50 text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all"><Edit size={16}/></button>
+                                                {u.id !== user?.id && <button onClick={() => setShowDeleteModal(u)} className="p-2 bg-rose-50 text-rose-600 border-2 border-rose-600 hover:bg-rose-600 hover:text-white transition-all"><Trash2 size={16}/></button>}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="font-black text-xl tracking-tight uppercase truncate">{u.name || u.username}</p>
+                                            <p className="text-[10px] font-black text-gray-400 flex items-center gap-1 uppercase">
+                                                <Shield size={10} /> {u.permissions?.includes('*') ? 'Full System Admin' : `${u.permissions?.length || 0} Permissions`}
+                                            </p>
+                                        </div>
+                                        <div className="mt-4 flex flex-wrap gap-1.5 pt-4 border-t-2 border-dashed border-gray-100 dark:border-gray-800">
+                                            {u.permissions?.slice(0, 3).map(p => (
+                                                <span key={p} className="text-[8px] font-black bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 border border-gray-200 dark:border-gray-700 uppercase italic">{p}</span>
+                                            ))}
+                                            {(u.permissions?.length || 0) > 3 && <span className="text-[8px] font-black opacity-40">+{(u.permissions?.length || 0) - 3}</span>}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Add/Edit Section */}
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] h-fit sticky top-4">
+                            <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4 mb-8">
+                                <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-4 border-gray-950">
+                                    <UserPlus size={20} />
                                 </div>
-                                <div className="flex flex-wrap gap-2 mb-2">
-                                    <p className="text-[10px] font-black uppercase opacity-60 w-full mb-1">قوالب صلاحيات جاهزة</p>
-                                    {[
-                                        { label: 'مدير نظام', perms: ['*'] },
-                                        { label: 'محاسب', perms: ['view_finance', 'manage_finance'] },
-                                        { label: 'مشرف تربوي', perms: ['view_students', 'manage_students', 'view_teachers'] },
-                                        { label: 'موظف استقبال', perms: ['view_students', 'manage_students'] },
-                                    ].map(role => (
-                                        <button 
-                                            key={role.label}
-                                            onClick={() => setNewUser({...newUser, permissions: role.perms})}
-                                            className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-bold border border-gray-200 dark:border-gray-700 hover:bg-primary-50 hover:border-primary-200 transition-all"
-                                        >
-                                            {role.label}
-                                        </button>
-                                    ))}
+                                <h2 className="text-xl font-black uppercase tracking-tighter">{editingUserId ? 'تعديل المسؤول' : 'إضافة حساب جديد'}</h2>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black uppercase opacity-50">اسم الدخول</label>
+                                        <input value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-black outline-none focus:border-primary-600 transition-all text-sm" placeholder="ADMIN_USERNAME" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black uppercase opacity-50">الرقم السري</label>
+                                        <input type="password" value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-black outline-none focus:border-primary-600 transition-all text-sm" placeholder="********" />
+                                    </div>
                                 </div>
-                                <p className="text-[10px] font-black uppercase opacity-60">تخصيص الصلاحيات يدوياً</p>
-                                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-                                    {AVAILABLE_PERMISSIONS.map(p => (
-                                        <button key={p.id} onClick={() => {
-                                            const perms = newUser.permissions.includes(p.id) ? newUser.permissions.filter(x => x !== p.id) : [...newUser.permissions, p.id];
-                                            setNewUser({...newUser, permissions: perms});
-                                        }} className={cn("p-2 text-[10px] font-black border transition-all text-right", newUser.permissions.includes(p.id) ? "bg-primary-600 text-white border-primary-600" : "bg-gray-50 border-gray-100 text-gray-400")}>
-                                            {p.label}
-                                        </button>
-                                    ))}
+
+                                <div className="space-y-4 pt-4 border-t-2 border-gray-950">
+                                    <p className="text-[10px] font-black uppercase opacity-60 flex items-center gap-2 italic">قوالب صلاحيات سريعة</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {[
+                                            { label: 'مدير نظام', perms: ['*'] },
+                                            { label: 'محاسب', perms: ['view_finance', 'manage_finance'] },
+                                            { label: 'مشرف تربوي', perms: ['view_students', 'manage_students', 'view_teachers'] },
+                                        ].map(role => (
+                                            <button key={role.label} onClick={() => setNewUser({...newUser, permissions: role.perms})} className="px-2 py-1 bg-white dark:bg-gray-800 text-[9px] font-black border-2 border-gray-950 hover:bg-primary-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none">{role.label}</button>
+                                        ))}
+                                    </div>
+                                    
+                                    <p className="text-[10px] font-black uppercase opacity-60 italic mt-6">تخصيص الصلاحيات يدوياً</p>
+                                    <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto p-2 border-2 border-gray-100 dark:border-gray-800">
+                                        {AVAILABLE_PERMISSIONS.map(p => (
+                                            <button key={p.id} onClick={() => {
+                                                const perms = newUser.permissions.includes(p.id) ? newUser.permissions.filter(x => x !== p.id) : [...newUser.permissions, p.id];
+                                                setNewUser({...newUser, permissions: perms});
+                                            }} className={cn("p-2 text-[8px] font-black border-2 transition-all text-right uppercase", newUser.permissions.includes(p.id) ? "bg-primary-600 text-white border-gray-950" : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400")}>
+                                                {p.label}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="flex gap-2">
-                                    <button onClick={handleUserAction} className="flex-1 py-4 bg-primary-600 text-white font-black uppercase tracking-widest text-[11px] shadow-lg shadow-primary-500/20">{editingUserId ? 'تحديث البيانات' : 'إنشاء الحساب'}</button>
-                                    {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="px-6 bg-gray-100 font-bold uppercase text-[11px]">إلغاء</button>}
+
+                                <div className="flex flex-col gap-3 pt-4">
+                                    <button onClick={handleUserAction} className="w-full py-5 bg-primary-600 text-white font-black uppercase tracking-[0.2em] text-xs shadow-[8px_8px_0px_0px_black] hover:bg-black transition-all active:translate-x-1 active:translate-y-1 active:shadow-none">
+                                        {editingUserId ? 'Update Administrator' : 'Create System Account'}
+                                    </button>
+                                    {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="w-full py-3 bg-gray-100 dark:bg-gray-800 font-bold uppercase text-[10px] italic border-2 border-gray-950 text-gray-600">Cancel Edit</button>}
                                 </div>
                             </div>
                         </section>
@@ -905,32 +920,76 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'audit' && (
-                    <section className="bg-white dark:bg-gray-900 p-8 border border-gray-100 dark:border-gray-800 shadow-sm rounded-xl overflow-hidden">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b dark:border-slate-800/80">
-                             <h2 className="text-xl font-black flex items-center gap-3 uppercase"><Activity size={24} className="text-primary-600"/> الرقابة: سجل النشاط والعمليات</h2>
-                             <button onClick={fetchLogs} className="p-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg transition-colors shadow-sm"><RefreshCw size={20}/></button>
-                        </div>
-                        <div className="overflow-x-auto rounded-xl border border-gray-100 dark:border-slate-800 shadow-inner">
-                            <table className="w-full text-right whitespace-nowrap">
-                                <thead className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 uppercase text-[10px] font-black tracking-widest">
-                                    <tr>
-                                        <th className="p-4 border-b dark:border-slate-700">التوقيت (التاريخ والساعة)</th>
-                                        <th className="p-4 border-b dark:border-slate-700">الموظف/المسؤول</th>
-                                        <th className="p-4 border-b dark:border-slate-700">الإجراء المُنفذ</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100 dark:divide-slate-800/80">
-                                    {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
-                                        <tr key={idx} className="bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors">
-                                            <td className="p-4 font-mono text-slate-500 dark:text-slate-400" dir="ltr">{new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}</td>
-                                            <td className="p-4 flex items-center gap-2"><Users size={14} className="text-slate-400" /> {log.username}</td>
-                                            <td className="p-4"><span className="px-3 py-1.5 bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-800/50 rounded-md font-black text-xs">{log.action}</span></td>
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <section className="bg-white dark:bg-gray-950 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                            <div className="flex items-center justify-between p-6 bg-gray-950 text-white border-b-4 border-gray-950">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-primary-600 flex items-center justify-center border-2 border-white shadow-[2px_2px_0px_0px_white]">
+                                        <Activity size={24} />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-black uppercase tracking-tighter italic">Digital Audit Control</h2>
+                                        <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest italic leading-none">Global Activity Audit Log</p>
+                                    </div>
+                                </div>
+                                <button 
+                                    onClick={fetchLogs} 
+                                    className="p-3 bg-white/10 hover:bg-primary-600 text-white border-2 border-white/20 transition-all flex items-center gap-2 font-black text-[10px] uppercase shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1"
+                                >
+                                    <RefreshCw size={18} />
+                                    Refresh Buffer
+                                </button>
+                            </div>
+
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-right border-collapse">
+                                    <thead className="bg-gray-50 dark:bg-gray-900 border-b-4 border-gray-950">
+                                        <tr className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] italic">
+                                            <th className="p-5 border-l-2 border-gray-100 dark:border-gray-800">توقيت العملية (Log Time)</th>
+                                            <th className="p-5 border-l-2 border-gray-100 dark:border-gray-800">المسؤول المنفذ (Identity)</th>
+                                            <th className="p-5">طبيعة الإجراء البرمجي (Action)</th>
                                         </tr>
-                                    )) : <tr><td colSpan={3} className="p-20 text-center text-slate-400 dark:text-slate-500 font-black">لا يوجد سجلات حالياً للعمليات المراقبة</td></tr>}
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
+                                    </thead>
+                                    <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
+                                        {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
+                                            <tr key={idx} className="group hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-colors">
+                                                <td className="p-5 font-mono text-[11px] font-black text-gray-400 dark:text-gray-500 border-l-2 border-gray-100 dark:border-gray-800" dir="ltr">
+                                                    {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
+                                                </td>
+                                                <td className="p-5 font-black text-sm uppercase italic">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[10px] border-2 border-gray-950 group-hover:bg-primary-600 group-hover:text-white transition-all shadow-sm">
+                                                            {log.username?.[0]?.toUpperCase() || 'A'}
+                                                        </div>
+                                                        <span className="tracking-tighter">{log.username}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="p-5">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-2 h-2 rounded-full bg-primary-600 animate-pulse"></div>
+                                                        <span className="font-bold text-xs uppercase tracking-tight text-slate-700 dark:text-slate-300">
+                                                            {log.action}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )) : (
+                                            <tr>
+                                                <td colSpan={3} className="p-20 text-center font-black text-gray-300 uppercase italic tracking-widest">
+                                                    No activity recorded in the current buffer.
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div className="p-4 bg-gray-50 dark:bg-gray-900 border-t-4 border-gray-950 flex justify-between items-center text-[9px] font-black text-gray-500 uppercase italic tracking-[0.2em]">
+                                <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></div> Monitor Status: Active</span>
+                                <span>End of Record Cache</span>
+                            </div>
+                        </section>
+                    </div>
                 )}
             </div>
 
