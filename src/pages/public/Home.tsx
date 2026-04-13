@@ -508,7 +508,7 @@ export const Home = () => {
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 <div className="relative flex items-center gap-2">
-                                    <span>احجز حصتك التجريبية الآن</span>
+                                    <span>احجز حصتك المجانية الآن</span>
                                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                                 </div>
                             </a>
