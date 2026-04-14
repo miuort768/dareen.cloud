@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Download, X, Smartphone, Zap, Bell, Monitor } from 'lucide-react';
+import { Download, X, Smartphone, Monitor } from 'lucide-react';
 
 export const InstallPWA = () => {
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
