@@ -53,10 +53,10 @@ export const Dashboard = () => {
     if (loading) {
         return (
             <div className="space-y-8 p-4 lg:p-8 bg-gray-50 dark:bg-gray-950 min-h-screen">
-                <div className="h-64 bg-gray-200 dark:bg-gray-800 border-4 border-gray-950 dark:border-gray-700"></div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="h-64 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-2xl border border-gray-100 dark:border-slate-800"></div>
+                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-6">
                     {[...Array(8)].map((_, i) => (
-                        <div key={i} className="h-40 bg-gray-200 dark:bg-gray-800 border-4 border-gray-950 dark:border-gray-700"></div>
+                        <div key={i} className="h-24 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-2xl border border-gray-100 dark:border-slate-800"></div>
                     ))}
                 </div>
             </div>
@@ -262,7 +262,7 @@ export const Dashboard = () => {
                         />
                         <button 
                             onClick={() => setSelectedStudentForReport(null)}
-                            className="mt-6 w-full py-4 bg-white text-gray-950 border-4 border-gray-950 font-black text-xs uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                            className="mt-6 w-full py-4 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-100 dark:border-slate-700 font-bold text-xs uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all shadow-sm rounded-xl"
                         >
                             إغلاق المعاينة
                         </button>

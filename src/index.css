@@ -18,7 +18,7 @@
     --bg-surface: 243 244 246; /* Gray-100 for lighter base */
     --bg-card: 255 255 255;
     --border-main: 226 232 240; /* slate-200 */
-    --border-accent: 15 23 42; /* sharp black border */
+    --border-accent: 226 232 240; /* soft slate border */
   }
 
   /* Premium Dark Mode for Public & Private Pages */
@@ -430,15 +430,15 @@
 
   /* --- Sharp Premium Design System --- */
   .sharp-card {
-    @apply bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-none transition-none;
+    @apply bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl shadow-sm transition-all;
   }
 
   .sharp-card-primary {
-    @apply bg-white dark:bg-slate-900 border-2 border-primary-600 dark:border-teal-400 rounded-none shadow-[4px_4px_0px_0px_rgba(var(--color-primary),0.2)] dark:shadow-[0_0_15px_-5px_rgba(20,184,166,0.3)] transition-none;
+    @apply bg-white dark:bg-slate-900 border border-primary-100 dark:border-teal-900/30 rounded-2xl shadow-sm transition-all;
   }
 
   .sharp-btn {
-    @apply rounded-none transition-none transform-none active:scale-100;
+    @apply rounded-xl transition-all active:scale-95;
   }
 
   /* Disable transitions for sharp design if requested */

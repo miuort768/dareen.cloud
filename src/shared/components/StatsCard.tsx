@@ -24,37 +24,31 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-4 md:p-6 bg-white dark:bg-gray-950 border-2 border-gray-950 dark:border-gray-800 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] transition-transform hover:-translate-y-1 rounded-none overflow-hidden",
+            "relative p-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 rounded-2xl overflow-hidden",
             className
         )}>
-            {/* Background Accent Lines */}
-            <div className="absolute top-0 right-0 w-8 h-8 bg-gray-950/5 -mr-4 -mt-4 rotate-45 pointer-events-none"></div>
-
-            <div className="relative flex flex-col md:items-center md:justify-center text-right md:text-center z-10 gap-4">
-                {/* Icon Circle */}
+            <div className="relative flex items-center gap-3 z-10">
+                {/* Compact Icon */}
                 <div className={cn(
-                    "w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border-2 border-gray-950 dark:border-gray-700 shadow-none rounded-none mx-0 md:mx-auto",
+                    "w-9 h-9 shrink-0 flex items-center justify-center rounded-xl",
                     colorStyles[color]
                 )}>
-                    <Icon className="w-6 h-6 md:w-8 md:h-8" />
+                    <Icon className="w-4 h-4" />
                 </div>
 
                 {/* Content */}
-                <div className="w-full min-w-0">
-                    <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">{title}</p>
-                    <h3 className="text-xl md:text-3xl font-black text-gray-950 dark:text-white tracking-tighter tabular-nums mb-2 truncate">
+                <div className="min-w-0 flex-1">
+                    <p className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-tighter leading-none mb-1 truncate">{title}</p>
+                    <h3 className="text-sm font-black text-gray-900 dark:text-white tracking-tight tabular-nums leading-none truncate">
                         {value}
                     </h3>
-
                     {trend && (
-                        <div className={cn(
-                            "inline-flex items-center gap-1.5 px-3 py-1 border-2 border-gray-950 rounded-none text-[9px] font-black uppercase tracking-widest",
-                            trendUp
-                                ? "bg-emerald-500 text-white"
-                                : "bg-rose-500 text-white"
+                        <p className={cn(
+                            "text-[8px] font-bold mt-1 leading-none",
+                            trendUp ? "text-emerald-500" : "text-rose-500"
                         )}>
                             {trend}
-                        </div>
+                        </p>
                     )}
                 </div>
             </div>
