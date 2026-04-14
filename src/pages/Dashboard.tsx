@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Megaphone } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
@@ -16,13 +15,8 @@ import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDa
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
 import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
-import { TeacherLeaderboard } from '../features/dashboard/components/TeacherLeaderboard';
-import { TeacherFocusList } from '../features/dashboard/components/TeacherFocusList';
-import { TeacherWeeklySummary } from '../features/dashboard/components/TeacherWeeklySummary';
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
-import { TeacherSalaryPreview } from '../features/dashboard/components/TeacherSalaryPreview';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
-import { TeacherRewardsKPIs } from '../features/dashboard/components/TeacherRewardsKPIs';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 
 export const Dashboard = () => {
@@ -36,9 +30,7 @@ export const Dashboard = () => {
         loading,
         rawStudents,
         rawSessions,
-        rawStudentInvoices,
-        topStudents,
-        focusStudents
+        rawStudentInvoices
     } = useDashboardData(currentUser);
 
     const [briefingStudent, setBriefingStudent] = useState<any | null>(null);
@@ -156,7 +148,6 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-            )}v>
             )}
 
             {/* Suggestion 2: Quick Brief Modal */}
