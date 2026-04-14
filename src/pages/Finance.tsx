@@ -31,23 +31,23 @@ export const Finance = () => {
     return (
         <div className="space-y-8 pb-40">
             {/* Premium Brutalist Header */}
-            <div className="relative bg-white border-4 border-gray-950 p-8 shadow-[12px_12px_0px_0px_black] overflow-hidden mb-8 rounded-none">
+            <div className="relative bg-white border-2 border-gray-950 p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-6 rounded-none">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
                 <div className="absolute top-0 right-0 w-48 h-full bg-primary-600/5 -skew-x-12 transform translate-x-24 pointer-events-none"></div>
 
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8 px-2 border-b-4 border-gray-950 pb-8">
-                    <div className="flex items-center gap-6">
-                        <div className="w-20 h-20 bg-primary-600 text-white border-4 border-gray-950 flex items-center justify-center transform -rotate-3 shadow-[6px_6px_0px_0px_black] relative">
-                             <div className="absolute -top-2 -right-2 w-6 h-6 bg-amber-400 border-2 border-gray-950"></div>
-                            <DollarSign size={40} strokeWidth={3} />
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 px-2 border-b-2 border-gray-950 pb-6">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-primary-600 text-white border-2 border-gray-950 flex items-center justify-center transform -rotate-3 shadow-[2px_2px_0px_0px_black] relative">
+                             <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-amber-400 border-2 border-gray-950"></div>
+                            <DollarSign size={24} strokeWidth={3} />
                         </div>
                         <div>
                             <div className="flex items-center gap-2 mb-2">
                                 <Sparkles size={14} className="text-amber-500" />
                                 <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em] italic">نظام الرقابة المالية المتكامل</span>
                             </div>
-                            <h1 className="text-2xl md:text-5xl font-black text-gray-950 tracking-tighter uppercase leading-none">الإدارة المالية والحسابات</h1>
+                            <h1 className="text-xl md:text-3xl font-black text-gray-950 tracking-tighter uppercase leading-none">الإدارة المالية والحسابات</h1>
                             <div className="mt-4 flex flex-wrap gap-3">
                                 <div className="bg-gray-950 text-white px-4 py-1.5 text-[11px] font-black uppercase tracking-widest border-2 border-gray-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)]">
                                     هامش الربح: {state.profitMargin}%
@@ -59,26 +59,26 @@ export const Finance = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-wrap lg:flex-nowrap items-center gap-4 no-print">
+                    <div className="flex flex-wrap lg:flex-nowrap items-center gap-3 no-print">
                         <button
                             onClick={() => navigate('/monthly-closing')}
-                            className="group flex items-center justify-center gap-3 px-6 py-4 bg-gray-950 text-white font-black text-sm border-4 border-gray-950 shadow-[6px_6px_0px_0px_#444] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all h-14 uppercase tracking-widest"
+                            className="group flex items-center justify-center gap-2 px-4 py-2 bg-gray-950 text-white font-black text-xs border-2 border-gray-950 shadow-[2px_2px_0px_0px_#444] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all h-10 uppercase tracking-widest"
                         >
-                            <CalendarCheck size={20} /> تقفيل وتسويات الشهر
+                            <CalendarCheck size={16} /> تقفيل وتسويات الشهر
                         </button>
                         
                         <button
                             onClick={() => actions.setShowAddModal(true)}
-                            className="flex items-center justify-center gap-3 px-6 py-4 bg-primary-600 text-white font-black text-sm border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all h-14 uppercase tracking-widest"
+                            className="flex items-center justify-center gap-2 px-4 py-2 bg-primary-600 text-white font-black text-xs border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all h-10 uppercase tracking-widest"
                         >
-                            <TrendingUp size={20} /> تسجيل معاملة مالية
+                            <TrendingUp size={16} /> تسجيل معاملة مالية
                         </button>
 
                         <button
                             onClick={() => alert('ميزة التصدير ستكون متاحة قريباً')}
-                            className="p-4 bg-white text-gray-950 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 transition-all h-14 flex items-center justify-center"
+                            className="px-4 py-2 bg-white text-gray-950 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] hover:bg-gray-50 transition-all h-10 flex items-center justify-center"
                         >
-                            <Download size={22} />
+                            <Download size={18} />
                         </button>
                     </div>
                 </div>
@@ -86,13 +86,13 @@ export const Finance = () => {
                 {/* Heavy Brutalist Stats inside Header */}
                 <div className="relative z-10 mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Income */}
-                    <div className="bg-emerald-50 border-4 border-gray-950 p-6 flex flex-col justify-between group hover:bg-emerald-100 transition-colors shadow-[6px_6px_0px_0px_black] relative overflow-hidden">
+                    <div className="bg-emerald-50 border-2 border-gray-950 p-4 flex flex-col justify-between group hover:bg-emerald-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
                         <div className="absolute top-2 left-2 text-emerald-200">
-                             <ArrowUpRight size={40} strokeWidth={4} />
+                             <ArrowUpRight size={32} strokeWidth={4} />
                         </div>
-                        <p className="text-emerald-700 text-xs font-black uppercase mb-4 tracking-widest border-b-2 border-emerald-200 pb-2 italic">إجمالي التدفقات الواردة</p>
+                        <p className="text-emerald-700 text-[10px] font-black uppercase mb-3 tracking-widest border-b-2 border-emerald-200 pb-2 italic">إجمالي التدفقات الواردة</p>
                         <div className="flex items-end gap-2">
-                             <p className="text-gray-950 text-3xl md:text-4xl font-black tabular-nums tracking-tighter leading-none">{state.totalIncome.toLocaleString()}</p>
+                             <p className="text-gray-950 text-2xl md:text-3xl font-black tabular-nums tracking-tighter leading-none">{state.totalIncome.toLocaleString()}</p>
                              <span className="text-xs font-black text-gray-500 mb-1 italic">ج.م</span>
                         </div>
                         <div className="mt-4 flex items-center gap-2 bg-white/50 border-t-2 border-emerald-200 pt-2">
@@ -101,13 +101,13 @@ export const Finance = () => {
                     </div>
 
                     {/* Teacher Expenses */}
-                    <div className="bg-rose-50 border-4 border-gray-950 p-6 flex flex-col justify-between group hover:bg-rose-100 transition-colors shadow-[6px_6px_0px_0px_black] relative overflow-hidden">
+                    <div className="bg-rose-50 border-2 border-gray-950 p-4 flex flex-col justify-between group hover:bg-rose-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
                         <div className="absolute top-2 left-2 text-rose-200">
-                             <ArrowDownRight size={40} strokeWidth={4} />
+                             <ArrowDownRight size={32} strokeWidth={4} />
                         </div>
-                        <p className="text-rose-700 text-xs font-black uppercase mb-4 tracking-widest border-b-2 border-rose-200 pb-2 italic">مستحقات المعلمات</p>
+                        <p className="text-rose-700 text-[10px] font-black uppercase mb-3 tracking-widest border-b-2 border-rose-200 pb-2 italic">مستحقات المعلمات</p>
                         <div className="flex items-end gap-2">
-                             <p className="text-gray-950 text-3xl md:text-4xl font-black tabular-nums tracking-tighter leading-none">{state.totalExpenses.toLocaleString()}</p>
+                             <p className="text-gray-950 text-2xl md:text-3xl font-black tabular-nums tracking-tighter leading-none">{state.totalExpenses.toLocaleString()}</p>
                              <span className="text-xs font-black text-gray-500 mb-1 italic">ج.م</span>
                         </div>
                         <div className="mt-4 flex items-center gap-2 bg-white/50 border-t-2 border-rose-200 pt-2">
@@ -116,13 +116,13 @@ export const Finance = () => {
                     </div>
 
                     {/* Fixed Expenses */}
-                    <div className="bg-amber-50 border-4 border-gray-950 p-6 flex flex-col justify-between group hover:bg-amber-100 transition-colors shadow-[6px_6px_0px_0px_black] relative overflow-hidden">
+                    <div className="bg-amber-50 border-2 border-gray-950 p-4 flex flex-col justify-between group hover:bg-amber-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
                         <div className="absolute top-2 left-2 text-amber-200">
-                             <DollarSign size={40} strokeWidth={4} />
+                             <DollarSign size={32} strokeWidth={4} />
                         </div>
-                        <p className="text-amber-700 text-xs font-black uppercase mb-4 tracking-widest border-b-2 border-amber-200 pb-2 italic">مصروفات الإدارة والتشغيل</p>
+                        <p className="text-amber-700 text-[10px] font-black uppercase mb-3 tracking-widest border-b-2 border-amber-200 pb-2 italic">مصروفات الإدارة والتشغيل</p>
                         <div className="flex items-end gap-2">
-                             <p className="text-gray-950 text-3xl md:text-4xl font-black tabular-nums tracking-tighter leading-none">{state.totalFixedExpenses.toLocaleString()}</p>
+                             <p className="text-gray-950 text-2xl md:text-3xl font-black tabular-nums tracking-tighter leading-none">{state.totalFixedExpenses.toLocaleString()}</p>
                              <span className="text-xs font-black text-gray-500 mb-1 italic">ج.م</span>
                         </div>
                         <div className="mt-4 flex items-center gap-2 bg-white/50 border-t-2 border-amber-200 pt-2">
@@ -131,14 +131,14 @@ export const Finance = () => {
                     </div>
 
                     {/* Net Profit */}
-                    <div className="bg-gray-950 border-4 border-gray-950 p-6 flex flex-col justify-between group shadow-[6px_6px_0px_0px_black] relative overflow-hidden">
+                    <div className="bg-gray-950 border-2 border-gray-950 p-4 flex flex-col justify-between group shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
                         <div className="absolute top-2 left-2 text-white/10">
-                             <TrendingUp size={40} strokeWidth={4} />
+                             <TrendingUp size={32} strokeWidth={4} />
                         </div>
-                        <p className="text-emerald-400 text-xs font-black uppercase mb-4 tracking-widest border-b-2 border-white/10 pb-2 italic">صافي الأرباح الصافية</p>
+                        <p className="text-emerald-400 text-[10px] font-black uppercase mb-3 tracking-widest border-b-2 border-white/10 pb-2 italic">صافي الأرباح الصافية</p>
                         <div className="flex items-end gap-2">
-                             <p className="text-white text-3xl md:text-5xl font-black tabular-nums tracking-tighter leading-none italic">{state.netProfit.toLocaleString()}</p>
-                             <span className="text-xs font-black text-emerald-400/60 mb-1 uppercase">LE</span>
+                             <p className="text-white text-2xl md:text-4xl font-black tabular-nums tracking-tighter leading-none italic">{state.netProfit.toLocaleString()}</p>
+                             <span className="text-[10px] font-black text-emerald-400/60 mb-1 uppercase">LE</span>
                         </div>
                         <div className="mt-4 flex items-center gap-2 border-t-2 border-white/10 pt-2">
                             <span className="text-[11px] font-black text-emerald-400 uppercase tracking-widest leading-none">أداء ممتاز للشهر الحالي</span>
@@ -163,36 +163,36 @@ export const Finance = () => {
             />
 
             {/* Premium Brutalist Filters */}
-            <div className="bg-white border-4 border-gray-950 p-8 shadow-[8px_8px_0px_0px_black] mb-8">
-                 <div className="flex items-center gap-3 mb-6 border-b-4 border-gray-950 pb-4">
-                    <div className="w-10 h-10 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                        <Search size={20} />
+            <div className="bg-white border-2 border-gray-950 p-6 shadow-[2px_2px_0px_0px_black] mb-6">
+                 <div className="flex items-center gap-3 mb-4 border-b-2 border-gray-950 pb-3">
+                    <div className="w-8 h-8 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
+                        <Search size={16} />
                     </div>
-                    <h3 className="text-xl font-black text-gray-950 uppercase tracking-tighter italic">فلترة وتعقب المعاملات</h3>
+                    <h3 className="text-lg font-black text-gray-950 uppercase tracking-tighter italic">فلترة وتعقب المعاملات</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Search */}
                     <div className="relative group">
                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2 px-1 italic">كلمة البحث</label>
-                        <Search className="absolute right-4 top-[46px] text-gray-950 w-5 h-5 pointer-events-none" />
+                        <Search className="absolute right-3 top-[34px] text-gray-950 w-4 h-4 pointer-events-none" />
                         <input
                             type="text"
                             placeholder="ابحث في المعاملات..."
                             value={state.searchTerm}
                             onChange={(e) => actions.setSearchTerm(e.target.value)}
-                            className="w-full pl-6 pr-14 py-4 border-4 border-gray-950 focus:outline-none focus:bg-white text-base font-black rounded-none bg-gray-50 transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] uppercase tracking-tight"
+                            className="w-full pl-4 pr-10 py-2 border-2 border-gray-950 focus:outline-none focus:bg-white text-sm font-black rounded-none bg-gray-50 transition-all shadow-[inset_2px_2px_4px_rgba(0,0,0,0.05)] uppercase tracking-tight"
                         />
                     </div>
 
                     {/* Type Filter */}
                     <div className="relative">
                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2 px-1 italic">نوع العملية</label>
-                        <Filter className="absolute right-4 top-[46px] text-gray-950 w-5 h-5 pointer-events-none" />
+                        <Filter className="absolute right-3 top-[34px] text-gray-950 w-4 h-4 pointer-events-none" />
                         <select
                             value={state.filterType}
                             onChange={(e) => actions.setFilterType(e.target.value as 'all' | 'income' | 'expense')}
-                            className="w-full pl-6 pr-14 py-4 border-4 border-gray-950 focus:outline-none bg-gray-50 font-black text-base appearance-none cursor-pointer rounded-none"
+                            className="w-full pl-4 pr-10 py-2 border-2 border-gray-950 focus:outline-none bg-gray-50 font-black text-sm appearance-none cursor-pointer rounded-none"
                         >
                             <option value="all">جميع المعاملات المالية</option>
                             <option value="income">إيرادات التدفق 🟢</option>
@@ -203,11 +203,11 @@ export const Finance = () => {
                     {/* Month Filter */}
                     <div className="relative">
                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2 px-1 italic">الفترة الزمنية</label>
-                        <Calendar className="absolute right-4 top-[46px] text-gray-950 w-5 h-5 pointer-events-none" />
+                        <Calendar className="absolute right-3 top-[34px] text-gray-950 w-4 h-4 pointer-events-none" />
                         <select
                             value={state.filterMonth}
                             onChange={(e) => actions.setFilterMonth(e.target.value)}
-                            className="w-full pl-6 pr-14 py-4 border-4 border-gray-950 focus:outline-none bg-gray-50 font-black text-base appearance-none cursor-pointer rounded-none font-mono"
+                            className="w-full pl-4 pr-10 py-2 border-2 border-gray-950 focus:outline-none bg-gray-50 font-black text-sm appearance-none cursor-pointer rounded-none font-mono"
                         >
                             <option value="all">كافة شهور السنة</option>
                             {state.uniqueMonths.map(month => (

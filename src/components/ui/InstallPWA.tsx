@@ -40,50 +40,32 @@ export const InstallPWA = () => {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-10 right-4 left-4 md:left-auto md:right-10 z-[500] animate-in slide-in-from-right-20 fade-in duration-1000">
-            <div className="bg-yellow-400 dark:bg-yellow-500 border-4 border-gray-950 p-6 md:p-8 max-w-sm shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative group overflow-hidden">
-                {/* Decorative Elements */}
-                <div className="absolute -top-10 -left-10 w-24 h-24 bg-black/5 rounded-full blur-2xl group-hover:bg-black/10 transition-all" />
-                
-                <button 
-                    onClick={() => setIsVisible(false)}
-                    className="absolute top-2 left-2 p-2 bg-black text-white hover:bg-red-600 transition-colors shadow-[2px_2px_0px_0px_white]"
-                >
-                    <X size={16} />
-                </button>
-
-                <div className="flex flex-col gap-6 text-black">
-                    <div className="flex items-center gap-4 border-b-4 border-black pb-4">
-                        <div className="w-16 h-16 bg-black text-yellow-400 flex items-center justify-center border-4 border-yellow-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] shrink-0 animate-bounce">
-                            {window.innerWidth > 768 ? <Monitor size={32} /> : <Smartphone size={32} />}
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-black uppercase tracking-tighter leading-none">تثبيت التطبيق</h2>
-                            <p className="text-[10px] font-black uppercase tracking-widest mt-1 opacity-70 italic">DAREEN_NATIVE_EXPERIENCE</p>
-                        </div>
+        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 z-[500] animate-in slide-in-from-bottom-10 fade-in duration-500">
+            <div className="bg-yellow-400 dark:bg-yellow-500 border-2 border-gray-950 p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative flex items-center justify-between gap-3 max-w-sm ml-auto">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-black text-yellow-400 flex items-center justify-center border-2 border-yellow-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] shrink-0">
+                        {window.innerWidth > 768 ? <Monitor size={20} /> : <Smartphone size={20} />}
                     </div>
-
-                    <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                            <Zap size={20} className="shrink-0 mt-0.5" />
-                            <p className="font-extrabold text-sm leading-snug">ثبت التطبيق الآن لسهولة الوصول واستلام التنبيهات الفورية على جهازك</p>
-                        </div>
-                        
-                        <div className="flex items-center gap-3 bg-black/5 p-3 border-2 border-black border-dashed">
-                            <Bell size={18} className="animate-pulse" />
-                            <span className="text-[10px] font-black uppercase italic">PWA Notifications Enabled</span>
-                        </div>
+                    <div className="flex flex-col">
+                        <h2 className="text-sm font-black uppercase tracking-tighter leading-none text-black">تثبيت التطبيق</h2>
+                        <p className="font-bold text-[10px] leading-snug text-black/80 mt-1">تنبيهات فورية ووصول أسرع</p>
                     </div>
+                </div>
 
+                <div className="flex items-center gap-2 shrink-0">
                     <button 
                         onClick={handleInstallClick}
-                        className="w-full py-5 bg-black text-yellow-400 font-black uppercase tracking-[0.2em] text-sm shadow-[8px_8px_0px_0px_rgba(255,255,255,0.4)] hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none"
+                        className="px-3 py-2 bg-black text-yellow-400 font-black uppercase text-[10px] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)] hover:bg-white hover:text-black transition-all flex items-center gap-1 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                     >
-                        <Download size={20} />
-                        ثبت التطبيق الآن
+                        <Download size={14} />
+                        تثبيت
                     </button>
-                    
-                    <p className="text-center text-[8px] font-black uppercase opacity-40">أفضل تجربة تصفح للمسؤولين والمعلمين</p>
+                    <button 
+                        onClick={() => setIsVisible(false)}
+                        className="p-2 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
+                    >
+                        <X size={14} />
+                    </button>
                 </div>
             </div>
         </div>
