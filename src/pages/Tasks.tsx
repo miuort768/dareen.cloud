@@ -126,22 +126,22 @@ export const Tasks = () => {
     return (
         <div className="space-y-8 pb-32 animate-in fade-in duration-500" dir="rtl">
             {/* Cyber-Brutalist Header */}
-            <div className="relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-[6px_6px_0px_0px_#ef4444] overflow-hidden group mx-2 md:mx-0">
+            <div className="relative bg-white border-2 border-gray-950 p-4 shadow-[2px_2px_0px_0px_#ef4444] overflow-hidden mx-2 md:mx-0">
                 <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_2px_2px,_#000_1px,_transparent_0)] [background-size:24px_24px] opacity-[0.03]"></div>
                 <div className="absolute -top-10 -left-10 w-48 h-48 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none"></div>
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-rose-500 flex items-center justify-center transform -rotate-2 hover:rotate-0 transition-all shadow-[4px_4px_0px_0px_#ef4444]">
-                            <ListTodo size={32} className="group-hover:scale-110 transition-transform" />
+                        <div className="w-12 h-12 bg-gray-950 text-white border-2 border-rose-500 flex items-center justify-center transform -rotate-2 hover:rotate-0 transition-all shadow-[2px_2px_0px_0px_#ef4444]">
+                            <ListTodo size={24} className="group-hover:scale-110 transition-transform" />
                         </div>
                         <div>
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="bg-gray-950 text-white text-[9px] font-black px-2 py-0.5 uppercase tracking-tighter">OPERATIONS HUB</span>
-                                <h1 className="text-2xl md:text-3xl font-black text-gray-950 tracking-tighter uppercase italic">غرفة العمليات</h1>
+                                <h1 className="text-xl md:text-2xl font-black text-gray-950 tracking-tighter uppercase italic">غرفة العمليات</h1>
                             </div>
-                            <p className="text-gray-500 font-black text-xs flex items-center gap-2">
-                                <Zap size={14} className="text-yellow-500 fill-yellow-500" />
+                            <p className="text-gray-500 font-bold text-[10px] flex items-center gap-1.5 mt-1">
+                                <Zap size={10} className="text-yellow-500 fill-yellow-500" />
                                 أدر مهامك بقوة، دقة، وسرعة فائقة
                             </p>
                         </div>
@@ -149,9 +149,9 @@ export const Tasks = () => {
 
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="bg-gray-950 text-white px-6 py-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-2 font-black text-xs md:text-sm uppercase group/btn w-full md:w-auto justify-center"
+                        className="bg-gray-950 text-white px-4 py-2 border-2 border-gray-950 shadow-[2px_2px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center gap-2 font-black text-[10px] md:text-xs uppercase group/btn w-full md:w-auto justify-center"
                     >
-                        <Plus size={20} className="group-hover/btn:rotate-90 transition-transform" />
+                        <Plus size={16} className="group-hover/btn:rotate-90 transition-transform" />
                         إطلاق مهمة جديدة
                     </button>
                 </div>
