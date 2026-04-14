@@ -2,69 +2,68 @@ import { useState, useEffect } from 'react';
 import { Download, X, Smartphone, Monitor } from 'lucide-react';
 
 export const InstallPWA = () => {
-    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const handler = (e: any) => {
-            e.preventDefault();
-            setDeferredPrompt(e);
-            
-            // Check if not installed
-            if (!window.matchMedia('(display-mode: standalone)').matches) {
-                // Show after 2 seconds to ensure visibility
-                setTimeout(() => setIsVisible(true), 2000);
+        // Initial check for standalone mode
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+        
+        if (!isStandalone) {
+            // Check if dismissed before
+            const isDismissed = sessionStorage.getItem('pwa_dismissed');
+            if (!isDismissed) {
+                // Show after 1 second for better UX and catch initial load
+                const timer = setTimeout(() => setIsVisible(true), 1200);
+                return () => clearTimeout(timer);
             }
-        };
-
-        window.addEventListener('beforeinstallprompt', handler);
-
-        // Fallback for debugging/testing
-        // setTimeout(() => setIsVisible(true), 3000);
-
-        return () => window.removeEventListener('beforeinstallprompt', handler);
+        }
     }, []);
 
     const handleInstallClick = async () => {
-        if (!deferredPrompt) {
-            // If prompt is missing but user clicked, show helpful alert
-            alert('خاصية التثبيت متوفرة في متصفح Chrome أو Edge. يرجى استخدام القائمة الجانبية للمتصفح (Install App).');
-            return;
+        const deferredPrompt = (window as any).deferredPrompt;
+        
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') setIsVisible(false);
+            (window as any).deferredPrompt = null;
+        } else {
+            // Help for manual install if prompt wasn't fired yet
+            alert('لتثبيت التطبيق على جهازك:\n- على Android/Chrome: اضغط على الثلاث نقاط بالأعلى ثم اختر "Install App".\n- على iPhone/Safari: اضغط على زر "Share" ثم اختر "Add to Home Screen".');
         }
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') setIsVisible(false);
-        setDeferredPrompt(null);
     };
 
     if (!isVisible) return null;
 
     return (
         <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 z-[500] animate-in slide-in-from-bottom-10 fade-in duration-500">
-            <div className="bg-yellow-400 dark:bg-yellow-500 border-2 border-gray-950 p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative flex items-center justify-between gap-3 max-w-sm ml-auto">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-black text-yellow-400 flex items-center justify-center border-2 border-yellow-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] shrink-0">
-                        {window.innerWidth > 768 ? <Monitor size={20} /> : <Smartphone size={20} />}
+            <div className="bg-yellow-400 dark:bg-yellow-500 border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] relative flex items-center justify-between gap-3 max-w-[280px] ml-auto">
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-black text-yellow-400 flex items-center justify-center border-2 border-yellow-800 shadow-[1px_1px_0px_0px_black] shrink-0">
+                        {window.innerWidth > 768 ? <Monitor size={16} /> : <Smartphone size={16} />}
                     </div>
                     <div className="flex flex-col">
-                        <h2 className="text-sm font-black uppercase tracking-tighter leading-none text-black">تثبيت التطبيق</h2>
-                        <p className="font-bold text-[10px] leading-snug text-black/80 mt-1">تنبيهات فورية ووصول أسرع</p>
+                        <h2 className="text-[11px] font-black uppercase text-black leading-tight">ثبت التطبيق</h2>
+                        <p className="font-bold text-[8px] text-black/80">أسرع وأسهل للاستخدام</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-1 shrink-0">
                     <button 
                         onClick={handleInstallClick}
-                        className="px-3 py-2 bg-black text-yellow-400 font-black uppercase text-[10px] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)] hover:bg-white hover:text-black transition-all flex items-center gap-1 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                        className="px-2 py-1.5 bg-black text-yellow-400 font-extrabold uppercase text-[9px] shadow-[1px_1px_0px_0px_gray] hover:bg-white hover:text-black transition-all flex items-center gap-1 active:translate-x-0.5 active:translate-y-0.5"
                     >
-                        <Download size={14} />
+                        <Download size={12} />
                         تثبيت
                     </button>
                     <button 
-                        onClick={() => setIsVisible(false)}
-                        className="p-2 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
+                        onClick={() => {
+                            setIsVisible(false);
+                            sessionStorage.setItem('pwa_dismissed', 'true');
+                        }}
+                        className="p-1.5 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
                     >
-                        <X size={14} />
+                        <X size={12} />
                     </button>
                 </div>
             </div>

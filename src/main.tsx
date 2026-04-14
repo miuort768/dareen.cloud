@@ -47,6 +47,13 @@ if (savedTheme === 'dark') {
     document.documentElement.classList.remove('dark');
 }
 
+// Global variable to catch PWA install prompt early
+(window as any).deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    (window as any).deferredPrompt = e;
+});
+
 // Register Service Worker for notifications
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
