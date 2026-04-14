@@ -25,6 +25,7 @@ const tasksRouter = require('./routes/tasks');
 const chatRouter = require('./routes/chat');
 const publicChatRouter = require('./routes/publicChat');
 const { announcementsRouter } = require('./routes/announcements');
+const forumRouter = require('./routes/forum');
 const appointmentsRouter = require('./routes/appointments');
 const { pushRouter, sendPushToUser } = require('./routes/push');
 
@@ -172,6 +173,7 @@ async function startServer() {
         apiRouter.use('/chat', chatRouter);
         // Announcements have their own internal role checks (GET public, others Admin)
         apiRouter.use('/announcements', announcementsRouter);
+        apiRouter.use('/forum', forumRouter);
         apiRouter.use('/appointments', appointmentsRouter);
         apiRouter.use('/push', pushRouter);
 

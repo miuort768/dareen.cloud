@@ -280,6 +280,28 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS forum_posts (
+            id TEXT PRIMARY KEY,
+            authorId TEXT NOT NULL,
+            authorName TEXT NOT NULL,
+            authorRole TEXT NOT NULL,
+            content TEXT NOT NULL,
+            status TEXT DEFAULT 'pending', -- pending, approved, rejected
+            upvotes TEXT DEFAULT '[]',
+            downvotes TEXT DEFAULT '[]',
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE IF NOT EXISTS forum_comments (
+            id TEXT PRIMARY KEY,
+            postId TEXT NOT NULL,
+            authorId TEXT NOT NULL,
+            authorName TEXT NOT NULL,
+            authorRole TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(postId) REFERENCES forum_posts(id) ON DELETE CASCADE
+        );
 
         -- Tables created above
     `);

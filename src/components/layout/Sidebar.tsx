@@ -70,6 +70,7 @@ export const Sidebar = () => {
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
+        { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
     ];
@@ -90,17 +91,20 @@ export const Sidebar = () => {
         // Exclude general dashboard for parents as they have parent-dashboard
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
-            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat'].includes(item.id)) return true;
+            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat', 'forum'].includes(item.id)) return true;
         }
 
         // Student specific access
         if (currentUser.role === 'student') {
             if (item.id === 'dashboard') return false;
-            if (['student_dashboard', 'chat'].includes(item.id)) return true;
+            if (['student_dashboard', 'chat', 'forum'].includes(item.id)) return true;
         }
 
         // Explicitly allow Dashboard for Teachers
         if (item.id === 'dashboard' && currentUser.role === 'teacher') return true;
+        
+        // Explicitly allow Forum for Teachers
+        if (item.id === 'forum' && currentUser.role === 'teacher') return true;
 
         // Specific page access
         return currentUser.permissions?.includes(item.id);

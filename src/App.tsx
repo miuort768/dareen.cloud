@@ -23,6 +23,7 @@ import { Students } from './pages/Students';
 import { Tasks } from './pages/Tasks';
 import { Chat } from './pages/Chat';
 import { Announcements } from './pages/Announcements';
+import { Forum } from './pages/Forum';
 import { MonthlyClosing } from './pages/MonthlyClosing';
 import { Leads } from './pages/Leads';
 import { Agenda } from './pages/Agenda';
@@ -186,6 +187,9 @@ function App() {
 
           {/* New Announcements Admin Route */}
           <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
+          
+          {/* Forum Route for all authenticated users */}
+          <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
