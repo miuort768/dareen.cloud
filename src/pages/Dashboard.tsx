@@ -64,37 +64,26 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="space-y-8 pb-32 max-w-[1600px] mx-auto" dir="rtl">
+        <div className="space-y-5 pb-20 max-w-[1600px] mx-auto px-4" dir="rtl">
             <DashboardHeader
                 isTeacher={isTeacher}
                 currentUser={currentUser}
                 stats={stats}
             />
 
-            {/* Modern Announcements Hub */}
-            <ModernAnnouncements />
-
-            {!isTeacher && <QuickActionsHub />}
-
+            {/* Top Row: Statistics (Small & Compact) */}
             <DashboardStats stats={stats} isTeacher={isTeacher} />
 
+            {/* Main Operational Layout */}
             {isTeacher ? (
-                <div className="space-y-8 animate-in fade-in duration-700">
-                    <div className="flex items-center justify-between mb-4 border-b-2 border-gray-100 dark:border-gray-800 pb-4">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-primary-600 text-white shadow-lg">
-                                <Megaphone size={18} />
-                            </div>
-                            <h2 className="text-xl font-black text-gray-950 dark:text-white uppercase tracking-tighter">مركز المعلمة الدراسي (Teacher Hub)</h2>
-                        </div>
-                    </div>
-
-                    {/* NEW: Timeline of Today's Sessions */}
+                /* Teacher View (Already compact) */
+                <div className="space-y-6 animate-in fade-in duration-500">
+                    <ModernAnnouncements />
                     <div className="w-full">
                         <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
                         <div className="lg:col-span-2">
                             <TeacherAchievements
                                 stats={stats}
@@ -106,112 +95,68 @@ export const Dashboard = () => {
                             <TasksAndRequests tasks={tasks} />
                         </div>
                     </div>
-
-                    {/* Quick Stats Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                         <TeacherWeeklySummary 
-                            stats={{
-                                weekTotalSessions: stats.weekTotalSessions || 0,
-                                newBadgesRecommended: stats.newBadgesRecommended || 0,
-                                bestStudentName: stats.bestStudentName,
-                                pointsEarnedThisWeek: (stats.weekTotalSessions || 0) * 5
-                            }}
-                        />
-                        <TeacherSalaryPreview 
-                            stats={{
-                                totalEarnings: (stats.completedSessions || 0) * (stats.teacherSessionPrice || 0),
-                                completedSessions: stats.completedSessions || 0,
-                                sessionsGoal: 100, 
-                                pricePerSession: stats.teacherSessionPrice || 0
-                            }}
-                        />
-                        <TeacherRewardsKPIs 
-                            stats={{
-                                attendanceRate: stats.attendanceRate || 0,
-                                studentsCount: stats.studentsCount || 0,
-                                evaluationsCompleted: stats.evaluationsCompleted || 0,
-                                teacherPoints: stats.teacherPoints || 0
-                            }}
-                        />
-                    </div>
-
-                    {(!focusStudents || focusStudents.length === 0) ? (
-                        <div className="space-y-8">
-                            <TeacherFocusList 
-                                students={[]} 
-                                onStudentClick={(s) => setBriefingStudent(s)}
-                            />
-                            <div className="grid grid-cols-1">
-                                <TeacherLeaderboard 
-                                    students={topStudents || []} 
-                                    onStudentClick={(s) => setBriefingStudent(s)}
-                                />
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <TeacherFocusList 
-                                students={focusStudents || []} 
-                                onStudentClick={(s) => setBriefingStudent(s)}
-                            />
-                             <TeacherLeaderboard 
-                                students={topStudents || []} 
-                                onStudentClick={(s) => setBriefingStudent(s)}
-                            />
-                        </div>
-                    )}
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                        <RenewalAlertsList
-                            stats={stats}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
-                    </div>
                 </div>
             ) : (
-                <div className="space-y-8 animate-in fade-in duration-700">
-                    {/* Admin Reorganized Layout */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="space-y-8">
+                /* Admin Executive View (NEW: Compact & Optimized) */
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
+                    
+                    {/* Left Column (Main Analytics & Feed) - 8/12 Columns */}
+                    <div className="xl:col-span-8 space-y-6">
+                        {/* Highlights & Hero Charts */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <PerformanceSummary stats={stats} isTeacher={false} />
+                            <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                        </div>
+
+                        {/* Large Charts Section */}
+                        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-4 shadow-sm">
+                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        </div>
+
+                        {/* Comprehensive Table Area */}
+                        <div className="space-y-6">
+                            <RenewalAlertsList
+                                stats={stats}
+                                lowBalanceStudents={lowBalanceStudents}
+                            />
+                            <AnalyticsDashboard
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                monthlyData={monthlyData}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right Column (Operational Sidepanel) - 4/12 Columns */}
+                    <div className="xl:col-span-4 space-y-6">
+                        {/* Quick Control Hub */}
+                        <QuickActionsHub />
+
+                        {/* Urgent Matters */}
+                        <div className="bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30 p-1">
                             <ImportantNotifications
                                 tasks={tasks}
                                 lowBalanceStudents={lowBalanceStudents}
                             />
                         </div>
-                        <div className="space-y-8">
-                            <TasksAndRequests tasks={tasks} />
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                        </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-                        <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                        {/* AI Smart Alerts */}
                         <SmartAlerts
                             students={rawStudents}
                             sessions={rawSessions}
                             studentInvoices={rawStudentInvoices}
                             lowBalanceStudents={lowBalanceStudents}
                         />
-                    </div>
 
-                    <div className="w-full">
-                         <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-8">
-                         <RenewalAlertsList
-                            stats={stats}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
-                        <AnalyticsDashboard
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            monthlyData={monthlyData}
-                        />
+                        {/* Recent Activity & Communication */}
+                        <div className="space-y-6">
+                            <TasksAndRequests tasks={tasks} />
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <ModernAnnouncements />
+                        </div>
                     </div>
                 </div>
+            )}v>
             )}
 
             {/* Suggestion 2: Quick Brief Modal */}

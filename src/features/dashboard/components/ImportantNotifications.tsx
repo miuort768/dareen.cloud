@@ -98,73 +98,61 @@ export const ImportantNotifications = ({
         : [];
 
     return (
-        <div className="bg-white border border-primary-200 dark:bg-gray-900 dark:border-gray-800 shadow-xl overflow-hidden relative group h-full">
-            <div className="absolute top-0 right-0 w-1.5 h-full bg-primary-600"></div>
-            <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-primary-50/30 dark:bg-primary-900/10">
-                <div className="flex items-center gap-4">
-                    <div className="relative p-2.5 bg-primary-600 shadow-lg shadow-primary-600/20 flex items-center justify-center">
-                        <Bell size={22} className="text-white" />
+        <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden relative group h-full">
+            <div className="absolute top-0 right-0 w-1 h-full bg-primary-600"></div>
+            <div className="p-4 border-b border-gray-50 dark:border-slate-800 flex items-center justify-between bg-primary-50/20 dark:bg-primary-900/10">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-primary-600 rounded-lg shadow-sm flex items-center justify-center">
+                        <Bell size={14} className="text-white" />
                     </div>
                     <div>
-                        <h3 className="font-black text-gray-900 dark:text-white text-sm tracking-tight uppercase">الإشعارات والتنبيهات الهامة</h3>
-                        <p className="text-[10px] font-black text-primary-600 uppercase tracking-widest opacity-80">تحتاج إلى انتباهك الفوري</p>
+                        <h3 className="font-bold text-gray-900 dark:text-white text-xs tracking-tight">التنبيهات الهامة</h3>
+                        <p className="text-[9px] font-medium text-primary-600/70 uppercase tracking-tighter">تحتاج إلى انتباهك</p>
                     </div>
                 </div>
-                <div className="flex gap-2">
-                    <span className="bg-rose-600 text-white px-3 py-1 text-[10px] font-black uppercase">
-                        {visibleNotifications.length} تنبيه
-                    </span>
-                </div>
+                <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">
+                    {visibleNotifications.length}
+                </span>
             </div>
 
-            <div className="divide-y divide-gray-100 dark:divide-gray-800 h-[240px] overflow-y-auto custom-scrollbar">
+            <div className="divide-y divide-gray-50 dark:divide-slate-800 h-[300px] overflow-y-auto custom-scrollbar">
                 {visibleNotifications.length > 0 ? (
                     visibleNotifications.map((note) => (
-                        <div key={note.id} className="p-6 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all group/item relative">
+                        <div key={note.id} className="p-4 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-all group/item relative">
                             <button
                                 onClick={() => handleDismiss(note.id)}
-                                className="absolute top-4 left-4 text-gray-300 hover:text-rose-500 transition-colors p-1 opacity-100 sm:opacity-0 group-hover/item:opacity-100"
-                                title="حذف الإشعار"
+                                className="absolute top-2 left-2 text-gray-300 hover:text-rose-500 transition-colors p-1"
+                                title="حذف"
                             >
-                                <X size={16} />
+                                <X size={14} />
                             </button>
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-3">
                                 <div className={cn(
-                                    "p-3 shrink-0",
+                                    "p-2 rounded-xl shrink-0",
                                     note.color === 'rose' ? "bg-rose-50 text-rose-600 dark:bg-rose-900/20" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
                                 )}>
-                                    <note.icon size={20} />
+                                    <note.icon size={16} />
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-start justify-between gap-2">
-                                        <h4 className="font-black text-gray-900 dark:text-white text-sm truncate uppercase tracking-tight text-right pl-6">
-                                            {note.title}
-                                        </h4>
-                                        {note.priority === 'high' && (
-                                            <span className="flex items-center gap-1 text-[10px] font-black text-rose-600 uppercase animate-pulse shrink-0">
-                                                <AlertCircle size={12} />
-                                                عاجل
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className="text-xs font-bold text-gray-400 mt-1.5 text-right leading-relaxed">{note.description}</p>
+                                <div className="flex-1 min-w-0 pr-4">
+                                    <h4 className="font-bold text-gray-900 dark:text-white text-[11px] leading-tight mb-1">
+                                        {note.title}
+                                    </h4>
+                                    <p className="text-[10px] text-gray-400 leading-normal">{note.description}</p>
 
-                                    <div className="mt-4 flex justify-end gap-2">
+                                    <div className="mt-2 text-left">
                                         {'action' in note && note.action ? (
                                             <button
                                                 onClick={note.action}
-                                                className="flex items-center gap-1 text-xs font-black text-primary-600 hover:text-primary-700 uppercase"
+                                                className="text-[10px] font-bold text-primary-600 hover:text-primary-700"
                                             >
                                                 {note.actionLabel}
-                                                <ArrowUpRight size={14} />
                                             </button>
                                         ) : 'link' in note && note.link ? (
                                             <Link
                                                 to={note.link}
-                                                className="flex items-center gap-1 text-xs font-black text-primary-600 hover:text-primary-700 uppercase"
+                                                className="text-[10px] font-bold text-primary-600 hover:text-primary-700"
                                             >
                                                 {note.actionLabel}
-                                                <ArrowUpRight size={14} />
                                             </Link>
                                         ) : null}
                                     </div>
@@ -173,11 +161,9 @@ export const ImportantNotifications = ({
                         </div>
                     ))
                 ) : (
-                    <div className="p-16 text-center">
-                        <div className="w-16 h-16 bg-gray-50 dark:bg-gray-800 mx-auto flex items-center justify-center mb-4">
-                            <Bell size={32} className="text-gray-200" />
-                        </div>
-                        <p className="text-xs text-gray-400 font-black uppercase tracking-widest">لا توجد تنبيهات جديدة حالياً</p>
+                    <div className="p-10 text-center">
+                        <Bell size={24} className="text-gray-100 mx-auto mb-2" />
+                        <p className="text-[10px] text-gray-400 font-medium">لا توجد تنبيهات</p>
                     </div>
                 )}
             </div>
