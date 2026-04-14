@@ -24,13 +24,13 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 rounded-2xl overflow-hidden",
+            "relative p-3 bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all rounded-none overflow-hidden",
             className
         )}>
             <div className="relative flex items-center gap-3 z-10">
                 {/* Compact Icon */}
                 <div className={cn(
-                    "w-9 h-9 shrink-0 flex items-center justify-center rounded-xl",
+                    "w-9 h-9 shrink-0 flex items-center justify-center border-2 border-gray-950 rounded-none",
                     colorStyles[color]
                 )}>
                     <Icon className="w-4 h-4" />
@@ -38,13 +38,13 @@ export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'b
 
                 {/* Content */}
                 <div className="min-w-0 flex-1">
-                    <p className="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-tighter leading-none mb-1 truncate">{title}</p>
-                    <h3 className="text-sm font-black text-gray-900 dark:text-white tracking-tight tabular-nums leading-none truncate">
+                    <p className="text-[9px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-tighter leading-none mb-1 truncate">{title}</p>
+                    <h3 className="text-sm font-black text-gray-950 dark:text-white tracking-tight tabular-nums leading-none truncate">
                         {value}
                     </h3>
                     {trend && (
                         <p className={cn(
-                            "text-[8px] font-bold mt-1 leading-none",
+                            "text-[8px] font-black mt-1 leading-none uppercase italic",
                             trendUp ? "text-emerald-500" : "text-rose-500"
                         )}>
                             {trend}

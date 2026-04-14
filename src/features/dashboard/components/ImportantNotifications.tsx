@@ -98,24 +98,24 @@ export const ImportantNotifications = ({
         : [];
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden relative group h-full">
-            <div className="absolute top-0 right-0 w-1 h-full bg-primary-600"></div>
-            <div className="p-4 border-b border-gray-50 dark:border-slate-800 flex items-center justify-between bg-primary-50/20 dark:bg-primary-900/10">
+        <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_black] rounded-none overflow-hidden relative group h-full">
+            <div className="absolute top-0 right-0 w-1 h-full bg-gray-950"></div>
+            <div className="p-4 border-b-2 border-gray-950 dark:border-slate-800 flex items-center justify-between bg-primary-600">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary-600 rounded-lg shadow-sm flex items-center justify-center">
-                        <Bell size={14} className="text-white" />
+                    <div className="p-2 bg-white rounded-none border-2 border-gray-950 shadow-none flex items-center justify-center">
+                        <Bell size={14} className="text-gray-950" />
                     </div>
                     <div>
-                        <h3 className="font-bold text-gray-900 dark:text-white text-xs tracking-tight">التنبيهات الهامة</h3>
-                        <p className="text-[9px] font-medium text-primary-600/70 uppercase tracking-tighter">تحتاج إلى انتباهك</p>
+                        <h3 className="font-black text-white text-xs tracking-tighter uppercase italic">غرفة التنبيهات</h3>
+                        <p className="text-[9px] font-black text-white/70 uppercase tracking-tighter">URGENT OPS</p>
                     </div>
                 </div>
-                <span className="bg-rose-500 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">
+                <span className="bg-white text-gray-950 px-2 py-0.5 rounded-none border-2 border-gray-950 text-[9px] font-black">
                     {visibleNotifications.length}
                 </span>
             </div>
 
-            <div className="divide-y divide-gray-50 dark:divide-slate-800 h-[300px] overflow-y-auto custom-scrollbar">
+            <div className="divide-y-2 divide-gray-950 dark:divide-slate-800 h-[300px] overflow-y-auto custom-scrollbar">
                 {visibleNotifications.length > 0 ? (
                     visibleNotifications.map((note) => (
                         <div key={note.id} className="p-4 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-all group/item relative">
@@ -128,29 +128,29 @@ export const ImportantNotifications = ({
                             </button>
                             <div className="flex items-start gap-3">
                                 <div className={cn(
-                                    "p-2 rounded-xl shrink-0",
+                                    "p-2 rounded-none border-2 border-gray-950 shadow-none shrink-0",
                                     note.color === 'rose' ? "bg-rose-50 text-rose-600 dark:bg-rose-900/20" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
                                 )}>
                                     <note.icon size={16} />
                                 </div>
                                 <div className="flex-1 min-w-0 pr-4">
-                                    <h4 className="font-bold text-gray-900 dark:text-white text-[11px] leading-tight mb-1">
+                                    <h4 className="font-black text-gray-950 dark:text-white text-[11px] leading-tight mb-1 uppercase italic tracking-tighter">
                                         {note.title}
                                     </h4>
-                                    <p className="text-[10px] text-gray-400 leading-normal">{note.description}</p>
+                                    <p className="text-[10px] text-gray-500 font-bold leading-normal">{note.description}</p>
 
                                     <div className="mt-2 text-left">
                                         {'action' in note && note.action ? (
                                             <button
                                                 onClick={note.action}
-                                                className="text-[10px] font-bold text-primary-600 hover:text-primary-700"
+                                                className="text-[9px] font-black text-primary-600 hover:text-primary-700 uppercase tracking-widest bg-gray-50 px-2 py-1 border border-gray-950"
                                             >
                                                 {note.actionLabel}
                                             </button>
                                         ) : 'link' in note && note.link ? (
                                             <Link
                                                 to={note.link}
-                                                className="text-[10px] font-bold text-primary-600 hover:text-primary-700"
+                                                className="text-[9px] font-black text-primary-600 hover:text-primary-700 uppercase tracking-widest bg-gray-50 px-2 py-1 border border-gray-950"
                                             >
                                                 {note.actionLabel}
                                             </Link>
@@ -163,7 +163,7 @@ export const ImportantNotifications = ({
                 ) : (
                     <div className="p-10 text-center">
                         <Bell size={24} className="text-gray-100 mx-auto mb-2" />
-                        <p className="text-[10px] text-gray-400 font-medium">لا توجد تنبيهات</p>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-tighter">لا توجد تنبيهات</p>
                     </div>
                 )}
             </div>
