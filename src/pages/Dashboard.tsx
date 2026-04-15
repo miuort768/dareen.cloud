@@ -99,55 +99,48 @@ export const Dashboard = () => {
                 <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
                     
                     {/* Left Column (Main Analytics & Feed) - 8/12 Columns */}
-                    <div className="xl:col-span-8 space-y-6">
+                    <div className="xl:col-span-12 space-y-6">
                         {/* Highlights & Hero Charts */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <PerformanceSummary stats={stats} isTeacher={false} />
                             <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                        </div>
-
-                        {/* Large Charts Section */}
-                        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-4 shadow-sm">
-                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                        </div>
-
-                        {/* Comprehensive Table Area */}
-                        <div className="space-y-6">
-                            <RenewalAlertsList
-                                stats={stats}
-                                lowBalanceStudents={lowBalanceStudents}
-                            />
-                            <AnalyticsDashboard
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                monthlyData={monthlyData}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Right Column (Operational Sidepanel) - 4/12 Columns */}
-                    <div className="xl:col-span-4 space-y-6">
-                        {/* Urgent Matters */}
-                        <div className="bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30 p-1">
-                            <ImportantNotifications
-                                tasks={tasks}
-                                lowBalanceStudents={lowBalanceStudents}
-                            />
-                        </div>
-
-                        {/* AI Smart Alerts */}
-                        <SmartAlerts
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            studentInvoices={rawStudentInvoices}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
-
-                        {/* Recent Activity & Communication */}
-                        <div className="space-y-6">
                             <TasksAndRequests tasks={tasks} />
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            <ModernAnnouncements />
+                        </div>
+
+                        {/* Large Charts Section & Table Area */}
+                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                            <div className="xl:col-span-8 space-y-6">
+                                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-4 shadow-sm">
+                                     <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                                </div>
+                                <RenewalAlertsList
+                                    stats={stats}
+                                    lowBalanceStudents={lowBalanceStudents}
+                                />
+                                <AnalyticsDashboard
+                                    students={rawStudents}
+                                    sessions={rawSessions}
+                                    monthlyData={monthlyData}
+                                />
+                            </div>
+
+                            {/* Sidebar elements now integrated into layout */}
+                            <div className="xl:col-span-4 space-y-6">
+                                <div className="bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30 p-1">
+                                    <ImportantNotifications
+                                        tasks={tasks}
+                                        lowBalanceStudents={lowBalanceStudents}
+                                    />
+                                </div>
+                                <SmartAlerts
+                                    students={rawStudents}
+                                    sessions={rawSessions}
+                                    studentInvoices={rawStudentInvoices}
+                                    lowBalanceStudents={lowBalanceStudents}
+                                />
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                                <ModernAnnouncements />
+                            </div>
                         </div>
                     </div>
                 </div>
