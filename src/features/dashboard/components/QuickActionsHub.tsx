@@ -8,33 +8,29 @@ export const QuickActionsHub = () => {
             title: 'إضافة طالب جديد', 
             icon: UserPlus, 
             href: '/students?action=new', 
-            color: 'indigo',
-            gradient: 'from-indigo-600 to-blue-600',
+            color: 'bg-indigo-600',
             description: 'تسجيل طالب جديد في النظام'
         },
         { 
             title: 'إصدار فاتورة', 
             icon: FilePlus, 
             href: '/student-invoices?action=new', 
-            color: 'emerald',
-            gradient: 'from-emerald-600 to-teal-600',
+            color: 'bg-emerald-600',
             description: 'إنشاء فاتورة رسوم دراسية'
         },
         { 
             title: 'تعديل الجدول', 
             icon: Calendar, 
             href: '/schedule', 
-            color: 'amber',
-            gradient: 'from-amber-600 to-orange-600',
+            color: 'bg-amber-500',
             description: 'إدارة مواعيد الحصص'
         },
         { 
             title: 'إعلان عام', 
             icon: Megaphone, 
             href: '/announcements?action=new', 
-            color: 'rose',
-            gradient: 'from-rose-600 to-pink-600',
-            description: 'نشر تنبيه لجميع المستخدمين'
+            color: 'bg-rose-600',
+            description: 'تنبيه لجميع المستخدمين'
         }
     ];
 
@@ -44,31 +40,21 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="group relative bg-white/80 dark:bg-slate-900/50 backdrop-blur-xl p-5 rounded-[2rem] border border-white dark:border-slate-800 shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden"
+                    className="group relative bg-white dark:bg-slate-900 p-4 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:bg-slate-50 flex flex-col gap-3"
                 >
-                    {/* Background Glow */}
-                    <div className={cn(
-                        "absolute -top-10 -left-10 w-24 h-24 bg-gradient-to-br opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-20",
-                        action.gradient
-                    )}></div>
-
-                    <div className="relative flex flex-col gap-3">
-                        <div className="flex items-center justify-between">
-                            <div className={cn(
-                                "w-10 h-10 flex items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3",
-                                action.gradient
-                            )}>
-                                <action.icon size={18} />
-                            </div>
-                            <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0">
-                                <ArrowLeft size={14} className="text-gray-400 group-hover:text-indigo-500" />
-                            </div>
+                    <div className="flex items-center justify-between">
+                        <div className={cn(
+                            "w-8 h-8 flex items-center justify-center rounded-none text-white border border-slate-900 shadow-none",
+                            action.color
+                        )}>
+                            <action.icon size={16} />
                         </div>
-                        
-                        <div>
-                            <h3 className="font-bold text-slate-800 dark:text-white text-sm mb-1">{action.title}</h3>
-                            <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 leading-tight">{action.description}</p>
-                        </div>
+                        <ArrowLeft size={16} className="text-slate-200 group-hover:text-slate-400 group-hover:-translate-x-1 transition-all" />
+                    </div>
+                    
+                    <div className="min-w-0">
+                        <h3 className="font-bold text-slate-900 dark:text-white text-[11px] mb-1 leading-none uppercase tracking-tight">{action.title}</h3>
+                        <p className="text-[9px] font-medium text-slate-400 dark:text-gray-500 leading-none truncate italic">{action.description}</p>
                     </div>
                 </Link>
             ))}
