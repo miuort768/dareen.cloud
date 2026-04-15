@@ -47,7 +47,7 @@ export const Dashboard = () => {
                 <div className="h-48 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
                 <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4">
                     {[...Array(8)].map((_, i) => (
-                        <div key={i} className="h-20 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
+                        <div key={i} className="h-24 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
                     ))}
                 </div>
             </div>
@@ -113,12 +113,7 @@ export const Dashboard = () => {
                 ) : (
                     <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         
-                        {/* 1. Full Width Analysis Center (Sharp) */}
-                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                        </div>
-
-                        {/* 2. Primary Operations Row: Side by Side (Sharp) */}
+                        {/* 1. Primary Operations Row: Side by Side (Alerts Moved UP) */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
                             <SmartAlerts
@@ -127,6 +122,11 @@ export const Dashboard = () => {
                                 studentInvoices={rawStudentInvoices}
                                 lowBalanceStudents={lowBalanceStudents}
                             />
+                        </div>
+
+                        {/* 2. Full Width Analysis Center (Charts Moved DOWN) */}
+                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
                         {/* 3. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
@@ -157,7 +157,7 @@ export const Dashboard = () => {
                 )}
             </div>
 
-            {/* Suggen 2: Quick Brief Modal */}
+            {/* Modals keep their premium look but will be adjusted if needed */}
             {isTeacher && briefingStudent && (
                 <StudentQuickBrief
                     isOpen={!!briefingStudent}
