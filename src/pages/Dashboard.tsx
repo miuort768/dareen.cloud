@@ -113,7 +113,10 @@ export const Dashboard = () => {
                 ) : (
                     <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         
-                        {/* 1. Primary Operations Row: Side by Side (Alerts Moved UP) */}
+                        {/* 🏆 1. Announcements & Urgent Alerts (Moved to TOP of content) */}
+                        <ModernAnnouncements />
+
+                        {/* 2. Primary Operations Row: Side by Side (Alerts) */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
                             <SmartAlerts
@@ -124,12 +127,12 @@ export const Dashboard = () => {
                             />
                         </div>
 
-                        {/* 2. Full Width Analysis Center (Charts Moved DOWN) */}
+                        {/* 3. Full Width Analysis Center (Charts) */}
                         <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
-                        {/* 3. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
+                        {/* 4. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
                         <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
                             <AnalyticsDashboard
                                 students={rawStudents}
@@ -138,26 +141,21 @@ export const Dashboard = () => {
                             />
                         </div>
 
-                        {/* 4. Secondary Operations Row: More Side-by-Side (Sharp) */}
+                        {/* 5. Secondary Operations Row: More Side-by-Side (Renewal & Activity) */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
                             <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                         </div>
 
-                        {/* 5. Bottom Tasks & Information */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                            <div className="lg:col-span-7">
-                                <TasksAndRequests tasks={tasks} />
-                            </div>
-                            <div className="lg:col-span-5">
-                                <ModernAnnouncements />
-                            </div>
+                        {/* 6. Tasks & Requests (Now occupies single column area) */}
+                        <div className="w-full">
+                            <TasksAndRequests tasks={tasks} />
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* Modals keep their premium look but will be adjusted if needed */}
+            {/* Suggen 2: Quick Brief Modal */}
             {isTeacher && briefingStudent && (
                 <StudentQuickBrief
                     isOpen={!!briefingStudent}
