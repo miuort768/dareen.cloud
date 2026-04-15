@@ -65,7 +65,7 @@ export const Dashboard = () => {
                 />
             </div>
 
-            <div className="max-w-[1600px] mx-auto px-4 md:px-8 -mt-10 space-y-10">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-8 -mt-10 space-y-12">
                 {/* Row 1: Key Statistics (Premium Floating Cards) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <DashboardStats stats={stats} isTeacher={isTeacher} />
@@ -100,52 +100,50 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex flex-col gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         
-                {/* Full Width Analysis Center */}
-                <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10">
-                    <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                </div>
-
-                <div className="grid grid-cols-1 gap-10">
-                    {/* Operations Row: Side by Side Alerts */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                        <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
-                        <SmartAlerts
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            studentInvoices={rawStudentInvoices}
-                            lowBalanceStudents={lowBalanceStudents}
-                        />
-                    </div>
-
-                    {/* Main Analytical Core */}
-                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-                        {/* Analytical Content (8/12) */}
-                        <div className="xl:col-span-8 space-y-10">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <PerformanceSummary stats={stats} isTeacher={false} />
-                                <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                            </div>
-
-                            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-2 shadow-2xl shadow-indigo-500/5 transition-all duration-500 overflow-hidden">
-                                <AnalyticsDashboard
-                                    students={rawStudents}
-                                    sessions={rawSessions}
-                                    monthlyData={monthlyData}
-                                />
-                            </div>
+                        {/* 1. Full Width Analysis Center */}
+                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5">
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
-                        {/* Operational Feed (4/12) */}
-                        <div className="xl:col-span-4 space-y-10">
-                            <TasksAndRequests tasks={tasks} />
-                            <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            <ModernAnnouncements />
+                        {/* 2. Side by Side Alerts */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
+                            <SmartAlerts
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                studentInvoices={rawStudentInvoices}
+                                lowBalanceStudents={lowBalanceStudents}
+                            />
                         </div>
-                    </div>
-                </div>
+
+                        {/* 3. Main Analytical Grid & Sidebar */}
+                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
+                            {/* Main Analytical Core (8/12) */}
+                            <div className="xl:col-span-8 space-y-10">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <PerformanceSummary stats={stats} isTeacher={false} />
+                                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
+                                </div>
+
+                                <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-2 shadow-2xl shadow-indigo-500/5 overflow-hidden">
+                                    <AnalyticsDashboard
+                                        students={rawStudents}
+                                        sessions={rawSessions}
+                                        monthlyData={monthlyData}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Operational Sidebar (4/12) */}
+                            <div className="xl:col-span-4 space-y-10">
+                                <TasksAndRequests tasks={tasks} />
+                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                                <ModernAnnouncements />
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
@@ -160,50 +158,16 @@ export const Dashboard = () => {
                         setBriefingStudent(null);
                     }}
                     student={briefingStudent}
-                    enrollment={briefingStudent.enrollments?.find((e: any) => e.teacherId === currentUser.id || e.teacher === (currentUser.teacherName || currentUser.name))}
-                    recentSessions={rawSessions
-                        .filter(s => s.studentId === briefingStudent.id && (s.status === 'completed' || s.status === 'مكتملة'))
-                        .sort((a,b) => (b.date || '').localeCompare(a.date || ''))
-                        .slice(0, 3)
-                        .map(s => ({
-                            date: s.date,
-                            topics: s.topics || 'حصة عادية',
-                            rating: 'ممتاز'
-                        }))
-                    }
                 />
             )}
 
             {selectedStudentForReport && (
-                <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-md overflow-y-auto">
-                    <div className="my-8 w-full max-w-lg">
-                        <MonthlyReportPreview 
-                            student={{
-                                id: selectedStudentForReport.id,
-                                name: selectedStudentForReport.name,
-                                grade: selectedStudentForReport.grade,
-                                subject: 'تحفيظ القرآن الكريم',
-                                points: selectedStudentForReport.totalPoints || 0,
-                                attendance: 95,
-                                sessionsCompleted: rawSessions.filter(s => s.studentId === selectedStudentForReport.id && s.status === 'completed').length,
-                                lastNotes: rawSessions
-                                    .filter(s => s.studentId === selectedStudentForReport.id && s.topics)
-                                    .slice(0, 3)
-                                    .map(s => s.topics!)
-                            }}
-                            onShare={(p) => {
-                                console.log(`Sharing via ${p}`);
-                                setSelectedStudentForReport(null);
-                            }}
-                        />
-                        <button 
-                            onClick={() => setSelectedStudentForReport(null)}
-                            className="mt-6 w-full py-4 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-100 dark:border-slate-700 font-bold text-xs uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all shadow-sm rounded-xl"
-                        >
-                            إغلاق المعاينة
-                        </button>
-                    </div>
-                </div>
+                <MonthlyReportPreview
+                    isOpen={!!selectedStudentForReport}
+                    onClose={() => setSelectedStudentForReport(null)}
+                    student={selectedStudentForReport}
+                    stats={stats}
+                />
             )}
         </div>
     );
