@@ -5,9 +5,7 @@ import { DashboardHeader } from '../features/dashboard/components/DashboardHeade
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
 import { ImportantNotifications } from '../features/dashboard/components/ImportantNotifications';
 import { DashboardCharts } from '../features/dashboard/components/DashboardCharts';
-import { PerformanceSummary } from '../features/dashboard/components/PerformanceSummary';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
-import { SessionAnalysis } from '../features/dashboard/components/SessionAnalysis';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
 import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
