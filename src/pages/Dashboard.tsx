@@ -62,7 +62,6 @@ export const Dashboard = () => {
                 <DashboardHeader
                     isTeacher={isTeacher}
                     currentUser={currentUser}
-                    stats={stats}
                 />
             </div>
 
