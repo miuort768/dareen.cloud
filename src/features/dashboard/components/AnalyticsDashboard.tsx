@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-    BarChart2, TrendingUp, Users, Award
+    BarChart2, TrendingUp, Users, Award, ShieldCheck
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
