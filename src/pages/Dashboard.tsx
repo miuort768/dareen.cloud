@@ -103,11 +103,11 @@ export const Dashboard = () => {
                     <div className="flex flex-col gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         
                         {/* 1. Full Width Analysis Center */}
-                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5">
+                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10">
                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
-                        {/* 2. Side by Side Alerts */}
+                        {/* 2. Primary Operations Row: Side by Side Alerts */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                             <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
                             <SmartAlerts
@@ -118,29 +118,27 @@ export const Dashboard = () => {
                             />
                         </div>
 
-                        {/* 3. Main Analytical Grid & Sidebar */}
-                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-                            {/* Main Analytical Core (8/12) */}
-                            <div className="xl:col-span-8 space-y-10">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <PerformanceSummary stats={stats} isTeacher={false} />
-                                    <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                                </div>
+                        {/* 3. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
+                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-6 shadow-2xl shadow-indigo-500/5">
+                            <AnalyticsDashboard
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                monthlyData={monthlyData}
+                            />
+                        </div>
 
-                                <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-2 shadow-2xl shadow-indigo-500/5 overflow-hidden">
-                                    <AnalyticsDashboard
-                                        students={rawStudents}
-                                        sessions={rawSessions}
-                                        monthlyData={monthlyData}
-                                    />
-                                </div>
-                            </div>
+                        {/* 4. Secondary Operations Row: More Side-by-Side (Renewal & Activity) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                        </div>
 
-                            {/* Operational Sidebar (4/12) */}
-                            <div className="xl:col-span-4 space-y-10">
+                        {/* 5. Bottom Tasks & Information */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                            <div className="lg:col-span-7">
                                 <TasksAndRequests tasks={tasks} />
-                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            </div>
+                            <div className="lg:col-span-5">
                                 <ModernAnnouncements />
                             </div>
                         </div>
@@ -160,15 +158,15 @@ export const Dashboard = () => {
                             grade: student.grade,
                             subject: 'مادة عامة',
                             points: student.totalPoints || 0,
-                            attendance: 95, // mock or derived
-                            sessionsCompleted: 12, // mock or derived
+                            attendance: 95, 
+                            sessionsCompleted: 12, 
                             lastNotes: [student.notes || 'تقدم ممتاز في المادة']
                         };
                         setSelectedStudentForReport(studentDataForReport);
                         setBriefingStudent(null);
                     }}
                     student={briefingStudent}
-                    recentSessions={[]} // Pass sessions here if available
+                    recentSessions={[]} 
                 />
             )}
 
