@@ -154,10 +154,21 @@ export const Dashboard = () => {
                     isOpen={!!briefingStudent}
                     onClose={() => setBriefingStudent(null)}
                     onGenerateReport={(student) => {
-                        setSelectedStudentForReport(student);
+                        const studentDataForReport = {
+                            id: student.id,
+                            name: student.name,
+                            grade: student.grade,
+                            subject: 'مادة عامة',
+                            points: student.totalPoints || 0,
+                            attendance: 95, // mock or derived
+                            sessionsCompleted: 12, // mock or derived
+                            lastNotes: [student.notes || 'تقدم ممتاز في المادة']
+                        };
+                        setSelectedStudentForReport(studentDataForReport);
                         setBriefingStudent(null);
                     }}
                     student={briefingStudent}
+                    recentSessions={[]} // Pass sessions here if available
                 />
             )}
 
@@ -166,7 +177,7 @@ export const Dashboard = () => {
                     isOpen={!!selectedStudentForReport}
                     onClose={() => setSelectedStudentForReport(null)}
                     student={selectedStudentForReport}
-                    stats={stats}
+                    onShare={(platform) => console.log('Sharing on', platform)}
                 />
             )}
         </div>
