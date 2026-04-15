@@ -63,35 +63,38 @@ export const Reports = () => {
                 </div>
                 
                 <div className="flex flex-wrap md:flex-nowrap p-3 gap-3 bg-white">
-                    {[
+                    { [
                         { id: 'academic', label: 'الأكاديمي', icon: Award, color: 'purple' },
                         { id: 'attendance', label: 'الحضور والغياب', icon: CheckCircle2, color: 'emerald' },
                         { id: 'financial', label: 'المالي العام', icon: DollarSign, color: 'amber' },
                         { id: 'enrollment', label: 'التسجيلات', icon: Target, color: 'rose' },
-                    ].map((tab) => (
-                        <button
-                            key={tab.id}
-                            onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                            className={cn(
-                                "flex-1 min-w-[100px] px-3 py-3 border-2 transition-all flex flex-col items-center justify-center gap-1.5 group relative overflow-hidden",
-                                state.activeReport === tab.id
-                                    ? "bg-gray-950 text-white border-gray-950 shadow-[2px_2px_0px_0px_#444] translate-x-0.5 translate-y-0.5 shadow-none"
-                                    : "bg-white text-gray-950 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
-                            )
-                        >
-                            <tab.icon size={16} strokeWidth={3} className={cn(
-                                "transition-transform group-hover:scale-110",
-                                state.activeReport === tab.id ? "text-white" : `text-${tab.color}-600`
-                            )} />
-                            <span className="text-[9px] font-black uppercase tracking-tight text-center">{tab.label}</span>
-                            
-                            {state.activeReport === tab.id && (
-                                <div className="absolute top-2 right-2 flex items-center gap-1">
-                                    <Sparkles size={10} className="text-amber-400" />
-                                </div>
-                            )}
-                        </button>
-                    ))}
+                    ].map((tab) => {
+                        const Icon = tab.icon;
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => actions.setActiveReport(tab.id as ReportType)}
+                                className={cn(
+                                    "flex-1 min-w-[100px] px-3 py-3 border-2 transition-all flex flex-col items-center justify-center gap-1.5 group relative overflow-hidden",
+                                    state.activeReport === tab.id
+                                        ? "bg-gray-950 text-white border-gray-950 shadow-[2px_2px_0px_0px_#444] translate-x-0.5 translate-y-0.5 shadow-none"
+                                        : "bg-white text-gray-950 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                                )}
+                            >
+                                <Icon size={16} strokeWidth={3} className={cn(
+                                    "transition-transform group-hover:scale-110",
+                                    state.activeReport === tab.id ? "text-white" : `text-${tab.color}-600`
+                                )} />
+                                <span className="text-[9px] font-black uppercase tracking-tight text-center">{tab.label}</span>
+                                
+                                {state.activeReport === tab.id && (
+                                    <div className="absolute top-2 right-2 flex items-center gap-1">
+                                        <Sparkles size={10} className="text-amber-400" />
+                                    </div>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 

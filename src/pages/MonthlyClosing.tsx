@@ -110,15 +110,7 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
             </div>
         </div>
     );
-};�عة القسيمة
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
 };
-
 
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
