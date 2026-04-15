@@ -95,55 +95,54 @@ export const Dashboard = () => {
                     </div>
                 </div>
             ) : (
-                /* Admin Executive View (NEW: Compact & Optimized) */
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
-                    
-                    {/* Left Column (Main Analytics & Feed) - 8/12 Columns */}
-                    <div className="xl:col-span-12 space-y-6">
-                        {/* Highlights & Hero Charts */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <>
+                    {/* Admin Executive View (NEW: Re-Balanced & High-Density) */}
+                    <div className="space-y-4">
+                        
+                        {/* Row 1: High-Priority Operational Metrics */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             <PerformanceSummary stats={stats} isTeacher={false} />
                             <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                             <TasksAndRequests tasks={tasks} />
                         </div>
 
-                        {/* Large Charts Section & Table Area */}
-                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-                            <div className="xl:col-span-8 space-y-6">
-                                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-4 shadow-sm">
+                        {/* Row 2: Visual Insights & Urgent Alerts */}
+                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
+                            <div className="xl:col-span-8">
+                                <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 p-2 shadow-[4px_4px_0px_0px_black] h-full">
                                      <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                                 </div>
-                                <RenewalAlertsList
-                                    stats={stats}
-                                    lowBalanceStudents={lowBalanceStudents}
-                                />
-                                <AnalyticsDashboard
-                                    students={rawStudents}
-                                    sessions={rawSessions}
-                                    monthlyData={monthlyData}
-                                />
                             </div>
-
-                            {/* Sidebar elements now integrated into layout */}
-                            <div className="xl:col-span-4 space-y-6">
-                                <div className="bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30 p-1">
-                                    <ImportantNotifications
-                                        tasks={tasks}
-                                        lowBalanceStudents={lowBalanceStudents}
-                                    />
-                                </div>
+                            <div className="xl:col-span-4 space-y-4">
+                                <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
                                 <SmartAlerts
                                     students={rawStudents}
                                     sessions={rawSessions}
                                     studentInvoices={rawStudentInvoices}
                                     lowBalanceStudents={lowBalanceStudents}
                                 />
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                                <ModernAnnouncements />
                             </div>
                         </div>
+
+                        {/* Row 3: Deep Data Analytics (Tables - FULL WIDTH) */}
+                        <div className="w-full">
+                            <AnalyticsDashboard
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                monthlyData={monthlyData}
+                            />
+                        </div>
+
+                        {/* Row 4: Chronology & Administrative Monitoring */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="space-y-4">
+                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
+                                <ModernAnnouncements />
+                            </div>
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                        </div>
                     </div>
-                </div>
+                </>
             )}
 
             {/* Suggestion 2: Quick Brief Modal */}
