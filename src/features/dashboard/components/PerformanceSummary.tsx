@@ -91,4 +91,3 @@ export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps
         </div>
     );
 };
-};

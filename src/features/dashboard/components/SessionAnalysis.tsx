@@ -87,9 +87,4 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
             </div>
         </div>
     );
-};>
-                </div>
-            </div>
-        </div>
-    );
 };
