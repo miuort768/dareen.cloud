@@ -65,7 +65,7 @@ export const Dashboard = () => {
                 />
             </div>
 
-            <div className="max-w-[1600px] mx-auto px-4 md:px-8 -mt-20 space-y-8">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-8 -mt-10 space-y-10">
                 {/* Row 1: Key Statistics (Premium Floating Cards) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <DashboardStats stats={stats} isTeacher={isTeacher} />
