@@ -70,10 +70,10 @@ export const StudentToolbar = ({
             <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto no-print justify-center lg:justify-end">
                 <button
                     onClick={onPrint}
-                    className="bg-emerald-500 text-white px-8 py-5 border-4 border-gray-950 rounded-none flex items-center justify-center gap-3 hover:bg-emerald-600 font-black shadow-[4px_4px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all whitespace-nowrap uppercase tracking-widest"
+                    className="bg-emerald-500 text-white px-6 py-4 border-4 border-gray-950 rounded-none flex items-center justify-center gap-3 hover:bg-emerald-600 font-black shadow-[4px_4px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all whitespace-nowrap uppercase tracking-widest"
                 >
                     <Printer size={22} />
-                    <span>طباعة الكشوف</span>
+                    <span>طباعة</span>
                 </button>
 
                 <div className="flex items-center gap-3 bg-gray-50 p-2 border-2 border-dashed border-gray-300">
