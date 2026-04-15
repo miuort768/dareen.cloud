@@ -56,6 +56,17 @@ export const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-10 overflow-x-hidden text-sm" dir="rtl">
+            
+            {/* 🏆 Top Honor Banner (Full Width, Sharp) */}
+            {!isTeacher && (
+                <div className="bg-slate-900 dark:bg-indigo-950 p-2 border-b-2 border-indigo-500 flex items-center justify-center gap-3 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%)] bg-[length:150px_150px] animate-[shimmer_8s_infinite] pointer-events-none"></div>
+                    <Star className="text-yellow-400 fill-yellow-400" size={12} />
+                    <h2 className="text-[11px] font-black text-indigo-100 tracking-[0.2em] uppercase italic">تهانينا لأنكم أفراد العائلة المميزين</h2>
+                    <Star className="text-yellow-400 fill-yellow-400" size={12} />
+                </div>
+            )}
+
             {/* Premium Header Section */}
             <div className="relative pt-4 pb-12">
                 <DashboardHeader
@@ -66,16 +77,6 @@ export const Dashboard = () => {
 
             <div className="max-w-[1600px] mx-auto px-4 md:px-6 -mt-8 space-y-8">
                 
-                {/* 🏆 New Sharp Welcome Banner */}
-                {!isTeacher && (
-                    <div className="bg-indigo-600 dark:bg-indigo-900/80 p-4 border-2 border-slate-900 dark:border-slate-800 flex items-center justify-center gap-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:250px_250px] animate-[shimmer_5s_infinite] pointer-events-none"></div>
-                        <Star className="text-yellow-400 fill-yellow-400 animate-pulse" size={20} />
-                        <h2 className="text-lg md:text-xl font-black text-white italic tracking-tighter uppercase">تهانينا لأنكم أفراد العائلة المميزين</h2>
-                        <Star className="text-yellow-400 fill-yellow-400 animate-pulse" size={20} />
-                    </div>
-                )}
-
                 {/* Row 1: Key Statistics (Sharp Floating Cards) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <DashboardStats stats={stats} isTeacher={isTeacher} />
@@ -156,7 +157,7 @@ export const Dashboard = () => {
                 )}
             </div>
 
-            {/* Modals keep their premium look but will be adjusted if needed */}
+            {/* Suggen 2: Quick Brief Modal */}
             {isTeacher && briefingStudent && (
                 <StudentQuickBrief
                     isOpen={!!briefingStudent}
