@@ -63,19 +63,27 @@ export const Dashboard = () => {
                 stats={stats}
             />
 
-            {/* Unified 12-Item Command Center (8 Stats + 4 Quick Actions) */}
+            {/* Row 1: Key Statistics (Standard Clean 4-Column Grid) */}
             {!isTeacher && (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <DashboardStats stats={stats} isTeacher={false} />
+                </div>
+            )}
+
+            {/* Row 2: Operational Command (Quick Actions - Separate & Clean) */}
+            {!isTeacher && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <QuickActionsHub />
                 </div>
             )}
 
             {/* Main Operational Layout */}
             {isTeacher ? (
-                /* Teacher View (Already compact) */
+                /* Teacher View */
                 <div className="space-y-6 animate-in fade-in duration-500">
-                    <DashboardStats stats={stats} isTeacher={true} />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                         <DashboardStats stats={stats} isTeacher={true} />
+                    </div>
                     <ModernAnnouncements />
                     <div className="w-full">
                         <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
@@ -95,36 +103,23 @@ export const Dashboard = () => {
                     </div>
                 </div>
             ) : (
-                <>
-                    {/* Admin Executive View (NEW: Re-Balanced & High-Density) */}
-                    <div className="space-y-4">
-                        
-                        {/* Row 1: High-Priority Operational Metrics */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                /* Admin Executive View (Optimized for Clarity) */
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 animate-in fade-in duration-500">
+                    
+                    {/* Left Side: Analytics & Planning (8/12) */}
+                    <div className="xl:col-span-8 space-y-6">
+                        {/* Core Performance Insights */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <PerformanceSummary stats={stats} isTeacher={false} />
                             <SessionAnalysis stats={stats} monthlyData={monthlyData} />
-                            <TasksAndRequests tasks={tasks} />
                         </div>
 
-                        {/* Row 2: Visual Insights & Urgent Alerts */}
-                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
-                            <div className="xl:col-span-8">
-                                <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 p-2 shadow-[4px_4px_0px_0px_black] h-full">
-                                     <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                                </div>
-                            </div>
-                            <div className="xl:col-span-4 space-y-4">
-                                <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
-                                <SmartAlerts
-                                    students={rawStudents}
-                                    sessions={rawSessions}
-                                    studentInvoices={rawStudentInvoices}
-                                    lowBalanceStudents={lowBalanceStudents}
-                                />
-                            </div>
+                        {/* Financial Area & Charts */}
+                        <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black]">
+                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
-                        {/* Row 3: Deep Data Analytics (Tables - FULL WIDTH) */}
+                        {/* Detailed Data Tables */}
                         <div className="w-full">
                             <AnalyticsDashboard
                                 students={rawStudents}
@@ -132,17 +127,30 @@ export const Dashboard = () => {
                                 monthlyData={monthlyData}
                             />
                         </div>
+                    </div>
 
-                        {/* Row 4: Chronology & Administrative Monitoring */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div className="space-y-4">
-                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                                <ModernAnnouncements />
-                            </div>
+                    {/* Right Side: Alerts & Operations (4/12) */}
+                    <div className="xl:col-span-4 space-y-6">
+                        <TasksAndRequests tasks={tasks} />
+                        
+                        <div className="bg-rose-50/50 dark:bg-rose-900/10 border-2 border-rose-100 p-2">
+                            <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
+                        </div>
+
+                        <SmartAlerts
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                            lowBalanceStudents={lowBalanceStudents}
+                        />
+
+                        <div className="space-y-6">
+                            <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
                             <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <ModernAnnouncements />
                         </div>
                     </div>
-                </>
+                </div>
             )}
 
             {/* Suggestion 2: Quick Brief Modal */}
