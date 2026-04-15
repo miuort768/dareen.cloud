@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bell, ListTodo, Phone, X, ShieldAlert } from 'lucide-react';
+import { Bell, ListTodo, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';

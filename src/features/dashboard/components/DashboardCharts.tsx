@@ -1,5 +1,5 @@
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area } from 'recharts';
-import { Activity, Sparkles, TrendingUp, Calendar } from 'lucide-react';
+import { Activity } from 'lucide-react';
 import type { DashboardMonthData as MonthData } from '../types';
 
 interface DashboardChartsProps {
