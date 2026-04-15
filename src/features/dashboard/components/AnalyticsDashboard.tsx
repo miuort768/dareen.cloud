@@ -58,8 +58,8 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             <ShieldCheck size={20} />
                         </div>
                         <div>
-                            <p className="text-emerald-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1">معدل الالتزام</p>
-                            <p className="text-2xl font-black text-white tabular-nums leading-none">{overallRate}%</p>
+                            <p className="text-emerald-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1 text-right">معدل الالتزام</p>
+                            <p className="text-2xl font-black text-white tabular-nums leading-none text-right">{overallRate}%</p>
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             <Users size={20} />
                         </div>
                         <div>
-                            <p className="text-indigo-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1">قاعدة الطلاب</p>
-                            <p className="text-2xl font-black text-white tabular-nums leading-none">{students.length}</p>
+                            <p className="text-indigo-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1 text-right">قاعدة الطلاب</p>
+                            <p className="text-2xl font-black text-white tabular-nums leading-none text-right">{students.length}</p>
                         </div>
                     </div>
                 </div>
@@ -79,9 +79,9 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-white dark:bg-slate-900/50 p-6 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm h-[320px] flex flex-col">
-                    <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-3 mb-6 border-b border-slate-50 pb-3">
                         <TrendingUp size={16} className="text-emerald-600" />
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">تطور الالتزام</h4>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight italic">تطور الالتزام</h4>
                     </div>
                     <div className="flex-1 w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
@@ -103,9 +103,9 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
 
                 <div className="bg-white dark:bg-slate-900/50 p-6 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm h-[320px] flex flex-col">
-                    <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-3 mb-6 border-b border-slate-50 pb-3">
                         <BarChart2 size={16} className="text-indigo-600" />
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">توزيع المسارات</h4>
+                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight italic">توزيع المسارات</h4>
                     </div>
                     <div className="flex-1 w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
@@ -121,29 +121,39 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            {/* Honor Roll: Redesigned (Sharp & Small) */}
+            {/* 🏅 Premium Hall of Fame (Redesigned لوحة الشرف) */}
             {students.some((s: any) => (s.totalPoints || 0) > 0) && (
-                <div className="bg-slate-900 p-6 rounded-none border border-slate-800 shadow-sm relative overflow-hidden">
-                    <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-                        <div className="shrink-0 text-center md:text-right border-l-0 md:border-l border-slate-700 pr-0 md:pr-2 pl-0 md:pl-8">
-                            <div className="w-12 h-12 bg-yellow-400 rounded-none flex items-center justify-center mx-auto md:mx-0 mb-3">
-                                <Award size={24} className="text-slate-950" />
+                <div className="bg-white border-2 border-slate-900 p-6 rounded-none shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
+                    <div className="flex flex-col md:flex-row items-center gap-10">
+                        {/* Title Badge */}
+                        <div className="shrink-0 flex flex-col items-center md:items-start">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Award size={24} className="text-yellow-500" />
+                                <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter italic leading-none">لوحة الشرف</h4>
                             </div>
-                            <h4 className="text-lg font-black text-white italic tracking-tighter mb-1 uppercase">لوحة الشرف</h4>
-                            <p className="text-slate-500 font-bold text-[9px] uppercase tracking-widest">أبرز المتميزين</p>
+                            <p className="text-[9px] font-black text-slate-400 tracking-[0.3em] uppercase underline underline-offset-4 decoration-yellow-500/50">أفضل الأداء لهذا الشهر</p>
                         </div>
 
-                        <div className="flex-1 grid grid-cols-3 md:grid-cols-5 gap-3">
+                        {/* Top Students High-Contrast List */}
+                        <div className="flex-1 grid grid-cols-2 lg:grid-cols-5 gap-4 w-full">
                             {[...students]
                                 .filter((s: any) => (s.totalPoints || 0) > 0)
                                 .sort((a: any, b: any) => (b.totalPoints || 0) - (a.totalPoints || 0))
                                 .slice(0, 5)
                                 .map((s: any, i: number) => (
-                                    <div key={s.id} className="p-3 bg-white/5 border border-white/10 rounded-none text-center hover:bg-white/10 transition-all">
-                                        <p className="text-[10px] font-bold text-slate-500 mb-1">#{i + 1}</p>
-                                        <p className="font-bold text-[10px] text-white mb-2 truncate">{s.name.split(' ')[0]}</p>
-                                        <div className="px-2 py-0.5 bg-yellow-500/10 rounded-none inline-flex items-center gap-1">
-                                            <span className="text-[11px] font-black text-yellow-500 tabular-nums">{s.totalPoints}</span>
+                                    <div key={s.id} className="relative p-3 border border-slate-100 hover:border-slate-900 transition-all group overflow-hidden">
+                                        {/* Rank Number Background */}
+                                        <span className="absolute -top-2 -left-2 text-4xl font-black text-slate-50 opacity-10 group-hover:opacity-20 transition-opacity">0{i + 1}</span>
+                                        
+                                        <div className="relative z-10 pt-2 text-center md:text-right">
+                                            <p className="text-[11px] font-black text-slate-900 truncate mb-2">{s.name}</p>
+                                            <div className="flex items-center justify-between">
+                                                <div className="h-0.5 flex-1 bg-slate-100 group-hover:bg-yellow-500 transition-colors mr-2"></div>
+                                                <div className="flex flex-col items-end">
+                                                    <span className="text-[10px] font-black text-slate-950 tabular-nums">{s.totalPoints}</span>
+                                                    <span className="text-[8px] font-bold text-slate-400 uppercase leading-none">نقطة تميز</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
