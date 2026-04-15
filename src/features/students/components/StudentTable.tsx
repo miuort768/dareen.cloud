@@ -1,4 +1,4 @@
-import { Eye, Edit, Trash, GraduationCap, AlertCircle } from 'lucide-react';
+import { Eye, Edit, Trash, GraduationCap, AlertCircle, Activity } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
 
@@ -12,24 +12,30 @@ interface StudentTableProps {
     isTeacherView: boolean;
 }
 
-export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, showDetails, isTeacherView }: StudentTableProps) => {
+export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, showDetails, isTeacherView: _isTeacherView }: StudentTableProps) => {
     return (
         <div className="bg-transparent">
-            {/* Desktop View */}
+            {/* Desktop View - Technical Report Style */}
             <div className="hidden md:block bg-white border-4 border-gray-950 dark:bg-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_black] overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
+                    <table className="w-full border-collapse text-right">
                         <thead>
-                            <tr className="bg-gray-950 text-white">
-                                <th className={cn("px-6 py-4 text-center font-black text-xs uppercase tracking-widest border-l border-white/10", showDetails && "px-2 py-3 text-[10px]")}>اسم الطالب</th>
-                                <th className={cn("px-6 py-4 text-center font-black text-xs uppercase tracking-widest border-l border-white/10", showDetails && "px-2 py-3 text-[10px]")}>الصف الدراسي</th>
-                                <th className={cn("px-6 py-4 text-center font-black text-xs uppercase tracking-widest border-l border-white/10", showDetails && "px-2 py-3 text-[10px]")}>رقم التواصل</th>
-                                <th className={cn("px-6 py-4 text-center font-black text-xs uppercase tracking-widest border-l border-white/10", showDetails && "px-2 py-3 text-[10px]")}>الاشتراكات</th>
-                                <th className={cn("px-6 py-4 text-center font-black text-xs uppercase tracking-widest", showDetails && "px-2 py-3 text-[10px]")}>الإجراءات</th>
+                            <tr className="bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>اسم الطالب</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>الصف</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>الاشتراكات</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>المتوقعة</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>المستخدمة</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest border-l border-white/10", showDetails && "px-1 text-[8px]")}>نسبة التقدم</th>
+                                <th className={cn("px-4 py-4 text-center font-black text-[10px] uppercase tracking-widest", showDetails && "px-1 text-[8px]")}>الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y-2 divide-gray-950">
                             {students.map((student) => {
+                                const totalExpected = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsTotal || 0), 0);
+                                const totalUsed = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsUsed || 0), 0);
+                                const progress = totalExpected > 0 ? Math.round((totalUsed / totalExpected) * 100) : 0;
+                                
                                 const hasLowBalance = student.enrollments?.some(en => (en.sessionsTotal - en.sessionsUsed) <= 2);
                                 const isSelected = selectedId === student.id;
 
@@ -37,43 +43,57 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                                     <tr
                                         key={student.id}
                                         className={cn(
-                                            "cursor-pointer transition-all hover:bg-primary-50/50",
+                                            "cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-slate-800 animate-in fade-in duration-300",
                                             isSelected ? 'bg-amber-400/20' : '',
                                             hasLowBalance ? 'bg-rose-50' : ''
                                         )}
                                         onClick={() => onSelect(student)}
                                     >
-                                        <td className={cn("px-6 py-4 text-center border-l-2 border-gray-100", showDetails && "px-2 py-2")}>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
                                             <div className="flex flex-col items-center">
-                                                <span className={cn("font-black text-gray-950 dark:text-white uppercase tracking-tight", showDetails ? "text-xs" : "text-sm")}>{student.name}</span>
+                                                <span className={cn("font-black text-gray-950 dark:text-white uppercase tracking-tight", showDetails ? "text-[10px]" : "text-xs italic")}>{student.name}</span>
                                                 {hasLowBalance && (
-                                                    <div className="flex items-center gap-1 mt-1 bg-rose-600 px-2 py-0.5 shadow-[2px_2px_0px_0px_black]">
+                                                    <div className="mt-1 bg-rose-600 px-1.5 py-0.5 shadow-[1px_1px_0px_0px_black] flex items-center gap-1">
                                                         <AlertCircle size={8} className="text-white" />
-                                                        <span className="text-[8px] font-black text-white uppercase italic">رصيد منخفض</span>
+                                                        <span className="text-[7px] font-black text-white uppercase italic">تحذير رصيد</span>
                                                     </div>
                                                 )}
                                             </div>
                                         </td>
-                                        <td className={cn("px-6 py-4 text-center border-l-2 border-gray-100", showDetails && "px-2 py-2")}>
-                                            <span className={cn("inline-block bg-primary-50 text-primary-700 font-black border-2 border-primary-600 px-3 py-1 text-[10px] uppercase shadow-[2px_2px_0px_0px_black]", showDetails && "px-1.5 py-0.5 text-[8px]")}>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
+                                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">
                                                 {student.grade}
                                             </span>
                                         </td>
-                                        <td className={cn("px-6 py-4 text-center border-l-2 border-gray-100 font-mono font-black text-gray-500", showDetails ? "px-1 py-1 text-[10px]" : "text-xs")} dir="ltr">
-                                            {isTeacherView ? '••••••••' : student.parentPhone}
-                                        </td>
-                                        <td className={cn("px-6 py-4 text-center border-l-2 border-gray-100", showDetails && "px-2 py-2")}>
-                                            <div className="flex items-center justify-center gap-2">
-                                                <div className="w-8 h-8 bg-gray-950 text-white flex items-center justify-center font-black text-xs border-2 border-gray-950 shadow-[2px_2px_0px_0px_#444]">
-                                                    {student.enrollments?.length || 0}
-                                                </div>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
+                                            <div className="inline-flex items-center justify-center w-6 h-6 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 font-black text-[10px]">
+                                                {student.enrollments?.length || 0}
                                             </div>
                                         </td>
-                                        <td className={cn("px-6 py-4 text-center", showDetails && "px-1 py-1")}>
-                                            <div className={cn("flex items-center justify-center gap-2", showDetails && "gap-1")}>
-                                                <button onClick={(e) => { e.stopPropagation(); onSelect(student); }} className="p-2 bg-white border-2 border-gray-950 text-primary-600 hover:bg-gray-950 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"><Eye size={showDetails ? 14 : 18} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="p-2 bg-white border-2 border-gray-950 text-emerald-600 hover:bg-gray-950 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"><Edit size={showDetails ? 14 : 18} /></button>
-                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="p-2 bg-white border-2 border-gray-950 text-rose-600 hover:bg-gray-950 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"><Trash size={showDetails ? 14 : 18} /></button>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
+                                            <span className="text-[11px] font-black text-slate-700 dark:text-slate-300 tabular-nums">{totalExpected}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
+                                            <span className="text-[11px] font-black text-emerald-600 tabular-nums">{totalUsed}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center border-l-2 border-gray-100 dark:border-gray-800">
+                                            <div className="flex items-center justify-center gap-2">
+                                                {!showDetails && (
+                                                    <div className="flex-1 bg-slate-100 dark:bg-slate-800 h-2 rounded-none overflow-hidden max-w-[80px] border border-slate-200 dark:border-slate-700">
+                                                        <div 
+                                                            className={cn("h-full transition-all duration-1000 bg-indigo-600")} 
+                                                            style={{ width: `${progress}%` }}
+                                                        ></div>
+                                                    </div>
+                                                )}
+                                                <span className="text-[10px] font-black text-slate-900 dark:text-slate-200 tabular-nums">{progress}%</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <div className="flex items-center justify-center gap-1.5">
+                                                <button onClick={(e) => { e.stopPropagation(); onSelect(student); }} className="p-1.5 bg-white border border-gray-950 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"><Eye size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="p-1.5 bg-white border border-gray-950 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"><Edit size={14} /></button>
+                                                <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="p-1.5 bg-white border border-gray-950 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"><Trash size={14} /></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -84,67 +104,52 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
                 </div>
             </div>
 
-            {/* Mobile View (Cards) */}
-            <div className="md:hidden space-y-6">
+            {/* Mobile View - High Contrast Detail Cards */}
+            <div className="md:hidden space-y-4">
                 {students.map((student) => {
+                    const totalExpected = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsTotal || 0), 0);
+                    const totalUsed = (student.enrollments || []).reduce((acc, en) => acc + (en.sessionsUsed || 0), 0);
+                    const progress = totalExpected > 0 ? Math.round((totalUsed / totalExpected) * 100) : 0;
                     const hasLowBalance = student.enrollments?.some(en => (en.sessionsTotal - en.sessionsUsed) <= 2);
-                    const isSelected = selectedId === student.id;
 
                     return (
-                        <div
-                            key={student.id}
-                            onClick={() => onSelect(student)}
-                            className={cn(
-                                "bg-white dark:bg-gray-900 border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] relative overflow-hidden",
-                                isSelected ? 'bg-amber-400/10' : ''
-                            )}
-                        >
-                            <div className="absolute top-0 right-0 w-2 h-full bg-primary-600"></div>
-                            
-                            <div className="flex items-start justify-between mb-4">
+                        <div key={student.id} onClick={() => onSelect(student)} className="bg-white dark:bg-gray-950 border-4 border-gray-950 p-4 shadow-[6px_6px_0px_0px_black] transition-transform active:scale-95">
+                            <div className="flex justify-between items-start mb-4">
                                 <div>
-                                    <h3 className="text-xl font-black text-gray-950 dark:text-white mb-1 uppercase tracking-tight">{student.name}</h3>
-                                    <div className="flex gap-2">
-                                        <span className="bg-gray-950 text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                                            {student.grade}
-                                        </span>
-                                    </div>
+                                    <h4 className="text-sm font-black text-gray-950 dark:text-white uppercase tracking-tighter italic">{student.name}</h4>
+                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{student.grade}</span>
                                 </div>
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); onEdit(student); }}
-                                        className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center text-emerald-600 shadow-[2px_2px_0px_0px_black]"
-                                    >
-                                        <Edit size={18} />
-                                    </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); onDelete(student.id); }}
-                                        className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center text-rose-600 shadow-[2px_2px_0px_0px_black]"
-                                    >
-                                        <Trash size={18} />
-                                    </button>
+                                <div className="flex gap-1.5">
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(student); }} className="w-8 h-8 bg-white border-2 border-gray-950 flex items-center justify-center text-emerald-600 shadow-[2px_2px_0px_0px_black]"><Edit size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(student.id); }} className="w-8 h-8 bg-white border-2 border-gray-950 flex items-center justify-center text-rose-600 shadow-[2px_2px_0px_0px_black]"><Trash size={14} /></button>
+                                </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-3 gap-2 mb-4">
+                                <div className="bg-slate-50 p-2 border border-slate-200 text-center">
+                                    <span className="text-[7px] font-black text-slate-400 block uppercase">الاشتراكات</span>
+                                    <span className="text-xs font-black text-slate-900">{student.enrollments?.length || 0}</span>
+                                </div>
+                                <div className="bg-slate-50 p-2 border border-slate-200 text-center">
+                                    <span className="text-[7px] font-black text-slate-400 block uppercase">المتوقعة</span>
+                                    <span className="text-xs font-black text-slate-900">{totalExpected}</span>
+                                </div>
+                                <div className="bg-slate-50 p-2 border border-slate-200 text-center">
+                                    <span className="text-[7px] font-black text-slate-400 block uppercase">المستخدمة</span>
+                                    <span className="text-xs font-black text-emerald-600">{totalUsed}</span>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-gray-50 border-2 border-gray-950 p-3 shadow-[2px_2px_0px_0px_black]">
-                                    <span className="text-[8px] font-black text-gray-400 uppercase block mb-1">بيانات التواصل</span>
-                                    <span className="font-mono font-black text-xs text-gray-950" dir="ltr">
-                                        {isTeacherView ? '••••••••' : student.parentPhone}
-                                    </span>
+                            <div className="flex items-center gap-3">
+                                <div className="flex-1 bg-slate-100 h-2 border border-slate-200">
+                                    <div className="h-full bg-indigo-600" style={{ width: `${progress}%` }}></div>
                                 </div>
-                                <div className="bg-gray-50 border-2 border-gray-950 p-3 shadow-[2px_2px_0px_0px_black]">
-                                    <span className="text-[8px] font-black text-gray-400 uppercase block mb-1">المواد المسجل بها</span>
-                                    <span className="font-black text-primary-600 text-xs">
-                                        {student.enrollments?.length || 0} اشتراكات
-                                    </span>
-                                </div>
+                                <span className="text-[10px] font-black italic">{progress}%</span>
                             </div>
 
                             {hasLowBalance && (
-                                <div className="mt-4 flex items-center justify-center gap-2 bg-rose-600 text-white p-2 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                                    <AlertCircle size={14} />
-                                    <span className="text-[10px] font-black uppercase italic tracking-widest">تنبيه: الرصيد شارف على الانتهاء</span>
+                                <div className="mt-4 bg-rose-600 text-white p-2 text-center text-[8px] font-black flex items-center justify-center gap-2 uppercase tracking-widest">
+                                    <Activity size={12} /> رصيد منخفض جداً - يرجى المراجعة
                                 </div>
                             )}
                         </div>
@@ -153,9 +158,9 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
             </div>
 
             {students.length === 0 && (
-                <div className="py-24 text-center bg-white border-4 border-gray-950 border-dashed shadow-[10px_10px_0px_0px_black]">
-                    <GraduationCap size={64} className="mx-auto mb-6 text-gray-200" />
-                    <p className="text-gray-400 font-black text-xl uppercase tracking-[0.2em]">قاعدة البيانات فارغة حالياً</p>
+                <div className="py-24 text-center bg-white border-4 border-gray-950 border-dashed shadow-[10px_10px_0px_0px_black] p-8">
+                    <GraduationCap size={48} className="mx-auto mb-4 text-gray-200" />
+                    <p className="text-gray-400 font-black text-sm uppercase tracking-[0.4em] italic">NO STUDENT DATA FOUND</p>
                 </div>
             )}
         </div>
