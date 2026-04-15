@@ -1,5 +1,5 @@
 import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+
 
 interface BriefSession {
     date: string;
