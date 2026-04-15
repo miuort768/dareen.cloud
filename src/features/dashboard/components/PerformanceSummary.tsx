@@ -1,4 +1,4 @@
-import { TrendingUp, Users, CheckCircle, Target } from 'lucide-react';
+import { TrendingUp, Users, CheckCircle } from 'lucide-react';
 import type { DashboardStats as Stats } from '../types';
 
 interface PerformanceSummaryProps {
