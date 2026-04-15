@@ -31,7 +31,7 @@ export const Reports = () => {
     }
 
     return (
-        <div className="space-y-10 pb-40">
+        <div className="space-y-6 pb-20">
             <ReportsHeader onExport={() => window.print()} />
 
             <div className="px-1">
@@ -48,42 +48,42 @@ export const Reports = () => {
             </div>
 
             {/* Premium Brutalist Report Tabs */}
-            <div className="bg-white border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] no-print mb-8">
-                <div className="flex items-center gap-3 p-6 border-b-4 border-gray-950 bg-gray-50">
-                    <div className="w-10 h-10 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                        <LayoutPanelTop size={20} />
+            <div className="bg-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] no-print mb-4">
+                <div className="flex items-center gap-2 p-3 border-b-2 border-gray-950 bg-gray-50">
+                    <div className="w-8 h-8 bg-gray-950 text-white flex items-center justify-center border border-gray-950 shadow-[1px_1px_0px_0px_black]">
+                        <LayoutPanelTop size={16} />
                     </div>
                     <div>
-                         <h3 className="text-xl font-black text-gray-950 uppercase tracking-tighter italic leading-none">تحديد نوع التقرير الفني</h3>
-                         <div className="flex items-center gap-2 mt-1">
-                             <div className="w-2 h-2 bg-purple-600 border border-gray-950 rounded-full animate-pulse"></div>
-                             <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest italic">البيانات المتاحة للتحليل الفوري</span>
+                         <h3 className="text-sm font-black text-gray-950 uppercase tracking-tighter italic leading-none">تحديد نوع التقرير الفني</h3>
+                         <div className="flex items-center gap-1.5 mt-0.5">
+                             <div className="w-1.5 h-1.5 bg-purple-600 border border-gray-950 rounded-full animate-pulse"></div>
+                             <span className="text-[7px] font-black text-gray-400 uppercase tracking-widest italic">البيانات المتاحة للتحليل</span>
                          </div>
                     </div>
                 </div>
                 
-                <div className="flex flex-wrap md:flex-nowrap p-4 gap-4 bg-white">
+                <div className="flex flex-wrap md:flex-nowrap p-3 gap-3 bg-white">
                     {[
-                        { id: 'academic', label: 'التقرير الأكاديمي', icon: Award, color: 'purple' },
-                        { id: 'attendance', label: 'تقرير الحضور والغياب', icon: CheckCircle2, color: 'emerald' },
-                        { id: 'financial', label: 'التقرير المالي العام', icon: DollarSign, color: 'amber' },
-                        { id: 'enrollment', label: 'تحليل التسجيلات', icon: Target, color: 'rose' },
+                        { id: 'academic', label: 'الأكاديمي', icon: Award, color: 'purple' },
+                        { id: 'attendance', label: 'الحضور والغياب', icon: CheckCircle2, color: 'emerald' },
+                        { id: 'financial', label: 'المالي العام', icon: DollarSign, color: 'amber' },
+                        { id: 'enrollment', label: 'التسجيلات', icon: Target, color: 'rose' },
                     ].map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
                             className={cn(
-                                "flex-1 min-w-[140px] px-6 py-6 border-4 transition-all flex flex-col items-center justify-center gap-3 group relative overflow-hidden",
+                                "flex-1 min-w-[100px] px-3 py-3 border-2 transition-all flex flex-col items-center justify-center gap-1.5 group relative overflow-hidden",
                                 state.activeReport === tab.id
-                                    ? "bg-gray-950 text-white border-gray-950 shadow-[4px_4px_0px_0px_#444] translate-x-1 translate-y-1 shadow-none"
-                                    : "bg-white text-gray-950 border-gray-950 shadow-[6px_6px_0px_0px_black] hover:bg-gray-50 active:translate-x-1 active:translate-y-1 active:shadow-none"
-                            )}
+                                    ? "bg-gray-950 text-white border-gray-950 shadow-[2px_2px_0px_0px_#444] translate-x-0.5 translate-y-0.5 shadow-none"
+                                    : "bg-white text-gray-950 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                            )
                         >
-                            <tab.icon size={24} strokeWidth={3} className={cn(
+                            <tab.icon size={16} strokeWidth={3} className={cn(
                                 "transition-transform group-hover:scale-110",
                                 state.activeReport === tab.id ? "text-white" : `text-${tab.color}-600`
                             )} />
-                            <span className="text-xs font-black uppercase tracking-widest text-center">{tab.label}</span>
+                            <span className="text-[9px] font-black uppercase tracking-tight text-center">{tab.label}</span>
                             
                             {state.activeReport === tab.id && (
                                 <div className="absolute top-2 right-2 flex items-center gap-1">
@@ -139,36 +139,36 @@ export const Reports = () => {
                         />
 
                         {/* Premium Brutalist Enrollment Summary */}
-                        <div className="bg-white border-4 border-gray-950 p-10 shadow-[10px_10px_0px_0px_black] relative overflow-hidden">
-                             <div className="absolute top-0 right-0 w-32 h-32 bg-rose-600/5 -rotate-45 transform translate-x-16 -translate-y-16 pointer-events-none"></div>
+                        <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] relative overflow-hidden">
+                             <div className="absolute top-0 right-0 w-24 h-24 bg-rose-600/5 -rotate-45 transform translate-x-12 -translate-y-12 pointer-events-none"></div>
                              
-                            <div className="flex items-center gap-4 mb-10 border-b-4 border-gray-950 pb-6">
-                                <div className="w-12 h-12 bg-rose-600 text-white flex items-center justify-center border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] transform rotate-3">
-                                    <Target size={24} strokeWidth={3} />
+                            <div className="flex items-center gap-3 mb-6 border-b-2 border-gray-950 pb-3">
+                                <div className="w-8 h-8 bg-rose-600 text-white flex items-center justify-center border border-gray-950 shadow-[2px_2px_0px_0px_black] transform rotate-3">
+                                    <Target size={16} strokeWidth={3} />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-black text-gray-950 uppercase tracking-tighter italic">ملخص إحصائيات التسجيلات النشطة</h2>
-                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1 italic">تحليل تركز الاشتراكات عبر الأقسام المختلفة</p>
+                                    <h2 className="text-sm font-black text-gray-950 uppercase tracking-tighter italic">ملخص إحصائيات التسجيلات النشطة</h2>
+                                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-0.5 italic">تحليل تركز الاشتراكات</p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div className="p-8 bg-blue-50 border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] flex flex-col items-center group hover:bg-blue-100 transition-colors">
-                                    <span className="text-[10px] text-blue-700 font-black uppercase tracking-widest mb-4 italic border-b-2 border-blue-200 pb-2">إجمالي الطلاب</span>
-                                    <span className="text-5xl font-black text-gray-950 tracking-tighter italic">{state.totalStudents}</span>
-                                    <div className="mt-4 text-[9px] font-black text-blue-600 uppercase tracking-widest">ACTIVE STUD. REGISTERED</div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="p-4 bg-blue-50 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] flex flex-col items-center group hover:bg-blue-100 transition-colors">
+                                    <span className="text-[8px] text-blue-700 font-black uppercase tracking-widest mb-2 italic border-b border-blue-200 pb-1">إجمالي الطلاب</span>
+                                    <span className="text-2xl font-black text-gray-950 tracking-tighter italic">{state.totalStudents}</span>
+                                    <div className="mt-2 text-[7px] font-black text-blue-600 uppercase tracking-widest">ACTIVE STUD. REGISTERED</div>
                                 </div>
                                 
-                                <div className="p-8 bg-emerald-50 border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] flex flex-col items-center group hover:bg-emerald-100 transition-colors">
-                                    <span className="text-[10px] text-emerald-700 font-black uppercase tracking-widest mb-4 italic border-b-2 border-emerald-200 pb-2">إجمالي الاشتراكات</span>
-                                    <span className="text-5xl font-black text-gray-950 tracking-tighter italic">{state.totalEnrollments}</span>
-                                    <div className="mt-4 text-[9px] font-black text-emerald-600 uppercase tracking-widest">PAID SERVICE CONTRACTS</div>
+                                <div className="p-4 bg-emerald-50 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] flex flex-col items-center group hover:bg-emerald-100 transition-colors">
+                                    <span className="text-[8px] text-emerald-700 font-black uppercase tracking-widest mb-2 italic border-b border-emerald-200 pb-1">إجمالي الاشتراكات</span>
+                                    <span className="text-2xl font-black text-gray-950 tracking-tighter italic">{state.totalEnrollments}</span>
+                                    <div className="mt-2 text-[7px] font-black text-emerald-600 uppercase tracking-widest">PAID SERVICE CONTRACTS</div>
                                 </div>
 
-                                <div className="p-8 bg-purple-50 border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] flex flex-col items-center group hover:bg-purple-100 transition-colors">
-                                    <span className="text-[10px] text-purple-700 font-black uppercase tracking-widest mb-4 italic border-b-2 border-purple-200 pb-2">المواد الأكاديمية</span>
-                                    <span className="text-5xl font-black text-gray-950 tracking-tighter italic">{new Set(state.subjectPieData.map(s => s.name)).size}</span>
-                                    <div className="mt-4 text-[9px] font-black text-purple-600 uppercase tracking-widest">DIVERSE SUBJECTS OFFERED</div>
+                                <div className="p-4 bg-purple-50 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] flex flex-col items-center group hover:bg-purple-100 transition-colors">
+                                    <span className="text-[8px] text-purple-700 font-black uppercase tracking-widest mb-2 italic border-b border-purple-200 pb-1">المواد الأكاديمية</span>
+                                    <span className="text-2xl font-black text-gray-950 tracking-tighter italic">{new Set(state.subjectPieData.map(s => s.name)).size}</span>
+                                    <div className="mt-2 text-[7px] font-black text-purple-600 uppercase tracking-widest">DIVERSE SUBJECTS OFFERED</div>
                                 </div>
                             </div>
                         </div>

@@ -25,18 +25,18 @@ export const AcademicReport = ({
     setSearchTerm
 }: AcademicReportProps) => {
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {/* Grade Distribution */}
-                <div className="bg-white p-6 border border-gray-200 dark:bg-gray-900 dark:border-gray-800 shadow-xl relative overflow-hidden group">
-                    <h2 className="text-lg font-black text-gray-800 mb-6 dark:text-white flex items-center gap-3">
-                        <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30">
-                            <BarChart3 size={20} className="text-indigo-600" />
+                <div className="bg-white p-3 border border-gray-200 dark:bg-gray-900 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+                    <h2 className="text-sm font-black text-gray-800 mb-3 dark:text-white flex items-center gap-2">
+                        <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30">
+                            <BarChart3 size={16} className="text-indigo-600" />
                         </div>
                         توزيع الطلاب حسب الصف
                     </h2>
-                    <div className="h-80" dir="ltr">
+                    <div className="h-64" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={gradeBarData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} opacity={0.5} />
@@ -71,9 +71,9 @@ export const AcademicReport = ({
                 </div>
 
                 {/* Subject Distribution */}
-                <div className="bg-white p-6 border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
-                    <h2 className="text-lg font-bold text-gray-800 mb-6 dark:text-white flex items-center gap-2">
-                        <PieChart size={20} className="text-purple-600" />
+                <div className="bg-white p-3 border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+                    <h2 className="text-sm font-bold text-gray-800 mb-3 dark:text-white flex items-center gap-2">
+                        <PieChart size={16} className="text-purple-600" />
                         توزيع الاشتراكات حسب المادة
                     </h2>
                     <div className="flex flex-col md:flex-row items-center gap-6 h-full">
@@ -106,21 +106,21 @@ export const AcademicReport = ({
 
             {/* Student Progress Table */}
             <div className="bg-white border border-gray-200 overflow-hidden dark:bg-gray-900 dark:border-gray-800">
-                <div className="p-4 md:p-6 border-b border-gray-100 dark:border-gray-800">
-                    <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <Activity size={18} className="text-purple-600 md:w-5 md:h-5" />
+                <div className="p-3 border-b border-gray-100 dark:border-gray-800">
+                    <h2 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <Activity size={16} className="text-purple-600" />
                         تقرير تقدم الطلاب
                     </h2>
                 </div>
-                <div className="p-4 bg-gray-50 border-b border-gray-100 dark:bg-gray-800/50 dark:border-gray-800">
+                <div className="p-3 bg-gray-50 border-b border-gray-100 dark:bg-gray-800/50 dark:border-gray-800">
                     <div className="relative">
-                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-3.5 h-3.5" />
                         <input
                             type="text"
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-4 pr-10 py-2.5 border border-gray-200 focus:outline-none focus:border-purple-500 text-sm rounded-none bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white"
+                            className="w-full pl-3 pr-9 py-2 border border-gray-200 focus:outline-none focus:border-purple-500 text-xs rounded-none bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white"
                         />
                     </div>
                 </div>
@@ -128,27 +128,27 @@ export const AcademicReport = ({
                 {/* Desktop View */}
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right">
-                        <thead className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-gray-800 dark:to-gray-800 text-xs font-bold text-gray-700 dark:text-gray-300">
+                        <thead className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-gray-800 dark:to-gray-800 text-[10px] font-black text-gray-700 dark:text-gray-300 uppercase tracking-tighter">
                             <tr>
-                                <th className="px-6 py-4 text-center">اسم الطالب</th>
-                                <th className="px-6 py-4 text-center">الصف</th>
-                                <th className="px-6 py-4 text-center">عدد الاشتراكات</th>
-                                <th className="px-6 py-4 text-center">الحصص المتوقعة</th>
-                                <th className="px-6 py-4 text-center">الحصص المستخدمة</th>
-                                <th className="px-6 py-4 text-center">نسبة التقدم</th>
+                                <th className="px-3 py-2 text-center border-l-2 border-white/20">اسم الطالب</th>
+                                <th className="px-3 py-2 text-center border-l-2 border-white/20">الصف</th>
+                                <th className="px-3 py-2 text-center border-l-2 border-white/20">الاشتراكات</th>
+                                <th className="px-3 py-2 text-center border-l-2 border-white/20">المتوقعة</th>
+                                <th className="px-3 py-2 text-center border-l-2 border-white/20">المستخدمة</th>
+                                <th className="px-3 py-2 text-center">نسبة التقدم</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                             {filteredStudentProgress.length > 0 ? filteredStudentProgress.map((student) => (
                                 <tr key={student.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                    <td className="px-6 py-2.5 text-center font-bold text-gray-900 dark:text-white text-sm">{student.name}</td>
-                                    <td className="px-6 py-2.5 text-center">
-                                        <span className="inline-block px-3 py-1 bg-blue-500/10 text-blue-700 dark:text-blue-400 text-[10px] font-black uppercase rounded-full border border-blue-500/20">{student.grade}</span>
+                                    <td className="px-3 py-1.5 text-center font-bold text-gray-900 dark:text-white text-xs">{student.name}</td>
+                                    <td className="px-3 py-1.5 text-center">
+                                        <span className="inline-block px-2 py-0.5 bg-blue-500/10 text-blue-700 dark:text-blue-400 text-[8px] font-black uppercase rounded-full border border-blue-500/20">{student.grade}</span>
                                     </td>
-                                    <td className="px-6 py-2.5 text-center font-mono text-sm font-bold">{student.totalEnrollments}</td>
-                                    <td className="px-6 py-2.5 text-center font-mono text-sm font-bold">{student.totalSessions}</td>
-                                    <td className="px-6 py-2.5 text-center font-mono text-sm font-bold text-emerald-600">{student.usedSessions}</td>
-                                    <td className="px-6 py-2.5">
+                                    <td className="px-3 py-1.5 text-center font-mono text-xs font-bold">{student.totalEnrollments}</td>
+                                    <td className="px-3 py-1.5 text-center font-mono text-xs font-bold">{student.totalSessions}</td>
+                                    <td className="px-3 py-1.5 text-center font-mono text-xs font-bold text-emerald-600">{student.usedSessions}</td>
+                                    <td className="px-3 py-1.5">
                                         <div className="flex items-center justify-center gap-2">
                                             <div className="flex-1 bg-gray-200 h-2 rounded-full overflow-hidden dark:bg-gray-700 max-w-[100px]">
                                                 <div className={`h-full rounded-full ${student.progress >= 80 ? 'bg-emerald-600' : student.progress >= 50 ? 'bg-amber-500' : 'bg-rose-500'}`} style={{ width: `${student.progress}%` }}></div>

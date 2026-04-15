@@ -22,73 +22,73 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
     
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] w-full max-w-xl overflow-hidden animate-in zoom-in-95 duration-200">
                 {/* Header */}
-                <div className="bg-gray-950 text-white p-6 flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                        <Receipt size={24} className="text-emerald-400" />
-                        <h2 className="text-xl font-black uppercase tracking-tighter">قسيمة راتب المعلمة</h2>
+                <div className="bg-gray-950 text-white p-4 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <Receipt size={20} className="text-emerald-400" />
+                        <h2 className="text-lg font-black uppercase tracking-tighter">قسيمة راتب المعلمة</h2>
                     </div>
                     <button onClick={onClose} className="hover:rotate-90 transition-transform">
-                        <X size={24} />
+                        <X size={20} />
                     </button>
                 </div>
 
-                <div className="p-8 space-y-8 overflow-y-auto max-h-[80vh]">
+                <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh]">
                     {/* Academy & Teacher Info */}
-                    <div className="flex justify-between items-start border-b-4 border-gray-100 dark:border-gray-800 pb-6">
+                    <div className="flex justify-between items-start border-b-2 border-gray-100 dark:border-gray-800 pb-4">
                         <div>
-                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">جهة الإصدار</p>
-                            <h3 className="text-2xl font-black text-gray-950 dark:text-white mb-2">أكاديمية دارين التعليمية</h3>
-                            <p className="text-xs font-bold text-gray-500">الفترة: {month}</p>
+                            <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5">جهة الإصدار</p>
+                            <h3 className="text-xl font-black text-gray-950 dark:text-white mb-1">أكاديمية دارين</h3>
+                            <p className="text-[10px] font-bold text-gray-500">الفترة: {month}</p>
                         </div>
                         <div className="text-left">
-                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">اسم المعلمة</p>
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">{teacher.name}</h3>
-                            <p className="text-xs font-bold text-emerald-600">{teacher.subject}</p>
+                            <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5">اسم المعلمة</p>
+                            <h3 className="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tighter">{teacher.name}</h3>
+                            <p className="text-[10px] font-bold text-emerald-600">{teacher.subject}</p>
                         </div>
                     </div>
 
                     {/* Financial Summary Box */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 dark:bg-gray-800/50 p-6 border-2 border-gray-950">
-                            <p className="text-[10px] font-black text-gray-400 uppercase mb-1">إجمالي عدد الحصص</p>
-                            <p className="text-3xl font-black text-gray-900 dark:text-white font-mono">{teacher.sessionsCount}</p>
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 dark:bg-gray-800/50 p-4 border-2 border-gray-950">
+                            <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5">إجمالي الحصص</p>
+                            <p className="text-xl font-black text-gray-900 dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 border-2 border-gray-950">
-                            <p className="text-[10px] font-black text-emerald-600 uppercase mb-1">صافي المستحق</p>
-                            <p className="text-3xl font-black text-emerald-700 dark:text-emerald-400 font-mono">
-                                {teacher.totalAmount.toLocaleString()} <span className="text-xs uppercase">ج.م</span>
+                        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 border-2 border-gray-950">
+                            <p className="text-[8px] font-black text-emerald-600 uppercase mb-0.5">صافي المستحق</p>
+                            <p className="text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono">
+                                {teacher.totalAmount.toLocaleString()} <span className="text-[10px] uppercase">ج.م</span>
                             </p>
                         </div>
                     </div>
 
                     {/* Detailed Sessions Table (Mini) */}
                     <div>
-                        <h4 className="text-sm font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <h4 className="text-xs font-black text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                              بيان الحصص المنجزة
                         </h4>
-                        <div className="border-2 border-gray-100 dark:border-gray-800 rounded-none overflow-hidden text-sm">
+                        <div className="border border-gray-100 dark:border-gray-800 rounded-none overflow-hidden text-[11px]">
                             <table className="w-full text-right">
                                 <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
-                                        <th className="p-3 font-black text-xs border-l border-gray-100 dark:border-gray-700">التاريخ</th>
-                                        <th className="p-3 font-black text-xs border-l border-gray-100 dark:border-gray-700">الطالب</th>
-                                        <th className="p-3 font-black text-xs">القيمة</th>
+                                        <th className="p-2 font-black text-[10px] border-l border-gray-100 dark:border-gray-700">التاريخ</th>
+                                        <th className="p-2 font-black text-[10px] border-l border-gray-100 dark:border-gray-700">الطالب</th>
+                                        <th className="p-2 font-black text-[10px]">القيمة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                                    {teacher.sessionsList?.slice(0, 10).map((s: any, idx: number) => (
+                                    {teacher.sessionsList?.slice(0, 8).map((s: any, idx: number) => (
                                         <tr key={idx}>
-                                            <td className="p-3 border-l border-gray-50 dark:border-gray-800 font-mono text-xs">{s.date}</td>
-                                            <td className="p-3 border-l border-gray-50 dark:border-gray-800 font-bold">{s.studentName}</td>
-                                            <td className="p-3 font-bold">{s.teacherPrice || teacher.price} ج.م</td>
+                                            <td className="p-2 border-l border-gray-50 dark:border-gray-800 font-mono text-[10px]">{s.date}</td>
+                                            <td className="p-2 border-l border-gray-50 dark:border-gray-800 font-bold">{s.studentName}</td>
+                                            <td className="p-2 font-bold">{s.teacherPrice || teacher.price} ج.م</td>
                                         </tr>
                                     ))}
-                                    {teacher.sessionsList?.length > 10 && (
+                                    {teacher.sessionsList?.length > 8 && (
                                         <tr>
-                                            <td colSpan={3} className="p-2 text-center text-[10px] text-gray-400 font-bold italic">
-                                                و {teacher.sessionsList.length - 10} حصص أخرى في السجل...
+                                            <td colSpan={3} className="p-1.5 text-center text-[9px] text-gray-400 font-bold italic">
+                                                و {teacher.sessionsList.length - 8} حصص أخرى...
                                             </td>
                                         </tr>
                                     )}
@@ -98,12 +98,19 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="flex gap-4 pt-4">
+                    <div className="flex gap-3 pt-2">
                         <button 
                             onClick={() => window.print()}
-                            className="flex-1 bg-gray-900 text-white py-4 font-black flex items-center justify-center gap-3 hover:bg-black transition-all"
+                            className="flex-1 bg-gray-900 text-white py-3 font-black text-xs flex items-center justify-center gap-2 hover:bg-black transition-all"
                         >
-                            <Printer size={18} /> طباعة القسيمة
+                            <Printer size={16} /> طباعة القسيمة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};�عة القسيمة
                         </button>
                     </div>
                 </div>
@@ -278,26 +285,26 @@ export const MonthlyClosing: React.FC = () => {
             {/* Header with Semester & Month Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-3 mb-1">
-                        <div className="w-1.5 h-8 bg-rose-600 border border-gray-950 dark:border-gray-800"></div>
+                    <h1 className="text-xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-2 mb-1">
+                        <div className="w-1 h-6 bg-rose-600 border border-gray-950 dark:border-gray-800"></div>
                         تقفيل الحسابات والأنشطة
                     </h1>
-                    <div className="flex items-center gap-2 text-gray-500 font-bold">
-                        <Calendar size={16} /> 
+                    <div className="flex items-center gap-1.5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                        <Calendar size={12} /> 
                         <span>{semesterName}</span>
-                        <span className="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                         <span>{selectedMonth}</span>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2">
                     {/* Semester Selector */}
-                    <div className="bg-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] px-4 py-2 flex items-center gap-2 dark:bg-gray-900 dark:border-gray-800">
-                        <span className="text-[10px] font-black opacity-40 uppercase ml-2 dark:text-gray-400">الفصل:</span>
+                    <div className="bg-white border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] px-2 py-1 flex items-center gap-1 dark:bg-gray-900 dark:border-gray-800">
+                        <span className="text-[7px] font-black opacity-40 uppercase ml-0.5 dark:text-gray-400">الفصل:</span>
                         <select 
                             value={semesterName} 
                             onChange={(e) => setSemesterName(e.target.value)}
-                            className="bg-transparent font-black border-none focus:ring-0 text-sm dark:text-white outline-none cursor-pointer"
+                            className="bg-transparent font-black border-none focus:ring-0 text-[10px] dark:text-white outline-none cursor-pointer p-0"
                         >
                             {semesterList.map(s => (
                                 <option key={s} value={s} className="dark:bg-gray-800">{s}</option>
@@ -305,11 +312,11 @@ export const MonthlyClosing: React.FC = () => {
                         </select>
                     </div>
 
-                    <div className="bg-white border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] px-4 py-2 flex items-center gap-3 dark:bg-gray-900 dark:border-gray-800">
-                        <Filter size={18} className="text-gray-400" />
+                    <div className="bg-white border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] px-2 py-1 flex items-center gap-1 dark:bg-gray-900 dark:border-gray-800">
+                        <Filter size={12} className="text-gray-400" />
                         <input 
                             type="month" 
-                            className="bg-transparent font-black border-none focus:ring-0 text-sm dark:text-white outline-none cursor-pointer" 
+                            className="bg-transparent font-black border-none focus:ring-0 text-[10px] dark:text-white outline-none cursor-pointer p-0" 
                             value={selectedMonth}
                             onChange={(e) => setSelectedMonth(e.target.value)}
                         />
@@ -317,78 +324,78 @@ export const MonthlyClosing: React.FC = () => {
                     
                     <button 
                         onClick={handleRefresh}
-                        className="p-3 bg-gray-950 text-white hover:bg-black transition-all shadow-[4px_4px_0px_0px_#444] border-2 border-gray-950"
+                        className="p-1.5 bg-gray-950 text-white hover:bg-black transition-all shadow-[1px_1px_0px_0px_#444] border-2 border-gray-950"
                     >
-                        <RefreshCw size={20} />
+                        <RefreshCw size={14} />
                     </button>
                     
                     <button 
                         onClick={() => window.print()}
-                        className="p-3 bg-rose-600 text-white hover:bg-rose-700 transition-all shadow-[4px_4px_0px_0px_black] border-2 border-gray-950"
+                        className="p-1.5 bg-rose-600 text-white hover:bg-rose-700 transition-all shadow-[1px_1px_0px_0px_black] border-2 border-gray-950"
                     >
-                        <Printer size={20} />
+                        <Printer size={14} />
                     </button>
                 </div>
             </div>
 
             {/* Quick Summary Bar */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">الربح المتوقع</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                <div className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
+                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">الربح المتوقع</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-2xl font-black text-blue-600 font-mono tracking-tighter">
-                                {netProjectedProfit.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-lg font-black text-blue-600 font-mono tracking-tighter leading-none">
+                                {netProjectedProfit.toLocaleString()} <span className="text-[8px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
-                            <p className="text-[10px] font-bold text-blue-400 mt-1">الهامش: {totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(1) : 0}%</p>
+                            <p className="text-[8px] font-bold text-blue-400 mt-1">الهامش: {totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}%</p>
                         </div>
-                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
-                            <DollarSign size={20} />
+                        <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-600 text-blue-600">
+                            <DollarSign size={16} />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">التحصيلات الفعلية</p>
+                <div className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
+                    <p className="text-[8px] font-black text-emerald-600 uppercase tracking-widest mb-0.5">التحصيلات الفعلية</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-2xl font-black text-emerald-600 font-mono tracking-tighter">
-                                {totalActualCollections.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-lg font-black text-emerald-600 font-mono tracking-tighter leading-none">
+                                {totalActualCollections.toLocaleString()} <span className="text-[8px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
-                            <p className="text-[10px] font-bold text-emerald-400 mt-1 flex items-center gap-1">
-                                الفائض: {netActualCashFlow.toLocaleString()} {CURRENCY_SYMBOL}
+                            <p className="text-[8px] font-bold text-emerald-400 mt-1">
+                                الفائض: {netActualCashFlow.toLocaleString()}
                             </p>
                         </div>
-                        <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
-                            <Wallet size={20} className="text-emerald-600" />
+                        <div className="w-8 h-8 bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-600">
+                            <Wallet size={16} className="text-emerald-600" />
                         </div>
                     </div>
                 </div>
                 
-                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">رواتب المعلمات</p>
+                <div className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
+                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">رواتب المعلمات</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-2xl font-black text-rose-600 font-mono tracking-tighter">
-                                {totalTeacherPayout.toLocaleString()} <span className="text-[10px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
+                            <h3 className="text-lg font-black text-rose-600 font-mono tracking-tighter leading-none">
+                                {totalTeacherPayout.toLocaleString()} <span className="text-[8px] uppercase opacity-70">{CURRENCY_SYMBOL}</span>
                             </h3>
                         </div>
-                        <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center border-2 border-rose-600 text-rose-600">
-                            <ArrowDownRight size={20} />
+                        <div className="w-8 h-8 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center border-2 border-rose-600 text-rose-600">
+                            <ArrowDownRight size={16} />
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">نشاط الأكاديمية</p>
+                <div className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group transition-transform hover:translate-y-[-2px]">
+                    <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">نشاط الأكاديمية</p>
                     <div className="flex items-end justify-between">
                         <div>
-                            <h3 className="text-2xl font-black text-amber-600 font-mono tracking-tighter">
-                                {filteredSessions.length} <span className="text-[10px] uppercase opacity-70">حصة</span>
+                            <h3 className="text-lg font-black text-amber-600 font-mono tracking-tighter leading-none">
+                                {filteredSessions.length} <span className="text-[8px] uppercase opacity-70">حصة</span>
                             </h3>
                         </div>
-                        <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600">
-                            <ActivityIcon size={20} />
+                        <div className="w-8 h-8 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center border-2 border-amber-600 text-amber-600">
+                            <ActivityIcon size={16} />
                         </div>
                     </div>
                 </div>
@@ -399,65 +406,65 @@ export const MonthlyClosing: React.FC = () => {
                 <button 
                     onClick={() => setActiveTab('payroll')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[10px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'payroll' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Receipt size={14} /> رواتب المعلمات
+                    <Receipt size={10} /> الرواتب
                 </button>
                 <button 
                     onClick={() => setActiveTab('collections')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'collections' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Wallet size={14} /> تحصيل الطلاب
+                    <Wallet size={10} /> التحاصيل
                 </button>
                 <button 
                     onClick={() => setActiveTab('renewals')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'renewals' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <AlertCircle size={14} /> انتهاء الرصيد
+                    <AlertCircle size={10} /> التجديدات
                 </button>
                 <button 
                     onClick={() => setActiveTab('analysis')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'analysis' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <BarChart3 size={14} /> تحليل المواد
+                    <BarChart3 size={10} /> التحليل
                 </button>
                 <button 
                     onClick={() => setActiveTab('summary')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'summary' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <TrendingUp size={14} /> ملخص الحسابات
+                    <TrendingUp size={10} /> الملخص
                 </button>
                 <button 
                     onClick={() => setActiveTab('teachers')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'teachers' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <Users size={14} /> تحليل المعلمات
+                    <Users size={10} /> المعلمات
                 </button>
                 <button 
                     onClick={() => setActiveTab('compensation')}
                     className={cn(
-                        "px-3 py-2 text-[11px] md:text-xs font-black transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap",
+                        "px-2 py-1.5 text-[9px] font-black transition-all flex items-center gap-1 whitespace-nowrap",
                         activeTab === 'compensation' ? "bg-gray-950 text-white dark:bg-white dark:text-gray-950" : "hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-gray-400"
                     )}
                 >
-                    <RefreshCw size={14} /> حصص التعويض
+                    <RefreshCw size={10} /> التعويض
                 </button>
             </div>
 
@@ -472,13 +479,13 @@ export const MonthlyClosing: React.FC = () => {
             <div className="bg-white border-2 border-gray-950 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden min-h-[500px]">
                 {activeTab === 'collections' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <div className="p-6 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
-                            <h2 className="text-lg font-black tracking-tight text-gray-900 dark:text-white">تحصيل مبالغ الطلاب - {selectedMonth}</h2>
-                            <div className="flex gap-4">
-                                <div className="bg-emerald-50 text-emerald-700 px-4 py-2 border-2 border-emerald-600 font-black text-xs shadow-[4px_4px_0px_0px_black]">
+                        <div className="p-4 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
+                            <h2 className="text-base font-black tracking-tight text-gray-900 dark:text-white">تحصيل مبالغ الطلاب - {selectedMonth}</h2>
+                            <div className="flex gap-2">
+                                <div className="bg-emerald-50 text-emerald-700 px-3 py-1.5 border-2 border-emerald-600 font-black text-[10px] shadow-[2px_2px_0px_0px_black]">
                                      المحصل: {studentInvoices?.filter((inv: any) => inv.status === 'paid' && inv.date.startsWith(selectedMonth)).reduce((acc: number, curr: any) => acc + curr.amount, 0).toLocaleString()} ج.م
                                 </div>
-                                <div className="bg-rose-50 text-rose-700 px-4 py-2 border-2 border-rose-600 font-black text-xs shadow-[4px_4px_0px_0px_black]">
+                                <div className="bg-rose-50 text-rose-700 px-3 py-1.5 border-2 border-rose-600 font-black text-[10px] shadow-[2px_2px_0px_0px_black]">
                                      المتبقي: {studentInvoices?.filter((inv: any) => inv.status !== 'paid' && inv.date.startsWith(selectedMonth)).reduce((acc: number, curr: any) => acc + curr.amount, 0).toLocaleString()} ج.م
                                 </div>
                             </div>
@@ -488,11 +495,11 @@ export const MonthlyClosing: React.FC = () => {
                             <table className="w-full text-right border-collapse">
                                 <thead className="bg-gray-900 text-white dark:bg-black">
                                     <tr>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">الطالب</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">البيان</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">التاريخ</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">الحالة</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10">الطالب</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10">البيان</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10 text-center">المبلغ</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10 text-center">التاريخ</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] text-center">الحالة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
@@ -500,20 +507,20 @@ export const MonthlyClosing: React.FC = () => {
                                         .filter((inv: any) => inv.date.startsWith(selectedMonth))
                                         .map((item: any) => (
                                             <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
-                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
-                                                    <span className="block font-black text-gray-900 dark:text-white leading-none mb-1">{item.studentName}</span>
-                                                    <span className="text-[10px] font-bold text-gray-400">ID: {item.studentId.slice(0, 8)}</span>
+                                                <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800">
+                                                    <span className="block font-black text-xs text-gray-900 dark:text-white leading-none mb-0.5">{item.studentName}</span>
+                                                    <span className="text-[9px] font-bold text-gray-400">ID: {item.studentId.slice(0, 6)}</span>
                                                 </td>
-                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-xs font-bold text-gray-500">
+                                                <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-[10px] font-bold text-gray-500">
                                                     {item.description}
                                                 </td>
-                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-lg text-emerald-600">
-                                                    {item.amount.toLocaleString()} <span className="text-[10px]">ج.م</span>
+                                                <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-base text-emerald-600">
+                                                    {item.amount.toLocaleString()} <span className="text-[9px]">ج.م</span>
                                                 </td>
-                                                <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-bold text-xs">
+                                                <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-bold text-[10px]">
                                                     {item.date}
                                                 </td>
-                                                <td className="px-6 py-5 text-center">
+                                                <td className="px-4 py-3 text-center">
                                                     <button
                                                         onClick={async () => {
                                                             const newStatus = item.status === 'paid' ? 'pending' : 'paid';
@@ -521,13 +528,13 @@ export const MonthlyClosing: React.FC = () => {
                                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                                         }}
                                                         className={cn(
-                                                            "px-4 py-2 border-2 font-black text-[10px] uppercase tracking-widest transition-all shadow-[4px_4px_0px_0px_black] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+                                                            "px-3 py-1.5 border-2 font-black text-[9px] uppercase tracking-widest transition-all shadow-[2px_2px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
                                                             item.status === 'paid' 
                                                                 ? "bg-emerald-600 text-white border-gray-950" 
                                                                 : "bg-white text-rose-600 border-rose-600 hover:bg-rose-50"
                                                         )}
                                                     >
-                                                        {item.status === 'paid' ? 'تم التحصيل' : 'انتظار الدفع'}
+                                                        {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}
                                                     </button>
                                                 </td>
                                             </tr>
@@ -547,64 +554,64 @@ export const MonthlyClosing: React.FC = () => {
                 )}
                 {activeTab === 'payroll' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <div className="p-6 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
-                            <h2 className="text-lg font-black tracking-tight text-gray-900 dark:text-white">رواتب معلمات الأكاديمية - {selectedMonth}</h2>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white font-black text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
-                                <Download size={14} /> تصدير PDF للمعلمات
+                        <div className="p-4 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
+                            <h2 className="text-base font-black tracking-tight text-gray-900 dark:text-white">رواتب معلمات الأكاديمية - {selectedMonth}</h2>
+                            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white font-black text-[10px] border border-gray-950 shadow-[2px_2px_0px_0px_black] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
+                                <Download size={12} /> تصدير PDF
                             </button>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-right border-collapse">
                                 <thead className="bg-gray-900 text-white dark:bg-black">
                                     <tr>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">المعلمة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الحصص</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ الأساسي</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">إضافات/خصم</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">المستحق النهائي</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10">المعلمة</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10 text-center">الحصص</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10 text-center">الأساسي</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] border-l border-white/10 text-center">إضافات/خصم</th>
+                                        <th className="px-4 py-3 font-black uppercase tracking-tighter text-[9px] text-center">المستحق</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
                                     {payrollData.length > 0 ? payrollData.map((item) => (
                                         <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white font-black dark:bg-white dark:text-black">
+                                            <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-8 h-8 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white font-black dark:bg-white dark:text-black text-xs">
                                                         {item.name.charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <span className="block font-black text-gray-900 dark:text-white leading-none mb-1">{item.name}</span>
-                                                        <span className="text-[10px] font-bold text-gray-400">{item.subject}</span>
+                                                        <span className="block font-black text-xs text-gray-950 dark:text-white leading-none mb-0.5">{item.name}</span>
+                                                        <span className="text-[8px] font-black text-gray-400 uppercase">{item.subject}</span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-lg dark:text-white">
+                                            <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-base dark:text-white">
                                                 {item.sessionsCount}
                                             </td>
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-gray-400">
+                                            <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-center font-mono font-black text-xs text-gray-400">
                                                 {item.baseAmount.toLocaleString()}
                                             </td>
-                                            <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
-                                                <div className="flex items-center justify-center gap-2">
+                                            <td className="px-4 py-3 border-l border-gray-100 dark:border-gray-800 text-center">
+                                                <div className="flex items-center justify-center gap-1">
                                                     <input 
                                                         type="number"
                                                         value={item.adjustment || ''}
                                                         placeholder="0"
                                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                                        className="w-20 bg-gray-50 border-2 border-gray-200 p-1 text-center font-black text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:border-gray-950 outline-none transition-all"
+                                                        className="w-16 bg-gray-50 border border-gray-200 p-1 text-center font-black text-xs dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:border-gray-950 outline-none transition-all"
                                                     />
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5 text-center">
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white font-mono font-black text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] dark:bg-emerald-500">
-                                                        {item.totalAmount.toLocaleString()} <span className="text-[11px]">{CURRENCY_SYMBOL}</span>
+                                            <td className="px-4 py-3 text-center">
+                                                <div className="flex flex-col items-center gap-1">
+                                                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-600 text-white font-mono font-black text-base shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] dark:bg-emerald-500">
+                                                        {item.totalAmount.toLocaleString()} <span className="text-[9px] font-black uppercase">LE</span>
                                                     </div>
                                                     <button 
                                                         onClick={() => setSelectedTeacherForSlip(item)}
-                                                        className="text-[10px] font-black text-gray-400 hover:text-emerald-600 underline underline-offset-4 flex items-center gap-1 transition-colors"
+                                                        className="text-[9px] font-black text-gray-400 hover:text-emerald-600 underline underline-offset-4 flex items-center gap-1 transition-colors italic"
                                                     >
-                                                        <Receipt size={10} /> التفاصيل والقسيمة
+                                                        <Receipt size={8} /> القسيمة
                                                     </button>
                                                 </div>
                                             </td>
@@ -625,52 +632,51 @@ export const MonthlyClosing: React.FC = () => {
 
                 {activeTab === 'renewals' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <div className="p-6 border-b-2 border-gray-100 dark:border-gray-800 bg-amber-50 dark:bg-amber-900/10">
-                            <h2 className="text-lg font-black tracking-tight text-amber-700 dark:text-amber-500 flex items-center gap-3">
-                                <AlertCircle size={20} /> تنبيهات الطلاب الموشكين على إنهاء رصيد الحصص
+                        <div className="p-3 border-b-2 border-gray-100 dark:border-gray-800 bg-amber-50 dark:bg-amber-900/10">
+                            <h2 className="text-sm font-black tracking-tight text-amber-700 dark:text-amber-500 flex items-center gap-2">
+                                <AlertCircle size={16} /> تنبيهات الطلاب الموشكين على إنهاء الرصيد
                             </h2>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
                             {renewalsData.length > 0 ? renewalsData.map((item, idx) => (
-                                <div key={idx} className="bg-white border-4 border-gray-950 p-6 relative group dark:bg-gray-900 dark:border-gray-800 shadow-[8px_8px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
-                                    <div className="absolute top-4 left-4">
+                                <div key={idx} className="bg-white border-2 border-gray-950 p-3 relative group dark:bg-gray-900 dark:border-gray-800 shadow-[4px_4px_0px_0px_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                                    <div className="absolute top-3 left-3">
                                         <div className={cn(
-                                            "w-10 h-10 border-2 border-gray-950 flex flex-col items-center justify-center font-black shadow-[2px_2px_0px_0px_black]",
+                                            "w-7 h-7 border-2 border-gray-950 flex flex-col items-center justify-center font-black shadow-[1px_1px_0px_0px_black]",
                                             item.remaining === 0 ? "bg-rose-600 text-white" : "bg-amber-400 text-gray-900"
                                         )}>
-                                            <span className="text-xl leading-none">{item.remaining}</span>
-                                            <span className="text-[8px] uppercase">باقي</span>
+                                            <span className="text-sm leading-none">{item.remaining}</span>
+                                            <span className="text-[6px] uppercase">باقي</span>
                                         </div>
                                     </div>
-                                    <div className="mb-4">
-                                        <h3 className="text-xl font-black text-gray-900 dark:text-white mb-1">{item.studentName}</h3>
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{item.subject}</p>
+                                    <div className="mb-2">
+                                        <h3 className="text-base font-black text-gray-900 dark:text-white mb-0.5">{item.studentName}</h3>
+                                        <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest">{item.subject}</p>
                                     </div>
-                                    <div className="pt-4 border-t-2 border-gray-100 dark:border-gray-800 space-y-3">
-                                        <div className="flex items-center justify-between text-xs font-bold text-gray-500">
-                                            <span>الرصيد الأصلي:</span>
-                                            <span className="text-gray-900 dark:text-white font-black">{item.total} حصص</span>
+                                    <div className="pt-2 border-t border-gray-100 dark:border-gray-800 space-y-2">
+                                        <div className="flex items-center justify-between text-[10px] font-bold text-gray-500">
+                                            <span>الرصيد الأصلي: {item.total} حصص</span>
                                         </div>
-                                        <div className="w-full bg-gray-100 h-2 dark:bg-gray-800 mt-2">
+                                        <div className="w-full bg-gray-100 h-1 dark:bg-gray-800 mt-1">
                                             <div 
                                                 className={cn("h-full", item.remaining === 0 ? "bg-rose-600" : "bg-amber-500")}
                                                 style={{ width: `${(Math.max(0, item.remaining) / item.total) * 100}%` }}
                                             />
                                         </div>
-                                        <div className="grid grid-cols-2 gap-2 mt-6">
+                                        <div className="grid grid-cols-2 gap-2 mt-4">
                                             <a 
                                                 href={item.waLink}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center justify-center gap-2 py-2 bg-emerald-600 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-emerald-700 transition-colors"
+                                                className="flex items-center justify-center gap-1.5 py-1.5 bg-emerald-600 text-white text-[9px] font-black border border-gray-950 hover:bg-emerald-700 transition-colors"
                                             >
-                                                <MessageCircle size={14} /> تذكير واتساب
+                                                <MessageCircle size={10} /> واتساب
                                             </a>
                                             <a 
                                                 href={`tel:${item.phone}`}
-                                                className="flex items-center justify-center gap-2 py-2 bg-gray-900 text-white text-[10px] font-black border-2 border-gray-950 hover:bg-black transition-colors dark:bg-black"
+                                                className="flex items-center justify-center gap-1.5 py-1.5 bg-gray-900 text-white text-[9px] font-black border border-gray-950 hover:bg-black transition-colors dark:bg-black"
                                             >
-                                                <Phone size={14} /> اتصال سريع
+                                                <Phone size={10} /> اتصال
                                             </a>
                                         </div>
                                     </div>
@@ -686,48 +692,42 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'summary' && (
-                    <div className="p-6 animate-in fade-in slide-in-from-bottom-5 duration-700">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="p-4 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div>
-                                <h1 className="text-3xl lg:text-4xl font-black text-gray-950 dark:text-white tracking-tighter mb-4">ملخص الأداء المالي <span className="text-emerald-600">+{((netProjectedProfit / (totalProjectedIncome || 1)) * 100).toFixed(0)}%</span></h1>
-                                <p className="text-base font-bold text-gray-500 leading-relaxed max-w-xl">
-                                    تحليل التدفق النقدي والأرباح المسجلة لهذا الشهر. يتم التفريق بين الإيرادات المتوقعة من الحصص المنفذة والتحصيلات الفعلية.
+                                <h1 className="text-xl lg:text-2xl font-black text-gray-950 dark:text-white tracking-tighter mb-2">ملخص الأداء المالي <span className="text-emerald-600">+{((netProjectedProfit / (totalProjectedIncome || 1)) * 100).toFixed(0)}%</span></h1>
+                                <p className="text-[10px] font-bold text-gray-500 leading-relaxed max-w-xl">
+                                    تحليل التدفق النقدي والأرباح المسجلة لهذا الشهر.
                                 </p>
-                                <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div className="border-l-4 border-emerald-500 pl-4 py-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">إيرادات متوقعة</p>
-                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalProjectedIncome.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
+                                    <div className="border-l-2 border-emerald-500 pl-3 py-1">
+                                        <p className="text-[7px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">إيرادات متوقعة</p>
+                                        <p className="text-base font-black text-gray-950 dark:text-white font-mono leading-none">{totalProjectedIncome.toLocaleString()} <span className="text-[8px]">{CURRENCY_SYMBOL}</span></p>
                                     </div>
-                                    <div className="border-l-4 border-emerald-600 pl-4 py-2 bg-emerald-50/30">
-                                        <p className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">تحصيلات فعلية</p>
-                                        <p className="text-xl font-black text-emerald-800 dark:text-emerald-400 font-mono">{totalActualCollections.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                    <div className="border-l-2 border-emerald-600 pl-3 py-1 bg-emerald-50/30">
+                                        <p className="text-[7px] font-black text-emerald-700 uppercase tracking-widest leading-none mb-1">تحصيلات فعلية</p>
+                                        <p className="text-base font-black text-emerald-800 dark:text-emerald-400 font-mono leading-none">{totalActualCollections.toLocaleString()} <span className="text-[8px]">{CURRENCY_SYMBOL}</span></p>
                                     </div>
-                                    <div className="border-l-4 border-rose-500 pl-4 py-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">تكاليف الرواتب</p>
-                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{totalTeacherPayout.toLocaleString()} <span className="text-xs">{CURRENCY_SYMBOL}</span></p>
+                                    <div className="border-l-2 border-rose-500 pl-3 py-1">
+                                        <p className="text-[7px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">تكاليف الرواتب</p>
+                                        <p className="text-base font-black text-gray-950 dark:text-white font-mono leading-none">{totalTeacherPayout.toLocaleString()} <span className="text-[8px]">{CURRENCY_SYMBOL}</span></p>
                                     </div>
-                                    <div className="border-l-4 border-gray-950 pl-4 py-2">
-                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">إجمالي الحصص</p>
-                                        <p className="text-xl font-black text-gray-950 dark:text-white font-mono">{filteredSessions.length}</p>
+                                    <div className="border-l-2 border-gray-950 pl-3 py-1">
+                                        <p className="text-[7px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">إجمالي الحصص</p>
+                                        <p className="text-base font-black text-gray-950 dark:text-white font-mono leading-none">{filteredSessions.length}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-6 border-2 border-gray-950 bg-emerald-50 dark:bg-emerald-900/10 shadow-[8px_8px_0px_0px_rgba(16,185,129,0.1)] dark:border-gray-800">
-                                <h3 className="text-lg font-black text-emerald-900 border-b-2 border-emerald-200 pb-3 mb-4 dark:text-emerald-400">نصيحة المدير الذكي 💡</h3>
-                                <div className="space-y-4">
-                                    <div className="flex gap-3 text-right">
-                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">1</div>
-                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">هناك {renewalsData.length} طالب بحاجة لتجديد اشتراكهم فوراً لضمان تدفق السيولة.</p>
+                            <div className="p-4 border-2 border-gray-950 bg-emerald-50 dark:bg-emerald-900/10 shadow-[4px_4px_0px_0px_rgba(16,185,129,0.1)] dark:border-gray-800">
+                                <h3 className="text-sm font-black text-emerald-900 border-b-2 border-emerald-200 pb-2 mb-3 dark:text-emerald-400 leading-none">نصيحة المدير الذكي 💡</h3>
+                                <div className="space-y-2">
+                                    <div className="flex gap-2 text-right">
+                                        <div className="flex-shrink-0 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-[9px]">1</div>
+                                        <p className="text-[10px] font-bold text-emerald-800 dark:text-emerald-500/80 leading-tight">طلاب بحاجة للتجديد: {renewalsData.length}.</p>
                                     </div>
-                                    <div className="flex gap-3 text-right">
-                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">2</div>
-                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">المعلمات حققن عائداً قوياً هذا الشهر، يفضل تثبيت مدفوعات الراتب قبل نهاية الأسبوع.</p>
-                                    </div>
-                                    <div className="flex gap-3 text-right">
-                                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">3</div>
-                                        <p className="text-xs font-bold text-emerald-800 dark:text-emerald-500/80 leading-relaxed">
-                                            السيولة المتوفرة (بعد الرواتب): {netActualCashFlow.toLocaleString()} {CURRENCY_SYMBOL}. الربح المتوقع الإجمالي: {netProjectedProfit.toLocaleString()} {CURRENCY_SYMBOL}.
-                                        </p>
+                                    <div className="flex gap-2 text-right">
+                                        <div className="flex-shrink-0 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-[9px]">2</div>
+                                        <p className="text-[10px] font-bold text-emerald-800 dark:text-emerald-500/80 leading-tight">السيولة المتاحة: {netActualCashFlow.toLocaleString()} {CURRENCY_SYMBOL}.</p>
                                     </div>
                                 </div>
                             </div>
@@ -736,84 +736,85 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'analysis' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
-                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">تحليل ربحية المواد الدراسية</h2>
-                                <p className="text-sm font-bold text-gray-400 mt-1">مقارنة الإيرادات بالتكاليف المباشرة لكل مادة</p>
+                                <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">تحليل ربحية المواد الدراسية</h2>
+                                <p className="text-[9px] font-bold text-gray-400 mt-0.5">مقارنة الإيرادات بالتكاليف المباشرة</p>
                             </div>
-                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
-                                <BarChart3 size={24} />
+                            <div className="w-8 h-8 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)]">
+                                <BarChart3 size={16} />
                             </div>
                         </div>
 
                         {/* Recharts Visualization */}
-                        <div className="bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-8 mb-10 shadow-[12px_12px_0px_0px_black] dark:border-gray-800">
-                            <h3 className="text-xl font-black text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                                <div className="w-4 h-4 bg-emerald-600 border-2 border-gray-950"></div>
-                                المخطط المالي التحليلي للمواد
+                        <div className="bg-gray-50 dark:bg-gray-900 border-2 border-gray-950 p-4 mb-6 shadow-[6px_6px_0px_0px_black] dark:border-gray-800">
+                            <h3 className="text-base font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <div className="w-3 h-3 bg-emerald-600 border border-gray-950"></div>
+                                المخطط التحليلي للمواد
                             </h3>
-                            <div className="h-[400px] w-full">
+                            <div className="h-[250px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart
                                         data={subjectAnalysis}
-                                        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-                                        <XAxis dataKey="name" stroke="#666" fontSize={12} tickLine={false} axisLine={false} />
-                                        <YAxis stroke="#666" fontSize={12} tickLine={false} axisLine={false} />
+                                        <XAxis dataKey="name" stroke="#666" fontSize={10} tickLine={false} axisLine={false} />
+                                        <YAxis stroke="#666" fontSize={10} tickLine={false} axisLine={false} />
                                         <Tooltip 
                                             contentStyle={{ 
                                                 backgroundColor: '#fff', 
                                                 border: '2px solid #000', 
                                                 borderRadius: '0px',
-                                                boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)'
+                                                boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+                                                fontSize: '10px'
                                             }} 
                                         />
-                                        <Legend verticalAlign="top" height={36} />
-                                        <Bar dataKey="income" name="إجمالي الإيرادات" fill="#10b981" radius={[4, 4, 0, 0]} />
-                                        <Bar dataKey="payout" name="رواتب المعلمات" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                                        <Legend verticalAlign="top" height={24} iconSize={10} wrapperStyle={{ fontSize: '10px' }} />
+                                        <Bar dataKey="income" name="إجمالي الإيرادات" fill="#10b981" radius={[2, 2, 0, 0]} />
+                                        <Bar dataKey="payout" name="رواتب المعلمات" fill="#f43f5e" radius={[2, 2, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {subjectAnalysis.map((subj, idx) => (
-                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.05)] p-6 relative group overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
-                                    <div className="mb-6 flex justify-between items-start">
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[3px_3px_0px_0px_black] p-3 relative group overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
+                                    <div className="mb-4 flex justify-between items-start text-right">
                                         <div>
-                                            <h3 className="text-xl font-black text-gray-900 dark:text-white">{subj.name}</h3>
-                                            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">{subj.sessionsCount} حصة مكتملة</p>
+                                            <h3 className="text-sm font-black text-gray-900 dark:text-white leading-none mb-1">{subj.name}</h3>
+                                            <p className="text-[8px] font-black text-emerald-600 uppercase tracking-widest">{subj.sessionsCount} حصة</p>
                                         </div>
                                         <div className="text-left">
-                                            <p className="text-[10px] font-black text-gray-400 uppercase">الربح الصافي</p>
-                                            <p className="text-xl font-black text-emerald-600 font-mono tracking-tighter">
-                                                {subj.profit.toLocaleString()} {CURRENCY_SYMBOL}
+                                            <p className="text-[8px] font-black text-gray-400 uppercase">الربح</p>
+                                            <p className="text-base font-black text-emerald-600 font-mono tracking-tighter">
+                                                {subj.profit.toLocaleString()} <span className="text-[9px]">LE</span>
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="space-y-4">
+                                    <div className="space-y-3">
                                         <div className="flex justify-between items-end">
-                                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">الإيرادات</span>
-                                            <span className="text-sm font-black text-gray-900 dark:text-white font-mono">{subj.income.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                                            <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">الإيرادات</span>
+                                            <span className="text-xs font-black text-gray-900 dark:text-white font-mono">{subj.income.toLocaleString()}</span>
                                         </div>
                                         <div className="w-full bg-gray-100 h-1 dark:bg-gray-700">
                                             <div className="h-full bg-blue-500 w-full" />
                                         </div>
                                         <div className="flex justify-between items-end">
-                                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">مستحقات المعلمات</span>
-                                            <span className="text-sm font-black text-gray-900 dark:text-white font-mono">{subj.payout.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                                            <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">المستحقات</span>
+                                            <span className="text-xs font-black text-gray-900 dark:text-white font-mono">{subj.payout.toLocaleString()}</span>
                                         </div>
                                         <div className="w-full bg-gray-100 h-1 dark:bg-gray-700">
                                             <div className="h-full bg-rose-500" style={{ width: `${(subj.payout / (subj.income || 1)) * 100}%` }} />
                                         </div>
                                     </div>
-                                    <div className="mt-6 pt-4 border-t-2 border-gray-50 dark:border-gray-700 flex justify-between items-center">
-                                        <span className="text-[10px] font-black text-gray-400 uppercase">نسبة هامش الربح</span>
-                                        <span className="text-sm font-black text-gray-950 dark:text-white">
-                                            {subj.income > 0 ? ((subj.profit / subj.income) * 100).toFixed(1) : 0}%
+                                    <div className="mt-4 pt-2 border-t border-gray-50 dark:border-gray-700 flex justify-between items-center">
+                                        <span className="text-[8px] font-black text-gray-400 uppercase">الهامش</span>
+                                        <span className="text-xs font-black text-gray-950 dark:text-white">
+                                            {subj.income > 0 ? ((subj.profit / subj.income) * 100).toFixed(0) : 0}%
                                         </span>
                                     </div>
                                 </div>
@@ -823,71 +824,71 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'teachers' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
-                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">تحليل كفاءة أداء المعلمات</h2>
-                                <p className="text-sm font-bold text-gray-400 mt-1">قياس الالتزام بالحضور وجودة التوثيق التعليمي</p>
+                                <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">تحليل أداء المعلمات</h2>
+                                <p className="text-[9px] font-bold text-gray-400 mt-0.5">قياس الالتزام وجودة التوثيق التعليمي</p>
                             </div>
-                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
-                                <Users size={24} />
+                            <div className="w-8 h-8 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)]">
+                                <Users size={16} />
                             </div>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="space-y-3">
                             {teacherPerformance.map((perf, idx) => (
-                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.05)] p-6">
-                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                                        <div className="flex items-center gap-4 min-w-[250px]">
-                                            <div className="w-14 h-14 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white text-xl font-black dark:bg-white dark:text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.1)]">
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[3px_3px_0px_0px_black] p-3 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                                        <div className="flex items-center gap-3 min-w-[200px]">
+                                            <div className="w-10 h-10 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white text-lg font-black dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
                                                 {perf.name.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tighter">{perf.name}</h3>
-                                                <p className="text-[10px] font-black text-gray-400 flex items-center gap-1 uppercase">إجمالي الحصص المجدولة: {perf.total}</p>
+                                                <h3 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-none mb-1">{perf.name}</h3>
+                                                <p className="text-[8px] font-black text-gray-400 flex items-center gap-1 uppercase">إجمالي: {perf.total}</p>
                                             </div>
                                         </div>
 
-                                        <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-6">
+                                        <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
                                             <div>
-                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">نسبة الالتزام</p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-xl font-black text-emerald-600 font-mono">{perf.attendanceRate.toFixed(1)}%</span>
-                                                    <div className="flex-1 h-2 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
+                                                <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5 tracking-widest">الالتزام</p>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-base font-black text-emerald-600 font-mono">{perf.attendanceRate.toFixed(0)}%</span>
+                                                    <div className="flex-1 h-1 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
                                                         <div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} />
                                                     </div>
                                                 </div>
                                             </div>
                                             
                                             <div>
-                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">جودة التوثيق</p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-xl font-black text-blue-600 font-mono">{perf.documentationRate.toFixed(1)}%</span>
-                                                    <div className="flex-1 h-2 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
+                                                <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5 tracking-widest">التوثيق</p>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-base font-black text-blue-600 font-mono">{perf.documentationRate.toFixed(0)}%</span>
+                                                    <div className="flex-1 h-1 bg-gray-100 dark:bg-gray-700/50 rounded-none overflow-hidden">
                                                         <div className="h-full bg-blue-500" style={{ width: `${perf.documentationRate}%` }} />
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            
                                             <div className="hidden md:block">
-                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">الحصص المكتملة</p>
-                                                <p className="text-xl font-black text-gray-900 dark:text-white font-mono">{perf.completed}</p>
+                                                <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5 tracking-widest">المكتمل</p>
+                                                <p className="text-base font-black text-gray-900 dark:text-white font-mono">{perf.completed}</p>
                                             </div>
 
                                             <div className="hidden md:block">
-                                                <p className="text-[10px] font-black text-gray-400 uppercase mb-1">الدروس الموثقة</p>
-                                                <p className="text-xl font-black text-gray-900 dark:text-white font-mono">{perf.documented}</p>
+                                                <p className="text-[8px] font-black text-gray-400 uppercase mb-0.5 tracking-widest">الموثق</p>
+                                                <p className="text-base font-black text-gray-900 dark:text-white font-mono">{perf.documented}</p>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-1.5">
                                             {perf.attendanceRate > 90 && perf.documentationRate > 80 ? (
-                                                <div className="bg-amber-100 text-amber-700 border-2 border-amber-200 px-4 py-2 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">
-                                                    <Star size={12} className="fill-amber-700" /> معلمة متميزة
+                                                <div className="bg-amber-100 text-amber-700 border border-amber-200 px-2 py-1 font-black text-[8px] uppercase tracking-widest flex items-center gap-1.5">
+                                                    <Star size={10} className="fill-amber-700" /> متميزة
                                                 </div>
                                             ) : (
-                                                <div className="bg-gray-100 text-gray-500 border-2 border-gray-200 px-4 py-2 font-black text-[10px] uppercase tracking-widest">
-                                                    تحت التقييم
+                                                <div className="bg-gray-50 text-gray-400 border border-gray-200 px-2 py-1 font-black text-[8px] uppercase tracking-widest">
+                                                    عادي
                                                 </div>
                                             )}
                                         </div>
@@ -899,45 +900,45 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'compensation' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-8">
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b-4 border-gray-950">
+                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
-                                <h2 className="text-2xl font-black text-gray-950 dark:text-white">جدول حصص التعويضات المعلقة</h2>
-                                <p className="text-sm font-bold text-gray-400 mt-1">الحصص التي تم إلغاؤها وبانتظار تحديد موعد بديل</p>
+                                <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">حصص التعويضات المعلقة</h2>
+                                <p className="text-[9px] font-bold text-gray-400 mt-0.5">الحصص بانتظار تحديد موعد بديل</p>
                             </div>
-                            <div className="w-12 h-12 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
-                                <RefreshCw size={24} />
+                            <div className="w-8 h-8 bg-gray-950 flex items-center justify-center text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)]">
+                                <RefreshCw size={16} />
                             </div>
                         </div>
 
-                        <div className="overflow-x-auto bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">
-                            <table className="w-full text-right border-collapse min-w-[600px]">
+                        <div className="overflow-x-auto bg-white border border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[4px_4px_0px_0px_black]">
+                            <table className="w-full text-right border-collapse min-w-[500px]">
                                 <thead>
-                                    <tr className="bg-gray-950 text-white text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-gray-950">
-                                        <th className="px-6 py-4">اسم الطالب</th>
-                                        <th className="px-6 py-4">المادة</th>
-                                        <th className="px-6 py-4">المعلمة</th>
-                                        <th className="px-6 py-4">تاريخ الإلغاء</th>
-                                        <th className="px-6 py-4 text-center">الخيار</th>
+                                    <tr className="bg-gray-950 text-white text-[9px] font-black uppercase tracking-widest border-b border-gray-950">
+                                        <th className="px-3 py-2">الطالب</th>
+                                        <th className="px-3 py-2">المادة</th>
+                                        <th className="px-3 py-2">المعلمة</th>
+                                        <th className="px-3 py-2">تاريخ الإلغاء</th>
+                                        <th className="px-3 py-2 text-center">الحالة</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-700">
+                                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                                     {filteredSessions.filter(s => s.needsCompensation && !s.isCompensation && s.status === 'cancelled').map((session, idx) => (
                                         <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                            <td className="px-6 py-4">
-                                                <div className="font-black text-gray-950 dark:text-white">{session.studentName}</div>
+                                            <td className="px-3 py-2">
+                                                <div className="text-xs font-black text-gray-950 dark:text-white leading-none">{session.studentName}</div>
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-xs font-bold text-gray-500">{session.subject}</div>
+                                            <td className="px-3 py-2">
+                                                <div className="text-[10px] font-bold text-gray-500">{session.subject}</div>
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-xs font-bold text-gray-500">{session.teacherName}</div>
+                                            <td className="px-3 py-2">
+                                                <div className="text-[10px] font-bold text-gray-500">{session.teacherName}</div>
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-xs font-bold text-rose-500 font-mono">{session.date}</div>
+                                            <td className="px-3 py-2">
+                                                <div className="text-[10px] font-bold text-rose-500 font-mono">{session.date}</div>
                                             </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <div className="text-[10px] font-black bg-rose-50 text-rose-600 px-3 py-1 inline-block border border-rose-100 uppercase">
+                                            <td className="px-3 py-2 text-center">
+                                                <div className="text-[8px] font-black bg-rose-50 text-rose-600 px-2 py-0.5 inline-block border border-rose-100 uppercase tracking-tighter">
                                                     بانتظار التعويض
                                                 </div>
                                             </td>
@@ -945,8 +946,8 @@ export const MonthlyClosing: React.FC = () => {
                                     ))}
                                     {filteredSessions.filter(s => s.needsCompensation && !s.isCompensation && s.status === 'cancelled').length === 0 && (
                                         <tr>
-                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold italic text-sm">
-                                                لا توجد حصص تعويضية معلقة حالياً
+                                            <td colSpan={5} className="px-3 py-10 text-center text-gray-400 font-black uppercase tracking-widest text-[10px]">
+                                                لا توجد حصص تعويضية معلقة
                                             </td>
                                         </tr>
                                     )}

@@ -191,30 +191,30 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="space-y-10 pb-32">
+        <div className="space-y-6 pb-20">
             {/* Ultra-Brutalist Command Header */}
-            <div className="relative bg-gray-950 p-10 shadow-[10px_10px_0px_0px_#ef4444] border-8 border-gray-950 overflow-hidden rounded-none mb-10">
+            <div className="relative bg-gray-950 p-4 shadow-[3px_3px_0px_0px_#ef4444] border-2 border-gray-950 overflow-hidden rounded-none mb-6">
                 <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" 
                      style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="flex items-center gap-8">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
                         <motion.div 
                             whileHover={{ rotate: -5, scale: 1.05 }}
-                            className="w-24 h-24 bg-primary-600 text-white border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] flex items-center justify-center transform -rotate-3"
+                            className="w-12 h-12 bg-primary-600 text-white border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] flex items-center justify-center transform -rotate-3"
                         >
-                            <Calendar size={48} strokeWidth={3} />
+                            <Calendar size={24} strokeWidth={3} />
                         </motion.div>
                         <div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="px-3 py-1 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic">جدول المهام التعليمية</span>
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="px-2 py-0.5 bg-primary-600 text-white text-[8px] font-black uppercase tracking-widest italic">جدول المهام</span>
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-pulse" />)}
                                 </div>
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">إدارة المهمات والمواعيد</h1>
-                            <p className="text-gray-400 text-xs md:text-base font-bold mt-4 flex items-center gap-3 uppercase tracking-wider">
-                                <Activity size={18} className="text-primary-500" />
+                            <h1 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase italic leading-none">إدارة المهمات والمواعيد</h1>
+                            <p className="text-gray-400 text-[10px] font-bold mt-2 flex items-center gap-2 uppercase tracking-wider">
+                                <Activity size={14} className="text-primary-500" />
                                 مراقبة وتوجيه الجلسات التعليمية لشركاء النجاح
                             </p>
                         </div>
@@ -223,62 +223,62 @@ export const Appointments = () => {
             </div>
 
             {/* High-Impact Insight Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                <motion.div whileHover={{ y: -5 }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <motion.div whileHover={{ y: -3 }}>
                     <StatsCard
                         title="الجلسات المجدولة"
                         value={totalAppointments}
                         icon={Calendar}
                         color="indigo"
                         trend="القوة الإجمالية"
-                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#4f46e5] rounded-none p-8"
+                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#4f46e5] rounded-none p-3"
                     />
                 </motion.div>
-                <motion.div whileHover={{ y: -5 }}>
+                <motion.div whileHover={{ y: -3 }}>
                     <StatsCard
                         title="عمليات اليوم"
                         value={todayAppointments}
                         icon={Zap}
                         color="blue"
                         trend="الهدف اليومي"
-                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#3b82f6] rounded-none p-8"
+                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#3b82f6] rounded-none p-3"
                     />
                 </motion.div>
-                <motion.div whileHover={{ y: -5 }}>
+                <motion.div whileHover={{ y: -3 }}>
                     <StatsCard
                         title="قيد التنفيذ المتبقي"
                         value={remainingToday}
                         icon={Target}
                         color="emerald"
                         trend="العمليات النشطة"
-                        className="border-8 border-gray-950 shadow-[8px_8px_0px_0px_#10b981] rounded-none p-8"
+                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#10b981] rounded-none p-3"
                     />
                 </motion.div>
             </div>
 
             {/* Operational Filters - Brutalist Panel */}
-            <div className="bg-white border-8 border-gray-950 p-8 shadow-[10px_10px_0px_0px_black] relative">
-                <div className="absolute top-0 right-0 w-24 h-full bg-gray-50 -skew-x-12 translate-x-12 pointer-events-none"></div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] relative">
+                <div className="absolute top-0 right-0 w-16 h-full bg-gray-50 -skew-x-12 translate-x-8 pointer-events-none"></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
                     <div className="relative group">
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">البحث الرقمي</label>
-                        <Search className="absolute right-4 top-[42px] text-gray-950" size={20} />
+                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">البحث الرقمي</label>
+                        <Search className="absolute right-3 top-[30px] text-gray-950" size={16} />
                         <input
                             type="text"
                             placeholder="بحث في السجلات..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic text-right"
+                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic text-right text-xs"
                         />
                     </div>
 
                     <div className="relative">
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">الفلترة الزمنية</label>
-                        <Filter className="absolute right-4 top-[42px] text-gray-950" size={20} />
+                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">الفلترة الزمنية</label>
+                        <Filter className="absolute right-3 top-[30px] text-gray-950" size={16} />
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic text-right"
+                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic text-right text-xs"
                         >
                             <option value="all">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -288,12 +288,12 @@ export const Appointments = () => {
                     </div>
 
                     <div className="relative">
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">قائد الفريق</label>
-                        <GraduationCap className="absolute right-4 top-[42px] text-gray-950" size={20} />
+                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">قائد الفريق</label>
+                        <GraduationCap className="absolute right-3 top-[30px] text-gray-950" size={16} />
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pl-6 pr-12 py-4 border-4 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic text-right"
+                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic text-right text-xs"
                         >
                             <option value="all">كل الكوادر</option>
                             {uniqueTeachers.map(teacher => (
@@ -305,25 +305,25 @@ export const Appointments = () => {
             </div>
 
             {/* Main Schedule Grid - Strategic Layout */}
-            <div className={`grid gap-10 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                <div className={`${showDetails ? 'lg:col-span-2' : ''} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`}>
+            <div className={`grid gap-4 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                <div className={`${showDetails ? 'lg:col-span-2' : ''} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
                     {appointmentsByDay.map(({ day, appointments }) => (
                         <motion.div 
                             layout
                             key={day} 
-                            className="bg-white border-8 border-gray-950 shadow-[10px_10px_0px_0px_#ef4444] group hover:-translate-x-1 hover:-translate-y-1 transition-all"
+                            className="bg-white border-2 border-gray-950 shadow-[3px_3px_0px_0px_#ef4444] group hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
                         >
-                            <div className="p-6 border-b-8 border-gray-950 flex items-center justify-between bg-gray-950">
-                                <div className="flex items-center gap-4">
-                                    <h3 className="font-black text-white uppercase tracking-tighter text-2xl italic">{day}</h3>
+                            <div className="p-3 border-b-2 border-gray-950 flex items-center justify-between bg-gray-950">
+                                <div className="flex items-center gap-2">
+                                    <h3 className="font-black text-white uppercase tracking-tighter text-base italic">{day}</h3>
                                 </div>
-                                <div className="flex items-center gap-2 bg-primary-600 px-4 py-2 border-2 border-white">
-                                    <span className="text-white text-lg font-black leading-none">{appointments.length}</span>
-                                    <span className="text-white text-[10px] font-bold uppercase tracking-widest">مهمة</span>
+                                <div className="flex items-center gap-1 bg-primary-600 px-2 py-0.5 border border-white">
+                                    <span className="text-white text-sm font-black leading-none">{appointments.length}</span>
+                                    <span className="text-white text-[8px] font-bold uppercase tracking-widest">مهمة</span>
                                 </div>
                             </div>
 
-                            <div className="p-6 min-h-[250px] flex flex-col justify-start">
+                            <div className="p-3 min-h-[150px] flex flex-col justify-start">
                                 {appointments.length > 0 ? (() => {
                                     const remainingSessions = appointments.filter(a => !completedSessionIds.includes(a.id));
 
@@ -336,37 +336,37 @@ export const Appointments = () => {
                                                     setSelectedAppointment(nextSession);
                                                     setShowDetails(true);
                                                 }}
-                                                className="p-6 bg-white border-4 border-gray-500 hover:border-primary-600 transition-all cursor-pointer relative overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
+                                                className="p-3 bg-white border-2 border-gray-200 hover:border-primary-600 transition-all cursor-pointer relative overflow-hidden shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
                                             >
                                                 {/* Status Badge */}
-                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-3 py-1 text-[9px] font-black uppercase italic tracking-tighter">المهمة التالية</div>
+                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-2 py-0.5 text-[7px] font-black uppercase italic tracking-tighter">التالي</div>
                                                 
-                                                <div className="flex items-center justify-between mt-4 mb-6">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="p-3 bg-gray-950 text-white border-2 border-gray-950 transform -rotate-3">
-                                                            <Clock size={20} strokeWidth={3} />
+                                                <div className="flex items-center justify-between mt-2 mb-3">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="p-1.5 bg-gray-950 text-white border border-gray-950 transform -rotate-3">
+                                                            <Clock size={14} strokeWidth={3} />
                                                         </div>
-                                                        <span className="text-2xl font-black text-gray-950 italic tracking-tighter">{nextSession.time}</span>
+                                                        <span className="text-lg font-black text-gray-950 italic tracking-tighter">{nextSession.time}</span>
                                                     </div>
                                                 </div>
 
-                                                <div className="space-y-4">
-                                                    <div className="flex items-center gap-3 p-2 bg-gray-50 border-r-4 border-gray-950">
-                                                        <User size={18} className="text-gray-950" />
+                                                <div className="space-y-2">
+                                                    <div className="flex items-center gap-2 p-1.5 bg-gray-50 border-r-2 border-gray-950">
+                                                        <User size={14} className="text-gray-950" />
                                                         <div className="flex flex-col">
-                                                            <span className="text-sm font-black text-gray-950">{nextSession.studentName}</span>
-                                                            <span className="text-[10px] text-primary-600 font-bold tracking-widest uppercase">منهج {nextSession.curriculum}</span>
+                                                            <span className="text-xs font-black text-gray-950">{nextSession.studentName}</span>
+                                                            <span className="text-[8px] text-primary-600 font-bold tracking-widest uppercase">{nextSession.curriculum}</span>
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center gap-3 px-2">
-                                                        <ShieldCheck size={18} className="text-emerald-500" />
-                                                        <span className="text-xs font-black text-gray-400 uppercase italic">القائد: {nextSession.teacherName}</span>
+                                                    <div className="flex items-center gap-2 px-1">
+                                                        <ShieldCheck size={14} className="text-emerald-500" />
+                                                        <span className="text-[9px] font-black text-gray-400 uppercase italic">القائد: {nextSession.teacherName}</span>
                                                     </div>
                                                 </div>
 
                                                 <button
                                                     onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-600 text-white border-4 border-gray-950 py-3 font-black text-xs uppercase italic shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-center"
+                                                    className="w-full mt-3 bg-emerald-500 hover:bg-emerald-600 text-white border-2 border-gray-950 py-1.5 font-black text-[10px] uppercase italic shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-center"
                                                 >
                                                     تأكيد الإنجاز
                                                 </button>
@@ -374,19 +374,19 @@ export const Appointments = () => {
                                         );
                                     } else {
                                         return (
-                                            <div className="text-center py-12 bg-emerald-50 border-4 border-emerald-500 flex flex-col items-center">
-                                                <div className="w-16 h-16 bg-white border-4 border-emerald-500 flex items-center justify-center mb-4 transform rotate-12">
-                                                    <CheckCircle2 size={32} className="text-emerald-600" />
+                                            <div className="text-center py-6 bg-emerald-50 border-2 border-emerald-500 flex flex-col items-center">
+                                                <div className="w-10 h-10 bg-white border-2 border-emerald-500 flex items-center justify-center mb-2 transform rotate-12">
+                                                    <CheckCircle2 size={20} className="text-emerald-600" />
                                                 </div>
-                                                <h4 className="text-emerald-950 font-black text-base uppercase tracking-tighter mb-2 italic">الحالة: مكتمل</h4>
-                                                <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">جميع المهمات مكتملة لهذا القطاع</p>
+                                                <h4 className="text-emerald-950 font-black text-xs uppercase tracking-tighter mb-1 italic">مكتمل</h4>
+                                                <p className="text-[8px] text-emerald-600 font-bold uppercase tracking-widest">جميع المهمات مكتملة</p>
                                             </div>
                                         );
                                     }
                                 })() : (
-                                    <div className="text-center py-12 border-4 border-dashed border-gray-200 opacity-30 grayscale">
-                                        <Calendar size={48} className="mx-auto mb-4" />
-                                        <p className="text-xs font-black uppercase tracking-widest italic">لا يوجد بيانات</p>
+                                    <div className="text-center py-8 border-2 border-dashed border-gray-200 opacity-30 grayscale">
+                                        <Calendar size={32} className="mx-auto mb-2" />
+                                        <p className="text-[10px] font-black uppercase tracking-widest italic">لا يوجد بيانات</p>
                                     </div>
                                 )}
                             </div>
@@ -398,24 +398,24 @@ export const Appointments = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className={cn(
-                            "bg-white border-8 border-gray-950 flex flex-col items-center justify-center shadow-[10px_10px_0px_0px_black] text-center p-8",
+                            "bg-white border-2 border-gray-950 flex flex-col items-center justify-center shadow-[3px_3px_0px_0px_black] text-center p-4",
                             appointmentsByDay.length % 3 === 1 ? "lg:col-span-2" : 
                             appointmentsByDay.length % 3 === 2 ? "lg:col-span-1" :
-                            appointmentsByDay.length === 0 ? "lg:col-span-3 min-h-[400px]" : "hidden lg:flex"
+                            appointmentsByDay.length === 0 ? "lg:col-span-3 min-h-[200px]" : "hidden lg:flex"
                         )}
                     >
-                         <div className="flex flex-col items-center gap-6">
+                         <div className="flex flex-col items-center gap-4">
                             <motion.div 
                                 animate={{ rotate: [0, 5, -5, 0] }} 
                                 transition={{ repeat: Infinity, duration: 5 }}
-                                className="w-20 h-20 bg-gray-50 border-4 border-gray-950 flex items-center justify-center transform rotate-3"
+                                className="w-10 h-10 bg-gray-50 border-2 border-gray-950 flex items-center justify-center transform rotate-3"
                             >
-                                <Calendar size={40} strokeWidth={1} className="text-gray-400" />
+                                <Calendar size={20} strokeWidth={1} className="text-gray-400" />
                             </motion.div>
                             <div className="text-center">
-                                <h3 className="font-black text-3xl text-gray-950 uppercase italic tracking-tighter mb-2">لا توجد إشارات</h3>
-                                <p className="text-gray-400 font-bold uppercase tracking-[2px] text-[10px] max-w-[250px] mx-auto leading-relaxed">
-                                    نظام الجدولة يعمل بكفاءة قصوى. لا يوجد مهام إضافية قيد المراقبة حالياً.
+                                <h3 className="font-black text-xl text-gray-950 uppercase italic tracking-tighter mb-1">لا توجد إشارات</h3>
+                                <p className="text-gray-400 font-bold uppercase tracking-widest text-[8px] max-w-[200px] mx-auto leading-relaxed">
+                                    نظام الجدولة يعمل بكفاءة قصوى.
                                 </p>
                             </div>
                          </div>
@@ -429,59 +429,59 @@ export const Appointments = () => {
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 50 }}
-                            className="bg-white border-8 border-gray-950 h-fit shadow-[20px_20px_0px_0px_black] sticky top-6 overflow-hidden"
+                            className="bg-white border-2 border-gray-950 h-fit shadow-[4px_4px_0px_0px_black] sticky top-4 overflow-hidden"
                         >
-                            <div className="p-8 bg-gray-950 text-white relative">
+                            <div className="p-4 bg-gray-950 text-white relative">
                                 <button 
                                     onClick={() => setShowDetails(false)} 
-                                    className="absolute left-6 top-6 w-10 h-10 border-2 border-white flex items-center justify-center hover:bg-rose-500 hover:border-rose-500 transition-all"
+                                    className="absolute left-4 top-4 w-6 h-6 border border-white flex items-center justify-center hover:bg-rose-500 hover:border-rose-500 transition-all"
                                 >
-                                    <X size={20} />
+                                    <X size={14} />
                                 </button>
-                                <div className="text-center pt-6">
-                                    <div className="inline-block p-4 border-4 border-primary-500 mb-6 transform -rotate-6">
-                                        <Zap className="text-primary-500" size={40} />
+                                <div className="text-center pt-2">
+                                    <div className="inline-block p-2 border-2 border-primary-500 mb-2 transform -rotate-6">
+                                        <Zap className="text-primary-500" size={24} />
                                     </div>
-                                    <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-[4px] mb-2 leading-none">لوجستيات المهمة</h4>
-                                    <h3 className="font-black text-4xl uppercase italic tracking-tighter mb-2">{selectedAppointment.day}</h3>
-                                    <div className="inline-block px-6 py-2 bg-primary-600 text-white border-2 border-white text-2xl font-black italic">
+                                    <h4 className="text-[8px] font-black text-gray-500 uppercase tracking-[2px] mb-1 leading-none">لوجستيات المهمة</h4>
+                                    <h3 className="font-black text-xl uppercase italic tracking-tighter mb-1">{selectedAppointment.day}</h3>
+                                    <div className="inline-block px-3 py-1 bg-primary-600 text-white border border-white text-lg font-black italic">
                                         {selectedAppointment.time}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8 space-y-6">
-                                <div className="p-6 bg-gray-50 border-r-8 border-primary-600 flex items-center justify-between group">
+                            <div className="p-4 space-y-3">
+                                <div className="p-3 bg-gray-50 border-r-4 border-primary-600 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">الطالب المستهدف</label>
-                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.studentName}</h4>
-                                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-widest">{selectedAppointment.studentGrade}</span>
+                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">الطالب المستهدف</label>
+                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.studentName}</h4>
+                                        <span className="text-[8px] font-bold text-primary-600 uppercase tracking-widest">{selectedAppointment.studentGrade}</span>
                                     </div>
-                                    <User size={32} className="text-gray-200 group-hover:text-primary-600 transition-colors" />
+                                    <User size={24} className="text-gray-200 group-hover:text-primary-600 transition-colors" />
                                 </div>
 
-                                <div className="p-6 bg-gray-50 border-r-8 border-emerald-500 flex items-center justify-between group">
+                                <div className="p-3 bg-gray-50 border-r-4 border-emerald-500 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">قائد المجموعة</label>
-                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.teacherName}</h4>
+                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">قائد المجموعة</label>
+                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.teacherName}</h4>
                                     </div>
-                                    <ShieldCheck size={32} className="text-gray-200 group-hover:text-emerald-500 transition-colors" />
+                                    <ShieldCheck size={24} className="text-gray-200 group-hover:text-emerald-500 transition-colors" />
                                 </div>
 
-                                <div className="p-6 bg-gray-50 border-r-8 border-amber-500 flex items-center justify-between group">
+                                <div className="p-3 bg-gray-50 border-r-4 border-amber-500 flex items-center justify-between group">
                                     <div>
-                                        <label className="block text-[10px] font-black text-gray-400 uppercase mb-1">نطاق المادة</label>
-                                        <h4 className="text-xl font-black text-gray-950 uppercase italic">{selectedAppointment.subject}</h4>
-                                        <span className="inline-block mt-2 px-3 py-1 bg-amber-500 text-white text-[9px] font-black uppercase italic">{selectedAppointment.curriculum}</span>
+                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">نطاق المادة</label>
+                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.subject}</h4>
+                                        <span className="inline-block mt-1 px-2 py-0.5 bg-amber-500 text-white text-[8px] font-black uppercase italic">{selectedAppointment.curriculum}</span>
                                     </div>
-                                    <BookOpen size={32} className="text-gray-200 group-hover:text-amber-500 transition-colors" />
+                                    <BookOpen size={24} className="text-gray-200 group-hover:text-amber-500 transition-colors" />
                                 </div>
 
                                 <button 
                                     onClick={() => setShowDetails(false)}
-                                    className="w-full flex items-center justify-center gap-4 py-5 bg-gray-950 text-white border-4 border-gray-950 font-black uppercase text-xs italic shadow-[8px_8px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                    className="w-full flex items-center justify-center gap-2 py-3 bg-gray-950 text-white border-2 border-gray-950 font-black uppercase text-[10px] italic shadow-[4px_4px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
                                 >
-                                    إغلاق التقرير <ArrowRight size={18} />
+                                    إغلاق التقرير <ArrowRight size={14} />
                                 </button>
                             </div>
                         </motion.div>
