@@ -16,7 +16,7 @@ import { RecentActivityFeed } from '../features/dashboard/components/RecentActiv
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
-import { Star } from 'lucide-react';
+
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
