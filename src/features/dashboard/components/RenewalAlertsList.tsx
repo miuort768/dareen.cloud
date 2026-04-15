@@ -1,4 +1,4 @@
-import { Bell, Phone } from 'lucide-react';
+import { Bell, Phone, UserX } from 'lucide-react';
 import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
@@ -12,113 +12,64 @@ interface RenewalAlertsListProps {
 export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsListProps) => {
     const { adminPhone } = useApp();
     return (
-        <div className="bg-white border border-rose-200 dark:bg-rose-950/20 dark:border-rose-900/30 overflow-hidden shadow-xl relative group h-full flex flex-col">
-            <div className="absolute top-0 right-0 w-1.5 h-full bg-rose-600 group-hover:w-2 transition-all"></div>
-            <div className="p-5 border-b border-rose-100 dark:border-rose-900/20 flex items-center justify-between bg-gradient-to-l from-rose-50/80 to-transparent dark:from-rose-900/10">
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col" dir="rtl">
+            <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="relative">
-                        <div className="absolute -inset-1 bg-rose-600/20 blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="relative p-2.5 bg-rose-600 shadow-lg shadow-rose-600/20 flex items-center justify-center">
-                            <Bell size={22} className="text-white animate-pulse" />
-                        </div>
+                    <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-2xl flex items-center justify-center border border-rose-500/20">
+                        <UserX size={24} />
                     </div>
-                    <div className="space-y-0.5">
-                        <h3 className="font-black text-gray-900 dark:text-white text-sm tracking-tight">تنبيهات تجديد الاشتراك</h3>
-                        <div className="flex items-center gap-2">
-                            <div className="h-1.5 w-1.5 rounded-full bg-rose-600 animate-pulse"></div>
-                            <p className="text-[10px] font-black text-rose-600 uppercase tracking-[0.15em] opacity-80">تتطلب متابعة فورية</p>
-                        </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">تجديد الاشتراكات</h3>
+                        <p className="text-sm font-medium text-gray-400">متابعة الطلاب المنتهي رصيدهم</p>
                     </div>
                 </div>
-                <div className="flex flex-col items-end gap-1">
-                    <div className="px-4 py-1.5 bg-rose-600 text-white text-[11px] font-black shadow-lg shadow-rose-600/30">
-                        {stats.lowBalanceCount} طلاب متعثرين
-                    </div>
-                    <p className="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest pl-1">قائمة التجديد</p>
+                <div className="px-4 py-1.5 bg-rose-500 text-white text-[11px] font-black rounded-xl shadow-lg shadow-rose-500/20">
+                    {stats.lowBalanceCount} طلاب تعثروا
                 </div>
             </div>
 
-            <div className="hidden sm:block overflow-x-auto flex-1 custom-scrollbar">
-                <table className="w-full">
-                    <thead>
-                        <tr className="bg-gray-50/50 dark:bg-gray-800/30 border-b border-gray-100 dark:border-gray-800">
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الطالب</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">المادة</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الرصيد المتبقي</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الإجراء</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {lowBalanceStudents.length > 0 ? (
-                            lowBalanceStudents.map((item, idx) => (
-                                <tr key={idx} className="hover:bg-rose-50/20 dark:hover:bg-rose-900/5 transition-colors border-b last:border-0 border-gray-50 dark:border-gray-800/50">
-                                    <td className="px-6 py-4 text-center">
-                                        <span className="font-black text-gray-900 dark:text-white text-xs">{item.studentName}</span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <span className="text-xs font-bold text-gray-600 dark:text-gray-400">{item.subject}</span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="flex justify-center">
-                                            <span className={cn(
-                                                "px-4 py-1.5 font-black text-[10px] tracking-tighter shadow-sm",
-                                                item.remainingSessions === 0
-                                                    ? "bg-rose-600 text-white shadow-rose-600/20"
-                                                    : "bg-amber-100/80 text-amber-700 dark:bg-amber-900/20 dark:text-amber-500"
-                                            )}>
-                                                {item.remainingSessions === 0 ? 'منتهي الصلاحية' : `${item.remainingSessions} حِصص متبقية`}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex justify-center">
-                                            <button
-                                                onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                                className="bg-emerald-600 text-white px-4 py-1.5 text-[10px] font-black uppercase hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-600/20 transition-all active:scale-95 flex items-center gap-2 group/btn"
-                                            >
-                                                إرسال تذكير
-                                                <Phone size={12} className="group-hover/btn:rotate-12 transition-transform" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={4} className="px-6 py-12 text-center text-xs font-black text-gray-400 opacity-30">لا توجد اشتراكات منتهية حالياً</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-
-            <div className="sm:hidden p-4 space-y-4">
+            <div className="overflow-x-auto flex-1 custom-scrollbar">
                 {lowBalanceStudents.length > 0 ? (
-                    lowBalanceStudents.map((item, idx) => (
-                        <div key={idx} className="bg-white dark:bg-gray-800/50 p-4 border border-rose-100 dark:border-rose-900/20 shadow-sm relative overflow-hidden">
-                            <div className="flex justify-between items-start mb-3">
-                                <div>
-                                    <h4 className="font-black text-gray-900 dark:text-white text-sm mb-0.5">{item.studentName}</h4>
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">{item.subject}</p>
+                    <div className="space-y-4">
+                        {lowBalanceStudents.map((item, idx) => (
+                            <div key={idx} className="p-5 bg-slate-50/50 dark:bg-slate-800/30 rounded-[2rem] border border-slate-100 dark:border-slate-800 flex items-center justify-between group transition-all hover:bg-white dark:hover:bg-slate-800">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">
+                                        {item.studentName.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-slate-800 dark:text-white">{item.studentName}</p>
+                                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{item.subject}</p>
+                                    </div>
                                 </div>
-                                <span className={cn(
-                                    "px-2 py-0.5 font-black text-[9px] uppercase tracking-tighter",
-                                    item.remainingSessions === 0 ? "bg-rose-600 text-white" : "bg-amber-100 text-amber-700"
-                                )}>
-                                    {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} حِصص`}
-                                </span>
+
+                                <div className="flex items-center gap-6">
+                                    <div className="text-left hidden md:block">
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">الرصيد</p>
+                                        <span className={cn(
+                                            "px-3 py-1 rounded-full font-black text-[10px] tracking-tighter",
+                                            item.remainingSessions === 0
+                                                ? "bg-rose-100 text-rose-600"
+                                                : "bg-amber-100 text-amber-600"
+                                        )}>
+                                            {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} حِصص`}
+                                        </span>
+                                    </div>
+                                    
+                                    <button
+                                        onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
+                                        className="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center hover:bg-emerald-600 transition-all hover:scale-110 shadow-lg shadow-emerald-500/20 group/btn"
+                                    >
+                                        <Phone size={18} className="group-hover/btn:rotate-12 transition-transform" />
+                                    </button>
+                                </div>
                             </div>
-                            <button
-                                onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
-                                className="w-full bg-emerald-600 text-white py-2.5 text-[10px] font-black uppercase flex items-center justify-center gap-2 active:scale-95 transition-transform"
-                            >
-                                إرسال تذكير عبر واتساب
-                                <Phone size={14} />
-                            </button>
-                        </div>
-                    ))
+                        ))}
+                    </div>
                 ) : (
-                    <div className="py-10 text-center text-xs font-black text-gray-400 opacity-30">لا توجد اشتراكات منتهية</div>
+                    <div className="py-12 text-center bg-slate-50/50 dark:bg-slate-800/30 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
+                        <p className="text-xs font-bold text-slate-400">لا توجد اشتراكات منتهية</p>
+                    </div>
                 )}
             </div>
         </div>

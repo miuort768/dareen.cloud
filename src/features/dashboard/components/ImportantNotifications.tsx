@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bell, ListTodo, Phone, X } from 'lucide-react';
+import { Bell, ListTodo, Phone, X, ShieldAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
@@ -65,29 +65,28 @@ export const ImportantNotifications = ({
         }
     };
 
-    // Combine notifications
     const notifications: NotificationItem[] = [
         ...(Array.isArray(lowBalanceStudents) ? lowBalanceStudents.map(s => ({
-            id: `lb - ${s.id} -${s.subject} `,
+            id: `lb-${s.id}-${s.subject}`,
             type: 'low_balance',
-            title: `رصيد منخفض: ${s.studentName} `,
-            description: `المتبقي ${s.remainingSessions} حِصص في مادة ${s.subject} `,
+            title: `${s.studentName}`,
+            description: `باقي ${s.remainingSessions} حِصص في ${s.subject}`,
             priority: (s.remainingSessions === 0 ? 'high' : 'medium') as 'high' | 'medium',
             action: () => sendWhatsAppReminder(s, undefined, adminPhone),
-            actionLabel: 'تذكير واتساب',
+            actionLabel: 'واتساب',
             icon: Phone,
             color: 'rose'
         })) : []),
         ...(Array.isArray(tasks) ? tasks.filter(t =>
             ['high', 'عالية', 'urgent', 'عاجل'].includes(t.priority?.toLowerCase())
         ).map(t => ({
-            id: `task - ${t.id} `,
+            id: `task-${t.id}`,
             type: 'task',
-            title: `مهمة عاجلة: ${t.title} `,
-            description: `تاريخ الاستحقاق: ${t.dueDate} `,
+            title: `${t.title}`,
+            description: `استحقاق: ${t.dueDate}`,
             priority: 'high' as const,
             link: '/tasks',
-            actionLabel: 'عرض المهام',
+            actionLabel: 'عرض',
             icon: ListTodo,
             color: 'amber'
         })) : [])
@@ -98,72 +97,74 @@ export const ImportantNotifications = ({
         : [];
 
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_black] rounded-none overflow-hidden relative group h-full">
-            <div className="absolute top-0 right-0 w-1 h-full bg-gray-950"></div>
-            <div className="p-4 border-b-2 border-gray-950 dark:border-slate-800 flex items-center justify-between bg-primary-600">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-white rounded-none border-2 border-gray-950 shadow-none flex items-center justify-center">
-                        <Bell size={14} className="text-gray-950" />
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col">
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-2xl flex items-center justify-center border border-rose-500/20">
+                        <ShieldAlert size={24} />
                     </div>
                     <div>
-                        <h3 className="font-black text-white text-xs tracking-tighter uppercase italic">غرفة التنبيهات</h3>
-                        <p className="text-[9px] font-black text-white/70 uppercase tracking-tighter">URGENT OPS</p>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">غرفة التنبيهات</h3>
+                        <p className="text-sm font-medium text-gray-400">إجراءات حرجة مطلوبة</p>
                     </div>
                 </div>
-                <span className="bg-white text-gray-950 px-2 py-0.5 rounded-none border-2 border-gray-950 text-[9px] font-black">
+                <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center font-black text-sm text-slate-400">
                     {visibleNotifications.length}
-                </span>
+                </div>
             </div>
 
-            <div className="divide-y-2 divide-gray-950 dark:divide-slate-800 h-[300px] overflow-y-auto custom-scrollbar">
+            <div className="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-1">
                 {visibleNotifications.length > 0 ? (
                     visibleNotifications.map((note) => (
-                        <div key={note.id} className="p-4 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-all group/item relative">
+                        <div key={note.id} className="p-5 bg-slate-50/50 dark:bg-slate-800/30 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 group relative">
                             <button
                                 onClick={() => handleDismiss(note.id)}
-                                className="absolute top-2 left-2 text-gray-300 hover:text-rose-500 transition-colors p-1"
-                                title="حذف"
+                                className="absolute top-4 left-4 text-slate-300 hover:text-rose-500 transition-colors p-2"
                             >
-                                <X size={14} />
+                                <X size={16} />
                             </button>
-                            <div className="flex items-start gap-3">
+                            <div className="flex items-start gap-4">
                                 <div className={cn(
-                                    "p-2 rounded-none border-2 border-gray-950 shadow-none shrink-0",
-                                    note.color === 'rose' ? "bg-rose-50 text-rose-600 dark:bg-rose-900/20" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
+                                    "w-12 h-12 shrink-0 flex items-center justify-center rounded-2xl border transition-all duration-500",
+                                    note.color === 'rose' ? "bg-rose-500/10 text-rose-500 border-rose-500/20" : "bg-amber-500/10 text-amber-500 border-amber-500/20"
                                 )}>
-                                    <note.icon size={16} />
+                                    <note.icon size={20} />
                                 </div>
-                                <div className="flex-1 min-w-0 pr-4">
-                                    <h4 className="font-black text-gray-950 dark:text-white text-[11px] leading-tight mb-1 uppercase italic tracking-tighter">
+                                <div className="flex-1 min-w-0">
+                                    <h4 className="font-bold text-slate-800 dark:text-white text-sm mb-1 line-clamp-1 pr-6">
                                         {note.title}
                                     </h4>
-                                    <p className="text-[10px] text-gray-500 font-bold leading-normal">{note.description}</p>
+                                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mb-3">{note.description}</p>
 
-                                    <div className="mt-2 text-left">
+                                    <div className="flex items-center gap-2">
                                         {'action' in note && note.action ? (
                                             <button
                                                 onClick={note.action}
-                                                className="text-[9px] font-black text-primary-600 hover:text-primary-700 uppercase tracking-widest bg-gray-50 px-2 py-1 border border-gray-950"
+                                                className="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-bold hover:bg-indigo-700 transition-colors"
                                             >
                                                 {note.actionLabel}
                                             </button>
                                         ) : 'link' in note && note.link ? (
                                             <Link
                                                 to={note.link}
-                                                className="text-[9px] font-black text-primary-600 hover:text-primary-700 uppercase tracking-widest bg-gray-50 px-2 py-1 border border-gray-950"
+                                                className="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-bold hover:bg-indigo-700 transition-colors"
                                             >
                                                 {note.actionLabel}
                                             </Link>
                                         ) : null}
+                                        <div className={cn(
+                                            "w-1.5 h-1.5 rounded-full animate-pulse",
+                                            note.priority === 'high' ? "bg-rose-500" : "bg-amber-500"
+                                        )}></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="p-10 text-center">
-                        <Bell size={24} className="text-gray-100 mx-auto mb-2" />
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-tighter">لا توجد تنبيهات</p>
+                    <div className="p-12 text-center bg-slate-50/50 dark:bg-slate-800/30 rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800">
+                        <Bell size={32} className="text-slate-200 dark:text-slate-700 mx-auto mb-4" />
+                        <p className="text-xs font-bold text-slate-400">غرفة التنبيهات نظيفة حالياً</p>
                     </div>
                 )}
             </div>

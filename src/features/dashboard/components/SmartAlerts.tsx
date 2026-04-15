@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AlertTriangle, CreditCard, TrendingDown, CheckCircle2, Zap } from 'lucide-react';
+import { AlertTriangle, CreditCard, TrendingDown, CheckCircle2, Zap, ArrowLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     const alerts = useMemo(() => {
         const result: any[] = [];
 
-        // 🔴 Alert 1: Students almost out of sessions (1 or 0 remaining)
+        // 🔴 Alert 1: Students almost out of sessions
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
                 result.push({
@@ -24,15 +24,15 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                     type: 'critical',
                     icon: AlertTriangle,
                     color: 'rose',
-                    title: `${s.studentName} — ${s.subject}`,
-                    desc: `باقي ${s.remainingSessions === 0 ? 'صفر حصص' : 'حصة واحدة فقط'} من رصيده!`,
+                    title: `${s.studentName}`,
+                    desc: `${s.subject}: باقي ${s.remainingSessions === 0 ? 'صفر حصص' : 'حصة واحدة فقط'}!`,
                     action: () => navigate('/students'),
-                    actionLabel: 'عرض الطالب'
+                    actionLabel: 'تعبئة رصيد'
                 });
             }
         });
 
-        // 🟠 Alert 2: Students with high absence rate (>30%)
+        // 🟠 Alert 2: Students with high absence rate
         students.forEach(s => {
             const studentSessions = sessions.filter(ss => ss.studentId === s.id);
             if (studentSessions.length < 3) return;
@@ -44,19 +44,19 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                     type: 'warning',
                     icon: TrendingDown,
                     color: 'amber',
-                    title: `${s.name} — غياب مرتفع`,
-                    desc: `نسبة الغياب ${Math.round(rate)}% (${absent} من ${studentSessions.length} حصة)`,
+                    title: `${s.name}`,
+                    desc: `تجاوز الغياب ${Math.round(rate)}% مؤخراً`,
                     action: () => navigate('/attendance'),
-                    actionLabel: 'سجل الحضور'
+                    actionLabel: 'السجل'
                 });
             }
         });
 
-        // 🔵 Alert 3: Unpaid invoices older than 7 days
-        const now = Date.now();
-        const sevenDays = 7 * 24 * 60 * 60 * 1000;
+        // 🔵 Alert 3: Unpaid invoices
         const overdueInvoices = studentInvoices.filter(inv => {
             if (!['unpaid', 'pending', 'overdue'].includes(inv.status?.toLowerCase())) return false;
+            const now = Date.now();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
             const created = new Date(inv.date || inv.created_at || 0).getTime();
             return (now - created) > sevenDays;
         });
@@ -66,15 +66,14 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 id: 'overdue-invoices',
                 type: 'warning',
                 icon: CreditCard,
-                color: 'blue',
-                title: `${overdueInvoices.length} فاتورة متأخرة`,
-                desc: `فواتير غير مدفوعة منذ أكثر من أسبوع تحتاج متابعة`,
+                color: 'indigo',
+                title: `${overdueInvoices.length} فواتير متأخرة`,
+                desc: `تحصيل مالي مطلوب للفواتير القديمة`,
                 action: () => navigate('/studentInvoices'),
-                actionLabel: 'عرض الفواتير'
+                actionLabel: 'التحصيل'
             });
         }
 
-        // 🟢 Alert 4: All good!
         if (result.length === 0) {
             result.push({
                 id: 'all-good',
@@ -82,59 +81,55 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 icon: CheckCircle2,
                 color: 'emerald',
                 title: 'كل شيء يسير بمنتهى الدقة!',
-                desc: 'جميع الطلاب ملتزمون بالخطط التعليمية والمواعيد حالياً. عمل رائع!',
+                desc: 'لا توجد مشاكل معلقة حالياً.',
                 action: null,
                 actionLabel: ''
             });
         }
 
         return result;
-    }, [students, sessions, studentInvoices, lowBalanceStudents]);
+    }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
     const colorMap: any = {
-        rose: { bg: 'bg-rose-50 dark:bg-rose-900/10', border: 'border-rose-200 dark:border-rose-800/40', icon: 'text-rose-600 bg-rose-100 dark:bg-rose-900/30', text: 'text-rose-900 dark:text-rose-200', sub: 'text-rose-600 dark:text-rose-400', btn: 'bg-rose-600 hover:bg-rose-700 text-white' },
-        amber: { bg: 'bg-amber-50 dark:bg-amber-900/10', border: 'border-amber-200 dark:border-amber-800/40', icon: 'text-amber-600 bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-900 dark:text-amber-200', sub: 'text-amber-600 dark:text-amber-400', btn: 'bg-amber-600 hover:bg-amber-700 text-white' },
-        blue: { bg: 'bg-blue-50 dark:bg-blue-900/10', border: 'border-blue-200 dark:border-blue-800/40', icon: 'text-blue-600 bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-900 dark:text-blue-200', sub: 'text-blue-600 dark:text-blue-400', btn: 'bg-blue-600 hover:bg-blue-700 text-white' },
-        emerald: { bg: 'bg-emerald-50 dark:bg-emerald-900/10', border: 'border-emerald-200 dark:border-emerald-800/40', icon: 'text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-900 dark:text-emerald-200', sub: 'text-emerald-600 dark:text-emerald-400', btn: '' },
+        rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-rose-500/20', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
+        amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-amber-500/20', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
+        indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-indigo-500/20', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },
+        emerald: { bg: 'bg-emerald-500/5', border: 'border-emerald-500/10', icon: 'bg-emerald-500 text-white shadow-emerald-500/20', text: 'text-emerald-600', sub: 'text-emerald-500/70', btn: '' },
     };
 
     return (
-        <div className="bg-white dark:bg-gray-950 border-4 border-gray-950 dark:border-gray-800 shadow-[10px_10px_0px_0px_black] dark:shadow-[10px_10px_0px_0px_rgba(255,255,255,0.05)] rounded-none overflow-hidden h-full flex flex-col min-h-[450px] lg:min-h-[550px]" dir="rtl">
-            <div className="p-6 border-b-4 border-gray-950 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
-                <h4 className="font-black text-sm lg:text-base uppercase tracking-[0.2em] text-gray-900 dark:text-white flex items-center gap-3">
-                    <Zap size={20} className="text-yellow-500 fill-yellow-500" />
-                    مركز التنبيهات الذكية
-                </h4>
-                <div className={cn(
-                    "text-[10px] font-black px-3 py-1.5 tracking-[0.2em] border-2 border-current uppercase",
-                    alerts.some(a => a.type === 'critical') ? 'bg-rose-500 text-white border-rose-600' :
-                    alerts.some(a => a.type === 'warning') ? 'bg-amber-500 text-white border-amber-600' : 
-                    'bg-emerald-500 text-white border-emerald-600'
-                )}>
-                    {alerts.filter(a => a.type !== 'success').length > 0 
-                        ? `${alerts.filter(a => a.type !== 'success').length} تنبيه` 
-                        : 'لا توجد مشاكل'}
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col" dir="rtl">
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-indigo-500/10 text-indigo-600 rounded-2xl flex items-center justify-center border border-indigo-500/20">
+                        <Zap size={24} className="fill-indigo-600" />
+                    </div>
+                    <div>
+                        <h4 className="text-xl font-bold text-slate-900 dark:text-white">التنبيهات الذكية</h4>
+                        <p className="text-sm font-medium text-gray-400">إشعارات النظام العاجلة</p>
+                    </div>
                 </div>
             </div>
-            <div className="p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1 flex flex-col justify-center translate-y-[-10px]">
+
+            <div className="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar pr-1">
                 {alerts.map(alert => {
-                    const c = colorMap[alert.color] || colorMap.blue;
+                    const c = colorMap[alert.color] || colorMap.indigo;
                     const Icon = alert.icon;
                     return (
-                        <div key={alert.id} className={cn("p-5 border-2 flex items-start gap-5 rounded-none shadow-sm transition-none", c.bg, c.border.replace('border-rose-200', 'border-rose-900/20'))}>
-                            <div className={cn("p-3 flex-shrink-0 border-2 border-current rounded-none", c.icon)}>
-                                <Icon size={20} />
+                        <div key={alert.id} className={cn("p-5 border-2 flex items-center gap-5 rounded-[2rem] transition-all hover:scale-[1.02]", c.bg, c.border)}>
+                            <div className={cn("w-12 h-12 shrink-0 flex items-center justify-center rounded-2xl shadow-lg transform -rotate-3", c.icon)}>
+                                <Icon size={22} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className={cn("font-black text-base tracking-tight uppercase", c.text)}>{alert.title}</p>
-                                <p className={cn("text-xs font-bold mt-1.5 opacity-80", c.sub)}>{alert.desc}</p>
+                                <p className={cn("font-bold text-sm tracking-tight", c.text)}>{alert.title}</p>
+                                <p className={cn("text-[11px] font-medium mt-1 uppercase tracking-wider", c.sub)}>{alert.desc}</p>
                             </div>
                             {alert.action && (
                                 <button
                                     onClick={alert.action}
-                                    className={cn("flex-shrink-0 px-4 py-2 text-[10px] font-black uppercase tracking-widest border-2 transition-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]", c.btn)}
+                                    className={cn("shrink-0 p-3 rounded-xl transition-all hover:scale-110", c.btn)}
                                 >
-                                    {alert.actionLabel}
+                                    <ArrowLeft size={16} />
                                 </button>
                             )}
                         </div>
