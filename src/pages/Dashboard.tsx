@@ -56,9 +56,9 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617] pb-20 -mt-8 -mx-4 md:-mx-8 overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617] pb-20 overflow-x-hidden" dir="rtl">
             {/* Premium Header Section */}
-            <div className="relative bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-indigo-950/20 pt-12 pb-24 px-4 md:px-8">
+            <div className="relative pt-6 pb-20">
                 <DashboardHeader
                     isTeacher={isTeacher}
                     currentUser={currentUser}
