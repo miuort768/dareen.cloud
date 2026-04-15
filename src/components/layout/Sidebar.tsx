@@ -154,11 +154,11 @@ export const Sidebar = () => {
             >
                 {/* Search & Logo Area */}
                 <div className={cn(
-                    "h-16 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
+                    "h-14 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
                     collapsed ? "justify-center px-0" : "justify-between px-6"
                 )}>
-                    <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0 border-2 border-current p-1" />
+                    <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
+                        <GraduationCap size={collapsed ? 24 : 20} className="text-gold shrink-0 border-2 border-current p-1" />
                         <span className={cn(
                             "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
@@ -175,7 +175,7 @@ export const Sidebar = () => {
                             key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
-                                "flex items-center gap-3 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-sm",
+                                "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-[13px]",
                                 isActive
                                     ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
@@ -184,7 +184,7 @@ export const Sidebar = () => {
                             title={collapsed ? item.name : ''}
                         >
                             <item.icon
-                                size={collapsed ? 22 : 18}
+                                size={collapsed ? 20 : 16}
                                 className="shrink-0"
                                 strokeWidth={2}
                             />
@@ -217,7 +217,7 @@ export const Sidebar = () => {
                         onClick={() => setCollapsed(!collapsed)}
                         className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
                     >
-                        {collapsed ? <ChevronRight size={20} className="mx-auto" /> : <ChevronLeft size={20} />}
+                        {collapsed ? <ChevronRight size={18} className="mx-auto" /> : <ChevronLeft size={18} />}
                         <span className={cn(
                             "whitespace-nowrap transition-all duration-300",
                             collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
@@ -236,7 +236,7 @@ export const Sidebar = () => {
                             collapsed && "justify-center"
                         )}
                     >
-                        <LogOut size={20} />
+                        <LogOut size={18} />
                         <span className={cn(
                             "whitespace-nowrap transition-all duration-300",
                             collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
