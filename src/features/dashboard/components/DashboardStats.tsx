@@ -10,7 +10,7 @@ interface DashboardStatsProps {
 
 export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-3">
+        <>
             <StatsCard title="إجمالي الطلاب" value={stats.studentsCount} icon={Users} color="blue" trendUp={true} />
             <StatsCard title="الاشتراكات النشطة" value={stats.totalEnrollments} icon={BookOpen} color="indigo"
                 trendUp={true} />
@@ -29,6 +29,6 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
                         trend={`هذا الشهر: ${stats.monthNetProfit}`} trendUp={true} />
                 </>
             )}
-        </div>
+        </>
     );
 };

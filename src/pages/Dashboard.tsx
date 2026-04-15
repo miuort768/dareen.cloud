@@ -63,13 +63,19 @@ export const Dashboard = () => {
                 stats={stats}
             />
 
-            {/* Top Row: Statistics (Small & Compact) */}
-            <DashboardStats stats={stats} isTeacher={isTeacher} />
+            {/* Unified 12-Item Command Center (8 Stats + 4 Quick Actions) */}
+            {!isTeacher && (
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+                    <DashboardStats stats={stats} isTeacher={false} />
+                    <QuickActionsHub />
+                </div>
+            )}
 
             {/* Main Operational Layout */}
             {isTeacher ? (
                 /* Teacher View (Already compact) */
                 <div className="space-y-6 animate-in fade-in duration-500">
+                    <DashboardStats stats={stats} isTeacher={true} />
                     <ModernAnnouncements />
                     <div className="w-full">
                         <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
@@ -121,9 +127,6 @@ export const Dashboard = () => {
 
                     {/* Right Column (Operational Sidepanel) - 4/12 Columns */}
                     <div className="xl:col-span-4 space-y-6">
-                        {/* Quick Control Hub */}
-                        <QuickActionsHub />
-
                         {/* Urgent Matters */}
                         <div className="bg-rose-50/50 dark:bg-rose-900/10 rounded-2xl border border-rose-100 dark:border-rose-900/30 p-1">
                             <ImportantNotifications

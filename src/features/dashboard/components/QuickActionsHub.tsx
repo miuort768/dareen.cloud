@@ -35,12 +35,12 @@ export const QuickActionsHub = () => {
     ];
 
     return (
-        <div className="grid grid-cols-2 gap-3 mb-0">
+        <>
             {actions.map((action, i) => (
                 <Link
                     key={i}
                     to={action.href}
-                    className="group relative bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 p-3 hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300 rounded-none overflow-hidden shadow-[2px_2px_0px_0px_black]"
+                    className="group relative bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 p-2 hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300 rounded-none overflow-hidden shadow-[2px_2px_0px_0px_black] min-h-[70px] flex flex-col justify-center"
                 >
                     <div className={cn(
                         "absolute top-0 right-0 w-1 h-full bg-gray-950",
@@ -50,23 +50,23 @@ export const QuickActionsHub = () => {
                         'bg-amber-600'
                     )}></div>
                     
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-1">
                         <div className={cn(
-                            "p-2 rounded-none border-2 border-gray-950",
+                            "p-1.5 rounded-none border-2 border-gray-950",
                             action.color === 'blue' ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/30' :
                             action.color === 'emerald' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' :
                             action.color === 'rose' ? 'bg-rose-50 text-rose-600 dark:bg-rose-900/30' :
                             'bg-amber-50 text-amber-600 dark:bg-amber-900/30'
                         )}>
-                            <action.icon size={16} />
+                            <action.icon size={14} />
                         </div>
-                        <ArrowRight size={14} className="text-gray-300 group-hover:text-gray-950 transition-all" />
+                        <ArrowRight size={12} className="text-gray-200 group-hover:text-gray-950 transition-all" />
                     </div>
                     
-                    <h3 className="font-black text-gray-950 dark:text-white text-[11px] mb-0.5 tracking-tighter uppercase italic">{action.title}</h3>
-                    <p className="text-[9px] font-black text-gray-400 uppercase tracking-tighter truncate">{action.description}</p>
+                    <h3 className="font-black text-gray-950 dark:text-white text-[9px] mb-0.5 tracking-tighter uppercase italic leading-none">{action.title}</h3>
+                    <p className="text-[7px] font-black text-gray-400 uppercase tracking-tighter truncate opacity-70">{action.description}</p>
                 </Link>
             ))}
-        </div>
+        </>
     );
 };
