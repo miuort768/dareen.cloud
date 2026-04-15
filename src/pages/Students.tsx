@@ -310,7 +310,6 @@ export const Students = () => {
             <StudentToolbar
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
-                onPrint={() => window.print()}
                 onExport={handleExport}
                 onImport={() => fileInputRef.current?.click()}
                 onDeleteAll={() => setIsDeletingAll(true)}
