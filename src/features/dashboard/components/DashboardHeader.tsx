@@ -43,7 +43,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             </div>
 
             {/* Top Dashboard Actions - Simplified */}
-            <div className="flex items-center gap-4">
+            <div className="hidden lg:items-center lg:gap-4 lg:flex">
                 
                 {/* 🕒 Sharp Clock Widget */}
                 <div className="flex items-center px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-none border-2 border-slate-950 gap-4 group">
