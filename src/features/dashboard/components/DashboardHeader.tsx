@@ -18,7 +18,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-center gap-10 xl:gap-40 relative z-10 w-full max-w-6xl mx-auto">
             {/* User Greeting Section */}
             <div className="flex items-center gap-5">
                 <div className="relative group">
