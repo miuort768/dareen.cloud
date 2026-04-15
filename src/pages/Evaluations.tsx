@@ -123,17 +123,17 @@ export const Evaluations = () => {
     return (
         <div className="space-y-8 pb-20 animate-in fade-in duration-500" dir="rtl">
             {/* Header Banner */}
-            <div className="relative bg-gray-950 p-10 border-b-8 border-primary-600 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)]">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div className="flex items-center gap-6">
-                        <div className="w-20 h-20 bg-primary-600 text-white flex items-center justify-center border-4 border-white shadow-[5px_5px_0px_0px_black] transform rotate-3">
-                            <Award size={40} />
+            <div className="relative bg-gray-950 p-6 border-b-4 border-primary-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-primary-600 text-white flex items-center justify-center border-2 border-white shadow-[3px_3px_0px_0px_black] transform rotate-3">
+                            <Award size={28} />
                         </div>
                         <div>
-                            <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tighter uppercase">تقييم الطلاب والتحفيز</h1>
-                            <p className="text-primary-400 text-sm font-black flex items-center gap-2 uppercase tracking-widest">
-                                <Zap size={16} className="fill-current" />
+                            <h1 className="text-xl md:text-2xl font-black text-white mb-1 tracking-tighter uppercase">تقييم الطلاب والتحفيز</h1>
+                            <p className="text-primary-400 text-[10px] font-black flex items-center gap-2 uppercase tracking-widest">
+                                <Zap size={12} className="fill-current" />
                                 كافئي طلابك بالنقاط والتقييمات الإيجابية
                             </p>
                         </div>
@@ -155,62 +155,62 @@ export const Evaluations = () => {
                         return (
                             <div key={student.id} className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] flex flex-col group transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_black]">
                                 {/* Student Profile Header */}
-                                <div className="p-6 border-b-4 border-gray-950 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between">
-                                    <div className="flex items-center gap-4 min-w-0">
-                                        <div className="w-12 h-12 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400 shrink-0">
-                                            <User size={24} />
+                                <div className="p-4 border-b-2 border-gray-950 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between">
+                                    <div className="flex items-center gap-3 min-w-0">
+                                        <div className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400 shrink-0">
+                                            <User size={20} />
                                         </div>
                                         <div className="min-w-0">
-                                            <h4 className="font-black text-lg text-gray-950 dark:text-white truncate">{student.name}</h4>
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{student.grade}</p>
+                                            <h4 className="font-black text-sm text-gray-950 dark:text-white truncate">{student.name}</h4>
+                                            <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">{student.grade}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-1">
-                                        <span className="bg-yellow-400 text-gray-950 px-2 py-1 border-2 border-gray-950 text-[10px] font-black shadow-[2px_2px_0px_0px_black]">
+                                        <span className="bg-yellow-400 text-gray-950 px-2 py-0.5 border-2 border-gray-950 text-[9px] font-black shadow-[1px_1px_0px_0px_black]">
                                             {student.totalPoints || 0} XP
                                         </span>
                                     </div>
                                 </div>
 
                                 {/* Last Evaluation Status */}
-                                <div className="p-6 flex-1 flex flex-col">
+                                <div className="p-4 flex-1 flex flex-col">
                                     {lastEval ? (
-                                        <div className="space-y-4 mb-6">
+                                        <div className="space-y-3 mb-4">
                                             <div className="flex items-center justify-between">
-                                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">آخر تقييم</span>
-                                                <div className={cn("flex items-center gap-1.5 px-3 py-1 text-[10px] font-black border-2 border-gray-950 transition-none", lastRating?.bg, lastRating?.color)}>
-                                                    {lastRating?.icon && <lastRating.icon size={12} strokeWidth={3} />}
+                                                <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">آخر تقييم</span>
+                                                <div className={cn("flex items-center gap-1 px-2 py-0.5 text-[9px] font-black border-2 border-gray-950 transition-none", lastRating?.bg, lastRating?.color)}>
+                                                    {lastRating?.icon && <lastRating.icon size={10} strokeWidth={3} />}
                                                     {lastEval.rating}
                                                 </div>
                                             </div>
-                                            <div className="bg-gray-50 dark:bg-gray-800 p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 relative">
-                                                <p className="text-xs font-bold text-gray-700 dark:text-gray-300 italic line-clamp-2">
+                                            <div className="bg-gray-50 dark:bg-gray-800 p-3 border-2 border-dashed border-gray-200 dark:border-gray-700 relative">
+                                                <p className="text-[10px] font-bold text-gray-700 dark:text-gray-300 italic line-clamp-2">
                                                     "{lastEval.notes || 'بدون ملاحظات'}"
                                                 </p>
-                                                <History size={14} className="absolute bottom-2 left-2 text-gray-300" />
+                                                <History size={10} className="absolute bottom-1.5 left-1.5 text-gray-300" />
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="flex-1 flex flex-col items-center justify-center py-6 text-center space-y-3 opacity-40">
-                                            <Award size={32} className="text-gray-300" />
-                                            <p className="text-[10px] font-black uppercase tracking-widest">لم يتم التقييم بعد</p>
+                                        <div className="flex-1 flex flex-col items-center justify-center py-4 text-center space-y-2 opacity-40">
+                                            <Award size={24} className="text-gray-300" />
+                                            <p className="text-[8px] font-black uppercase tracking-widest">لم يتم التقييم بعد</p>
                                         </div>
                                     )}
 
                                     {/* Action Buttons */}
-                                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                                    <div className="grid grid-cols-2 gap-2 mt-auto">
                                         <button
                                             onClick={() => { setFormData({ ...formData, studentId: student.id }); setIsModalOpen(true); }}
-                                            className="bg-primary-600 text-white border-2 border-gray-950 px-4 py-3 text-xs font-black uppercase tracking-tighter shadow-[4px_4px_0px_0px_black] hover:bg-primary-700 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2"
+                                            className="bg-primary-600 text-white border-2 border-gray-950 px-3 py-2 text-[10px] font-black uppercase tracking-tighter shadow-[2px_2px_0px_0px_black] hover:bg-primary-700 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2"
                                         >
-                                            <Plus size={16} strokeWidth={3} />
+                                            <Plus size={14} strokeWidth={3} />
                                             أضف تقييم
                                         </button>
                                         <button
                                             onClick={() => setExpandedStudentId(isExpanded ? null : student.id)}
-                                            className="bg-white dark:bg-gray-800 text-gray-950 dark:text-white border-2 border-gray-950 px-4 py-3 text-xs font-black uppercase tracking-tighter shadow-[4px_4px_0px_0px_black] hover:bg-gray-50 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2"
+                                            className="bg-white dark:bg-gray-800 text-gray-950 dark:text-white border-2 border-gray-950 px-3 py-2 text-[10px] font-black uppercase tracking-tighter shadow-[2px_2px_0px_0px_black] hover:bg-gray-50 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2"
                                         >
-                                            {isExpanded ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
+                                            {isExpanded ? <ChevronUp size={14} strokeWidth={3} /> : <ChevronDown size={14} strokeWidth={3} />}
                                             السجل ({studentEvals.length})
                                         </button>
                                     </div>
@@ -276,19 +276,19 @@ export const Evaluations = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
                     <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden">
-                        <div className="p-8 border-b-4 border-gray-950 bg-primary-600 text-white flex justify-between items-center relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-                            <h3 className="text-2xl font-black flex items-center gap-3 relative z-10 uppercase tracking-tighter">
-                                <Award size={28} />
+                        <div className="p-4 border-b-2 border-gray-950 bg-primary-600 text-white flex justify-between items-center relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                            <h3 className="text-lg font-black flex items-center gap-2 relative z-10 uppercase tracking-tighter">
+                                <Award size={20} />
                                 {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'تقييم طالب جديد'}
                             </h3>
-                            <button onClick={() => setIsModalOpen(false)} className="bg-white text-gray-950 w-10 h-10 flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-xl">
+                            <button onClick={() => setIsModalOpen(false)} className="bg-white text-gray-950 w-8 h-8 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-lg">
                                 &times;
                             </button>
                         </div>
                         
-                        <div className="p-8 overflow-y-auto custom-scrollbar">
-                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-8">
+                        <div className="p-6 overflow-y-auto custom-scrollbar">
+                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-6">
                                 {!formData.studentId && (
                                     <div>
                                         <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em]">اختر الطالب</label>
@@ -296,7 +296,7 @@ export const Evaluations = () => {
                                             value={formData.studentId}
                                             onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
                                             required
-                                            className="w-full border-4 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 font-black text-sm text-gray-950 dark:text-white transition-all focus:ring-4 focus:ring-primary-600/20 outline-none appearance-none cursor-pointer"
+                                            className="w-full border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-2.5 font-black text-xs text-gray-950 dark:text-white focus:ring-2 focus:ring-primary-600/20 outline-none appearance-none cursor-pointer"
                                         >
                                             <option value="">-- اختر من قائمة طلابك --</option>
                                             {teacherStudents.map(s => (
@@ -318,14 +318,14 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-4 border-4 transition-all duration-200 flex flex-col items-center justify-center gap-3",
+                                                        "p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
                                                         isSelected 
-                                                            ? cn(opt.bg, "border-gray-950 translate-x-1 translate-y-1 shadow-none", opt.color) 
-                                                            : "border-gray-950 bg-white dark:bg-gray-800 text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-[4px_4px_0px_0px_black]"
+                                                            ? cn(opt.bg, "border-gray-950 translate-x-0.5 translate-y-0.5 shadow-none", opt.color) 
+                                                            : "border-gray-950 bg-white dark:bg-gray-800 text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-[2px_2px_0px_0px_black]"
                                                     )}
                                                 >
-                                                    <OptIcon size={24} strokeWidth={isSelected ? 4 : 2} className={cn(isSelected && "animate-bounce")} />
-                                                    <span className="text-[10px] font-black uppercase tracking-widest">{opt.value}</span>
+                                                    <OptIcon size={18} strokeWidth={isSelected ? 4 : 2} className={cn(isSelected && "animate-bounce")} />
+                                                    <span className="text-[9px] font-black uppercase tracking-widest">{opt.value}</span>
                                                 </button>
                                             )
                                         })}
@@ -355,10 +355,10 @@ export const Evaluations = () => {
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
                                             placeholder="0"
                                             min="0"
-                                            className="w-full border-4 border-l-0 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 font-black text-2xl text-yellow-600 text-center outline-none focus:bg-yellow-50 transition-colors"
+                                            className="w-full border-2 border-l-0 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-2.5 font-black text-xl text-yellow-600 text-center outline-none focus:bg-yellow-50 transition-colors"
                                         />
-                                        <div className="bg-yellow-400 text-gray-950 px-6 flex items-center justify-center border-4 border-gray-950 border-r-0 shrink-0 shadow-[4px_0px_0px_0px_black_inset]">
-                                            <Zap size={24} className="fill-current" />
+                                        <div className="bg-yellow-400 text-gray-950 px-4 flex items-center justify-center border-2 border-gray-950 border-r-0 shrink-0 shadow-[2px_0px_0px_0px_black_inset]">
+                                            <Zap size={18} className="fill-current" />
                                         </div>
                                     </div>
                                 </div>
@@ -368,29 +368,29 @@ export const Evaluations = () => {
                                     <textarea
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                                        rows={4}
-                                        className="w-full border-4 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-4 shadow-inner text-sm font-bold transition-all focus:bg-gray-50 dark:focus:bg-gray-700 outline-none resize-none placeholder:text-gray-300"
-                                        placeholder="مثال: أداء ممتاز اليوم في حفظ سورة البقرة، استمر يا بطل!"
+                                        rows={3}
+                                        className="w-full border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-3 shadow-inner text-xs font-bold transition-all focus:bg-gray-50 dark:focus:bg-gray-700 outline-none resize-none placeholder:text-gray-300"
+                                        placeholder="مثال: أداء ممتاز اليوم..."
                                     />
                                 </div>
                             </form>
                         </div>
                         
-                        <div className="p-8 border-t-4 border-gray-950 bg-gray-50 dark:bg-gray-800 flex justify-end gap-4 shrink-0">
+                        <div className="p-4 border-t-2 border-gray-950 bg-gray-50 dark:bg-gray-800 flex justify-end gap-3 shrink-0">
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className="px-8 py-4 bg-white dark:bg-gray-700 border-2 border-gray-950 text-gray-950 dark:text-white text-xs font-black uppercase tracking-widest hover:bg-gray-100 transition-all shadow-[4px_4px_0px_0px_black] active:translate-y-1 active:shadow-none"
+                                className="px-6 py-2.5 bg-white dark:bg-gray-700 border-2 border-gray-950 text-gray-950 dark:text-white text-[10px] font-black uppercase tracking-widest hover:bg-gray-100 transition-all shadow-[2px_2px_0px_0px_black] active:translate-y-0.5 active:shadow-none"
                             >
                                 إلغاء
                             </button>
                             <button
                                 type="submit"
                                 form="evaluation-form"
-                                className="px-10 py-4 bg-primary-600 text-white border-2 border-gray-950 text-xs font-black uppercase tracking-widest hover:bg-primary-700 transition-all shadow-[6px_6px_0px_0px_black] active:translate-y-1 active:shadow-none flex items-center gap-2"
+                                className="px-8 py-2.5 bg-primary-600 text-white border-2 border-gray-950 text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all shadow-[3px_3px_0px_0px_black] active:translate-y-0.5 active:shadow-none flex items-center gap-2"
                             >
-                                <CheckCircle2 size={18} />
-                                إرسال التقييم فوراً
+                                <CheckCircle2 size={16} />
+                                إرسال التقييم
                             </button>
                         </div>
                     </div>
