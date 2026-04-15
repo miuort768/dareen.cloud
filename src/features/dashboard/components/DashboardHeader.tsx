@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Clock, CalendarCheck, Wallet } from 'lucide-react';
+import { GraduationCap, Clock, CalendarCheck, Wallet, Bell, Search, Settings } from 'lucide-react';
 import type { DashboardStats as Stats } from '../types';
 import type { User } from '../../../types/auth';
 
@@ -21,72 +21,64 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
     }, []);
 
     return (
-        <div className="relative -mx-3 -mt-3 lg:mx-0 lg:mt-0 bg-white dark:bg-gray-900 p-4 shadow-[2px_2px_0px_0px_black] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.05)] border-2 border-gray-950 dark:border-gray-800 rounded-none mb-6 overflow-hidden">
-            {/* Background Accent */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/5 -mr-16 -mt-16 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gray-950 dark:bg-primary-900/40 flex items-center justify-center border-2 border-gray-950 dark:border-primary-500 shadow-[2px_2px_0px_0px_#444] shrink-0 transform -rotate-1">
-                        <GraduationCap size={24} className="text-white" />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            {/* User Greeting Section */}
+            <div className="flex items-center gap-5">
+                <div className="relative group">
+                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-500/20 transform transition-transform duration-500 group-hover:rotate-6">
+                        <GraduationCap size={32} className="text-white" />
                     </div>
-                    <div>
-                        <div className="flex items-center gap-2 mb-1">
-                            <div className="w-1.5 h-6 bg-rose-600 border border-gray-950"></div>
-                            <span className="text-gray-400 dark:text-gray-500 font-black text-[10px] uppercase tracking-widest">أكاديمية دارين التعليمية</span>
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-4 border-[#f8fafc] dark:border-[#020617] rounded-full"></div>
+                </div>
+                
+                <div>
+                    <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                        {isTeacher ? `أهلاً بك، أ. ${currentUser?.name}` : 'لوحة التحكم الاستراتيجية'}
+                    </h1>
+                    <div className="flex items-center gap-3 mt-1.5">
+                        <div className="flex items-center gap-1.5 px-3 py-1 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-full border border-slate-200 dark:border-slate-800 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                            <CalendarCheck size={12} className="text-indigo-500" />
+                            {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
                         </div>
-                        {isTeacher ? (
-                            <h1 className="text-xl lg:text-2xl font-black text-gray-950 dark:text-white tracking-tighter">
-                                أهلاً بك، أ. {currentUser?.name}
-                            </h1>
-                        ) : (
-                            <h1 className="text-xl lg:text-2xl font-black text-gray-950 dark:text-white tracking-tighter">
-                                لوحة التحكم الرئيسية
-                            </h1>
-                        )}
-                        <p className="text-gray-500 dark:text-gray-400 text-xs font-bold mt-1 flex items-center gap-2">
-                           <CalendarCheck size={14} className="text-primary-600" />
-                           {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
-                        </p>
+                        <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800"></div>
+                        <span className="text-xs font-medium text-slate-400">أكاديمية دارين التعليمية</span>
                     </div>
                 </div>
+            </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                    {isTeacher && (
-                        <div className="bg-emerald-50 dark:bg-emerald-950/30 px-3 py-2 border-2 border-gray-950 dark:border-emerald-500/30 flex items-center gap-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                            <div className="p-1.5 bg-emerald-600 text-white border-2 border-gray-950">
-                                <Wallet size={16} />
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-emerald-600 uppercase mb-0.5">صافي الأرباح</p>
-                                <p className="text-xl font-black text-emerald-950 dark:text-emerald-400 leading-none tabular-nums">
-                                    {stats.monthNetProfit.toLocaleString()}
-                                    <span className="text-xs mr-1 opacity-60">ج.م</span>
-                                </p>
-                            </div>
-                        </div>
-                    )}
+            {/* Top Dashboard Actions */}
+            <div className="flex flex-wrap items-center gap-4">
+                {/* Search Bar (Modern) */}
+                <div className="hidden lg:flex items-center px-4 py-2 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all group min-w-[240px]">
+                    <Search size={16} className="text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                    <input 
+                        type="text" 
+                        placeholder="بحث سريع عن طالب أو حصة..." 
+                        className="bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-700 dark:text-slate-200 placeholder:text-slate-400 flex-1 mr-3 text-right"
+                    />
+                </div>
 
-                    <Link to="/appointments" className="bg-primary-50 dark:bg-primary-950/30 px-3 py-2 border-2 border-gray-950 dark:border-primary-500/30 flex items-center gap-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform group">
-                        <div className="p-1.5 bg-primary-600 text-white border-2 border-gray-950 group-hover:bg-gray-950 transition-colors">
-                            <CalendarCheck size={16} />
-                        </div>
-                        <div>
-                            <p className="text-[9px] font-black text-primary-600 uppercase mb-0.5">حصص اليوم</p>
-                            <p className="text-lg font-black text-primary-950 dark:text-primary-400 leading-none tabular-nums">{stats.todaySessions}</p>
-                        </div>
-                    </Link>
+                {/* Notifications & Settings Buttons */}
+                <div className="flex items-center gap-2">
+                    <button className="w-11 h-11 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-white transition-all shadow-sm">
+                        <Bell size={20} />
+                    </button>
+                    <button className="w-11 h-11 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-white transition-all shadow-sm">
+                        <Settings size={20} />
+                    </button>
+                </div>
 
-                    <div className="bg-gray-50 dark:bg-gray-800 px-3 py-2 border-2 border-gray-950 dark:border-gray-700 flex items-center gap-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-mono">
-                        <div className="p-1.5 bg-gray-950 text-white border-2 border-gray-800">
-                            <Clock size={16} />
-                        </div>
-                        <div>
-                            <p className="text-[10px] font-black text-gray-400 uppercase mb-0.5 font-sans">التوقيت الحالي</p>
-                            <p className="text-base font-black text-gray-950 dark:text-white leading-none tracking-tight">
-                                {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                            </p>
-                        </div>
+                {/* Quick Info Box */}
+                <div className="flex items-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl shadow-xl shadow-slate-900/10 gap-4 group">
+                    <div className="text-right">
+                        <p className="text-[10px] font-bold opacity-50 uppercase tracking-widest leading-none mb-1 text-left">توقيت دارين</p>
+                        <p className="text-lg font-black tracking-tight leading-none tabular-nums font-mono">
+                           {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </p>
+                    </div>
+                    <div className="w-px h-8 bg-white/10 dark:bg-slate-900/10"></div>
+                    <div className="w-10 h-10 bg-white/10 dark:bg-slate-900/5 rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform">
+                        <Clock size={20} />
                     </div>
                 </div>
             </div>

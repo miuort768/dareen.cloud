@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Megaphone, ChevronLeft, ChevronRight, Bell, AlertTriangle, Calendar, Info } from 'lucide-react';
+import { Megaphone, ChevronLeft, ChevronRight, Bell, AlertTriangle, Calendar, Info, Sparkles } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
 
@@ -45,68 +45,68 @@ export const ModernAnnouncements: React.FC = () => {
 
     const getTypeDetails = (type: string) => {
         switch (type) {
-            case 'urgent': return { icon: AlertTriangle, color: 'text-rose-500', bg: 'bg-rose-500/10', border: 'border-rose-500/20', label: 'عاجل' };
-            case 'holiday': return { icon: Calendar, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'border-amber-500/20', label: 'إجازة' };
-            case 'event': return { icon: Megaphone, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', label: 'فعالية' };
-            default: return { icon: Info, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20', label: 'تنبيه' };
+            case 'urgent': return { icon: AlertTriangle, color: 'text-rose-500', bg: 'bg-rose-500/10', border: 'border-rose-500/20', label: 'تنبيه عاجل', gradient: 'from-rose-500 to-pink-600' };
+            case 'holiday': return { icon: Calendar, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'border-amber-500/20', label: 'إجازة رسمية', gradient: 'from-amber-500 to-orange-600' };
+            case 'event': return { icon: Megaphone, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', label: 'فعالية قادمة', gradient: 'from-indigo-600 to-blue-600' };
+            default: return { icon: Info, color: 'text-emerald-500', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', label: 'إعلان عام', gradient: 'from-emerald-600 to-teal-600' };
         }
     };
 
     const type = getTypeDetails(current.type);
 
     return (
-        <div className="relative group bg-gray-950 border-2 md:border-4 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.3)] overflow-hidden mx-1 md:mx-0">
+        <div className="relative group bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 shadow-2xl shadow-indigo-500/5 overflow-hidden transition-all duration-500 hover:shadow-indigo-500/10">
             {/* Animated Progress Bar */}
-            <div className="absolute bottom-0 right-0 h-1 bg-primary-600 transition-all duration-[8000ms] ease-linear z-20" 
+            <div className="absolute bottom-0 right-0 h-1.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-30 transition-all duration-[8000ms] ease-linear z-20" 
                  style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }} />
             
-            <div className="flex flex-col md:flex-row items-stretch">
-                {/* Type Badge - Sharp Sidebar */}
-                <div className={cn("w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-3 md:p-4 gap-2 transition-colors duration-500", type.bg)}>
-                    <type.icon size={22} className={type.color} />
-                    <span className={cn("text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]", type.color)}>
+            <div className="flex flex-col md:flex-row items-stretch min-h-[140px]">
+                {/* Type Badge - Modern Gradient Box */}
+                <div className={cn("w-full md:w-40 flex flex-row md:flex-col items-center justify-center p-6 gap-3 transition-all duration-700 relative overflow-hidden", type.bg)}>
+                    <div className={cn("absolute inset-0 opacity-10 bg-gradient-to-br", type.gradient)}></div>
+                    <div className={cn("relative p-3 rounded-2xl bg-white dark:bg-slate-900 shadow-xl", type.color)}>
+                        <type.icon size={28} />
+                    </div>
+                    <span className={cn("relative text-[10px] font-black uppercase tracking-widest", type.color)}>
                         {type.label}
                     </span>
                 </div>
 
                 {/* Content Area */}
-                <div className="flex-1 p-5 md:p-8 flex flex-col justify-center relative min-h-[100px] md:min-h-[120px]">
-                    <div className="absolute top-3 left-4 md:top-4 md:left-6 flex items-center gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
-                        <Bell size={12} className="text-white" />
-                        <span className="text-[9px] md:text-[10px] font-black text-white uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
+                <div className="flex-1 p-8 md:p-10 flex flex-col justify-center relative">
+                    <div className="absolute top-6 left-8 flex items-center gap-2 px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded-full border border-slate-100 dark:border-slate-700">
+                        <Sparkles size={12} className="text-amber-500" />
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{currentIndex + 1} من {announcements.length}</span>
                     </div>
 
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <h4 className="text-white font-black text-base md:text-xl mb-1 md:mb-2 tracking-tight">
+                    <div className="animate-in fade-in slide-in-from-right-8 duration-700">
+                        <h4 className="text-slate-900 dark:text-white font-black text-xl md:text-2xl mb-2 tracking-tight">
                             {current.title}
                         </h4>
-                        <p className="text-gray-400 text-[11px] md:text-sm font-bold leading-relaxed max-w-3xl">
+                        <p className="text-slate-500 dark:text-gray-400 text-sm md:text-base font-medium leading-relaxed max-w-4xl">
                             {current.content}
                         </p>
                     </div>
 
-                    {/* Navigation Buttons */}
+                    {/* Navigation Icons Control */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-3 left-4 md:bottom-4 md:left-6 flex gap-2">
+                        <div className="absolute bottom-6 left-8 flex gap-3">
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)}
-                                className="p-1 md:p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5"
+                                className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all border border-slate-100 dark:border-slate-700"
                             >
-                                <ChevronRight size={14} />
+                                <ChevronRight size={18} />
                             </button>
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)}
-                                className="p-1 md:p-1.5 border-2 border-white/5 hover:border-white/20 text-white/40 hover:text-white transition-all bg-white/5"
+                                className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all border border-slate-100 dark:border-slate-700"
                             >
-                                <ChevronLeft size={14} />
+                                <ChevronLeft size={18} />
                             </button>
                         </div>
                     )}
                 </div>
             </div>
-
-            {/* Decorative Grid Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         </div>
     );
 };

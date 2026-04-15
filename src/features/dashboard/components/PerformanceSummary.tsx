@@ -1,5 +1,6 @@
-import { TrendingUp, Users, CheckCircle } from 'lucide-react';
+import { TrendingUp, Users, CheckCircle, Activity, Layout } from 'lucide-react';
 import type { DashboardStats as Stats } from '../types';
+import { cn } from '../../../lib/utils';
 
 interface PerformanceSummaryProps {
     stats: Stats;
@@ -8,65 +9,65 @@ interface PerformanceSummaryProps {
 
 export const PerformanceSummary = ({ stats, isTeacher }: PerformanceSummaryProps) => {
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 shadow-[4px_4px_0px_0px_black] rounded-none relative overflow-hidden group h-full">
-            <div className="absolute top-0 right-0 w-1 h-full bg-emerald-600"></div>
-            <div className="p-3 border-b-2 border-gray-950 dark:border-slate-800 flex items-center justify-between bg-emerald-600">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-white text-gray-950 rounded-none border-2 border-gray-950">
-                        <TrendingUp size={16} />
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10 h-full">
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-2xl flex items-center justify-center border border-emerald-500/20">
+                        <Activity size={24} />
                     </div>
                     <div>
-                        <h3 className="font-black text-white text-xs uppercase tracking-tighter italic leading-none">ملخص الأداء</h3>
-                        <p className="text-[9px] font-black text-white/70 uppercase tracking-tighter">PERFORMANCE CENTER</p>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">ملخص الأداء</h3>
+                        <p className="text-sm font-medium text-gray-400">تحليل النشاط الحالي</p>
                     </div>
                 </div>
             </div>
 
-            <div className="p-4 space-y-5">
+            <div className="space-y-8">
                 {/* Attendance Metric */}
-                <div className="relative">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-tighter italic">معدل الحضور</span>
-                        <span className="text-sm font-black text-gray-950 dark:text-white tabular-nums">{stats.attendanceRate}%</span>
+                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-800">
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center gap-2">
+                            <Layout size={16} className="text-indigo-500" />
+                            <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">معدل الحضور اليومي</span>
+                        </div>
+                        <span className="text-lg font-black text-slate-900 dark:text-white tabular-nums">{stats.attendanceRate}%</span>
                     </div>
-                    <div className="h-3 bg-gray-50 dark:bg-slate-800 border-2 border-gray-950 rounded-none overflow-hidden relative">
+                    <div className="h-4 bg-white dark:bg-slate-900 rounded-full border border-slate-200 dark:border-slate-700 overflow-hidden relative p-1">
                         <div
-                            className="absolute top-0 right-0 h-full bg-emerald-500 transition-all duration-1000"
+                            className="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all duration-1000 shadow-lg shadow-indigo-500/20"
                             style={{ width: `${stats.attendanceRate}%` }}
                         ></div>
                     </div>
                 </div>
 
                 {isTeacher ? (
-                    /* Teacher Specific Metrics */
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="p-3 bg-primary-50 dark:bg-primary-900/10 border-2 border-gray-950 rounded-none shadow-[2px_2px_0px_0px_black]">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <Users size={12} className="text-primary-600" />
-                                    <p className="text-[9px] font-black text-primary-600 uppercase">الطلاب</p>
-                                </div>
-                                <h4 className="text-base font-black text-gray-950 dark:text-white">{stats.studentsCount}</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="p-6 bg-indigo-500/5 border border-indigo-500/20 rounded-[2rem] group hover:bg-indigo-500 transition-all duration-500">
+                            <div className="flex items-center gap-3 mb-2">
+                                <Users size={20} className="text-indigo-500 group-hover:text-white" />
+                                <p className="text-xs font-bold text-indigo-500 group-hover:text-indigo-100 uppercase">الطلاب</p>
                             </div>
-                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/10 border-2 border-gray-950 rounded-none shadow-[2px_2px_0px_0px_black]">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <CheckCircle size={12} className="text-emerald-600" />
-                                    <p className="text-[9px] font-black text-emerald-600 uppercase">تم الإنجاز</p>
-                                </div>
-                                <h4 className="text-base font-black text-gray-950 dark:text-white">{stats.completedSessions}</h4>
+                            <h4 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-white">{stats.studentsCount}</h4>
+                        </div>
+                        <div className="p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-[2rem] group hover:bg-emerald-500 transition-all duration-500">
+                            <div className="flex items-center gap-3 mb-2">
+                                <CheckCircle size={20} className="text-emerald-500 group-hover:text-white" />
+                                <p className="text-xs font-bold text-emerald-500 group-hover:text-emerald-100 uppercase">الحصص</p>
                             </div>
+                            <h4 className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-white">{stats.completedSessions}</h4>
                         </div>
                     </div>
                 ) : (
-                    /* Admin Specific Metrics */
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="p-3 bg-indigo-50 dark:bg-indigo-900/10 border-2 border-gray-950 rounded-none relative overflow-hidden shadow-[2px_2px_0px_0px_black]">
-                            <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">مدفوع</p>
-                            <h4 className="text-lg font-black text-gray-950 dark:text-white tabular-nums">{stats.paidInvoices}</h4>
+                    <div className="grid grid-cols-2 gap-6">
+                        <div className="p-6 bg-violet-500/5 border border-violet-500/10 rounded-[2rem] relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-violet-500 opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
+                            <p className="text-xs font-bold text-violet-600 dark:text-violet-400 uppercase mb-2">فواتير مدفوعة</p>
+                            <h4 className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">{stats.paidInvoices}</h4>
                         </div>
-                        <div className="p-3 bg-rose-50 dark:bg-rose-900/10 border-2 border-gray-950 rounded-none relative overflow-hidden shadow-[2px_2px_0px_0px_black]">
-                            <p className="text-[10px] font-black text-rose-600 uppercase mb-1">معلق</p>
-                            <h4 className="text-lg font-black text-gray-950 dark:text-white tabular-nums">{stats.pendingInvoices}</h4>
+                        <div className="p-6 bg-rose-500/5 border border-rose-500/10 rounded-[2rem] relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-rose-500 opacity-5 blur-2xl group-hover:opacity-20 transition-opacity"></div>
+                            <p className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase mb-2">فواتير معلقة</p>
+                            <h4 className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">{stats.pendingInvoices}</h4>
                         </div>
                     </div>
                 )}

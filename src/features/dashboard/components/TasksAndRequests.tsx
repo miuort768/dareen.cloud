@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ListTodo, CheckCircle2 } from 'lucide-react';
+import { ListTodo, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardTask as Task } from '../types';
 
@@ -9,53 +9,64 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white border-2 border-gray-950 dark:bg-gray-900 dark:border-gray-800 shadow-[4px_4px_0px_0px_black] relative flex flex-col group rounded-none h-full">
-            <div className="absolute top-0 right-0 w-1.5 h-full bg-amber-500 border-l-2 border-gray-950"></div>
-            <div className="p-3 border-b-2 border-gray-950 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-gray-800/20">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-amber-500 text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_#444]">
-                        <ListTodo size={18} />
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10 h-full flex flex-col">
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-2xl flex items-center justify-center border border-amber-500/20">
+                        <ListTodo size={24} />
                     </div>
                     <div>
-                        <h3 className="font-black text-gray-950 dark:text-white text-xs uppercase tracking-tight leading-none">المهام والطلبات</h3>
-                        <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mt-1">المتابعة الإدارية</p>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">المهام والطلبات</h3>
+                        <p className="text-sm font-medium text-gray-400">المتابعة الإدارية</p>
                     </div>
                 </div>
-                <Link to="/tasks" className="bg-gray-950 text-white px-3 py-1 border-2 border-gray-950 text-[10px] font-black uppercase tracking-widest hover:bg-black transition-colors">إدارة الكل</Link>
+                <Link to="/tasks" className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-xl transition-colors text-indigo-600">
+                    <ChevronLeft size={20} />
+                </Link>
             </div>
-            <div className="flex-1 overflow-y-auto custom-scrollbar min-h-[220px]">
+
+            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1">
                 {tasks.length > 0 ? (
-                    tasks.slice(0, 8).map((task) => (
-                        <div key={task.id} className="p-4 flex items-center gap-4 border-b-2 border-gray-100 dark:border-gray-800/50 last:border-0 hover:bg-amber-50 dark:hover:bg-amber-900/10 transition-all group/item cursor-pointer">
-                            <div className={cn(
-                                "w-2.5 h-10 flex-shrink-0 border border-gray-950",
-                                task.priority === 'high' ? "bg-red-500" :
-                                    task.priority === 'medium' ? "bg-amber-500" : "bg-blue-500"
-                            )}></div>
-                            <div className="flex-1 min-w-0 text-right">
-                                <p className="font-black text-xs text-gray-950 dark:text-white truncate group-hover/item:text-primary-600 transition-colors uppercase">{task.title}</p>
-                                <div className="flex items-center justify-end gap-3 mt-1.5">
-                                    <span className="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">{task.dueDate}</span>
-                                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-none border border-gray-400"></div>
-                                    <span className={cn(
-                                        "text-[9px] font-black px-2 py-0.5 border border-gray-950",
-                                        task.priority === 'high' ? "text-white bg-red-600 shadow-[2px_2px_0px_0px_black]" : "text-gray-950 bg-gray-100"
-                                    )}>
-                                        {task.priority === 'high' ? 'عاجل جداً' : 'مهمة عمل'}
-                                    </span>
+                    tasks.slice(0, 5).map((task) => (
+                        <div key={task.id} className="p-4 bg-slate-50/50 dark:bg-slate-800/30 rounded-[1.5rem] border border-slate-100 dark:border-slate-800 transition-all hover:scale-[1.02] hover:bg-white dark:hover:bg-slate-800 group">
+                            <div className="flex items-start gap-4">
+                                <div className={cn(
+                                    "w-3 h-3 rounded-full mt-1.5 shrink-0 shadow-lg",
+                                    task.priority === 'high' ? "bg-red-500 shadow-red-500/20" :
+                                    task.priority === 'medium' ? "bg-amber-500 shadow-amber-500/20" : "bg-blue-500 shadow-blue-500/20"
+                                )}></div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-bold text-sm text-slate-800 dark:text-white leading-tight mb-2">{task.title}</p>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-[10px] font-semibold text-gray-400">{task.dueDate}</span>
+                                        <div className="w-1 h-1 rounded-full bg-slate-300"></div>
+                                        <span className={cn(
+                                            "text-[10px] font-bold px-2 py-0.5 rounded-full",
+                                            task.priority === 'high' ? "bg-red-50 text-red-600" : "bg-slate-100 text-slate-600"
+                                        )}>
+                                            {task.priority === 'high' ? 'عاجل' : 'مهمة'}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="p-12 text-center space-y-3">
-                        <div className="w-14 h-14 bg-gray-50 border-2 border-gray-200 mx-auto flex items-center justify-center transform rotate-3">
-                            <CheckCircle2 size={32} className="text-gray-300" />
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
+                        <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-700">
+                            <CheckCircle2 size={32} className="text-slate-300" />
                         </div>
-                        <p className="text-[11px] text-gray-400 font-black uppercase tracking-widest leading-none">لا توجد مهام معلقة</p>
+                        <p className="text-sm font-bold text-gray-400">لا توجد مهام معلقة</p>
                     </div>
                 )}
             </div>
+            
+            <Link 
+                to="/tasks" 
+                className="mt-6 w-full py-4 px-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-bold text-xs uppercase tracking-widest text-center hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all shadow-lg shadow-indigo-500/10"
+            >
+                عرض جميع المهام
+            </Link>
         </div>
     );
 };

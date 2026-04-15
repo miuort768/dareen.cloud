@@ -1,4 +1,4 @@
-import { UserPlus, FilePlus, Megaphone, ArrowRight, Calendar } from 'lucide-react';
+import { UserPlus, FilePlus, Megaphone, ArrowLeft, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 
@@ -8,7 +8,8 @@ export const QuickActionsHub = () => {
             title: 'إضافة طالب جديد', 
             icon: UserPlus, 
             href: '/students?action=new', 
-            color: 'blue',
+            color: 'indigo',
+            gradient: 'from-indigo-600 to-blue-600',
             description: 'تسجيل طالب جديد في النظام'
         },
         { 
@@ -16,21 +17,24 @@ export const QuickActionsHub = () => {
             icon: FilePlus, 
             href: '/student-invoices?action=new', 
             color: 'emerald',
+            gradient: 'from-emerald-600 to-teal-600',
             description: 'إنشاء فاتورة رسوم دراسية'
-        },
-        { 
-            title: 'إعلان عام', 
-            icon: Megaphone, 
-            href: '/announcements?action=new', 
-            color: 'rose',
-            description: 'نشر تنبيه لجميع المستخدمين'
         },
         { 
             title: 'تعديل الجدول', 
             icon: Calendar, 
             href: '/schedule', 
             color: 'amber',
+            gradient: 'from-amber-600 to-orange-600',
             description: 'إدارة مواعيد الحصص'
+        },
+        { 
+            title: 'إعلان عام', 
+            icon: Megaphone, 
+            href: '/announcements?action=new', 
+            color: 'rose',
+            gradient: 'from-rose-600 to-pink-600',
+            description: 'نشر تنبيه لجميع المستخدمين'
         }
     ];
 
@@ -40,31 +44,32 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="group relative bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 p-2 hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300 rounded-none overflow-hidden shadow-[2px_2px_0px_0px_black] min-h-[70px] flex flex-col justify-center"
+                    className="group relative bg-white/80 dark:bg-slate-900/50 backdrop-blur-xl p-5 rounded-[2rem] border border-white dark:border-slate-800 shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 overflow-hidden"
                 >
+                    {/* Background Glow */}
                     <div className={cn(
-                        "absolute top-0 right-0 w-1 h-full bg-gray-950",
-                        action.color === 'blue' ? 'bg-blue-600' :
-                        action.color === 'emerald' ? 'bg-emerald-600' :
-                        action.color === 'rose' ? 'bg-rose-600' :
-                        'bg-amber-600'
+                        "absolute -top-10 -left-10 w-24 h-24 bg-gradient-to-br opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-20",
+                        action.gradient
                     )}></div>
-                    
-                    <div className="flex items-center justify-between mb-1">
-                        <div className={cn(
-                            "p-1.5 rounded-none border-2 border-gray-950",
-                            action.color === 'blue' ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/30' :
-                            action.color === 'emerald' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30' :
-                            action.color === 'rose' ? 'bg-rose-50 text-rose-600 dark:bg-rose-900/30' :
-                            'bg-amber-50 text-amber-600 dark:bg-amber-900/30'
-                        )}>
-                            <action.icon size={14} />
+
+                    <div className="relative flex flex-col gap-3">
+                        <div className="flex items-center justify-between">
+                            <div className={cn(
+                                "w-10 h-10 flex items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3",
+                                action.gradient
+                            )}>
+                                <action.icon size={18} />
+                            </div>
+                            <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-4 group-hover:translate-x-0">
+                                <ArrowLeft size={14} className="text-gray-400 group-hover:text-indigo-500" />
+                            </div>
                         </div>
-                        <ArrowRight size={12} className="text-gray-200 group-hover:text-gray-950 transition-all" />
+                        
+                        <div>
+                            <h3 className="font-bold text-slate-800 dark:text-white text-sm mb-1">{action.title}</h3>
+                            <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 leading-tight">{action.description}</p>
+                        </div>
                     </div>
-                    
-                    <h3 className="font-black text-gray-950 dark:text-white text-[9px] mb-0.5 tracking-tighter uppercase italic leading-none">{action.title}</h3>
-                    <p className="text-[7px] font-black text-gray-400 uppercase tracking-tighter truncate opacity-70">{action.description}</p>
                 </Link>
             ))}
         </>
