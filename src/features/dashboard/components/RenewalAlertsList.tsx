@@ -59,7 +59,7 @@ export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsLi
                                 </button>
                             </div>
                         </div>
-                    ))}
+                    ))
                 ) : (
                     <div className="py-10 text-center text-slate-400 text-[10px] italic border border-dashed border-slate-100">لا تجديدات</div>
                 )}
