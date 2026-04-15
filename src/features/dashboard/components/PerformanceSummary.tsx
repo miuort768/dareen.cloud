@@ -1,6 +1,5 @@
-import { TrendingUp, Users, CheckCircle, Activity, Layout } from 'lucide-react';
+import { Users, CheckCircle, Activity, Layout } from 'lucide-react';
 import type { DashboardStats as Stats } from '../types';
-import { cn } from '../../../lib/utils';
 
 interface PerformanceSummaryProps {
     stats: Stats;

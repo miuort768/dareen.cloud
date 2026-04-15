@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { GraduationCap, Clock, CalendarCheck, Wallet, Bell, Search, Settings } from 'lucide-react';
-import type { DashboardStats as Stats } from '../types';
+import { GraduationCap, Clock, CalendarCheck, Bell, Search, Settings } from 'lucide-react';
 import type { User } from '../../../types/auth';
 
 interface DashboardHeaderProps {
     isTeacher: boolean;
     currentUser: User | null;
-    stats: Stats;
 }
 
-export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHeaderProps) => {
+export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {

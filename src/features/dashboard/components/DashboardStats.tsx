@@ -1,4 +1,5 @@
-import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign, LucideIcon, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardStats as Stats } from '../types';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Megaphone, ChevronLeft, ChevronRight, Bell, AlertTriangle, Calendar, Info, Sparkles } from 'lucide-react';
+import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, Sparkles } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
 

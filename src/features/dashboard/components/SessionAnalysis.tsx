@@ -1,5 +1,5 @@
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area } from 'recharts';
-import { CalendarCheck, PieChart } from 'lucide-react';
+import { PieChart } from 'lucide-react';
 import type { DashboardMonthData as MonthData, DashboardStats as Stats } from '../types';
 
 interface SessionAnalysisProps {
