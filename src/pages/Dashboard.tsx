@@ -16,6 +16,7 @@ import { RecentActivityFeed } from '../features/dashboard/components/RecentActiv
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
+import { Star } from 'lucide-react';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -42,11 +43,11 @@ export const Dashboard = () => {
 
     if (loading) {
         return (
-            <div className="space-y-8 p-4 lg:p-8 bg-gray-50 dark:bg-gray-950 min-h-screen">
-                <div className="h-64 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-2xl border border-gray-100 dark:border-slate-800"></div>
-                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-6">
+            <div className="space-y-4 p-4 lg:p-6 bg-gray-50 dark:bg-gray-950 min-h-screen">
+                <div className="h-48 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
+                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4">
                     {[...Array(8)].map((_, i) => (
-                        <div key={i} className="h-24 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-2xl border border-gray-100 dark:border-slate-800"></div>
+                        <div key={i} className="h-20 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
                     ))}
                 </div>
             </div>
@@ -54,37 +55,48 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617] pb-20 overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-10 overflow-x-hidden text-sm" dir="rtl">
             {/* Premium Header Section */}
-            <div className="relative pt-6 pb-20">
+            <div className="relative pt-4 pb-12">
                 <DashboardHeader
                     isTeacher={isTeacher}
                     currentUser={currentUser}
                 />
             </div>
 
-            <div className="max-w-[1600px] mx-auto px-4 md:px-8 -mt-10 space-y-12">
-                {/* Row 1: Key Statistics (Premium Floating Cards) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 -mt-8 space-y-8">
+                
+                {/* 🏆 New Sharp Welcome Banner */}
+                {!isTeacher && (
+                    <div className="bg-indigo-600 dark:bg-indigo-900/80 p-4 border-2 border-slate-900 dark:border-slate-800 flex items-center justify-center gap-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] bg-[length:250px_250px] animate-[shimmer_5s_infinite] pointer-events-none"></div>
+                        <Star className="text-yellow-400 fill-yellow-400 animate-pulse" size={20} />
+                        <h2 className="text-lg md:text-xl font-black text-white italic tracking-tighter uppercase">تهانينا لأنكم أفراد العائلة المميزين</h2>
+                        <Star className="text-yellow-400 fill-yellow-400 animate-pulse" size={20} />
+                    </div>
+                )}
+
+                {/* Row 1: Key Statistics (Sharp Floating Cards) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <DashboardStats stats={stats} isTeacher={isTeacher} />
                 </div>
 
                 {/* Quick Command Bar */}
                 {!isTeacher && (
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                         <QuickActionsHub />
                     </div>
                 )}
 
                 {/* Main Content Area */}
                 {isTeacher ? (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <ModernAnnouncements />
-                        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500">
+                        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md rounded-none border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                             <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
                             <div className="lg:col-span-2">
                                 <TeacherAchievements
                                     stats={stats}
@@ -98,15 +110,15 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         
-                        {/* 1. Full Width Analysis Center */}
-                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10">
+                        {/* 1. Full Width Analysis Center (Sharp) */}
+                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                             <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
                         </div>
 
-                        {/* 2. Primary Operations Row: Side by Side Alerts */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        {/* 2. Primary Operations Row: Side by Side (Sharp) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
                             <SmartAlerts
                                 students={rawStudents}
@@ -117,7 +129,7 @@ export const Dashboard = () => {
                         </div>
 
                         {/* 3. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
-                        <div className="w-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-6 shadow-2xl shadow-indigo-500/5">
+                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
                             <AnalyticsDashboard
                                 students={rawStudents}
                                 sessions={rawSessions}
@@ -125,14 +137,14 @@ export const Dashboard = () => {
                             />
                         </div>
 
-                        {/* 4. Secondary Operations Row: More Side-by-Side (Renewal & Activity) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        {/* 4. Secondary Operations Row: More Side-by-Side (Sharp) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
                             <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                         </div>
 
                         {/* 5. Bottom Tasks & Information */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                             <div className="lg:col-span-7">
                                 <TasksAndRequests tasks={tasks} />
                             </div>
@@ -144,7 +156,7 @@ export const Dashboard = () => {
                 )}
             </div>
 
-            {/* Suggestion 2: Quick Brief Modal */}
+            {/* Modals keep their premium look but will be adjusted if needed */}
             {isTeacher && briefingStudent && (
                 <StudentQuickBrief
                     isOpen={!!briefingStudent}

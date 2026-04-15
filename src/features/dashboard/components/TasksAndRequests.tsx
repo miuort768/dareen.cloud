@@ -9,40 +9,38 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10 flex flex-col">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-2xl flex items-center justify-center border border-amber-500/20">
-                        <ListTodo size={24} />
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-none border-t-2 border-t-amber-500 flex flex-col">
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-50">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-amber-500 text-white flex items-center justify-center">
+                        <ListTodo size={16} />
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">المهام والطلبات</h3>
-                        <p className="text-sm font-medium text-gray-400">المتابعة الإدارية</p>
+                        <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">المهام والطلبات</h3>
                     </div>
                 </div>
-                <Link to="/tasks" className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-xl transition-colors text-indigo-600">
-                    <ChevronLeft size={20} />
+                <Link to="/tasks" className="p-1 hover:bg-slate-50 rounded-none transition-colors text-slate-400">
+                    <ChevronLeft size={16} />
                 </Link>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1 max-h-[400px]">
+            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 max-h-[300px]">
                 {tasks.length > 0 ? (
                     tasks.slice(0, 5).map((task) => (
-                        <div key={task.id} className="p-4 bg-slate-50/50 dark:bg-slate-800/30 rounded-[1.5rem] border border-slate-100 dark:border-slate-800 transition-all hover:scale-[1.02] hover:bg-white dark:hover:bg-slate-800 group">
-                            <div className="flex items-start gap-4">
+                        <div key={task.id} className="p-3 bg-slate-50/50 dark:bg-slate-800/30 rounded-none border border-slate-100 dark:border-slate-800 transition-all hover:bg-white group">
+                            <div className="flex items-start gap-3">
                                 <div className={cn(
-                                    "w-3 h-3 rounded-full mt-1.5 shrink-0 shadow-lg",
-                                    task.priority === 'high' ? "bg-red-500 shadow-red-500/20" :
-                                    task.priority === 'medium' ? "bg-amber-500 shadow-amber-500/20" : "bg-blue-500 shadow-blue-500/20"
+                                    "w-2 h-5 shrink-0",
+                                    task.priority === 'high' ? "bg-red-500" :
+                                    task.priority === 'medium' ? "bg-amber-500" : "bg-blue-500"
                                 )}></div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-bold text-sm text-slate-800 dark:text-white leading-tight mb-2">{task.title}</p>
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-[10px] font-semibold text-gray-400">{task.dueDate}</span>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300"></div>
+                                    <p className="font-bold text-[11px] text-slate-800 dark:text-white leading-tight mb-1 truncate">{task.title}</p>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[9px] font-bold text-slate-400 font-mono italic">{task.dueDate}</span>
                                         <span className={cn(
-                                            "text-[10px] font-bold px-2 py-0.5 rounded-full",
-                                            task.priority === 'high' ? "bg-red-50 text-red-600" : "bg-slate-100 text-slate-600"
+                                            "text-[8px] font-black px-1.5 py-0.5 rounded-none border",
+                                            task.priority === 'high' ? "bg-red-50 text-red-600 border-red-100" : "bg-slate-50 text-slate-600 border-slate-100"
                                         )}>
                                             {task.priority === 'high' ? 'عاجل' : 'مهمة'}
                                         </span>
@@ -52,20 +50,17 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                         </div>
                     ))
                 ) : (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                        <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-700">
-                            <CheckCircle2 size={32} className="text-slate-300" />
-                        </div>
-                        <p className="text-sm font-bold text-gray-400">لا توجد مهام معلقة</p>
+                    <div className="py-10 text-center border border-dashed border-slate-200">
+                        <p className="text-[10px] font-bold text-slate-400 uppercase">لا توجد مهام</p>
                     </div>
                 )}
             </div>
             
             <Link 
                 to="/tasks" 
-                className="mt-6 w-full py-4 px-6 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-bold text-xs uppercase tracking-widest text-center hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all shadow-lg shadow-indigo-500/10"
+                className="mt-5 w-full py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-[10px] uppercase tracking-widest text-center hover:bg-slate-800 transition-all border border-slate-950 shadow-none"
             >
-                عرض جميع المهام
+                السجل الكامل
             </Link>
         </div>
     );

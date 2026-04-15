@@ -16,7 +16,6 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     const alerts = useMemo(() => {
         const result: any[] = [];
 
-        // 🔴 Alert 1: Students almost out of sessions
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
                 result.push({
@@ -25,14 +24,13 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                     icon: AlertTriangle,
                     color: 'rose',
                     title: `${s.studentName}`,
-                    desc: `${s.subject}: باقي ${s.remainingSessions === 0 ? 'صفر حصص' : 'حصة واحدة فقط'}!`,
+                    desc: `${s.subject}: باقي ${s.remainingSessions === 0 ? 'صفر' : '1'}!`,
                     action: () => navigate('/students'),
-                    actionLabel: 'تعبئة رصيد'
+                    actionLabel: 'تعبئة'
                 });
             }
         });
 
-        // 🟠 Alert 2: Students with high absence rate
         students.forEach(s => {
             const studentSessions = sessions.filter(ss => ss.studentId === s.id);
             if (studentSessions.length < 3) return;
@@ -45,14 +43,13 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                     icon: TrendingDown,
                     color: 'amber',
                     title: `${s.name}`,
-                    desc: `تجاوز الغياب ${Math.round(rate)}% مؤخراً`,
+                    desc: `غياب ${Math.round(rate)}%`,
                     action: () => navigate('/attendance'),
-                    actionLabel: 'السجل'
+                    actionLabel: 'سجل'
                 });
             }
         });
 
-        // 🔵 Alert 3: Unpaid invoices
         const overdueInvoices = studentInvoices.filter(inv => {
             if (!['unpaid', 'pending', 'overdue'].includes(inv.status?.toLowerCase())) return false;
             const now = Date.now();
@@ -67,10 +64,10 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 type: 'warning',
                 icon: CreditCard,
                 color: 'indigo',
-                title: `${overdueInvoices.length} فواتير متأخرة`,
-                desc: `تحصيل مالي مطلوب للفواتير القديمة`,
+                title: `${overdueInvoices.length} فواتير`,
+                desc: `تحصيل مالي مطلوب`,
                 action: () => navigate('/studentInvoices'),
-                actionLabel: 'التحصيل'
+                actionLabel: 'تحصيل'
             });
         }
 
@@ -80,8 +77,8 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                 type: 'success',
                 icon: CheckCircle2,
                 color: 'emerald',
-                title: 'كل شيء يسير بمنتهى الدقة!',
-                desc: 'لا توجد مشاكل معلقة حالياً.',
+                title: 'النظام سليم',
+                desc: 'لا توجد معلقات.',
                 action: null,
                 actionLabel: ''
             });
@@ -91,45 +88,44 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
     }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
     const colorMap: any = {
-        rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-rose-500/20', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
-        amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-amber-500/20', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
-        indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-indigo-500/20', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },
-        emerald: { bg: 'bg-emerald-500/5', border: 'border-emerald-500/10', icon: 'bg-emerald-500 text-white shadow-emerald-500/20', text: 'text-emerald-600', sub: 'text-emerald-500/70', btn: '' },
+        rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-none', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
+        amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-none', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
+        indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-none', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },
+        emerald: { bg: 'bg-emerald-500/5', border: 'border-emerald-500/10', icon: 'bg-emerald-500 text-white shadow-none', text: 'text-emerald-600', sub: 'text-emerald-500/70', btn: '' },
     };
 
     return (
-        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col" dir="rtl">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-indigo-500/10 text-indigo-600 rounded-2xl flex items-center justify-center border border-indigo-500/20">
-                        <Zap size={24} className="fill-indigo-600" />
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 shadow-sm rounded-none flex flex-col" dir="rtl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-100 dark:bg-slate-800 text-slate-600 rounded-none flex items-center justify-center border border-slate-200">
+                        <Zap size={16} />
                     </div>
                     <div>
-                        <h4 className="text-xl font-bold text-slate-900 dark:text-white">التنبيهات الذكية</h4>
-                        <p className="text-sm font-medium text-gray-400">إشعارات النظام العاجلة</p>
+                        <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">إخطارات ذكية</h4>
                     </div>
                 </div>
             </div>
 
-            <div className="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar pr-1">
+            <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
                 {alerts.map(alert => {
                     const c = colorMap[alert.color] || colorMap.indigo;
                     const Icon = alert.icon;
                     return (
-                        <div key={alert.id} className={cn("p-5 border-2 flex items-center gap-5 rounded-[2rem] transition-all hover:scale-[1.02]", c.bg, c.border)}>
-                            <div className={cn("w-12 h-12 shrink-0 flex items-center justify-center rounded-2xl shadow-lg transform -rotate-3", c.icon)}>
-                                <Icon size={22} />
+                        <div key={alert.id} className={cn("p-3 border border-slate-100 flex items-center gap-3 rounded-none transition-all hover:bg-white dark:hover:bg-slate-800", c.bg)}>
+                            <div className={cn("w-8 h-8 shrink-0 flex items-center justify-center rounded-none", c.icon)}>
+                                <Icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className={cn("font-bold text-sm tracking-tight", c.text)}>{alert.title}</p>
-                                <p className={cn("text-[11px] font-medium mt-1 uppercase tracking-wider", c.sub)}>{alert.desc}</p>
+                                <p className={cn("font-bold text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
+                                <p className={cn("text-[9px] font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
                             </div>
                             {alert.action && (
                                 <button
                                     onClick={alert.action}
-                                    className={cn("shrink-0 p-3 rounded-xl transition-all hover:scale-110", c.btn)}
+                                    className={cn("shrink-0 p-2 rounded-none transition-all hover:brightness-110", c.btn)}
                                 >
-                                    <ArrowLeft size={16} />
+                                    <ArrowLeft size={12} />
                                 </button>
                             )}
                         </div>
