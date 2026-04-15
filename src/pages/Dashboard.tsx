@@ -102,18 +102,33 @@ export const Dashboard = () => {
                 ) : (
                     <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         
-                        {/* Analytical Mainframe (8/12) */}
-                        <div className="xl:col-span-8 space-y-8">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Full Width Analysis Center */}
+                <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10">
+                    <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                </div>
+
+                <div className="grid grid-cols-1 gap-10">
+                    {/* Operations Row: Side by Side Alerts */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
+                        <SmartAlerts
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                            lowBalanceStudents={lowBalanceStudents}
+                        />
+                    </div>
+
+                    {/* Main Analytical Core */}
+                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
+                        {/* Analytical Content (8/12) */}
+                        <div className="xl:col-span-8 space-y-10">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <PerformanceSummary stats={stats} isTeacher={false} />
                                 <SessionAnalysis stats={stats} monthlyData={monthlyData} />
                             </div>
 
-                            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 overflow-hidden transition-all duration-500 hover:shadow-indigo-500/10">
-                                <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                            </div>
-
-                            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-2 shadow-2xl shadow-indigo-500/5 transition-all duration-500">
+                            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-2 shadow-2xl shadow-indigo-500/5 transition-all duration-500 overflow-hidden">
                                 <AnalyticsDashboard
                                     students={rawStudents}
                                     sessions={rawSessions}
@@ -122,27 +137,15 @@ export const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Operational Sidebar (4/12) */}
-                        <div className="xl:col-span-4 space-y-8">
+                        {/* Operational Feed (4/12) */}
+                        <div className="xl:col-span-4 space-y-10">
                             <TasksAndRequests tasks={tasks} />
-
-                            <div className="bg-indigo-50/50 dark:bg-indigo-950/20 backdrop-blur-xl rounded-[2rem] border border-indigo-100 dark:border-indigo-900/30 p-4 shadow-xl shadow-indigo-500/5">
-                                <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
-                            </div>
-
-                            <SmartAlerts
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                studentInvoices={rawStudentInvoices}
-                                lowBalanceStudents={lowBalanceStudents}
-                            />
-
-                            <div className="space-y-8">
-                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                                <ModernAnnouncements />
-                            </div>
+                            <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <ModernAnnouncements />
                         </div>
+                    </div>
+                </div>
                     </div>
                 )}
             </div>
