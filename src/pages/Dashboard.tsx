@@ -57,16 +57,6 @@ export const Dashboard = () => {
     return (
         <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-10 overflow-x-hidden text-sm" dir="rtl">
             
-            {/* 🏆 Top Honor Banner (Full Width, Sharp) */}
-            {!isTeacher && (
-                <div className="bg-slate-900 dark:bg-indigo-950 p-2 border-b-2 border-indigo-500 flex items-center justify-center gap-3 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%)] bg-[length:150px_150px] animate-[shimmer_8s_infinite] pointer-events-none"></div>
-                    <Star className="text-yellow-400 fill-yellow-400" size={12} />
-                    <h2 className="text-[11px] font-black text-indigo-100 tracking-[0.2em] uppercase italic">تهانينا لأنكم أفراد العائلة المميزين</h2>
-                    <Star className="text-yellow-400 fill-yellow-400" size={12} />
-                </div>
-            )}
-
             {/* Premium Header Section */}
             <div className="relative pt-4 pb-12">
                 <DashboardHeader
