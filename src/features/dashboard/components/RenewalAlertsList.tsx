@@ -1,4 +1,4 @@
-import { Bell, Phone, UserX } from 'lucide-react';
+import { Phone, UserX } from 'lucide-react';
 import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
