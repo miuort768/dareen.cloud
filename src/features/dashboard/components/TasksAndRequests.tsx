@@ -9,7 +9,7 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10 h-full flex flex-col">
+        <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] border border-white dark:border-slate-800 p-8 shadow-2xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/10 flex flex-col">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-2xl flex items-center justify-center border border-amber-500/20">
@@ -25,7 +25,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                 </Link>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1">
+            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1 max-h-[400px]">
                 {tasks.length > 0 ? (
                     tasks.slice(0, 5).map((task) => (
                         <div key={task.id} className="p-4 bg-slate-50/50 dark:bg-slate-800/30 rounded-[1.5rem] border border-slate-100 dark:border-slate-800 transition-all hover:scale-[1.02] hover:bg-white dark:hover:bg-slate-800 group">
