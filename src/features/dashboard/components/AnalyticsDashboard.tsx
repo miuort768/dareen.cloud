@@ -126,12 +126,13 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 <div className="bg-white border-2 border-slate-900 p-6 rounded-none shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
                     <div className="flex flex-col md:flex-row items-center gap-10">
                         {/* Title Badge */}
-                        <div className="shrink-0 flex flex-col items-center md:items-start">
+                        <div className="shrink-0 flex flex-col items-start min-w-[140px]">
                             <div className="flex items-center gap-2 mb-2">
                                 <Award size={24} className="text-yellow-500" />
                                 <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter italic leading-none">لوحة الشرف</h4>
                             </div>
-                            <p className="text-[9px] font-black text-slate-400 tracking-[0.3em] uppercase underline underline-offset-4 decoration-yellow-500/50">أفضل الأداء لهذا الشهر</p>
+                            <p className="text-[9px] font-black text-slate-400 tracking-[0.2em] uppercase italic">أفضل الأداء لهذا الشهر</p>
+                            <div className="h-1 w-1/2 bg-yellow-500 mt-2"></div>
                         </div>
 
                         {/* Top Students High-Contrast List */}
