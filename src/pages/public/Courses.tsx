@@ -168,15 +168,15 @@ export const Courses = () => {
                                 className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
                             >
                                 {/* Course Header (Clean Image Area) */}
-                                <div className="h-44 sm:h-52 relative overflow-hidden bg-white dark:bg-slate-800 flex items-center justify-center p-2">
+                                <div className="h-44 sm:h-52 relative overflow-hidden bg-slate-50 dark:bg-slate-800/50 flex items-start justify-center">
                                     <img
                                         src={course.image}
                                         alt={course.title}
-                                        className="w-full h-full object-contain object-center scale-100 group-hover:scale-[1.03] transition-transform duration-500"
+                                        className="w-full h-full object-contain object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
                                     />
                                     
                                     {/* Corner Status Badge */}
-                                    <div className="absolute top-3 right-3 z-20">
+                                    <div className="absolute top-2 left-2 z-20">
                                         <div className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-full text-[9px] font-black uppercase text-green-500 tracking-tighter shadow-sm flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                                             {course.price}
