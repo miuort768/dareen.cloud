@@ -106,8 +106,8 @@ router.post('/', validate(createStudentSchema), async (req, res) => {
                     }
 
                     await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [newId, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule)]
+                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule, nextSessionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [newId, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, e.sessionsUsed, JSON.stringify(e.schedule), e.nextSessionNotes || null]
                     );
                 }
             }
@@ -151,12 +151,15 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 
             await tx.run(query, params);
 
-            // 2. Fetch existing enrollments to preserve their sessionsUsed
-            const existingEnrollments = await tx.all('SELECT teacher, subject, sessionsUsed FROM enrollments WHERE studentId = ?', [id]);
-            const sessionsMap = {};
+            // 2. Fetch existing enrollments to preserve their sessionsUsed and nextSessionNotes
+            const existingEnrollments = await tx.all('SELECT teacher, subject, sessionsUsed, nextSessionNotes FROM enrollments WHERE studentId = ?', [id]);
+            const preservedMap = {};
             existingEnrollments.forEach(en => {
                 const key = `${en.teacher.trim().toLowerCase()}-${en.subject.trim().toLowerCase()}`;
-                sessionsMap[key] = en.sessionsUsed;
+                preservedMap[key] = {
+                    used: en.sessionsUsed,
+                    notes: en.nextSessionNotes
+                };
             });
 
             // 3. Re-sync enrollments
@@ -171,11 +174,13 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
                     }
 
                     const matchKey = `${e.teacher.trim().toLowerCase()}-${e.subject.trim().toLowerCase()}`;
-                    const preservedUsed = sessionsMap[matchKey] !== undefined ? sessionsMap[matchKey] : (e.sessionsUsed || 0);
+                    const preservedData = preservedMap[matchKey] || {};
+                    const preservedUsed = preservedData.used !== undefined ? preservedData.used : (e.sessionsUsed || 0);
+                    const finalNotes = e.nextSessionNotes !== undefined ? e.nextSessionNotes : (preservedData.notes || null);
 
                     await tx.run(
-                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, preservedUsed, JSON.stringify(e.schedule)]
+                        `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule, nextSessionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [id, e.teacher, finalTeacherId, e.subject, e.curr, e.sessionsTotal, preservedUsed, JSON.stringify(e.schedule), finalNotes]
                     );
                 }
             }
