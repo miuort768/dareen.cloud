@@ -9,8 +9,6 @@ import {
     Trash2,
     User,
     History,
-    ChevronDown,
-    ChevronUp,
     Zap
 } from 'lucide-react';
 import { api } from '../lib/api';
@@ -26,7 +24,6 @@ export const Evaluations = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [historyModalStudent, setHistoryModalStudent] = useState<any | null>(null);
-    const [expandedStudentId, setExpandedStudentId] = useState<string | null>(null);
     
     // Form state
     const [formData, setFormData] = useState({
@@ -161,7 +158,6 @@ export const Evaluations = () => {
                         
                         const lastEval = studentEvals[0];
                         const lastRating = lastEval ? ratingOptions.find(r => r.value === lastEval.rating) || ratingOptions[0] : null;
-                        const isExpanded = expandedStudentId === student.id;
 
                         return (
                             <div key={student.id} className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] flex flex-col group transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_black]">
@@ -393,7 +389,7 @@ export const Evaluations = () => {
                                 {evaluations
                                     .filter(ev => ev.studentId === historyModalStudent.id)
                                     .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
-                                    .map((ev, idx) => {
+                                    .map((ev) => {
                                         const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
                                         return (
                                             <div key={ev.id} className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 pb-8 last:pb-0">
