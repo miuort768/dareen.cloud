@@ -366,6 +366,9 @@ export const Evaluations = () => {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
             {/* History Modal - Technical Sharp Style */}
             {historyModalStudent && (
                 <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in">
