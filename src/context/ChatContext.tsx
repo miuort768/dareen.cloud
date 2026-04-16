@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
 import { useApp } from './AppContext';
+import { api } from '../lib/api';
 import { sendNativeNotification, playNotificationSound } from '../lib/notificationUtils';
 import type { ChatMessage, Conversation } from '../types/chat.types';
 
@@ -22,8 +23,23 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [typingUsers, setTypingUsers] = useState<{ conversationId: string; userName: string }[]>([]);
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
     const activeConvRef = React.useRef<string | null>(null);
-    const [totalUnreadCount, setTotalUnreadCount] = useState(0);
     const [isConnected, setIsConnected] = useState(false);
+
+    // Reactive Conversations Query (Shared with useChat hooks)
+    const { data: conversations = [] } = useQuery<Conversation[]>({
+        queryKey: ['conversations', String(currentUser?.id)],
+        queryFn: async () => {
+            if (!currentUser?.id) return [];
+            return api.get<Conversation[]>(`/chat/conversations?userId=${currentUser.id}`);
+        },
+        enabled: isAuthenticated && !!currentUser?.id,
+        staleTime: 30000, // 30 seconds
+    });
+
+    // Derive total unread count reactively from query data
+    const totalUnreadCount = Array.isArray(conversations) 
+        ? conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0) 
+        : 0;
 
     React.useEffect(() => {
         activeConvRef.current = activeConversationId;
@@ -178,17 +194,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
     }, [isAuthenticated, currentUser, queryClient]);
 
-    // Derived State: Total Unread Count
-    useEffect(() => {
-        if (!isAuthenticated || !currentUser) return;
-        const currentUserId = String(currentUser.id);
-
-        const conversations = queryClient.getQueryData<Conversation[]>(['conversations', currentUserId]);
-        if (conversations) {
-            const total = conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0);
-            setTotalUnreadCount(total);
-        }
-    }, [isAuthenticated, currentUser, queryClient, isConnected]);
+    // Derived State: Total Unread Count is now calculated reactively above
+    // No manual useEffect needed anymore
 
     return (
         <ChatContext.Provider value={{ typingUsers, setTyping, activeConversationId, setActiveConversationId, totalUnreadCount, isConnected }}>
