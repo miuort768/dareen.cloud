@@ -73,7 +73,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
             if (enrollmentIndex === -1) return false;
 
             const updatedStudent = { ...student };
-            const updatedEnrollments = student.enrollments.map((e, idx) => 
+            const updatedEnrollments = student.enrollments.map((e) => 
                 e.subject === subject ? { ...e, nextSessionNotes: notes } : e
             );
             updatedStudent.enrollments = updatedEnrollments;
