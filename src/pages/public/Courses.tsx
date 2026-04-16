@@ -6,7 +6,6 @@ import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 
 // Import course images
-import foundationImg from '../../assets/courses/foundation.png';
 import foundationNewImg from '../../assets/courses/foundation-new.jpg';
 import foundationV2Img from '../../assets/courses/foundation-v2.jpg';
 import kuwaitiImg from '../../assets/courses/kuwaiti-curriculum.jpg';
