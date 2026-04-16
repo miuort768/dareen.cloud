@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BookOpen, Calendar, CheckCircle2, Clock, Edit, Trash2, TrendingUp, XCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
@@ -33,11 +33,27 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     const [isEditing, setIsEditing] = useState(false);
     const [notes, setNotes] = useState(en.nextSessionNotes || '');
     const [isSavingNotes, setIsSavingNotes] = useState(false);
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Keep internal notes in sync with prop changes (Suggestions 3 Sync)
+    // Keep internal notes in sync with prop changes
     React.useEffect(() => {
         setNotes(en.nextSessionNotes || '');
     }, [en.nextSessionNotes]);
+
+    // Proper debounce save function
+    const triggerSave = (value: string) => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(async () => {
+            if (value.trim() !== (en.nextSessionNotes || '').trim()) {
+                setIsSavingNotes(true);
+                try {
+                    await onUpdateNotes?.(student.id, en.subject, value);
+                } finally {
+                    setTimeout(() => setIsSavingNotes(false), 500);
+                }
+            }
+        }, 1500);
+    };
     const [timerRunning, setTimerRunning] = useState(false);
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerInterval, setTimerInterval] = useState<any>(null);
@@ -293,20 +309,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         value={notes}
                         onChange={(e) => {
                             setNotes(e.target.value);
-                            // Debounce Auto-save
-                            const timeoutId = setTimeout(async () => {
-                                if (e.target.value.trim() !== (en.nextSessionNotes || '').trim()) {
-                                    setIsSavingNotes(true);
-                                    try {
-                                        await onUpdateNotes?.(student.id, en.subject, e.target.value);
-                                    } finally {
-                                        setTimeout(() => setIsSavingNotes(false), 500);
-                                    }
-                                }
-                            }, 1500);
-                            return () => clearTimeout(timeoutId);
+                            triggerSave(e.target.value);
                         }}
                         onBlur={async () => {
+                            if (debounceRef.current) clearTimeout(debounceRef.current);
                             if (notes.trim() !== (en.nextSessionNotes || '').trim()) {
                                 setIsSavingNotes(true);
                                 try {
