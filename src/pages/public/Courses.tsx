@@ -168,11 +168,11 @@ export const Courses = () => {
                                 className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
                             >
                                 {/* Course Header (Clean Image Area) */}
-                                <div className="h-40 relative overflow-hidden bg-gray-50">
+                                <div className="h-44 sm:h-52 relative overflow-hidden bg-white dark:bg-slate-800 flex items-center justify-center p-2">
                                     <img
                                         src={course.image}
                                         alt={course.title}
-                                        className="w-full h-full object-cover object-center"
+                                        className="w-full h-full object-contain object-center scale-100 group-hover:scale-[1.03] transition-transform duration-500"
                                     />
                                     
                                     {/* Corner Status Badge */}
