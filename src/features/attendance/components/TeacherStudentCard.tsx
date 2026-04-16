@@ -266,48 +266,46 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     )}
                 </div>
 
-                {/* THE SCRATCHPAD (Suggestions 3) - Persistence Improved */}
+                {/* THE SCRATCHPAD (Suggestions 3) - Rename & Auto-save Persistence improved */}
                 <div className="mb-6 p-4 bg-amber-50/50 dark:bg-amber-900/10 border-2 border-dashed border-amber-200 dark:border-amber-800/50 relative group/notes transition-all hover:bg-amber-50 dark:hover:bg-amber-900/20">
                     <div className="flex items-center justify-between mb-3 border-b border-amber-200 dark:border-amber-800/50 pb-2">
                         <div className="flex items-center gap-2">
                             <h5 className="text-[10px] font-black text-amber-700 dark:text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
                                 <Edit size={12} />
-                                مفكرة الحصة القادمة
+                                ملاحظات قبل الحصة
                             </h5>
                             {isSavingNotes ? (
                                 <span className="flex items-center gap-1 text-[8px] font-black text-amber-600 animate-pulse bg-white dark:bg-amber-950 px-2 py-0.5 border border-amber-200">
                                     <div className="w-1 h-1 bg-amber-600 rounded-full animate-bounce"></div>
-                                    جاري الحفظ...
+                                    جاري الحفظ تلقائياً...
                                 </span>
                             ) : notes.trim() !== (en.nextSessionNotes || '').trim() ? (
-                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200 animate-in fade-in duration-300">تغييرات لم تُحفظ</span>
+                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200 animate-in fade-in duration-300">جاري الكتابة...</span>
                             ) : notes.trim() !== '' && (
                                 <span className="text-[8px] font-black text-emerald-600 bg-white dark:bg-emerald-950 px-2 py-0.5 border border-emerald-200 flex items-center gap-1">
-                                    <CheckCircle2 size={8} /> تم الحفظ في السجل
+                                    <CheckCircle2 size={8} /> تم الحفظ
                                 </span>
                             )}
                         </div>
-                        
-                        {(notes.trim() !== (en.nextSessionNotes || '').trim()) && !isSavingNotes && (
-                            <button 
-                                onClick={async () => {
-                                    setIsSavingNotes(true);
-                                    try {
-                                        await onUpdateNotes?.(student.id, en.subject, notes);
-                                    } finally {
-                                        setTimeout(() => setIsSavingNotes(false), 500);
-                                    }
-                                }}
-                                className="bg-amber-600 text-white px-3 py-1 text-[9px] font-black uppercase tracking-tighter hover:bg-amber-700 transition-all flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none"
-                            >
-                                <CheckCircle2 size={10} /> حفظ الآن
-                            </button>
-                        )}
                     </div>
                     
                     <textarea 
                         value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
+                        onChange={(e) => {
+                            setNotes(e.target.value);
+                            // Debounce Auto-save
+                            const timeoutId = setTimeout(async () => {
+                                if (e.target.value.trim() !== (en.nextSessionNotes || '').trim()) {
+                                    setIsSavingNotes(true);
+                                    try {
+                                        await onUpdateNotes?.(student.id, en.subject, e.target.value);
+                                    } finally {
+                                        setTimeout(() => setIsSavingNotes(false), 500);
+                                    }
+                                }
+                            }, 1500);
+                            return () => clearTimeout(timeoutId);
+                        }}
                         onBlur={async () => {
                             if (notes.trim() !== (en.nextSessionNotes || '').trim()) {
                                 setIsSavingNotes(true);
@@ -318,8 +316,8 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 }
                             }
                         }}
-                        placeholder="اكتبي ملاحظاتك للحصة القادمة هنا... (مثلاً: وصلنا للآية ٢٠)"
-                        className="w-full bg-transparent border-none focus:ring-0 text-xs font-bold text-gray-700 dark:text-gray-300 placeholder:text-amber-300 dark:placeholder:text-amber-900/50 resize-none min-h-[70px] p-0 leading-relaxed"
+                        placeholder="اكتبي ملاحظات التقوية أو التنبيهات هنا..."
+                        className="w-full bg-transparent border-none focus:ring-0 text-xs font-bold text-gray-700 dark:text-gray-300 placeholder:text-amber-300 dark:placeholder:text-amber-900/50 resize-none min-h-[80px] p-0 leading-relaxed"
                     />
                     
                     <div className="absolute bottom-1 right-2 opacity-30 pointer-events-none">
