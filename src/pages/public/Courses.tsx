@@ -191,11 +191,11 @@ export const Courses = () => {
                                         <StarRating rating={course.rating} />
                                     </div>
 
-                                    <div className="mt-0 mb-1">
-                                        <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-red-600 transition-colors min-h-[3rem]">
+                                    <div className="mt-2 mb-2 flex-grow flex flex-col justify-start">
+                                        <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-red-600 transition-colors">
                                             {course.title}
                                         </h3>
-                                        <div className="h-1 w-12 bg-green-500/20 rounded-full mt-1 group-hover:w-20 group-hover:bg-red-500/50 transition-all duration-700"></div>
+                                        <div className="h-1 w-12 bg-green-500/20 rounded-full mt-1.5 mb-2 group-hover:w-20 group-hover:bg-red-500/50 transition-all duration-700"></div>
                                     </div>
 
                                     <p className="text-gray-400 text-[11px] md:text-xs leading-relaxed font-medium line-clamp-3 mb-4 mt-2">
