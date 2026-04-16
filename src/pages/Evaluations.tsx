@@ -139,7 +139,7 @@ export const Evaluations = () => {
                             <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tighter uppercase italic">تقييم الطلاب والتحفيز</h1>
                             <div className="flex items-center gap-3">
                                 <span className="h-[2px] w-8 bg-indigo-500"></span>
-                                <p className="text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                                <p className="text-slate-500 dark:text-slate-400 text-[8px] sm:text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">
                                     <Zap size={12} className="text-amber-500 fill-current" />
                                     نظام المكافآت الذكي والتقييم الأكاديمي الشامل
                                 </p>
