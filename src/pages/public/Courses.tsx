@@ -182,14 +182,14 @@ export const Courses = () => {
                                             {course.price}
                                         </div>
                                     </div>
+                                    {/* Star Rating Badge - Inside image container for perfect overlay */}
+                                    <div className="absolute bottom-3 left-4 z-30 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
+                                        <StarRating rating={course.rating} />
+                                    </div>
                                 </div>
 
                                 {/* Course Content */}
                                 <div className="px-5 pt-3 pb-0 flex flex-col flex-grow relative">
-                                    {/* Star Rating Badge - perfectly centered on the line between image and content */}
-                                    <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
-                                        <StarRating rating={course.rating} />
-                                    </div>
 
                                     <div className="mt-2 mb-2 flex-grow flex flex-col justify-start">
                                         <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-red-600 transition-colors">
