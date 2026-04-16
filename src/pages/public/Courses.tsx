@@ -8,6 +8,7 @@ import { SEO } from '../../components/SEO';
 // Import course images
 import foundationImg from '../../assets/courses/foundation.png';
 import foundationNewImg from '../../assets/courses/foundation-new.jpg';
+import foundationV2Img from '../../assets/courses/foundation-v2.jpg';
 import kuwaitiImg from '../../assets/courses/kuwaiti-curriculum.jpg';
 import qatariImg from '../../assets/courses/qatari-curriculum.jpg';
 import saudiImg from '../../assets/courses/saudi-curriculum.jpg';
@@ -20,10 +21,10 @@ import frenchImg from '../../assets/courses/french-course.jpg';
 import skillsImg from '../../assets/courses/skills-course.jpg';
 
 const COURSES = [
-    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationNewImg },
-    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationImg },
-    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', rating: 4.7, price: 'متاح الآن', image: foundationImg },
-    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', rating: 4.6, price: 'متاح الآن', image: foundationImg },
+    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img },
+    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationNewImg },
+    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', rating: 4.7, price: 'متاح الآن', image: foundationNewImg },
+    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', rating: 4.6, price: 'متاح الآن', image: foundationNewImg },
 
     // Gulf & Regional Curricula
     { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '4.5k', rating: 4.7, price: 'متاح الآن', image: kuwaitiImg },
