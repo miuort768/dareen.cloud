@@ -25,6 +25,7 @@ export const Evaluations = () => {
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [historyModalStudent, setHistoryModalStudent] = useState<any | null>(null);
     const [expandedStudentId, setExpandedStudentId] = useState<string | null>(null);
     
     // Form state
@@ -217,55 +218,16 @@ export const Evaluations = () => {
                                             أضف تقييم
                                         </button>
                                         <button
-                                            onClick={() => setExpandedStudentId(isExpanded ? null : student.id)}
+                                            onClick={() => setHistoryModalStudent(student)}
                                             className="bg-white dark:bg-gray-800 text-gray-950 dark:text-white border-2 border-gray-950 px-3 py-2 text-[10px] font-black uppercase tracking-tighter shadow-[2px_2px_0px_0px_black] hover:bg-gray-50 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2"
                                         >
-                                            {isExpanded ? <ChevronUp size={14} strokeWidth={3} /> : <ChevronDown size={14} strokeWidth={3} />}
+                                            <History size={14} strokeWidth={3} />
                                             السجل ({studentEvals.length})
                                         </button>
                                     </div>
                                 </div>
 
-                                {/* Expanded History List */}
-                                {isExpanded && (
-                                    <div className="bg-gray-950 text-white p-4 border-t-4 border-gray-950 max-h-[300px] overflow-y-auto custom-scrollbar-dark">
-                                        <h5 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                                            <Star size={12} className="text-yellow-400" />
-                                            تاريخ التقييمات الكامل
-                                        </h5>
-                                        <div className="space-y-4">
-                                            {studentEvals.map((ev) => {
-                                                const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
-                                                return (
-                                                    <div key={ev.id} className="border-l-2 border-gray-800 pl-4 py-1 relative">
-                                                        <div className="flex items-center justify-between mb-2">
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-[14px]">{r.icon && <r.icon size={12} className="text-primary-400" />}</span>
-                                                                <span className="text-xs font-black text-white">{ev.rating}</span>
-                                                                {ev.points > 0 && <span className="text-[9px] font-black text-yellow-400">+{ev.points} XP</span>}
-                                                            </div>
-                                                            <span className="text-[9px] font-black text-gray-600 uppercase">
-                                                                {format(new Date(ev.created_at || ev.date), 'dd/MM/yy')}
-                                                            </span>
-                                                        </div>
-                                                        <p className="text-[10px] font-medium text-gray-400 mb-2 leading-relaxed">{ev.notes}</p>
-                                                        {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
-                                                            <button 
-                                                                onClick={() => handleDelete(ev.id)}
-                                                                className="text-rose-500 hover:text-rose-400 p-1 transition-colors"
-                                                            >
-                                                                <Trash2 size={12} />
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                );
-                                            })}
-                                            {studentEvals.length === 0 && (
-                                                <p className="text-[10px] text-gray-600 italic">لا يوجد سجل تاريخي.</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
+
                             </div>
                         );
                     })}
@@ -401,6 +363,101 @@ export const Evaluations = () => {
                             >
                                 <CheckCircle2 size={16} />
                                 إرسال التقييم
+                            </button>
+                        </div>
+                    </div>
+            {/* History Modal - Technical Sharp Style */}
+            {historyModalStudent && (
+                <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in">
+                    <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-2xl flex flex-col max-h-[85vh] overflow-hidden">
+                        <div className="p-6 border-b-2 border-gray-950 bg-slate-900 text-white flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400">
+                                    <User size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-black uppercase tracking-tighter">سجل تقييمات للطالب</h3>
+                                    <p className="text-primary-400 text-[10px] font-black uppercase tracking-widest">{historyModalStudent.name}</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setHistoryModalStudent(null)} className="w-10 h-10 flex items-center justify-center bg-white text-gray-950 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-xl">
+                                &times;
+                            </button>
+                        </div>
+
+                        <div className="p-8 overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-gray-950">
+                            <div className="space-y-6">
+                                {evaluations
+                                    .filter(ev => ev.studentId === historyModalStudent.id)
+                                    .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
+                                    .map((ev, idx) => {
+                                        const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
+                                        return (
+                                            <div key={ev.id} className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 pb-8 last:pb-0">
+                                                <div className="absolute -left-2.5 top-0 w-5 h-5 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white rounded-none flex items-center justify-center z-10">
+                                                    <div className="w-1.5 h-1.5 bg-indigo-500"></div>
+                                                </div>
+                                                
+                                                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all group">
+                                                    <div className="flex items-center justify-between mb-4">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className={cn("px-3 py-1 text-[10px] font-black border tracking-widest uppercase flex items-center gap-2", r.bg, r.color, "border-current opacity-80")}>
+                                                                <r.icon size={12} strokeWidth={3} />
+                                                                {ev.rating}
+                                                            </div>
+                                                            {ev.points > 0 && (
+                                                                <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-1 border border-amber-100">
+                                                                    +{ev.points} XP
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="text-[10px] font-black text-slate-400 font-mono tracking-tighter">
+                                                                {format(new Date(ev.created_at || ev.date), 'dd MMMM yyyy')}
+                                                            </span>
+                                                            {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
+                                                                <button 
+                                                                    onClick={() => handleDelete(ev.id)}
+                                                                    className="text-slate-300 hover:text-rose-500 transition-colors p-1"
+                                                                >
+                                                                    <Trash2 size={14} />
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-xs font-bold text-slate-600 dark:text-slate-400 italic leading-relaxed border-r-2 border-slate-100 pr-4">
+                                                        "{ev.notes || 'لا يوجد ملاحظات مسجلة'}"
+                                                    </p>
+                                                    <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-5 h-5 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center">
+                                                                <User size={10} className="text-slate-400" />
+                                                            </div>
+                                                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                                تقييم بواسطة: {ev.teacherName || 'نظام آلي'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                
+                                {evaluations.filter(ev => ev.studentId === historyModalStudent.id).length === 0 && (
+                                    <div className="py-20 text-center border-4 border-dashed border-slate-100 dark:border-slate-800">
+                                        <History size={48} className="mx-auto text-slate-200 mb-4" />
+                                        <p className="text-sm font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات لهذا الطالب حتى الآن</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="p-4 bg-white dark:bg-slate-900 border-t-2 border-gray-950 flex justify-center">
+                            <button 
+                                onClick={() => setHistoryModalStudent(null)}
+                                className="px-10 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[11px] uppercase tracking-[0.2em] shadow-xl hover:bg-slate-800 transition-all"
+                            >
+                                إغلاق السجل
                             </button>
                         </div>
                     </div>
