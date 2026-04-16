@@ -34,33 +34,30 @@ export const InstallPWA = () => {
     const deferredPromptRef = useRef<any>(null);
 
     useEffect(() => {
-        // Already installed - don't show
+        // Already installed as standalone app - don't show
         if (isStandaloneMode()) return;
 
-        // Already dismissed permanently
+        // Already permanently dismissed
         if (localStorage.getItem('pwa_dismissed_permanent')) return;
 
         const detectedPlatform = detectPlatform();
         setPlatform(detectedPlatform);
 
-        // Android / Windows / Desktop Chrome - wait for native prompt
+        // Listen for native install prompt (Android / Chrome / Edge / Windows)
         const handleBeforeInstall = (e: Event) => {
             e.preventDefault();
             deferredPromptRef.current = e;
-            const dismissed = sessionStorage.getItem('pwa_dismissed_session');
-            if (!dismissed) {
-                setTimeout(() => setIsVisible(true), 1500);
-            }
         };
-
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
-        // iOS / Mac Safari - show manual guide after delay
-        if (detectedPlatform === 'ios-safari' || detectedPlatform === 'mac-safari') {
-            const dismissed = sessionStorage.getItem('pwa_dismissed_session');
-            if (!dismissed) {
-                setTimeout(() => setIsVisible(true), 2000);
-            }
+        // Show banner for ALL non-installed platforms after short delay
+        const dismissed = sessionStorage.getItem('pwa_dismissed_session');
+        if (!dismissed) {
+            const timer = setTimeout(() => setIsVisible(true), 2000);
+            return () => {
+                clearTimeout(timer);
+                window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
+            };
         }
 
         return () => {
