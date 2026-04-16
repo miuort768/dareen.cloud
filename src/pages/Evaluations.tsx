@@ -122,20 +122,30 @@ export const Evaluations = () => {
 
     return (
         <div className="space-y-8 pb-20 animate-in fade-in duration-500" dir="rtl">
-            {/* Header Banner */}
-            <div className="relative bg-gray-950 p-6 border-b-4 border-primary-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-primary-600 text-white flex items-center justify-center border-2 border-white shadow-[3px_3px_0px_0px_black] transform rotate-3">
-                            <Award size={28} />
+            {/* Header Banner - Redesigned with White Theme and Geometric Patterns */}
+            <div className="relative bg-white dark:bg-slate-950 p-8 border-b border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+                {/* Geometric Background Patterns */}
+                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
+                    <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px), radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
+                    <div className="absolute top-10 right-10 w-64 h-64 border-2 border-indigo-500 rotate-45"></div>
+                    <div className="absolute -bottom-20 -left-10 w-48 h-48 border border-emerald-500 rounded-full"></div>
+                </div>
+
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
+                            <div className="absolute inset-0 bg-indigo-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            <Award size={32} strokeWidth={2.5} className="relative z-10" />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-black text-white mb-1 tracking-tighter uppercase">تقييم الطلاب والتحفيز</h1>
-                            <p className="text-primary-400 text-[10px] font-black flex items-center gap-2 uppercase tracking-widest">
-                                <Zap size={12} className="fill-current" />
-                                كافئي طلابك بالنقاط والتقييمات الإيجابية
-                            </p>
+                            <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tighter uppercase italic">تقييم الطلاب والتحفيز</h1>
+                            <div className="flex items-center gap-3">
+                                <span className="h-[2px] w-8 bg-indigo-500"></span>
+                                <p className="text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                                    <Zap size={12} className="text-amber-500 fill-current" />
+                                    نظام المكافآت الذكي والتقييم الأكاديمي الشامل
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
