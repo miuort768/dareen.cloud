@@ -87,15 +87,15 @@ export const Dashboard = () => {
                             <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                            <div className="lg:col-span-2">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                            <div>
                                 <TeacherAchievements
                                     stats={stats}
                                     lowBalanceStudents={lowBalanceStudents}
                                     isTeacher={true}
                                 />
                             </div>
-                            <div className="lg:col-span-1">
+                            <div>
                                 <TasksAndRequests tasks={tasks} />
                             </div>
                         </div>
