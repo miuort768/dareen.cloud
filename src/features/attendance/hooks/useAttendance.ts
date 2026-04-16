@@ -64,12 +64,20 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         }
     };
 
-    const updateEnrollmentNotes = async (studentId: string, enrollmentIndex: number, notes: string) => {
+    const updateEnrollmentNotes = async (studentId: string, subject: string, notes: string) => {
         try {
             const student = students.find(s => s.id === studentId);
             if (!student) return false;
+            
+            const enrollmentIndex = student.enrollments.findIndex(e => e.subject === subject);
+            if (enrollmentIndex === -1) return false;
+
             const updatedStudent = { ...student };
-            updatedStudent.enrollments[enrollmentIndex].nextSessionNotes = notes;
+            const updatedEnrollments = [...student.enrollments];
+            updatedEnrollments[enrollmentIndex] = { ...updatedEnrollments[enrollmentIndex], nextSessionNotes: notes };
+            updatedStudent.enrollments = updatedEnrollments;
+
+            console.log(`Saving notes for ${student.name} - ${subject}:`, notes);
             await attendanceService.updateStudent(updatedStudent);
             setStudents(prev => prev.map(s => s.id === studentId ? updatedStudent : s));
             return true;

@@ -11,7 +11,7 @@ interface TeacherStudentCardProps {
     onLogAttendance: (student: Student, enrollment: Enrollment) => void;
     onViewHistory: (studentId: string, studentName: string, grade: string, subject: string, curriculum?: string) => void;
     onDeleteSlot: (student: Student, enrollment: Enrollment, index: number) => void;
-    onUpdateNotes?: (studentId: string, enrollmentIndex: number, notes: string) => void;
+    onUpdateNotes?: (studentId: string, subject: string, notes: string) => void;
     onReschedule?: (student: Student, enrollment: Enrollment) => void;
     logDate: string;
     onDateChange: (date: string) => void;
@@ -33,6 +33,11 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     const [isEditing, setIsEditing] = useState(false);
     const [notes, setNotes] = useState(en.nextSessionNotes || '');
     const [isSavingNotes, setIsSavingNotes] = useState(false);
+
+    // Keep internal notes in sync with prop changes (Suggestions 3 Sync)
+    React.useEffect(() => {
+        setNotes(en.nextSessionNotes || '');
+    }, [en.nextSessionNotes]);
     const [timerRunning, setTimerRunning] = useState(false);
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerInterval, setTimerInterval] = useState<any>(null);
@@ -283,8 +288,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             <button 
                                 onClick={() => {
                                     setIsSavingNotes(true);
-                                    const enIndex = student.enrollments.indexOf(en);
-                                    onUpdateNotes?.(student.id, enIndex, notes);
+                                    onUpdateNotes?.(student.id, en.subject, notes);
                                     setTimeout(() => setIsSavingNotes(false), 800);
                                 }}
                                 className="bg-amber-600 text-white px-3 py-1 text-[9px] font-black uppercase tracking-tighter hover:bg-amber-700 transition-all flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none"
@@ -300,8 +304,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         onBlur={() => {
                             if (notes !== (en.nextSessionNotes || '')) {
                                 setIsSavingNotes(true);
-                                const enIndex = student.enrollments.indexOf(en);
-                                onUpdateNotes?.(student.id, enIndex, notes);
+                                onUpdateNotes?.(student.id, en.subject, notes);
                                 setTimeout(() => setIsSavingNotes(false), 800);
                             }
                         }}

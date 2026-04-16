@@ -135,6 +135,7 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     try {
         const updatedStudent = await withTransaction(req.db, async (tx) => {
             // 1. Update basic student info
+            logger.info(`Update attempt for student ${id}`, { name, notes: !!notes, enrollmentsCount: enrollments?.length });
             const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
             let query = `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ?, username = ?`;
             let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername];
@@ -177,6 +178,8 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
                     const preservedData = preservedMap[matchKey] || {};
                     const preservedUsed = preservedData.used !== undefined ? preservedData.used : (e.sessionsUsed || 0);
                     const finalNotes = e.nextSessionNotes !== undefined ? e.nextSessionNotes : (preservedData.notes || null);
+                    
+                    logger.info(`Re-syncing enrollment for ${id}`, { subject: e.subject, notes: finalNotes });
 
                     await tx.run(
                         `INSERT INTO enrollments (studentId, teacher, teacherId, subject, curr, sessionsTotal, sessionsUsed, schedule, nextSessionNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
