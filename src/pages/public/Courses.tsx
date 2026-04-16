@@ -16,6 +16,7 @@ import omanImg from '../../assets/courses/oman-curriculum.jpg';
 import egyptImg from '../../assets/courses/egypt-curriculum.jpg';
 import jordanImg from '../../assets/courses/jordan-curriculum.jpg';
 import arabicImg from '../../assets/courses/arabic-course.jpg';
+import skillsImg from '../../assets/courses/skills-course.jpg';
 
 const COURSES = [
     { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationNewImg },
@@ -35,7 +36,7 @@ const COURSES = [
     { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: foundationImg },
     { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '4.2k', rating: 4.7, price: 'متاح الآن', image: arabicImg },
     { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '2.9k', rating: 4.5, price: 'متاح الآن', image: foundationImg },
-    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '3.5k', rating: 4.9, price: 'متاح الآن', image: foundationImg },
+    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '3.5k', rating: 4.9, price: 'متاح الآن', image: skillsImg },
 ];
 
 const CATEGORIES = [
