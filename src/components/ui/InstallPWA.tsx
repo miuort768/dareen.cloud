@@ -74,14 +74,23 @@ export const InstallPWA = () => {
 
         // Android / Chrome / Edge: use native prompt
         if (deferredPromptRef.current) {
-            deferredPromptRef.current.prompt();
-            const { outcome } = await deferredPromptRef.current.userChoice;
-            if (outcome === 'accepted') {
-                setIsVisible(false);
-                localStorage.setItem('pwa_dismissed_permanent', 'true');
+            try {
+                deferredPromptRef.current.prompt();
+                const { outcome } = await deferredPromptRef.current.userChoice;
+                if (outcome === 'accepted') {
+                    setIsVisible(false);
+                    localStorage.setItem('pwa_dismissed_permanent', 'true');
+                }
+            } catch (err) {
+                console.error('Install prompt failed:', err);
+            } finally {
+                deferredPromptRef.current = null;
             }
-            deferredPromptRef.current = null;
+            return;
         }
+
+        // Fallback for any platform without native prompt
+        setShowIOSGuide(true);
     };
 
     const handleDismiss = () => {
