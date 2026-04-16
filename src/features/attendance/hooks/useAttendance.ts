@@ -73,13 +73,15 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
             if (enrollmentIndex === -1) return false;
 
             const updatedStudent = { ...student };
-            const updatedEnrollments = [...student.enrollments];
-            updatedEnrollments[enrollmentIndex] = { ...updatedEnrollments[enrollmentIndex], nextSessionNotes: notes };
+            const updatedEnrollments = student.enrollments.map((e, idx) => 
+                e.subject === subject ? { ...e, nextSessionNotes: notes } : e
+            );
             updatedStudent.enrollments = updatedEnrollments;
 
             console.log(`Saving notes for ${student.name} - ${subject}:`, notes);
             await attendanceService.updateStudent(updatedStudent);
-            setStudents(prev => prev.map(s => s.id === studentId ? updatedStudent : s));
+            // Deep update state to ensure re-render
+            setStudents(prev => [...prev.map(s => s.id === studentId ? { ...updatedStudent } : s)]);
             return true;
         } catch (error) {
             console.error("Error updating enrollment notes", error);
