@@ -279,17 +279,24 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                     <div className="w-1 h-1 bg-amber-600 rounded-full animate-bounce"></div>
                                     جاري الحفظ...
                                 </span>
-                            ) : notes !== (en.nextSessionNotes || '') && (
-                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200">تغييرات لم تُحفظ</span>
+                            ) : notes.trim() !== (en.nextSessionNotes || '').trim() ? (
+                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200 animate-in fade-in duration-300">تغييرات لم تُحفظ</span>
+                            ) : notes.trim() !== '' && (
+                                <span className="text-[8px] font-black text-emerald-600 bg-white dark:bg-emerald-950 px-2 py-0.5 border border-emerald-200 flex items-center gap-1">
+                                    <CheckCircle2 size={8} /> تم الحفظ في السجل
+                                </span>
                             )}
                         </div>
                         
-                        {(notes !== (en.nextSessionNotes || '')) && !isSavingNotes && (
+                        {(notes.trim() !== (en.nextSessionNotes || '').trim()) && !isSavingNotes && (
                             <button 
-                                onClick={() => {
+                                onClick={async () => {
                                     setIsSavingNotes(true);
-                                    onUpdateNotes?.(student.id, en.subject, notes);
-                                    setTimeout(() => setIsSavingNotes(false), 800);
+                                    try {
+                                        await onUpdateNotes?.(student.id, en.subject, notes);
+                                    } finally {
+                                        setTimeout(() => setIsSavingNotes(false), 500);
+                                    }
                                 }}
                                 className="bg-amber-600 text-white px-3 py-1 text-[9px] font-black uppercase tracking-tighter hover:bg-amber-700 transition-all flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none"
                             >
@@ -301,11 +308,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     <textarea 
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
-                        onBlur={() => {
-                            if (notes !== (en.nextSessionNotes || '')) {
+                        onBlur={async () => {
+                            if (notes.trim() !== (en.nextSessionNotes || '').trim()) {
                                 setIsSavingNotes(true);
-                                onUpdateNotes?.(student.id, en.subject, notes);
-                                setTimeout(() => setIsSavingNotes(false), 800);
+                                try {
+                                    await onUpdateNotes?.(student.id, en.subject, notes);
+                                } finally {
+                                    setTimeout(() => setIsSavingNotes(false), 500);
+                                }
                             }
                         }}
                         placeholder="اكتبي ملاحظاتك للحصة القادمة هنا... (مثلاً: وصلنا للآية ٢٠)"
