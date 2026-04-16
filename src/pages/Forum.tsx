@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageSquare, ThumbsUp, ThumbsDown, Send, MoreHorizontal, Share2 } from 'lucide-react';
+import { MessageSquare, ThumbsUp, ThumbsDown, Send, MoreHorizontal, AlertTriangle } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
@@ -269,9 +269,12 @@ export const Forum = () => {
                                             <MessageSquare size={16} />
                                             تعليق
                                         </button>
-                                        <button className="flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black text-slate-600 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800">
-                                            <Share2 size={16} />
-                                            مشاركة
+                                        <button 
+                                            onClick={() => showNotification('تم إرسال التبليغ للإدارة للمراجعة', 'success')}
+                                            className="flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black text-rose-500 transition-colors hover:bg-rose-50 dark:hover:bg-rose-900/10"
+                                        >
+                                            <AlertTriangle size={16} />
+                                            تبليغ
                                         </button>
                                     </div>
 
