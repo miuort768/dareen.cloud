@@ -125,7 +125,7 @@ export const Courses = () => {
                     </div>
 
                     {/* Search & Filters */}
-                    <div className="max-w-5xl mx-auto mb-20 relative px-2">
+                    <div className="max-w-5xl mx-auto mb-12 relative px-2">
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1 relative group">
                                 <input
@@ -143,17 +143,17 @@ export const Courses = () => {
                             </button>
                         </div>
 
-                        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mt-10">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-3 mt-8">
                             {CATEGORIES.map((cat) => (
                                 <button
                                     key={cat.value}
                                     onClick={() => setActiveCategory(cat.value)}
-                                    className={`flex items-center gap-2 px-6 py-3.5 rounded-full font-black text-[10px] md:text-sm transition-all duration-500 border-2 ${activeCategory === cat.value
+                                    className={`flex items-center justify-center gap-2 px-4 md:px-6 py-3.5 rounded-full font-black text-[10px] md:text-sm transition-all duration-500 border-2 ${activeCategory === cat.value
                                         ? 'bg-slate-900 dark:bg-slate-100 border-slate-900 dark:border-slate-100 text-white dark:text-slate-950 shadow-xl shadow-black/20 dark:shadow-indigo-500/20 -translate-y-1'
                                         : 'bg-white dark:bg-slate-900/50 dark:backdrop-blur-md text-gray-500 dark:text-slate-400 border-gray-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 hover:text-slate-900 dark:hover:text-slate-100'
                                         }`}
                                 >
-                                    <cat.icon size={16} className={`${activeCategory === cat.value ? 'text-green-500' : 'text-gray-300'}`} />
+                                    <cat.icon size={16} className={`${activeCategory === cat.value ? 'text-green-500' : 'text-gray-300'} flex-shrink-0`} />
                                     <span className={`tracking-tight whitespace-nowrap ${activeCategory === cat.value ? 'text-white' : ''}`}>{cat.label}</span>
                                 </button>
                             ))}
@@ -172,7 +172,7 @@ export const Courses = () => {
                                     <img
                                         src={course.image}
                                         alt={course.title}
-                                        className="w-full h-full object-contain object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
+                                        className="w-full h-full object-cover object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
                                     />
                                     
                                     {/* Corner Status Badge */}
