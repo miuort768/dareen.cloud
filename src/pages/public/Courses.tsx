@@ -168,11 +168,11 @@ export const Courses = () => {
                                 className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
                             >
                                 {/* Course Header (Clean Image Area) */}
-                                <div className="h-44 sm:h-52 relative overflow-hidden bg-slate-50 dark:bg-slate-800/50 flex items-start justify-center">
+                                <div className="h-44 sm:h-44 relative overflow-hidden bg-white dark:bg-slate-800/50 flex items-start justify-center">
                                     <img
                                         src={course.image}
                                         alt={course.title}
-                                        className="w-full h-full object-cover object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
+                                        className="w-full h-full object-contain object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
                                     />
                                     
                                     {/* Corner Status Badge */}
@@ -185,7 +185,7 @@ export const Courses = () => {
                                 </div>
 
                                 {/* Course Content */}
-                                <div className="px-5 pt-6 pb-0 flex flex-col flex-grow relative">
+                                <div className="px-5 pt-3 pb-0 flex flex-col flex-grow relative">
                                     {/* Star Rating Badge - perfectly half on image, half on content */}
                                     <div className="absolute top-0 -translate-y-1/2 left-4 z-30 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
                                         <StarRating rating={course.rating} />
