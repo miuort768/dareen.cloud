@@ -108,7 +108,7 @@ export const Courses = () => {
                 <div className="container mx-auto px-4 relative z-10">
 
                     {/* Header */}
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/50 backdrop-blur-sm border border-red-50 rounded-full mb-6 animate-fade-in group hover:border-red-100 shadow-sm transition-all">
                             <Sparkles size={14} className="text-red-500" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">استكشف مستقبل التعلم</span>
