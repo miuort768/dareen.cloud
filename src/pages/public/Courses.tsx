@@ -186,8 +186,8 @@ export const Courses = () => {
 
                                 {/* Course Content */}
                                 <div className="px-5 pt-3 pb-0 flex flex-col flex-grow relative">
-                                    {/* Star Rating Badge - perfectly half on image, half on content */}
-                                    <div className="absolute top-0 -translate-y-1/2 left-4 z-30 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
+                                    {/* Star Rating Badge - perfectly centered on the line between image and content */}
+                                    <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
                                         <StarRating rating={course.rating} />
                                     </div>
 
