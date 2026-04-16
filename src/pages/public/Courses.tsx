@@ -189,9 +189,9 @@ export const Courses = () => {
                                 </div>
 
                                 {/* Course Content */}
-                                <div className="px-5 pt-3 pb-0 flex flex-col flex-grow relative">
+                                <div className="px-5 pt-2 pb-0 flex flex-col flex-grow relative">
 
-                                    <div className="mt-2 mb-2 flex-grow flex flex-col justify-start">
+                                    <div className="mt-1 mb-2 flex-grow flex flex-col justify-start">
                                         <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-red-600 transition-colors">
                                             {course.title}
                                         </h3>
