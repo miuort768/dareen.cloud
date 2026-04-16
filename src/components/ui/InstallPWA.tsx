@@ -34,7 +34,7 @@ export const InstallPWA = () => {
     const deferredPromptRef = useRef<any>(null);
 
     useEffect(() => {
-        // Already installed as standalone app - don't show
+        // Already installed as standalone app
         if (isStandaloneMode()) return;
 
         // Already permanently dismissed
@@ -43,14 +43,20 @@ export const InstallPWA = () => {
         const detectedPlatform = detectPlatform();
         setPlatform(detectedPlatform);
 
-        // Listen for native install prompt (Android / Chrome / Edge / Windows)
+        // ✅ KEY FIX: Use the early-captured prompt from main.tsx
+        if ((window as any).deferredPrompt) {
+            deferredPromptRef.current = (window as any).deferredPrompt;
+        }
+
+        // Also listen for future beforeinstallprompt events
         const handleBeforeInstall = (e: Event) => {
             e.preventDefault();
             deferredPromptRef.current = e;
+            (window as any).deferredPrompt = e;
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
-        // Show banner for ALL non-installed platforms after short delay
+        // Show banner for all non-installed platforms
         const dismissed = sessionStorage.getItem('pwa_dismissed_session');
         if (!dismissed) {
             const timer = setTimeout(() => setIsVisible(true), 2000);
