@@ -214,11 +214,11 @@ export const InstallPWA = () => {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                    <h2 className="text-[12px] font-black uppercase text-black leading-tight">ثبتي التطبيق</h2>
+                    <h2 className="text-[12px] font-black uppercase text-black leading-tight">تطبيق دارين</h2>
                     <p className="font-bold text-[9px] text-black/70 truncate">
                         {platform === 'ios-safari' || platform === 'mac-safari'
                             ? 'اضغطي Share ← Add to Home Screen'
-                            : 'أسرع وأسهل — يعمل بدون إنترنت'}
+                            : 'أسرع وأسهل — مجاني'}
                     </p>
                 </div>
 
