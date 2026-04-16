@@ -135,7 +135,7 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
     try {
         const updatedStudent = await withTransaction(req.db, async (tx) => {
             // 1. Update basic student info
-            logger.info(`Update attempt for student ${id}`, { name, notes: !!notes, enrollmentsCount: enrollments?.length });
+            logger.info(`Update attempt for student ${id}`, { body: JSON.stringify(req.body) });
             const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
             let query = `UPDATE students SET name = ?, grade = ?, parentPhone = ?, studentPhone = ?, curriculum = ?, notes = ?, sessionPrice = ?, username = ?`;
             let params = [name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, dbUsername];
