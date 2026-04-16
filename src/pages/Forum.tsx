@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageSquare, ThumbsUp, ThumbsDown, Send, Trash2, CheckCircle, XCircle, MoreHorizontal, Share2 } from 'lucide-react';
+import { MessageSquare, ThumbsUp, ThumbsDown, Send, MoreHorizontal, Share2 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
@@ -196,7 +196,6 @@ export const Forum = () => {
                     <div className="space-y-4">
                         {posts.map(post => {
                             const isLiked = post.upvotes.includes(currentUser?.id || '');
-                            const isDisliked = post.downvotes.includes(currentUser?.id || '');
 
                             return (
                                 <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500">
