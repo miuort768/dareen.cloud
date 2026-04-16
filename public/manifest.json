@@ -5,14 +5,10 @@
   "start_url": "/?pwa=1",
   "scope": "/",
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "minimal-ui",
-    "fullscreen"
-  ],
-  "background_color": "#0b141a",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#ffffff",
   "theme_color": "#ef4444",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "categories": [
     "education",
     "productivity",
@@ -57,22 +53,6 @@
           "sizes": "192x192"
         }
       ]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/login-screenshot.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "واجهة تسجيل الدخول"
-    },
-    {
-      "src": "/dashboard-screenshot.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "لوحة التحكم"
     }
   ]
 }

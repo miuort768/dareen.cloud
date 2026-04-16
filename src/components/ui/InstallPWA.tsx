@@ -1,67 +1,226 @@
-import { useState, useEffect } from 'react';
-import { Download, X, Smartphone, Monitor } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Download, X, Smartphone, Monitor, Share, MoreVertical } from 'lucide-react';
+
+type Platform = 'android-chrome' | 'ios-safari' | 'windows-edge' | 'mac-safari' | 'desktop-chrome' | 'other';
+
+const detectPlatform = (): Platform => {
+    const ua = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
+    const isAndroid = /Android/.test(ua);
+    const isMac = /Macintosh/.test(ua) && !isIOS;
+    const isWindows = /Windows/.test(ua);
+    const isChrome = /Chrome/.test(ua) && !/Edge|Edg/.test(ua);
+    const isEdge = /Edg/.test(ua);
+    const isSafari = /Safari/.test(ua) && !isChrome && !isEdge;
+
+    if (isIOS) return 'ios-safari';
+    if (isAndroid && isChrome) return 'android-chrome';
+    if (isWindows && isEdge) return 'windows-edge';
+    if (isWindows && isChrome) return 'desktop-chrome';
+    if (isMac && isSafari) return 'mac-safari';
+    if (isMac && isChrome) return 'desktop-chrome';
+    return 'other';
+};
+
+const isStandaloneMode = () =>
+    window.matchMedia('(display-mode: standalone)').matches ||
+    (window.navigator as any).standalone === true ||
+    document.referrer.includes('android-app://');
 
 export const InstallPWA = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [platform, setPlatform] = useState<Platform>('other');
+    const [showIOSGuide, setShowIOSGuide] = useState(false);
+    const deferredPromptRef = useRef<any>(null);
 
     useEffect(() => {
-        // Initial check for standalone mode
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
-        
-        if (!isStandalone) {
-            // Check if dismissed before
-            const isDismissed = sessionStorage.getItem('pwa_dismissed');
-            if (!isDismissed) {
-                // Show after 1 second for better UX and catch initial load
-                const timer = setTimeout(() => setIsVisible(true), 1200);
-                return () => clearTimeout(timer);
+        // Already installed - don't show
+        if (isStandaloneMode()) return;
+
+        // Already dismissed permanently
+        if (localStorage.getItem('pwa_dismissed_permanent')) return;
+
+        const detectedPlatform = detectPlatform();
+        setPlatform(detectedPlatform);
+
+        // Android / Windows / Desktop Chrome - wait for native prompt
+        const handleBeforeInstall = (e: Event) => {
+            e.preventDefault();
+            deferredPromptRef.current = e;
+            const dismissed = sessionStorage.getItem('pwa_dismissed_session');
+            if (!dismissed) {
+                setTimeout(() => setIsVisible(true), 1500);
+            }
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
+
+        // iOS / Mac Safari - show manual guide after delay
+        if (detectedPlatform === 'ios-safari' || detectedPlatform === 'mac-safari') {
+            const dismissed = sessionStorage.getItem('pwa_dismissed_session');
+            if (!dismissed) {
+                setTimeout(() => setIsVisible(true), 2000);
             }
         }
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
+        };
     }, []);
 
-    const handleInstallClick = async () => {
-        const deferredPrompt = (window as any).deferredPrompt;
-        
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') setIsVisible(false);
-            (window as any).deferredPrompt = null;
-        } else {
-            // Help for manual install if prompt wasn't fired yet
-            alert('لتثبيت التطبيق على جهازك:\n- على Android/Chrome: اضغط على الثلاث نقاط بالأعلى ثم اختر "Install App".\n- على iPhone/Safari: اضغط على زر "Share" ثم اختر "Add to Home Screen".');
+    const handleInstall = async () => {
+        // iOS / Mac Safari: show step-by-step guide
+        if (platform === 'ios-safari' || platform === 'mac-safari') {
+            setShowIOSGuide(true);
+            return;
         }
+
+        // Android / Chrome / Edge: use native prompt
+        if (deferredPromptRef.current) {
+            deferredPromptRef.current.prompt();
+            const { outcome } = await deferredPromptRef.current.userChoice;
+            if (outcome === 'accepted') {
+                setIsVisible(false);
+                localStorage.setItem('pwa_dismissed_permanent', 'true');
+            }
+            deferredPromptRef.current = null;
+        }
+    };
+
+    const handleDismiss = () => {
+        setIsVisible(false);
+        setShowIOSGuide(false);
+        sessionStorage.setItem('pwa_dismissed_session', 'true');
+    };
+
+    const handleDismissPermanent = () => {
+        setIsVisible(false);
+        setShowIOSGuide(false);
+        localStorage.setItem('pwa_dismissed_permanent', 'true');
     };
 
     if (!isVisible) return null;
 
+    const isDesktop = platform === 'desktop-chrome' || platform === 'windows-edge';
+    const isIOS = platform === 'ios-safari';
+    const isMacSafari = platform === 'mac-safari';
+
+    // iOS / Mac Safari Step-by-step guide
+    if (showIOSGuide) {
+        return (
+            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 backdrop-blur-sm p-4">
+                <div className="bg-white dark:bg-gray-900 border-2 border-gray-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
+                    {/* Header */}
+                    <div className="bg-yellow-400 border-b-2 border-gray-950 px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <Smartphone size={18} className="text-black" />
+                            <h2 className="font-black text-sm text-black uppercase tracking-tighter">
+                                تثبيت تطبيق دارين
+                            </h2>
+                        </div>
+                        <button onClick={handleDismiss} className="p-1 hover:bg-black/10 transition-colors">
+                            <X size={16} className="text-black" />
+                        </button>
+                    </div>
+
+                    {/* Steps */}
+                    <div className="p-4 space-y-3">
+                        {isIOS ? (
+                            <>
+                                <p className="text-[11px] font-bold text-gray-500 mb-3">اتبعي هذه الخطوات في Safari:</p>
+                                <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">1</span>
+                                    <div>
+                                        <p className="text-xs font-black text-gray-800 dark:text-white flex items-center gap-1">
+                                            اضغطي على زر المشاركة <Share size={12} className="text-blue-500" />
+                                        </p>
+                                        <p className="text-[10px] text-gray-500">في أسفل شاشة المتصفح</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">2</span>
+                                    <div>
+                                        <p className="text-xs font-black text-gray-800 dark:text-white">مرري للأسفل</p>
+                                        <p className="text-[10px] text-gray-500">في قائمة المشاركة</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">3</span>
+                                    <div>
+                                        <p className="text-xs font-black text-gray-800 dark:text-white">اضغطي "Add to Home Screen"</p>
+                                        <p className="text-[10px] text-gray-500">ثم اضغطي "Add" للتأكيد</p>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <p className="text-[11px] font-bold text-gray-500 mb-3">اتبع هذه الخطوات في Safari (Mac):</p>
+                                <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">1</span>
+                                    <p className="text-xs font-black text-gray-800 dark:text-white">اضغط على القائمة File ثم "Add to Dock"</p>
+                                </div>
+                                <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">2</span>
+                                    <p className="text-xs font-black text-gray-800 dark:text-white">أو استخدم Chrome/Edge للتثبيت التلقائي</p>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex border-t-2 border-gray-950">
+                        <button
+                            onClick={handleDismissPermanent}
+                            className="flex-1 py-3 text-[10px] font-black text-gray-500 hover:bg-gray-50 transition-colors border-r border-gray-200"
+                        >
+                            عدم التذكير مجدداً
+                        </button>
+                        <button
+                            onClick={handleDismiss}
+                            className="flex-1 py-3 text-[10px] font-black bg-yellow-400 text-black hover:bg-yellow-500 transition-colors"
+                        >
+                            فهمت، شكراً
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Standard install banner (Android, Chrome, Edge)
     return (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 z-[500] animate-in slide-in-from-bottom-10 fade-in duration-500">
-            <div className="bg-yellow-400 dark:bg-yellow-500 border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] relative flex items-center justify-between gap-3 max-w-[280px] ml-auto">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-black text-yellow-400 flex items-center justify-center border-2 border-yellow-800 shadow-[1px_1px_0px_0px_black] shrink-0">
-                        {window.innerWidth > 768 ? <Monitor size={16} /> : <Smartphone size={16} />}
-                    </div>
-                    <div className="flex flex-col">
-                        <h2 className="text-[11px] font-black uppercase text-black leading-tight">ثبت التطبيق</h2>
-                        <p className="font-bold text-[8px] text-black/80">أسرع وأسهل للاستخدام</p>
-                    </div>
+        <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
+            isDesktop
+                ? 'bottom-4 right-4'
+                : 'bottom-4 left-2 right-2'
+        }`}>
+            <div className={`bg-yellow-400 dark:bg-yellow-500 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3 p-3 ${
+                isDesktop ? 'max-w-[300px] ml-auto' : ''
+            }`}>
+                <div className="w-9 h-9 bg-black text-yellow-400 flex items-center justify-center border-2 border-gray-950 shrink-0">
+                    {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
+                </div>
+
+                <div className="flex-1 min-w-0">
+                    <h2 className="text-[12px] font-black uppercase text-black leading-tight">ثبتي التطبيق</h2>
+                    <p className="font-bold text-[9px] text-black/70 truncate">
+                        {platform === 'ios-safari' || platform === 'mac-safari'
+                            ? 'اضغطي Share ← Add to Home Screen'
+                            : 'أسرع وأسهل — يعمل بدون إنترنت'}
+                    </p>
                 </div>
 
                 <div className="flex items-center gap-1 shrink-0">
-                    <button 
-                        onClick={handleInstallClick}
-                        className="px-2 py-1.5 bg-black text-yellow-400 font-extrabold uppercase text-[9px] shadow-[1px_1px_0px_0px_gray] hover:bg-white hover:text-black transition-all flex items-center gap-1 active:translate-x-0.5 active:translate-y-0.5"
+                    <button
+                        onClick={handleInstall}
+                        className="px-3 py-2 bg-black text-yellow-400 font-black uppercase text-[9px] hover:bg-gray-900 transition-all flex items-center gap-1 active:translate-y-0.5 shadow-[2px_2px_0px_0px_gray]"
                     >
-                        <Download size={12} />
-                        تثبيت
+                        {isIOS || isMacSafari ? <Share size={11} /> : <Download size={11} />}
+                        {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
                     </button>
-                    <button 
-                        onClick={() => {
-                            setIsVisible(false);
-                            sessionStorage.setItem('pwa_dismissed', 'true');
-                        }}
-                        className="p-1.5 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
+                    <button
+                        onClick={handleDismiss}
+                        className="p-2 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
                     >
                         <X size={12} />
                     </button>
