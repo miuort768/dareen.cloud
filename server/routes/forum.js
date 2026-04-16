@@ -6,16 +6,19 @@ const { v4: uuidv4 } = require('uuid');
 router.get('/', async (req, res) => {
     try {
         const user = req.user;
-        let query = 'SELECT * FROM forum_posts';
+        let query = `
+            SELECT p.*, (SELECT COUNT(*) FROM forum_comments WHERE postId = p.id) as commentCount 
+            FROM forum_posts p
+        `;
         let params = [];
 
         // If not admin, only show approved posts or posts created by the user themselves
         if (user.role !== 'admin') {
-            query += ' WHERE status = "approved" OR authorId = ?';
+            query += ' WHERE p.status = "approved" OR p.authorId = ?';
             params.push(user.id);
         }
 
-        query += ' ORDER BY created_at DESC';
+        query += ' ORDER BY p.created_at DESC';
 
         const posts = await req.db.all(query, params);
         
@@ -23,7 +26,8 @@ router.get('/', async (req, res) => {
         const formattedPosts = posts.map(p => ({
             ...p,
             upvotes: JSON.parse(p.upvotes || '[]'),
-            downvotes: JSON.parse(p.downvotes || '[]')
+            downvotes: JSON.parse(p.downvotes || '[]'),
+            commentCount: p.commentCount || 0
         }));
 
         res.json(formattedPosts);

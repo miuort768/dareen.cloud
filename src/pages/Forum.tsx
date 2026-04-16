@@ -25,6 +25,7 @@ interface Post {
     status: 'pending' | 'approved' | 'rejected';
     upvotes: string[];
     downvotes: string[];
+    commentCount?: number;
     created_at: string;
     comments?: Comment[];
 }
@@ -235,21 +236,25 @@ export const Forum = () => {
 
                                     {/* FB Stats Area */}
                                     <div className="px-4 py-2 flex justify-between items-center border-t border-slate-50 dark:border-slate-800 mx-4">
-                                        <div className="flex items-center -space-x-1 space-x-reverse">
-                                            {post.upvotes.length > 0 && (
-                                                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-20">
-                                                    <ThumbsUp size={10} className="text-white fill-current" />
-                                                </div>
-                                            )}
-                                            {post.downvotes.length > 0 && (
-                                                <div className="w-5 h-5 bg-rose-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-10">
-                                                    <ThumbsDown size={10} className="text-white fill-current" />
-                                                </div>
-                                            )}
-                                            <span className="mr-6 text-[11px] text-slate-500 font-bold">{post.upvotes.length + post.downvotes.length} تفاعل</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex items-center -space-x-1 space-x-reverse">
+                                                {post.upvotes.length > 0 && (
+                                                    <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-20">
+                                                        <ThumbsUp size={10} className="text-white fill-current" />
+                                                    </div>
+                                                )}
+                                                {post.downvotes.length > 0 && (
+                                                    <div className="w-5 h-5 bg-rose-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-10">
+                                                        <ThumbsDown size={10} className="text-white fill-current" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <span className="text-[11px] text-slate-500 font-bold">
+                                                {post.upvotes.length + post.downvotes.length > 0 ? (post.upvotes.length + post.downvotes.length) : ''} تفاعل
+                                            </span>
                                         </div>
-                                        <div className="text-[11px] text-slate-500 font-bold hover:underline cursor-pointer">
-                                            {post.comments?.length || 0} تعليق
+                                        <div onClick={() => toggleComments(post.id)} className="text-[11px] text-slate-500 font-bold hover:underline cursor-pointer">
+                                            {post.comments ? post.comments.length : (post.commentCount || 0)} تعليق
                                         </div>
                                     </div>
 
