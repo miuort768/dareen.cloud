@@ -20,23 +20,24 @@ import arabicImg from '../../assets/courses/arabic-course.jpg';
 import frenchImg from '../../assets/courses/french-course.jpg';
 import skillsImg from '../../assets/courses/skills-course.jpg';
 import tajweedImg from '../../assets/courses/tajweed-course.jpg';
+import englishImg from '../../assets/courses/english-course.jpg';
 
 const COURSES = [
-    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img },
+    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'تأسيس شامل في اللغة العربية والإنجليزية والرياضيات بأساليب تفاعلية حديثة.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img },
     { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationNewImg },
     { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', rating: 4.7, price: 'متاح الآن', image: foundationNewImg },
     { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', rating: 4.6, price: 'متاح الآن', image: tajweedImg },
 
     // Gulf & Regional Curricula
     { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '4.5k', rating: 4.7, price: 'متاح الآن', image: kuwaitiImg },
-    { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل لجميع مواد المنهج السعودي المطور لجميع المراحل الدراسية مع نخبة من الأساتذة.', students: '4.1k', rating: 4.8, price: 'متاح الآن', image: saudiImg },
+    { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل للمنهج السعودي المطور لجميع المراحل مع نخبة من الأساتذة.', students: '4.1k', rating: 4.8, price: 'متاح الآن', image: saudiImg },
     { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة، مع التركيز على نواتج التعلم المتطورة.', students: '3.2k', rating: 4.5, price: 'متاح الآن', image: uaeImg },
     { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '3.3k', rating: 4.6, price: 'متاح الآن', image: qatariImg },
     { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', rating: 4.4, price: 'متاح الآن', image: omanImg },
-    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية لطلاب المنهج المصري المقيمين في الخارج بأسلوب مبسط يحاكي النظام التعليمي المصري.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: egyptImg },
+    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية للمنهج المصري بأسلوب مبسط يحاكي النظام التعليمي.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: egyptImg },
     { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '2.8k', rating: 4.3, price: 'متاح الآن', image: jordanImg },
 
-    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: foundationImg },
+    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: englishImg },
     { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '4.2k', rating: 4.7, price: 'متاح الآن', image: arabicImg },
     { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '2.9k', rating: 4.5, price: 'متاح الآن', image: frenchImg },
     { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '3.5k', rating: 4.9, price: 'متاح الآن', image: skillsImg },
