@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         const newPost = {
             id: 'post_' + uuidv4(),
             authorId: user.id || user.username, // some fallback
-            authorName: user.name || user.username,
+            authorName: user.username,
             authorRole: user.role,
             content: content.trim(),
             status: user.role === 'admin' ? 'approved' : 'pending',
@@ -150,7 +150,7 @@ router.post('/:id/comments', async (req, res) => {
             id: 'comment_' + uuidv4(),
             postId: req.params.id,
             authorId: user.id || user.username,
-            authorName: user.name || user.username,
+            authorName: user.username,
             authorRole: user.role,
             content: content.trim()
         };

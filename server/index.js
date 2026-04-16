@@ -169,9 +169,7 @@ async function startServer() {
         apiRouter.use('/system', checkRole(['admin']), systemRouter);
         apiRouter.use('/finance', checkRole(['admin']), financeRouter);
         apiRouter.use('/tasks', tasksRouter);
-        apiRouter.use('/tasks', tasksRouter);
         apiRouter.use('/chat', chatRouter);
-        // Announcements have their own internal role checks (GET public, others Admin)
         apiRouter.use('/announcements', announcementsRouter);
         apiRouter.use('/forum', forumRouter);
         apiRouter.use('/appointments', appointmentsRouter);
