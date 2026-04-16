@@ -365,77 +365,74 @@ export const Evaluations = () => {
                 </div>
             )}
 
-            {/* History Modal - Technical Sharp Style */}
+            {/* History Modal - Technical Sharp Style (Refined & Compact) */}
             {historyModalStudent && (
-                <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-2xl flex flex-col max-h-[85vh] overflow-hidden">
-                        <div className="p-6 border-b-2 border-gray-950 bg-slate-900 text-white flex justify-between items-center">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400">
-                                    <User size={24} />
+                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden">
+                        {/* Header - White with Pattern */}
+                        <div className="p-4 border-b-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-slate-950 flex justify-between items-center relative overflow-hidden shrink-0">
+                            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '12px 12px' }}></div>
+                            <div className="flex items-center gap-3 relative z-10">
+                                <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-400">
+                                    <User size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-black uppercase tracking-tighter">سجل تقييمات للطالب</h3>
-                                    <p className="text-primary-400 text-[10px] font-black uppercase tracking-widest">{historyModalStudent.name}</p>
+                                    <h3 className="text-sm font-black uppercase tracking-tighter text-slate-900 dark:text-white">سجل التقييمات الكامل</h3>
+                                    <p className="text-indigo-600 dark:text-indigo-400 text-[9px] font-black uppercase tracking-widest">{historyModalStudent.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setHistoryModalStudent(null)} className="w-10 h-10 flex items-center justify-center bg-white text-gray-950 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-xl">
+                            <button onClick={() => setHistoryModalStudent(null)} className="w-8 h-8 flex items-center justify-center bg-slate-900 text-white border border-slate-900 hover:bg-rose-600 transition-all font-black text-lg relative z-10">
                                 &times;
                             </button>
                         </div>
 
-                        <div className="p-8 overflow-y-auto custom-scrollbar bg-gray-50 dark:bg-gray-950">
-                            <div className="space-y-6">
+                        {/* Content area - More compact */}
+                        <div className="p-4 overflow-y-auto custom-scrollbar bg-slate-50/50 dark:bg-slate-950">
+                            <div className="space-y-4">
                                 {evaluations
                                     .filter(ev => ev.studentId === historyModalStudent.id)
                                     .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
                                     .map((ev) => {
                                         const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
                                         return (
-                                            <div key={ev.id} className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800 pb-8 last:pb-0">
-                                                <div className="absolute -left-2.5 top-0 w-5 h-5 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white rounded-none flex items-center justify-center z-10">
-                                                    <div className="w-1.5 h-1.5 bg-indigo-500"></div>
-                                                </div>
+                                            <div key={ev.id} className="relative pl-6 border-l border-slate-200 dark:border-slate-800 pb-4 last:pb-0">
+                                                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-slate-900 dark:bg-white border border-white dark:border-slate-900 rounded-none z-10"></div>
                                                 
-                                                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all group">
-                                                    <div className="flex items-center justify-between mb-4">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className={cn("px-3 py-1 text-[10px] font-black border tracking-widest uppercase flex items-center gap-2", r.bg, r.color, "border-current opacity-80")}>
-                                                                <r.icon size={12} strokeWidth={3} />
+                                                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 shadow-none hover:border-indigo-500 transition-all group">
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className={cn("px-2 py-0.5 text-[8px] font-black border tracking-widest uppercase flex items-center gap-1.5", r.bg, r.color, "border-current opacity-90")}>
+                                                                <r.icon size={10} strokeWidth={3} />
                                                                 {ev.rating}
                                                             </div>
                                                             {ev.points > 0 && (
-                                                                <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-2 py-1 border border-amber-100">
+                                                                <span className="text-[8px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 border border-amber-100">
                                                                     +{ev.points} XP
                                                                 </span>
                                                             )}
                                                         </div>
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="text-[10px] font-black text-slate-400 font-mono tracking-tighter">
-                                                                {format(new Date(ev.created_at || ev.date), 'dd MMMM yyyy')}
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-[9px] font-black text-slate-400 font-mono tracking-tighter">
+                                                                {format(new Date(ev.created_at || ev.date), 'dd/MM/yy')}
                                                             </span>
                                                             {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
                                                                 <button 
                                                                     onClick={() => handleDelete(ev.id)}
                                                                     className="text-slate-300 hover:text-rose-500 transition-colors p-1"
                                                                 >
-                                                                    <Trash2 size={14} />
+                                                                    <Trash2 size={12} />
                                                                 </button>
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <p className="text-xs font-bold text-slate-600 dark:text-slate-400 italic leading-relaxed border-r-2 border-slate-100 pr-4">
-                                                        "{ev.notes || 'لا يوجد ملاحظات مسجلة'}"
+                                                    <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 italic leading-snug border-r-2 border-indigo-500/10 pr-3">
+                                                        "{ev.notes || 'لا يوجد ملاحظات'}"
                                                     </p>
-                                                    <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex justify-between items-center">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-5 h-5 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center">
-                                                                <User size={10} className="text-slate-400" />
-                                                            </div>
-                                                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                                                                تقييم بواسطة: {ev.teacherName || 'نظام آلي'}
-                                                            </span>
-                                                        </div>
+                                                    <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
+                                                        <User size={8} className="text-slate-300" />
+                                                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest opacity-60">
+                                                            بواسطة: {ev.teacherName || 'نظام آلي'}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -443,20 +440,20 @@ export const Evaluations = () => {
                                     })}
                                 
                                 {evaluations.filter(ev => ev.studentId === historyModalStudent.id).length === 0 && (
-                                    <div className="py-20 text-center border-4 border-dashed border-slate-100 dark:border-slate-800">
-                                        <History size={48} className="mx-auto text-slate-200 mb-4" />
-                                        <p className="text-sm font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات لهذا الطالب حتى الآن</p>
+                                    <div className="py-12 text-center border-2 border-dashed border-slate-100 dark:border-slate-800">
+                                        <History size={32} className="mx-auto text-slate-100 mb-3" />
+                                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات حالياً</p>
                                     </div>
                                 )}
                             </div>
                         </div>
 
-                        <div className="p-4 bg-white dark:bg-slate-900 border-t-2 border-gray-950 flex justify-center">
+                        <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-center shrink-0">
                             <button 
                                 onClick={() => setHistoryModalStudent(null)}
-                                className="px-10 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[11px] uppercase tracking-[0.2em] shadow-xl hover:bg-slate-800 transition-all"
+                                className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-800 transition-all border border-transparent"
                             >
-                                إغلاق السجل
+                                إغلاق النافذة
                             </button>
                         </div>
                     </div>
