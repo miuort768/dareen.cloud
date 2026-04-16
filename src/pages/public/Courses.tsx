@@ -11,6 +11,9 @@ import kuwaitiImg from '../../assets/courses/kuwaiti-curriculum.jpg';
 import qatariImg from '../../assets/courses/qatari-curriculum.jpg';
 import saudiImg from '../../assets/courses/saudi-curriculum.jpg';
 import uaeImg from '../../assets/courses/uae-curriculum.jpg';
+import omanImg from '../../assets/courses/oman-curriculum.jpg';
+import egyptImg from '../../assets/courses/egypt-curriculum.jpg';
+import jordanImg from '../../assets/courses/jordan-curriculum.jpg';
 
 const COURSES = [
     { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'البرنامج الأقوى لتأسيس طفلك في (اللغة العربية، الإنجليزية، والرياضيات) بأساليب تفاعلية حديثة تضمن إتقان المهارات الأساسية في وقت قياسي.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationImg },
@@ -23,9 +26,9 @@ const COURSES = [
     { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل لجميع مواد المنهج السعودي المطور لجميع المراحل الدراسية مع نخبة من الأساتذة.', students: '4.1k', rating: 4.8, price: 'متاح الآن', image: saudiImg },
     { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة، مع التركيز على نواتج التعلم المتطورة.', students: '3.2k', rating: 4.5, price: 'متاح الآن', image: uaeImg },
     { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '3.3k', rating: 4.6, price: 'متاح الآن', image: qatariImg },
-    { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', rating: 4.4, price: 'متاح الآن', image: foundationImg },
-    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية لطلاب المنهج المصري المقيمين في الخارج بأسلوب مبسط يحاكي النظام التعليمي المصري.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: foundationImg },
-    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '2.8k', rating: 4.3, price: 'متاح الآن', image: foundationImg },
+    { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', rating: 4.4, price: 'متاح الآن', image: omanImg },
+    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية لطلاب المنهج المصري المقيمين في الخارج بأسلوب مبسط يحاكي النظام التعليمي المصري.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: egyptImg },
+    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '2.8k', rating: 4.3, price: 'متاح الآن', image: jordanImg },
 
     { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: foundationImg },
     { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '4.2k', rating: 4.7, price: 'متاح الآن', image: foundationImg },
