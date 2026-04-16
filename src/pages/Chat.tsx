@@ -24,7 +24,8 @@ export const Chat: React.FC = () => {
         deleteConversation,
         refetchConversations,
         typingUsers,
-        setTyping
+        setTyping,
+        markAsRead
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
@@ -159,6 +160,7 @@ export const Chat: React.FC = () => {
                             setShowMoreMenu={setShowMoreMenu}
                             menuRef={menuRef}
                             setTyping={setTyping}
+                            markAsRead={markAsRead}
                         />
                     ) : (
                         <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#222e35] relative border-l border-gray-200 dark:border-gray-800">

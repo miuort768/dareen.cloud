@@ -27,6 +27,7 @@ interface ChatWindowProps {
     setShowMoreMenu: (val: boolean) => void;
     menuRef: React.RefObject<HTMLDivElement>;
     setTyping: (convId: string, isTyping: boolean, name: string) => void;
+    markAsRead: (convId: string) => void;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -43,7 +44,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     showMoreMenu,
     setShowMoreMenu,
     menuRef,
-    setTyping
+    setTyping,
+    markAsRead
 }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -57,6 +59,13 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Mark as read when conversation is active or new messages arrive
+    useEffect(() => {
+        if (selectedConv?.id) {
+            markAsRead(selectedConv.id);
+        }
+    }, [selectedConv.id, messages.length, markAsRead]);
 
     const handleScroll = () => {
         if (!scrollContainerRef.current) return;
