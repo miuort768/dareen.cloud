@@ -350,9 +350,9 @@ export const Schedule = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="md:hidden space-y-6 px-3 font-black">
+            <div className="md:hidden space-y-6 px-4 font-black">
                 {/* Modern Day Picker */}
-                <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 -mx-3 px-3 border-b border-gray-200">
+                <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 -mx-4 px-4 border-b border-gray-200">
                     {DAYS_OF_WEEK.map(day => {
                         const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                         return (
@@ -373,24 +373,24 @@ export const Schedule = () => {
                     })}
                 </div>
                 
-                {/* Timeline Grid Layout */}
-                <div className="space-y-4 px-1 pb-10">
+                {/* Timeline Grid Layout - Enhanced left padding */}
+                <div className="space-y-4 px-1 pb-16">
                     {TIME_SLOTS.map(slot => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[50px_1fr] gap-3 items-start">
+                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[55px_1fr] gap-4 items-start">
                                 {/* Time Pillar */}
                                 <div className="flex flex-col items-center pt-2">
                                     <div className="bg-white border-[1.5px] border-gray-950 px-1.5 py-0.5 shadow-[1.5px_1.5px_0px_0px_black] text-[8px] font-black tracking-tighter whitespace-nowrap mb-1.5">
                                         {slot.label}
                                     </div>
-                                    <div className="w-[1.5px] h-full min-h-[40px] bg-gray-200 relative">
+                                    <div className="w-[1.5px] h-full min-h-[45px] bg-gray-200 relative">
                                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-950 rounded-full border-2 border-white shadow-sm" />
                                     </div>
                                 </div>
 
-                                {/* Sessions Content - Added pl-2 for left-side spacing */}
-                                <div className="space-y-3 pb-2 pl-2 min-w-0">
+                                {/* Sessions Content - Increased pl-6 for ample left breathing room */}
+                                <div className="space-y-3 pb-2 pl-6 min-w-0">
                                     {events.length > 0 ? (
                                         events.map(ev => {
                                             const style = getTeacherStyle(ev.teacherName);
