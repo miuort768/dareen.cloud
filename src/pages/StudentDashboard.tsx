@@ -492,14 +492,14 @@ const StatCard = ({ icon: Icon, label, value, color }: any) => {
         rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-6 rounded-none border shadow-xl transition-all", colors[color])}>
-            <div className="flex items-center gap-4 mb-4">
-                <div className={cn("w-12 h-12 rounded-none flex items-center justify-center ring-4", iconStyles[color])}>
-                    <Icon size={24} strokeWidth={2} />
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-4 md:p-6 rounded-none border shadow-xl transition-all", colors[color])}>
+            <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-4">
+                <div className={cn("w-8 h-8 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-2 md:ring-4", iconStyles[color])}>
+                    <Icon className="w-4 h-4 md:w-6 md:h-6" strokeWidth={2} />
                 </div>
-                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{label}</span>
+                <span className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-tight">{label}</span>
             </div>
-            <div className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</div>
+            <div className="text-xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</div>
         </motion.div>
     );
 };
