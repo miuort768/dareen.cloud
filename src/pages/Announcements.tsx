@@ -137,6 +137,148 @@ export const Announcements = () => {
                 border: 'border-indigo-600',
                 shadow: 'shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]',
                 label: 'فعاليـة جديـدة' 
+import { useState, useEffect } from 'react';
+import {
+    Megaphone,
+    Plus,
+    Trash2,
+    Edit3,
+    AlertTriangle,
+    Info,
+    Calendar,
+    X,
+    CheckCircle2,
+    ArrowLeftRight,
+    Zap,
+    MapPin,
+    Users
+} from 'lucide-react';
+import { api } from '../lib/api';
+import { useApp } from '../context/AppContext';
+import { cn } from '../lib/utils';
+import { format } from 'date-fns';
+import { ar } from 'date-fns/locale';
+
+type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event';
+
+interface Announcement {
+    id: string;
+    title: string;
+    content: string;
+    type: AnnouncementType;
+    date: string;
+    isActive: boolean;
+}
+
+export const Announcements = () => {
+    const { showNotification } = useApp();
+    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
+
+    // Form State
+    const [formData, setFormData] = useState<{
+        title: string;
+        content: string;
+        type: AnnouncementType;
+        isActive: boolean;
+    }>({
+        title: '',
+        content: '',
+        type: 'general',
+        isActive: true
+    });
+
+    useEffect(() => {
+        fetchAnnouncements();
+    }, []);
+
+    const fetchAnnouncements = async () => {
+        try {
+            setIsLoading(true);
+            const data = await api.get<Announcement[]>('/announcements');
+            setAnnouncements(data || []);
+        } catch (error) {
+            console.error('Error fetching announcements:', error);
+            setAnnouncements([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const payload = {
+                ...formData,
+                date: new Date().toISOString()
+            };
+
+            if (editingAnnouncement) {
+                await api.put(`/announcements/${editingAnnouncement.id}`, payload);
+                showNotification('تم تحديث الإعلان بنجاح', 'success');
+            } else {
+                await api.post('/announcements', payload);
+                showNotification('تم نشر الإعلان بنجاح', 'success');
+            }
+
+            setIsModalOpen(false);
+            setEditingAnnouncement(null);
+            setFormData({ title: '', content: '', type: 'general', isActive: true });
+            fetchAnnouncements();
+        } catch (error) {
+            showNotification('فشل حفظ الإعلان', 'error');
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!window.confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
+        try {
+            await api.delete(`/announcements/${id}`);
+            showNotification('تم حذف الإعلان', 'success');
+            fetchAnnouncements();
+        } catch (error) {
+            showNotification('فشل حذف الإعلان', 'error');
+        }
+    };
+
+    const openEdit = (ann: Announcement) => {
+        setEditingAnnouncement(ann);
+        setFormData({
+            title: ann.title,
+            content: ann.content,
+            type: ann.type,
+            isActive: ann.isActive
+        });
+        setIsModalOpen(true);
+    };
+
+    const getTypeStyles = (type: string) => {
+        switch (type) {
+            case 'urgent': return { 
+                icon: AlertTriangle, 
+                color: 'text-rose-600', 
+                bg: 'bg-rose-50 dark:bg-rose-950/20', 
+                border: 'border-rose-600',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(225,29,72,1)]',
+                label: 'تنبيـه عاجـل' 
+            };
+            case 'holiday': return { 
+                icon: Calendar, 
+                color: 'text-amber-600', 
+                bg: 'bg-amber-50 dark:bg-amber-950/20', 
+                border: 'border-amber-500',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(245,158,11,1)]',
+                label: 'إجـازة رسميـة' 
+            };
+            case 'event': return { 
+                icon: Megaphone, 
+                color: 'text-indigo-600', 
+                bg: 'bg-indigo-50 dark:bg-indigo-950/20', 
+                border: 'border-indigo-600',
+                shadow: 'shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]',
+                label: 'فعاليـة جديـدة' 
             };
             default: return { 
                 icon: Info, 
@@ -358,7 +500,37 @@ export const Announcements = () => {
                     </div>
                 </div>
             )}
+
+            {/* ═══════════════ OPERATIONAL FOOTER ═══════════════ */}
+            <div className="grid grid-cols-3 gap-2 md:gap-6 pt-10 border-t border-slate-200 dark:border-slate-800">
+                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <Zap size={14} className="text-primary-500" />
+                    </div>
+                    <div>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">تحديث فوري</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">بث مباشر للتعميمات.</p>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <MapPin size={14} className="text-primary-500" />
+                    </div>
+                    <div>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مركز المتابعة</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">القناة الرسمية المركزية.</p>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <Users size={14} className="text-primary-500" />
+                    </div>
+                    <div>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">إدارة ذكية</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">تغطي كافة الأقسام.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
-
 };

@@ -165,13 +165,13 @@ export const ParentAnnouncements = () => {
                                 className="w-full lg:w-80 pr-10 pl-4 py-3 bg-white/5 backdrop-blur-xl border border-white/10 text-white font-black text-[10px] uppercase tracking-widest focus:bg-white/10 focus:border-white/20 focus:outline-none transition-all placeholder:text-slate-600 rounded-none shadow-inner"
                             />
                         </div>
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-1.5 w-full">
                             {['all', 'urgent', 'holiday', 'event'].map((type) => (
                                 <button
                                     key={type}
                                     onClick={() => setFilterType(type)}
                                     className={cn(
-                                        "px-3 py-1.5 text-[8px] font-black uppercase tracking-widest border transition-all rounded-none italic shadow-sm",
+                                        "w-full md:w-auto px-3 py-2.5 text-[8px] font-black uppercase tracking-widest border transition-all rounded-none italic shadow-sm",
                                         filterType === type 
                                             ? "bg-primary-600 border-primary-500 text-white shadow-lg shadow-primary-500/20" 
                                             : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10"
@@ -266,32 +266,32 @@ export const ParentAnnouncements = () => {
             </div>
 
             {/* ═══════════════ OPERATIONAL FOOTER ═══════════════ */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-slate-200 dark:border-slate-800">
-                <div className="flex items-center gap-4 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-10 h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <Zap size={18} className="text-primary-500" />
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 pt-8 border-t border-slate-200 dark:border-slate-800">
+                <div className="flex flex-col items-center text-center gap-2 p-2 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <Zap size={14} className="text-primary-500" />
                     </div>
                     <div>
-                        <h5 className="font-black text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">تحديث فوري</h5>
-                        <p className="text-[8px] text-slate-500 font-bold leading-tight">تنبيهات فورية عند الاعتماد.</p>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">تحديث فوري</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">تنبيهات فورية.</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-4 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-10 h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <MapPin size={18} className="text-primary-500" />
+                <div className="flex flex-col items-center text-center gap-2 p-2 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <MapPin size={14} className="text-primary-500" />
                     </div>
                     <div>
-                        <h5 className="font-black text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مركز المتابعة</h5>
-                        <p className="text-[8px] text-slate-500 font-bold leading-tight">القناة الرسمية الوحيدة للتعميمات.</p>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مركز المتابعة</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">القناة الرسمية.</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-4 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-10 h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <Users size={18} className="text-primary-500" />
+                <div className="flex flex-col items-center text-center gap-2 p-2 bg-white/5 border border-slate-100 dark:border-slate-800">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+                        <Users size={14} className="text-primary-500" />
                     </div>
                     <div>
-                        <h5 className="font-black text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مجتمع ذكي</h5>
-                        <p className="text-[8px] text-slate-500 font-bold leading-tight">وصول دقيق لكافة المعلومات.</p>
+                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مجتمع ذكي</h5>
+                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">وصول دقيق.</p>
                     </div>
                 </div>
             </div>
