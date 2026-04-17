@@ -186,7 +186,8 @@ export const ChatbotWidget = ({ forcedOpen, onClose }: ChatbotProps) => {
     const allowedPaths = ['/', '/courses', '/about', '/contact'];
     const isAllowedPage = allowedPaths.includes(location.pathname);
 
-    if (!chatbotEnabled || !isAllowedPage) return null;
+    // If not manually triggered via forcedOpen, respect the settings and path restrictions
+    if (!forcedOpen && (!chatbotEnabled || !isAllowedPage)) return null;
 
     return (
         <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end pointer-events-none">
