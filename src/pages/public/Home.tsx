@@ -396,7 +396,7 @@ export const Home = () => {
             </section>
 
             {/* How it Works Section - Reimagined Creative Design */}
-            <section id="how-it-works" className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
+            <section id="how-it-works" className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.05] dark:bg-red-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
