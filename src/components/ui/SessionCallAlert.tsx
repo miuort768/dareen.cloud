@@ -62,7 +62,7 @@ export const SessionCallAlert = () => {
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                className="fixed bottom-20 left-4 right-4 md:left-auto md:right-8 md:bottom-8 z-[1000] md:w-[400px]"
+                className="fixed bottom-16 left-4 right-4 md:left-auto md:right-8 md:bottom-8 z-[1000] md:w-[400px]"
             >
                 <div className="bg-white border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] p-1 overflow-hidden">
                     <div className="bg-primary-600 p-3 flex justify-between items-center border-b-2 border-gray-950">

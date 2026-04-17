@@ -141,29 +141,25 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="space-y-8 pb-48 px-2 md:px-0 max-w-full overflow-x-hidden" dir="rtl">
+        <div className="space-y-3 pb-28 max-w-full overflow-x-hidden" dir="rtl">
 
-            {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-2 lg:p-6 shadow-xl border-b border-white/5">
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 w-full md:w-auto">
-                        <div className="shrink-0 w-8 h-8 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg">
-                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                <GraduationCap size={16} className="text-white md:size-28" />
-                            </div>
+            {/* ═══════════════ HEADER ═══════════════ */}
+            <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-3 lg:p-6 shadow-xl">
+                {/* Single row: icon + name + points all in one line */}
+                <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <div className="shrink-0 w-9 h-9 bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                            <GraduationCap size={18} className="text-white" />
                         </div>
                         <div className="min-w-0">
-                            <h1 className="text-sm md:text-2xl font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-[8px] md:text-[11px] font-medium flex items-center gap-1 mt-0.5 uppercase tracking-tighter italic">
-                                {todayArabic} • {todayDate}
-                            </p>
+                            <h1 className="text-sm font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-[8px] font-medium truncate">{todayArabic} • {todayDate}</p>
                         </div>
                     </div>
-
-                    <div className="flex items-center justify-between gap-2 bg-white/5 backdrop-blur-xl border border-white/10 p-1.5 md:p-4 rounded-none w-full md:w-auto min-w-[100px]">
-                        <div className="px-1 text-right">
-                            <span className="block text-[7px] font-bold text-slate-500 uppercase tracking-widest mb-0">نقاط التميز</span>
-                            <div className="text-base md:text-2xl font-black text-yellow-400 leading-none">{points}</div>
+                    <div className="shrink-0 flex items-center gap-1.5 bg-white/10 border border-white/20 px-2 py-1 rounded">
+                        <div className="text-right">
+                            <span className="block text-[6px] font-bold text-slate-400 uppercase tracking-wider">نقاط التميز</span>
+                            <div className="text-sm font-black text-yellow-400 leading-none">{points}</div>
                         </div>
                         <RankBadge rank={rank} size="sm" />
                     </div>
