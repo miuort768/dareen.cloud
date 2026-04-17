@@ -26,7 +26,6 @@ export const StudentDashboard = () => {
     const [activeTab, setActiveTab] = useState<'overview' | 'schedule' | 'sessions' | 'subjects'>('overview');
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
-    const todayDate = format(new Date(), 'dd MMMM yyyy', { locale: ar });
 
     useEffect(() => {
         let socket = (window as any).socket;
@@ -161,7 +160,7 @@ export const StudentDashboard = () => {
                             <span className="block text-[6px] font-bold text-slate-400 uppercase tracking-wider">النقاط</span>
                             <div className="text-[10px] md:text-sm font-black text-yellow-400 leading-none">{points}</div>
                         </div>
-                        <RankBadge rank={rank} size="xs" />
+                        <RankBadge rank={rank} size="sm" />
                     </div>
                 </div>
             </div>
