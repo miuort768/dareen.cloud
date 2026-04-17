@@ -82,16 +82,16 @@ export const Leads: React.FC = () => {
     }
 
     return (
-        <div className="p-4 lg:p-10 min-h-screen bg-gray-50/50 dark:bg-gray-950/50" dir="rtl">
+        <div className="pb-28" dir="rtl">
             {/* Header */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-4 mb-2">
-                        <div className="w-1.5 h-12 bg-emerald-600 border-2 border-gray-950 dark:border-gray-800"></div>
-                        إدارة العملاء والمهتمين (Leads)
+                    <h1 className="text-xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tighter flex items-center gap-3 mb-1">
+                        <div className="w-1 md:w-1.5 h-8 md:h-12 bg-emerald-600 border-2 border-gray-950 dark:border-gray-800"></div>
+                        إدارة العملاء والمهتمين
                     </h1>
-                    <p className="text-gray-500 font-bold flex items-center gap-2">
-                        <Users size={16} /> تتبع مسار تحويل الطلاب من الاستفسار إلى الاشتراك الفعلي
+                    <p className="text-gray-500 font-bold flex items-center gap-2 text-xs md:text-sm">
+                        <Users size={14} /> تتبع مسار تحويل الطلاب من الاستفسار إلى الاشتراك الفعلي
                     </p>
                 </div>
 
@@ -106,7 +106,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Quick Stats Bar */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6">
                 <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group overflow-hidden relative">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي المهتمين</p>
                     <div className="flex items-end justify-between">
@@ -177,8 +177,8 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Leads Table/Grid */}
-            <div className="bg-white border-2 border-gray-950 shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden">
-                <table className="w-full text-right border-collapse">
+            <div className="bg-white border-2 border-gray-950 shadow-[6px_6px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-x-auto">
+                <table className="w-full text-right border-collapse min-w-[600px]">
                     <thead className="bg-gray-900 text-white dark:bg-black">
                         <tr>
                             <th className="px-6 py-4 font-black text-xs uppercase border-l border-white/10">العميل</th>
