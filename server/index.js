@@ -267,6 +267,10 @@ async function startServer() {
             if (!token) return next(new Error('Authentication error'));
 
             try {
+                if (token === 'guest') {
+                    socket.data.user = { id: 'guest', role: 'guest', name: 'Guest User' };
+                    return next();
+                }
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
                 socket.data.user = decoded;
                 next();
