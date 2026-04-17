@@ -100,61 +100,60 @@ export const StudentDashboard = () => {
         <div className="space-y-8 pb-32" dir="rtl">
 
             {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-5 lg:p-6 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
+            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-6 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
-                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-5">
+                <div className="relative z-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
                         <motion.div 
-                            whileHover={{ scale: 1.05 }}
-                            className="w-16 h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/20"
+                            className="shrink-0 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/20"
                         >
                             <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                <GraduationCap size={32} className="text-white" strokeWidth={1.5} />
+                                <GraduationCap size={28} className="text-white" strokeWidth={1.5} />
                             </div>
                         </motion.div>
-                        <div>
-                            <div className="flex items-center gap-2 mb-1.5">
-                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[9px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
+                        <div className="min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[8px] md:text-[9px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
                                 <RankBadge rank={rank} size="sm" />
                             </div>
-                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-[11px] font-medium flex items-center gap-2 mt-0.5">
+                            <h1 className="text-lg md:text-2xl font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-[10px] md:text-[11px] font-medium flex items-center gap-2 mt-0.5">
                                 <Clock size={12} className="text-primary-400" /> {todayArabic} • {todayDate}
                             </p>
                         </div>
                     </div>
 
-                    {/* Points & Rank Card - More Compact */}
+                    {/* Points & Rank Card - Full width on mobile */}
                     <motion.div 
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-none min-w-[180px] shadow-sm"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex items-center justify-between md:justify-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-none w-full md:w-auto md:min-w-[180px] shadow-sm"
                     >
                         <div className="flex-1 text-right">
-                            <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">نقاط التميز</span>
-                            <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
+                            <span className="block text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">نقاط التميز</span>
+                            <div className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
                         </div>
-                        <div className="text-2xl filter drop-shadow-sm">{rank.icon}</div>
+                        <div className="text-xl md:text-2xl filter drop-shadow-sm">{rank.icon}</div>
                     </motion.div>
                 </div>
             </div>
 
             {/* ═══════════════ STAT CARDS ═══════════════ */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard icon={CheckCircle2} label="الحصص المكتملة" value={stats.totalAttendance} color="emerald" />
-                <StatCard icon={Target} label="الحصص القادمة" value={stats.upcomingSessions} color="blue" />
-                <StatCard icon={TrendingUp} label="معدل الانضباط" value={`${stats.attendanceRate}%`} color="amber" />
-                <StatCard icon={Trophy} label="الرتبة الحالية" value={rank.name} color="rose" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-8">
+                <StatCard icon={Trophy} label="معدل الحضور" value={`${stats.attendanceRate}%`} color="emerald" />
+                <StatCard icon={Clock} label="حصص قادمة" value={stats.upcomingSessions} color="blue" />
+                <StatCard icon={Star} label="إجمالي النقاط" value={points} color="amber" />
+                <StatCard icon={TrendingUp} label="مستوى الإنجاز" value={rank.name} color="rose" />
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 rounded-none border border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
+            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 rounded-none border border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-hide">
                 {[
-                    { key: 'overview', label: 'نظرة عامة', icon: Activity },
+                    { key: 'overview', label: 'الرئيسية', icon: Activity },
                     { key: 'schedule', label: 'الجدول', icon: CalendarDays },
                     { key: 'sessions', label: 'الحصص', icon: BookOpen },
                     { key: 'subjects', label: 'الاشتراكات', icon: GraduationCap },
@@ -163,13 +162,13 @@ export const StudentDashboard = () => {
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key as any)}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-none font-bold text-sm transition-all whitespace-nowrap",
+                            "flex-1 flex items-center justify-center gap-1.5 px-4 py-3 rounded-none font-bold text-xs md:text-sm transition-all whitespace-nowrap",
                             activeTab === tab.key
-                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-xl shadow-primary-500/10"
+                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-md shadow-primary-500/10"
                                 : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                         )}
                     >
-                        <tab.icon size={18} /> {tab.label}
+                        <tab.icon size={16} /> {tab.label}
                     </button>
                 ))}
             </div>
