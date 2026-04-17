@@ -279,6 +279,8 @@ async function startServer() {
             }
         });
 
+        const activeSessions = new Map(); // studentId -> sessionData
+
         io.on('connection', (socket) => {
             const user = socket.data.user;
             const userId = user?.id;
@@ -289,6 +291,15 @@ async function startServer() {
                 const userRoom = `user_${userId}`;
                 socket.join(userRoom);
                 console.log(`   ✅ Joined Personal Room: ${userRoom}`);
+
+                // PERSISTENCE: If student reconnects, check if there's an active session for them
+                if (user?.role === 'student' || user?.role === 'user') {
+                    const activeSession = activeSessions.get(String(userId));
+                    if (activeSession) {
+                        console.log(`   💎 [IO] Re-sending persistent session invite to student ${userId}`);
+                        socket.emit('session_invite', activeSession);
+                    }
+                }
             }
 
             socket.on('join_conversation', (conversationId) => {
@@ -360,32 +371,37 @@ async function startServer() {
 
             // --- New: Direct Session Invites ---
             socket.on('call_student', async (data) => {
-                // data: { studentId, teacherId, teacherName, subject, type }
-                const targetRoom = `user_${data.studentId}`;
+                const studentIdStr = String(data.studentId);
+                const targetRoom = `user_${studentIdStr}`;
                 
-                // Track presence for debugging
-                const sockets = await io.in(targetRoom).fetchSockets();
-                console.log(`   📡 [IO] BROADCASTING call to student ${data.studentId}. Room members: ${sockets.length}`);
-                
-                if (sockets.length === 0) {
-                    console.log(`   ⚠️ [IO] Warning: Student ${data.studentId} is NOT connected to their room.`);
-                }
-
-                // Use io.to() instead of socket.to() for guaranteed delivery to everyone in the room
-                io.to(targetRoom).emit('session_invite', {
+                const sessionData = {
                     teacherId: user.id,
                     teacherName: user.name,
+                    teacherSocketId: socket.id, // Store sender's socket
                     subject: data.subject,
                     type: data.type || 'video',
                     timestamp: new Date().toISOString()
-                });
+                };
+
+                activeSessions.set(studentIdStr, sessionData);
+                io.to(targetRoom).emit('session_invite', sessionData);
             });
 
             socket.on('end_session', (data) => {
-                const targetRoom = `user_${data.studentId}`;
-                console.log(`   ❄️ [IO] BROADCASTING end session to student ${data.studentId}`);
-                io.to(targetRoom).emit('session_ended', {
-                    teacherId: user.id
+                const studentIdStr = String(data.studentId);
+                activeSessions.delete(studentIdStr);
+                io.to(`user_${studentIdStr}`).emit('session_ended', { teacherId: user.id });
+            });
+
+            socket.on('disconnect', () => {
+                console.log(`🔌 Socket Disconnected: ${socket.id}`);
+                // Cleanup: Find any sessions this socket was hosting
+                activeSessions.forEach((session, studentId) => {
+                    if (session.teacherSocketId === socket.id) {
+                        console.log(`   🧹 Cleaning up abandoned session for student ${studentId}`);
+                        activeSessions.delete(studentId);
+                        io.to(`user_${studentId}`).emit('session_ended', { teacherId: user.id });
+                    }
                 });
             });
 
