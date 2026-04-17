@@ -141,10 +141,10 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="space-y-3 pb-28 max-w-full overflow-x-hidden" dir="rtl">
+        <div className="space-y-4 pb-28" dir="rtl">
 
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-3 lg:p-6 shadow-xl">
+            <div className="-mx-3 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-3 py-3 lg:mx-0 lg:px-6 lg:py-6 shadow-xl">
                 {/* Single row: icon + name + points all in one line */}
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
