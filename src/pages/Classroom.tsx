@@ -173,6 +173,88 @@ export const Classroom = () => {
         </div>
     );
 
+    if (currentUser?.role === 'student') {
+        return (
+            <div className="fixed inset-0 bg-gray-950 flex flex-col z-[2000] overflow-hidden" dir="rtl">
+                {/* ══════════════ STUDENT HEADER ══════════════ */}
+                <div className="h-16 bg-white/5 border-b border-white/10 flex items-center justify-between px-6 backdrop-blur-xl">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center animate-pulse border-2 border-white/20">
+                            <span className="text-[10px] font-black text-white">LIVE</span>
+                        </div>
+                        <h2 className="text-white font-black text-sm uppercase tracking-tighter italic">بث مباشر من المعلمة</h2>
+                    </div>
+                </div>
+
+                {/* ══════════════ MAIN FOCUS: TEACHER SCREEN ══════════════ */}
+                <div className="flex-1 relative bg-black flex items-center justify-center overflow-hidden">
+                    {remoteStream ? (
+                        <video 
+                            ref={remoteVideoRef} 
+                            autoPlay 
+                            playsInline 
+                            className="w-full h-full object-contain"
+                        />
+                    ) : (
+                        <div className="flex flex-col items-center gap-6">
+                            <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center border-4 border-white/10 animate-spin-slow">
+                                <Monitor size={48} className="text-white/20" />
+                            </div>
+                            <p className="text-white/40 font-black uppercase text-xs tracking-widest animate-pulse">بانتظار بدء الشرح من المعلمة...</p>
+                        </div>
+                    )}
+
+                    {/* Minimalist Local Preview (Optional, only if camera is ON) */}
+                    {!isCameraOff && (
+                        <div className="absolute bottom-6 right-6 w-40 h-24 border-4 border-gray-950 shadow-2xl overflow-hidden bg-gray-900 ring-2 ring-white/10 scale-x-[-1]">
+                            <video 
+                                ref={myVideoRef} 
+                                autoPlay 
+                                muted 
+                                playsInline 
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* ══════════════ FOCUS CONTROL BAR ══════════════ */}
+                <div className="h-28 bg-gray-950/90 backdrop-blur-2xl flex items-center justify-center px-10 border-t-2 border-white/10 gap-8">
+                    <button 
+                        onClick={toggleMute}
+                        className={cn(
+                            "w-16 h-16 rounded-full flex items-center justify-center transition-all border-4 shadow-xl",
+                            isMuted ? "bg-red-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110"
+                        )}
+                    >
+                        {isMuted ? <MicOff size={28} /> : <Mic size={28} />}
+                    </button>
+                    
+                    <button 
+                        onClick={toggleCamera}
+                        className={cn(
+                            "w-16 h-16 rounded-full flex items-center justify-center transition-all border-4 shadow-xl",
+                            isCameraOff ? "bg-red-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110"
+                        )}
+                    >
+                        {isCameraOff ? <VideoOff size={28} /> : <Video size={28} />}
+                    </button>
+
+                    <button 
+                        onClick={() => navigate(-1)}
+                        className="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center border-8 border-gray-950 shadow-2xl hover:scale-110 active:scale-95 transition-all group"
+                    >
+                        <PhoneOff size={36} className="group-hover:rotate-[135deg] transition-transform" />
+                    </button>
+
+                    <button className="w-16 h-16 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-white/20 transition-all border-4 border-gray-900 shadow-xl border-white/20">
+                        <MessageSquare size={28} />
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-950 text-white flex flex-col font-black italic" dir="rtl">
             {/* Header */}
