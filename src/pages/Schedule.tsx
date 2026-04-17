@@ -16,8 +16,6 @@ import {
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
 
 // Interfaces
 interface Student {
