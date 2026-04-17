@@ -358,6 +358,25 @@ async function startServer() {
                 console.log(`   📡 Teacher sending signal to student ${data.studentId}`);
             });
 
+            // --- New: Direct Session Invites ---
+            socket.on('call_student', (data) => {
+                // data: { studentId, teacherId, teacherName, subject, type }
+                console.log(`   📞 Teacher ${user.name} calling student ${data.studentId}`);
+                socket.to(`user_${data.studentId}`).emit('session_invite', {
+                    teacherId: user.id,
+                    teacherName: user.name,
+                    subject: data.subject,
+                    type: data.type || 'video',
+                    timestamp: new Date().toISOString()
+                });
+            });
+
+            socket.on('end_session', (data) => {
+                socket.to(`user_${data.studentId}`).emit('session_ended', {
+                    teacherId: user.id
+                });
+            });
+
         });
 
         const serverInstance = server.listen(PORT, () => {

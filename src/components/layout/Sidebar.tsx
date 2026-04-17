@@ -28,6 +28,7 @@ import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
 import { useChatContext } from '../../context/ChatContext';
+import { SessionCallAlert } from '../ui/SessionCallAlert';
 
 export const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(() => {
@@ -382,6 +383,8 @@ export const Sidebar = () => {
                     </div>
                 </div>
             </div>
+
+            <SessionCallAlert />
         </>
     );
 };

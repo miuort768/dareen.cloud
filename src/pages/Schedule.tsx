@@ -10,7 +10,8 @@ import {
     LayoutGrid,
     CheckCircle2,
     Plus,
-    Printer
+    Printer,
+    Video
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
@@ -43,6 +44,7 @@ interface ScheduleSlot {
 
 interface ScheduleEvent {
     id: string;
+    studentId: string;
     studentName: string;
     studentGrade: string;
     teacherName: string;
@@ -165,6 +167,7 @@ export const Schedule = () => {
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص'].includes(normalizedPeriod);
                         return {
                             id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                            studentId: student.id,
                             studentName: student.name,
                             studentGrade: student.grade,
                             teacherName: (enrollment.teacher || '').trim(),
@@ -474,6 +477,27 @@ export const Schedule = () => {
                                     </div>
                                 ))}
                             </div>
+                            
+                            {currentUser?.role === 'teacher' && (
+                                <button 
+                                    onClick={() => {
+                                        const socket = (window as any).socket;
+                                        if (socket) {
+                                            socket.emit('call_student', {
+                                                studentId: selectedEvent.studentId,
+                                                subject: selectedEvent.subject,
+                                                type: 'video'
+                                            });
+                                        }
+                                        window.location.href = `/classroom/${selectedEvent.studentId}`;
+                                    }}
+                                    className="w-full bg-primary-600 text-white py-4 font-black uppercase text-xs border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2 group"
+                                >
+                                    <Video size={18} className="group-hover:animate-pulse" />
+                                    بدء الحصة المباشرة الآن
+                                </button>
+                            )}
+                            
                             <button onClick={() => setShowDetails(false)} className="w-full bg-gray-950 text-white py-3 font-black uppercase text-[10px] hover:bg-gray-800 transition-colors">إغلاق</button>
                         </div>
                     </div>

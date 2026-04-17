@@ -37,6 +37,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 import { InstallPWA } from './components/ui/InstallPWA';
+import { Classroom } from './pages/Classroom';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -191,6 +192,8 @@ function App() {
           {/* Forum Route for all authenticated users */}
           <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
         </Route>
+
+        <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
