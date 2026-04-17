@@ -100,47 +100,45 @@ export const StudentDashboard = () => {
         <div className="space-y-8 pb-32" dir="rtl">
 
             {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 lg:p-12 shadow-2xl shadow-indigo-500/20 border-l border-t border-white/10">
+            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-5 lg:p-6 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
                 {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
+                <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-                <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary-500/20 rounded-full blur-[100px]" />
-                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-[100px]" />
+                <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                    <div className="flex items-center gap-6">
+                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div className="flex items-center gap-5">
                         <motion.div 
                             whileHover={{ scale: 1.05 }}
-                            className="w-24 h-24 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/30"
+                            className="w-16 h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/20"
                         >
                             <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                <GraduationCap size={48} className="text-white" strokeWidth={1.5} />
+                                <GraduationCap size={32} className="text-white" strokeWidth={1.5} />
                             </div>
                         </motion.div>
                         <div>
-                            <div className="flex items-center gap-3 mb-3">
-                                <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[9px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
                                 <RankBadge rank={rank} size="sm" />
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-sm font-medium flex items-center gap-2 mt-1">
-                                <Clock size={16} className="text-primary-400" /> {todayArabic} • {todayDate}
+                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-[11px] font-medium flex items-center gap-2 mt-0.5">
+                                <Clock size={12} className="text-primary-400" /> {todayArabic} • {todayDate}
                             </p>
                         </div>
                     </div>
 
-                    {/* Points & Rank Card */}
+                    {/* Points & Rank Card - More Compact */}
                     <motion.div 
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-5 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-none min-w-[260px] shadow-inner"
+                        className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-none min-w-[180px] shadow-sm"
                     >
                         <div className="flex-1 text-right">
-                            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">نقاط التميز</span>
-                            <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
-                            {next && <div className="text-[10px] text-slate-500 mt-2 font-medium">متبقي <span className="text-amber-400">{pointsNeeded}</span> لرتبة {next.name}</div>}
+                            <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">نقاط التميز</span>
+                            <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
                         </div>
-                        <div className="text-4xl filter drop-shadow-md">{rank.icon}</div>
+                        <div className="text-2xl filter drop-shadow-sm">{rank.icon}</div>
                     </motion.div>
                 </div>
             </div>
