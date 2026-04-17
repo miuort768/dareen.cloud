@@ -57,7 +57,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     };
 
     useEffect(() => {
-        scrollToBottom("smooth");
+        const timer = setTimeout(() => {
+            scrollToBottom("smooth");
+        }, 100);
+        return () => clearTimeout(timer);
     }, [messages]);
 
     // Mark as read when conversation is active or new messages arrive
@@ -174,7 +177,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 onScroll={handleScroll}
                 className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 flex flex-col space-y-2 custom-scrollbar relative z-10"
             >
-                {messages.map((msg, idx) => {
+                {[...messages].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
                     const isGroup = selectedConv.isGroup;
                     
