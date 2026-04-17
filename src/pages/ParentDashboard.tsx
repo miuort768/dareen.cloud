@@ -188,6 +188,14 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
+            {/* ═══════════════ STAT CARDS ═══════════════ */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 <StatCard icon={Calendar} label="العمليات" value={stats.sessionCount} color="amber" subValue={`${stats.upcomingSessions} مهمة`} onClick={() => navigate('/parent-attendance')} />
+                 <StatCard icon={Users} label="الأبناء" value={stats.childCount} color="emerald" subValue="قطاع النجاح" onClick={() => navigate('/parent-students')} />
+                 <StatCard icon={Award} label="التقارير" value="سجل كامل" color="blue" subValue="متابعة دورية" onClick={() => navigate('/evaluations')} />
+                 <StatCard icon={Receipt} label="المالية" value={stats.pendingInvoiceCount} color="rose" subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'مكتمل'} onClick={() => navigate('/student-invoices')} />
+            </div>
+
             {/* ═══════════════ STRATEGIC INTELLIGENCE GRID ═══════════════ */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Excellence Radar */}
@@ -382,13 +390,7 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ STAT CARDS ═══════════════ */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 <StatCard icon={Calendar} label="العمليات" value={stats.sessionCount} color="amber" subValue={`${stats.upcomingSessions} مهمة`} onClick={() => navigate('/parent-attendance')} />
-                 <StatCard icon={Users} label="الأبناء" value={stats.childCount} color="emerald" subValue="قطاع النجاح" onClick={() => navigate('/parent-students')} />
-                 <StatCard icon={Award} label="التقارير" value="سجل كامل" color="blue" subValue="متابعة دورية" onClick={() => navigate('/evaluations')} />
-                 <StatCard icon={Receipt} label="المالية" value={stats.pendingInvoiceCount} color="rose" subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'مكتمل'} onClick={() => navigate('/student-invoices')} />
-            </div>
+
 
             {/* ═══════════════ LOWER OPERATIONS GRID ═══════════════ */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
