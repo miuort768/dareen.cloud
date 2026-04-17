@@ -60,24 +60,25 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-12 lg:h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 flex items-center justify-between px-3 lg:px-8 sticky top-0 z-50 transition-all duration-300">
+        <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-slate-900/80 dark:border-slate-800 transition-colors duration-300">
 
-            {/* Branding Section */}
-            <div className="flex items-center gap-3">
-                <div className="flex flex-col items-start justify-center border-l dark:border-slate-800 pl-3 md:pl-6 py-0.5">
-                    <span className="text-[9px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-tighter">معهد دارين</span>
-                    <span className="text-[7px] md:text-[9px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-0.5 whitespace-nowrap hidden md:block">
+            {/* Search Bar / Quick Search */}
+            <div className="flex-1 flex items-center gap-2 lg:gap-6">
+                <div className="flex flex-col items-center justify-center ml-4 border-l border-gray-100 dark:border-slate-800 pl-6 py-1">
+                    <span className="text-[10px] lg:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-tighter">معهد دارين</span>
+                    <span className="text-[8px] lg:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-1 whitespace-nowrap">
                         {user.role === 'teacher' ? 'مرحباً بكِ شريكة النجاح' : 'مرحباً بك شريك النجاح'}
                     </span>
                 </div>
 
-                {/* Hide title on mobile to leave space for sticky dashboard tabs */}
                 {title && (
-                    <div className="hidden lg:block animate-in fade-in slide-in-from-right-4 duration-300 overflow-hidden">
+                    <div className="animate-in fade-in slide-in-from-right-4 duration-300 overflow-hidden">
                         <h1 className="text-sm lg:text-xl font-black text-gray-900 dark:text-gray-100 truncate">{title}</h1>
-                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-gray-400 truncate">{subtitle}</p>
+                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-gray-400 hidden lg:block truncate">{subtitle}</p>
                     </div>
                 )}
+                <div className="mr-auto ml-8 hidden lg:block">
+                </div>
             </div>
 
             {/* Right Actions */}
