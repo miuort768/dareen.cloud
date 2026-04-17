@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Video, X, BellRing, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
-import { cn } from '../../lib/utils';
 
 export const SessionCallAlert = () => {
     const { currentUser } = useApp();
@@ -20,7 +19,7 @@ export const SessionCallAlert = () => {
             
             // Play audio alert
             const audio = new Audio('/notification.mp3');
-            audio.play().catch(e => console.log("Audio play blocked"));
+            audio.play().catch(() => console.log("Audio play blocked"));
         };
 
         socket.on('session_invite', handleInvite);
@@ -68,7 +67,9 @@ export const SessionCallAlert = () => {
                             <div className="flex gap-2">
                                 <button 
                                     onClick={() => {
-                                        window.location.href = `/classroom/${currentUser.id}`;
+                                        if (currentUser?.id) {
+                                            window.location.href = `/classroom/${currentUser.id}`;
+                                        }
                                     }}
                                     className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-black text-xs flex items-center justify-center gap-2"
                                 >
