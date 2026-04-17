@@ -361,34 +361,47 @@ export const Schedule = () => {
             </div>
 
             {/* Mobile - Compact Timeline */}
-            <div className="md:hidden space-y-4 px-4 font-black">
-                <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
-                    {DAYS_OF_WEEK.map(day => (
-                        <button 
-                            key={day}
-                            onClick={() => setMobileActiveDay(day)}
-                            className={cn(
-                                "shrink-0 px-4 py-2 border-2 font-black text-[10px] uppercase transition-all shadow-[2px_2px_0px_0px_black]",
-                                mobileActiveDay === day 
-                                    ? "bg-primary-600 text-white border-gray-950 translate-x-0.5 translate-y-0.5 shadow-none" 
-                                    : "bg-white text-gray-400 border-gray-950"
-                            )}
-                        >
-                            {day}
-                        </button>
-                    ))}
+            <div className="md:hidden space-y-6 px-4 font-black">
+                {/* Modern Day Picker */}
+                <div className="flex overflow-x-auto gap-3 pb-3 no-scrollbar sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md pt-2 -mx-4 px-4 border-b border-gray-200">
+                    {DAYS_OF_WEEK.map(day => {
+                        const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
+                        return (
+                            <button 
+                                key={day}
+                                onClick={() => setMobileActiveDay(day)}
+                                className={cn(
+                                    "shrink-0 px-6 py-2.5 border-2 font-black text-[11px] uppercase transition-all duration-300 relative",
+                                    mobileActiveDay === day 
+                                        ? "bg-gray-950 text-white border-gray-950 shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] -translate-y-1" 
+                                        : "bg-white text-gray-400 border-gray-200"
+                                )}
+                            >
+                                {day}
+                                {isToday && (
+                                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
                 
-                <div className="space-y-4 relative before:absolute before:right-6 before:top-0 before:bottom-0 before:w-0.5 before:bg-gray-100">
+                {/* Timeline Container */}
+                <div className="space-y-6 relative before:absolute before:right-[53px] before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-primary-500/20 before:via-gray-200 before:to-transparent">
                     {TIME_SLOTS.map(slot => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className="flex gap-4 pr-1 relative">
-                                <div className="absolute right-4.5 w-3 h-3 bg-gray-950 border-2 border-white shrink-0 z-10 translate-x-[1px] rounded-0"></div>
-                                <div className="w-12 pt-0.5 text-right">
-                                    <span className="text-[9px] font-black text-gray-400 tracking-tighter">{slot.label}</span>
+                            <div key={`${slot.hour}-${slot.period}`} className="flex gap-4 pr-0 relative group">
+                                {/* Time Indicator Area */}
+                                <div className="w-14 shrink-0 flex flex-col items-center">
+                                    <div className="bg-white border-2 border-gray-950 px-2 py-1 shadow-[2px_2px_0px_0px_black] z-10">
+                                        <span className="text-[10px] font-black text-gray-950 tracking-tighter whitespace-nowrap">{slot.label}</span>
+                                    </div>
+                                    <div className="w-4 h-4 rounded-full bg-gray-950 border-4 border-white mt-1.5 z-10 shadow-sm"></div>
                                 </div>
-                                <div className="flex-1 space-y-2 pb-4">
+
+                                {/* Content Area */}
+                                <div className="flex-1 space-y-3 pb-2 pt-0.5">
                                     {events.length > 0 ? (
                                         events.map(ev => {
                                             const style = getTeacherStyle(ev.teacherName);
@@ -396,14 +409,33 @@ export const Schedule = () => {
                                                 <div 
                                                     key={ev.id} 
                                                     onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
-                                                    className={cn("p-3 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] relative overflow-hidden", style.bg)}
+                                                    className={cn(
+                                                        "p-4 border-2 border-gray-950 shadow-[6px_6px_0px_0px_black] relative active:scale-[0.98] transition-all",
+                                                        style.bg
+                                                    )}
                                                 >
-                                                    <div className={cn("absolute right-0 top-0 w-1 h-full", style.accent)}></div>
-                                                    <h3 className="text-sm font-black text-gray-950">{ev.studentName}</h3>
-                                                    <div className="flex items-center gap-2 mt-1 opacity-70">
-                                                        <span className="text-[10px] font-bold">{ev.subject}</span>
-                                                        <span className="text-[10px]">|</span>
-                                                        <span className="text-[10px] font-black">{ev.teacherName}</span>
+                                                    <div className="flex justify-between items-start mb-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-8 h-8 bg-gray-950 border border-white flex items-center justify-center text-white shrink-0">
+                                                                <User size={14} />
+                                                            </div>
+                                                            <h3 className="text-sm font-black text-gray-950 leading-tight">{ev.studentName}</h3>
+                                                        </div>
+                                                        <div className="flex items-center gap-1 bg-white/40 px-2 py-1 border border-gray-950/10">
+                                                            <Zap size={10} className="text-yellow-600 fill-yellow-500" />
+                                                            <span className="text-[10px] font-black">{ev.studentPoints}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-950/5">
+                                                        <div className="flex items-center gap-1.5 overflow-hidden">
+                                                            <BookOpen size={12} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[10px] font-bold truncate">{ev.subject}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 overflow-hidden">
+                                                            <Users size={12} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[10px] font-black truncate">{ev.teacherName}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             )
@@ -414,9 +446,15 @@ export const Schedule = () => {
                                                 setEnrollData({...enrollData, day: mobileActiveDay, hour: String(slot.hour), period: slot.period}); 
                                                 setShowAddModal(true); 
                                             }}
-                                            className="p-2 border-2 border-dashed border-gray-200 text-center hover:bg-gray-50 transition-all cursor-pointer group"
+                                            className="group flex items-center gap-4 p-4 border-2 border-dashed border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer rounded-none active:bg-emerald-100"
                                         >
-                                            <span className="text-[8px] font-black text-gray-300 uppercase italic">متاح</span>
+                                            <div className="w-10 h-10 border-2 border-dashed border-gray-200 group-hover:border-emerald-500 flex items-center justify-center text-gray-300 group-hover:text-emerald-500 transition-colors">
+                                                <Plus size={18} />
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-[11px] font-black text-gray-400 group-hover:text-emerald-600 uppercase italic">فترة زمنية متاحة</p>
+                                                <p className="text-[9px] font-bold text-gray-300 group-hover:text-emerald-400">انقر هنا لحجز حصـة جديدة</p>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
