@@ -256,39 +256,39 @@ export const Sidebar = () => {
                         key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
-                            "flex flex-col items-center justify-center flex-1 h-full gap-0.5 transition-all duration-300 relative px-1",
-                            isActive
-                                ? "text-primary-600 dark:text-primary-400 scale-105"
-                                : "text-gray-400 dark:text-gray-500 opacity-70"
+                            "flex flex-col items-center justify-center flex-1 h-full transition-all duration-500 relative px-1",
+                            isActive ? "z-10" : "z-0"
                         )}
                     >
                         {({ isActive }) => (
                             <>
                                 <div className={cn(
-                                    "p-2 rounded-2xl transition-all duration-300 relative group",
+                                    "rounded-full transition-all duration-500 relative group flex items-center justify-center shrink-0",
                                     isActive 
-                                        ? "bg-gradient-to-br from-primary-500 to-indigo-600 text-white shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] dark:shadow-primary-500/20 ring-4 ring-primary-500/10" 
-                                        : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                                        ? "w-14 h-14 bg-gradient-to-br from-primary-500 to-indigo-600 text-white shadow-[0_12px_24px_-8px_rgba(79,70,229,0.7)] dark:shadow-primary-500/40 border-4 border-white dark:border-gray-950 -translate-y-5" 
+                                        : "w-11 h-11 text-gray-400 dark:text-gray-500"
                                 )}>
                                     <item.icon
-                                        size={20}
+                                        size={isActive ? 24 : 20}
                                         strokeWidth={isActive ? 2.5 : 2}
                                     />
-                                    {/* Indicator Glow Dot */}
-                                    {isActive && (
-                                        <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border-2 border-white dark:border-gray-950 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                                    {/* Unread Count Badge */}
+                                    {item.id === 'chat' && totalUnreadCount > 0 && (
+                                        <span className={cn(
+                                            "absolute flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full ring-2 ring-white dark:ring-gray-950 shadow-lg",
+                                            isActive ? "-top-1 -right-1 w-5 h-5" : "top-1 right-1 w-4 h-4"
+                                        )}>
+                                            {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                        </span>
                                     )}
                                 </div>
-                                <span className={cn(
-                                    "text-[9px] font-black truncate max-w-[3.5rem] text-center leading-none mt-1 transition-all duration-300",
-                                    isActive ? "text-slate-900 dark:text-white" : "text-slate-400"
-                                )}>
-                                    {item.name}
-                                </span>
-                                {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute top-1 right-2 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full ring-2 ring-white dark:ring-gray-950 shadow-lg">
-                                        {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                {!isActive && (
+                                    <span className="text-[9px] font-black truncate max-w-[3.5rem] text-center leading-none mt-1 transition-all duration-300 text-slate-400">
+                                        {item.name}
                                     </span>
+                                )}
+                                {isActive && (
+                                    <div className="absolute bottom-2 w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.8)] animate-pulse" />
                                 )}
                             </>
                         )}
@@ -297,12 +297,12 @@ export const Sidebar = () => {
 
                 <button
                     onClick={() => setMobileMenuOpen(true)}
-                    className="flex flex-col items-center justify-center flex-1 h-full gap-0.5 text-gray-400 dark:text-gray-500 active:scale-95 transition-all"
+                    className="flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 text-gray-400 dark:text-gray-500 active:scale-90"
                 >
-                    <div className="p-1.5 rounded-xl transition-colors">
+                    <div className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <Menu size={20} />
                     </div>
-                    <span className="text-[9px] font-bold leading-none">المزيد</span>
+                    <span className="text-[9px] font-black leading-none mt-1 text-slate-400">المزيد</span>
                 </button>
             </div>
 
