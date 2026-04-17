@@ -23,7 +23,7 @@ import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
-import { ParentChildVisualProgress } from '../features/dashboard/components/ParentChildVisualProgress';
+// ParentDashboard
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
@@ -363,7 +363,7 @@ export const ParentDashboard = () => {
                                         <div className="bg-white/5 border border-white/10 p-4 rounded-none w-full lg:w-48 text-center backdrop-blur-md">
                                             <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">معرض الأوسمة</p>
                                             <div className="flex flex-wrap justify-center gap-2">
-                                                {childBadges.slice(0, 3).map((badge, bIdx) => (
+                                                {childBadges.slice(0, 3).map((badge: string, bIdx: number) => (
                                                     <div key={bIdx} className="w-8 h-8 bg-slate-800 border border-slate-700 flex items-center justify-center hover:bg-slate-700 transition-colors" title={badge}>
                                                         <Award size={16} className="text-amber-500" />
                                                     </div>
