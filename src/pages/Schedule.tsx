@@ -16,6 +16,8 @@ import {
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
+import { format } from 'date-fns';
+import { ar } from 'date-fns/locale';
 
 // Interfaces
 interface Student {
@@ -211,7 +213,7 @@ export const Schedule = () => {
 
     return (
         <div className="space-y-6 pb-20 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
-            {/* Master Header - Scaled Down */}
+            {/* Master Header */}
             <div className="relative bg-white border-4 border-gray-950 p-6 shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group mx-4">
                 <div className="absolute top-0 right-0 w-48 h-full bg-primary-600/5 -skew-x-12 translate-x-10"></div>
                 
@@ -241,13 +243,13 @@ export const Schedule = () => {
                 </div>
             </div>
 
-            {/* Stats - Compact */}
+            {/* Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 font-black">
                 {[
                     { label: 'إجمالي الحصص', val: allEvents.length, icon: LayoutGrid, color: 'bg-blue-400' },
                     { label: 'طلاب محددون', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'bg-emerald-400' },
                     { label: 'مواد مفعّلة', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
-                    { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
+                    { label: 'اليوم النشط', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
                     <div key={i} className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] transition-transform">
                         <div className={cn("w-10 h-10 border-2 border-gray-950 flex items-center justify-center text-gray-950 mb-3 shadow-[2px_2px_0px_0px_black]", stat.color)}>
@@ -259,7 +261,7 @@ export const Schedule = () => {
                 ))}
             </div>
 
-            {/* Filter Bar - Compact */}
+            {/* Filter Bar */}
             <div className="mx-4 bg-gray-50 border-2 border-gray-950 p-4 flex flex-col md:flex-row items-end gap-4 no-print shadow-[6px_6px_0px_0px_black]">
                 <div className="w-full md:flex-1">
                     <label className="text-[10px] font-black text-gray-950 uppercase mb-2 block">البحث السريع</label>
@@ -275,7 +277,7 @@ export const Schedule = () => {
                     </div>
                 </div>
                 <div className="w-full md:w-32">
-                    <label className="text-[10px] font-black text-gray-950 uppercase mb-2 block">اليوم</label>
+                    <label className="text-[10px] font-black text-gray-950 uppercase mb-2 block">فلتر اليوم</label>
                     <select 
                         value={filterDay} 
                         onChange={e => setFilterDay(e.target.value)}
@@ -287,8 +289,8 @@ export const Schedule = () => {
                 </div>
             </div>
 
-            {/* Main Timetable - Desktop - Scaled for Screen */}
-            <div className="hidden md:block mx-4 overflow-x-auto custom-scrollbar border-2 border-gray-950 bg-white shadow-lg max-w-full">
+            {/* Desktop Table View */}
+            <div className="hidden md:block mx-4 overflow-x-auto custom-scrollbar border-2 border-gray-950 bg-white shadow-lg">
                 <table className="w-full border-collapse table-fixed min-w-[1000px]">
                     <thead>
                         <tr className="bg-gray-950 text-white">
@@ -360,7 +362,7 @@ export const Schedule = () => {
                 </table>
             </div>
 
-            {/* Mobile - Compact Timeline */}
+            {/* Mobile View */}
             <div className="md:hidden space-y-6 px-4 font-black">
                 {/* Modern Day Picker */}
                 <div className="flex overflow-x-auto gap-3 pb-3 no-scrollbar sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md pt-2 -mx-4 px-4 border-b border-gray-200">
@@ -392,7 +394,6 @@ export const Schedule = () => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
                             <div key={`${slot.hour}-${slot.period}`} className="flex gap-4 pr-0 relative group">
-                                {/* Time Indicator Area */}
                                 <div className="w-14 shrink-0 flex flex-col items-center">
                                     <div className="bg-white border-2 border-gray-950 px-2 py-1 shadow-[2px_2px_0px_0px_black] z-10">
                                         <span className="text-[10px] font-black text-gray-950 tracking-tighter whitespace-nowrap">{slot.label}</span>
@@ -400,7 +401,6 @@ export const Schedule = () => {
                                     <div className="w-4 h-4 rounded-full bg-gray-950 border-4 border-white mt-1.5 z-10 shadow-sm"></div>
                                 </div>
 
-                                {/* Content Area */}
                                 <div className="flex-1 space-y-3 pb-2 pt-0.5">
                                     {events.length > 0 ? (
                                         events.map(ev => {
@@ -464,7 +464,7 @@ export const Schedule = () => {
                 </div>
             </div>
 
-            {/* Modal Components - Scaled Down */}
+            {/* Modals */}
             {showDetails && selectedEvent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-sm animate-in fade-in">
                     <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black] overflow-hidden transform animate-in zoom-in-95">
@@ -494,7 +494,6 @@ export const Schedule = () => {
                 </div>
             )}
 
-            {/* Quick Add Modal - Scaled Down */}
             {showAddModal && (
                 <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-sm">
                     <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black] animate-in zoom-in-95 font-black">
@@ -504,7 +503,7 @@ export const Schedule = () => {
                         </div>
                         <form onSubmit={handleQuickEnroll} className="p-6 space-y-6">
                             <div className="bg-yellow-50 border-2 border-gray-950 p-3 text-[10px]">
-                                <p className="text-gray-400 mb-0.5 uppercase">الموعد</p>
+                                <p className="text-gray-400 mb-0.5 uppercase">الموعد المختـار</p>
                                 <p className="text-sm font-black">{enrollData.day} — {enrollData.hour}:00 {enrollData.period === 'am' ? 'ص' : 'م'}</p>
                             </div>
                             <div className="space-y-4">
