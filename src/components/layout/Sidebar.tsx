@@ -256,26 +256,37 @@ export const Sidebar = () => {
                         key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
-                            "flex flex-col items-center justify-center flex-1 h-full gap-0.5 transition-all duration-200 relative px-1",
+                            "flex flex-col items-center justify-center flex-1 h-full gap-0.5 transition-all duration-300 relative px-1",
                             isActive
-                                ? "text-primary-600 dark:text-primary-400"
-                                : "text-gray-400 dark:text-gray-500"
+                                ? "text-primary-600 dark:text-primary-400 scale-105"
+                                : "text-gray-400 dark:text-gray-500 opacity-70"
                         )}
                     >
                         {({ isActive }) => (
                             <>
                                 <div className={cn(
-                                    "p-1.5 rounded-xl transition-all duration-200",
-                                    isActive ? "bg-primary-50 dark:bg-primary-900/40" : ""
+                                    "p-2 rounded-2xl transition-all duration-300 relative group",
+                                    isActive 
+                                        ? "bg-gradient-to-br from-primary-500 to-indigo-600 text-white shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] dark:shadow-primary-500/20 ring-4 ring-primary-500/10" 
+                                        : "hover:bg-gray-100 dark:hover:bg-gray-800"
                                 )}>
                                     <item.icon
                                         size={20}
                                         strokeWidth={isActive ? 2.5 : 2}
                                     />
+                                    {/* Indicator Glow Dot */}
+                                    {isActive && (
+                                        <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border-2 border-white dark:border-gray-950 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                                    )}
                                 </div>
-                                <span className="text-[9px] font-bold truncate max-w-[3.5rem] text-center leading-none">{item.name}</span>
+                                <span className={cn(
+                                    "text-[9px] font-black truncate max-w-[3.5rem] text-center leading-none mt-1 transition-all duration-300",
+                                    isActive ? "text-slate-900 dark:text-white" : "text-slate-400"
+                                )}>
+                                    {item.name}
+                                </span>
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute top-1 right-1 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full">
+                                    <span className="absolute top-1 right-2 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full ring-2 ring-white dark:ring-gray-950 shadow-lg">
                                         {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
                                     </span>
                                 )}
