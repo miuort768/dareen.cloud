@@ -10,8 +10,7 @@ import {
     LayoutGrid,
     CheckCircle2,
     Plus,
-    Printer,
-    Sparkles
+    Printer
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
