@@ -534,19 +534,19 @@ const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) =
             whileHover={{ y: -5 }}
             onClick={onClick}
             className={cn(
-                "p-4 md:p-6 rounded-none border bg-gradient-to-br shadow-xl transition-all",
+                "p-3 md:p-6 rounded-none border bg-gradient-to-br shadow-xl transition-all",
                 colors[color],
                 onClick && "cursor-pointer"
             )}
         >
-            <div className="flex flex-col gap-4">
-                <div className={cn("w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-white/10 shadow-sm", iconStyles[color])}>
-                    <Icon size={24} strokeWidth={2} />
+            <div className="flex flex-col gap-3 md:gap-4">
+                <div className={cn("w-9 h-9 md:w-12 md:h-12 flex items-center justify-center border border-white/10 shadow-sm", iconStyles[color])}>
+                    <Icon size={18} md:size={24} strokeWidth={2} />
                 </div>
-                <div>
-                    <p className="text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 leading-none italic">{label}</p>
-                    <h3 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none">{value}</h3>
-                    {subValue && <p className="text-[8px] md:text-[10px] font-black text-primary-600 dark:text-primary-400 mt-2 italic uppercase tracking-widest leading-none">{subValue}</p>}
+                <div className="min-w-0 overflow-hidden">
+                    <p className="text-[7px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5 md:mb-1 leading-none italic">{label}</p>
+                    <h3 className="text-lg md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none truncate">{value}</h3>
+                    {subValue && <p className="text-[7px] md:text-[10px] font-black text-primary-600 dark:text-primary-400 mt-1 md:mt-2 italic uppercase tracking-widest leading-none">{subValue}</p>}
                 </div>
             </div>
         </motion.div>
