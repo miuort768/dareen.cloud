@@ -67,7 +67,7 @@ export const StudentDashboard = () => {
 
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
+    const { next } = getNextRank(points, STUDENT_RANKS);
 
     const weeklySchedule = useMemo(() => {
         if (!studentData) return [];
