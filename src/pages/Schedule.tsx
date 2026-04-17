@@ -361,9 +361,9 @@ export const Schedule = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="md:hidden space-y-6 px-4 font-black">
+            <div className="md:hidden space-y-6 px-3 font-black">
                 {/* Modern Day Picker */}
-                <div className="flex overflow-x-auto gap-3 pb-3 no-scrollbar sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md pt-2 -mx-4 px-4 border-b border-gray-200">
+                <div className="flex overflow-x-auto gap-2 pb-3 no-scrollbar sticky top-0 z-20 bg-gray-50/90 backdrop-blur-md pt-2 -mx-3 px-3 border-b border-gray-200">
                     {DAYS_OF_WEEK.map(day => {
                         const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                         return (
@@ -371,9 +371,9 @@ export const Schedule = () => {
                                 key={day}
                                 onClick={() => setMobileActiveDay(day)}
                                 className={cn(
-                                    "shrink-0 px-6 py-2.5 border-2 font-black text-[11px] uppercase transition-all duration-300 relative",
+                                    "shrink-0 px-4 py-2 border-2 font-black text-[10px] uppercase transition-all duration-300 relative",
                                     mobileActiveDay === day 
-                                        ? "bg-gray-950 text-white border-gray-950 shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] -translate-y-1" 
+                                        ? "bg-gray-950 text-white border-gray-950 shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]" 
                                         : "bg-white text-gray-400 border-gray-200"
                                 )}
                             >
@@ -387,16 +387,16 @@ export const Schedule = () => {
                 </div>
                 
                 {/* Timeline Container */}
-                <div className="space-y-6 relative before:absolute before:right-[53px] before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-primary-500/20 before:via-gray-200 before:to-transparent">
+                <div className="space-y-6 relative before:absolute before:right-[41px] before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-primary-500/30 before:via-gray-200 before:to-transparent">
                     {TIME_SLOTS.map(slot => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className="flex gap-4 pr-0 relative group">
-                                <div className="w-14 shrink-0 flex flex-col items-center">
-                                    <div className="bg-white border-2 border-gray-950 px-2 py-1 shadow-[2px_2px_0px_0px_black] z-10">
-                                        <span className="text-[10px] font-black text-gray-950 tracking-tighter whitespace-nowrap">{slot.label}</span>
+                            <div key={`${slot.hour}-${slot.period}`} className="flex gap-3 pr-0 relative group">
+                                <div className="w-12 shrink-0 flex flex-col items-center">
+                                    <div className="bg-white border-2 border-gray-950 px-1.5 py-0.5 shadow-[2px_2px_0px_0px_black] z-10">
+                                        <span className="text-[9px] font-black text-gray-950 tracking-tighter whitespace-nowrap">{slot.label}</span>
                                     </div>
-                                    <div className="w-4 h-4 rounded-full bg-gray-950 border-4 border-white mt-1.5 z-10 shadow-sm"></div>
+                                    <div className="w-3 h-3 rounded-full bg-gray-950 border-2 border-white mt-2 z-10 shadow-sm"></div>
                                 </div>
 
                                 <div className="flex-1 space-y-3 pb-2 pt-0.5">
@@ -408,31 +408,31 @@ export const Schedule = () => {
                                                     key={ev.id} 
                                                     onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
                                                     className={cn(
-                                                        "p-4 border-2 border-gray-950 shadow-[6px_6px_0px_0px_black] relative active:scale-[0.98] transition-all",
+                                                        "p-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] relative active:scale-[0.98] transition-all",
                                                         style.bg
                                                     )}
                                                 >
                                                     <div className="flex justify-between items-start mb-2">
                                                         <div className="flex items-center gap-2">
-                                                            <div className="w-8 h-8 bg-gray-950 border border-white flex items-center justify-center text-white shrink-0">
-                                                                <User size={14} />
+                                                            <div className="w-7 h-7 bg-gray-950 border border-white flex items-center justify-center text-white shrink-0">
+                                                                <User size={12} />
                                                             </div>
-                                                            <h3 className="text-sm font-black text-gray-950 leading-tight">{ev.studentName}</h3>
+                                                            <h3 className="text-[13px] font-black text-gray-950 leading-tight truncate max-w-[120px]">{ev.studentName}</h3>
                                                         </div>
-                                                        <div className="flex items-center gap-1 bg-white/40 px-2 py-1 border border-gray-950/10">
-                                                            <Zap size={10} className="text-yellow-600 fill-yellow-500" />
-                                                            <span className="text-[10px] font-black">{ev.studentPoints}</span>
+                                                        <div className="flex items-center gap-1 bg-white/40 px-1.5 py-0.5 border border-gray-950/10">
+                                                            <Zap size={9} className="text-yellow-600 fill-yellow-500" />
+                                                            <span className="text-[9px] font-black">{ev.studentPoints}</span>
                                                         </div>
                                                     </div>
 
                                                     <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-950/5">
                                                         <div className="flex items-center gap-1.5 overflow-hidden">
-                                                            <BookOpen size={12} className="text-primary-600 shrink-0" />
-                                                            <span className="text-[10px] font-bold truncate">{ev.subject}</span>
+                                                            <BookOpen size={10} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[9px] font-bold truncate">{ev.subject}</span>
                                                         </div>
                                                         <div className="flex items-center gap-1.5 overflow-hidden">
-                                                            <Users size={12} className="text-primary-600 shrink-0" />
-                                                            <span className="text-[10px] font-black truncate">{ev.teacherName}</span>
+                                                            <Users size={10} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[9px] font-black truncate">{ev.teacherName}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -444,14 +444,14 @@ export const Schedule = () => {
                                                 setEnrollData({...enrollData, day: mobileActiveDay, hour: String(slot.hour), period: slot.period}); 
                                                 setShowAddModal(true); 
                                             }}
-                                            className="group flex items-center gap-4 p-4 border-2 border-dashed border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer rounded-none active:bg-emerald-100"
+                                            className="group flex items-center gap-3 p-3 border-2 border-dashed border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer rounded-none active:bg-emerald-100"
                                         >
-                                            <div className="w-10 h-10 border-2 border-dashed border-gray-200 group-hover:border-emerald-500 flex items-center justify-center text-gray-300 group-hover:text-emerald-500 transition-colors">
-                                                <Plus size={18} />
+                                            <div className="w-8 h-8 border-2 border-dashed border-gray-200 group-hover:border-emerald-500 flex items-center justify-center text-gray-300 group-hover:text-emerald-500 transition-colors">
+                                                <Plus size={14} />
                                             </div>
                                             <div className="text-right">
-                                                <p className="text-[11px] font-black text-gray-400 group-hover:text-emerald-600 uppercase italic">فترة زمنية متاحة</p>
-                                                <p className="text-[9px] font-bold text-gray-300 group-hover:text-emerald-400">انقر هنا لحجز حصـة جديدة</p>
+                                                <p className="text-[10px] font-black text-gray-400 group-hover:text-emerald-600 uppercase italic">موعد متاح</p>
+                                                <p className="text-[8px] font-bold text-gray-300 group-hover:text-emerald-400">انقر هنا لحجز حصـة جديدة</p>
                                             </div>
                                         </div>
                                     )}
