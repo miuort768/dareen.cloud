@@ -29,25 +29,44 @@ export const StudentDashboard = () => {
     const todayDate = format(new Date(), 'dd MMMM yyyy', { locale: ar });
 
     useEffect(() => {
-        const socket = (window as any).socket;
-        if (!socket || currentUser?.role !== 'student') return;
+        let socket = (window as any).socket;
+        let retryCount = 0;
+        let timeoutId: any;
 
-        const handleInvite = (data: any) => {
-            console.log("🔥 StudentDashboard: Session invite received", data);
-            setLiveSession(data);
+        const setupListeners = () => {
+            socket = (window as any).socket;
+            if (!socket && retryCount < 10) {
+                retryCount++;
+                timeoutId = setTimeout(setupListeners, 1000); // Retry every second for 10 seconds
+                return;
+            }
+
+            if (!socket || currentUser?.role !== 'student') return;
+
+            const handleInvite = (data: any) => {
+                console.log("🔥 [Socket] StudentDashboard: Session invite received", data);
+                setLiveSession(data);
+            };
+
+            const handleEnd = () => {
+                console.log("❄️ [Socket] StudentDashboard: Session ended");
+                setLiveSession(null);
+            };
+
+            socket.on('session_invite', handleInvite);
+            socket.on('session_ended', handleEnd);
+
+            return () => {
+                socket.off('session_invite', handleInvite);
+                socket.off('session_ended', handleEnd);
+            };
         };
 
-        const handleEnd = () => {
-            console.log("❄️ StudentDashboard: Session ended");
-            setLiveSession(null);
-        };
-
-        socket.on('session_invite', handleInvite);
-        socket.on('session_ended', handleEnd);
+        const cleanup = setupListeners();
 
         return () => {
-            socket.off('session_invite', handleInvite);
-            socket.off('session_ended', handleEnd);
+            if (timeoutId) clearTimeout(timeoutId);
+            if (cleanup) cleanup();
         };
     }, [currentUser]);
 

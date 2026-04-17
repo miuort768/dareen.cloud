@@ -168,9 +168,10 @@ export const Schedule = () => {
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص'].includes(normalizedPeriod);
+                        const sId = student.id || (student as any)._id;
                         return {
-                            id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
-                            studentId: student.id,
+                            id: `${sId}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                            studentId: sId,
                             studentName: student.name,
                             studentGrade: student.grade,
                             teacherName: (enrollment.teacher || '').trim(),

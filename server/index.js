@@ -361,8 +361,10 @@ async function startServer() {
             // --- New: Direct Session Invites ---
             socket.on('call_student', (data) => {
                 // data: { studentId, teacherId, teacherName, subject, type }
-                console.log(`   📞 Teacher ${user.name} calling student ${data.studentId}`);
-                socket.to(`user_${data.studentId}`).emit('session_invite', {
+                const targetRoom = `user_${data.studentId}`;
+                console.log(`   📞 [IO] Teacher ${user.name} calling student ${data.studentId} in room ${targetRoom}`);
+                
+                socket.to(targetRoom).emit('session_invite', {
                     teacherId: user.id,
                     teacherName: user.name,
                     subject: data.subject,
@@ -372,7 +374,9 @@ async function startServer() {
             });
 
             socket.on('end_session', (data) => {
-                socket.to(`user_${data.studentId}`).emit('session_ended', {
+                const targetRoom = `user_${data.studentId}`;
+                console.log(`   ❄️ [IO] Teacher ${user.name} ending session for student ${data.studentId}`);
+                socket.to(targetRoom).emit('session_ended', {
                     teacherId: user.id
                 });
             });

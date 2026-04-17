@@ -59,6 +59,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const socket = socketService.getSocket();
         if (!socket) return;
+        (window as any).socket = socket;
 
         // Ensure currentUserId is a string for consistent cache keys
         const currentUserId = String(currentUser.id);
