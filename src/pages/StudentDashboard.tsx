@@ -100,7 +100,7 @@ export const StudentDashboard = () => {
         <div className="space-y-8 pb-32" dir="rtl">
 
             {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 lg:p-12 shadow-2xl shadow-indigo-500/20">
+            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 lg:p-12 shadow-2xl shadow-indigo-500/20 border-l border-t border-white/10">
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
@@ -110,16 +110,16 @@ export const StudentDashboard = () => {
                 <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
                     <div className="flex items-center gap-6">
                         <motion.div 
-                            whileHover={{ scale: 1.05, rotate: 5 }}
-                            className="w-24 h-24 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-3xl shadow-lg shadow-primary-500/30"
+                            whileHover={{ scale: 1.05 }}
+                            className="w-24 h-24 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/30"
                         >
-                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-[inherit] flex items-center justify-center border border-white/20">
+                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
                                 <GraduationCap size={48} className="text-white" strokeWidth={1.5} />
                             </div>
                         </motion.div>
                         <div>
                             <div className="flex items-center gap-3 mb-3">
-                                <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-full border border-white/10">مركز العمليات</span>
+                                <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
                                 <RankBadge rank={rank} size="sm" />
                             </div>
                             <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">أهلاً يا بطل، {studentData?.name}</h1>
@@ -133,7 +133,7 @@ export const StudentDashboard = () => {
                     <motion.div 
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-5 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] min-w-[260px] shadow-inner"
+                        className="flex items-center gap-5 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-none min-w-[260px] shadow-inner"
                     >
                         <div className="flex-1 text-right">
                             <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">نقاط التميز</span>
@@ -154,7 +154,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex p-1.5 bg-slate-100 dark:bg-slate-900/50 rounded-[2rem] border border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
+            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 rounded-none border border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
                 {[
                     { key: 'overview', label: 'نظرة عامة', icon: Activity },
                     { key: 'schedule', label: 'الجدول', icon: CalendarDays },
@@ -165,9 +165,9 @@ export const StudentDashboard = () => {
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key as any)}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all whitespace-nowrap",
+                            "flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-none font-bold text-sm transition-all whitespace-nowrap",
                             activeTab === tab.key
-                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-xl shadow-primary-500/10 scale-[1.02]"
+                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-xl shadow-primary-500/10"
                                 : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                         )}
                     >
@@ -184,10 +184,10 @@ export const StudentDashboard = () => {
                     <div className="lg:col-span-8 space-y-8">
                         
                         {/* Performance Bars */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800 p-8 rounded-[2.5rem] shadow-2xl shadow-emerald-500/20 text-white">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800 p-8 rounded-none shadow-2xl shadow-emerald-500/20 text-white">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-none blur-3xl -translate-y-1/2 translate-x-1/2" />
                             <div className="flex items-center gap-4 mb-10">
-                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
+                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
                                     <TrendingUp size={24} />
                                 </div>
                                 <h3 className="text-2xl font-black tracking-tight">مستشار الإنجاز</h3>
@@ -200,7 +200,7 @@ export const StudentDashboard = () => {
                         </div>
 
                         {/* Today's Schedule */}
-                        <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                        <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                             <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
                                 <h4 className="font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                                     <CalendarDays className="text-primary-600" size={24} /> مهام اليوم ({todayArabic})
@@ -210,9 +210,9 @@ export const StudentDashboard = () => {
                                 {todaySchedule.length > 0 ? todaySchedule.map((dayData, idx) => (
                                     <div key={idx} className="space-y-4">
                                         {dayData.slots.map((slot, sIdx) => (
-                                            <div key={sIdx} className="group bg-slate-50 dark:bg-slate-800/30 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between transition-all hover:shadow-lg hover:shadow-primary-500/5 hover:-translate-x-1">
+                                            <div key={sIdx} className="group bg-slate-50 dark:bg-slate-800/30 p-5 rounded-none border border-slate-100 dark:border-slate-800 flex items-center justify-between transition-all hover:shadow-lg hover:shadow-primary-500/5">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                                    <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center shadow-sm">
                                                         <Target size={20} className="text-primary-600" />
                                                     </div>
                                                     <div>
@@ -220,7 +220,7 @@ export const StudentDashboard = () => {
                                                         <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{slot.teacher}</span>
                                                     </div>
                                                 </div>
-                                                <div className="px-4 py-2 bg-primary-600/10 text-primary-600 rounded-xl text-xs font-black">
+                                                <div className="px-4 py-2 bg-primary-600/10 text-primary-600 rounded-none text-xs font-black">
                                                     {slot.time} {slot.period === 'am' ? 'صباحاً' : 'مساءً'}
                                                 </div>
                                             </div>
@@ -228,7 +228,7 @@ export const StudentDashboard = () => {
                                     </div>
                                 )) : (
                                     <div className="py-20 flex flex-col items-center justify-center text-center">
-                                        <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-6">
+                                        <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-none flex items-center justify-center mb-6">
                                             <Clock size={40} className="text-slate-400" />
                                         </div>
                                         <p className="text-sm font-bold text-slate-500 dark:text-slate-400">لا توجد مهام اليوم - استمتع ببعض الراحة!</p>
@@ -248,17 +248,17 @@ export const StudentDashboard = () => {
                         </div>
 
                         {/* Points Activity */}
-                        <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl overflow-hidden relative">
+                        <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-200 dark:border-slate-800 p-8 shadow-xl overflow-hidden relative">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-500 to-transparent" />
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-2xl flex items-center justify-center ring-4 ring-rose-500/20">
+                                <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-none flex items-center justify-center ring-4 ring-rose-500/20">
                                     <Activity size={24} strokeWidth={2} />
                                 </div>
                                 <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">آخر النشاطات</h3>
                             </div>
                             <div className="space-y-4">
                                 {pointLogs.slice(0, 4).map((log, i) => (
-                                    <div key={i} className="group p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all">
+                                    <div key={i} className="group p-4 bg-slate-50 dark:bg-slate-800/30 rounded-none border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all">
                                         <div className="flex justify-between items-center mb-1">
                                             <span className="text-xs font-bold text-slate-900 dark:text-slate-200">{log.action || 'مكافأة'}</span>
                                             <span className="text-xl font-black text-emerald-600">+{log.amount}</span>
@@ -276,10 +276,10 @@ export const StudentDashboard = () => {
                         </div>
 
                         {/* Support Card */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-[2.5rem] shadow-2xl shadow-indigo-500/10 text-white">
-                            <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl" />
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-none shadow-2xl shadow-indigo-500/10 text-white">
+                            <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary-500/10 rounded-none blur-3xl" />
                             <div className="flex items-center gap-4 mb-8">
-                                <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-lg">
+                                <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20 shadow-lg">
                                     <Headset size={28} strokeWidth={1.5} />
                                 </div>
                                 <div className="text-right">
@@ -289,7 +289,7 @@ export const StudentDashboard = () => {
                             </div>
                             <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="w-full py-4 bg-white text-slate-950 rounded-2xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:bg-slate-50 transition-all hover:scale-[1.02]">
+                                className="w-full py-4 bg-white text-slate-950 rounded-none text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:bg-slate-50 transition-all">
                                 تواصل عبر الواتساب <MessageSquare size={16} strokeWidth={2.5} />
                             </a>
                         </div>
@@ -298,10 +298,10 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'schedule' && (
-                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                     <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
                         <h4 className="font-black text-2xl tracking-tight text-slate-900 dark:text-white flex items-center gap-4">
-                            <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-2xl flex items-center justify-center ring-4 ring-emerald-500/20">
+                            <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-none flex items-center justify-center ring-4 ring-emerald-500/20">
                                 <CalendarDays size={28} />
                             </div>
                             الجدول الأسبوعي الكامل
@@ -310,24 +310,24 @@ export const StudentDashboard = () => {
                     <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {weeklySchedule.length > 0 ? weeklySchedule.map((dayData, idx) => (
                             <div key={idx} className={cn(
-                                "rounded-[2rem] p-6 border transition-all",
+                                "rounded-none p-6 border transition-all",
                                 dayData.day === todayArabic 
                                     ? "bg-primary-50/30 dark:bg-primary-600/5 border-primary-500/30 shadow-lg shadow-primary-500/5" 
                                     : "bg-slate-50 dark:bg-slate-800/30 border-slate-100 dark:border-slate-800 shadow-sm"
                             )}>
                                 <div className="flex items-center gap-4 mb-6 pb-4 border-b dark:border-slate-700/50">
-                                    <div className="w-10 h-10 bg-slate-900 dark:bg-slate-700 text-white rounded-xl flex items-center justify-center font-black text-lg">{dayData.day.substring(0, 1)}</div>
+                                    <div className="w-10 h-10 bg-slate-900 dark:bg-slate-700 text-white rounded-none flex items-center justify-center font-black text-lg">{dayData.day.substring(0, 1)}</div>
                                     <h5 className="text-xl font-black text-slate-900 dark:text-white">{dayData.day}</h5>
-                                    {dayData.day === todayArabic && <span className="mr-auto px-3 py-1 bg-primary-600 text-white text-[10px] font-bold rounded-full">اليوم</span>}
+                                    {dayData.day === todayArabic && <span className="mr-auto px-3 py-1 bg-primary-600 text-white text-[10px] font-bold rounded-none">اليوم</span>}
                                 </div>
                                 <div className="space-y-3">
                                     {dayData.slots.map((slot, sIdx) => (
-                                        <div key={sIdx} className="bg-white dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <div key={sIdx} className="bg-white dark:bg-slate-900/50 p-4 rounded-none border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                                             <div>
                                                 <span className="text-sm font-bold text-slate-900 dark:text-white block">{slot.subject}</span>
                                                 <span className="text-[10px] text-slate-400 font-medium">{slot.teacher}</span>
                                             </div>
-                                            <div className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-lg text-[10px] font-black">
+                                            <div className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-none text-[10px] font-black">
                                                 {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
                                             </div>
                                         </div>
@@ -336,7 +336,7 @@ export const StudentDashboard = () => {
                             </div>
                         )) : (
                             <div className="col-span-full py-20 text-center">
-                                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-none flex items-center justify-center mx-auto mb-6">
                                     <CalendarDays size={48} className="text-slate-300" />
                                 </div>
                                 <p className="text-sm font-medium text-slate-400">لا يوجد جدول مسجل حالياً</p>
@@ -347,10 +347,10 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'sessions' && (
-                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
                     <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
                         <h4 className="font-black text-2xl tracking-tight text-slate-900 dark:text-white flex items-center gap-4">
-                            <div className="w-12 h-12 bg-indigo-500/10 text-indigo-600 rounded-2xl flex items-center justify-center ring-4 ring-indigo-500/20">
+                            <div className="w-12 h-12 bg-indigo-500/10 text-indigo-600 rounded-none flex items-center justify-center ring-4 ring-indigo-500/20">
                                 <BookOpen size={28} />
                             </div>
                             سجل الحصص السابقة
@@ -361,7 +361,7 @@ export const StudentDashboard = () => {
                             <div key={i} className="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                 <div className="flex items-center gap-5">
                                     <div className={cn(
-                                        "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-110",
+                                        "w-12 h-12 rounded-none flex items-center justify-center shadow-lg transition-transform",
                                         session.status === 'completed' ? "bg-emerald-500 text-white" : session.status === 'cancelled' ? "bg-rose-500 text-white" : "bg-primary-500 text-white"
                                     )}>
                                         {session.status === 'completed' ? <CheckCircle2 size={24} /> : session.status === 'cancelled' ? <XCircle size={24} /> : <Play size={24} />}
@@ -372,7 +372,7 @@ export const StudentDashboard = () => {
                                     </div>
                                 </div>
                                 <div className={cn(
-                                    "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider",
+                                    "px-4 py-2 rounded-none text-[10px] font-black uppercase tracking-wider",
                                     session.status === 'completed' ? "bg-emerald-500/10 text-emerald-600" : session.status === 'cancelled' ? "bg-rose-500/10 text-rose-600" : "bg-primary-500/10 text-primary-600"
                                 )}>
                                     {session.status === 'completed' ? 'حضور ✓' : session.status === 'cancelled' ? 'غياب ✗' : 'قادمة'}
@@ -402,16 +402,16 @@ export const StudentDashboard = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
                                 className={cn(
-                                    "p-8 rounded-[2.5rem] border relative shadow-xl transition-all hover:shadow-2xl overflow-hidden",
+                                    "p-8 rounded-none border relative shadow-xl transition-all hover:shadow-2xl overflow-hidden",
                                     en.isFrozen ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800" : 
                                     isLow ? "bg-rose-50/50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800" : 
                                     "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800"
                                 )}
                             >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-500/5 to-transparent rounded-full -translate-y-16 translate-x-16" />
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-500/5 to-transparent rounded-none -translate-y-16 translate-x-16" />
                                 
                                 {en.isFrozen && (
-                                    <div className="absolute top-5 left-5 flex items-center gap-1.5 text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-full shadow-lg">
+                                    <div className="absolute top-5 left-5 flex items-center gap-1.5 text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-none shadow-lg">
                                         <Snowflake size={14} className="animate-spin-slow" /> مُجمّد مؤقتاً
                                     </div>
                                 )}
@@ -422,7 +422,7 @@ export const StudentDashboard = () => {
                                         <p className="text-xs font-bold text-slate-500 dark:text-slate-400">مع المعلمة: {en.teacher}</p>
                                     </div>
                                     <div className={cn(
-                                        "px-5 py-2.5 rounded-2xl font-black text-base shadow-lg",
+                                        "px-5 py-2.5 rounded-none font-black text-base shadow-lg",
                                         isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white shadow-emerald-500/20"
                                     )}>
                                         {remaining} حصة
@@ -433,7 +433,7 @@ export const StudentDashboard = () => {
                                 <div className="flex flex-wrap gap-2 mb-8 relative z-10">
                                     {[...Array(Math.min(en.sessionsTotal, 20))].map((_, idx) => (
                                         <div key={idx} className={cn(
-                                            "w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-black border transition-all",
+                                            "w-8 h-8 rounded-none flex items-center justify-center text-[10px] font-black border transition-all",
                                             idx < en.sessionsUsed 
                                                 ? "bg-emerald-500 border-emerald-400 text-white shadow-sm" 
                                                 : "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-300 dark:text-slate-600"
@@ -445,8 +445,8 @@ export const StudentDashboard = () => {
                                 </div>
 
                                 {/* Progress level */}
-                                <div className="relative h-6 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden p-1 border dark:border-slate-700">
-                                    <div className={cn("h-full rounded-lg transition-all shadow-md", isLow ? "bg-rose-600" : "bg-primary-600")} style={{ width: `${progress}%` }} />
+                                <div className="relative h-6 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden p-1 border dark:border-slate-700">
+                                    <div className={cn("h-full rounded-none transition-all shadow-md", isLow ? "bg-rose-600" : "bg-primary-600")} style={{ width: `${progress}%` }} />
                                     <span className="absolute inset-0 flex items-center justify-center text-[9px] font-black text-slate-900 dark:text-white mix-blend-difference">{progress}%</span>
                                 </div>
                                 <div className="flex justify-between mt-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -458,7 +458,7 @@ export const StudentDashboard = () => {
                                     <motion.div 
                                         animate={{ scale: [1, 1.02, 1] }}
                                         transition={{ repeat: Infinity, duration: 2 }}
-                                        className="mt-6 flex items-center gap-2 text-[11px] font-black text-rose-600 bg-rose-500/10 p-3 rounded-2xl border border-rose-200/50"
+                                        className="mt-6 flex items-center gap-2 text-[11px] font-black text-rose-600 bg-rose-500/10 p-3 rounded-none border border-rose-200/50"
                                     >
                                         <AlertCircle size={16} />
                                         تنبيه: الرصيد شارف على الانتهاء، يرجى التجديد قريباً.
@@ -495,9 +495,9 @@ const StatCard = ({ icon: Icon, label, value, color }: any) => {
         rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-6 rounded-[2rem] border shadow-xl transition-all", colors[color])}>
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-6 rounded-none border shadow-xl transition-all", colors[color])}>
             <div className="flex items-center gap-4 mb-4">
-                <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center ring-4", iconStyles[color])}>
+                <div className={cn("w-12 h-12 rounded-none flex items-center justify-center ring-4", iconStyles[color])}>
                     <Icon size={24} strokeWidth={2} />
                 </div>
                 <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{label}</span>
@@ -513,9 +513,9 @@ const ProgressBar = ({ label, value, color }: { label: string; value: number; co
             <span className="text-xs font-bold text-white/70 uppercase tracking-widest">{label}</span>
             <span className="text-2xl font-black text-white">{value}%</span>
         </div>
-        <div className="w-full h-4 bg-black/20 rounded-full relative overflow-hidden p-0.5">
+        <div className="w-full h-4 bg-black/20 rounded-none relative overflow-hidden p-0.5">
             <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ duration: 1.5, ease: 'easeOut' }}
-                className={cn("absolute top-0 right-0 h-full rounded-full shadow-lg", color)} 
+                className={cn("absolute top-0 right-0 h-full rounded-none shadow-lg", color)} 
                 style={{ 
                     boxShadow: '0 0 15px rgba(255,255,255,0.3)',
                     backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)'
@@ -532,8 +532,8 @@ const QuickLink = ({ icon: Icon, label, color, onClick }: any) => {
     };
     return (
         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onClick}
-            className={cn("p-6 rounded-[2rem] flex flex-col items-center gap-3 text-center transition-all shadow-xl", colors[color])}>
-            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/20">
+            className={cn("p-6 rounded-none flex flex-col items-center gap-3 text-center transition-all shadow-xl", colors[color])}>
+            <div className="w-12 h-12 bg-white/20 rounded-none flex items-center justify-center backdrop-blur-md border border-white/20">
                 <Icon size={24} strokeWidth={2.5} />
             </div>
             <p className="text-xs font-black uppercase tracking-tight">{label}</p>
