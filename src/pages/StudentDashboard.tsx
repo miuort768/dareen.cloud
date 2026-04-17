@@ -99,37 +99,49 @@ export const StudentDashboard = () => {
     return (
         <div className="space-y-8 pb-32" dir="rtl">
 
-            {/* ═══════════════ TACTICAL HEADER ═══════════════ */}
-            <div className="relative bg-gray-950 p-6 lg:p-10 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#3b82f6] overflow-hidden">
-                <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '25px 25px' }} />
+            {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 lg:p-12 shadow-2xl shadow-indigo-500/20">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
+                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary-500/20 rounded-full blur-[100px]" />
+                <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-[100px]" />
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-5">
-                        <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ repeat: Infinity, duration: 4 }}
-                            className="w-20 h-20 bg-primary-600 text-white border-[4px] border-gray-950 shadow-[4px_4px_0px_0px_white] flex items-center justify-center transform -rotate-2">
-                            <GraduationCap size={44} strokeWidth={2.5} />
+                <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+                    <div className="flex items-center gap-6">
+                        <motion.div 
+                            whileHover={{ scale: 1.05, rotate: 5 }}
+                            className="w-24 h-24 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-3xl shadow-lg shadow-primary-500/30"
+                        >
+                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-[inherit] flex items-center justify-center border border-white/20">
+                                <GraduationCap size={48} className="text-white" strokeWidth={1.5} />
+                            </div>
                         </motion.div>
                         <div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="px-2.5 py-0.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest italic border-b border-white">مركز عمليات الطالب</span>
+                            <div className="flex items-center gap-3 mb-3">
+                                <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-full border border-white/10">مركز العمليات</span>
                                 <RankBadge rank={rank} size="sm" />
                             </div>
-                            <h1 className="text-2xl md:text-4xl font-black text-white tracking-tighter uppercase italic leading-none mb-2">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-gray-400 text-xs font-black flex items-center gap-2 uppercase tracking-wider">
-                                <Zap size={14} className="text-yellow-400" /> {todayArabic} • {todayDate}
+                            <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-sm font-medium flex items-center gap-2 mt-1">
+                                <Clock size={16} className="text-primary-400" /> {todayArabic} • {todayDate}
                             </p>
                         </div>
                     </div>
 
                     {/* Points & Rank Card */}
-                    <div className="flex items-center gap-4 bg-white/5 border-4 border-white/10 p-5 min-w-[220px]">
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-5 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] min-w-[260px] shadow-inner"
+                    >
                         <div className="flex-1 text-right">
-                            <span className="block text-[10px] font-black text-gray-500 uppercase tracking-[3px] mb-1">رصيد النقاط</span>
-                            <div className="text-3xl font-black text-white italic leading-none">{points} <span className="text-xs text-primary-400">نقطة</span></div>
-                            {next && <div className="text-[9px] text-gray-500 mt-1 font-bold">متبقي {pointsNeeded} للترقية لـ {next.name}</div>}
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">نقاط التميز</span>
+                            <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
+                            {next && <div className="text-[10px] text-slate-500 mt-2 font-medium">متبقي <span className="text-amber-400">{pointsNeeded}</span> لرتبة {next.name}</div>}
                         </div>
-                        <div className="text-3xl">{rank.icon}</div>
-                    </div>
+                        <div className="text-4xl filter drop-shadow-md">{rank.icon}</div>
+                    </motion.div>
                 </div>
             </div>
 
@@ -142,24 +154,24 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex flex-wrap lg:flex-nowrap gap-4 w-full">
+            <div className="flex p-1.5 bg-slate-100 dark:bg-slate-900/50 rounded-[2rem] border border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar">
                 {[
                     { key: 'overview', label: 'نظرة عامة', icon: Activity },
-                    { key: 'schedule', label: 'الجدول الأسبوعي', icon: CalendarDays },
-                    { key: 'sessions', label: 'سجل الحصص', icon: BookOpen },
-                    { key: 'subjects', label: 'المواد والاشتراكات', icon: GraduationCap },
+                    { key: 'schedule', label: 'الجدول', icon: CalendarDays },
+                    { key: 'sessions', label: 'الحصص', icon: BookOpen },
+                    { key: 'subjects', label: 'الاشتراكات', icon: GraduationCap },
                 ].map(tab => (
                     <button
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key as any)}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-3 px-6 py-4 font-black text-sm uppercase tracking-wider border-4 border-gray-950 transition-all min-w-[160px]",
+                            "flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all whitespace-nowrap",
                             activeTab === tab.key
-                                ? "bg-gray-950 text-white shadow-[6px_6px_0px_0px_#3b82f6] -translate-y-1"
-                                : "bg-white text-gray-600 hover:bg-gray-50 shadow-[6px_6px_0px_0px_black] hover:-translate-y-0.5"
+                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-xl shadow-primary-500/10 scale-[1.02]"
+                                : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                         )}
                     >
-                        <tab.icon size={20} /> {tab.label}
+                        <tab.icon size={18} /> {tab.label}
                     </button>
                 ))}
             </div>
@@ -172,49 +184,54 @@ export const StudentDashboard = () => {
                     <div className="lg:col-span-8 space-y-8">
                         
                         {/* Performance Bars */}
-                        <div className="bg-gray-950 p-8 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#10b981] text-white">
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="p-2 bg-white text-gray-950 transform -rotate-3 border-2 border-gray-950"><TrendingUp size={20} strokeWidth={3} /></div>
-                                <h3 className="text-xl font-black uppercase italic tracking-tighter">مؤشر الأداء</h3>
+                        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800 p-8 rounded-[2.5rem] shadow-2xl shadow-emerald-500/20 text-white">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
+                                    <TrendingUp size={24} />
+                                </div>
+                                <h3 className="text-2xl font-black tracking-tight">مستشار الإنجاز</h3>
                             </div>
-                            <div className="space-y-8">
-                                <ProgressBar label="معدل الحضور" value={stats.attendanceRate} color="bg-emerald-500" />
-                                <ProgressBar label="التقدم في الحصص" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} color="bg-primary-500" />
-                                {next && <ProgressBar label={`التقدم نحو ${next.name}`} value={Math.min(Math.round((points / next.minPoints) * 100), 100)} color="bg-yellow-400" />}
+                            <div className="space-y-10">
+                                <ProgressBar label="معدل الحضور" value={stats.attendanceRate} color="bg-white" />
+                                <ProgressBar label="التقدم الدراسي" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} color="bg-white/90" />
+                                {next && <ProgressBar label={`التقدم نحو ${next.name}`} value={Math.min(Math.round((points / next.minPoints) * 100), 100)} color="bg-yellow-300" />}
                             </div>
                         </div>
 
                         {/* Today's Schedule */}
-                        <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#3b82f6] overflow-hidden">
-                            <div className="p-5 border-b-[6px] border-gray-950 bg-primary-50 flex items-center justify-between">
-                                <h4 className="font-black text-lg uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic">
+                        <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                            <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
+                                <h4 className="font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                                     <CalendarDays className="text-primary-600" size={24} /> مهام اليوم ({todayArabic})
                                 </h4>
                             </div>
-                            <div className="p-6">
+                            <div className="p-8">
                                 {todaySchedule.length > 0 ? todaySchedule.map((dayData, idx) => (
-                                    <div key={idx} className="space-y-3">
+                                    <div key={idx} className="space-y-4">
                                         {dayData.slots.map((slot, sIdx) => (
-                                            <div key={sIdx} className="bg-gray-50 p-4 border-2 border-gray-950 flex items-center justify-between shadow-[3px_3px_0px_0px_black] hover:translate-x-1 transition-all">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center shadow-[2px_2px_0px_0px_black]">
-                                                        <Target size={18} className="text-primary-600" />
+                                            <div key={sIdx} className="group bg-slate-50 dark:bg-slate-800/30 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between transition-all hover:shadow-lg hover:shadow-primary-500/5 hover:-translate-x-1">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                                                        <Target size={20} className="text-primary-600" />
                                                     </div>
                                                     <div>
-                                                        <span className="text-sm font-black text-gray-950 block">{slot.subject}</span>
-                                                        <span className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">{slot.teacher}</span>
+                                                        <span className="text-base font-bold text-slate-900 dark:text-white block">{slot.subject}</span>
+                                                        <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{slot.teacher}</span>
                                                     </div>
                                                 </div>
-                                                <div className="px-3 py-1.5 bg-gray-950 text-white text-[10px] font-black">
+                                                <div className="px-4 py-2 bg-primary-600/10 text-primary-600 rounded-xl text-xs font-black">
                                                     {slot.time} {slot.period === 'am' ? 'صباحاً' : 'مساءً'}
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 )) : (
-                                    <div className="py-16 flex flex-col items-center justify-center opacity-40 text-center">
-                                        <Clock size={40} className="mb-3" />
-                                        <p className="text-xs font-black uppercase tracking-[4px]">لا توجد مهام اليوم - استمتع بإجازتك!</p>
+                                    <div className="py-20 flex flex-col items-center justify-center text-center">
+                                        <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-6">
+                                            <Clock size={40} className="text-slate-400" />
+                                        </div>
+                                        <p className="text-sm font-bold text-slate-500 dark:text-slate-400">لا توجد مهام اليوم - استمتع ببعض الراحة!</p>
                                     </div>
                                 )}
                             </div>
@@ -231,47 +248,49 @@ export const StudentDashboard = () => {
                         </div>
 
                         {/* Points Activity */}
-                        <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#ef4444] p-6 overflow-hidden">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="p-2 bg-rose-600 text-white transform -rotate-3 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                                    <Activity size={18} strokeWidth={3} />
+                        <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 p-8 shadow-xl overflow-hidden relative">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-500 to-transparent" />
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-2xl flex items-center justify-center ring-4 ring-rose-500/20">
+                                    <Activity size={24} strokeWidth={2} />
                                 </div>
-                                <h3 className="text-lg font-black text-gray-950 uppercase italic tracking-tighter">آخر التحديثات</h3>
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">آخر النشاطات</h3>
                             </div>
                             <div className="space-y-4">
                                 {pointLogs.slice(0, 4).map((log, i) => (
-                                    <div key={i} className="p-3 bg-gray-50 border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
+                                    <div key={i} className="group p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all">
                                         <div className="flex justify-between items-center mb-1">
-                                            <span className="text-[10px] font-black text-gray-950 uppercase italic">{log.action || 'نقاط'}</span>
-                                            <span className="text-lg font-black text-emerald-600 italic">+{log.amount}</span>
+                                            <span className="text-xs font-bold text-slate-900 dark:text-slate-200">{log.action || 'مكافأة'}</span>
+                                            <span className="text-xl font-black text-emerald-600">+{log.amount}</span>
                                         </div>
-                                        <span className="text-[9px] text-gray-400 font-bold">{log.timestamp ? format(new Date(log.timestamp), 'dd/MM HH:mm') : ''}</span>
+                                        <span className="text-[10px] text-slate-400 font-medium">{log.timestamp ? format(new Date(log.timestamp), 'dd/MM HH:mm', { locale: ar }) : ''}</span>
                                     </div>
                                 ))}
                                 {pointLogs.length === 0 && (
-                                    <div className="py-10 text-center border-4 border-dashed border-gray-100 opacity-40">
-                                        <Star size={28} className="mx-auto mb-2" />
-                                        <p className="text-[9px] font-black uppercase tracking-widest">لم تحصل على نقاط بعد</p>
+                                    <div className="py-12 text-center">
+                                        <Star size={32} className="mx-auto mb-3 text-slate-200 dark:text-slate-700" />
+                                        <p className="text-xs font-medium text-slate-400">ابدأ في حضور الحصص لتجمع النقاط!</p>
                                     </div>
                                 )}
                             </div>
                         </div>
 
                         {/* Support Card */}
-                        <div className="bg-gray-950 p-6 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#3b82f6] text-white">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-10 h-10 bg-white text-gray-950 flex items-center justify-center border-4 border-white transform rotate-6">
-                                    <Headset size={20} strokeWidth={3} />
+                        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-[2.5rem] shadow-2xl shadow-indigo-500/10 text-white">
+                            <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl" />
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-lg">
+                                    <Headset size={28} strokeWidth={1.5} />
                                 </div>
-                                <div>
-                                    <h4 className="text-sm font-black uppercase italic tracking-tighter leading-none mb-1">الدعم الفوري</h4>
-                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">تواصل مع المشرف</p>
+                                <div className="text-right">
+                                    <h4 className="text-lg font-black tracking-tight leading-none mb-1">الدعم التعليمي</h4>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">متاح للرد على استفساراتك</p>
                                 </div>
                             </div>
                             <a href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="bg-white text-gray-950 w-full py-3 text-[10px] font-black uppercase tracking-[4px] flex items-center justify-center gap-2 border-b-4 border-primary-600 hover:bg-primary-50 transition-colors">
-                                تواصل الآن <MessageSquare size={14} strokeWidth={3} />
+                                className="w-full py-4 bg-white text-slate-950 rounded-2xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:bg-slate-50 transition-all hover:scale-[1.02]">
+                                تواصل عبر الواتساب <MessageSquare size={16} strokeWidth={2.5} />
                             </a>
                         </div>
                     </div>
@@ -279,31 +298,36 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'schedule' && (
-                <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#10b981] overflow-hidden">
-                    <div className="p-5 border-b-[6px] border-gray-950 bg-emerald-50">
-                        <h4 className="font-black text-xl uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic">
-                            <CalendarDays className="text-emerald-600" size={28} /> الجدول الأسبوعي الكامل
+                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                    <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+                        <h4 className="font-black text-2xl tracking-tight text-slate-900 dark:text-white flex items-center gap-4">
+                            <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-2xl flex items-center justify-center ring-4 ring-emerald-500/20">
+                                <CalendarDays size={28} />
+                            </div>
+                            الجدول الأسبوعي الكامل
                         </h4>
                     </div>
-                    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {weeklySchedule.length > 0 ? weeklySchedule.map((dayData, idx) => (
                             <div key={idx} className={cn(
-                                "border-4 border-gray-950 p-5 shadow-[6px_6px_0px_0px_black]",
-                                dayData.day === todayArabic ? "bg-primary-50 border-primary-600 shadow-[6px_6px_0px_0px_#3b82f6]" : "bg-white"
+                                "rounded-[2rem] p-6 border transition-all",
+                                dayData.day === todayArabic 
+                                    ? "bg-primary-50/30 dark:bg-primary-600/5 border-primary-500/30 shadow-lg shadow-primary-500/5" 
+                                    : "bg-slate-50 dark:bg-slate-800/30 border-slate-100 dark:border-slate-800 shadow-sm"
                             )}>
-                                <div className="flex items-center gap-3 mb-5 font-black text-gray-950 border-b-4 border-gray-100 pb-3">
-                                    <div className="w-9 h-9 bg-gray-950 text-white flex items-center justify-center transform -rotate-3 text-sm">{dayData.day.substring(0, 1)}</div>
-                                    <h5 className="text-lg">{dayData.day}</h5>
-                                    {dayData.day === todayArabic && <span className="px-2 py-0.5 bg-primary-600 text-white text-[8px] font-black uppercase">اليوم</span>}
+                                <div className="flex items-center gap-4 mb-6 pb-4 border-b dark:border-slate-700/50">
+                                    <div className="w-10 h-10 bg-slate-900 dark:bg-slate-700 text-white rounded-xl flex items-center justify-center font-black text-lg">{dayData.day.substring(0, 1)}</div>
+                                    <h5 className="text-xl font-black text-slate-900 dark:text-white">{dayData.day}</h5>
+                                    {dayData.day === todayArabic && <span className="mr-auto px-3 py-1 bg-primary-600 text-white text-[10px] font-bold rounded-full">اليوم</span>}
                                 </div>
                                 <div className="space-y-3">
                                     {dayData.slots.map((slot, sIdx) => (
-                                        <div key={sIdx} className="bg-gray-50 p-3 border-2 border-gray-950 flex items-center justify-between">
+                                        <div key={sIdx} className="bg-white dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
                                             <div>
-                                                <span className="text-xs font-black text-gray-950 block">{slot.subject}</span>
-                                                <span className="text-[9px] text-gray-400 font-bold">{slot.teacher}</span>
+                                                <span className="text-sm font-bold text-slate-900 dark:text-white block">{slot.subject}</span>
+                                                <span className="text-[10px] text-slate-400 font-medium">{slot.teacher}</span>
                                             </div>
-                                            <div className="px-2 py-1 bg-gray-950 text-white text-[9px] font-black">
+                                            <div className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-lg text-[10px] font-black">
                                                 {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
                                             </div>
                                         </div>
@@ -311,9 +335,11 @@ export const StudentDashboard = () => {
                                 </div>
                             </div>
                         )) : (
-                            <div className="col-span-full py-20 text-center opacity-30">
-                                <CalendarDays size={48} className="mx-auto mb-4" />
-                                <p className="text-xs font-black uppercase tracking-[4px]">لا يوجد جدول مسجل حالياً</p>
+                            <div className="col-span-full py-20 text-center">
+                                <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <CalendarDays size={48} className="text-slate-300" />
+                                </div>
+                                <p className="text-sm font-medium text-slate-400">لا يوجد جدول مسجل حالياً</p>
                             </div>
                         )}
                     </div>
@@ -321,38 +347,41 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'sessions' && (
-                <div className="bg-white border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_#6366f1] overflow-hidden">
-                    <div className="p-5 border-b-[6px] border-gray-950 bg-indigo-50">
-                        <h4 className="font-black text-xl uppercase tracking-tighter text-gray-950 flex items-center gap-3 italic">
-                            <BookOpen className="text-indigo-600" size={28} /> سجل الحصص والحضور
+                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                    <div className="p-8 border-b dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+                        <h4 className="font-black text-2xl tracking-tight text-slate-900 dark:text-white flex items-center gap-4">
+                            <div className="w-12 h-12 bg-indigo-500/10 text-indigo-600 rounded-2xl flex items-center justify-center ring-4 ring-indigo-500/20">
+                                <BookOpen size={28} />
+                            </div>
+                            سجل الحصص السابقة
                         </h4>
                     </div>
-                    <div className="divide-y-2 divide-gray-950">
+                    <div className="divide-y dark:divide-slate-800">
                         {recentSessions.length > 0 ? recentSessions.map((session, i) => (
-                            <div key={i} className="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                                <div className="flex items-center gap-4">
+                            <div key={i} className="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <div className="flex items-center gap-5">
                                     <div className={cn(
-                                        "w-10 h-10 border-2 border-gray-950 flex items-center justify-center shadow-[2px_2px_0px_0px_black]",
-                                        session.status === 'completed' ? "bg-emerald-500 text-white" : session.status === 'cancelled' ? "bg-rose-500 text-white" : "bg-amber-400 text-gray-950"
+                                        "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-transform hover:scale-110",
+                                        session.status === 'completed' ? "bg-emerald-500 text-white" : session.status === 'cancelled' ? "bg-rose-500 text-white" : "bg-primary-500 text-white"
                                     )}>
-                                        {session.status === 'completed' ? <CheckCircle2 size={18} /> : session.status === 'cancelled' ? <XCircle size={18} /> : <Play size={18} />}
+                                        {session.status === 'completed' ? <CheckCircle2 size={24} /> : session.status === 'cancelled' ? <XCircle size={24} /> : <Play size={24} />}
                                     </div>
                                     <div>
-                                        <span className="text-sm font-black text-gray-950 block">{session.subject || session.teacherName}</span>
-                                        <span className="text-[10px] text-gray-400 font-bold">{session.teacherName} • {session.date}</span>
+                                        <span className="text-base font-bold text-slate-900 dark:text-white block">{session.subject || session.teacherName}</span>
+                                        <span className="text-xs text-slate-400 font-medium">{session.teacherName} • {session.date}</span>
                                     </div>
                                 </div>
                                 <div className={cn(
-                                    "px-3 py-1.5 border-2 border-gray-950 text-[10px] font-black uppercase shadow-[2px_2px_0px_0px_black]",
-                                    session.status === 'completed' ? "bg-emerald-50 text-emerald-700" : session.status === 'cancelled' ? "bg-rose-50 text-rose-700" : "bg-amber-50 text-amber-700"
+                                    "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider",
+                                    session.status === 'completed' ? "bg-emerald-500/10 text-emerald-600" : session.status === 'cancelled' ? "bg-rose-500/10 text-rose-600" : "bg-primary-500/10 text-primary-600"
                                 )}>
                                     {session.status === 'completed' ? 'حضور ✓' : session.status === 'cancelled' ? 'غياب ✗' : 'قادمة'}
                                 </div>
                             </div>
                         )) : (
-                            <div className="py-20 text-center opacity-30">
-                                <BookOpen size={48} className="mx-auto mb-4" />
-                                <p className="text-xs font-black uppercase tracking-[4px]">لا يوجد سجل حصص بعد</p>
+                            <div className="py-24 text-center">
+                                <BookOpen size={64} className="mx-auto mb-6 text-slate-200 dark:text-slate-800" />
+                                <p className="text-sm font-medium text-slate-400">لا يوجد سجل حصص مسجل للمواد الحالية</p>
                             </div>
                         )}
                     </div>
@@ -360,70 +389,88 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'subjects' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {(studentData?.enrollments || []).map((en: any, i: number) => {
                         const remaining = en.sessionsTotal - en.sessionsUsed;
                         const isLow = remaining <= 2;
                         const progress = en.sessionsTotal > 0 ? Math.round((en.sessionsUsed / en.sessionsTotal) * 100) : 0;
 
                         return (
-                            <div key={i} className={cn(
-                                "p-6 border-[6px] border-gray-950 shadow-[10px_10px_0px_0px_black] relative",
-                                en.isFrozen ? "bg-blue-50" : isLow ? "bg-rose-50" : "bg-white"
-                            )}>
+                            <motion.div 
+                                key={i} 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                                className={cn(
+                                    "p-8 rounded-[2.5rem] border relative shadow-xl transition-all hover:shadow-2xl overflow-hidden",
+                                    en.isFrozen ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800" : 
+                                    isLow ? "bg-rose-50/50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800" : 
+                                    "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800"
+                                )}
+                            >
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-500/5 to-transparent rounded-full -translate-y-16 translate-x-16" />
+                                
                                 {en.isFrozen && (
-                                    <div className="absolute top-3 left-3 flex items-center gap-1 text-[9px] font-black bg-blue-600 text-white px-2 py-1 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                                        <Snowflake size={12} /> مُجمّد
+                                    <div className="absolute top-5 left-5 flex items-center gap-1.5 text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-full shadow-lg">
+                                        <Snowflake size={14} className="animate-spin-slow" /> مُجمّد مؤقتاً
                                     </div>
                                 )}
                                 
-                                <div className="flex items-start justify-between mb-6">
-                                    <div>
-                                        <h5 className="font-black text-xl text-gray-950 tracking-tighter uppercase mb-1">{en.subject}</h5>
-                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">المعلمة: {en.teacher}</p>
+                                <div className="flex items-start justify-between mb-8 relative z-10">
+                                    <div className="text-right">
+                                        <h5 className="font-black text-2xl text-slate-900 dark:text-white tracking-tight mb-1">{en.subject}</h5>
+                                        <p className="text-xs font-bold text-slate-500 dark:text-slate-400">مع المعلمة: {en.teacher}</p>
                                     </div>
                                     <div className={cn(
-                                        "px-4 py-2 border-4 border-gray-950 font-black text-sm shadow-[4px_4px_0px_0px_black]",
-                                        isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white"
+                                        "px-5 py-2.5 rounded-2xl font-black text-base shadow-lg",
+                                        isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white shadow-emerald-500/20"
                                     )}>
                                         {remaining} حصة
                                     </div>
                                 </div>
 
-                                {/* Progress Grid */}
-                                <div className="Grid grid-cols-5 md:grid-cols-8 gap-1.5 mb-6 flex flex-wrap">
+                                {/* Progress Visuals */}
+                                <div className="flex flex-wrap gap-2 mb-8 relative z-10">
                                     {[...Array(Math.min(en.sessionsTotal, 20))].map((_, idx) => (
                                         <div key={idx} className={cn(
-                                            "w-7 h-7 border-2 flex items-center justify-center text-[8px] font-black",
-                                            idx < en.sessionsUsed ? "bg-emerald-500 border-gray-950 text-white" : "bg-white border-gray-200"
+                                            "w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-black border transition-all",
+                                            idx < en.sessionsUsed 
+                                                ? "bg-emerald-500 border-emerald-400 text-white shadow-sm" 
+                                                : "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-300 dark:text-slate-600"
                                         )}>
-                                            {idx < en.sessionsUsed ? '✓' : idx + 1}
+                                            {idx < en.sessionsUsed ? <CheckCircle2 size={16} /> : idx + 1}
                                         </div>
                                     ))}
+                                    {en.sessionsTotal > 20 && <div className="w-8 h-8 flex items-center justify-center text-[10px] font-black text-slate-400">...</div>}
                                 </div>
 
-                                {/* Progress bar */}
-                                <div className="h-4 bg-white border-2 border-gray-950 p-0.5">
-                                    <div className={cn("h-full transition-all", isLow ? "bg-rose-600" : "bg-primary-600")} style={{ width: `${progress}%` }} />
+                                {/* Progress level */}
+                                <div className="relative h-6 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden p-1 border dark:border-slate-700">
+                                    <div className={cn("h-full rounded-lg transition-all shadow-md", isLow ? "bg-rose-600" : "bg-primary-600")} style={{ width: `${progress}%` }} />
+                                    <span className="absolute inset-0 flex items-center justify-center text-[9px] font-black text-slate-900 dark:text-white mix-blend-difference">{progress}%</span>
                                 </div>
-                                <div className="flex justify-between mt-2 text-[10px] font-black text-gray-400 uppercase">
-                                    <span>المُستخدم: {en.sessionsUsed}</span>
-                                    <span>الإجمالي: {en.sessionsTotal}</span>
+                                <div className="flex justify-between mt-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                    <span>المُستخدم {en.sessionsUsed}</span>
+                                    <span>الرصيد الكلي {en.sessionsTotal}</span>
                                 </div>
 
                                 {isLow && (
-                                    <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-rose-600 bg-rose-100 p-2 border border-rose-300">
-                                        <AlertCircle size={14} />
-                                        تنبيه: الرصيد شارف على الانتهاء!
-                                    </div>
+                                    <motion.div 
+                                        animate={{ scale: [1, 1.02, 1] }}
+                                        transition={{ repeat: Infinity, duration: 2 }}
+                                        className="mt-6 flex items-center gap-2 text-[11px] font-black text-rose-600 bg-rose-500/10 p-3 rounded-2xl border border-rose-200/50"
+                                    >
+                                        <AlertCircle size={16} />
+                                        تنبيه: الرصيد شارف على الانتهاء، يرجى التجديد قريباً.
+                                    </motion.div>
                                 )}
-                            </div>
+                            </motion.div>
                         );
                     })}
                     {(!studentData?.enrollments || studentData.enrollments.length === 0) && (
-                        <div className="col-span-full py-20 text-center border-4 border-dashed border-gray-200 opacity-40">
-                            <GraduationCap size={48} className="mx-auto mb-4" />
-                            <p className="text-xs font-black uppercase tracking-[4px]">لا توجد اشتراكات حالياً</p>
+                        <div className="col-span-full py-24 text-center">
+                            <GraduationCap size={64} className="mx-auto mb-6 text-slate-200 dark:text-slate-800" />
+                            <p className="text-sm font-medium text-slate-400">لا توجد مواد دراسية مسجلة في ملفك حالياً</p>
                         </div>
                     )}
                 </div>
@@ -436,50 +483,60 @@ export const StudentDashboard = () => {
 
 const StatCard = ({ icon: Icon, label, value, color }: any) => {
     const colors: any = {
-        emerald: "border-emerald-600 shadow-[6px_6px_0px_0px_#059669]",
-        blue: "border-blue-600 shadow-[6px_6px_0px_0px_#2563eb]",
-        amber: "border-amber-600 shadow-[6px_6px_0px_0px_#d97706]",
-        rose: "border-rose-600 shadow-[6px_6px_0px_0px_#e11d48]",
+        emerald: "from-emerald-500/10 via-white to-white dark:from-emerald-500/5 dark:via-slate-900 dark:to-slate-900 shadow-emerald-500/5 border-emerald-500/20",
+        blue: "from-blue-500/10 via-white to-white dark:from-blue-500/5 dark:via-slate-900 dark:to-slate-900 shadow-blue-500/5 border-blue-500/20",
+        amber: "from-amber-500/10 via-white to-white dark:from-amber-500/5 dark:via-slate-900 dark:to-slate-900 shadow-amber-500/5 border-amber-500/20",
+        rose: "from-rose-500/10 via-white to-white dark:from-rose-500/5 dark:via-slate-900 dark:to-slate-900 shadow-rose-500/5 border-rose-500/20",
     };
-    const iconColors: any = {
-        emerald: "bg-emerald-600", blue: "bg-blue-600", amber: "bg-amber-600", rose: "bg-rose-600",
+    const iconStyles: any = {
+        emerald: "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20",
+        blue: "bg-blue-500/10 text-blue-600 ring-blue-500/20",
+        amber: "bg-amber-500/10 text-amber-600 ring-amber-500/20",
+        rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <div className={cn("bg-white p-5 border-4 border-gray-950", colors[color])}>
-            <div className="flex items-center gap-3 mb-3">
-                <div className={cn("w-9 h-9 text-white flex items-center justify-center transform -rotate-2 border-2 border-gray-950", iconColors[color])}>
-                    <Icon size={18} strokeWidth={3} />
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-6 rounded-[2rem] border shadow-xl transition-all", colors[color])}>
+            <div className="flex items-center gap-4 mb-4">
+                <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center ring-4", iconStyles[color])}>
+                    <Icon size={24} strokeWidth={2} />
                 </div>
-                <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">{label}</span>
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{label}</span>
             </div>
-            <div className="text-2xl font-black text-gray-950 italic tracking-tighter">{value}</div>
-        </div>
+            <div className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</div>
+        </motion.div>
     );
 };
 
 const ProgressBar = ({ label, value, color }: { label: string; value: number; color: string }) => (
     <div>
-        <div className="flex justify-between items-end mb-2">
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">{label}</span>
-            <span className="text-2xl font-black text-white italic leading-none">{value}%</span>
+        <div className="flex justify-between items-end mb-3">
+            <span className="text-xs font-bold text-white/70 uppercase tracking-widest">{label}</span>
+            <span className="text-2xl font-black text-white">{value}%</span>
         </div>
-        <div className="w-full h-3 bg-white/10 border-2 border-gray-950 relative overflow-hidden">
-            <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ duration: 1, ease: 'easeOut' }}
-                className={cn("absolute top-0 right-0 h-full", color)} />
+        <div className="w-full h-4 bg-black/20 rounded-full relative overflow-hidden p-0.5">
+            <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ duration: 1.5, ease: 'easeOut' }}
+                className={cn("absolute top-0 right-0 h-full rounded-full shadow-lg", color)} 
+                style={{ 
+                    boxShadow: '0 0 15px rgba(255,255,255,0.3)',
+                    backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)'
+                }}
+            />
         </div>
     </div>
 );
 
 const QuickLink = ({ icon: Icon, label, color, onClick }: any) => {
     const colors: any = {
-        blue: "text-blue-600 border-blue-600 shadow-[4px_4px_0px_0px_#2563eb] hover:bg-blue-50",
-        amber: "text-amber-600 border-amber-600 shadow-[4px_4px_0px_0px_#d97706] hover:bg-amber-50",
+        blue: "bg-blue-600 text-white shadow-blue-500/30 hover:bg-blue-700",
+        amber: "bg-amber-500 text-white shadow-amber-500/30 hover:bg-amber-600",
     };
     return (
-        <motion.button whileHover={{ y: -3 }} onClick={onClick}
-            className={cn("p-4 bg-white border-4 flex flex-col items-center gap-2 text-center transition-all", colors[color])}>
-            <Icon size={22} strokeWidth={3} />
-            <p className="text-[10px] font-black uppercase tracking-tighter">{label}</p>
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onClick}
+            className={cn("p-6 rounded-[2rem] flex flex-col items-center gap-3 text-center transition-all shadow-xl", colors[color])}>
+            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/20">
+                <Icon size={24} strokeWidth={2.5} />
+            </div>
+            <p className="text-xs font-black uppercase tracking-tight">{label}</p>
         </motion.button>
     );
 };
