@@ -182,15 +182,15 @@ export const StudentDashboard = () => {
                     <div className="lg:col-span-8 space-y-8">
                         
                         {/* Performance Bars */}
-                        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800 p-8 rounded-none shadow-2xl shadow-emerald-500/20 text-white">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-800 p-5 rounded-none shadow-2xl shadow-emerald-500/10 text-white">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-none blur-3xl -translate-y-1/2 translate-x-1/2" />
-                            <div className="flex items-center gap-4 mb-10">
-                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                    <TrendingUp size={24} />
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
+                                    <TrendingUp size={20} />
                                 </div>
-                                <h3 className="text-2xl font-black tracking-tight">مستشار الإنجاز</h3>
+                                <h3 className="text-lg font-black tracking-tight">مستشار الإنجاز</h3>
                             </div>
-                            <div className="space-y-10">
+                            <div className="space-y-6">
                                 <ProgressBar label="معدل الحضور" value={stats.attendanceRate} color="bg-white" />
                                 <ProgressBar label="التقدم الدراسي" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} color="bg-white/90" />
                                 {next && <ProgressBar label={`التقدم نحو ${next.name}`} value={Math.min(Math.round((points / next.minPoints) * 100), 100)} color="bg-yellow-300" />}
