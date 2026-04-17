@@ -249,8 +249,8 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            {/* Mobile Bottom Navigation - Modern Floating Design */}
-            <div className="lg:hidden fixed bottom-4 left-4 right-4 h-14 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-around px-2 z-[100] shadow-[0_15px_60px_-15px_rgba(0,0,0,0.3)] rounded-2xl ring-1 ring-black/5 dark:ring-white/5">
+            {/* Mobile Bottom Navigation - Restored Solid Design */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-14 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
                 {[
                     ...filteredNavigation.slice(0, 3)
                 ].map((item) => (
@@ -259,7 +259,7 @@ export const Sidebar = () => {
                         to={item.href}
                         className={({ isActive }) => cn(
                             "flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 relative px-1",
-                            isActive ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+                            isActive ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"
                         )}
                     >
                         {({ isActive }) => (
@@ -274,7 +274,7 @@ export const Sidebar = () => {
                                 {isActive && (
                                     <motion.div 
                                         layoutId="mobileNavIndicator"
-                                        className="absolute -bottom-1 w-1 h-1 bg-primary-600 dark:bg-primary-400 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.8)]" 
+                                        className="absolute bottom-0 w-8 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full" 
                                     />
                                 )}
                                 
