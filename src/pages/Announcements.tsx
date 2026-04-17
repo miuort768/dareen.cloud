@@ -9,7 +9,6 @@ import {
     Calendar,
     X,
     CheckCircle2,
-    LayoutGrid,
     ArrowLeftRight
 } from 'lucide-react';
 import { api } from '../lib/api';
