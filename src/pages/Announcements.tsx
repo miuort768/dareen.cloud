@@ -9,145 +9,6 @@ import {
     Calendar,
     X,
     CheckCircle2,
-    ArrowLeftRight
-} from 'lucide-react';
-import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
-import { cn } from '../lib/utils';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
-
-type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event';
-
-interface Announcement {
-    id: string;
-    title: string;
-    content: string;
-    type: AnnouncementType;
-    date: string;
-    isActive: boolean;
-}
-
-export const Announcements = () => {
-    const { showNotification } = useApp();
-    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
-
-    // Form State
-    const [formData, setFormData] = useState<{
-        title: string;
-        content: string;
-        type: AnnouncementType;
-        isActive: boolean;
-    }>({
-        title: '',
-        content: '',
-        type: 'general',
-        isActive: true
-    });
-
-    useEffect(() => {
-        fetchAnnouncements();
-    }, []);
-
-    const fetchAnnouncements = async () => {
-        try {
-            setIsLoading(true);
-            const data = await api.get<Announcement[]>('/announcements');
-            setAnnouncements(data || []);
-        } catch (error) {
-            console.error('Error fetching announcements:', error);
-            setAnnouncements([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleSave = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const payload = {
-                ...formData,
-                date: new Date().toISOString()
-            };
-
-            if (editingAnnouncement) {
-                await api.put(`/announcements/${editingAnnouncement.id}`, payload);
-                showNotification('تم تحديث الإعلان بنجاح', 'success');
-            } else {
-                await api.post('/announcements', payload);
-                showNotification('تم نشر الإعلان بنجاح', 'success');
-            }
-
-            setIsModalOpen(false);
-            setEditingAnnouncement(null);
-            setFormData({ title: '', content: '', type: 'general', isActive: true });
-            fetchAnnouncements();
-        } catch (error) {
-            showNotification('فشل حفظ الإعلان', 'error');
-        }
-    };
-
-    const handleDelete = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا الإعلان؟')) return;
-        try {
-            await api.delete(`/announcements/${id}`);
-            showNotification('تم حذف الإعلان', 'success');
-            fetchAnnouncements();
-        } catch (error) {
-            showNotification('فشل حذف الإعلان', 'error');
-        }
-    };
-
-    const openEdit = (ann: Announcement) => {
-        setEditingAnnouncement(ann);
-        setFormData({
-            title: ann.title,
-            content: ann.content,
-            type: ann.type,
-            isActive: ann.isActive
-        });
-        setIsModalOpen(true);
-    };
-
-    const getTypeStyles = (type: string) => {
-        switch (type) {
-            case 'urgent': return { 
-                icon: AlertTriangle, 
-                color: 'text-rose-600', 
-                bg: 'bg-rose-50 dark:bg-rose-950/20', 
-                border: 'border-rose-600',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(225,29,72,1)]',
-                label: 'تنبيـه عاجـل' 
-            };
-            case 'holiday': return { 
-                icon: Calendar, 
-                color: 'text-amber-600', 
-                bg: 'bg-amber-50 dark:bg-amber-950/20', 
-                border: 'border-amber-500',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(245,158,11,1)]',
-                label: 'إجـازة رسميـة' 
-            };
-            case 'event': return { 
-                icon: Megaphone, 
-                color: 'text-indigo-600', 
-                bg: 'bg-indigo-50 dark:bg-indigo-950/20', 
-                border: 'border-indigo-600',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]',
-                label: 'فعاليـة جديـدة' 
-import { useState, useEffect } from 'react';
-import {
-    Megaphone,
-    Plus,
-    Trash2,
-    Edit3,
-    AlertTriangle,
-    Info,
-    Calendar,
-    X,
-    CheckCircle2,
     ArrowLeftRight,
     Zap,
     MapPin,
@@ -259,33 +120,21 @@ export const Announcements = () => {
             case 'urgent': return { 
                 icon: AlertTriangle, 
                 color: 'text-rose-600', 
-                bg: 'bg-rose-50 dark:bg-rose-950/20', 
-                border: 'border-rose-600',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(225,29,72,1)]',
                 label: 'تنبيـه عاجـل' 
             };
             case 'holiday': return { 
                 icon: Calendar, 
                 color: 'text-amber-600', 
-                bg: 'bg-amber-50 dark:bg-amber-950/20', 
-                border: 'border-amber-500',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(245,158,11,1)]',
                 label: 'إجـازة رسميـة' 
             };
             case 'event': return { 
                 icon: Megaphone, 
                 color: 'text-indigo-600', 
-                bg: 'bg-indigo-50 dark:bg-indigo-950/20', 
-                border: 'border-indigo-600',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]',
                 label: 'فعاليـة جديـدة' 
             };
             default: return { 
                 icon: Info, 
                 color: 'text-primary-600', 
-                bg: 'bg-blue-50 dark:bg-blue-950/20', 
-                border: 'border-primary-600',
-                shadow: 'shadow-[8px_8px_0px_0px_rgba(37,99,235,1)]',
                 label: 'إعـلان عـام' 
             };
         }
@@ -296,7 +145,6 @@ export const Announcements = () => {
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
             <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 lg:p-10 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
-                {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
@@ -389,7 +237,6 @@ export const Announcements = () => {
                                 </div>
                             </div>
 
-                            {/* Status Footer */}
                             {!ann.isActive && (
                                 <div className="mt-5 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800">
                                     <span className="text-[7px] font-black text-amber-600 dark:text-amber-500 uppercase italic flex items-center gap-1.5">
@@ -425,24 +272,24 @@ export const Announcements = () => {
 
                         <form onSubmit={handleSave} className="p-6 md:p-8 space-y-6">
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic flex items-center gap-2">اسم التعميم / العنوان</label>
+                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">اسم التعميم / العنوان</label>
                                 <input
                                     required
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-xs outline-none focus:ring-2 ring-primary-500 transition-all rounded-none dark:text-white"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-xs outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all"
                                     placeholder="أدخل عنوان الإعلان..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-5">
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic flex items-center gap-2">تصنيف البيانات</label>
+                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">تصنيف البيانات</label>
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
-                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 transition-all cursor-pointer rounded-none dark:text-white"
+                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all cursor-pointer"
                                     >
                                         <option value="general">إعـلان عـام</option>
                                         <option value="urgent">تنبيـه عـاجل</option>
@@ -451,14 +298,14 @@ export const Announcements = () => {
                                     </select>
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic flex items-center gap-2">حالة النشر</label>
+                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">حالة النشر</label>
                                     <div className="flex gap-1 h-11">
                                         <button 
                                             type="button"
                                             onClick={() => setFormData({...formData, isActive: true})}
                                             className={cn(
                                                 "flex-1 font-black text-[8px] uppercase transition-all",
-                                                formData.isActive ? "bg-emerald-600 text-white shadow-lg" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                                formData.isActive ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
                                             نشر
@@ -468,7 +315,7 @@ export const Announcements = () => {
                                             onClick={() => setFormData({...formData, isActive: false})}
                                             className={cn(
                                                 "flex-1 font-black text-[8px] uppercase transition-all",
-                                                !formData.isActive ? "bg-amber-600 text-white shadow-lg" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                                !formData.isActive ? "bg-amber-600 text-white shadow-lg shadow-amber-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
                                             مسودة
@@ -478,13 +325,13 @@ export const Announcements = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic flex items-center gap-2">محتوى التعميم</label>
+                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">محتوى التعميم</label>
                                 <textarea
                                     required
                                     rows={4}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 transition-all leading-relaxed italic dark:text-white"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all leading-relaxed italic"
                                     placeholder="اكتب تفاصيل الإعلان هنا..."
                                 />
                             </div>
