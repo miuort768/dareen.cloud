@@ -144,45 +144,29 @@ export const StudentDashboard = () => {
         <div className="space-y-8 pb-48 px-2 md:px-0 max-w-full overflow-x-hidden" dir="rtl">
 
             {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-6 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
-                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
-                <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
-                
-                <div className="relative z-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-4">
-                        <motion.div 
-                            className="shrink-0 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/20"
-                        >
+            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-2 lg:p-6 shadow-xl border-b border-white/5">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 w-full md:w-auto">
+                        <div className="shrink-0 w-8 h-8 md:w-16 md:h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg">
                             <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                <GraduationCap size={28} className="text-white" strokeWidth={1.5} />
+                                <GraduationCap size={16} className="text-white md:size-28" />
                             </div>
-                        </motion.div>
+                        </div>
                         <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[8px] md:text-[9px] font-bold uppercase tracking-wider rounded-none border border-white/10">مركز العمليات</span>
-                                <RankBadge rank={rank} size="sm" />
-                            </div>
-                            <h1 className="text-lg md:text-2xl font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-[10px] md:text-[11px] font-medium flex items-center gap-2 mt-0.5">
-                                <Clock size={12} className="text-primary-400" /> {todayArabic} • {todayDate}
+                            <h1 className="text-sm md:text-2xl font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-[8px] md:text-[11px] font-medium flex items-center gap-1 mt-0.5 uppercase tracking-tighter italic">
+                                {todayArabic} • {todayDate}
                             </p>
                         </div>
                     </div>
 
-                    {/* Points & Rank Card - Full width on mobile */}
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-center justify-between md:justify-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-4 rounded-none w-full md:w-auto md:min-w-[180px] shadow-sm"
-                    >
-                        <div className="flex-1 text-right">
-                            <span className="block text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">نقاط التميز</span>
-                            <div className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-200 leading-none">{points}</div>
+                    <div className="flex items-center justify-between gap-2 bg-white/5 backdrop-blur-xl border border-white/10 p-1.5 md:p-4 rounded-none w-full md:w-auto min-w-[100px]">
+                        <div className="px-1 text-right">
+                            <span className="block text-[7px] font-bold text-slate-500 uppercase tracking-widest mb-0">نقاط التميز</span>
+                            <div className="text-base md:text-2xl font-black text-yellow-400 leading-none">{points}</div>
                         </div>
-                        <div className="text-xl md:text-2xl filter drop-shadow-sm">{rank.icon}</div>
-                    </motion.div>
+                        <RankBadge rank={rank} size="sm" />
+                    </div>
                 </div>
             </div>
 
@@ -569,14 +553,14 @@ const StatCard = ({ icon: Icon, label, value, color }: any) => {
         rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-3 md:p-6 rounded-none border shadow-xl transition-all min-w-0", colors[color])}>
-            <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
-                <div className={cn("w-7 h-7 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-2 md:ring-4 shrink-0", iconStyles[color])}>
-                    <Icon className="w-3.5 h-3.5 md:w-6 md:h-6" strokeWidth={2} />
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-2 md:p-6 rounded-none border shadow-md transition-all min-w-0", colors[color])}>
+            <div className="flex items-center gap-1.5 md:gap-4 mb-1 md:mb-4">
+                <div className={cn("w-6 h-6 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-1 md:ring-4 shrink-0", iconStyles[color])}>
+                    <Icon className="w-3 h-3 md:w-6 md:h-6" strokeWidth={2.5} />
                 </div>
-                <span className="text-[8px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none truncate">{label}</span>
+                <span className="text-[7px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-tighter leading-none truncate">{label}</span>
             </div>
-            <div className="text-lg md:text-3xl font-black text-slate-900 dark:text-white tracking-tight truncate">{value}</div>
+            <div className="text-base md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter truncate">{value}</div>
         </motion.div>
     );
 };

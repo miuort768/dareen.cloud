@@ -249,8 +249,8 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            {/* Mobile Bottom Navigation - Restored Solid Design */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-14 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+            {/* Mobile Bottom Navigation - Ultra Compact Design */}
+            <div className="lg:hidden fixed bottom-2 left-2 right-2 h-12 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-around px-1 z-[100] shadow-xl rounded-xl ring-1 ring-black/5">
                 {[
                     ...filteredNavigation.slice(0, 3)
                 ].map((item) => (
@@ -258,15 +258,15 @@ export const Sidebar = () => {
                         key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
-                            "flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 relative px-1",
+                            "flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 relative",
                             isActive ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"
                         )}
                     >
                         {({ isActive }) => (
                             <>
-                                <item.icon size={18} strokeWidth={isActive ? 2.5 : 2} />
+                                <item.icon size={16} strokeWidth={isActive ? 2.5 : 2} />
                                 <span className={cn(
-                                    "text-[8px] font-black leading-none mt-1 uppercase tracking-tighter transition-all duration-300",
+                                    "text-[7px] font-black leading-none mt-0.5 uppercase tracking-tighter transition-all duration-300",
                                     isActive ? "opacity-100" : "opacity-60"
                                 )}>
                                     {item.name}
@@ -274,13 +274,13 @@ export const Sidebar = () => {
                                 {isActive && (
                                     <motion.div 
                                         layoutId="mobileNavIndicator"
-                                        className="absolute bottom-0 w-8 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full" 
+                                        className="absolute bottom-0 w-6 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full" 
                                     />
                                 )}
                                 
                                 {/* Notification Badge for Chat */}
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute top-2 right-1/2 translate-x-3 w-3.5 h-3.5 bg-rose-500 text-white text-[7px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm animate-pulse">
+                                    <span className="absolute top-1.5 right-1/2 translate-x-3 w-3 h-3 bg-rose-500 text-white text-[6px] font-black flex items-center justify-center rounded-full ring-1 ring-white dark:ring-gray-950 shadow-sm animate-pulse">
                                         {totalUnreadCount > 9 ? '+' : totalUnreadCount}
                                     </span>
                                 )}
@@ -293,8 +293,8 @@ export const Sidebar = () => {
                     onClick={() => setMobileMenuOpen(true)}
                     className="flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 text-gray-400 dark:text-gray-500"
                 >
-                    <Menu size={18} strokeWidth={2} />
-                    <span className="text-[8px] font-black leading-none mt-1 uppercase tracking-tighter opacity-60">المزيد</span>
+                    <Menu size={16} strokeWidth={2} />
+                    <span className="text-[7px] font-black leading-none mt-0.5 uppercase tracking-tighter opacity-60">المزيد</span>
                 </button>
             </div>
 
