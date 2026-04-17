@@ -141,7 +141,7 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="space-y-8 pb-32" dir="rtl">
+        <div className="space-y-8 pb-48 px-2 md:px-0 max-w-full overflow-x-hidden" dir="rtl">
 
             {/* ═══════════════ PREMIUM HEADER ═══════════════ */}
             <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-6 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
@@ -569,14 +569,14 @@ const StatCard = ({ icon: Icon, label, value, color }: any) => {
         rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-4 md:p-6 rounded-none border shadow-xl transition-all", colors[color])}>
-            <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-4">
-                <div className={cn("w-8 h-8 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-2 md:ring-4", iconStyles[color])}>
-                    <Icon className="w-4 h-4 md:w-6 md:h-6" strokeWidth={2} />
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-3 md:p-6 rounded-none border shadow-xl transition-all min-w-0", colors[color])}>
+            <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
+                <div className={cn("w-7 h-7 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-2 md:ring-4 shrink-0", iconStyles[color])}>
+                    <Icon className="w-3.5 h-3.5 md:w-6 md:h-6" strokeWidth={2} />
                 </div>
-                <span className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-tight">{label}</span>
+                <span className="text-[8px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none truncate">{label}</span>
             </div>
-            <div className="text-xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</div>
+            <div className="text-lg md:text-3xl font-black text-slate-900 dark:text-white tracking-tight truncate">{value}</div>
         </motion.div>
     );
 };
