@@ -199,16 +199,16 @@ export const ParentDashboard = () => {
             {/* ═══════════════ STRATEGIC INTELLIGENCE GRID ═══════════════ */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Excellence Radar */}
-                <div className="bg-slate-900 border border-slate-800 p-6 shadow-2xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
-                         style={{ backgroundImage: 'radial-gradient(circle at 10px 10px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+                <div className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-full h-full opacity-[0.05] dark:opacity-[0.03] pointer-events-none" 
+                         style={{ backgroundImage: 'radial-gradient(circle at 10px 10px, currentColor 1px, transparent 0)', backgroundSize: '40px 40px' }} />
                     
                     <div className="relative z-10">
                         <div className="flex items-center gap-3 mb-8">
-                            <div className="p-2 bg-primary-600/20 text-primary-400 border border-primary-500/20">
+                            <div className="p-2 bg-primary-600/10 text-primary-600 dark:text-primary-400 border border-primary-500/20">
                                 <Trophy size={20} className="animate-pulse" />
                             </div>
-                            <h3 className="font-black text-lg text-white uppercase italic tracking-tight">رادار التميز الأسبوعي</h3>
+                            <h3 className="font-black text-lg text-slate-900 dark:text-white uppercase italic tracking-tight">رادار التميز الأسبوعي</h3>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -216,28 +216,28 @@ export const ParentDashboard = () => {
                                 <motion.div 
                                     key={child.id} 
                                     whileHover={{ x: -5 }}
-                                    className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-none group/card transition-all hover:bg-white/10"
+                                    className="flex items-center justify-between p-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-none group/card transition-all hover:bg-slate-100 dark:hover:bg-white/10"
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-yellow-500/10 border border-amber-500/30 flex items-center justify-center">
-                                            <Star size={24} className="text-yellow-400 fill-current opacity-80" />
+                                            <Star size={24} className="text-yellow-600 dark:text-yellow-400 fill-current opacity-80" />
                                         </div>
                                         <div>
-                                            <h4 className="text-sm font-black text-slate-200">{child.name}</h4>
-                                            <p className="text-[10px] font-bold text-amber-500 uppercase mt-1">إنجاز دراسي متميز</p>
+                                            <h4 className="text-sm font-black text-slate-900 dark:text-slate-200">{child.name}</h4>
+                                            <p className="text-[10px] font-bold text-amber-600 dark:text-amber-500 uppercase mt-1">إنجاز دراسي متميز</p>
                                         </div>
                                     </div>
                                     <div className="text-left">
-                                        <span className="text-2xl font-black italic text-emerald-400">+50</span>
+                                        <span className="text-2xl font-black italic text-emerald-600 dark:text-emerald-400">+50</span>
                                         <p className="text-[8px] font-black uppercase text-slate-500 tracking-widest leading-none">نقطة</p>
                                     </div>
                                 </motion.div>
                             ))}
                         </div>
 
-                        <div className="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between">
-                            <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">تحديث البيانات: فوري</div>
-                            <button className="group text-[10px] font-black text-primary-400 hover:text-white uppercase italic flex items-center gap-1 transition-all">
+                        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                            <div className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">تحديث البيانات: فوري</div>
+                            <button className="group text-[10px] font-black text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-white uppercase italic flex items-center gap-1 transition-all">
                                 عرض كافة الإنجازات <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             </button>
                         </div>
