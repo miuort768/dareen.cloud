@@ -27,7 +27,7 @@ class ChatService {
                 c.*, 
                 CASE 
                     WHEN c.isGroup = 1 THEN c.name 
-                    ELSE COALESCE(other_u.name, other_t.name, other_p.name, other_cp.name, 'Unknown User') 
+                    ELSE COALESCE(other_u.name, other_t.name, other_p.name, other_cp.name, c.name, 'Unknown User') 
                 END as displayName,
                 (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
                 (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
