@@ -33,11 +33,17 @@ export const Classroom = () => {
 
         const initMedia = async () => {
             try {
-                // Always request both to keep the pipeline open, but we start with video tracks disabled
-                const initialStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: true, 
-                    audio: true 
-                });
+                // High-quality Audio constraints
+                const constraints = {
+                    video: true,
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                };
+                
+                const initialStream = await navigator.mediaDevices.getUserMedia(constraints);
                 
                 // Disable video tracks immediately if camera is off
                 initialStream.getVideoTracks().forEach(t => t.enabled = !isCameraOff);
@@ -55,36 +61,51 @@ export const Classroom = () => {
                     call.answer(initialStream);
                     call.on('stream', (userRemoteStream) => {
                         console.log("📡 Remote stream received (Call Answer)");
-                        setRemoteStream(userRemoteStream);
-                        if (remoteVideoRef.current) {
-                            remoteVideoRef.current.srcObject = userRemoteStream;
-                            remoteVideoRef.current.muted = false;
-                        }
+                        handleRemoteStream(userRemoteStream);
                     });
                 });
 
                 if (currentUser?.role === 'student') {
-                    // Small delay to ensure teacher is ready
                     setTimeout(() => {
                         const call = peerRef.current?.call(`teacher-${id}`, initialStream);
                         if (call) {
                             callRef.current = call;
                             call.on('stream', (userRemoteStream) => {
-                                console.log("📡 Remote stream received on student side");
-                                setRemoteStream(userRemoteStream);
-                                if (remoteVideoRef.current) {
-                                    remoteVideoRef.current.srcObject = userRemoteStream;
-                                    remoteVideoRef.current.muted = false; // Force NOT muted
-                                    remoteVideoRef.current.play().catch(e => console.error("Auto-play failed", e));
-                                }
+                                console.log("📡 Remote stream received (Student Call)");
+                                handleRemoteStream(userRemoteStream);
                             });
                         }
                     }, 3000);
                 }
             } catch (err: any) {
                 console.error("Media Error:", err);
-                setError("يرجى السماح بالوصول للميكروفون للمتابعة");
+                setError("يرجى السماح بالوصول للميكروفون والكاميرا للمتابعة");
                 setLoading(false);
+            }
+        };
+
+        const handleRemoteStream = (userRemoteStream: MediaStream) => {
+            setRemoteStream(userRemoteStream);
+            if (remoteVideoRef.current) {
+                remoteVideoRef.current.srcObject = userRemoteStream;
+                remoteVideoRef.current.muted = false;
+                remoteVideoRef.current.volume = 1.0;
+                
+                // Track debugger
+                userRemoteStream.getAudioTracks().forEach(track => {
+                    console.log(`🎵 Remote Audio Track: ${track.label}, Enabled: ${track.enabled}, ReadyState: ${track.readyState}`);
+                    track.enabled = true; // Force enable
+                });
+
+                remoteVideoRef.current.play().catch(e => {
+                    console.error("Auto-play failed", e);
+                    // Standard browser fix: re-try on any click
+                    const retryPlay = () => {
+                        remoteVideoRef.current?.play();
+                        document.removeEventListener('click', retryPlay);
+                    };
+                    document.addEventListener('click', retryPlay);
+                });
             }
         };
 
