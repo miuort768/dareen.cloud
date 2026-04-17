@@ -141,27 +141,27 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="space-y-4 pb-28" dir="rtl">
+        <div className="space-y-4 pb-28 min-w-0 w-full" dir="rtl">
 
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="-mx-3 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-3 py-3 lg:mx-0 lg:px-6 lg:py-6 shadow-xl">
+            <div className="-mx-3 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-3 py-2 lg:mx-0 lg:px-6 lg:py-6 shadow-xl">
                 {/* Single row: icon + name + points all in one line */}
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                        <div className="shrink-0 w-9 h-9 bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-lg">
-                            <GraduationCap size={18} className="text-white" />
+                        <div className="shrink-0 w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                            <GraduationCap size={16} className="text-white" />
                         </div>
                         <div className="min-w-0">
-                            <h1 className="text-sm font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-[8px] font-medium truncate">{todayArabic} • {todayDate}</p>
+                            <h1 className="text-[12px] md:text-sm font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
+                            <p className="text-slate-400 text-[8px] font-medium truncate">{todayArabic}</p>
                         </div>
                     </div>
-                    <div className="shrink-0 flex items-center gap-1.5 bg-white/10 border border-white/20 px-2 py-1 rounded">
+                    <div className="shrink-0 flex items-center gap-1 bg-white/10 border border-white/20 px-1.5 py-0.5 md:px-2 md:py-1 rounded">
                         <div className="text-right">
-                            <span className="block text-[6px] font-bold text-slate-400 uppercase tracking-wider">نقاط التميز</span>
-                            <div className="text-sm font-black text-yellow-400 leading-none">{points}</div>
+                            <span className="block text-[6px] font-bold text-slate-400 uppercase tracking-wider">النقاط</span>
+                            <div className="text-[10px] md:text-sm font-black text-yellow-400 leading-none">{points}</div>
                         </div>
-                        <RankBadge rank={rank} size="sm" />
+                        <RankBadge rank={rank} size="xs" />
                     </div>
                 </div>
             </div>
@@ -207,7 +207,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 rounded-none border border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-hide">
+            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-hide min-w-0">
                 {[
                     { key: 'overview', label: 'الرئيسية', icon: Activity },
                     { key: 'schedule', label: 'الجدول', icon: CalendarDays },
@@ -218,13 +218,15 @@ export const StudentDashboard = () => {
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key as any)}
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-1.5 px-4 py-3 rounded-none font-bold text-xs md:text-sm transition-all whitespace-nowrap",
+                            "flex-1 flex items-center justify-center gap-1 px-2 py-2.5 font-bold text-[10px] md:text-sm transition-all min-w-0",
                             activeTab === tab.key
-                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-md shadow-primary-500/10"
-                                : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                                ? "bg-white dark:bg-primary-600 text-primary-600 dark:text-white shadow-md"
+                                : "text-slate-500 dark:text-slate-400"
                         )}
                     >
-                        <tab.icon size={16} /> {tab.label}
+                        <tab.icon size={14} className="shrink-0" />
+                        <span className="truncate hidden xs:inline sm:inline">{tab.label}</span>
+                        <span className="sm:hidden text-[8px] leading-none mt-0.5 truncate">{tab.label}</span>
                     </button>
                 ))}
             </div>
@@ -436,7 +438,7 @@ export const StudentDashboard = () => {
             )}
 
             {activeTab === 'subjects' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {(studentData?.enrollments || []).map((en: any, i: number) => {
                         const remaining = en.sessionsTotal - en.sessionsUsed;
                         const isLow = remaining <= 2;
@@ -449,7 +451,7 @@ export const StudentDashboard = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
                                 className={cn(
-                                    "p-8 rounded-none border relative shadow-xl transition-all hover:shadow-2xl overflow-hidden",
+                                    "p-4 md:p-6 border relative shadow-lg transition-all overflow-hidden",
                                     en.isFrozen ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800" : 
                                     isLow ? "bg-rose-50/50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800" : 
                                     "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800"
@@ -463,21 +465,20 @@ export const StudentDashboard = () => {
                                     </div>
                                 )}
                                 
-                                <div className="flex items-start justify-between mb-8 relative z-10">
+                                <div className="flex items-start justify-between mb-4 relative z-10">
                                     <div className="text-right">
-                                        <h5 className="font-black text-2xl text-slate-900 dark:text-white tracking-tight mb-1">{en.subject}</h5>
-                                        <p className="text-xs font-bold text-slate-500 dark:text-slate-400">مع المعلمة: {en.teacher}</p>
+                                        <h5 className="font-black text-base md:text-xl text-slate-900 dark:text-white tracking-tight mb-1">{en.subject}</h5>
+                                        <p className="text-xs font-bold text-slate-500 dark:text-slate-400">{en.teacher}</p>
                                     </div>
                                     <div className={cn(
-                                        "px-5 py-2.5 rounded-none font-black text-base shadow-lg",
-                                        isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white shadow-emerald-500/20"
+                                        "px-3 py-1.5 font-black text-sm shadow",
+                                        isLow ? "bg-rose-600 text-white" : "bg-emerald-500 text-white"
                                     )}>
                                         {remaining} حصة
                                     </div>
                                 </div>
 
-                                {/* Progress Visuals */}
-                                <div className="flex flex-wrap gap-2 mb-8 relative z-10">
+                                <div className="flex flex-wrap gap-1.5 mb-4 relative z-10">
                                     {[...Array(Math.min(en.sessionsTotal, 20))].map((_, idx) => (
                                         <div key={idx} className={cn(
                                             "w-8 h-8 rounded-none flex items-center justify-center text-[10px] font-black border transition-all",
@@ -542,26 +543,29 @@ const StatCard = ({ icon: Icon, label, value, color }: any) => {
         rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
     };
     return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-2 md:p-6 rounded-none border shadow-md transition-all min-w-0", colors[color])}>
-            <div className="flex items-center gap-1.5 md:gap-4 mb-1 md:mb-4">
-                <div className={cn("w-6 h-6 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-1 md:ring-4 shrink-0", iconStyles[color])}>
-                    <Icon className="w-3 h-3 md:w-6 md:h-6" strokeWidth={2.5} />
+        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-3 md:p-6 rounded-none border shadow-md transition-all min-w-0", colors[color])}>
+            <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
+                <div className={cn("w-7 h-7 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-1 md:ring-4 shrink-0", iconStyles[color])}>
+                    <Icon className="w-3.5 h-3.5 md:w-6 md:h-6" strokeWidth={2.5} />
                 </div>
-                <span className="text-[7px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-tighter leading-none truncate">{label}</span>
+                <span className="text-[9px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-tighter leading-none truncate">{label}</span>
             </div>
-            <div className="text-base md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter truncate">{value}</div>
+            <div className="text-lg md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter truncate">{value}</div>
         </motion.div>
     );
 };
 
 const ProgressBar = ({ label, value, color }: { label: string; value: number; color: string }) => (
-    <div>
-        <div className="flex justify-between items-end mb-3">
-            <span className="text-xs font-bold text-white/70 uppercase tracking-widest">{label}</span>
-            <span className="text-2xl font-black text-white">{value}%</span>
+    <div className="min-w-0">
+        <div className="flex justify-between items-end mb-2">
+            <span className="text-[10px] md:text-xs font-bold text-white/70 uppercase tracking-widest truncate ml-2">{label}</span>
+            <span className="text-lg md:text-2xl font-black text-white shrink-0">{value}%</span>
         </div>
-        <div className="w-full h-4 bg-black/20 rounded-none relative overflow-hidden p-0.5">
-            <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ duration: 1.5, ease: 'easeOut' }}
+        <div className="w-full h-3 md:h-4 bg-black/20 rounded-none relative overflow-hidden p-0.5">
+            <motion.div 
+                initial={{ width: 0 }} 
+                animate={{ width: `${value}%` }} 
+                transition={{ duration: 1.5, ease: 'easeOut' }}
                 className={cn("absolute top-0 right-0 h-full rounded-none shadow-lg", color)} 
                 style={{ 
                     boxShadow: '0 0 15px rgba(255,255,255,0.3)',
@@ -579,11 +583,11 @@ const QuickLink = ({ icon: Icon, label, color, onClick }: any) => {
     };
     return (
         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onClick}
-            className={cn("p-6 rounded-none flex flex-col items-center gap-3 text-center transition-all shadow-xl", colors[color])}>
-            <div className="w-12 h-12 bg-white/20 rounded-none flex items-center justify-center backdrop-blur-md border border-white/20">
-                <Icon size={24} strokeWidth={2.5} />
+            className={cn("p-3 md:p-5 flex flex-col items-center gap-2 text-center transition-all shadow-lg", colors[color])}>
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/20">
+                <Icon size={18} strokeWidth={2.5} />
             </div>
-            <p className="text-xs font-black uppercase tracking-tight">{label}</p>
+            <p className="text-[10px] font-black uppercase">{label}</p>
         </motion.button>
     );
 };
