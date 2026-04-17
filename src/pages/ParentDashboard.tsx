@@ -170,6 +170,9 @@ export const ParentDashboard = () => {
                             <p className="text-slate-400 text-xs md:text-sm font-medium flex items-center gap-2 mt-0.5">
                                 <ShieldCheck size={16} className="text-primary-400" /> أهلاً بك، أ/ {currentUser?.name}
                             </p>
+                            <p className="text-slate-500 text-[10px] md:text-xs font-medium flex items-center gap-2 mt-1">
+                                <Clock size={12} className="text-primary-400" /> {todayArabic} • {format(new Date(), 'dd/MM/yyyy')}
+                            </p>
                         </div>
                     </div>
 
