@@ -9,29 +9,48 @@ export const SessionCallAlert = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        const socket = (window as any).socket;
-        if (!socket || currentUser?.role !== 'student') return;
+        let socket = (window as any).socket;
+        let retryCount = 0;
+        let timeoutId: any;
 
-        const handleInvite = (data: any) => {
-            console.log("📞 Received session invite:", data);
-            setCallData(data);
-            setShow(true);
+        const setupListeners = () => {
+            socket = (window as any).socket;
+            if (!socket && retryCount < 10) {
+                retryCount++;
+                timeoutId = setTimeout(setupListeners, 1000);
+                return;
+            }
+
+            if (!socket || currentUser?.role !== 'student') return;
+
+            const handleInvite = (data: any) => {
+                console.log("📞 [Socket] SessionCallAlert: Received session invite", data);
+                setCallData(data);
+                setShow(true);
+                
+                // Play audio alert
+                const audio = new Audio('/notification.mp3');
+                audio.play().catch(() => console.log("Audio play blocked"));
+            };
+
+            socket.on('session_invite', handleInvite);
             
-            // Play audio alert
-            const audio = new Audio('/notification.mp3');
-            audio.play().catch(() => console.log("Audio play blocked"));
+            socket.on('session_ended', () => {
+                setShow(false);
+                setCallData(null);
+            });
+
+            return () => {
+                socket.off('session_invite', handleInvite);
+                socket.off('session_ended');
+            };
         };
 
-        socket.on('session_invite', handleInvite);
-        
-        socket.on('session_ended', () => {
-            setShow(false);
-            setCallData(null);
-        });
+        const cleanup = setupListeners();
 
         return () => {
-            socket.off('session_invite', handleInvite);
-            socket.off('session_ended');
+            if (timeoutId) clearTimeout(timeoutId);
+            if (cleanup) cleanup();
         };
     }, [currentUser]);
 

@@ -359,12 +359,20 @@ async function startServer() {
             });
 
             // --- New: Direct Session Invites ---
-            socket.on('call_student', (data) => {
+            socket.on('call_student', async (data) => {
                 // data: { studentId, teacherId, teacherName, subject, type }
                 const targetRoom = `user_${data.studentId}`;
-                console.log(`   📞 [IO] Teacher ${user.name} calling student ${data.studentId} in room ${targetRoom}`);
                 
-                socket.to(targetRoom).emit('session_invite', {
+                // Track presence for debugging
+                const sockets = await io.in(targetRoom).fetchSockets();
+                console.log(`   📡 [IO] BROADCASTING call to student ${data.studentId}. Room members: ${sockets.length}`);
+                
+                if (sockets.length === 0) {
+                    console.log(`   ⚠️ [IO] Warning: Student ${data.studentId} is NOT connected to their room.`);
+                }
+
+                // Use io.to() instead of socket.to() for guaranteed delivery to everyone in the room
+                io.to(targetRoom).emit('session_invite', {
                     teacherId: user.id,
                     teacherName: user.name,
                     subject: data.subject,
@@ -375,8 +383,8 @@ async function startServer() {
 
             socket.on('end_session', (data) => {
                 const targetRoom = `user_${data.studentId}`;
-                console.log(`   ❄️ [IO] Teacher ${user.name} ending session for student ${data.studentId}`);
-                socket.to(targetRoom).emit('session_ended', {
+                console.log(`   ❄️ [IO] BROADCASTING end session to student ${data.studentId}`);
+                io.to(targetRoom).emit('session_ended', {
                     teacherId: user.id
                 });
             });
