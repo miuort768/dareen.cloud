@@ -8,7 +8,6 @@ import {
     Receipt,
     CheckCircle2,
     CalendarDays,
-    Clock,
     Headset,
     Activity,
     Star,
@@ -170,9 +169,6 @@ export const ParentDashboard = () => {
                             <p className="text-slate-400 text-xs md:text-sm font-medium flex items-center gap-2 mt-0.5">
                                 <ShieldCheck size={16} className="text-primary-400" /> أهلاً بك، أ/ {currentUser?.name}
                             </p>
-                            <p className="text-slate-500 text-[10px] md:text-xs font-medium flex items-center gap-2 mt-1">
-                                <Clock size={12} className="text-primary-400" /> {todayArabic} • {format(new Date(), 'dd/MM/yyyy')}
-                            </p>
                         </div>
                     </div>
 
@@ -193,9 +189,9 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ═══════════════ STRATEGIC INTELLIGENCE GRID ═══════════════ */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Excellence Radar */}
-                <div className="lg:col-span-8 bg-slate-900 border border-slate-800 p-6 shadow-2xl relative overflow-hidden group">
+                <div className="bg-slate-900 border border-slate-800 p-6 shadow-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none" 
                          style={{ backgroundImage: 'radial-gradient(circle at 10px 10px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
                     
@@ -241,7 +237,7 @@ export const ParentDashboard = () => {
                 </div>
 
                 {/* Metrics */}
-                <div className="lg:col-span-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-xl">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-xl">
                     <div>
                         <div className="flex items-center gap-3 mb-8">
                             <div className="p-2 bg-slate-900 dark:bg-white/10 dark:text-white rounded-none">
@@ -287,28 +283,103 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ HERO PROGRESS SECTION ═══════════════ */}
-            <div>
-                <div className="flex items-center gap-3 mb-6">
+            {/* ═══════════════ CINEMATIC HEROES SHOWCASE (FULL WIDTH) ═══════════════ */}
+            <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-primary-600 text-white rounded-none">
-                        <Trophy size={18} />
+                        <Trophy size={20} />
                     </div>
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">مستويات أبطال الدارين</h2>
+                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">مراكز الأبطال النخبويين</h2>
                 </div>
-                <ParentChildVisualProgress 
-                    childrenProfiles={children.map(c => ({
-                        id: c.id, name: c.name, totalPoints: c.totalPoints || 0,
-                        badges: (() => {
-                            if (!c.badges) return [];
+                
+                <div className="grid grid-cols-1 gap-6">
+                    {children.map((child) => {
+                        const points = child.totalPoints || 0;
+                        const getStatus = (p: number) => {
+                            if (p >= 2500) return { name: 'أسطورة الدارين', icon: '👑', color: 'text-rose-400', glow: 'bg-rose-500/20', bar: 'bg-rose-500', next: null };
+                            if (p >= 1000) return { name: 'البروفيسور', icon: '🧠', color: 'text-emerald-400', glow: 'bg-emerald-500/20', bar: 'bg-emerald-500', next: 2500 };
+                            if (p >= 500) return { name: 'بطل العصر', icon: '🛡️', color: 'text-amber-400', glow: 'bg-amber-500/20', bar: 'bg-amber-500', next: 1000 };
+                            if (p >= 100) return { name: 'المجتهد الذكي', icon: '📚', color: 'text-blue-400', glow: 'bg-blue-500/20', bar: 'bg-blue-600', next: 500 };
+                            return { name: 'الباحث المستكشف', icon: '🧭', color: 'text-slate-400', glow: 'bg-slate-500/20', bar: 'bg-slate-500', next: 100 };
+                        };
+                        const status = getStatus(points);
+                        const progress = status.next ? (points / status.next) * 100 : 100;
+                        const childBadges = (() => {
+                            if (!child.badges) return [];
                             try {
-                                const parsed = JSON.parse(c.badges);
+                                const parsed = JSON.parse(child.badges);
                                 return Array.isArray(parsed) ? parsed.map((b: any) => b.name) : [];
-                            } catch (e) { return c.badges.split(',').filter((b: string) => b); }
-                        })(),
-                        teacherName: (c.enrollments && c.enrollments[0]?.teacher) || 'المعلمة المشرفة',
-                        lastEvaluation: 'امتياز', adminPhone: adminPhone || ''
-                    }))}
-                />
+                            } catch (e) { return child.badges.split(',').filter((b: string) => b); }
+                        })();
+
+                        return (
+                            <motion.div 
+                                key={child.id}
+                                whileHover={{ y: -5 }}
+                                className="relative overflow-hidden bg-slate-900 border border-slate-800 p-6 md:p-8 shadow-2xl rounded-none group"
+                            >
+                                <div className={cn("absolute -right-20 -top-20 w-64 h-64 rounded-full blur-[120px] opacity-10 transition-opacity group-hover:opacity-30", status.glow)} />
+                                
+                                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                    <div className="lg:col-span-4 flex items-center gap-6">
+                                        <div className="relative shrink-0">
+                                            <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-800 border border-slate-700 flex items-center justify-center text-4xl shadow-inner rounded-none">
+                                                {status.icon}
+                                            </div>
+                                            <div className="absolute -bottom-2 -left-2 px-2 py-1 bg-primary-600 border border-slate-900 text-white text-[10px] font-black italic">
+                                                {points} PT
+                                            </div>
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">الحالة العملياتية</p>
+                                            <h4 className={cn("text-lg md:text-xl font-black italic tracking-tighter truncate", status.color)}>{status.name}</h4>
+                                            <h5 className="text-white font-black text-xl truncate">{child.name}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div className="lg:col-span-5 space-y-4">
+                                        <div className="flex justify-between items-end">
+                                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest italic">مستوى كفاءة التعلم</span>
+                                            {status.next && (
+                                                <span className="text-[9px] font-bold text-primary-400 italic">بانتظار {status.next - points} نقطة للترقية</span>
+                                            )}
+                                        </div>
+                                        <div className="h-2.5 bg-slate-800 border border-slate-700 rounded-none overflow-hidden p-0.5 sm:px-1">
+                                            <motion.div 
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${progress}%` }}
+                                                className={cn("h-full relative", status.bar)}
+                                            >
+                                                <div className="absolute top-0 right-0 w-8 h-full bg-white/30 blur-md animate-pulse" />
+                                            </motion.div>
+                                        </div>
+                                        <div className="flex justify-between text-[8px] font-bold text-slate-500 uppercase tracking-widest">
+                                            <span>الرتبة الدنيا</span>
+                                            <span>الهدف: {status.next || 'MAX'}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="lg:col-span-3 flex lg:justify-end">
+                                        <div className="bg-white/5 border border-white/10 p-4 rounded-none w-full lg:w-48 text-center backdrop-blur-md">
+                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">معرض الأوسمة</p>
+                                            <div className="flex flex-wrap justify-center gap-2">
+                                                {childBadges.slice(0, 3).map((badge, bIdx) => (
+                                                    <div key={bIdx} className="w-8 h-8 bg-slate-800 border border-slate-700 flex items-center justify-center hover:bg-slate-700 transition-colors" title={badge}>
+                                                        <Award size={16} className="text-amber-500" />
+                                                    </div>
+                                                ))}
+                                                {childBadges.length > 3 && (
+                                                    <div className="w-8 h-8 bg-primary-600/20 text-primary-400 flex items-center justify-center text-[10px] font-black">+{childBadges.length - 3}</div>
+                                                )}
+                                                {childBadges.length === 0 && <span className="text-[8px] font-bold text-slate-600 italic">لا توجد أوسمة بعد</span>}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
             </div>
 
             {/* ═══════════════ STAT CARDS ═══════════════ */}
