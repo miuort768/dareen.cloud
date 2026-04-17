@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
     MessageSquare, Settings, Users, Share, 
-    Crown, User
+    Crown, User, Monitor
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
@@ -17,13 +17,15 @@ export const Classroom = () => {
     const [stream, setStream] = useState<MediaStream | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
-    const [isCameraOff, setIsCameraOff] = useState(false);
+    const [isCameraOff, setIsCameraOff] = useState(true); // Default to Camera OFF
+    const [isScreenSharing, setIsScreenSharing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     
     const myVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peerRef = useRef<Peer | null>(null);
+    const callRef = useRef<any>(null);
 
     useEffect(() => {
         let currentPeer: Peer | null = null;
@@ -31,10 +33,13 @@ export const Classroom = () => {
 
         const initMedia = async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                currentStream = stream;
-                setStream(stream);
-                if (myVideoRef.current) myVideoRef.current.srcObject = stream;
+                // Audio ONLY by default
+                const initialStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: false, 
+                    audio: true 
+                });
+                currentStream = initialStream;
+                setStream(initialStream);
                 setLoading(false);
 
                 const peerId = currentUser?.role === 'teacher' ? `teacher-${id}` : `student-${currentUser?.id || Math.random().toString(36).substr(2, 9)}`;
@@ -42,7 +47,8 @@ export const Classroom = () => {
                 peerRef.current = currentPeer;
 
                 currentPeer.on('call', (call) => {
-                    call.answer(stream);
+                    callRef.current = call;
+                    call.answer(initialStream);
                     call.on('stream', (userRemoteStream) => {
                         setRemoteStream(userRemoteStream);
                         if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
@@ -52,7 +58,8 @@ export const Classroom = () => {
                 if (currentUser?.role === 'student') {
                     setTimeout(() => {
                         if (currentPeer) {
-                            const call = currentPeer.call(`teacher-${id}`, stream);
+                            const call = currentPeer.call(`teacher-${id}`, initialStream);
+                            callRef.current = call;
                             call.on('stream', (userRemoteStream) => {
                                 setRemoteStream(userRemoteStream);
                                 if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
@@ -62,7 +69,7 @@ export const Classroom = () => {
                 }
             } catch (err: any) {
                 console.error("Media Error:", err);
-                setError(err.message || "فشل الوصول للكاميرا والميكروفون");
+                setError("يرجى السماح بالوصول للميكروفون للمتابعة");
                 setLoading(false);
             }
         };
@@ -75,6 +82,42 @@ export const Classroom = () => {
         };
     }, [id, currentUser]);
 
+    const startScreenShare = async () => {
+        try {
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            setIsScreenSharing(true);
+            
+            // Replace our local track in the UI mirror
+            if (myVideoRef.current) myVideoRef.current.srcObject = screenStream;
+            
+            // Replace the track in the outgoing peer call if active
+            if (callRef.current && callRef.current.peerConnection) {
+                const videoTrack = screenStream.getVideoTracks()[0];
+                const sender = callRef.current.peerConnection.getSenders().find((s: any) => s.track.kind === 'video');
+                if (sender) {
+                    sender.replaceTrack(videoTrack);
+                } else {
+                    // If no video sender existed (audio only start), we might need to renegotiate or just rely on new calls.
+                    // Simplified for now: add the track.
+                    callRef.current.peerConnection.addTrack(videoTrack, screenStream);
+                }
+            }
+
+            screenStream.getVideoTracks()[0].onended = () => {
+                setIsScreenSharing(false);
+                if (stream) {
+                    const videoTrack = stream.getVideoTracks()[0];
+                    if (videoTrack && callRef.current?.peerConnection) {
+                        const sender = callRef.current.peerConnection.getSenders().find((s: any) => s.track.kind === 'video');
+                        if (sender) sender.replaceTrack(videoTrack);
+                    }
+                }
+            };
+        } catch (err) {
+            console.error("Screen share error:", err);
+        }
+    };
+
     const toggleMute = () => {
         if (stream) {
             stream.getAudioTracks()[0].enabled = isMuted;
@@ -82,10 +125,30 @@ export const Classroom = () => {
         }
     };
 
-    const toggleCamera = () => {
-        if (stream) {
-            stream.getVideoTracks()[0].enabled = isCameraOff;
-            setIsCameraOff(!isCameraOff);
+    const toggleCamera = async () => {
+        try {
+            if (isCameraOff) {
+                // Try to get video stream if we don't have it
+                const videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                setStream(videoStream);
+                if (myVideoRef.current) myVideoRef.current.srcObject = videoStream;
+                
+                // Replace audio/video tracks in call
+                if (callRef.current?.peerConnection) {
+                    videoStream.getTracks().forEach(track => {
+                        const sender = callRef.current.peerConnection.getSenders().find((s: any) => s.track.kind === track.kind);
+                        if (sender) sender.replaceTrack(track);
+                        else callRef.current.peerConnection.addTrack(track, videoStream);
+                    });
+                }
+                setIsCameraOff(false);
+            } else {
+                stream?.getVideoTracks().forEach(t => t.stop());
+                setIsCameraOff(true);
+            }
+        } catch (err) {
+            console.error("Camera access error:", err);
+            alert("فشل الوصول للكاميرا. يرجى التأكد من الأذونات.");
         }
     };
 
@@ -189,9 +252,18 @@ export const Classroom = () => {
                             <Settings size={14} className="text-gray-500" />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                            <button className="bg-white/5 hover:bg-white/10 h-12 flex flex-col items-center justify-center border border-white/10 text-[9px] gap-1">
-                                <Share size={16} /> مشاركة
-                            </button>
+                            {currentUser?.role === 'teacher' && (
+                                <button 
+                                    onClick={startScreenShare}
+                                    className={cn(
+                                        "h-12 flex flex-col items-center justify-center border border-white/10 text-[9px] gap-1 transition-colors",
+                                        isScreenSharing ? "bg-emerald-600 text-white border-emerald-400" : "bg-white/5 hover:bg-white/10"
+                                    )}
+                                >
+                                    <Share size={16} /> 
+                                    {isScreenSharing ? "جاري المشاركة" : "مشاركة الشاشة"}
+                                </button>
+                            )}
                             <button className="bg-white/5 hover:bg-white/10 h-12 flex flex-col items-center justify-center border border-white/10 text-[9px] gap-1">
                                 <MessageSquare size={16} /> الدردشة
                             </button>
@@ -201,10 +273,10 @@ export const Classroom = () => {
                     {/* Info Card */}
                     <div className="flex-1 bg-primary-600/10 border-4 border-primary-600/20 p-6 flex flex-col items-center justify-center text-center">
                         <div className="w-12 h-12 bg-primary-600 flex items-center justify-center mb-4">
-                            <User size={24} />
+                            <Monitor size={24} />
                         </div>
-                        <h4 className="text-sm mb-2 uppercase">انضباط الحصة</h4>
-                        <p className="text-[10px] text-gray-400 font-bold italic leading-relaxed">يرجى التأكد من هدوء المكان ووضوح الإضاءة للحصول على أفضل تجربة تعليمية.</p>
+                        <h4 className="text-sm mb-2 uppercase">مشاركة الشاشة</h4>
+                        <p className="text-[10px] text-gray-400 font-bold italic leading-relaxed">المعلمة ستقوم بمشاركة شاشتها معك للشرح المباشر.</p>
                     </div>
                 </div>
             </div>
