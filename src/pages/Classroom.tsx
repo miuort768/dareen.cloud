@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
     MessageSquare, Settings, Users, Share, 
-    Crown, User, Monitor
+    Crown, Monitor
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
