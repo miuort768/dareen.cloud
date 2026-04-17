@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
     TrendingUp, CalendarDays, Clock, Headset, Activity,
-    GraduationCap, BookOpen, Trophy, MessageSquare, Zap,
+    GraduationCap, BookOpen, Trophy, MessageSquare,
     Star, Award, Target, CheckCircle2, XCircle, AlertCircle, Play, Snowflake
 } from 'lucide-react';
 import { api } from '../lib/api';
