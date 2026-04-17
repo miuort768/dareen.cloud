@@ -33,11 +33,15 @@ export const Classroom = () => {
 
         const initMedia = async () => {
             try {
-                // Audio ONLY by default
+                // Always request both to keep the pipeline open, but we start with video tracks disabled
                 const initialStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: false, 
+                    video: true, 
                     audio: true 
                 });
+                
+                // Disable video tracks immediately if camera is off
+                initialStream.getVideoTracks().forEach(t => t.enabled = !isCameraOff);
+                
                 currentStream = initialStream;
                 setStream(initialStream);
                 setLoading(false);
@@ -50,8 +54,12 @@ export const Classroom = () => {
                     callRef.current = call;
                     call.answer(initialStream);
                     call.on('stream', (userRemoteStream) => {
+                        console.log("📡 Remote stream received (Call Answer)");
                         setRemoteStream(userRemoteStream);
-                        if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
+                        if (remoteVideoRef.current) {
+                            remoteVideoRef.current.srcObject = userRemoteStream;
+                            remoteVideoRef.current.muted = false;
+                        }
                     });
                 });
 
@@ -66,6 +74,7 @@ export const Classroom = () => {
                                 setRemoteStream(userRemoteStream);
                                 if (remoteVideoRef.current) {
                                     remoteVideoRef.current.srcObject = userRemoteStream;
+                                    remoteVideoRef.current.muted = false; // Force NOT muted
                                     remoteVideoRef.current.play().catch(e => console.error("Auto-play failed", e));
                                 }
                             });
