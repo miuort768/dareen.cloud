@@ -57,7 +57,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     };
 
     useEffect(() => {
-        scrollToBottom();
+        scrollToBottom("smooth");
     }, [messages]);
 
     // Mark as read when conversation is active or new messages arrive
@@ -172,7 +172,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 space-y-2 custom-scrollbar relative z-10"
+                className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 flex flex-col space-y-2 custom-scrollbar relative z-10"
             >
                 {messages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
