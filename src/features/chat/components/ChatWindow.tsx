@@ -172,9 +172,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 flex flex-col-reverse space-y-2 space-y-reverse custom-scrollbar relative z-10"
+                className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 space-y-2 custom-scrollbar relative z-10"
             >
-                {[...messages].reverse().map((msg, idx) => {
+                {messages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
                     const isGroup = selectedConv.isGroup;
                     
