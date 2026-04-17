@@ -145,17 +145,15 @@ export const Home = () => {
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
-                                <a
-                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي استفسار بخصوص أحكام التجويد وتلاوة القرآن الكريم')}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <button
+                                    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-green-600 fill-green-600" />
                                     </div>
                                     <span>كيف نعمل؟</span>
-                                </a>
+                                </button>
                             </div>
                             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center gap-6">
                                 <div className="flex -space-x-3 space-x-reverse">
@@ -398,7 +396,7 @@ export const Home = () => {
             </section>
 
             {/* How it Works Section - Reimagined Creative Design */}
-            <section className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
+            <section id="how-it-works" className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.05] dark:bg-red-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
