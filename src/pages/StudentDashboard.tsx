@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     TrendingUp, CalendarDays, Clock, Headset, Activity,
     GraduationCap, BookOpen, Trophy, MessageSquare,
-    Star, Award, Target, CheckCircle2, XCircle, AlertCircle, Play, Snowflake
+    Star, Award, Target, CheckCircle2, XCircle, AlertCircle, Play, Snowflake,
+    ArrowRight
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -20,11 +21,35 @@ export const StudentDashboard = () => {
     const [studentData, setStudentData] = useState<any>(null);
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
+    const [liveSession, setLiveSession] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'overview' | 'schedule' | 'sessions' | 'subjects'>('overview');
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
     const todayDate = format(new Date(), 'dd MMMM yyyy', { locale: ar });
+
+    useEffect(() => {
+        const socket = (window as any).socket;
+        if (!socket || currentUser?.role !== 'student') return;
+
+        const handleInvite = (data: any) => {
+            console.log("🔥 StudentDashboard: Session invite received", data);
+            setLiveSession(data);
+        };
+
+        const handleEnd = () => {
+            console.log("❄️ StudentDashboard: Session ended");
+            setLiveSession(null);
+        };
+
+        socket.on('session_invite', handleInvite);
+        socket.on('session_ended', handleEnd);
+
+        return () => {
+            socket.off('session_invite', handleInvite);
+            socket.off('session_ended', handleEnd);
+        };
+    }, [currentUser]);
 
     useEffect(() => {
         const fetchStudentData = async () => {
@@ -141,6 +166,38 @@ export const StudentDashboard = () => {
                     </motion.div>
                 </div>
             </div>
+
+            {/* ═══════════════ LIVE SESSION BANNER ═══════════════ */}
+            <AnimatePresence>
+                {liveSession && (
+                    <motion.div 
+                        initial={{ opacity: 0, height: 0, y: -20 }}
+                        animate={{ opacity: 1, height: 'auto', y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -20 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 p-1 shadow-xl border-4 border-gray-950">
+                            <div className="bg-white/10 backdrop-blur-sm p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-white/30">
+                                <div className="flex items-center gap-4 text-gray-950">
+                                    <div className="w-12 h-12 bg-gray-950 text-yellow-400 flex items-center justify-center border-2 border-white shadow-lg animate-bounce">
+                                        <Play size={24} fill="currentColor" />
+                                    </div>
+                                    <div className="text-right">
+                                        <h3 className="text-base md:text-lg font-black leading-tight uppercase tracking-tighter">حصتك المباشرة بدأت الآن!</h3>
+                                        <p className="text-[10px] md:text-xs font-bold opacity-80 italic">المعلمة {liveSession.teacherName} بانتظارك في الغرفة الدراسية</p>
+                                    </div>
+                                </div>
+                                <button 
+                                    onClick={() => navigate(`/classroom/${currentUser?.id}`)}
+                                    className="w-full md:w-auto bg-gray-950 text-white px-8 py-3 font-black uppercase text-xs border-2 border-gray-950 shadow-[4px_4px_0px_0px_white] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2 group"
+                                >
+                                    دخول الحصة الآن <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* ═══════════════ STAT CARDS ═══════════════ */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-8">
