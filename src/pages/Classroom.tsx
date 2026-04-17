@@ -56,16 +56,21 @@ export const Classroom = () => {
                 });
 
                 if (currentUser?.role === 'student') {
+                    // Small delay to ensure teacher is ready
                     setTimeout(() => {
-                        if (currentPeer) {
-                            const call = currentPeer.call(`teacher-${id}`, initialStream);
+                        const call = peerRef.current?.call(`teacher-${id}`, initialStream);
+                        if (call) {
                             callRef.current = call;
                             call.on('stream', (userRemoteStream) => {
+                                console.log("📡 Remote stream received on student side");
                                 setRemoteStream(userRemoteStream);
-                                if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
+                                if (remoteVideoRef.current) {
+                                    remoteVideoRef.current.srcObject = userRemoteStream;
+                                    remoteVideoRef.current.play().catch(e => console.error("Auto-play failed", e));
+                                }
                             });
                         }
-                    }, 2000);
+                    }, 3000);
                 }
             } catch (err: any) {
                 console.error("Media Error:", err);
@@ -84,37 +89,45 @@ export const Classroom = () => {
 
     const startScreenShare = async () => {
         try {
+            // 1. Get Screen Stream
             const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
             setIsScreenSharing(true);
             
-            // Replace our local track in the UI mirror
-            if (myVideoRef.current) myVideoRef.current.srcObject = screenStream;
+            // 2. Combine Screen Video + Microphone Audio
+            const micTrack = stream?.getAudioTracks()[0];
+            const combinedStream = new MediaStream([screenStream.getVideoTracks()[0]]);
+            if (micTrack) combinedStream.addTrack(micTrack);
             
-            // Replace the track in the outgoing peer call if active
+            // Update UI mirror
+            if (myVideoRef.current) myVideoRef.current.srcObject = combinedStream;
+            
+            // 3. Update Existing Call or Start New
             if (callRef.current && callRef.current.peerConnection) {
                 const videoTrack = screenStream.getVideoTracks()[0];
-                const sender = callRef.current.peerConnection.getSenders().find((s: any) => s.track.kind === 'video');
-                if (sender) {
-                    sender.replaceTrack(videoTrack);
+                const senders = callRef.current.peerConnection.getSenders();
+                const videoSender = senders.find((s: any) => s.track?.kind === 'video');
+                
+                if (videoSender) {
+                    videoSender.replaceTrack(videoTrack);
                 } else {
-                    // If no video sender existed (audio only start), we might need to renegotiate or just rely on new calls.
-                    // Simplified for now: add the track.
-                    callRef.current.peerConnection.addTrack(videoTrack, screenStream);
+                    // If no video sender existed, we must add it. This often requires a new call in PeerJS.
+                    // For maximum compatibility, let's re-call the students or trigger a signal.
+                    peerRef.current?.call(`student-${id}`, combinedStream); // Fallback recall
                 }
             }
 
             screenStream.getVideoTracks()[0].onended = () => {
                 setIsScreenSharing(false);
+                // Revert to audio only
                 if (stream) {
-                    const videoTrack = stream.getVideoTracks()[0];
-                    if (videoTrack && callRef.current?.peerConnection) {
-                        const sender = callRef.current.peerConnection.getSenders().find((s: any) => s.track.kind === 'video');
-                        if (sender) sender.replaceTrack(videoTrack);
-                    }
+                    if (myVideoRef.current) myVideoRef.current.srcObject = stream;
+                    const videoSender = callRef.current?.peerConnection?.getSenders().find((s: any) => s.track?.kind === 'video');
+                    if (videoSender) videoSender.replaceTrack(null);
                 }
             };
         } catch (err) {
             console.error("Screen share error:", err);
+            setIsScreenSharing(false);
         }
     };
 
