@@ -10,7 +10,7 @@ import { cn } from '../lib/utils';
 import Peer from 'peerjs';
 
 export const Classroom = () => {
-    const { id } = useParams(); // This is the studentId/roomSuffix
+    const { id } = useParams(); 
     const { currentUser } = useApp();
     const navigate = useNavigate();
     
@@ -18,30 +18,31 @@ export const Classroom = () => {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
     const [isCameraOff, setIsCameraOff] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     
     const myVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peerRef = useRef<Peer | null>(null);
 
     useEffect(() => {
-        // Initialize Media
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-            .then(myStream => {
-                setStream(myStream);
-                if (myVideoRef.current) myVideoRef.current.srcObject = myStream;
-                
-                // Initialize Peer
-                const peerId = currentUser?.role === 'teacher' ? `teacher-${id}` : `student-${currentUser?.id}`;
-                const peer = new Peer(peerId);
-                peerRef.current = peer;
+        let currentPeer: Peer | null = null;
+        let currentStream: MediaStream | null = null;
 
-                peer.on('open', (id) => console.log('My peer ID is: ' + id));
+        const initMedia = async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                currentStream = stream;
+                setStream(stream);
+                if (myVideoRef.current) myVideoRef.current.srcObject = stream;
+                setLoading(false);
 
-                // If student, they will likely "Call" or wait to be called
-                // If teacher, they wait for connections or initiate
-                
-                peer.on('call', (call) => {
-                    call.answer(myStream);
+                const peerId = currentUser?.role === 'teacher' ? `teacher-${id}` : `student-${currentUser?.id || Math.random().toString(36).substr(2, 9)}`;
+                currentPeer = new Peer(peerId);
+                peerRef.current = currentPeer;
+
+                currentPeer.on('call', (call) => {
+                    call.answer(stream);
                     call.on('stream', (userRemoteStream) => {
                         setRemoteStream(userRemoteStream);
                         if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
@@ -49,23 +50,30 @@ export const Classroom = () => {
                 });
 
                 if (currentUser?.role === 'student') {
-                    // Try calling teacher
                     setTimeout(() => {
-                        const call = peer.call(`teacher-${id}`, myStream);
-                        call.on('stream', (userRemoteStream) => {
-                            setRemoteStream(userRemoteStream);
-                            if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
-                        });
+                        if (currentPeer) {
+                            const call = currentPeer.call(`teacher-${id}`, stream);
+                            call.on('stream', (userRemoteStream) => {
+                                setRemoteStream(userRemoteStream);
+                                if (remoteVideoRef.current) remoteVideoRef.current.srcObject = userRemoteStream;
+                            });
+                        }
                     }, 2000);
                 }
-            })
-            .catch(err => console.error("Failed to get stream", err));
+            } catch (err: any) {
+                console.error("Media Error:", err);
+                setError(err.message || "فشل الوصول للكاميرا والميكروفون");
+                setLoading(false);
+            }
+        };
+
+        initMedia();
 
         return () => {
-            stream?.getTracks().forEach(track => track.stop());
-            peerRef.current?.destroy();
+            currentStream?.getTracks().forEach(track => track.stop());
+            currentPeer?.destroy();
         };
-    }, []);
+    }, [id, currentUser]);
 
     const toggleMute = () => {
         if (stream) {
@@ -81,8 +89,29 @@ export const Classroom = () => {
         }
     };
 
+    if (error) return (
+        <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
+            <div className="w-16 h-16 bg-rose-600 mb-6 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_white]">
+                <VideoOff size={32} className="text-white" />
+            </div>
+            <h1 className="text-2xl font-black text-white italic mb-4 uppercase tracking-tighter">خطأ في الكاميرا أو الميكروفون</h1>
+            <p className="text-gray-400 text-sm max-w-xs mb-8">{error}</p>
+            <button onClick={() => navigate(-1)} className="bg-white text-gray-950 px-8 py-3 font-black uppercase text-xs border-4 border-gray-950 shadow-[6px_6px_0px_0px_#444]">العودة للخلف</button>
+        </div>
+    );
+
+    if (loading) return (
+        <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center" dir="rtl">
+            <div className="relative w-16 h-16 mb-8">
+                <div className="absolute inset-0 border-4 border-white/10" />
+                <div className="absolute inset-0 border-4 border-primary-600 border-t-transparent animate-spin" />
+            </div>
+            <p className="text-white/20 font-black italic uppercase tracking-[0.3em]">جاري تهيئة الغرفة المباشرة...</p>
+        </div>
+    );
+
     return (
-        <div className="min-h-screen bg-gray-950 text-white flex flex-col font-black italic">
+        <div className="min-h-screen bg-gray-950 text-white flex flex-col font-black italic" dir="rtl">
             {/* Header */}
             <div className="h-16 border-b-4 border-white/10 flex items-center justify-between px-6 bg-gray-950/80 backdrop-blur-md">
                 <div className="flex items-center gap-4">
@@ -103,8 +132,8 @@ export const Classroom = () => {
                     <button className="p-2 hover:bg-white/5 transition-colors border border-white/10">
                         <Users size={20} />
                     </button>
-                    <button className="p-2 hover:bg-white/5 transition-colors border border-white/10 text-rose-500">
-                        <PhoneOff size={20} onClick={() => navigate(-1)} />
+                    <button onClick={() => navigate(-1)} className="p-2 hover:bg-white/5 transition-colors border border-white/10 text-rose-500">
+                        <PhoneOff size={20} />
                     </button>
                 </div>
             </div>
@@ -137,10 +166,10 @@ export const Classroom = () => {
                     </div>
                 </div>
 
-                {/* Sidebar area: Chat, Self Video, Participants */}
+                {/* Sidebar area */}
                 <div className="flex flex-col gap-4 overflow-y-auto no-scrollbar">
                     {/* My Video */}
-                    <div className="aspect-video bg-gray-900 border-4 border-primary-600/30 relative overflow-hidden shadow-2xl overflow-hidden group">
+                    <div className="aspect-video bg-gray-900 border-4 border-primary-600/30 relative overflow-hidden shadow-2xl group">
                         <video 
                             ref={myVideoRef} 
                             autoPlay 
@@ -186,7 +215,7 @@ export const Classroom = () => {
                     onClick={toggleMute}
                     className={cn(
                         "w-14 h-14 flex items-center justify-center transition-all border-4",
-                        isMuted ? "bg-rose-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110 active:scale-95 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
+                        isMuted ? "bg-rose-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
                     )}
                 >
                     {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
@@ -196,7 +225,7 @@ export const Classroom = () => {
                     onClick={toggleCamera}
                     className={cn(
                         "w-14 h-14 flex items-center justify-center transition-all border-4",
-                        isCameraOff ? "bg-rose-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110 active:scale-95 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
+                        isCameraOff ? "bg-rose-600 border-gray-950 text-white" : "bg-white border-gray-950 text-gray-950 hover:scale-110 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
                     )}
                 >
                     {isCameraOff ? <VideoOff size={24} /> : <Video size={24} />}
@@ -204,7 +233,7 @@ export const Classroom = () => {
                 
                 <button 
                     onClick={() => navigate(-1)}
-                    className="w-14 h-14 bg-rose-600 border-4 border-gray-950 text-white flex items-center justify-center hover:scale-110 active:scale-95 shadow-[4px_4px_0px_0px_rgba(224,36,36,0.3)] transition-all"
+                    className="w-14 h-14 bg-rose-600 border-4 border-gray-950 text-white flex items-center justify-center hover:scale-110 shadow-[4px_4px_0px_0px_rgba(224,36,36,0.3)] transition-all"
                 >
                     <PhoneOff size={24} />
                 </button>

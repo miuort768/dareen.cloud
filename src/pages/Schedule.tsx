@@ -107,6 +107,8 @@ export const Schedule = () => {
     const [mobileActiveDay, setMobileActiveDay] = useState<string>('');
     const [loading, setLoading] = useState(true);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
         setMobileActiveDay(DAYS_OF_WEEK.includes(today) ? today : 'السبت');
@@ -489,7 +491,7 @@ export const Schedule = () => {
                                                 type: 'video'
                                             });
                                         }
-                                        window.location.href = `/classroom/${selectedEvent.studentId}`;
+                                        navigate(`/classroom/${selectedEvent.studentId}`);
                                     }}
                                     className="w-full bg-primary-600 text-white py-4 font-black uppercase text-xs border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2 group"
                                 >
