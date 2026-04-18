@@ -103,13 +103,13 @@ export const StudentDashboard = () => {
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-3xl shadow-lg shadow-purple-500/20 text-white"
+                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-none shadow-lg shadow-purple-500/20 text-white"
             >
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
-                <BookOpen className="absolute bottom-4 left-4 text-white/10" size={100} />
+                <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
                 
                 <div className="relative z-10 flex flex-col items-center text-center">
-                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-2">الفصل القادم</span>
+                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-2">الحصة القادمة</span>
                     {todaySchedule.length > 0 ? (
                         <>
                             <h2 className="text-xl md:text-2xl font-black mb-1">{todaySchedule[0].slots[0].subject}</h2>
