@@ -240,30 +240,31 @@ export const Forum = () => {
                                         </p>
                                     </div>
 
-
-
                                     {/* FB Actions Bar */}
-                                    <div className="px-2 md:px-4 py-1 flex border-t border-slate-100 dark:border-slate-800 mt-2">
+                                    <div className="px-2 md:px-4 py-1.5 flex border-t border-slate-100 dark:border-slate-800 mt-2 bg-slate-50/30 dark:bg-slate-800/20">
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
-                                            className={cn("flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black transition-colors hover:bg-slate-50 dark:hover:bg-slate-800", isLiked ? "text-blue-600" : "text-slate-600")}
+                                            className={cn(
+                                                "flex-1 py-2 flex items-center justify-center gap-2 text-xs font-black transition-all hover:bg-white dark:hover:bg-slate-700 active:scale-95",
+                                                isLiked ? "text-blue-600 bg-blue-50/50 dark:bg-blue-900/10" : "text-slate-600"
+                                            )}
                                         >
                                             <ThumbsUp size={16} className={cn(isLiked && "fill-current")} />
-                                            أعجبني
+                                            <span>أعجبني</span>
                                         </button>
                                         <button 
                                             onClick={() => toggleComments(post.id)}
-                                            className="flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black text-slate-600 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
+                                            className="flex-1 py-2 flex items-center justify-center gap-2 text-xs font-black text-slate-600 transition-all hover:bg-white dark:hover:bg-slate-700 active:scale-95 border-x border-slate-100 dark:border-slate-800"
                                         >
                                             <MessageSquare size={16} />
-                                            تعليق
+                                            <span>تعليق</span>
                                         </button>
                                         <button 
-                                            onClick={() => showNotification('تم إرسال التبليغ للإدارة للمراجعة', 'success')}
-                                            className="flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black text-rose-500 transition-colors hover:bg-rose-50 dark:hover:bg-rose-900/10"
+                                            onClick={() => showNotification('تم إرسال التبليغ للإدارة للمراجعة', 'info')}
+                                            className="flex-1 py-2 flex items-center justify-center gap-2 text-xs font-black text-rose-500 transition-all hover:bg-rose-50 dark:hover:bg-rose-900/10 active:scale-95"
                                         >
                                             <AlertTriangle size={16} />
-                                            تبليغ
+                                            <span>تبليغ</span>
                                         </button>
                                     </div>
 

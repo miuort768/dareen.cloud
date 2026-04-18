@@ -65,18 +65,18 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
 
     return (
         <div className={cn(
-            "group relative flex items-center gap-4 p-4 min-w-[320px] max-w-[420px] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] border backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-            "bg-white/80 dark:bg-slate-900/80",
+            "group relative flex items-center gap-4 p-4 min-w-[320px] max-w-[420px] rounded-none shadow-[4px_4px_0px_0px_black] border-2 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+            "bg-white dark:bg-slate-900",
             border,
             isExiting ? "opacity-0 scale-95 translate-x-10" : "animate-in slide-in-from-right-12 fade-in",
-            "hover:shadow-[0_25px_60px_rgba(0,0,0,0.25)] hover:-translate-y-1"
+            "hover:shadow-[6px_6px_0px_0px_black] hover:-translate-y-0.5"
         )}>
             {/* Background Gradient Overlay */}
-            <div className={cn("absolute inset-0 rounded-2xl bg-gradient-to-br opacity-50", gradient)} />
+            <div className={cn("absolute inset-0 bg-gradient-to-br opacity-5", gradient)} />
 
             {/* Icon Section */}
             <div className={cn(
-                "relative z-10 p-2.5 rounded-xl text-white shadow-lg shadow-black/5 flex-shrink-0 animate-bounce-slow",
+                "relative z-10 p-2.5 rounded-none text-white border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] flex-shrink-0 animate-bounce-slow",
                 iconBg
             )}>
                 <Icon size={20} className="drop-shadow-sm" />
@@ -92,13 +92,13 @@ export const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProp
             {/* Close Button */}
             <button
                 onClick={handleClose}
-                className="relative z-10 p-1.5 rounded-lg text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all"
+                className="relative z-10 p-1.5 rounded-none text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all border border-transparent hover:border-gray-950"
             >
                 <X size={16} />
             </button>
 
             {/* Premium Progress Bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden rounded-b-2xl opacity-40">
+            <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden opacity-40">
                 <div
                     className={cn("h-full", progressBar)}
                     style={{ 
