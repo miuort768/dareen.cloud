@@ -140,7 +140,7 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="space-y-4 pb-28 min-w-0 w-full" dir="rtl">
+        <div className="space-y-4 pb-28 w-full max-w-full overflow-x-hidden px-[1px]" dir="rtl">
 
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="-mx-3 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-3 py-2 lg:mx-0 lg:px-6 lg:py-6 shadow-xl">
@@ -198,7 +198,7 @@ export const StudentDashboard = () => {
             </AnimatePresence>
 
             {/* ═══════════════ STAT CARDS ═══════════════ */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-8 w-full">
                 <StatCard icon={Trophy} label="معدل الحضور" value={`${stats.attendanceRate}%`} color="emerald" />
                 <StatCard icon={Clock} label="حصص قادمة" value={stats.upcomingSessions} color="blue" />
                 <StatCard icon={Star} label="إجمالي النقاط" value={points} color="amber" />
@@ -206,7 +206,8 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ TAB NAVIGATION ═══════════════ */}
-            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-hide min-w-0">
+            <div className="flex p-1 bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 overflow-hidden w-full">
+                <div className="flex w-full overflow-x-auto scrollbar-hide">
                 {[
                     { key: 'overview', label: 'الرئيسية', icon: Activity },
                     { key: 'schedule', label: 'الجدول', icon: CalendarDays },
@@ -228,6 +229,7 @@ export const StudentDashboard = () => {
                         <span className="sm:hidden text-[8px] leading-none mt-0.5 truncate">{tab.label}</span>
                     </button>
                 ))}
+                </div>
             </div>
 
 
