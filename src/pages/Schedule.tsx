@@ -255,6 +255,7 @@ export const Schedule = () => {
                         <div className={cn("shrink-0 w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] z-10", stat.color)}>
                             <stat.icon size={12} strokeWidth={3} className="text-gray-950" />
                         </div>
+                    </div>
                 ))}
             </div>
 
