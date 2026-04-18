@@ -9,7 +9,6 @@ import {
     Search,
     Zap,
     LayoutGrid,
-    CheckCircle2,
     Plus,
     Printer,
     Video
