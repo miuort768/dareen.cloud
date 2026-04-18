@@ -76,46 +76,46 @@ export const ModernAnnouncements: React.FC = () => {
             
             <div className="flex flex-col md:flex-row items-stretch min-h-[100px]">
                 {/* Type Badge - Technical Box (Sharp & Small) */}
-                <div onClick={() => setShowAcknowledge(true)} className={cn("w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-4 gap-2 transition-all duration-700 relative cursor-pointer hover:opacity-80 active:scale-95", type.bg)}>
-                    <div className={cn("p-2 rounded-none bg-white dark:bg-slate-900 border-2 border-slate-900 text-slate-900", type.color)}>
-                        <type.icon size={20} />
+                <div onClick={() => setShowAcknowledge(true)} className={cn("w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-3 md:p-4 gap-2 transition-all duration-700 relative cursor-pointer hover:opacity-80 active:scale-95", type.bg)}>
+                    <div className={cn("p-1.5 md:p-2 rounded-none bg-white dark:bg-slate-900 border-2 border-slate-900 text-slate-900", type.color)}>
+                        <type.icon size={16} className="md:size-[20px]" />
                     </div>
-                    <span className={cn("text-[9px] font-black uppercase tracking-widest", type.color)}>
+                    <span className={cn("text-[8px] md:text-[9px] font-black uppercase tracking-widest leading-none", type.color)}>
                         {type.label}
                     </span>
-                    <div className="absolute top-1 right-1 opacity-20 group-hover:opacity-100 italic font-black text-[8px] tracking-tighter">ACKNOWLEDGE</div>
+                    <div className="hidden md:block absolute top-1 right-1 opacity-20 group-hover:opacity-100 italic font-black text-[8px] tracking-tighter">ACKNOWLEDGE</div>
                 </div>
 
                 {/* Content Area (Smaller Fonts) */}
-                <div onClick={() => setShowAcknowledge(true)} className="flex-1 p-6 md:p-8 flex flex-col justify-center relative cursor-pointer hover:bg-slate-50 transition-colors">
-                    <div className="absolute top-4 left-6 flex items-center gap-2 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 rounded-none border border-slate-100 dark:border-slate-700">
-                        <Sparkles size={10} className="text-amber-500" />
-                        <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
+                <div onClick={() => setShowAcknowledge(true)} className="flex-1 p-4 md:p-8 flex flex-col justify-center relative cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <div className="absolute top-2 left-4 md:top-4 md:left-6 flex items-center gap-2 px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800 rounded-none border border-slate-100 dark:border-slate-700">
+                        <Sparkles size={8} className="text-amber-500" />
+                        <span className="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
                     </div>
 
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                        <h4 className="text-slate-900 dark:text-white font-black text-lg mb-1 tracking-tighter uppercase italic">
+                    <div className="animate-in fade-in slide-in-from-right-4 duration-500 pr-1 py-4 md:py-0">
+                        <h4 className="text-slate-900 dark:text-white font-black text-sm md:text-lg mb-1 tracking-tighter uppercase italic leading-tight">
                             {current.title}
                         </h4>
-                        <p className="text-slate-500 dark:text-gray-400 text-[11px] font-bold leading-relaxed max-w-4xl">
+                        <p className="text-slate-500 dark:text-gray-400 text-[10px] md:text-[11px] font-bold leading-relaxed max-w-4xl line-clamp-3 md:line-clamp-none">
                             {current.content}
                         </p>
                     </div>
 
                     {/* Navigation Control (Sharp) */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-4 left-6 flex gap-2" onClick={(e) => e.stopPropagation()}>
+                        <div className="absolute bottom-2 left-4 md:bottom-4 md:left-6 flex gap-1.5" onClick={(e) => e.stopPropagation()}>
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)}
-                                className="w-7 h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
+                                className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
                             >
-                                <ChevronRight size={14} />
+                                <ChevronRight size={12} className="md:size-[14px]" />
                             </button>
                             <button 
                                 onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)}
-                                className="w-7 h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
+                                className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
                             >
-                                <ChevronLeft size={14} />
+                                <ChevronLeft size={12} className="md:size-[14px]" />
                             </button>
                         </div>
                     )}
