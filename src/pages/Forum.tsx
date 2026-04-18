@@ -152,7 +152,7 @@ export const Forum = () => {
                 <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-3 md:p-4 shadow-sm md:rounded-lg">
                     <div className="flex gap-2 md:gap-3 items-center mb-3 md:mb-4">
                         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
-                            <img src="/logo-3d.jpg" alt="Dareen Logo" className="w-full h-full object-contain scale-110" />
+                            <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                         </div>
                         <button 
                             onClick={() => document.getElementById('new-post-input')?.focus()}
@@ -204,7 +204,7 @@ export const Forum = () => {
                                     <div className="p-3 md:p-4 flex justify-between items-center">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
-                                                <img src="/logo-3d.jpg" alt="Dareen Logo" className="w-full h-full object-contain scale-110" />
+                                                <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2">
@@ -278,7 +278,7 @@ export const Forum = () => {
                                                 {post.comments?.map(comment => (
                                                     <div key={comment.id} className="flex gap-2">
                                                         <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
-                                                            <img src="/logo-3d.jpg" alt="Dareen Logo" className="w-full h-full object-contain" />
+                                                            <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                         </div>
                                                         <div className="flex-1">
                                                             <div className="bg-slate-200/50 dark:bg-slate-700/50 p-2.5 inline-block">
@@ -301,7 +301,7 @@ export const Forum = () => {
                                             {/* FB Add Comment Input */}
                                             <div className="flex gap-2 items-center">
                                                 <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
-                                                    <img src="/logo-3d.jpg" alt="Dareen Logo" className="w-full h-full object-contain" />
+                                                    <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                 </div>
                                                 <div className="flex-1 relative">
                                                     <input 
