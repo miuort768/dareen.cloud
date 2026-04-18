@@ -46,10 +46,18 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        // Fetch real name from database for accuracy
+        let realName = user.name || user.username;
+        const dbUser = await req.db.get('SELECT name FROM users WHERE id = ?', [user.id]) ||
+                       await req.db.get('SELECT name FROM teachers WHERE id = ?', [user.id]) ||
+                       await req.db.get('SELECT name FROM students WHERE id = ?', [user.id]);
+        
+        if (dbUser && dbUser.name) realName = dbUser.name;
+
         const newPost = {
             id: 'post_' + uuidv4(),
-            authorId: user.id || user.username, // some fallback
-            authorName: user.username,
+            authorId: user.id || user.username,
+            authorName: realName,
             authorRole: user.role,
             content: content.trim(),
             status: user.role === 'admin' ? 'approved' : 'pending',
@@ -196,11 +204,19 @@ router.post('/:id/comments', async (req, res) => {
     if (!content || !content.trim()) return res.status(400).json({ error: 'Content is required.' });
 
     try {
+        // Fetch real name from database for accuracy
+        let realName = user.name || user.username;
+        const dbUser = await req.db.get('SELECT name FROM users WHERE id = ?', [user.id]) ||
+                       await req.db.get('SELECT name FROM teachers WHERE id = ?', [user.id]) ||
+                       await req.db.get('SELECT name FROM students WHERE id = ?', [user.id]);
+        
+        if (dbUser && dbUser.name) realName = dbUser.name;
+
         const newComment = {
             id: 'comment_' + uuidv4(),
             postId: req.params.id,
             authorId: user.id || user.username,
-            authorName: user.username,
+            authorName: realName,
             authorRole: user.role,
             content: content.trim()
         };
