@@ -35,41 +35,51 @@ export const InstallPWA = () => {
 
     useEffect(() => {
         // Already installed as standalone app
-        if (isStandaloneMode()) return;
-
-        // Already permanently dismissed
-        // if (localStorage.getItem('pwa_dismissed_permanent')) return;
-
+        if (isStandaloneMode()) {
+            console.log('App is in standalone mode, hiding install banner.');
+            setIsVisible(false);
+            return;
+        }
 
         const detectedPlatform = detectPlatform();
         setPlatform(detectedPlatform);
 
-        // ✅ KEY FIX: Use the early-captured prompt from main.tsx
+        // Capture initial prompt
         if ((window as any).deferredPrompt) {
             deferredPromptRef.current = (window as any).deferredPrompt;
+            setIsVisible(true);
         }
 
-        // Also listen for future beforeinstallprompt events
         const handleBeforeInstall = (e: Event) => {
+            console.log('beforeinstallprompt event fired');
             e.preventDefault();
             deferredPromptRef.current = e;
             (window as any).deferredPrompt = e;
+            setIsVisible(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
-        // Show banner for all non-installed platforms
-        // Reduced delay for better visibility
-        const timer = setTimeout(() => setIsVisible(true), 500);
+        // Aggressive check: If not standalone, show after a delay anyway (as fallback guide)
+        const timer = setTimeout(() => {
+            if (!isStandaloneMode()) {
+                setIsVisible(true);
+            }
+        }, 1000);
+
+        // Secondary check at 5 seconds just in case
+        const secondaryTimer = setTimeout(() => {
+            if (!isStandaloneMode()) {
+                setIsVisible(true);
+            }
+        }, 5000);
+
         return () => {
             clearTimeout(timer);
-            window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
-        };
-
-
-        return () => {
+            clearTimeout(secondaryTimer);
             window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
         };
     }, []);
+
 
     const handleInstall = async () => {
         // iOS / Mac Safari: show step-by-step guide
