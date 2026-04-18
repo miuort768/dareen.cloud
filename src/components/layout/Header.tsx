@@ -80,11 +80,9 @@ export const Header = () => {
             <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                 <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/10 dark:border-white/10 pl-4 py-1 shrink-0">
                     <span className="text-[10px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
-                    <div className="px-2 py-0.5 mt-1.5 bg-primary-50 dark:bg-teal-900/20 rounded-full border border-primary-100 dark:border-teal-800/30">
-                        <span className="text-[8px] md:text-[10px] font-black text-primary-700 dark:text-teal-300 whitespace-nowrap">
-                            {getRoleLabel(user.role)}
-                        </span>
-                    </div>
+                    <span className="text-[9px] md:text-[11px] font-black text-primary-700/80 dark:text-teal-300/80 mt-1 whitespace-nowrap">
+                        {getRoleLabel(user.role)}
+                    </span>
                 </div>
 
                 {title && (
@@ -96,13 +94,13 @@ export const Header = () => {
             </div>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-1 md:gap-4 shrink-0">
+            <div className="flex items-center gap-3 lg:gap-6 shrink-0">
                 {/* Dark Mode Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-xl hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400 shrink-0"
+                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-2xl bg-gray-50 dark:bg-slate-900 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-teal-400 transition-all duration-300 shadow-sm border border-transparent hover:border-primary-100 dark:hover:border-teal-800 shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={14} className="md:size-[16px]" /> : <Moon size={14} className="md:size-[16px]" />}
+                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
 
                 {/* Notifications Dropdown */}
@@ -116,8 +114,8 @@ export const Header = () => {
                             {getRoleLabel(user.role)}
                         </p>
                     </div>
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 shadow-sm dark:from-slate-800 dark:to-slate-900 dark:text-teal-300 border border-primary-500/20 overflow-hidden shrink-0 rotate-3 hover:rotate-0 transition-transform duration-300">
-                        <User size={20} />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 dark:from-slate-800 dark:to-slate-900 dark:text-teal-300 border border-primary-400/30 dark:border-teal-500/30 shadow-[0_0_10px_rgba(52,211,153,0.3)] overflow-hidden shrink-0 rotate-3 hover:rotate-0 transition-all duration-300">
+                        <User size={22} />
                     </div>
                 </div>
             </div>
