@@ -46,7 +46,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             "w-full lg:w-[400px] flex flex-col bg-white dark:bg-[#111b21] shrink-0 overflow-hidden relative border-r border-gray-200 dark:border-gray-800 pb-[65px] lg:pb-0",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
-            <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
+            <div className="h-[60px] bg-[#f8f9fa] dark:bg-[#1a2226] px-4 flex items-center justify-between shrink-0 border-b border-gray-200/50 dark:border-white/5">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-400/30 dark:border-emerald-500/30 shadow-[0_0_8px_rgba(52,211,153,0.2)] shrink-0">
                         <img 
@@ -179,10 +179,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 )}
             </div>
             
-            <div className="bg-white/80 dark:bg-[#111b21]/80 backdrop-blur-md p-3 border-t border-emerald-500/10 text-center sticky bottom-0 z-[100] w-full">
-                <div className="flex items-center justify-center gap-2">
+            <div className="bg-white/80 dark:bg-[#111b21]/90 backdrop-blur-md p-3 border-t border-emerald-500/10 text-center sticky bottom-0 z-[100] w-full">
+                <div className="flex items-center justify-center gap-2 drop-shadow-[0_0_5px_rgba(0,168,132,0.4)]">
                     <ShieldCheck size={14} className="text-[#00a884] animate-pulse" />
-                    <span className="text-[10px] text-[#00a884] font-black uppercase tracking-[0.3em] drop-shadow-sm">تواصل آمن ومشفر</span>
+                    <span className="text-[10px] text-[#00a884] font-black uppercase tracking-[0.3em]">تواصل آمن ومشفر</span>
                 </div>
             </div>
         </div>
