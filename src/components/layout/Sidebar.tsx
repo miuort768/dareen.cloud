@@ -264,23 +264,27 @@ export const Sidebar = () => {
                         )}
                     >
                         {({ isActive }) => (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 relative">
                                 <span className={cn(
                                     "text-xs font-black whitespace-nowrap overflow-hidden transition-all duration-500",
                                     isActive ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0"
                                 )}>
                                     {item.name}
                                 </span>
-                                <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
                                 
-                                {/* Notification Badge for Chat */}
-                                {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute top-0 right-0 translate-x-1 -translate-y-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm">
-                                        {totalUnreadCount > 9 ? '+' : totalUnreadCount}
-                                    </span>
-                                )}
+                                <div className="relative">
+                                    <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
+                                    
+                                    {/* Notification Badge for Chat */}
+                                    {item.id === 'chat' && totalUnreadCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm animate-pulse">
+                                            {totalUnreadCount > 9 ? '+' : totalUnreadCount}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         )}
+
                     </NavLink>
                 ))}
 
