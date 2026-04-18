@@ -18,7 +18,8 @@ export const Layout = () => {
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col transition-all duration-300">
-                {!isChatOnly && <Header />}
+                {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
+
                 <main className={cn(
                     "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
@@ -39,6 +40,7 @@ export const Layout = () => {
                                 </div>
                             </div>
                         }>
+
                             <Outlet />
                         </React.Suspense>
                     </div>
