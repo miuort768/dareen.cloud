@@ -347,8 +347,7 @@ const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: n
         </div>
     </div>
 );
-    );
-};
+
 
 // ═══════════ Sub Components ═══════════
 
