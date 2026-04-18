@@ -215,9 +215,9 @@ export const Schedule = () => {
     if (loading) return <div className="p-20 text-center font-black animate-pulse text-gray-400">جاري تحميل الجدول...</div>;
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
+        <div className="space-y-6 pb-24 animate-in fade-in duration-500 overflow-x-hidden px-4" dir="rtl">
             {/* Master Header */}
-            <div className="relative bg-white border-2 border-gray-950 p-2.5 md:p-6 shadow-[2px_2px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group w-full">
+            <div className="relative bg-white border-2 border-gray-950 p-2.5 md:p-6 shadow-[3px_3px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group w-full mx-auto">
                 <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="flex items-center gap-2 md:gap-3 text-right">
@@ -239,7 +239,7 @@ export const Schedule = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 w-full font-black px-0">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full font-black">
                 {[
                     { label: 'الحصص', val: allEvents.length, icon: LayoutGrid, color: 'bg-blue-400' },
                     { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'bg-emerald-400' },
@@ -259,7 +259,7 @@ export const Schedule = () => {
             </div>
 
             {/* Filter Bar */}
-            <div className="w-full bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black]">
+            <div className="w-full bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] mx-auto">
                 <div className="w-full md:flex-1">
                     <div className="relative">
                         <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-950" size={13} />
