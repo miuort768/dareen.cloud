@@ -13,7 +13,7 @@ interface AttendanceHeaderProps {
 
 export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, stats, isTeacher }) => {
     return (
-        <div className="relative bg-white border-2 border-gray-950 p-4 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-6 rounded-none">
+        <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-4 md:mb-6 rounded-none">
             {/* Pattern Background */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
             <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 transform translate-x-16 pointer-events-none"></div>
@@ -36,31 +36,31 @@ export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDate
                     </div>
                 </div>
 
-                <div className="flex items-center gap-6 flex-wrap">
+                <div className="flex items-center gap-2 md:gap-6 flex-wrap w-full md:w-auto">
                     {!isTeacher && (
-                        <div className="hidden md:flex gap-4">
-                            <div className="bg-emerald-50 border-2 border-gray-950 p-3 min-w-[120px] shadow-[2px_2px_0px_0px_black] flex flex-col items-center">
-                                <p className="text-emerald-700 text-[9px] font-black uppercase tracking-widest leading-none mb-2">حصص اليوم</p>
-                                <p className="text-gray-950 text-2xl font-black leading-none">{stats.todayTotal}</p>
+                        <div className="flex md:flex gap-2 md:gap-4 w-full md:w-auto">
+                            <div className="flex-1 md:flex-none bg-emerald-50 border-2 border-gray-950 p-2 md:p-3 shadow-[2px_2px_0px_0px_black] flex flex-col items-center">
+                                <p className="text-emerald-700 text-[8px] md:text-[9px] font-black uppercase tracking-widest leading-none mb-1 md:mb-2">اليوم</p>
+                                <p className="text-gray-950 text-xl md:text-2xl font-black leading-none">{stats.todayTotal}</p>
                             </div>
-                            <div className="bg-amber-50 border-2 border-gray-950 p-3 min-w-[120px] shadow-[2px_2px_0px_0px_black] flex flex-col items-center">
-                                <p className="text-amber-700 text-[9px] font-black uppercase tracking-widest leading-none mb-2">المنجز حالياً</p>
-                                <p className="text-gray-950 text-2xl font-black leading-none">{stats.totalCompleted}</p>
+                            <div className="flex-1 md:flex-none bg-amber-50 border-2 border-gray-950 p-2 md:p-3 shadow-[2px_2px_0px_0px_black] flex flex-col items-center">
+                                <p className="text-amber-700 text-[8px] md:text-[9px] font-black uppercase tracking-widest leading-none mb-1 md:mb-2">المنجز</p>
+                                <p className="text-gray-950 text-xl md:text-2xl font-black leading-none">{stats.totalCompleted}</p>
                             </div>
                         </div>
                     )}
                     
                     {!isTeacher && (
-                        <div className="bg-white border-2 border-gray-950 flex items-center shadow-[2px_2px_0px_0px_black] group">
-                            <div className="px-3 py-3 bg-gray-950 text-white border-l-2 border-gray-950 flex items-center justify-center group-hover:bg-primary-600 transition-colors">
-                                <Calendar size={20} />
+                        <div className="bg-white border-2 border-gray-950 flex items-center shadow-[2px_2px_0px_0px_black] group w-full md:w-auto">
+                            <div className="px-2 py-2 md:px-3 md:py-3 bg-gray-950 text-white border-l-2 border-gray-950 flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                                <Calendar size={16} className="md:size-[20px]" />
                             </div>
-                            <div className="p-1.5">
+                            <div className="p-1 flex-1 md:p-1.5">
                                 <input
                                     type="date"
                                     value={date}
                                     onChange={(e) => onDateChange(e.target.value)}
-                                    className="bg-transparent border-none text-gray-950 font-black text-sm focus:outline-none pr-3 py-1 cursor-pointer uppercase tracking-tight"
+                                    className="w-full bg-transparent border-none text-gray-950 font-black text-xs md:text-sm focus:outline-none pr-2 md:pr-3 py-1 cursor-pointer uppercase tracking-tight"
                                 />
                             </div>
                         </div>

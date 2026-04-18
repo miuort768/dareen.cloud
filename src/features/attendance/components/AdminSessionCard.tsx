@@ -32,39 +32,39 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     };
 
     return (
-        <div className="group relative bg-white border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between">
+        <div className="group relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between">
             {/* Design accents */}
             <div className="absolute top-0 right-0 w-2 h-full bg-primary-600"></div>
             
             <div className="space-y-6">
                 <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] transform -rotate-3 text-xl font-black">
+                    <div className="flex items-center gap-3 md:gap-4">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] transform -rotate-3 text-lg md:text-xl font-black shrink-0">
                             {getGradeDisplay(studentGrade)}
                         </div>
-                        <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <h4 className="font-black text-gray-950 text-xl tracking-tighter uppercase leading-none">{session.studentName}</h4>
+                        <div className="min-w-0">
+                            <div className="flex flex-col md:flex-row md:items-center gap-1 mb-1">
+                                <h4 className="font-black text-gray-950 text-base md:text-xl tracking-tighter uppercase leading-none truncate">{session.studentName}</h4>
                                 {studentGrade && (
-                                    <span className="text-[10px] font-black bg-gray-950 text-white px-2 py-0.5 border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
+                                    <span className="w-fit text-[8px] md:text-[10px] font-black bg-gray-950 text-white px-1.5 md:px-2 py-0.5 border md:border-2 border-gray-950 shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)]">
                                         {studentGrade}
                                     </span>
                                 )}
                             </div>
                             <div className="flex items-center gap-2">
-                                <BookOpen size={14} className="text-primary-600" />
-                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">{session.subject}</p>
+                                <BookOpen size={12} className="text-primary-600 md:size-[14px]" />
+                                <p className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest italic truncate">{session.subject}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-gray-50 border-2 border-dashed border-gray-300 p-4">
-                     <div className="flex items-center gap-2 mb-3">
-                        <Clock size={16} className="text-gray-950" />
-                        <span className="text-[10px] font-black text-gray-950 uppercase tracking-widest italic">موعد الحصة المجدول</span>
+                <div className="bg-gray-50 border-2 border-dashed border-gray-300 p-3 md:p-4">
+                     <div className="flex items-center gap-2 mb-2 md:mb-3">
+                        <Clock size={14} className="text-gray-950 md:size-[16px]" />
+                        <span className="text-[8px] md:text-[10px] font-black text-gray-950 uppercase tracking-widest italic">الموعد</span>
                     </div>
-                    <div className="text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-4 py-1 inline-block shadow-[2px_2px_0px_0px_black] tracking-tight">
+                    <div className="text-base md:text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-3 md:px-4 py-1 inline-block shadow-[2px_2px_0px_0px_black] tracking-tight">
                         {session.time}
                     </div>
                 </div>
@@ -92,28 +92,28 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 </div>
             </div>
 
-            <div className="flex gap-4 pt-8">
+            <div className="flex gap-2 md:gap-4 pt-6 md:pt-8">
                 <button
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     className={cn(
-                        "flex-1 py-4 border-4 font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
                         session.status === 'completed'
                             ? 'bg-emerald-500 text-white border-gray-950'
                             : 'bg-white border-gray-950 text-emerald-600 hover:bg-emerald-50'
                     )}
                 >
-                    <CheckCircle2 size={18} strokeWidth={3} /> حاضر
+                    <CheckCircle2 size={16} className="md:size-[18px]" strokeWidth={3} /> حاضر
                 </button>
                 <button
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     className={cn(
-                        "flex-1 py-4 border-4 font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
                         session.status === 'cancelled'
                             ? 'bg-rose-600 text-white border-gray-950'
                             : 'bg-white border-gray-950 text-rose-600 hover:bg-rose-50'
                     )}
                 >
-                    <XCircle size={18} strokeWidth={3} /> غائب
+                    <XCircle size={16} className="md:size-[18px]" strokeWidth={3} /> غائب
                 </button>
             </div>
         </div>
