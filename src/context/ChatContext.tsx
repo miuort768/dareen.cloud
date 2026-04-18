@@ -13,7 +13,9 @@ interface ChatContextType {
     setActiveConversationId: (id: string | null) => void;
     totalUnreadCount: number;
     isConnected: boolean;
+    liveSession: any | null;
 }
+
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
@@ -24,6 +26,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
     const activeConvRef = React.useRef<string | null>(null);
     const [isConnected, setIsConnected] = useState(false);
+    const [liveSession, setLiveSession] = useState<any | null>(null);
+
 
     // Reactive Conversations Query (Shared with useChat hooks)
     const { data: conversations = [] } = useQuery<Conversation[]>({
@@ -181,9 +185,22 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
+        const handleSessionInvite = (data: any) => {
+            console.log('💎 Live session invite received:', data);
+            setLiveSession(data);
+        };
+
+        const handleSessionEnded = () => {
+            console.log('🛑 Live session ended');
+            setLiveSession(null);
+        };
+
         socket.on('new_message', handleNewMessage);
         socket.on('typing', handleTyping);
         socket.on('new_conversation', handleNewConversation);
+        socket.on('session_invite', handleSessionInvite);
+        socket.on('session_ended', handleSessionEnded);
+
 
         return () => {
             socket.off('connect', onConnect);
@@ -192,6 +209,9 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             socket.off('new_message', handleNewMessage);
             socket.off('typing', handleTyping);
             socket.off('new_conversation', handleNewConversation);
+            socket.off('session_invite', handleSessionInvite);
+            socket.off('session_ended', handleSessionEnded);
+
         };
     }, [isAuthenticated, currentUser, queryClient]);
 
@@ -199,9 +219,10 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // No manual useEffect needed anymore
 
     return (
-        <ChatContext.Provider value={{ typingUsers, setTyping, activeConversationId, setActiveConversationId, totalUnreadCount, isConnected }}>
+        <ChatContext.Provider value={{ typingUsers, setTyping, activeConversationId, setActiveConversationId, totalUnreadCount, isConnected, liveSession }}>
             {children}
         </ChatContext.Provider>
+
     );
 };
 

@@ -21,10 +21,16 @@ router.get('/me', authMiddleware, async (req, res) => {
             schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
         }));
 
+        const activeSessions = req.app.get('activeSessions');
+        const activeSession = activeSessions?.get(String(studentId));
+
         res.json({
             ...student,
-            enrollments: enrollmentsWithParsedData
+            enrollments: enrollmentsWithParsedData,
+            isLive: !!activeSession,
+            activeSession: activeSession || null
         });
+
     } catch (err) {
         logger.error('Error fetching student profile with data', err);
         res.status(500).json({ error: 'Internal Server Error' });

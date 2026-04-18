@@ -257,6 +257,8 @@ async function startServer() {
 
         // Make io accessible to routers
         app.set('socketio', io);
+        app.set('activeSessions', activeSessions);
+
 
         const jwt = require('jsonwebtoken');
 
@@ -377,7 +379,7 @@ async function startServer() {
                 const sessionData = {
                     teacherId: user.id,
                     teacherName: user.name,
-                    teacherSocketId: socket.id, // Store sender's socket
+                    teacherSocketId: socket.id, 
                     subject: data.subject,
                     type: data.type || 'video',
                     timestamp: new Date().toISOString()
@@ -385,7 +387,41 @@ async function startServer() {
 
                 activeSessions.set(studentIdStr, sessionData);
                 io.to(targetRoom).emit('session_invite', sessionData);
+
+                // --- 🔔 Also create a persistent database notification ---
+                try {
+                    const db = await getDb();
+                    const { v4: uuidv4 } = require('uuid');
+                    
+                    // Create notification for student
+                    const studentNotifId = uuidv4();
+                    const msg = `بدأت المعلمة ${user.name} حصة ${data.subject} الآن. يمكنك الانضمام مباشرة!`;
+                    
+                    await db.run(
+                        `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [studentNotifId, user.id, studentIdStr, user.name, 'حصة مباشرة بدأت!', msg, 'live', new Date().toISOString(), 0, '/student-dashboard']
+                    );
+                    io.to(targetRoom).emit('notification', { id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', time: new Date().toISOString() });
+
+                    // Find Parent and create notification for them too
+                    const student = await db.get('SELECT parentPhone FROM students WHERE id = ?', [studentIdStr]);
+                    if (student && student.parentPhone) {
+                        const parent = await db.get('SELECT id FROM users WHERE phone = ? AND role = ?', [student.parentPhone, 'parent']);
+                        if (parent) {
+                            const parentNotifId = uuidv4();
+                            const parentMsg = `بدأت الحصة المباشرة لابنكم/ابنتكم في مادة ${data.subject} مع المعلمة ${user.name}.`;
+                            await db.run(
+                                `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                [parentNotifId, user.id, parent.id, user.name, 'تنبيه حصة مباشرة لابنكم', parentMsg, 'live', new Date().toISOString(), 0, '/parent-dashboard']
+                            );
+                            io.to(`user_${parent.id}`).emit('notification', { id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', time: new Date().toISOString() });
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error creating live session notifications:', err);
+                }
             });
+
 
             socket.on('end_session', (data) => {
                 const studentIdStr = String(data.studentId);

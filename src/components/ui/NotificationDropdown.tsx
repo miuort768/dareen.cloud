@@ -118,8 +118,12 @@ export const NotificationDropdown = () => {
         }
     };
 
-    const getIcon = (type: string) => {
-        switch (type) {
+            case 'live':
+                return (
+                    <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center animate-pulse border border-emerald-200 dark:border-emerald-800/50">
+                        <Smartphone className="text-emerald-600 dark:text-emerald-400" size={16} />
+                    </div>
+                );
             case 'success':
                 return <CheckCircle2 className="text-emerald-500" size={18} />;
             case 'warning':
@@ -130,6 +134,7 @@ export const NotificationDropdown = () => {
                 return <Bell className="text-gray-500" size={18} />;
         }
     };
+
 
     return (
         <div className="relative" ref={dropdownRef}>
@@ -146,18 +151,24 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="fixed inset-x-4 top-16 md:absolute md:inset-auto md:left-0 md:lg:left-[-50px] md:mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[380px] bg-white border border-gray-200 rounded-none shadow-2xl dark:bg-gray-900 dark:border-gray-700 z-50 transition-none">
+                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-slate-900/98 backdrop-blur-xl border-2 border-slate-900 dark:border-slate-800 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[100] animate-in fade-in slide-in-from-top-2 duration-300">
+                    <div className="absolute -top-[10px] left-4 md:left-8 w-4 h-4 bg-white dark:bg-slate-900 border-t-2 border-l-2 border-slate-900 dark:border-slate-800 rotate-45 hidden md:block" />
+                    
                     {/* Header */}
-                    <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+
+                    <div className="p-4 border-b-2 border-slate-900 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
                         <div className="flex items-center gap-2">
-                            <Bell size={16} className="text-indigo-600" />
-                            <h3 className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white">الإشعارات</h3>
+                            <div className="w-8 h-8 bg-indigo-600 rounded-none flex items-center justify-center text-white shadow-[2px_2px_0_rgba(0,0,0,1)]">
+                                <Bell size={16} />
+                            </div>
+                            <h3 className="font-black text-xs uppercase tracking-widest text-slate-900 dark:text-white">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-red-100 text-red-700 text-[9px] sm:text-xs font-bold px-1.5 py-0.5 rounded-full dark:bg-red-900/30 dark:text-red-400">
-                                    {unreadCount} جديد
+                                <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 shadow-[1px_1px_0_rgba(0,0,0,1)]">
+                                    {unreadCount} مـهـم
                                 </span>
                             )}
                         </div>
+
                         <div className="flex items-center gap-3">
                             {unreadCount > 0 && (
                                 <button

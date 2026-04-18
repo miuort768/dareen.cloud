@@ -11,10 +11,14 @@ import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
 
+import { useChatContext } from '../context/ChatContext';
+
 export const StudentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
+    const { liveSession } = useChatContext();
     const navigate = useNavigate();
     const [studentData, setStudentData] = useState<any>(null);
+
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -137,9 +141,21 @@ export const StudentDashboard = () => {
                                     <div className="w-2 h-2 rounded-full border border-white" />
                                 </div>
                             </div>
-                            <p className="text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
-                                اليوم الساعة {todaySchedule[0].slots[0].time} مساءً
-                            </p>
+                            
+                            {(liveSession || studentData?.isLive) ? (
+                                <button 
+                                    onClick={() => navigate(`/classroom/${liveSession?.teacherId || studentData?.activeSession?.teacherId}`)}
+                                    className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-black text-sm md:text-base shadow-[0_0_15px_rgba(16,185,129,0.4)] animate-pulse transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                                >
+                                    <div className="w-2 h-2 bg-white rounded-full animate-ping" />
+                                    انضم للحصة الآن
+                                </button>
+                            ) : (
+                                <p className="text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                                    اليوم الساعة {todaySchedule[0].slots[0].time} مساءً
+                                </p>
+                            )}
+
                         </div>
                     ) : (
                         <div className="flex flex-col items-center gap-2">
