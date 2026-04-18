@@ -1,10 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-    TrendingUp, CalendarDays, Clock, Headset, Activity,
-    GraduationCap, BookOpen, Trophy, MessageSquare,
-    Star, Award, Target, CheckCircle2, XCircle, AlertCircle, Play, Snowflake,
-    ArrowRight
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -13,7 +10,6 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
-import { RankBadge } from '../shared/components/RankBadge';
 
 export const StudentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
@@ -21,53 +17,9 @@ export const StudentDashboard = () => {
     const [studentData, setStudentData] = useState<any>(null);
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
-    const [liveSession, setLiveSession] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState<'overview' | 'schedule' | 'sessions' | 'subjects'>('overview');
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
-
-    useEffect(() => {
-        let socket = (window as any).socket;
-        let retryCount = 0;
-        let timeoutId: any;
-
-        const setupListeners = () => {
-            socket = (window as any).socket;
-            if (!socket && retryCount < 10) {
-                retryCount++;
-                timeoutId = setTimeout(setupListeners, 1000); // Retry every second for 10 seconds
-                return;
-            }
-
-            if (!socket || currentUser?.role !== 'student') return;
-
-            const handleInvite = (data: any) => {
-                console.log("🔥 [Socket] StudentDashboard: Session invite received", data);
-                setLiveSession(data);
-            };
-
-            const handleEnd = () => {
-                console.log("❄️ [Socket] StudentDashboard: Session ended");
-                setLiveSession(null);
-            };
-
-            socket.on('session_invite', handleInvite);
-            socket.on('session_ended', handleEnd);
-
-            return () => {
-                socket.off('session_invite', handleInvite);
-                socket.off('session_ended', handleEnd);
-            };
-        };
-
-        const cleanup = setupListeners();
-
-        return () => {
-            if (timeoutId) clearTimeout(timeoutId);
-            if (cleanup) cleanup();
-        };
-    }, [currentUser]);
 
     useEffect(() => {
         const fetchStudentData = async () => {
@@ -126,15 +78,12 @@ export const StudentDashboard = () => {
     }, [studentData]);
 
     const todaySchedule = weeklySchedule.filter(d => d.day === todayArabic);
-    const recentSessions = sessions.slice(0, 8);
 
     if (isLoading) {
         return (
-            <div className="space-y-4 p-4">
-                <div className="h-48 bg-gray-100 dark:bg-gray-800 animate-pulse border-8 border-gray-950" />
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <div key={i} className="h-28 bg-gray-100 dark:bg-gray-800 animate-pulse border-4 border-gray-950" />)}
-                </div>
+            <div className="space-y-4 p-4 text-center py-20">
+                <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-slate-500 font-bold">جاري تحميل بياناتك يا بطل...</p>
             </div>
         );
     }
@@ -236,7 +185,7 @@ export const StudentDashboard = () => {
                     <button className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider">عرض الكل</button>
                 </div>
                 <div className="space-y-3">
-                    {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot, i) => (
+                    {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot: any, i: number) => (
                         <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-[20px] shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-[15px] flex items-center justify-center">
@@ -290,8 +239,8 @@ export const StudentDashboard = () => {
                                         تلقيت {log.amount} نقطة جديدة: {log.action}
                                     </h4>
                                     <div className="flex items-center gap-1 mt-1.5">
-                                        {[1, 2, 3, 4, 5].map(star => (
-                                            <Star key={star} size={10} className={star <= 5 ? "text-yellow-400 fill-yellow-400" : "text-slate-200"} />
+                                        {[1, 2, 3, 4, 5].map(starIdx => (
+                                            <Star key={starIdx} size={10} className="text-yellow-400 fill-yellow-400" />
                                         ))}
                                     </div>
                                     <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-2">منذ ساعتين</p>
@@ -330,8 +279,6 @@ export const StudentDashboard = () => {
     );
 };
 
-// ═══════════ Simple Sub Components ═══════════
-
 const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: number; subLabel?: string }) => (
     <div>
         <div className="flex justify-between items-center mb-2.5">
@@ -347,69 +294,3 @@ const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: n
         </div>
     </div>
 );
-
-
-// ═══════════ Sub Components ═══════════
-
-const StatCard = ({ icon: Icon, label, value, color }: any) => {
-    const colors: any = {
-        emerald: "from-emerald-500/10 via-white to-white dark:from-emerald-500/5 dark:via-slate-900 dark:to-slate-900 shadow-emerald-500/5 border-emerald-500/20",
-        blue: "from-blue-500/10 via-white to-white dark:from-blue-500/5 dark:via-slate-900 dark:to-slate-900 shadow-blue-500/5 border-blue-500/20",
-        amber: "from-amber-500/10 via-white to-white dark:from-amber-500/5 dark:via-slate-900 dark:to-slate-900 shadow-amber-500/5 border-amber-500/20",
-        rose: "from-rose-500/10 via-white to-white dark:from-rose-500/5 dark:via-slate-900 dark:to-slate-900 shadow-rose-500/5 border-rose-500/20",
-    };
-    const iconStyles: any = {
-        emerald: "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20",
-        blue: "bg-blue-500/10 text-blue-600 ring-blue-500/20",
-        amber: "bg-amber-500/10 text-amber-600 ring-amber-500/20",
-        rose: "bg-rose-500/10 text-rose-600 ring-rose-500/20",
-    };
-    return (
-        <motion.div whileHover={{ y: -5 }} className={cn("bg-gradient-to-br p-3 md:p-6 rounded-none border shadow-md transition-all min-w-0", colors[color])}>
-            <div className="flex items-center gap-2 md:gap-4 mb-2 md:mb-4">
-                <div className={cn("w-7 h-7 md:w-12 md:h-12 rounded-none flex items-center justify-center ring-1 md:ring-4 shrink-0", iconStyles[color])}>
-                    <Icon className="w-3.5 h-3.5 md:w-6 md:h-6" strokeWidth={2.5} />
-                </div>
-                <span className="text-[9px] md:text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-tighter leading-none truncate">{label}</span>
-            </div>
-            <div className="text-lg md:text-3xl font-black text-slate-900 dark:text-white tracking-tighter truncate">{value}</div>
-        </motion.div>
-    );
-};
-
-const ProgressBar = ({ label, value, color }: { label: string; value: number; color: string }) => (
-    <div className="min-w-0">
-        <div className="flex justify-between items-end mb-2">
-            <span className="text-[10px] md:text-xs font-bold text-white/70 uppercase tracking-widest truncate ml-2">{label}</span>
-            <span className="text-lg md:text-2xl font-black text-white shrink-0">{value}%</span>
-        </div>
-        <div className="w-full h-3 md:h-4 bg-black/20 rounded-none relative overflow-hidden p-0.5">
-            <motion.div 
-                initial={{ width: 0 }} 
-                animate={{ width: `${value}%` }} 
-                transition={{ duration: 1.5, ease: 'easeOut' }}
-                className={cn("absolute top-0 right-0 h-full rounded-none shadow-lg", color)} 
-                style={{ 
-                    boxShadow: '0 0 15px rgba(255,255,255,0.3)',
-                    backgroundImage: 'linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)'
-                }}
-            />
-        </div>
-    </div>
-);
-
-const QuickLink = ({ icon: Icon, label, color, onClick }: any) => {
-    const colors: any = {
-        blue: "bg-blue-600 text-white shadow-blue-500/30 hover:bg-blue-700",
-        amber: "bg-amber-500 text-white shadow-amber-500/30 hover:bg-amber-600",
-    };
-    return (
-        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={onClick}
-            className={cn("p-3 md:p-5 flex flex-col items-center gap-2 text-center transition-all shadow-lg", colors[color])}>
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/20">
-                <Icon size={18} strokeWidth={2.5} />
-            </div>
-            <p className="text-[10px] font-black uppercase">{label}</p>
-        </motion.button>
-    );
-};
