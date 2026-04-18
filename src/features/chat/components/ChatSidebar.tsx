@@ -48,8 +48,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         )}>
             <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-indigo-500 text-white font-bold text-lg shadow-sm border border-white/20">
-                        {currentUser?.name?.charAt(0).toUpperCase() || 'U'}
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <img 
+                            src="/chat-avatar.jpg" 
+                            alt="avatar" 
+                            className="w-full h-full object-cover" 
+                        />
                     </div>
                 </div>
 
@@ -108,11 +112,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 )}
                             >
                                 <div className="shrink-0 relative">
-                                    <div className={cn(
-                                        "w-12 h-12 rounded-full flex items-center justify-center font-black text-xs shadow-sm shadow-black/5 border border-white/10 transition-transform duration-300 group-hover:scale-105",
-                                        conv.isGroup ? "bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400" : "bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400"
-                                    )}>
-                                        {(conv.displayName || 'U').charAt(0)}
+                                    <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 border border-gray-100 dark:border-white/10 shadow-sm">
+                                        <img 
+                                            src="/chat-avatar.jpg" 
+                                            alt="chat" 
+                                            className="w-full h-full object-cover"
+                                        />
                                     </div>
                                     {isConnected && !isSelected && (
                                         <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-[#111b21] rounded-full shadow-sm"></div>

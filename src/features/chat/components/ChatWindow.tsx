@@ -106,10 +106,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         onClick={() => selectedConv.isGroup && openGroupSettings()}
                     >
                         <img 
-                            src={selectedConv.isGroup ? "/group-avatar.png" : "/chat-avatar.jpg"} 
+                            src="/chat-avatar.jpg" 
                             alt="avatar" 
                             className="w-full h-full object-cover" 
-                            onError={(e) => { (e.target as HTMLImageElement).src = "https://ui-avatars.com/api/?name=" + selectedConv.displayName + "&background=random"; }}
                         />
                     </div>
 
