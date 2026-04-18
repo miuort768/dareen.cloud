@@ -55,6 +55,7 @@ export const Sidebar = () => {
         { name: 'لوحة التحكم', href: '/admin-dashboard', id: 'dashboard', icon: LayoutDashboard },
         { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
         { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
+        { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
         { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
@@ -71,7 +72,6 @@ export const Sidebar = () => {
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student-invoices', icon: DollarSign },
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
-        { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
@@ -93,7 +93,7 @@ export const Sidebar = () => {
         // Exclude general dashboard for parents as they have parent-dashboard
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
-            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'chat', 'forum'].includes(item.id)) return true;
+            if (['parent_dashboard', 'chat', 'parent_students', 'parent_announcements', 'forum'].includes(item.id)) return true;
         }
 
         // Student specific access
