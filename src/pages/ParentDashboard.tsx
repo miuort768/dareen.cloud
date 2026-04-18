@@ -130,385 +130,308 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="space-y-4">
-                <div className="h-32 bg-gray-100 dark:bg-gray-800 animate-pulse" />
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 animate-pulse" />)}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 space-y-8">
+                <div className="h-48 bg-gray-100 animate-pulse" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    {[...Array(4)].map((_, i) => <div key={i} className="h-32 bg-gray-100 animate-pulse" />)}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="h-64 bg-gray-100 animate-pulse" />
+                    <div className="h-64 bg-gray-100 animate-pulse" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="pt-6 md:pt-10 space-y-8 pb-32" dir="rtl">
-
-
-            {/* ═══════════════ PREMIUM PARENT HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-5 lg:p-8 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
-                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-                <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
+        <div className="min-h-screen bg-slate-50/50 pb-20 pt-4 md:pt-10" dir="rtl">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-in fade-in duration-700">
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-5">
-                        <motion.div 
-                            className="shrink-0 w-16 h-16 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 rounded-none shadow-lg shadow-primary-500/20"
-                        >
-                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md rounded-none flex items-center justify-center border border-white/20">
-                                <Users size={32} className="text-white" strokeWidth={1.5} />
-                            </div>
-                        </motion.div>
-                        <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-1.5">
-                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[9px] font-bold uppercase tracking-wider rounded-none border border-white/10 italic">مركز المتابعة الذكي</span>
-                                <div className="flex gap-1">
-                                    {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-emerald-500 rounded-none animate-pulse" style={{ animationDelay: `${i*0.2}s` }} />)}
-                                </div>
-                            </div>
-                            <h1 className="text-xl md:text-3xl font-black text-white leading-tight">بوابة المتابعة الذكية</h1>
-                            <p className="text-slate-400 text-xs md:text-sm font-medium flex items-center gap-2 mt-0.5">
-                                <ShieldCheck size={16} className="text-primary-400" /> أهلاً بك، أ/ {currentUser?.name}
-                            </p>
-                        </div>
-                    </div>
-
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-center justify-between md:justify-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-none w-full md:w-auto md:min-w-[200px] shadow-sm"
-                    >
-                        <div className="flex-1 text-right">
-                            <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">إجمالي الأبناء</span>
-                            <div className="text-3xl md:text-4xl font-black text-white leading-none">{children.length}</div>
-                        </div>
-                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center border border-white/20">
-                             <Users size={24} className="text-white" />
-                        </div>
-                    </motion.div>
-                </div>
-            </div>
-
-            {/* ═══════════════ STAT CARDS ═══════════════ */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 <StatCard icon={Calendar} label="العمليات" value={stats.sessionCount} color="amber" subValue={`${stats.upcomingSessions} مهمة`} onClick={() => navigate('/parent-attendance')} />
-                 <StatCard icon={Users} label="الأبناء" value={stats.childCount} color="emerald" subValue="قطاع النجاح" onClick={() => navigate('/parent-students')} />
-                 <StatCard icon={Award} label="التقارير" value="سجل كامل" color="blue" subValue="متابعة دورية" onClick={() => navigate('/evaluations')} />
-                 <StatCard icon={Receipt} label="المالية" value={stats.pendingInvoiceCount} color="rose" subValue={stats.totalPending > 0 ? `${stats.totalPending} ج.م` : 'مكتمل'} onClick={() => navigate('/student-invoices')} />
-            </div>
-
-            {/* ═══════════════ STRATEGIC INTELLIGENCE GRID ═══════════════ */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Excellence Radar */}
-                <div className="bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-full h-full opacity-[0.05] dark:opacity-[0.03] pointer-events-none" 
-                         style={{ backgroundImage: 'radial-gradient(circle at 10px 10px, currentColor 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-                    
+                {/* ═══════════════ NEW MINIMALIST HEADER ═══════════════ */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-6 md:p-8 border border-slate-100 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-1 h-full bg-primary-600"></div>
                     <div className="relative z-10">
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="p-2 bg-primary-600/10 text-primary-600 dark:text-primary-400 border border-primary-500/20">
-                                <Trophy size={20} className="animate-pulse" />
+                        <p className="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-1">مرحباً بك مجدداً،</p>
+                        <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-3">
+                            أ/ {currentUser?.name}
+                            <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        </h1>
+                        <div className="flex items-center gap-4 mt-3">
+                            <div className="flex items-center gap-2 px-3 py-1 bg-primary-50 text-primary-700 rounded-none text-[10px] font-black border border-primary-100">
+                                <Users size={12} />
+                                إجمالي الأبناء: {children.length}
                             </div>
-                            <h3 className="font-black text-lg text-slate-900 dark:text-white uppercase italic tracking-tight">رادار التميز الأسبوعي</h3>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {children.filter(c => c.totalPoints > 0).slice(0, 2).map((child) => (
-                                <motion.div 
-                                    key={child.id} 
-                                    whileHover={{ x: -5 }}
-                                    className="flex items-center justify-between p-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-none group/card transition-all hover:bg-slate-100 dark:hover:bg-white/10"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-yellow-500/10 border border-amber-500/30 flex items-center justify-center">
-                                            <Star size={24} className="text-yellow-600 dark:text-yellow-400 fill-current opacity-80" />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-black text-slate-900 dark:text-slate-200">{child.name}</h4>
-                                            <p className="text-[10px] font-bold text-amber-600 dark:text-amber-500 uppercase mt-1">إنجاز دراسي متميز</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-left">
-                                        <span className="text-2xl font-black italic text-emerald-600 dark:text-emerald-400">+50</span>
-                                        <p className="text-[8px] font-black uppercase text-slate-500 tracking-widest leading-none">نقطة</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                            <div className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">تحديث البيانات: فوري</div>
-                            <button className="group text-[10px] font-black text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-white uppercase italic flex items-center gap-1 transition-all">
-                                عرض كافة الإنجازات <ChevronLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Metrics */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between shadow-xl">
-                    <div>
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="p-2 bg-slate-900 dark:bg-white/10 dark:text-white rounded-none">
-                                <Activity size={20} strokeWidth={2.5} />
-                            </div>
-                            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase italic tracking-tight">مؤشرات الأداء</h3>
-                        </div>
-
-                        <div className="space-y-6">
-                            <div className="group">
-                                <div className="flex justify-between items-end mb-2">
-                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">معدل الانضباط</span>
-                                    <span className="text-xl font-black text-slate-900 dark:text-emerald-400 italic">{stats.attendanceRate}%</span>
-                                </div>
-                                <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-none">
-                                    <motion.div 
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${stats.attendanceRate}%` }}
-                                        className="h-full bg-emerald-500"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="group">
-                                <div className="flex justify-between items-end mb-2">
-                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">كفاءة الرصيد</span>
-                                    <span className="text-xl font-black text-slate-900 dark:text-primary-400 italic">{stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0}%</span>
-                                </div>
-                                <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-none">
-                                    <motion.div 
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0}%` }}
-                                        className="h-full bg-primary-600"
-                                    />
-                                </div>
+                            <div className="text-[10px] text-gray-400 font-bold flex items-center gap-1">
+                                <Calendar size={12} /> {format(new Date(), 'eeee, d MMMM', { locale: ar })}
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-8 p-3 bg-slate-50 dark:bg-slate-800/50 border-r-4 border-emerald-500 text-center">
-                        <span className="text-[10px] font-black dark:text-slate-300 uppercase tracking-[2px]">الحالة: استقرار عملياتي</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* ═══════════════ CINEMATIC HEROES SHOWCASE (FULL WIDTH) ═══════════════ */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary-600 text-white rounded-none">
-                        <Trophy size={20} />
-                    </div>
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">مراكز الأبطال النخبويين</h2>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-6">
-                    {children.map((child) => {
-                        const points = child.totalPoints || 0;
-                        const getStatus = (p: number) => {
-                            if (p >= 2500) return { name: 'أسطورة الدارين', icon: '👑', color: 'text-rose-400', glow: 'bg-rose-500/20', bar: 'bg-rose-500', next: null };
-                            if (p >= 1000) return { name: 'البروفيسور', icon: '🧠', color: 'text-emerald-400', glow: 'bg-emerald-500/20', bar: 'bg-emerald-500', next: 2500 };
-                            if (p >= 500) return { name: 'بطل العصر', icon: '🛡️', color: 'text-amber-400', glow: 'bg-amber-500/20', bar: 'bg-amber-500', next: 1000 };
-                            if (p >= 100) return { name: 'المجتهد الذكي', icon: '📚', color: 'text-blue-400', glow: 'bg-blue-500/20', bar: 'bg-blue-600', next: 500 };
-                            return { name: 'الباحث المستكشف', icon: '🧭', color: 'text-slate-400', glow: 'bg-slate-500/20', bar: 'bg-slate-500', next: 100 };
-                        };
-                        const status = getStatus(points);
-                        const progress = status.next ? (points / status.next) * 100 : 100;
-                        const childBadges = (() => {
-                            if (!child.badges) return [];
-                            try {
-                                const parsed = JSON.parse(child.badges);
-                                return Array.isArray(parsed) ? parsed.map((b: any) => b.name) : [];
-                            } catch (e) { return child.badges.split(',').filter((b: string) => b); }
-                        })();
-
-                        return (
-                            <motion.div 
-                                key={child.id}
-                                whileHover={{ y: -5 }}
-                                className="relative overflow-hidden bg-slate-900 border border-slate-800 p-6 md:p-8 shadow-2xl rounded-none group"
-                            >
-                                <div className={cn("absolute -right-20 -top-20 w-64 h-64 rounded-full blur-[120px] opacity-10 transition-opacity group-hover:opacity-30", status.glow)} />
-                                
-                                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                                    <div className="lg:col-span-4 flex items-center gap-6">
-                                        <div className="relative shrink-0">
-                                            <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-800 border border-slate-700 flex items-center justify-center text-4xl shadow-inner rounded-none">
-                                                {status.icon}
-                                            </div>
-                                            <div className="absolute -bottom-2 -left-2 px-2 py-1 bg-primary-600 border border-slate-900 text-white text-[10px] font-black italic">
-                                                {points} PT
-                                            </div>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">الحالة العملياتية</p>
-                                            <h4 className={cn("text-lg md:text-xl font-black italic tracking-tighter truncate", status.color)}>{status.name}</h4>
-                                            <h5 className="text-white font-black text-xl truncate">{child.name}</h5>
-                                        </div>
-                                    </div>
-
-                                    <div className="lg:col-span-5 space-y-4">
-                                        <div className="flex justify-between items-end">
-                                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest italic">مستوى كفاءة التعلم</span>
-                                            {status.next && (
-                                                <span className="text-[9px] font-bold text-primary-400 italic">بانتظار {status.next - points} نقطة للترقية</span>
-                                            )}
-                                        </div>
-                                        <div className="h-2.5 bg-slate-800 border border-slate-700 rounded-none overflow-hidden p-0.5 sm:px-1">
-                                            <motion.div 
-                                                initial={{ width: 0 }}
-                                                whileInView={{ width: `${progress}%` }}
-                                                className={cn("h-full relative", status.bar)}
-                                            >
-                                                <div className="absolute top-0 right-0 w-8 h-full bg-white/30 blur-md animate-pulse" />
-                                            </motion.div>
-                                        </div>
-                                        <div className="flex justify-between text-[8px] font-bold text-slate-500 uppercase tracking-widest">
-                                            <span>الرتبة الدنيا</span>
-                                            <span>الهدف: {status.next || 'MAX'}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="lg:col-span-3 flex lg:justify-end">
-                                        <div className="bg-white/5 border border-white/10 p-4 rounded-none w-full lg:w-48 text-center backdrop-blur-md">
-                                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">معرض الأوسمة</p>
-                                            <div className="flex flex-wrap justify-center gap-2">
-                                                {childBadges.slice(0, 3).map((badge: string, bIdx: number) => (
-                                                    <div key={bIdx} className="w-8 h-8 bg-slate-800 border border-slate-700 flex items-center justify-center hover:bg-slate-700 transition-colors" title={badge}>
-                                                        <Award size={16} className="text-amber-500" />
-                                                    </div>
-                                                ))}
-                                                {childBadges.length > 3 && (
-                                                    <div className="w-8 h-8 bg-primary-600/20 text-primary-400 flex items-center justify-center text-[10px] font-black">+{childBadges.length - 3}</div>
-                                                )}
-                                                {childBadges.length === 0 && <span className="text-[8px] font-bold text-slate-600 italic">لا توجد أوسمة بعد</span>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </div>
-            </div>
-
-
-
-            {/* ═══════════════ LOWER OPERATIONS GRID ═══════════════ */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Schedule Container */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
-                    <div className="p-6 border-b dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
-                        <h4 className="font-black text-lg uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3 italic leading-none">
-                            <CalendarDays className="text-primary-600" size={24} />
-                            {showAllDays ? 'خريطة المهام' : `مهمات (${todayArabic})`}
-                        </h4>
-                        <button
-                            onClick={() => setShowAllDays(!showAllDays)}
-                            className="px-4 py-1.5 bg-slate-900 dark:bg-primary-600 text-white font-black text-[10px] uppercase italic transition-all hover:opacity-90"
+                    <div className="flex items-center gap-2">
+                         <button 
+                            onClick={() => window.open(`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`, '_blank')}
+                            className="p-3 bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-all group"
+                            title="الدعم الفني"
                         >
-                            {showAllDays ? 'اليوم الحالي' : 'عرض الكل'}
+                            <Headset size={20} className="group-hover:rotate-12 transition-transform" />
+                        </button>
+                        <button 
+                            onClick={logout}
+                            className="p-3 bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-600 hover:text-white transition-all group"
+                            title="تسجيل الخروج"
+                        >
+                            <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
                         </button>
                     </div>
+                </div>
+
+                {/* ═══════════════ CORE STATS AUTO GRID ═══════════════ */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                     <StatCardV2 icon={Users} label="الأبناء" value="قطاع النجاح" color="indigo" onClick={() => navigate('/parent-students')} />
+                     <StatCardV2 icon={CalendarDays} label="العمليات" value={`${stats.upcomingSessions} مهمة`} color="primary" onClick={() => navigate('/parent-attendance')} />
+                     <StatCardV2 icon={Award} label="التقارير" value="سجل كامل" color="blue" onClick={() => navigate('/evaluations')} />
+                     <StatCardV2 icon={Receipt} label="المالية" value={stats.totalPending > 0 ? "يوجد مستحقات" : "مكتمل"} color="rose" onClick={() => navigate('/student-invoices')} />
+                </div>
+
+                {/* ═══════════════ PERFORMANCE & INTELLIGENCE ═══════════════ */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
                     
-                    <div className="p-6 max-h-[400px] overflow-y-auto no-scrollbar">
-                        <div className="space-y-4">
-                            {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
-                                <div key={idx} className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 p-4 shadow-sm relative">
-                                    <div className="flex items-center gap-2 mb-4 font-black text-slate-900 dark:text-white italic border-b dark:border-slate-700 pb-2">
-                                        <h5 className="text-sm">{dayData.day}</h5>
+                    {/* Metrics Panel - Left Side on Desktop */}
+                    <div className="lg:col-span-8 space-y-8">
+                        {/* Performance Indicators Card */}
+                        <div className="bg-white border border-slate-100 p-6 md:p-8 shadow-sm group">
+                            <div className="flex items-center justify-between mb-8">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 bg-slate-900 text-white">
+                                        <Activity size={20} />
                                     </div>
-                                    <div className="space-y-3">
-                                        {dayData.slots.map((slot, sIdx) => (
-                                            <div key={sIdx} className="bg-slate-50 dark:bg-slate-900/50 p-3 border border-slate-100 dark:border-slate-800 flex items-center justify-between gap-4 group transition-all">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
-                                                        <User size={14} className="text-primary-600" />
-                                                    </div>
-                                                    <div>
-                                                        <span className="text-xs font-black text-slate-900 dark:text-slate-200 block">{slot.studentName}</span>
-                                                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{slot.subject}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="px-2 py-1 bg-slate-900 dark:bg-slate-700 text-white text-[10px] font-black italic">
-                                                    {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
-                                                </div>
+                                    <h3 className="text-lg font-black text-gray-900 italic uppercase">مؤشرات الأداء العامة</h3>
+                                </div>
+                                <div className="hidden md:flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-r-2 border-primary-600 pr-3">
+                                    بيانات حية محدثة دقيقة
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-xs font-black text-gray-500 uppercase">معدل الانضباط التراكمي</span>
+                                        <span className="text-2xl font-black text-emerald-600 italic tracking-tighter">{stats.attendanceRate}%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-gray-100 overflow-hidden">
+                                        <motion.div 
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${stats.attendanceRate}%` }}
+                                            className="h-full bg-emerald-500 relative"
+                                        >
+                                            <div className="absolute top-0 right-0 w-20 h-full bg-white/20 blur-md"></div>
+                                        </motion.div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-xs font-black text-gray-500 uppercase">كفاءة استخدام الرصيد</span>
+                                        <span className="text-2xl font-black text-primary-600 italic tracking-tighter">{stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0}%</span>
+                                    </div>
+                                    <div className="h-1.5 bg-gray-100 overflow-hidden">
+                                        <motion.div 
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${stats.sessionsTotal > 0 ? (stats.sessionsUsed / stats.sessionsTotal) * 100 : 0}%` }}
+                                            className="h-full bg-primary-600"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Operational Status Badge */}
+                                <div className="mt-8 p-5 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4 border-r-4 border-emerald-500 group-hover:bg-emerald-50/50 transition-colors">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        <span className="text-xs font-black text-gray-900 uppercase">الحالة التشغيلية للملف التعليمي</span>
+                                    </div>
+                                    <span className="text-[10px] md:text-xs font-black text-emerald-700 bg-white px-4 py-1.5 shadow-sm border border-emerald-100 uppercase tracking-widest italic">استقرار عملياتي كامل</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Schedule Section */}
+                        <div className="bg-white border border-slate-100 overflow-hidden shadow-sm">
+                            <div className="p-6 border-b border-gray-50 flex items-center justify-between bg-gray-50/30">
+                                <div className="flex items-center gap-3">
+                                    <CalendarDays className="text-primary-600" size={22} />
+                                    <h4 className="font-black text-lg text-gray-900 italic uppercase">
+                                        {showAllDays ? 'خريطة المهام الكاملة' : `مهام اليوم (${todayArabic})`}
+                                    </h4>
+                                </div>
+                                <button
+                                    onClick={() => setShowAllDays(!showAllDays)}
+                                    className="text-[10px] font-black uppercase text-primary-600 hover:text-primary-700 underline underline-offset-4 tracking-widest transition-all"
+                                >
+                                    {showAllDays ? 'عرض اليوم فقط' : 'عرض الجدول الكامل'}
+                                </button>
+                            </div>
+                            
+                            <div className="p-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto max-h-[400px] no-scrollbar">
+                                    {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).map((dayData, idx) => (
+                                        <div key={idx} className="space-y-4">
+                                            <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
+                                                <div className="w-1.5 h-1.5 bg-primary-600"></div>
+                                                <h5 className="text-xs font-black text-gray-900 uppercase italic tracking-tighter">{dayData.day}</h5>
                                             </div>
-                                        ))}
-                                    </div>
+                                            <div className="space-y-3">
+                                                {dayData.slots.map((slot, sIdx) => (
+                                                    <div key={sIdx} className="bg-gray-50 p-4 border border-gray-100 flex items-center justify-between gap-4 group/item hover:bg-white hover:border-primary-500 transition-all">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-8 h-8 bg-white border border-gray-200 flex items-center justify-center text-primary-600 shadow-sm group-hover/item:rotate-12 transition-transform">
+                                                                <User size={14} />
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-xs font-black text-gray-950 block leading-tight">{slot.studentName}</span>
+                                                                <span className="text-[9px] text-gray-400 font-bold uppercase mt-1 block">{slot.subject}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="px-3 py-1 bg-gray-900 text-white text-[9px] font-black italic tracking-widest">
+                                                            {slot.time} {slot.period === 'am' ? 'ص' : 'م'}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {(showAllDays ? weeklySchedule : weeklySchedule.filter(d => d.day === todayArabic)).length === 0 && (
+                                        <div className="col-span-full py-12 text-center bg-gray-50 border-2 border-dashed border-gray-200">
+                                            <Calendar size={32} className="mx-auto text-gray-200 mb-3" />
+                                            <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">لا توجد مهام مجدولة لهذا اليوم</p>
+                                        </div>
+                                    )}
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Invoices Container */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
-                    <div className="p-6 border-b dark:border-slate-800 flex items-center bg-slate-50/50 dark:bg-slate-800/50">
-                        <h4 className="font-black text-lg uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3 italic leading-none">
-                            <Receipt className="text-rose-600" size={24} />
-                            سجل المستحقات المالية
-                        </h4>
-                    </div>
-                    <div className="p-6 max-h-[400px] overflow-y-auto no-scrollbar">
-                        <div className="space-y-4">
-                            {displayData.invoices.filter(i => i.status === 'unpaid').map((invoice) => (
-                                <div key={invoice.id} className="p-5 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 shadow-sm group hover:translate-x-1 transition-all">
-                                    <div className="flex justify-between items-start mb-4">
+                    {/* Financial & Support - Right Side on Desktop */}
+                    <div className="lg:col-span-4 space-y-8">
+                        {/* Excellence Radar Mini */}
+                        <div className="bg-gradient-to-br from-gray-900 to-indigo-950 p-8 shadow-2xl relative overflow-hidden group">
+                           <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                           <div className="relative z-10">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <Trophy size={20} className="text-amber-500" />
+                                    <h3 className="text-sm font-black text-white uppercase italic tracking-tighter">رادار التميز</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    {children.filter(c => c.totalPoints > 0).slice(0, 3).map((child) => (
+                                        <div key={child.id} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs">⭐</div>
+                                                <span className="text-xs font-bold text-gray-300">{child.name}</span>
+                                            </div>
+                                            <span className="text-lg font-black text-emerald-400 italic">+{child.totalPoints}</span>
+                                        </div>
+                                    ))}
+                                    {children.filter(c => c.totalPoints > 0).length === 0 && (
+                                        <p className="text-[10px] text-gray-500 italic">في انتظار تسجيل الإنجازات الأولية</p>
+                                    )}
+                                </div>
+                           </div>
+                        </div>
+
+                        {/* Financial Ledger Card (Inspired by user image) */}
+                        <div className="bg-indigo-600 p-8 shadow-xl relative overflow-hidden group min-h-[220px] flex flex-col justify-between">
+                            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
+                            <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
+                            
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="p-3 bg-white/10 backdrop-blur-md">
+                                        <Receipt size={24} className="text-white" />
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-[10px] text-indigo-100 font-bold uppercase tracking-widest leading-none">حالة الحساب المالي</p>
+                                        <h4 className="text-2xl font-black text-white italic mt-1">{stats.totalPending > 0 ? 'مستحق سداد' : 'مكتمل حالياً'}</h4>
+                                    </div>
+                                </div>
+
+                                <div className="pt-6 border-t border-white/10">
+                                    <div className="flex justify-between items-end">
                                         <div>
-                                            <p className="text-xs font-black text-slate-900 dark:text-white uppercase italic">كشف {invoice.month}/{invoice.year}</p>
-                                            <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest">{invoice.studentName}</p>
+                                            <p className="text-[9px] text-indigo-200 font-black uppercase tracking-widest mb-1 italic">لا توجد مستحقات معلقة</p>
+                                            <p className="text-indigo-50 text-xs font-medium">نظام المالية يعمل بكفاءة</p>
                                         </div>
-                                        <div className="w-10 h-10 bg-rose-500/10 flex items-center justify-center border border-rose-500/20">
-                                            <Target size={20} className="text-rose-600" />
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center justify-between border-t dark:border-slate-700 pt-4 font-black">
-                                        <div className="text-left font-black tracking-tight">
-                                            <span className="text-sm text-slate-400 ml-1 italic">ج.م</span>
-                                            <span className="text-2xl text-rose-600">{invoice.amount}</span>
-                                        </div>
-                                        <button className="px-3 py-1.5 bg-rose-600 text-white text-[10px] font-black uppercase italic shadow-lg shadow-rose-500/20">سداد الآن</button>
+                                        <button 
+                                            onClick={() => navigate('/student-invoices')}
+                                            className="px-6 py-2 bg-white text-indigo-600 font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 transition-all shadow-lg"
+                                        >
+                                            التفاصيل
+                                        </button>
                                     </div>
                                 </div>
-                            ))}
-                            {displayData.invoices.filter(i => i.status === 'unpaid').length === 0 && (
-                                <div className="py-20 text-center opacity-30 flex flex-col items-center">
-                                    <CheckCircle2 size={48} className="mb-4 text-emerald-500" />
-                                    <p className="text-xs font-black italic">الحساب المالي مكتمل حالياً</p>
-                                </div>
-                            )}
+                            </div>
+                        </div>
+
+                        {/* Support Card */}
+                        <div className="bg-white border border-slate-100 p-6 shadow-sm flex items-center gap-6 group hover:bg-slate-900 hover:text-white transition-all duration-500 cursor-pointer">
+                            <div className="w-12 h-12 bg-primary-600/10 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                <Headset size={24} strokeWidth={1.5} />
+                            </div>
+                            <div>
+                                <h4 className="font-black text-sm uppercase italic tracking-tighter">قناة الدعم الإستراتيجي</h4>
+                                <p className="text-[10px] text-gray-500 font-bold uppercase mt-1 tracking-widest group-hover:text-gray-400">مساعدة فورية وتقارير مفسرة</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Support Links */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <motion.a
-                    whileHover={{ scale: 1.02 }}
-                    href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex bg-slate-900 p-6 border border-slate-800 shadow-2xl text-white group"
-                >
-                    <div className="flex items-center gap-6">
-                        <div className="w-12 h-12 bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
-                            <Headset size={24} className="text-emerald-400" />
+                {/* Excellence Showcase (Hero Cards) */}
+                <div className="pt-8 border-t border-gray-100">
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-8 h-8 bg-amber-500 text-white flex items-center justify-center shadow-lg transform -rotate-3">
+                            <Trophy size={16} />
                         </div>
-                        <div>
-                            <h4 className="font-black text-sm uppercase italic">قناة الدعم الفني</h4>
-                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">مساعدة فورية عبر واتساب</p>
-                        </div>
+                        <h2 className="text-xl font-black text-gray-900 uppercase italic tracking-tight">نظام تطور جدارات الأبناء</h2>
                     </div>
-                </motion.a>
-                
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-xl flex items-center gap-6">
-                    <div className="w-12 h-12 bg-primary-600/10 flex items-center justify-center border border-primary-600/20">
-                        <Star size={24} className="text-primary-600" />
-                    </div>
-                    <div>
-                        <h4 className="font-black text-sm text-slate-900 dark:text-white uppercase italic">نظام جودة التعليم</h4>
-                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">خوارزميات ذكية لتتبع النمو</p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {children.map((child) => {
+                             const points = child.totalPoints || 0;
+                             const getStatus = (p: number) => {
+                                 if (p >= 500) return { name: 'أسطورة الأكاديمية', icon: '👑', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200' };
+                                 if (p >= 100) return { name: 'المجتهد الذكي', icon: '🚀', color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-200' };
+                                 return { name: 'المكتشف الواعد', icon: '🧭', color: 'text-gray-600', bg: 'bg-gray-50', border: 'border-gray-200' };
+                             };
+                             const status = getStatus(points);
+
+                             return (
+                                 <motion.div 
+                                    key={child.id}
+                                    whileHover={{ y: -5 }}
+                                    className="bg-white border border-slate-100 p-8 shadow-sm flex flex-col md:flex-row items-center gap-8 relative group overflow-hidden"
+                                 >
+                                    <div className="absolute top-0 left-0 w-2 h-full bg-primary-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div className="w-32 h-32 bg-gray-50 border border-gray-100 flex items-center justify-center text-5xl shrink-0 group-hover:scale-110 transition-transform duration-500 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat">
+                                        {status.icon}
+                                    </div>
+                                    <div className="flex-1 text-center md:text-right">
+                                        <div className={cn("inline-flex px-3 py-1 text-[9px] font-black uppercase tracking-widest mb-3 italic border", status.color, status.bg, status.border)}>
+                                            {status.name}
+                                        </div>
+                                        <h4 className="text-2xl font-black text-gray-900 leading-none mb-2">{child.name}</h4>
+                                        <div className="flex items-center justify-center md:justify-start gap-3 mt-4">
+                                            <div className="px-4 py-2 bg-gray-900 text-white text-xs font-black italic tracking-widest shadow-lg">
+                                                {points} نقطة
+                                            </div>
+                                            <button 
+                                                onClick={() => navigate('/parent-students')}
+                                                className="text-[10px] font-black uppercase text-primary-600 underline underline-offset-4 tracking-widest hover:text-primary-700 transition-colors"
+                                            >
+                                                استعراض ملف الجودة <ChevronLeft size={14} className="inline-block" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                 </motion.div>
+                             );
+                        })}
                     </div>
                 </div>
             </div>
@@ -516,18 +439,12 @@ export const ParentDashboard = () => {
     );
 };
 
-const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) => {
-    const colors: any = {
-        blue: "from-blue-500/10 via-white to-white dark:from-blue-500/5 dark:via-slate-900 dark:to-slate-900 shadow-blue-500/5 border-blue-500/20",
-        amber: "from-amber-500/10 via-white to-white dark:from-amber-500/5 dark:via-slate-900 dark:to-slate-900 shadow-amber-500/5 border-amber-500/20",
-        emerald: "from-emerald-500/10 via-white to-white dark:from-emerald-500/5 dark:via-slate-900 dark:to-slate-900 shadow-emerald-500/5 border-emerald-500/20",
-        rose: "from-rose-500/10 via-white to-white dark:from-rose-500/5 dark:via-slate-900 dark:to-slate-900 shadow-rose-500/5 border-rose-500/20",
-    };
-    const iconStyles: any = {
-        blue: "bg-blue-500/20 text-blue-600 dark:text-blue-400",
-        amber: "bg-amber-500/20 text-amber-600 dark:text-amber-400",
-        emerald: "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
-        rose: "bg-rose-500/20 text-rose-600 dark:text-rose-400",
+const StatCardV2 = ({ icon: Icon, label, value, color, onClick }: any) => {
+    const colorClasses: any = {
+        primary: "bg-primary-50 text-primary-700 border-primary-100 hover:bg-primary-600 hover:text-white",
+        indigo: "bg-indigo-50 text-indigo-700 border-indigo-100 hover:bg-indigo-600 hover:text-white",
+        blue: "bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-600 hover:text-white",
+        rose: "bg-rose-50 text-rose-700 border-rose-100 hover:bg-rose-600 hover:text-white",
     };
 
     return (
@@ -535,21 +452,17 @@ const StatCard = ({ icon: Icon, label, value, color, subValue, onClick }: any) =
             whileHover={{ y: -5 }}
             onClick={onClick}
             className={cn(
-                "p-3 md:p-6 rounded-none border bg-gradient-to-br shadow-xl transition-all",
-                colors[color],
-                onClick && "cursor-pointer"
+                "bg-white border border-slate-100 p-6 md:p-8 shadow-sm flex flex-col gap-4 group transition-all duration-500 cursor-pointer overflow-hidden relative"
             )}
         >
-            <div className="flex flex-col gap-3 md:gap-4">
-                <div className={cn("w-9 h-9 md:w-12 md:h-12 flex items-center justify-center border border-white/10 shadow-sm", iconStyles[color])}>
-                    <Icon size={18} md:size={24} strokeWidth={2} />
-                </div>
-                <div className="min-w-0 overflow-hidden">
-                    <p className="text-[7px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-0.5 md:mb-1 leading-none italic">{label}</p>
-                    <h3 className="text-lg md:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none truncate">{value}</h3>
-                    {subValue && <p className="text-[7px] md:text-[10px] font-black text-primary-600 dark:text-primary-400 mt-1 md:mt-2 italic uppercase tracking-widest leading-none">{subValue}</p>}
-                </div>
+            <div className={cn("w-12 h-12 flex items-center justify-center transition-all duration-500 shadow-sm", colorClasses[color])}>
+                <Icon size={24} strokeWidth={1.5} />
             </div>
+            <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 leading-none">{label}</p>
+                <h3 className="text-lg md:text-xl font-black text-gray-900 italic tracking-tighter leading-none group-hover:translate-x-1 transition-transform">{value}</h3>
+            </div>
+            <div className="absolute -bottom-2 -left-2 w-12 h-12 bg-gray-50/50 group-hover:bg-primary-600/10 transition-colors rotate-45"></div>
         </motion.div>
     );
 };
