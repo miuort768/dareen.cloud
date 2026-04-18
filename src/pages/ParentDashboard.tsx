@@ -108,27 +108,28 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#f8faff] flex flex-col items-center justify-center p-4">
+            <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
                 <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="text-slate-500 font-bold tracking-tight text-xs">جاري التحميل...</p>
+                <p className="text-slate-500 dark:text-slate-400 font-bold tracking-tight text-xs">جاري التحميل...</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] pb-20 px-4 lg:px-8 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
+        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-20 px-4 lg:px-8 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
             
-            {/* ═══════════════ HEADER ═══════════════ */}
+            {/* ═══════════════ HEADER (Updated responsiveness & Logout positioning) ═══════════════ */}
             <div className="flex justify-between items-start mb-2 pr-1">
-                <div className="max-w-[80%]">
-                    <h1 className="text-md md:text-2xl font-black text-slate-900 leading-tight">
-                        مرحباً بك شريك النجاح، <span className="text-indigo-600 block md:inline">أ/ {currentUser?.name}</span>
+                <div className="max-w-[82%]">
+                    <h1 className="text-[13px] md:text-2xl font-black text-slate-900 dark:text-white leading-tight">
+                        مرحباً بك شريك النجاح، <span className="text-indigo-600 dark:text-indigo-400 block md:inline">أ/ {currentUser?.name}</span>
                     </h1>
-                    <p className="text-slate-500 text-[9px] md:text-xs font-medium mt-0.5">رحلة تميز أبنائك تبدأ من هنا</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-[8px] md:text-xs font-medium mt-0.5 opacity-80">رحلة تميز أبنائك تبدأ من هنا</p>
                 </div>
                 <button 
                     onClick={logout}
-                    className="p-2.5 bg-white text-rose-500 rounded-2xl shadow-sm border border-slate-100 hover:bg-rose-50 transition-all"
+                    className="p-2.5 bg-white dark:bg-slate-900 text-rose-500 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all translate-y-1.5"
+                    title="تسجيل الخروج"
                 >
                     <LogOut size={18} />
                 </button>
@@ -163,17 +164,17 @@ export const ParentDashboard = () => {
                 <QuickStatCard icon={Award} label="المعلمات" value={stats.teacherCount} color="rose" />
             </div>
 
-            {/* ═══════════════ NAVIGATION GRID (Updated: Added Forum) ═══════════════ */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* ═══════════════ NAVIGATION GRID ═══════════════ */}
+            <div className="grid grid-cols-2 gap-3 text-slate-900 dark:text-white">
                 <NavButton label="ملفات الأبناء" icon={Users} onClick={() => navigate('/parent-students')} />
                 <NavButton label="منتدى دارين" icon={LayoutDashboard} onClick={() => navigate('/forum')} />
             </div>
 
-            {/* ═══════════════ ELITE HEROES (Updated: Neon Glow) ═══════════════ */}
+            {/* ═══════════════ ELITE HEROES ═══════════════ */}
             <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-1 px-1">
                     <Star className="text-amber-500" size={18} fill="currentColor" />
-                    <h3 className="text-sm md:text-lg font-black text-slate-900 italic">مراكز الأبطال النخبويين</h3>
+                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مراكز الأبطال النخبويين</h3>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -183,10 +184,9 @@ export const ParentDashboard = () => {
                         const progress = Math.min(Math.round((points / status.goal) * 100), 100);
 
                         return (
-                            <div key={child.id} onClick={() => navigate('/parent-students')} className="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-50 flex items-center gap-3 cursor-pointer hover:shadow-md transition-all">
+                            <div key={child.id} onClick={() => navigate('/parent-students')} className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center gap-3 cursor-pointer hover:shadow-md transition-all">
                                 <div className="relative">
-                                     {/* Inner Shadow + Neon Glow around avatar */}
-                                    <div className="w-12 h-12 rounded-xl bg-indigo-900 border border-indigo-400/30 flex items-center justify-center overflow-hidden shadow-[0_0_12px_rgba(99,102,241,0.4)] transition-all group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">
+                                    <div className="w-12 h-12 rounded-xl bg-indigo-900 dark:bg-slate-950 border border-indigo-400/30 flex items-center justify-center overflow-hidden shadow-[0_0_12px_rgba(99,102,241,0.4)] transition-all group/avatar hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">
                                         <User className="text-indigo-400 opacity-60" size={24} />
                                     </div>
                                     <div className="absolute -bottom-1 -right-1 bg-rose-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-md border border-white">
@@ -194,31 +194,31 @@ export const ParentDashboard = () => {
                                     </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="text-xs font-black text-slate-900 leading-tight truncate">{child.name}</h4>
+                                    <h4 className="text-xs font-black text-slate-900 dark:text-white leading-tight truncate">{child.name}</h4>
                                     <div className="flex justify-between items-center mt-1.5 mb-0.5">
-                                        <span className="text-[8px] font-bold text-slate-400 capitalize">{status.name}</span>
-                                        <span className="text-[8px] font-black text-indigo-600">{progress}%</span>
+                                        <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500 capitalize">{status.name}</span>
+                                        <span className="text-[8px] font-black text-indigo-600 dark:text-indigo-400">{progress}%</span>
                                     </div>
-                                    <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                         <motion.div 
                                             initial={{ width: 0 }}
                                             animate={{ width: `${progress}%` }}
-                                            className="h-full bg-indigo-600"
+                                            className="h-full bg-indigo-600 dark:bg-indigo-500"
                                         />
                                     </div>
                                 </div>
-                                <ChevronLeft className="text-slate-300" size={14} />
+                                <ChevronLeft className="text-slate-300 dark:text-slate-700" size={14} />
                             </div>
                         );
                     })}
                 </div>
             </div>
 
-            {/* ═══════════════ SUCCESS ADVISOR (Updated: Transparent & Small Fonts) ═══════════════ */}
+            {/* ═══════════════ SUCCESS ADVISOR ═══════════════ */}
             <div className="py-2 space-y-6">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                    <Activity className="text-indigo-600" size={18} />
-                    <h3 className="text-sm md:text-lg font-black text-slate-900 italic">مستشار الإنجاز</h3>
+                    <Activity className="text-indigo-600 dark:text-indigo-400" size={18} />
+                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مستشار الإنجاز</h3>
                 </div>
 
                 <div className="space-y-6">
@@ -232,43 +232,43 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ DAILY TASKS (Updated: Smaller Fonts) ═══════════════ */}
+            {/* ═══════════════ DAILY TASKS ═══════════════ */}
             <div className="space-y-3">
                 <div className="flex items-center justify-between px-1">
-                    <h3 className="text-sm md:text-lg font-black text-slate-900 italic">مهام اليوم ({todayArabic})</h3>
-                    <button className="text-[8px] font-black text-indigo-600 uppercase tracking-widest hover:underline">عرض الكل</button>
+                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مهام اليوم ({todayArabic})</h3>
+                    <button className="text-[8px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest hover:underline">عرض الكل</button>
                 </div>
 
                 <div className="space-y-3">
                     {todayTasks.map((task, idx) => (
-                        <div key={idx} className="bg-white p-4 rounded-3xl shadow-sm border border-slate-50 flex items-center justify-between group hover:shadow-md transition-all">
+                        <div key={idx} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between group hover:shadow-md transition-all">
                              <div className="flex items-center gap-3">
-                                <div className="w-11 h-11 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 dark:text-indigo-400 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all">
                                     <BookOpen size={18} />
                                 </div>
                                 <div>
-                                    <h4 className="text-xs font-black text-slate-900">{task.subject}</h4>
-                                    <p className="text-[9px] font-bold text-slate-400 mt-0.5">الطالب: {task.studentName}</p>
-                                    <p className="text-[8px] font-bold text-indigo-400">المعلمة: {task.teacher}</p>
+                                    <h4 className="text-xs font-black text-slate-900 dark:text-white">{task.subject}</h4>
+                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-0.5">الطالب: {task.studentName}</p>
+                                    <p className="text-[8px] font-bold text-indigo-400 dark:text-indigo-600">المعلمة: {task.teacher}</p>
                                 </div>
                             </div>
-                            <div className="text-left font-black text-slate-900 border-r border-slate-50 pr-4">
+                            <div className="text-left font-black text-slate-900 dark:text-white border-r border-slate-50 dark:border-slate-800 pr-4">
                                 <span className="block text-xs">{task.time} م</span>
-                                <span className="inline-block px-1.5 py-0.5 bg-indigo-50 text-indigo-600 text-[7px] rounded-lg mt-0.5 tracking-tighter uppercase">قادم</span>
+                                <span className="inline-block px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 dark:text-indigo-400 text-[7px] rounded-lg mt-0.5 tracking-tighter uppercase">قادم</span>
                             </div>
                         </div>
                     ))}
                     {todayTasks.length === 0 && (
-                        <div className="py-8 flex flex-col items-center justify-center bg-white rounded-3xl border-2 border-dashed border-slate-100 opacity-60">
-                            <CalendarDays className="text-slate-200 mb-1" size={32} />
-                            <p className="text-slate-400 font-bold text-[10px] tracking-tight text-center">لا توجد مهام اليوم</p>
+                        <div className="py-8 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-3xl border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
+                            <CalendarDays className="text-slate-200 dark:text-slate-700 mb-1" size={32} />
+                            <p className="text-slate-400 dark:text-slate-600 font-bold text-[10px] tracking-tight text-center">لا توجد مهام اليوم</p>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* ═══════════════ SUPPORT FOOTER ═══════════════ */}
-            <div className="bg-[#5c4fb1] p-5 rounded-2xl shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            {/* ═══════════════ SUPPORT FOOTER (Sharper corners as requested) ═══════════════ */}
+            <div className="bg-[#5c4fb1] dark:bg-[#4a3f9e] p-5 rounded-lg shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
                 <div className="text-center md:text-right relative z-10 w-full md:w-auto">
                     <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
@@ -277,9 +277,9 @@ export const ParentDashboard = () => {
                 <a 
                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-[#5c4fb1] px-5 py-2 rounded-xl font-black text-[10px] flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
+                    className="bg-white text-[#5c4fb1] px-5 py-2 rounded-lg font-black text-[10px] flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
                 >
-                    <div className="w-6 h-6 bg-[#5c4fb1] text-white rounded-lg flex items-center justify-center">
+                    <div className="w-6 h-6 bg-[#5c4fb1] text-white rounded-md flex items-center justify-center">
                         <MessageSquare size={12} fill="currentColor" />
                     </div>
                     تواصل معنا
@@ -292,17 +292,17 @@ export const ParentDashboard = () => {
 
 const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
     const colors: any = {
-        indigo: "bg-indigo-50 text-indigo-500 shadow-indigo-100",
-        blue: "bg-blue-50 text-blue-500 shadow-blue-100",
-        rose: "bg-rose-50 text-rose-500 shadow-rose-100"
+        indigo: "bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 shadow-indigo-100 dark:shadow-none",
+        blue: "bg-blue-50 dark:bg-blue-900/10 text-blue-500 shadow-blue-100 dark:shadow-none",
+        rose: "bg-rose-50 dark:bg-rose-900/10 text-rose-500 shadow-rose-100 dark:shadow-none"
     };
     return (
-        <div className="bg-white py-2.5 px-1.5 rounded-2xl shadow-sm border border-slate-50 flex flex-col items-center justify-center text-center">
+        <div className="bg-white dark:bg-slate-900 py-2.5 px-1.5 rounded-2xl shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col items-center justify-center text-center">
             <div className={cn("w-7 h-7 rounded-full flex items-center justify-center mb-1", colors[color])}>
                 <Icon size={12} />
             </div>
-            <span className="text-sm md:text-lg font-black text-slate-900 leading-none">{value}</span>
-            <span className="text-[8px] md:text-[10px] font-bold text-slate-400 mt-1">{label}</span>
+            <span className="text-sm md:text-lg font-black text-slate-900 dark:text-white leading-none">{value}</span>
+            <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 mt-1">{label}</span>
         </div>
     );
 };
@@ -310,26 +310,26 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
 const NavButton = ({ label, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="bg-[#f2f0ff] p-3 rounded-2xl border border-indigo-100/30 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white hover:shadow-md group"
+        className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-3 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"
     >
-        <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-indigo-600 shadow-sm group-hover:scale-110 transition-transform">
+        <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm group-hover:scale-110 transition-transform">
             <Icon size={16} strokeWidth={1.5} />
         </div>
-        <span className="text-[10px] font-black text-slate-700 tracking-tight">{label}</span>
+        <span className="text-[10px] font-black text-slate-700 dark:text-slate-400 tracking-tight">{label}</span>
     </button>
 );
 
 const ProgressRow = ({ label, value, subLabel }: { label: string; value: number; subLabel?: string }) => (
     <div className="space-y-2">
         <div className="flex justify-between items-center px-1">
-            <span className="text-sm md:text-lg font-black text-slate-900 italic tracking-tighter">{label}</span>
-            <span className="text-[8px] md:text-xs font-black text-slate-500">{subLabel || `${value}%`}</span>
+            <span className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic tracking-tighter">{label}</span>
+            <span className="text-[8px] md:text-xs font-black text-slate-500 dark:text-slate-400">{subLabel || `${value}%`}</span>
         </div>
-        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
             <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: `${value}%` }}
-                className="h-full bg-indigo-600 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+                className="h-full bg-indigo-600 dark:bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
             />
         </div>
     </div>
