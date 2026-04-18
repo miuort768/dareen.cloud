@@ -178,7 +178,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <div className="bg-white/80 dark:bg-[#111b21]/80 backdrop-blur-md p-3 border-t border-emerald-500/10 text-center sticky bottom-0 z-[100] w-full">
                 <div className="flex items-center justify-center gap-2">
                     <ShieldCheck size={14} className="text-[#00a884] animate-pulse" />
-                    <span className="text-[10px] text-[#00a884] font-black uppercase tracking-[0.3em] drop-shadow-sm">تواصل آمن ومحمي</span>
+                    <span className="text-[10px] text-[#00a884] font-black uppercase tracking-[0.3em] drop-shadow-sm">تواصل آمن ومشفر</span>
                 </div>
             </div>
         </div>
