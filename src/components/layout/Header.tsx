@@ -57,18 +57,33 @@ export const Header = () => {
         }
     };
 
+    const getRoleLabel = (role: string) => {
+        switch (role) {
+            case 'admin': return 'مدير النظام';
+            case 'teacher': return 'معلمة';
+            case 'student': return 'طالب';
+            case 'parent': return 'ولي أمر';
+            default: return 'مستخدم';
+        }
+    };
+
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-14 lg:h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-40 dark:bg-slate-900/80 dark:border-slate-800 transition-colors duration-300">
+        <header className="h-[70px] lg:h-[80px] bg-white/95 backdrop-blur-md border-b-2 border-gray-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 dark:bg-slate-950/95 dark:border-white/5 shadow-sm transition-all duration-500">
+            {/* Edge Design Accent */}
+            <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent" />
+            <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50" />
 
-            {/* Search Bar / Quick Search */}
-            <div className="flex-1 flex items-center min-w-0">
-                <div className="flex flex-col items-center justify-center ml-2 md:ml-4 border-l border-gray-100 dark:border-slate-800 pl-2 md:pl-6 py-1 shrink-0">
-                    <span className="text-[8px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-tighter">دارين</span>
-                    <span className="text-[6px] md:text-[10px] font-bold text-gray-400 dark:text-gray-500 leading-none mt-0.5 whitespace-nowrap">
-                        {user.role === 'teacher' ? 'ملمة' : 'مدير'}
-                    </span>
+            {/* Left Section: Branding & Title */}
+            <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
+                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/10 dark:border-white/10 pl-4 py-1 shrink-0">
+                    <span className="text-[10px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
+                    <div className="px-2 py-0.5 mt-1.5 bg-primary-50 dark:bg-teal-900/20 rounded-full border border-primary-100 dark:border-teal-800/30">
+                        <span className="text-[8px] md:text-[10px] font-black text-primary-700 dark:text-teal-300 whitespace-nowrap">
+                            {getRoleLabel(user.role)}
+                        </span>
+                    </div>
                 </div>
 
                 {title && (
@@ -93,15 +108,15 @@ export const Header = () => {
                 <NotificationDropdown />
 
                 {/* User Profile */}
-                <div className="flex items-center gap-2 lg:gap-3 pr-1.5 md:pr-4 border-r border-gray-100 dark:border-slate-800 shrink-0">
-                    <div className="text-center hidden lg:block">
-                        <p className="text-xs lg:text-sm font-bold text-gray-900 dark:text-slate-100">{user.name}</p>
-                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-slate-400">
-                            {user.role === 'teacher' ? 'معلمة' : 'مدير النظام'}
+                <div className="flex items-center gap-3 pr-4 border-r-2 border-primary-500/10 dark:border-white/10 shrink-0">
+                    <div className="text-right hidden sm:block">
+                        <p className="text-xs lg:text-sm font-black text-gray-900 dark:text-slate-100 leading-tight">{user.name}</p>
+                        <p className="text-[10px] font-bold text-primary-600 dark:text-teal-400 opacity-70">
+                            {getRoleLabel(user.role)}
                         </p>
                     </div>
-                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 border border-white shadow-sm dark:bg-slate-800 dark:text-teal-300 dark:border-slate-700 overflow-hidden shrink-0">
-                        <User size={14} className="md:size-[16px]" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 shadow-sm dark:from-slate-800 dark:to-slate-900 dark:text-teal-300 border border-primary-500/20 overflow-hidden shrink-0 rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <User size={20} />
                     </div>
                 </div>
             </div>
