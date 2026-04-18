@@ -5,8 +5,6 @@ import {
     Users,
     Receipt,
     CalendarDays,
-    Headset,
-    Activity,
     Star,
     Award,
     Trophy,
@@ -18,8 +16,6 @@ import {
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone, logout } = useApp();
