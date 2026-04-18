@@ -89,7 +89,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
             </div>
 
-            <div className="p-2 bg-white dark:bg-[#111b21] border-b border-gray-100 dark:border-gray-800">
+            <div className="p-2 bg-white border-b border-gray-100">
                 <div className="relative flex items-center bg-[#FF7B7B] rounded-lg px-3 py-1.5 border-0 outline-none ring-0">
                     <Search className="text-black" size={18} />
                     <input
