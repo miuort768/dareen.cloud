@@ -111,13 +111,19 @@ router.post('/:id/vote', async (req, res) => {
         let upvotes = JSON.parse(post.upvotes || '[]');
         let downvotes = JSON.parse(post.downvotes || '[]');
 
-        // Remove user from both arrays first to reset their vote
+        // Check if the user is already in the target array
+        const wasUpvoted = upvotes.includes(userId);
+        const wasDownvoted = downvotes.includes(userId);
+
+        // Remove user from both arrays to reset
         upvotes = upvotes.filter(id => id !== userId);
         downvotes = downvotes.filter(id => id !== userId);
 
-        if (type === 'upvote') {
+        // If clicking same type, just leave it removed (toggle off)
+        // If clicking different type, add to new one
+        if (type === 'upvote' && !wasUpvoted) {
             upvotes.push(userId);
-        } else if (type === 'downvote') {
+        } else if (type === 'downvote' && !wasDownvoted) {
             downvotes.push(userId);
         }
 
