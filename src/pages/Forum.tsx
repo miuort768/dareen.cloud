@@ -156,7 +156,7 @@ export const Forum = () => {
                         </div>
                         <button 
                             onClick={() => document.getElementById('new-post-input')?.focus()}
-                            className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-4 py-3 text-right text-slate-500 font-bold text-sm transition-colors border border-transparent"
+                            className="flex-1 bg-[#ff6b6b] hover:bg-[#ff5252] px-4 py-3 text-right text-gray-950 font-black text-sm transition-all border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] active:translate-x-0.5 active:translate-y-0.5"
                         >
                             بم تفكر يا {currentUser?.name?.split(' ')[0]}؟
                         </button>
@@ -166,7 +166,7 @@ export const Forum = () => {
                             id="new-post-input"
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
-                            className="w-full bg-transparent border-none p-2 min-h-[60px] resize-none focus:ring-0 text-sm font-medium"
+                            className="w-full bg-white dark:bg-slate-800 border-2 border-gray-950 p-3 min-h-[80px] resize-none focus:ring-0 text-sm font-black text-gray-950 dark:text-gray-100 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.1)]"
                             placeholder="شاركنا أفكارك..."
                         />
                         <div className="flex justify-end mt-2">
@@ -225,7 +225,10 @@ export const Forum = () => {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             {post.status === 'pending' && (
-                                                <span className="text-[9px] font-black bg-amber-50 text-amber-600 border border-amber-200 px-2 py-0.5">مراجعة</span>
+                                                <div className="flex flex-col items-end gap-1">
+                                                    <span className="text-[8px] md:text-[9px] font-black bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5 animate-pulse">قيد المراجعة - تظهر لك فقط</span>
+                                                    {isAdmin && <span className="text-[7px] text-gray-400">تحتاج موافقة</span>}
+                                                </div>
                                             )}
                                             <button className="text-slate-400 hover:bg-slate-100 p-1.5 transition-colors">
                                                 <MoreHorizontal size={18} />
