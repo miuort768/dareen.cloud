@@ -10,9 +10,11 @@ import {
     ShieldCheck,
     Grid,
     Zap,
-    Umbrella
+    Umbrella,
+    MessageCircle
 } from 'lucide-react';
 import { api } from '../lib/api';
+import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -27,6 +29,7 @@ interface Announcement {
 }
 
 export const ParentAnnouncements = () => {
+    const { adminPhone } = useApp();
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -101,7 +104,7 @@ export const ParentAnnouncements = () => {
     return (
         <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
 
-            {/* ═══════════════ HERO BANNER (Sharp Edges + Neon Glow) ═══════════════ */}
+            {/* ═══════════════ HERO BANNER ═══════════════ */}
             <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -116,8 +119,7 @@ export const ParentAnnouncements = () => {
                     <p className="text-indigo-100/70 text-[10px] md:text-sm font-bold max-w-lg mx-auto leading-relaxed">ابق على اطلاع بأحدث التنبيهات والفعاليات داخل المؤسسة</p>
                 </div>
 
-                {/* Subtle Neon Decorative line */}
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50 shadow-[0_-5px_10px_rgba(34,211,238,0.5)]" />
+                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" />
             </motion.div>
 
             {/* ═══════════════ SEARCH & FILTERS ═══════════════ */}
@@ -165,7 +167,7 @@ export const ParentAnnouncements = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ ANNOUNCEMENTS LIST (Sharp Corners) ═══════════════ */}
+            {/* ═══════════════ ANNOUNCEMENTS LIST ═══════════════ */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <AnimatePresence mode="popLayout">
                     {filteredAnnouncements.map((ann, idx) => {
@@ -178,7 +180,7 @@ export const ParentAnnouncements = () => {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                                 key={ann.id}
-                                className="bg-white dark:bg-slate-900 rounded-lg p-5 md:p-6 shadow-sm border border-slate-50 dark:border-slate-800 relative group overflow-hidden"
+                                className="bg-white dark:bg-slate-900 rounded-lg p-5 md:p-6 shadow-sm border border-slate-50 dark:border-slate-800 relative group overflow-hidden flex flex-col"
                             >
                                 {/* Header Info */}
                                 <div className="flex justify-between items-start mb-5">
@@ -193,16 +195,16 @@ export const ParentAnnouncements = () => {
                                 </div>
 
                                 {/* Content */}
-                                <div className="space-y-2.5 mb-6 px-1">
+                                <div className="space-y-2.5 mb-6 px-1 flex-1">
                                     <h3 className="text-md md:text-xl font-black text-slate-900 dark:text-white leading-tight italic tracking-tight">
                                         {ann.title}
                                     </h3>
-                                    <p className="text-[12px] md:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
+                                    <p className="text-[12px] md:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-4">
                                         {ann.content}
                                     </p>
                                 </div>
 
-                                {/* Footer */}
+                                {/* Footer (Updated to WhatsApp Inquiry) */}
                                 <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800 px-1">
                                     <div className="flex items-center gap-2">
                                         <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-100/50 dark:border-indigo-900/30">
@@ -211,12 +213,14 @@ export const ParentAnnouncements = () => {
                                         <span className="text-[9px] text-slate-500 dark:text-slate-400 font-black italic">إدارة الأكاديمية</span>
                                     </div>
                                     
-                                    <motion.button 
-                                        whileHover={{ x: -2 }}
-                                        className="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg text-[9px] font-black flex items-center gap-2 transition-all hover:bg-indigo-600 hover:text-white"
+                                    <a 
+                                        href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}?text=${encodeURIComponent(`استفسار بخصوص إعلان: ${ann.title}`)}`}
+                                        target="_blank" rel="noopener noreferrer"
+                                        className="bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 px-4 py-1.5 rounded-lg text-[10px] font-black flex items-center gap-2 transition-all hover:bg-indigo-600 hover:text-white hover:border-indigo-600"
                                     >
-                                        فتح الإعلان <ChevronLeft size={12} />
-                                    </motion.button>
+                                        <MessageCircle size={14} />
+                                        استفسار
+                                    </a>
                                 </div>
                             </motion.div>
                         );
