@@ -249,8 +249,8 @@ export const Sidebar = () => {
                 </div>
             </div>
 
-            {/* Mobile Bottom Navigation - Ultra Compact Design */}
-            <div className="lg:hidden fixed bottom-2 left-2 right-2 h-12 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-around px-1 z-[100] shadow-xl rounded-xl ring-1 ring-black/5">
+            {/* Mobile Bottom Navigation - Redesigned to match image */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-4 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
                 {[
                     ...filteredNavigation.slice(0, 3)
                 ].map((item) => (
@@ -258,43 +258,38 @@ export const Sidebar = () => {
                         key={`mobile-${item.href}-${item.id}`}
                         to={item.href}
                         className={({ isActive }) => cn(
-                            "flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 relative",
-                            isActive ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"
+                            "flex items-center justify-center transition-all duration-500 rounded-full",
+                            isActive 
+                                ? "bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2" 
+                                : "text-gray-400 dark:text-gray-500 p-2"
                         )}
                     >
                         {({ isActive }) => (
-                            <>
-                                <item.icon size={16} strokeWidth={isActive ? 2.5 : 2} />
+                            <div className="flex items-center gap-2">
                                 <span className={cn(
-                                    "text-[7px] font-black leading-none mt-0.5 uppercase tracking-tighter transition-all duration-300",
-                                    isActive ? "opacity-100" : "opacity-60"
+                                    "text-xs font-black whitespace-nowrap overflow-hidden transition-all duration-500",
+                                    isActive ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0"
                                 )}>
                                     {item.name}
                                 </span>
-                                {isActive && (
-                                    <motion.div 
-                                        layoutId="mobileNavIndicator"
-                                        className="absolute bottom-0 w-6 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full" 
-                                    />
-                                )}
+                                <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
                                 
                                 {/* Notification Badge for Chat */}
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute top-1.5 right-1/2 translate-x-3 w-3 h-3 bg-rose-500 text-white text-[6px] font-black flex items-center justify-center rounded-full ring-1 ring-white dark:ring-gray-950 shadow-sm animate-pulse">
+                                    <span className="absolute top-0 right-0 translate-x-1 -translate-y-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm">
                                         {totalUnreadCount > 9 ? '+' : totalUnreadCount}
                                     </span>
                                 )}
-                            </>
+                            </div>
                         )}
                     </NavLink>
                 ))}
 
                 <button
                     onClick={() => setMobileMenuOpen(true)}
-                    className="flex flex-col items-center justify-center flex-1 h-full transition-all duration-300 text-gray-400 dark:text-gray-500"
+                    className="flex items-center justify-center p-2 text-gray-400 dark:text-gray-500 hover:text-indigo-600 transition-colors"
                 >
-                    <Menu size={16} strokeWidth={2} />
-                    <span className="text-[7px] font-black leading-none mt-0.5 uppercase tracking-tighter opacity-60">المزيد</span>
+                    <Menu size={22} strokeWidth={2} />
                 </button>
             </div>
 
