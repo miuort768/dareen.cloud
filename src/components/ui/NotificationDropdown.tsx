@@ -118,6 +118,8 @@ export const NotificationDropdown = () => {
         }
     };
 
+    const getIcon = (type: string) => {
+        switch (type) {
             case 'live':
                 return (
                     <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center animate-pulse border border-emerald-200 dark:border-emerald-800/50">
@@ -134,6 +136,7 @@ export const NotificationDropdown = () => {
                 return <Bell className="text-gray-500" size={18} />;
         }
     };
+
 
 
     return (
