@@ -145,20 +145,27 @@ export const StudentDashboard = () => {
             </motion.div>
 
             {/* ═══════════════ STATS ROW ═══════════════ */}
-            <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
-                    <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-3">
-                        <Star size={20} fill="currentColor" />
+            <div className="grid grid-cols-3 gap-2 md:gap-4">
+                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
+                        <Star size={16} fill="currentColor" />
                     </div>
-                    <span className="text-2xl font-black text-slate-900 dark:text-white">{points}</span>
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1">مجموع النقاط</span>
+                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{points}</span>
+                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
-                    <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-3">
-                        <CalendarDays size={20} />
+                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
+                        <CalendarDays size={16} />
                     </div>
-                    <span className="text-2xl font-black text-slate-900 dark:text-white">{stats.attendanceRate}%</span>
-                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1">معدل الحضور</span>
+                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}%</span>
+                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
+                </div>
+                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
+                        <BookOpen size={16} />
+                    </div>
+                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{(studentData?.enrollments || []).length}</span>
+                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">عدد المواد</span>
                 </div>
             </div>
 
