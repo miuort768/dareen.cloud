@@ -57,14 +57,13 @@ export const InstallPWA = () => {
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
         // Show banner for all non-installed platforms
-        const dismissed = sessionStorage.getItem('pwa_dismissed_session');
-        if (!dismissed) {
-            const timer = setTimeout(() => setIsVisible(true), 2000);
-            return () => {
-                clearTimeout(timer);
-                window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
-            };
-        }
+        // Reduced delay for better visibility
+        const timer = setTimeout(() => setIsVisible(true), 500);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
+        };
+
 
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
