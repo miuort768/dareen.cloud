@@ -7,7 +7,7 @@ import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
-import type { Conversation, ChatView } from '../../../types/chat.types';
+import type { Conversation } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
 interface ChatSidebarProps {
@@ -16,6 +16,7 @@ interface ChatSidebarProps {
     setSelectedConv: (conv: Conversation | null) => void;
     currentUser: User | null;
     setShowNewChatModal: (val: boolean) => void;
+    setIsEditingGroup: (val: boolean) => void;
     logout: () => void;
     typingUsers: any[];
 }
@@ -26,6 +27,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setSelectedConv,
     currentUser,
     setShowNewChatModal,
+    setIsEditingGroup,
     logout,
     typingUsers
 }) => {
