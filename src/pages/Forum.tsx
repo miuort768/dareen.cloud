@@ -151,8 +151,8 @@ export const Forum = () => {
                 {/* 🖊️ Post Creation Box (FB Style) */}
                 <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-3 md:p-4 shadow-sm md:rounded-lg">
                     <div className="flex gap-2 md:gap-3 items-center mb-3 md:mb-4">
-                        <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-black text-lg shrink-0">
-                            {currentUser?.name?.charAt(0) || 'U'}
+                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100">
+                            <img src="/logo.png" alt="Dareen Logo" className="w-8 h-8 object-contain" />
                         </div>
                         <button 
                             onClick={() => document.getElementById('new-post-input')?.focus()}
@@ -203,17 +203,23 @@ export const Forum = () => {
                                     {/* FB Header */}
                                     <div className="p-3 md:p-4 flex justify-between items-center">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white flex items-center justify-center font-black border border-slate-200 dark:border-slate-700">
-                                                {post.authorName.charAt(0)}
+                                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100">
+                                                <img src="/logo.png" alt="Dareen Logo" className="w-8 h-8 object-contain" />
                                             </div>
                                             <div>
-                                                <h4 className="font-black text-slate-900 dark:text-white text-sm hover:underline cursor-pointer">{post.authorName}</h4>
-                                                <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold">
-                                                    <span>{formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: arEG })}</span>
-                                                    <span>•</span>
-                                                    <span className="uppercase tracking-tighter">
+                                                <div className="flex items-center gap-2">
+                                                    <h4 className="font-black text-slate-900 dark:text-white text-sm hover:underline cursor-pointer">{post.authorName}</h4>
+                                                    <span className={cn(
+                                                        "text-[9px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-tighter",
+                                                        post.authorRole === 'admin' ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400" :
+                                                        post.authorRole === 'teacher' ? "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400" :
+                                                        "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400"
+                                                    )}>
                                                         {post.authorRole === 'admin' ? 'الإدارة' : post.authorRole === 'teacher' ? 'معلم' : 'طالب'}
                                                     </span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold mt-0.5">
+                                                    <span>{formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: arEG })}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -234,32 +240,10 @@ export const Forum = () => {
                                         </p>
                                     </div>
 
-                                    {/* FB Stats Area */}
-                                    <div className="px-3 md:px-4 py-2 flex justify-between items-center border-t border-slate-50 dark:border-slate-800 mx-2 md:mx-4">
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex items-center -space-x-1 space-x-reverse">
-                                                {post.upvotes.length > 0 && (
-                                                    <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-20">
-                                                        <ThumbsUp size={10} className="text-white fill-current" />
-                                                    </div>
-                                                )}
-                                                {post.downvotes.length > 0 && (
-                                                    <div className="w-5 h-5 bg-rose-500 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 z-10">
-                                                        <ThumbsDown size={10} className="text-white fill-current" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <span className="text-[11px] text-slate-500 font-bold">
-                                                {post.upvotes.length + post.downvotes.length > 0 ? (post.upvotes.length + post.downvotes.length) : ''} تفاعل
-                                            </span>
-                                        </div>
-                                        <div onClick={() => toggleComments(post.id)} className="text-[11px] text-slate-500 font-bold hover:underline cursor-pointer">
-                                            {post.comments ? post.comments.length : (post.commentCount || 0)} تعليق
-                                        </div>
-                                    </div>
+
 
                                     {/* FB Actions Bar */}
-                                    <div className="px-2 md:px-4 py-1 flex border-y border-slate-100 dark:border-slate-800 mx-2 md:mx-4">
+                                    <div className="px-2 md:px-4 py-1 flex border-t border-slate-100 dark:border-slate-800 mt-2">
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
                                             className={cn("flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black transition-colors hover:bg-slate-50 dark:hover:bg-slate-800", isLiked ? "text-blue-600" : "text-slate-600")}
@@ -289,8 +273,8 @@ export const Forum = () => {
                                             <div className="space-y-3">
                                                 {post.comments?.map(comment => (
                                                     <div key={comment.id} className="flex gap-2">
-                                                        <div className="w-8 h-8 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center font-black text-[10px] shrink-0">
-                                                            {comment.authorName.charAt(0)}
+                                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100">
+                                                            <img src="/logo.png" alt="Dareen Logo" className="w-6 h-6 object-contain" />
                                                         </div>
                                                         <div className="flex-1">
                                                             <div className="bg-slate-200/50 dark:bg-slate-700/50 p-2.5 inline-block">
@@ -312,8 +296,8 @@ export const Forum = () => {
 
                                             {/* FB Add Comment Input */}
                                             <div className="flex gap-2 items-center">
-                                                <div className="w-8 h-8 bg-slate-900 text-white flex items-center justify-center font-black text-[10px] shrink-0">
-                                                    {currentUser?.name?.charAt(0)}
+                                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100">
+                                                    <img src="/logo.png" alt="Dareen Logo" className="w-6 h-6 object-contain" />
                                                 </div>
                                                 <div className="flex-1 relative">
                                                     <input 
