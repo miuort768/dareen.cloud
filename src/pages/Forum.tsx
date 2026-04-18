@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
@@ -84,7 +85,7 @@ export const Forum = () => {
     const handleVote = async (postId: string, type: 'upvote' | 'downvote') => {
         try {
             const data = await api.post<any>(`/forum/${postId}/vote`, { type });
-            setPosts(posts.map(p => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
+            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
         } catch (error) {
             console.error(error);
             showNotification('فشل التصويت المرجو المحاولة لاحقا', 'error');
@@ -118,13 +119,13 @@ export const Forum = () => {
         if (!viewingComments[postId]) {
             try {
                 const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-                setPosts(posts.map(p => p.id === postId ? { ...p, comments: data } : p));
+                setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
             } catch (error) {
                 console.error(error);
                 showNotification('فشل تحميل التعليقات', 'error');
             }
         }
-        setViewingComments(prev => ({ ...prev, [postId]: !prev[postId] }));
+        setViewingComments((prev: Record<string, boolean>) => ({ ...prev, [postId]: !prev[postId] }));
     };
 
     const handleAddComment = async (postId: string) => {
@@ -133,10 +134,10 @@ export const Forum = () => {
 
         try {
             await api.post(`/forum/${postId}/comments`, { content: text });
-            setCommentTexts(prev => ({ ...prev, [postId]: '' }));
+            setCommentTexts((prev: Record<string, string>) => ({ ...prev, [postId]: '' }));
             showNotification('تم إضافة التعليق بنجاح', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-            setPosts(posts.map(p => p.id === postId ? { ...p, comments: data } : p));
+            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
         } catch (error) {
             console.error(error);
             showNotification('فشل إضافة التعليق', 'error');
@@ -149,7 +150,7 @@ export const Forum = () => {
             await api.delete(`/forum/comments/${commentId}`);
             showNotification('تم حذف التعليق بنجاح', 'success');
             const data = await api.get<Comment[]>(`/forum/${postId}/comments`);
-            setPosts(posts.map(p => p.id === postId ? { ...p, comments: data } : p));
+            setPosts(posts.map((p: Post) => p.id === postId ? { ...p, comments: data } : p));
         } catch (err) {
             console.error(err);
             showNotification('فشل حذف التعليق', 'error');
@@ -217,7 +218,7 @@ export const Forum = () => {
                     </div>
                 ) : (
                     <div className="space-y-4">
-                        {posts.map(post => {
+                        {posts.map((post: Post) => {
                             const isLiked = post.upvotes.includes(currentUser?.id || '');
                             const isHighlighted = post.id === highlightedPostId;
 
@@ -317,7 +318,7 @@ export const Forum = () => {
                                     {viewingComments[post.id] && (
                                         <div className="bg-slate-50 dark:bg-slate-800/50 p-3 md:p-4 space-y-4">
                                             <div className="space-y-3">
-                                                {post.comments?.map(comment => (
+                                                {post.comments?.map((comment: Comment) => (
                                                     <div key={comment.id} className="flex gap-2">
                                                         <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
                                                             <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
@@ -349,7 +350,7 @@ export const Forum = () => {
                                                     <input 
                                                         type="text"
                                                         value={commentTexts[post.id] || ''}
-                                                        onChange={(e) => setCommentTexts(prev => ({ ...prev, [post.id]: e.target.value }))}
+                                                        onChange={(e) => setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب تعليقاً..."
                                                         className="w-full bg-slate-200/50 dark:bg-slate-700/50 border-none px-4 py-2 text-xs font-medium focus:ring-0"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
