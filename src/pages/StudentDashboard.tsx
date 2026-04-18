@@ -89,10 +89,10 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-20 px-4 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
+        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-20 px-2 lg:px-8 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
             
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="mb-6">
+            <div className="mb-6 pr-2 lg:pr-0">
                 <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-1">
                     مرحباً، {studentData?.name?.split(' ')[0]} {studentData?.name?.split(' ')[1] || ''}
                 </h1>
