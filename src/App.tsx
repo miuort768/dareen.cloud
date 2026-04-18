@@ -5,6 +5,8 @@ import { usePageLoader } from './hooks/usePageLoader';
 
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
+import { InstallPWA } from './components/ui/InstallPWA';
+
 import { Login } from './pages/Login';
 import { Home } from './pages/public/Home';
 import { Dashboard } from './pages/Dashboard';
@@ -129,7 +131,9 @@ function App() {
         </div>
       )}
       <ScrollToTop />
+      {location.pathname === '/' && <InstallPWA />}
       {/* Public Facing Actions - Only show on specific public pages */}
+
 
       {['/', '/courses', '/about', '/contact'].includes(location.pathname) && (
         <FloatingActions />

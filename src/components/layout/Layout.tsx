@@ -44,8 +44,8 @@ export const Layout = () => {
                 </main>
             </div>
 
-            <InstallPWA />
         </div>
     );
 };
+
 
