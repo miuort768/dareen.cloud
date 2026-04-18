@@ -146,11 +146,11 @@ export const Forum = () => {
 
     return (
         <div className="min-h-screen bg-[#f0f2f5] dark:bg-slate-950 pb-20 animate-in fade-in duration-500" dir="rtl">
-            <div className="max-w-[680px] mx-auto pt-6 px-4 space-y-4">
+            <div className="max-w-[680px] mx-auto pt-2 md:pt-6 space-y-4 -mx-4 md:mx-auto px-1 md:px-0 w-auto md:w-full">
                 
                 {/* 🖊️ Post Creation Box (FB Style) */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-4 shadow-sm">
-                    <div className="flex gap-3 items-center mb-4">
+                <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-3 md:p-4 shadow-sm md:rounded-lg">
+                    <div className="flex gap-2 md:gap-3 items-center mb-3 md:mb-4">
                         <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-black text-lg shrink-0">
                             {currentUser?.name?.charAt(0) || 'U'}
                         </div>
@@ -199,9 +199,9 @@ export const Forum = () => {
                             const isLiked = post.upvotes.includes(currentUser?.id || '');
 
                             return (
-                                <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500">
+                                <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500 md:rounded-lg">
                                     {/* FB Header */}
-                                    <div className="p-4 flex justify-between items-center">
+                                    <div className="p-3 md:p-4 flex justify-between items-center">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white flex items-center justify-center font-black border border-slate-200 dark:border-slate-700">
                                                 {post.authorName.charAt(0)}
@@ -228,14 +228,14 @@ export const Forum = () => {
                                     </div>
 
                                     {/* FB Content */}
-                                    <div className="px-4 pb-4">
-                                        <p className="text-slate-800 dark:text-slate-200 text-sm font-medium leading-[1.6] whitespace-pre-wrap">
+                                    <div className="px-3 md:px-4 pb-3 md:pb-4">
+                                        <p className="text-slate-800 dark:text-slate-200 text-[13px] md:text-sm font-medium leading-[1.7] whitespace-pre-wrap">
                                             {post.content}
                                         </p>
                                     </div>
 
                                     {/* FB Stats Area */}
-                                    <div className="px-4 py-2 flex justify-between items-center border-t border-slate-50 dark:border-slate-800 mx-4">
+                                    <div className="px-3 md:px-4 py-2 flex justify-between items-center border-t border-slate-50 dark:border-slate-800 mx-2 md:mx-4">
                                         <div className="flex items-center gap-2">
                                             <div className="flex items-center -space-x-1 space-x-reverse">
                                                 {post.upvotes.length > 0 && (
@@ -259,7 +259,7 @@ export const Forum = () => {
                                     </div>
 
                                     {/* FB Actions Bar */}
-                                    <div className="px-4 py-1 flex border-y border-slate-100 dark:border-slate-800 mx-4">
+                                    <div className="px-2 md:px-4 py-1 flex border-y border-slate-100 dark:border-slate-800 mx-2 md:mx-4">
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
                                             className={cn("flex-1 py-1.5 flex items-center justify-center gap-2 text-xs font-black transition-colors hover:bg-slate-50 dark:hover:bg-slate-800", isLiked ? "text-blue-600" : "text-slate-600")}
@@ -285,7 +285,7 @@ export const Forum = () => {
 
                                     {/* FB Comments Section */}
                                     {viewingComments[post.id] && (
-                                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 space-y-4">
+                                        <div className="bg-slate-50 dark:bg-slate-800/50 p-3 md:p-4 space-y-4">
                                             <div className="space-y-3">
                                                 {post.comments?.map(comment => (
                                                     <div key={comment.id} className="flex gap-2">
