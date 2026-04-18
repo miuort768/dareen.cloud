@@ -6,17 +6,14 @@ import {
     Users,
     Calendar,
     Receipt,
-    CheckCircle2,
     CalendarDays,
     Headset,
     Activity,
     Star,
     Award,
     Trophy,
-    ShieldCheck,
-    Target,
     User,
-    ChevronLeft
+    LogOut
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -26,7 +23,7 @@ import { ar } from 'date-fns/locale';
 // ParentDashboard
 
 export const ParentDashboard = () => {
-    const { currentUser, adminPhone } = useApp();
+    const { currentUser, adminPhone, logout } = useApp();
     const navigate = useNavigate();
     const [children, setChildren] = useState<any[]>([]);
     const [sessions, setSessions] = useState<any[]>([]);
