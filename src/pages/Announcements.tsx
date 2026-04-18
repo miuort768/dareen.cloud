@@ -348,36 +348,6 @@ export const Announcements = () => {
                 </div>
             )}
 
-            {/* ═══════════════ OPERATIONAL FOOTER ═══════════════ */}
-            <div className="grid grid-cols-3 gap-2 md:gap-6 pt-10 border-t border-slate-200 dark:border-slate-800">
-                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <Zap size={14} className="text-primary-500" />
-                    </div>
-                    <div>
-                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">تحديث فوري</h5>
-                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">بث مباشر للتعميمات.</p>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <MapPin size={14} className="text-primary-500" />
-                    </div>
-                    <div>
-                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">مركز المتابعة</h5>
-                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">القناة الرسمية المركزية.</p>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center text-center gap-2 p-3.5 bg-white/5 border border-slate-100 dark:border-slate-800">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
-                        <Users size={14} className="text-primary-500" />
-                    </div>
-                    <div>
-                        <h5 className="font-black text-[7px] md:text-[9px] uppercase italic tracking-widest text-slate-900 dark:text-white mb-0.5 leading-none">إدارة ذكية</h5>
-                        <p className="hidden md:block text-[8px] text-slate-500 font-bold leading-tight">تغطي كافة الأقسام.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };
