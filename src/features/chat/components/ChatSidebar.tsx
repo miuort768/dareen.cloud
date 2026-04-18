@@ -48,7 +48,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         )}>
             <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-400/30 dark:border-emerald-500/30 shadow-[0_0_8px_rgba(52,211,153,0.2)] shrink-0">
                         <img 
                             src="/chat-avatar.jpg" 
                             alt="avatar" 

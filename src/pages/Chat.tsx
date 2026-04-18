@@ -169,7 +169,7 @@ export const Chat: React.FC = () => {
                             </div>
                             <h2 className="text-3xl font-light text-[#41525d] dark:text-[#e9edef] mb-2 tracking-tight">واتساب دارين للكمبيوتر</h2>
                             <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-sm mx-auto leading-relaxed">
-                                أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة وبدون انقطاع.
+                                أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة.
                             </p>
                         </div>
                     </div>
