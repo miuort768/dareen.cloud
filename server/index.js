@@ -255,9 +255,12 @@ async function startServer() {
             pingInterval: 25000
         });
 
+        const activeSessions = new Map(); // studentId -> sessionData
+
         // Make io accessible to routers
         app.set('socketio', io);
         app.set('activeSessions', activeSessions);
+
 
 
         const jwt = require('jsonwebtoken');
@@ -281,7 +284,6 @@ async function startServer() {
             }
         });
 
-        const activeSessions = new Map(); // studentId -> sessionData
 
         io.on('connection', (socket) => {
             const user = socket.data.user;
