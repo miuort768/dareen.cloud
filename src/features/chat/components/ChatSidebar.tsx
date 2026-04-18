@@ -89,18 +89,19 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
             </div>
 
-            <div className="p-2 bg-white border-b border-gray-100">
-                <div className="relative flex items-center bg-[#FF7B7B] rounded-lg px-3 py-1.5 border-0 outline-none ring-0">
-                    <Search className="text-black" size={18} />
+            <div className="p-2 bg-white dark:bg-[#111b21] border-b border-gray-100 dark:border-white/5">
+                <div className="relative flex items-center bg-[#f0f2f5] dark:bg-[#202c33] rounded-lg px-3 py-1.5 border-0 outline-none ring-0 transition-colors">
+                    <Search className="text-[#54656f] dark:text-[#aebac1] ml-3 shrink-0" size={18} />
                     <input
                         type="text"
                         placeholder="البحث أو بدء دردشة جديدة"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="flex-1 bg-transparent border-0 focus:ring-0 focus:outline-none ring-0 text-sm py-1 px-4 text-right text-black placeholder:text-black/60 font-medium"
+                        className="flex-1 bg-transparent border-0 focus:ring-0 focus:outline-none ring-0 text-sm py-1 px-4 text-right text-[#111b21] dark:text-[#e9edef] placeholder:text-[#667781] dark:placeholder:text-[#8696a0] font-medium"
                     />
                 </div>
             </div>
+
 
             <div className="flex-1 overflow-y-auto no-scrollbar">
                 {filteredConversations.length > 0 ? (

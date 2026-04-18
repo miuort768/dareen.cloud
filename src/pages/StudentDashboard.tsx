@@ -105,7 +105,13 @@ export const StudentDashboard = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-none shadow-lg shadow-purple-500/20 text-white"
             >
+                {/* Neon Corner Triangle */}
+                <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none overflow-hidden z-20">
+                    <div className="absolute top-[-25px] right-[-25px] w-12 h-12 bg-cyan-400 rotate-45 shadow-[0_0_15px_#22d3ee]" />
+                </div>
+
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
+
                 <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
                 
                 <div className="relative z-10 flex flex-col items-center text-center">
@@ -146,21 +152,21 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ STATS ROW ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
                         <Star size={16} fill="currentColor" />
                     </div>
                     <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{points}</span>
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
                         <CalendarDays size={16} />
                     </div>
                     <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}%</span>
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
                         <BookOpen size={16} />
                     </div>
@@ -168,6 +174,7 @@ export const StudentDashboard = () => {
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">عدد المواد</span>
                 </div>
             </div>
+
 
             {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
             <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-5 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">

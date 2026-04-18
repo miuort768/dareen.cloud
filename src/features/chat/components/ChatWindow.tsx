@@ -248,7 +248,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </AnimatePresence>
 
             {/* Input Bar - Standardized Style */}
-            <footer className="bg-[#f0f2f5] dark:bg-[#202c33] min-h-[62px] flex items-end px-3 py-2.5 z-10 gap-2">
+            <footer className="bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-10 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
@@ -264,20 +264,21 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             }
                         }}
                         placeholder="اكتب رسالة"
-                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-lg px-3 py-2.5 focus:ring-0 max-h-32 resize-none text-right scroll-smooth custom-scrollbar"
+                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10"
                     />
                 </div>
 
-                <div className="flex items-center justify-center self-center">
+                <div className="flex items-center justify-center shrink-0">
                     <button
                         onClick={handleSendMessage}
-                        className="bg-[#00a884] text-white p-3.5 rounded-xl hover:bg-[#008f6f] transition-all flex-shrink-0 shadow-md active:scale-95 flex items-center justify-center"
+                        className="bg-[#00a884] text-white p-3.5 rounded-xl hover:bg-[#008f6f] transition-all shadow-[0_2px_4px_rgba(0,0,0,0.1)] active:scale-95 flex items-center justify-center h-[48px] w-[48px]"
                         title="إرسال"
                     >
-                        <Send size={24} className={cn("transition-transform", isSending && "animate-pulse")} />
+                        <Send size={20} className={cn("transition-transform", isSending && "animate-pulse")} />
                     </button>
                 </div>
             </footer>
+
         </div>
     );
 };
