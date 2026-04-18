@@ -218,21 +218,21 @@ export const Schedule = () => {
         <div className="px-3 md:px-0 w-full max-w-full overflow-hidden block">
             <div className="space-y-5 pb-32 animate-in fade-in duration-500 overflow-x-hidden container mx-auto max-w-5xl" dir="rtl">
                 {/* Master Header */}
-                <div className="relative bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] overflow-hidden">
+                <div className="relative bg-white border-2 border-gray-950 p-2 md:p-6 shadow-[3px_3px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 pointer-events-none"></div>
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 md:gap-3 text-right">
-                        <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-primary-500 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)] md:shadow-[3px_3px_0px_0px_rgba(37,99,235,1)] flex items-center justify-center shrink-0">
-                            <Calendar size={20} className="md:size-[28px]" />
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-2 mb-0.5">
-                                <span className="bg-primary-600 text-white text-[6px] md:text-[7px] font-black px-1 md:px-1.5 py-0.5 border border-gray-950 uppercase italic">LIVE</span>
-                                <h1 className="text-base md:text-3xl font-black text-gray-950 tracking-tighter italic leading-none">الجدول الأسبوعي</h1>
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-3">
+                        <div className="flex items-center gap-2 md:gap-3 text-right w-full">
+                            <div className="w-8 h-8 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-primary-500 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)] md:shadow-[3px_3px_0px_0px_rgba(37,99,235,1)] flex items-center justify-center shrink-0">
+                                <Calendar size={16} className="md:size-[28px]" />
                             </div>
-                            <p className="text-gray-500 font-black text-[8px] md:text-xs">إدارة المواعيد بذكاء وتصميم عصري</p>
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                    <span className="bg-primary-600 text-white text-[6px] md:text-[7px] font-black px-1 md:px-1.5 py-0.5 border border-gray-950 uppercase italic shrink-0">LIVE</span>
+                                    <h1 className="text-xs md:text-3xl font-black text-gray-950 tracking-tighter italic leading-none truncate">الجدول الأسبوعي</h1>
+                                </div>
+                                <p className="text-gray-500 font-black text-[7px] md:text-xs truncate">إدارة المواعيد بذكاء وتصميم عصري</p>
+                            </div>
                         </div>
-                    </div>
                     <button onClick={() => window.print()} className="hidden md:flex bg-gray-950 text-white px-5 py-2.5 border-2 border-gray-950 shadow-[4px_4px_0px_0px_#444] hover:shadow-none transition-all items-center gap-2 font-black text-[10px] uppercase">
                         <Printer size={16} /> طباعة
                     </button>
@@ -247,37 +247,37 @@ export const Schedule = () => {
                     { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
                     { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] flex items-center justify-between overflow-hidden relative">
-                        <div className="flex flex-col min-w-0 z-10 w-full overflow-hidden">
-                            <p className="text-[9px] md:text-xs font-black text-gray-500 uppercase leading-none mb-1 truncate">{stat.label}</p>
-                            <h3 className="text-sm md:text-xl font-black text-gray-950 truncate leading-none">{stat.val}</h3>
+                    <div key={i} className="bg-white border-2 border-gray-950 p-1 md:p-2 shadow-[2px_2px_0px_0px_black] flex items-center justify-between gap-1 overflow-hidden relative">
+                        <div className="flex flex-col min-w-0 z-10 overflow-hidden px-1">
+                            <p className="text-[7px] md:text-[9px] font-black text-gray-500 uppercase leading-none mb-0.5 truncate">{stat.label}</p>
+                            <h3 className="text-[11px] md:text-lg font-black text-gray-950 truncate leading-none">{stat.val}</h3>
                         </div>
-                        <div className={cn("shrink-0 w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] z-10", stat.color)}>
-                            <stat.icon size={12} strokeWidth={3} className="text-gray-950" />
+                        <div className={cn("shrink-0 w-5 h-5 rounded-full flex items-center justify-center border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] z-10", stat.color)}>
+                            <stat.icon size={8} strokeWidth={3} className="text-gray-950" />
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Filter Bar */}
-            <div className="bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black]">
-                <div className="w-full md:flex-1">
+            <div className="bg-gray-50 border-2 border-gray-950 p-1.5 md:p-3 flex items-end gap-1.5 md:gap-3 no-print shadow-[2px_2px_0px_0px_black]">
+                <div className="flex-1 min-w-0">
                     <div className="relative">
-                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-950" size={13} />
+                        <Search className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-950" size={12} />
                         <input 
                             type="text" 
                             placeholder="ابحث..." 
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-white border-2 border-gray-950 p-2 pr-9 font-bold text-[10px] md:text-xs text-gray-950 focus:bg-yellow-50 outline-none"
+                            className="w-full bg-white border-2 border-gray-950 py-1.5 px-2 pr-7 font-black text-[9px] md:text-xs text-gray-950 focus:bg-yellow-50 outline-none"
                         />
                     </div>
                 </div>
-                <div className="w-full md:w-32">
+                <div className="w-[100px] shrink-0">
                     <select 
                         value={filterDay} 
                         onChange={e => setFilterDay(e.target.value)}
-                        className="w-full bg-white border-2 border-gray-950 p-2 font-bold text-[10px] md:text-xs outline-none appearance-none cursor-pointer"
+                        className="w-full bg-white border-2 border-gray-950 py-1.5 px-1 font-black text-[9px] md:text-xs outline-none appearance-none cursor-pointer h-[26px]"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(d => <option key={d} value={d}>{d}</option>)}
@@ -369,7 +369,7 @@ export const Schedule = () => {
                                 key={day}
                                 onClick={() => setMobileActiveDay(day)}
                                 className={cn(
-                                    "shrink-0 px-3 py-1.5 border-2 font-black text-[9px] uppercase transition-all relative",
+                                    "shrink-0 px-2 py-1.5 border-2 font-black text-[8px] uppercase transition-all relative",
                                     mobileActiveDay === day 
                                         ? "bg-gray-950 text-white border-gray-950 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)]" 
                                         : "bg-white text-gray-400 border-gray-200"
@@ -387,13 +387,13 @@ export const Schedule = () => {
                     {TIME_SLOTS.map(slot => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[45px_1fr] gap-2 items-start">
+                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[40px_1fr] gap-2 items-start">
                                 <div className="flex flex-col items-center pt-1">
                                     <div className="bg-white border border-gray-950 px-1 py-0.5 shadow-[1px_1px_0px_0px_black] text-[7px] font-black whitespace-nowrap mb-1">
                                         {slot.label}
                                     </div>
                                     <div className="w-[1px] h-10 bg-gray-200 relative">
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-950 rounded-full" />
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-900 rounded-full" />
                                     </div>
                                 </div>
 
