@@ -137,6 +137,47 @@ router.post('/:id/vote', async (req, res) => {
     }
 });
 
+// Report a post
+router.post('/:id/report', async (req, res) => {
+    const { id } = req.params;
+    const user = req.user;
+    const { v4: uuidv4 } = require('uuid');
+
+    try {
+        const post = await req.db.get('SELECT authorName, content FROM forum_posts WHERE id = ?', [id]);
+        if (!post) return res.status(404).json({ error: 'Post not found.' });
+
+        // Find all admins
+        const admins = await req.db.all('SELECT id FROM users WHERE role = "admin"');
+        
+        // Create notifications for all admins
+        for (const admin of admins) {
+            const notifId = 'notif_' + uuidv4();
+            await req.db.run(
+                `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    notifId, 
+                    user.id, 
+                    admin.id, 
+                    user.name || user.username, 
+                    'تبليغ عن محتوى', 
+                    `قام ${user.name || user.username} بالتبليغ عن منشور لـ ${post.authorName}`, 
+                    'warning', 
+                    new Date().toISOString(), 
+                    0,
+                    `/forum?postId=${id}`
+                ]
+            );
+        }
+
+        res.json({ message: 'تم إرسال التبليغ للإدارة.' });
+    } catch (err) {
+        console.error('Report error:', err);
+        res.status(500).json({ error: 'Failed to send report.' });
+    }
+});
+
 // Get comments for a post
 router.get('/:id/comments', async (req, res) => {
     try {

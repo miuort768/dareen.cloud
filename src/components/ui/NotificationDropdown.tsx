@@ -12,6 +12,7 @@ interface Notification {
     time: string;
     read: boolean;
     conversationId?: string;
+    link?: string;
 }
 
 export const NotificationDropdown = () => {
@@ -218,7 +219,10 @@ export const NotificationDropdown = () => {
                                         }`}
                                     onClick={() => {
                                         markAsRead(notification.id);
-                                        if (notification.conversationId) {
+                                        if (notification.link) {
+                                            navigate(notification.link);
+                                            setIsOpen(false);
+                                        } else if (notification.conversationId) {
                                             navigate(`/chat?conversationId=${notification.conversationId}`);
                                             setIsOpen(false);
                                         }

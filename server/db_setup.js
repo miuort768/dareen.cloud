@@ -367,6 +367,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('student_invoices', 'items', 'TEXT');
     await addColumnIfNotExists('sessions', 'teacherPrice', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('notifications', 'conversationId', 'TEXT');
+    await addColumnIfNotExists('notifications', 'link', 'TEXT');
     await addColumnIfNotExists('conversations', 'isLive', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('conversations', 'meetingUrl', 'TEXT');
 

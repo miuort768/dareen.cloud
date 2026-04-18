@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
@@ -33,6 +33,9 @@ interface Post {
 export const Forum = () => {
     const { currentUser, showNotification } = useApp();
     const isAdmin = currentUser?.role === 'admin';
+    const [searchParams] = useSearchParams();
+    const highlightedPostId = searchParams.get('postId');
+    
     const [posts, setPosts] = useState<Post[]>([]);
     const [newPostContent, setNewPostContent] = useState('');
     const [loading, setLoading] = useState(true);
@@ -55,6 +58,15 @@ export const Forum = () => {
     useEffect(() => {
         fetchPosts();
     }, []);
+
+    useEffect(() => {
+        if (highlightedPostId && !loading) {
+            const element = document.getElementById(`post-${highlightedPostId}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [highlightedPostId, loading]);
 
     const handleCreatePost = async () => {
         if (!newPostContent.trim()) return;
@@ -144,6 +156,16 @@ export const Forum = () => {
         }
     };
 
+    const handleReport = async (postId: string) => {
+        try {
+            await api.post(`/forum/${postId}/report`);
+            showNotification('تم إرسال التبليغ للإدارة للمراجعة', 'info');
+        } catch (error) {
+            console.error(error);
+            showNotification('فشل إرسال التبليغ', 'error');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#f0f2f5] dark:bg-slate-950 pb-20 animate-in fade-in duration-500" dir="rtl">
             <div className="max-w-[680px] mx-auto pt-2 md:pt-6 space-y-4 -mx-4 md:mx-auto px-1 md:px-0 w-auto md:w-full">
@@ -197,9 +219,17 @@ export const Forum = () => {
                     <div className="space-y-4">
                         {posts.map(post => {
                             const isLiked = post.upvotes.includes(currentUser?.id || '');
+                            const isHighlighted = post.id === highlightedPostId;
 
                             return (
-                                <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500 md:rounded-lg">
+                                <div 
+                                    key={post.id} 
+                                    id={`post-${post.id}`}
+                                    className={cn(
+                                        "bg-white dark:bg-slate-900 border shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500 md:rounded-lg transition-all",
+                                        isHighlighted ? "border-amber-400 ring-2 ring-amber-400/20 bg-amber-50/10" : "border-slate-300 dark:border-slate-800"
+                                    )}
+                                >
                                     {/* FB Header */}
                                     <div className="p-3 md:p-4 flex justify-between items-center">
                                         <div className="flex items-center gap-3">
@@ -275,7 +305,7 @@ export const Forum = () => {
                                             <span>تعليق</span>
                                         </button>
                                         <button 
-                                            onClick={() => showNotification('تم إرسال التبليغ للإدارة للمراجعة', 'info')}
+                                            onClick={() => handleReport(post.id)}
                                             className="flex-1 py-2 flex items-center justify-center gap-2 text-xs font-black text-rose-500 transition-all hover:bg-rose-50 dark:hover:bg-rose-900/10 active:scale-95"
                                         >
                                             <AlertTriangle size={16} />

@@ -45,8 +45,8 @@ router.post('/', async (req, res) => {
         const senderId = body.senderId || 'system';
 
         await req.db.run(
-            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0, body.conversationId || null]
+            `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, conversationId, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [id, senderId, body.receiverId, body.senderName, body.title, body.message, body.type || 'info', body.time || new Date().toISOString(), body.read ? 1 : 0, body.conversationId || null, body.link || null]
         );
 
         // Send Real-Time Push Notification if subscription exists
