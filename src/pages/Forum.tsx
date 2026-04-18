@@ -218,7 +218,7 @@ export const Forum = () => {
                                                         {post.authorRole === 'admin' ? 'الإدارة' : post.authorRole === 'teacher' ? 'معلم' : 'طالب'}
                                                     </span>
                                                 </div>
-                                                <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-bold mt-0.5">
+                                                <div className="flex items-center gap-1.5 text-[8px] text-slate-500 font-light mt-0.5">
                                                     <span>{formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: arEG })}</span>
                                                 </div>
                                             </div>
