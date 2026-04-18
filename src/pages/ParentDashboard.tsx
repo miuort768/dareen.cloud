@@ -383,50 +383,86 @@ export const ParentDashboard = () => {
                     </div>
                 </div>
 
-                {/* Excellence Showcase (Hero Cards) */}
-                <div className="pt-8 border-t border-gray-100">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-8 h-8 bg-amber-500 text-white flex items-center justify-center shadow-lg transform -rotate-3">
-                            <Trophy size={16} />
+                {/* ═══════════════ ELITE HEROES CENTERS (UPDATED DESIGN) ═══════════════ */}
+                <div className="pt-12 border-t border-slate-200">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                        <div>
+                            <div className="flex items-center gap-3 mb-2">
+                                <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">مراكز الأبطال النخبويين</h2>
+                                <div className="w-8 h-8 rounded-full border-2 border-primary-600 flex items-center justify-center text-primary-600">
+                                    <Star size={16} className="fill-current" />
+                                </div>
+                            </div>
+                            <p className="text-gray-400 text-xs md:text-sm font-bold">تتبع تقدمك، احصل على أوسمتك وارتق في مراتب النخبة.</p>
                         </div>
-                        <h2 className="text-xl font-black text-gray-900 uppercase italic tracking-tight">نظام تطور جدارات الأبناء</h2>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                         {children.map((child) => {
                              const points = child.totalPoints || 0;
                              const getStatus = (p: number) => {
-                                 if (p >= 500) return { name: 'أسطورة الأكاديمية', icon: '👑', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200' };
-                                 if (p >= 100) return { name: 'المجتهد الذكي', icon: '🚀', color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-200' };
-                                 return { name: 'المكتشف الواعد', icon: '🧭', color: 'text-gray-600', bg: 'bg-gray-50', border: 'border-gray-200' };
+                                 if (p >= 1000) return { name: 'البروفيسور النخبوي', rank: 'مخضرم', nextGoal: 2500, icon: '👑' };
+                                 if (p >= 500) return { name: 'المجتهد الذكي', rank: 'متقدم', nextGoal: 1000, icon: '🚀' };
+                                 return { name: 'الباحث المستكشف', rank: 'مبتدئ', nextGoal: 100, icon: '🧭' };
                              };
                              const status = getStatus(points);
+                             const progress = Math.min(Math.round((points / status.nextGoal) * 100), 100);
 
                              return (
                                  <motion.div 
                                     key={child.id}
                                     whileHover={{ y: -5 }}
-                                    className="bg-white border border-slate-100 p-8 shadow-sm flex flex-col md:flex-row items-center gap-8 relative group overflow-hidden"
+                                    className="bg-white border border-slate-100 p-8 shadow-sm relative group overflow-hidden"
                                  >
-                                    <div className="absolute top-0 left-0 w-2 h-full bg-primary-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <div className="w-32 h-32 bg-gray-50 border border-gray-100 flex items-center justify-center text-5xl shrink-0 group-hover:scale-110 transition-transform duration-500 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat">
-                                        {status.icon}
-                                    </div>
-                                    <div className="flex-1 text-center md:text-right">
-                                        <div className={cn("inline-flex px-3 py-1 text-[9px] font-black uppercase tracking-widest mb-3 italic border", status.color, status.bg, status.border)}>
-                                            {status.name}
+                                    <div className="flex justify-between items-start mb-8">
+                                        <div className="text-right">
+                                            <p className="text-[10px] font-black text-primary-600 uppercase tracking-widest mb-1 italic">الحالة العملياتية</p>
+                                            <h4 className="text-xl font-black text-gray-900 mb-1">{status.name}</h4>
+                                            <h5 className="text-2xl font-black text-gray-900">{child.name}</h5>
                                         </div>
-                                        <h4 className="text-2xl font-black text-gray-900 leading-none mb-2">{child.name}</h4>
-                                        <div className="flex items-center justify-center md:justify-start gap-3 mt-4">
-                                            <div className="px-4 py-2 bg-gray-900 text-white text-xs font-black italic tracking-widest shadow-lg">
-                                                {points} نقطة
+                                        
+                                        {/* Circular Avatar with Point Badge */}
+                                        <div className="relative">
+                                            <div className="w-20 h-20 rounded-full border-[3px] border-primary-100 p-1 bg-white overflow-hidden shadow-inner">
+                                                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-3xl">
+                                                    <User className="text-white/20" size={40} />
+                                                </div>
                                             </div>
-                                            <button 
-                                                onClick={() => navigate('/parent-students')}
-                                                className="text-[10px] font-black uppercase text-primary-600 underline underline-offset-4 tracking-widest hover:text-primary-700 transition-colors"
+                                            <div className="absolute -bottom-1 -right-2 bg-rose-600 text-white text-[9px] font-black px-2 py-1 rounded-full shadow-lg border-2 border-white">
+                                                PT {points}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Progress Section */}
+                                    <div className="space-y-4 mb-8">
+                                        <div className="flex justify-between items-end">
+                                            <div className="text-right">
+                                                <p className="text-[10px] font-black text-gray-900 uppercase italic">مستوى كفاءة التعلم</p>
+                                                <p className="text-[9px] font-bold text-gray-400 mt-0.5">بانتظار {status.nextGoal - points} نقطة للترقية</p>
+                                            </div>
+                                            <span className="text-2xl font-black text-primary-700 italic">{progress}%</span>
+                                        </div>
+                                        <div className="h-2.5 bg-slate-100 overflow-hidden relative">
+                                            <motion.div 
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${progress}%` }}
+                                                className="h-full bg-gradient-to-l from-primary-400 to-primary-700 relative"
                                             >
-                                                استعراض ملف الجودة <ChevronLeft size={14} className="inline-block" />
-                                            </button>
+                                                <div className="absolute inset-0 bg-white/20 blur-sm animate-pulse"></div>
+                                            </motion.div>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer Info */}
+                                    <div className="flex justify-between items-center pt-6 border-t border-slate-50">
+                                        <div className="text-right">
+                                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">الهدف</p>
+                                            <p className="text-sm font-black text-gray-900">{status.nextGoal} نقطة</p>
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1 text-left">الرتبة الدنيا</p>
+                                            <p className="text-sm font-black text-gray-900">{status.rank}</p>
                                         </div>
                                     </div>
                                  </motion.div>
@@ -434,6 +470,7 @@ export const ParentDashboard = () => {
                         })}
                     </div>
                 </div>
+
             </div>
         </div>
     );
