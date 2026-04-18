@@ -35,23 +35,21 @@ export const InstallPWA = () => {
 
     useEffect(() => {
         // Already installed as standalone app
-        if (isStandaloneMode()) {
-            console.log('App is in standalone mode, hiding install banner.');
-            setIsVisible(false);
-            return;
-        }
+        if (isStandaloneMode()) return;
+
+        // Already permanently dismissed
+        if (localStorage.getItem('pwa_dismissed_permanent')) return;
 
         const detectedPlatform = detectPlatform();
         setPlatform(detectedPlatform);
 
-        // Capture initial prompt
+        // Capture initial prompt from window
         if ((window as any).deferredPrompt) {
             deferredPromptRef.current = (window as any).deferredPrompt;
             setIsVisible(true);
         }
 
         const handleBeforeInstall = (e: Event) => {
-            console.log('beforeinstallprompt event fired');
             e.preventDefault();
             deferredPromptRef.current = e;
             (window as any).deferredPrompt = e;
@@ -59,27 +57,18 @@ export const InstallPWA = () => {
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
 
-        // Aggressive check: If not standalone, show after a delay anyway (as fallback guide)
+        // Visibility Fallback (much shorter delay for home page)
         const timer = setTimeout(() => {
             if (!isStandaloneMode()) {
                 setIsVisible(true);
             }
-        }, 1000);
-
-        // Secondary check at 5 seconds just in case
-        const secondaryTimer = setTimeout(() => {
-            if (!isStandaloneMode()) {
-                setIsVisible(true);
-            }
-        }, 5000);
+        }, 1200);
 
         return () => {
             clearTimeout(timer);
-            clearTimeout(secondaryTimer);
             window.removeEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
         };
     }, []);
-
 
     const handleInstall = async () => {
         // iOS / Mac Safari: show step-by-step guide
@@ -132,12 +121,11 @@ export const InstallPWA = () => {
         return (
             <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 backdrop-blur-sm p-4">
                 <div className="bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_#4f46e5] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
-                    {/* Header */}
                     <div className="bg-yellow-400 dark:bg-indigo-600 border-b-2 border-gray-950 dark:border-white px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Smartphone size={18} className="text-black dark:text-white" />
-                            <h2 className="font-black text-sm text-black dark:text-white uppercase tracking-tighter">
-                                تطبيق دارين
+                            <h2 className="font-black text-sm text-black dark:text-white uppercase tracking-tighter text-right">
+                                تطبيق معهد دارين
                             </h2>
                         </div>
                         <button onClick={handleDismiss} className="p-1 hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
@@ -145,8 +133,7 @@ export const InstallPWA = () => {
                         </button>
                     </div>
 
-                    {/* Steps */}
-                    <div className="p-4 space-y-3 dark:bg-slate-900">
+                    <div className="p-4 space-y-3 dark:bg-slate-900 text-right">
                         {isIOS ? (
                             <>
                                 <p className="text-[11px] font-bold text-gray-500 dark:text-slate-400 mb-3">اتبعي هذه الخطوات في Safari:</p>
@@ -185,7 +172,6 @@ export const InstallPWA = () => {
                         )}
                     </div>
 
-                    {/* Actions */}
                     <div className="flex border-t-2 border-gray-950 dark:border-slate-700">
                         <button
                             onClick={handleDismissPermanent}
@@ -205,47 +191,40 @@ export const InstallPWA = () => {
         );
     }
 
-    // Standard install banner (Android, Chrome, Edge)
     return (
-        <div className={`fixed z-[9999] animate-in slide-in-from-bottom-10 fade-in duration-700 ${
-            isDesktop
-                ? 'bottom-6 right-6'
-                : 'bottom-0 left-0 right-0'
+        <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
+            isDesktop ? 'bottom-6 right-6' : 'bottom-4 left-4 right-4'
         }`}>
-            <div className={`bg-gradient-to-r from-yellow-400 to-yellow-300 dark:from-slate-900 dark:to-slate-800 border-t-2 md:border-2 border-black dark:border-indigo-500 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] md:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex items-center gap-4 p-4 md:p-3 ${
-                isDesktop ? 'max-w-[340px] ml-auto rounded-none' : 'rounded-t-2xl'
+            <div className={`bg-yellow-400 dark:bg-slate-900/95 dark:backdrop-blur-xl border-2 border-gray-950 dark:border-indigo-500/50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_#4f46e5] flex items-center gap-3 p-3 ${
+                isDesktop ? 'max-w-[300px] ml-auto' : ''
             }`}>
-                <div className="w-11 h-11 md:w-9 md:h-9 bg-black dark:bg-indigo-600 text-yellow-400 dark:text-white flex items-center justify-center border-2 border-black dark:border-white shrink-0 shadow-sm">
-                    {isDesktop ? <Monitor size={20} /> : <Smartphone size={22} />}
+                <div className="w-9 h-9 bg-black dark:bg-indigo-600 text-yellow-400 dark:text-white flex items-center justify-center border-2 border-gray-950 dark:border-white shrink-0">
+                    {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
                 </div>
 
-                <div className="flex-1 min-w-0">
-                    <h2 className="text-[13px] md:text-[12px] font-black uppercase text-black dark:text-white leading-tight tracking-tight">تطبيق معهد دارين</h2>
-                    <p className="font-bold text-[10px] md:text-[9px] text-black/70 dark:text-slate-400 truncate mt-0.5">
-                        {isIOS || isMacSafari
-                            ? 'اضغطي Share ← Add to Home Screen'
-                            : 'أسرع، أخف، ويدعم الإشعارات'}
+                <div className="flex-1 min-w-0 text-right">
+                    <h2 className="text-[12px] font-black uppercase text-black dark:text-white leading-tight">تطبيق معهد دارين</h2>
+                    <p className="font-bold text-[9px] text-black/70 dark:text-slate-400 truncate mt-0.5">
+                        {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع، أخف، ويدعم الإشعارات'}
                     </p>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-1 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-4 py-2.5 md:px-3 md:py-2 bg-black dark:bg-indigo-600 text-yellow-500 dark:text-white font-black uppercase text-[11px] md:text-[10px] hover:bg-gray-900 dark:hover:bg-indigo-700 transition-all flex items-center gap-1.5 active:scale-95 shadow-md md:shadow-none"
+                        className="px-3 py-2 bg-black dark:bg-indigo-600 text-yellow-400 dark:text-white font-black uppercase text-[10px] hover:bg-gray-900 dark:hover:bg-indigo-700 transition-all flex items-center gap-1 active:translate-y-0.5 shadow-[2px_2px_0px_0px_gray] dark:shadow-none"
                     >
-                        {isIOS || isMacSafari ? <Share size={13} /> : <Download size={13} />}
+                        {isIOS || isMacSafari ? <Share size={11} /> : <Download size={11} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
                     </button>
                     <button
                         onClick={handleDismiss}
-                        className="p-2.5 md:p-2 text-black/40 dark:text-white/40 hover:text-red-500 transition-colors"
+                        className="p-2 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-red-600 hover:text-white transition-colors"
                     >
-                        <X size={isDesktop ? 16 : 20} />
+                        <X size={12} />
                     </button>
-
                 </div>
             </div>
         </div>
     );
 };
-
