@@ -152,21 +152,24 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ STATS ROW ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                {/* Points Card */}
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(244,63,94,0.15)] dark:shadow-[0_0_20px_rgba(244,63,94,0.1)] border border-rose-100/50 dark:border-rose-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
                         <Star size={16} fill="currentColor" />
                     </div>
                     <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{points}</span>
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                {/* Attendance Card */}
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(59,130,246,0.15)] dark:shadow-[0_0_20px_rgba(59,130,246,0.1)] border border-blue-100/50 dark:border-blue-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
                         <CalendarDays size={16} />
                     </div>
                     <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}%</span>
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                {/* Subjects Card */}
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(16,185,129,0.15)] dark:shadow-[0_0_20px_rgba(16,185,129,0.1)] border border-emerald-100/50 dark:border-emerald-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
                         <BookOpen size={16} />
                     </div>
@@ -174,6 +177,7 @@ export const StudentDashboard = () => {
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">عدد المواد</span>
                 </div>
             </div>
+
 
 
             {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
