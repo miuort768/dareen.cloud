@@ -2,7 +2,8 @@
   "name": "معهد دارين للتعليم والتدريب",
   "short_name": "دارين",
   "description": "نظام إدارة شامل لأكاديمية دارين لتعليم و التدريب - منصة تعليمية متكاملة للمدربين والطلاب",
-  "start_url": "/?pwa=1",
+  "start_url": "/dashboard?pwa=1",
+
   "scope": "/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
