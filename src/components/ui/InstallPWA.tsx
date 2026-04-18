@@ -66,28 +66,44 @@ export const InstallPWA = () => {
     }, []);
 
     const handleInstall = async () => {
+        // iOS / Mac Safari: show step-by-step guide
         if (platform === 'ios-safari' || platform === 'mac-safari') {
             setShowIOSGuide(true);
             return;
         }
 
+        // Try to get the prompt again from window just in case ref was lost
+        const globalPrompt = (window as any).deferredPrompt;
+        if (globalPrompt) {
+            deferredPromptRef.current = globalPrompt;
+        }
+
+        // Android / Chrome / Edge: use native prompt
         if (deferredPromptRef.current) {
             try {
-                deferredPromptRef.current.prompt();
-                const { outcome } = await deferredPromptRef.current.userChoice;
+                const promptEvent = deferredPromptRef.current;
+                await promptEvent.prompt();
+                const { outcome } = await promptEvent.userChoice;
+                console.log('User response to install prompt:', outcome);
+                
                 if (outcome === 'accepted') {
                     setIsVisible(false);
                     localStorage.setItem('pwa_dismissed_permanent', 'true');
+                    (window as any).deferredPrompt = null;
                 }
             } catch (err) {
                 console.error('Install prompt failed:', err);
+                setShowIOSGuide(true); // Fallback to manual if API fails
             } finally {
                 deferredPromptRef.current = null;
             }
             return;
         }
+
+        // Final Fallback: If no native prompt is allowed by browser, show manual guide
         setShowIOSGuide(true);
     };
+
 
     const handleDismiss = () => {
         setIsVisible(false);
