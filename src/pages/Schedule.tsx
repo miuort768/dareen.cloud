@@ -219,7 +219,7 @@ export const Schedule = () => {
         <div className="space-y-6 pb-20 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
             {/* Master Header */}
             <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[3px_3px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group mx-0.5 md:mx-4">
-                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10"></div>
+                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="flex items-center gap-2 md:gap-3 text-right">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-primary-500 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)] md:shadow-[3px_3px_0px_0px_rgba(37,99,235,1)] flex items-center justify-center shrink-0">
@@ -247,7 +247,7 @@ export const Schedule = () => {
                     { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
                     { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white border-2 border-gray-950 p-1.5 md:p-3 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] flex items-center gap-2">
+                    <div key={i} className="bg-white border-2 border-gray-950 p-1.5 md:p-3 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] flex items-center gap-2 overflow-hidden">
                         <div className={cn("w-6 h-6 md:w-8 md:h-8 border-2 border-gray-950 flex items-center justify-center text-gray-950 shadow-[1px_1px_0px_0px_black] shrink-0", stat.color)}>
                             <stat.icon size={11} className="md:size-[16px]" strokeWidth={3} />
                         </div>
@@ -359,9 +359,9 @@ export const Schedule = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="md:hidden space-y-6 px-4 font-black">
-                {/* Modern Day Picker */}
-                <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 -mx-4 px-4 border-b border-gray-200">
+            <div className="md:hidden space-y-4 px-1 font-black">
+                {/* Day Picker */}
+                <div className="flex overflow-x-auto gap-2 pb-2 sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 -mx-1 px-2">
                     {DAYS_OF_WEEK.map(day => {
                         const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                         return (
@@ -369,41 +369,36 @@ export const Schedule = () => {
                                 key={day}
                                 onClick={() => setMobileActiveDay(day)}
                                 className={cn(
-                                    "shrink-0 px-3.5 py-2 border-2 font-black text-[9px] uppercase transition-all duration-300 relative",
+                                    "shrink-0 px-3 py-1.5 border-2 font-black text-[9px] uppercase transition-all relative",
                                     mobileActiveDay === day 
                                         ? "bg-gray-950 text-white border-gray-950 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)]" 
                                         : "bg-white text-gray-400 border-gray-200"
                                 )}
                             >
                                 {day}
-                                {isToday && <span className="absolute -top-1.5 -right-1.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />}
+                                {isToday && <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-rose-500 rounded-full" />}
                             </button>
                         );
                     })}
                 </div>
                 
-                {/* Timeline Grid Layout - Enhanced left padding */}
-                <div className="space-y-4 px-1 pb-16">
+                {/* Timeline */}
+                <div className="space-y-3 pb-20">
                     {TIME_SLOTS.map(slot => {
                         const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[55px_1fr] gap-4 items-start">
-                                {/* Time Pillar */}
-                                <div className="flex flex-col items-center pt-2">
-                                    <div className="bg-white border-[1.5px] border-gray-950 px-1.5 py-0.5 shadow-[1.5px_1.5px_0px_0px_black] text-[8px] font-black tracking-tighter whitespace-nowrap mb-1.5">
+                            <div key={`${slot.hour}-${slot.period}`} className="grid grid-cols-[50px_1fr] gap-3 items-start">
                                 <div className="flex flex-col items-center pt-1">
-                                    <div className="bg-white border-[1.5px] border-gray-950 px-1 py-0.5 shadow-[1.5px_1.5px_0px_0px_black] text-[7px] font-black tracking-tighter whitespace-nowrap mb-1">
+                                    <div className="bg-white border border-gray-950 px-1 py-0.5 shadow-[1px_1px_0px_0px_black] text-[7px] font-black whitespace-nowrap mb-1">
                                         {slot.label}
                                     </div>
-                                    <div className="w-[1.5px] h-full min-h-[40px] bg-gray-200 relative">
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-950 rounded-full border border-white shadow-sm" />
+                                    <div className="w-[1px] h-10 bg-gray-200 relative">
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-950 rounded-full" />
                                     </div>
                                 </div>
-                                <main className={cn(
-                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative",
-                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "px-4 pt-1 md:px-5 lg:px-8 pb-32 lg:pb-8"
-                )}>
-                    {events.length > 0 ? (
+
+                                <div className="space-y-2 pb-1 min-w-0">
+                                    {events.length > 0 ? (
                                         events.map(ev => {
                                             const style = getTeacherStyle(ev.teacherName);
                                             return (
@@ -411,31 +406,30 @@ export const Schedule = () => {
                                                     key={ev.id} 
                                                     onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
                                                     className={cn(
-                                                        "p-2.5 md:p-3 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] relative active:scale-[0.98] transition-all min-w-0 overflow-hidden",
+                                                        "p-2 border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] relative transition-all min-w-0 overflow-hidden",
                                                         style.bg
                                                     )}
                                                 >
-                                                    <div className="flex justify-between items-start mb-1.5">
-                                                        <div className="flex items-center gap-2 min-w-0">
-                                                            <div className="w-6 h-6 bg-gray-950 flex items-center justify-center text-white shrink-0">
+                                                    <div className="flex justify-between items-start mb-1">
+                                                        <div className="flex items-center gap-1.5 min-w-0">
+                                                            <div className="w-5 h-5 bg-gray-950 flex items-center justify-center text-white shrink-0">
                                                                 <User size={10} />
                                                             </div>
-                                                            <h3 className="text-[12px] font-black text-gray-950 leading-tight truncate">{ev.studentName}</h3>
+                                                            <h3 className="text-[10px] font-black text-gray-950 truncate leading-none">{ev.studentName}</h3>
                                                         </div>
-                                                        <div className="flex items-center gap-0.5 bg-white/40 px-1 py-0.5 border border-gray-950/10 shrink-0">
+                                                        <div className="flex items-center gap-0.5 bg-white/40 px-1 py-0.5 shrink-0">
                                                             <Zap size={8} className="text-yellow-600 fill-yellow-500" />
-                                                            <span className="text-[8px] font-black">{ev.studentPoints}</span>
+                                                            <span className="text-[7px] font-black">{ev.studentPoints}</span>
                                                         </div>
                                                     </div>
-
-                                                    <div className="grid grid-cols-2 gap-2 mt-1.5 pt-1.5 border-t border-gray-950/5">
-                                                        <div className="flex items-center gap-1 overflow-hidden">
-                                                            <BookOpen size={9} className="text-primary-600 shrink-0" />
-                                                            <span className="text-[8px] font-bold truncate italic">{ev.subject}</span>
+                                                    <div className="flex gap-3 mt-1 pt-1 border-t border-gray-950/5">
+                                                        <div className="flex items-center gap-1 min-w-0">
+                                                            <BookOpen size={8} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[7px] font-bold truncate italic">{ev.subject}</span>
                                                         </div>
-                                                        <div className="flex items-center gap-1 overflow-hidden">
-                                                            <Users size={9} className="text-primary-600 shrink-0" />
-                                                            <span className="text-[8px] font-black truncate">{ev.teacherName}</span>
+                                                        <div className="flex items-center gap-1 min-w-0">
+                                                            <Users size={8} className="text-primary-600 shrink-0" />
+                                                            <span className="text-[7px] font-black truncate">{ev.teacherName}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -447,71 +441,58 @@ export const Schedule = () => {
                                                 setEnrollData({...enrollData, day: mobileActiveDay, hour: String(slot.hour), period: slot.period}); 
                                                 setShowAddModal(true); 
                                             }}
-                                            className="group flex items-center justify-center h-14 border-2 border-dashed border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer rounded-none active:bg-emerald-100"
+                                            className="h-10 border border-dashed border-gray-200 flex items-center justify-center gap-1.5 text-gray-300"
                                         >
-                                            <div className="flex items-center gap-2 text-gray-300 group-hover:text-emerald-500">
-                                                <Plus size={12} />
-                                                <span className="text-[10px] uppercase font-black tracking-widest italic leading-none">متاح</span>
-                                            </div>
+                                            <Plus size={10} />
+                                            <span className="text-[8px] font-black uppercase italic">متاح</span>
                                         </div>
                                     )}
                                 </div>
                             </div>
-                        )
+                        );
                     })}
                 </div>
             </div>
 
             {/* Modals */}
             {showDetails && selectedEvent && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-sm animate-in fade-in">
-                    <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black] overflow-hidden transform animate-in zoom-in-95">
-                        <div className="p-5 bg-primary-600 text-white flex justify-between items-center border-b-4 border-gray-950">
-                            <h3 className="text-lg font-black italic">تفاصيل الحصة</h3>
-                            <button onClick={() => setShowDetails(false)} className="bg-white text-gray-950 w-8 h-8 flex items-center justify-center border-2 border-gray-950 font-black text-xl">&times;</button>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-sm">
+                    <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black] overflow-hidden">
+                        <div className="p-4 bg-primary-600 text-white flex justify-between items-center border-b-2 border-gray-950">
+                            <h3 className="text-base font-black italic">تفاصيل الحصة</h3>
+                            <button onClick={() => setShowDetails(false)} className="text-white text-2xl">&times;</button>
                         </div>
-                        <div className="p-6 space-y-6 font-black text-right">
+                        <div className="p-5 space-y-4 font-black">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-gray-50 border-2 border-gray-950 flex items-center justify-center text-gray-900 shadow-[2px_2px_0px_0px_black]"><User size={24} /></div>
+                                <div className="w-10 h-10 bg-gray-100 flex items-center justify-center text-gray-900 border border-gray-950"><User size={20} /></div>
                                 <div>
-                                    <h4 className="text-lg font-black text-gray-950">{selectedEvent.studentName}</h4>
-                                    <p className="text-[10px] text-primary-600 uppercase tracking-widest">{selectedEvent.studentGrade}</p>
+                                    <h4 className="text-base font-black">{selectedEvent.studentName}</h4>
+                                    <p className="text-[10px] text-gray-400">{selectedEvent.studentGrade}</p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-4 bg-gray-50 border-2 border-gray-950 p-4 shadow-inner text-xs">
-                                {[{ label: 'المادة', val: selectedEvent.subject, icon: BookOpen }, { label: 'المعلمة', val: selectedEvent.teacherName, icon: Users }, { label: 'اليوم', val: selectedEvent.day, icon: Calendar }, { label: 'الوقت', val: selectedEvent.time, icon: Clock }].map((item, i) => (
-                                    <div key={i}>
-                                        <label className="text-[8px] text-gray-400 uppercase mb-0.5 block">{item.label}</label>
-                                        <p className="flex items-center gap-1.5"><item.icon size={12} className="text-primary-600" />{item.val}</p>
-                                    </div>
-                                ))}
+                            <div className="grid grid-cols-2 gap-3 bg-gray-50 border border-gray-950 p-3 text-[10px]">
+                                <div><span className="text-gray-400 block mb-0.5">المادة</span><p>{selectedEvent.subject}</p></div>
+                                <div><span className="text-gray-400 block mb-0.5">المعلمة</span><p>{selectedEvent.teacherName}</p></div>
+                                <div><span className="text-gray-400 block mb-0.5">اليوم</span><p>{selectedEvent.day}</p></div>
+                                <div><span className="text-gray-400 block mb-0.5">الوقت</span><p>{selectedEvent.time}</p></div>
                             </div>
-                            
                             {currentUser?.role === 'teacher' && (
                                 <button 
                                     onClick={() => {
                                         const socket = (window as any).socket;
-                                        if (socket && socket.connected) {
-                                            console.log("🚀 Sending call to server for student:", selectedEvent.studentId);
-                                            socket.emit('call_student', {
-                                                studentId: String(selectedEvent.studentId),
-                                                subject: selectedEvent.subject,
-                                                type: 'video'
-                                            });
+                                        if (socket?.connected) {
+                                            socket.emit('call_student', { studentId: String(selectedEvent.studentId), subject: selectedEvent.subject, type: 'video' });
                                             navigate(`/classroom/${selectedEvent.studentId}`);
                                         } else {
-                                            alert("⚠️ تنبيه: نظام الاتصال المباشر غير متصل حالياً. يرجى تحديث الصفحة والمحاولة مرة أخرى.");
-                                            console.error("Socket not connected or not found");
+                                            alert("⚠️ نظام الاتصال غير متصل.");
                                         }
                                     }}
-                                    className="w-full bg-primary-600 text-white py-4 font-black uppercase text-xs border-4 border-gray-950 shadow-[6px_6px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2 group"
+                                    className="w-full bg-primary-600 text-white py-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] font-black text-xs flex items-center justify-center gap-2"
                                 >
-                                    <Video size={18} className="group-hover:animate-pulse" />
-                                    بدء الحصة المباشرة الآن
+                                    <Video size={16} /> بدء الحصة المباشرة
                                 </button>
                             )}
-                            
-                            <button onClick={() => setShowDetails(false)} className="w-full bg-gray-950 text-white py-3 font-black uppercase text-[10px] hover:bg-gray-800 transition-colors">إغلاق</button>
+                            <button onClick={() => setShowDetails(false)} className="w-full bg-gray-950 text-white py-2.5 font-black text-[10px]">إغلاق</button>
                         </div>
                     </div>
                 </div>
@@ -519,26 +500,18 @@ export const Schedule = () => {
 
             {showAddModal && (
                 <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-sm">
-                    <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black] animate-in zoom-in-95 font-black text-right">
-                        <div className="p-5 bg-emerald-600 text-white flex justify-between items-center border-b-4 border-gray-950">
-                            <h3 className="text-lg font-black italic">حجز جديد</h3>
-                            <button onClick={() => setShowAddModal(false)} className="bg-white text-gray-950 w-8 h-8 flex items-center justify-center border-2 border-gray-950">&times;</button>
-                        </div>
-                        <form onSubmit={handleQuickEnroll} className="p-6 space-y-6">
-                            <div className="bg-yellow-50 border-2 border-gray-950 p-3 text-[10px]">
-                                <p className="text-gray-400 mb-0.5 uppercase">الموعد المختـار</p>
-                                <p className="text-sm font-black">{enrollData.day} — {enrollData.hour}:00 {enrollData.period === 'am' ? 'ص' : 'م'}</p>
-                            </div>
-                            <div className="space-y-4">
-                                <select required value={enrollData.studentId} onChange={e => setEnrollData({...enrollData, studentId: e.target.value})} className="w-full border-2 border-gray-950 p-2.5 font-bold text-xs outline-none bg-white">
+                    <div className="bg-white border-4 border-gray-950 w-full max-w-sm shadow-[10px_10px_0px_0px_black]">
+                        <form onSubmit={handleQuickEnroll} className="p-5 space-y-4">
+                            <h3 className="text-base font-black border-b-2 border-gray-950 pb-2">حجز موعد</h3>
+                            <div className="space-y-3">
+                                <select required value={enrollData.studentId} onChange={e => setEnrollData({...enrollData, studentId: e.target.value})} className="w-full border-2 border-gray-950 p-2 font-bold text-xs bg-white outline-none">
                                     <option value="">-- اختر الطالب --</option>
-                                    {students.map(s => <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>)}
+                                    {students.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                                 </select>
-                                <input type="text" placeholder="المادة..." value={enrollData.subject} onChange={e => setEnrollData({...enrollData, subject: e.target.value})} className="w-full border-2 border-gray-950 p-2.5 font-bold text-xs outline-none" />
+                                <input type="text" placeholder="المادة..." value={enrollData.subject} onChange={e => setEnrollData({...enrollData, subject: e.target.value})} className="w-full border-2 border-gray-950 p-2 font-bold text-xs outline-none" />
                             </div>
-                            <button type="submit" className="w-full bg-emerald-600 text-white py-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] font-black uppercase text-xs flex items-center justify-center gap-2">
-                                <CheckCircle2 size={16} /> تأكيد الحجز
-                            </button>
+                            <button type="submit" className="w-full bg-emerald-600 text-white py-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] font-black text-xs">تأكيد الحجز</button>
+                            <button type="button" onClick={() => setShowAddModal(false)} className="w-full text-center text-[10px] font-black">إلغاء</button>
                         </form>
                     </div>
                 </div>
