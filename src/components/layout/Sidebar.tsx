@@ -98,7 +98,7 @@ export const Sidebar = () => {
         // Student specific access
         if (currentUser.role === 'student') {
             if (item.id === 'dashboard') return false;
-            if (['student_dashboard', 'chat', 'forum'].includes(item.id)) return true;
+            if (['student_dashboard', 'chat', 'forum', 'parent_announcements'].includes(item.id)) return true;
         }
 
         // Explicitly allow Dashboard for Teachers
@@ -249,9 +249,9 @@ export const Sidebar = () => {
             </div>
 
             {/* Mobile Bottom Navigation - Redesigned to match image */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-4 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
                 {[
-                    ...filteredNavigation.slice(0, 3)
+                    ...filteredNavigation.slice(0, 4)
                 ].map((item) => (
                     <NavLink
                         key={`mobile-${item.href}-${item.id}`}

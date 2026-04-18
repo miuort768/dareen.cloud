@@ -64,7 +64,7 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   if (permission && currentUser) {
     const hasExplicitPermission = currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission);
     const isParentAccess = currentUser.role === 'parent' && (permission.startsWith('parent_') || permission === 'parent_announcements');
-    const isStudentAccess = currentUser.role === 'student' && permission.startsWith('student_');
+    const isStudentAccess = currentUser.role === 'student' && (permission.startsWith('student_') || permission === 'parent_announcements');
     const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard';
 
     if (!hasExplicitPermission && !isParentAccess && !isStudentAccess && !isTeacherDashboard) {
