@@ -71,9 +71,9 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-[75px] lg:h-[80px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500 overflow-hidden">
-            {/* Edge Design Accent - Slanted Side */}
-            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 -skew-x-[25deg] -translate-x-20 lg:hidden" />
+        <header className="h-[75px] lg:h-[80px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500">
+            {/* Edge Design Accent - Wide Curved Side */}
+            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 rounded-br-[80px] lg:hidden" />
             <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent" />
             <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50" />
 
