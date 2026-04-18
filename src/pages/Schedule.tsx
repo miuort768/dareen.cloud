@@ -215,9 +215,9 @@ export const Schedule = () => {
     if (loading) return <div className="p-20 text-center font-black animate-pulse text-gray-400">جاري تحميل الجدول...</div>;
 
     return (
-        <div className="space-y-6 pb-24 animate-in fade-in duration-500 overflow-x-hidden px-4" dir="rtl">
+        <div className="space-y-4 pb-32 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
             {/* Master Header */}
-            <div className="relative bg-white border-2 border-gray-950 p-2.5 md:p-6 shadow-[3px_3px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group w-full mx-auto">
+            <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="flex items-center gap-2 md:gap-3 text-right">
@@ -239,14 +239,14 @@ export const Schedule = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full font-black">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 font-black">
                 {[
                     { label: 'الحصص', val: allEvents.length, icon: LayoutGrid, color: 'bg-blue-400' },
                     { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'bg-emerald-400' },
                     { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
                     { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white border-2 border-gray-950 p-1.5 md:p-3 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] flex items-center gap-1.5 overflow-hidden">
+                    <div key={i} className="bg-white border-2 border-gray-950 p-2 md:p-3 shadow-[2px_2px_0px_0px_black] flex items-center gap-2 overflow-hidden">
                         <div className={cn("w-6 h-6 md:w-8 md:h-8 border-2 border-gray-950 flex items-center justify-center text-gray-950 shadow-[1px_1px_0px_0px_black] shrink-0", stat.color)}>
                             <stat.icon size={11} className="md:size-[16px]" strokeWidth={3} />
                         </div>
@@ -259,7 +259,7 @@ export const Schedule = () => {
             </div>
 
             {/* Filter Bar */}
-            <div className="w-full bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] mx-auto">
+            <div className="bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black]">
                 <div className="w-full md:flex-1">
                     <div className="relative">
                         <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-950" size={13} />
@@ -358,9 +358,9 @@ export const Schedule = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="md:hidden space-y-4 px-0 font-black">
+            <div className="md:hidden space-y-4 font-black">
                 {/* Day Picker */}
-                <div className="flex overflow-x-auto gap-2 pb-2 sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 -mx-1 px-2">
+                <div className="flex overflow-x-auto gap-2 pb-2 sticky top-0 z-20 bg-gray-50/95 backdrop-blur-md pt-2 px-1">
                     {DAYS_OF_WEEK.map(day => {
                         const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                         return (
