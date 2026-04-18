@@ -151,12 +151,12 @@ export const Forum = () => {
                 {/* 🖊️ Post Creation Box (FB Style) */}
                 <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-3 md:p-4 shadow-sm md:rounded-lg">
                     <div className="flex gap-2 md:gap-3 items-center mb-3 md:mb-4">
-                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
+                        <div className="w-10 h-10 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
                             <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                         </div>
                         <button 
                             onClick={() => document.getElementById('new-post-input')?.focus()}
-                            className="flex-1 bg-[#ff6b6b] hover:bg-[#ff5252] px-4 py-3 text-right text-gray-950 font-black text-sm transition-all border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] active:translate-x-0.5 active:translate-y-0.5"
+                            className="flex-1 bg-[#ff6b6b] hover:bg-[#ff5252] px-4 py-3 text-right text-gray-950 font-black text-sm transition-all"
                         >
                             بم تفكر يا {currentUser?.name?.split(' ')[0]}؟
                         </button>
@@ -203,7 +203,7 @@ export const Forum = () => {
                                     {/* FB Header */}
                                     <div className="p-3 md:p-4 flex justify-between items-center">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
+                                            <div className="w-10 h-10 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
                                                 <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                             </div>
                                             <div>
@@ -224,15 +224,27 @@ export const Forum = () => {
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            {post.status === 'pending' && (
-                                                <div className="flex flex-col items-end gap-1">
-                                                    <span className="text-[8px] md:text-[9px] font-black bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5 animate-pulse">قيد المراجعة - تظهر لك فقط</span>
-                                                    {isAdmin && <span className="text-[7px] text-gray-400">تحتاج موافقة</span>}
+                                            {post.status === 'pending' && isAdmin && (
+                                                <span className="text-[9px] font-black bg-amber-100 text-amber-700 border border-amber-300 px-2 py-0.5">يحتاج موافقة</span>
+                                            )}
+                                            {post.status === 'pending' && currentUser?.id === post.authorId && !isAdmin && (
+                                                <span className="text-[8px] font-black bg-slate-100 text-slate-500 px-2 py-0.5 italic">بانتظار مراجعة الإدارة</span>
+                                            )}
+                                            
+                                            {isAdmin && (
+                                                <div className="flex items-center gap-1">
+                                                    <button 
+                                                        onClick={() => handleDeletePost(post.id)}
+                                                        className="text-rose-500 hover:bg-rose-50 p-1.5 transition-colors border border-transparent hover:border-rose-200"
+                                                        title="حذف"
+                                                    >
+                                                        <AlertTriangle size={15} />
+                                                    </button>
+                                                    <button className="text-slate-400 hover:bg-slate-100 p-1.5 transition-colors">
+                                                        <MoreHorizontal size={18} />
+                                                    </button>
                                                 </div>
                                             )}
-                                            <button className="text-slate-400 hover:bg-slate-100 p-1.5 transition-colors">
-                                                <MoreHorizontal size={18} />
-                                            </button>
                                         </div>
                                     </div>
 
@@ -277,7 +289,7 @@ export const Forum = () => {
                                             <div className="space-y-3">
                                                 {post.comments?.map(comment => (
                                                     <div key={comment.id} className="flex gap-2">
-                                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
+                                                        <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
                                                             <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                         </div>
                                                         <div className="flex-1">
@@ -300,7 +312,7 @@ export const Forum = () => {
 
                                             {/* FB Add Comment Input */}
                                             <div className="flex gap-2 items-center">
-                                                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
+                                                <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
                                                     <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                 </div>
                                                 <div className="flex-1 relative">

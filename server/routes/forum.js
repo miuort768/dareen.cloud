@@ -12,10 +12,9 @@ router.get('/', async (req, res) => {
         `;
         let params = [];
 
-        // If not admin, only show approved posts or posts created by the user themselves
+        // If not admin, only show approved posts
         if (user.role !== 'admin') {
-            query += ' WHERE p.status = "approved" OR p.authorId = ?';
-            params.push(user.id);
+            query += ' WHERE p.status = "approved"';
         }
 
         query += ' ORDER BY p.created_at DESC';
