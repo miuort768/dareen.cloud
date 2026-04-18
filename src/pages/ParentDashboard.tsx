@@ -214,10 +214,10 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ SUCCESS ADVISOR ═══════════════ */}
-            <div className="py-2 space-y-6">
+            {/* ═══════════════ SUCCESS ADVISOR (Neon Green Styled) ═══════════════ */}
+            <div className="py-6 px-4 space-y-6 border-2 border-dashed border-emerald-400/30 dark:border-emerald-500/20 shadow-[0_0_15px_rgba(52,211,153,0.15)] rounded-none bg-emerald-50/5 dark:bg-emerald-900/5 transition-all">
                 <div className="flex items-center gap-2 mb-2 px-1">
-                    <Activity className="text-indigo-600 dark:text-indigo-400" size={18} />
+                    <Activity className="text-emerald-500 dark:text-emerald-400" size={18} />
                     <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مستشار الإنجاز</h3>
                 </div>
 
