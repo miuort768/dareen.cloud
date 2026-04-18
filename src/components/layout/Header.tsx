@@ -45,8 +45,11 @@ export const Header = () => {
                 return { title: 'المحادثات', subtitle: 'التواصل المباشر مع أولياء الأمور والمعلمات.' };
             case '/reports':
                 return { title: 'التقارير', subtitle: 'التقارير والإحصائيات العامة للمدرسة.' };
+            case '/forum':
+                return { title: 'منتدى دارين', subtitle: 'مساحة لمشاركة الأفكار والنقاشات الهادفة.' };
             case '/settings':
                 return { title: 'الإعدادات', subtitle: 'تكوين إعدادات النظام.' };
+
             case '/parent-dashboard':
                 return { title: 'لوحة التحكم', subtitle: 'نظرة عامة على أداء أبنائك.' };
             case '/parent-students':
