@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
     Users,
-    Calendar,
     Receipt,
     CalendarDays,
     Headset,
@@ -13,14 +12,10 @@ import {
     Trophy,
     User,
     LogOut,
-    ExternalLink,
-    ChevronLeft
+    ExternalLink
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
-import { cn } from '../lib/utils';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone, logout } = useApp();
@@ -250,7 +245,7 @@ export const ParentDashboard = () => {
     );
 };
 
-const PortalNavCard = ({ title, subtitle, icon: Icon, color, onClick, badge }: any) => {
+const PortalNavCard = ({ title, subtitle, icon: Icon, onClick, badge }: any) => {
     return (
         <motion.div
             whileHover={{ y: -10, scale: 1.02 }}
