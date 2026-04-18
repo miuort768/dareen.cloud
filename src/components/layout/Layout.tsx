@@ -20,8 +20,8 @@ export const Layout = () => {
             <div className="flex-1 flex flex-col transition-all duration-300">
                 {!isChatOnly && <Header />}
                 <main className={cn(
-                    "flex-1 overflow-y-auto custom-scrollbar relative",
-                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "px-3 pt-0 md:p-5 lg:p-8 pb-28 lg:pb-8"
+                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full",
+                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "px-4 pt-1 md:p-5 lg:p-8 pb-32 lg:pb-8"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(

@@ -218,7 +218,7 @@ export const Schedule = () => {
     return (
         <div className="space-y-6 pb-20 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
             {/* Master Header */}
-            <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[4px_4px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group mx-1 md:mx-4">
+            <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[3px_3px_0px_0px_#2563eb] md:shadow-[10px_10px_0px_0px_#2563eb] overflow-hidden group mx-0.5 md:mx-4">
                 <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10"></div>
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="flex items-center gap-2 md:gap-3 text-right">
@@ -240,25 +240,27 @@ export const Schedule = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-1 md:px-4 font-black">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-0.5 md:px-4 font-black">
                 {[
-                    { label: 'إجمالي الحصص', val: allEvents.length, icon: LayoutGrid, color: 'bg-blue-400' },
-                    { label: 'طلاب محددون', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'bg-emerald-400' },
-                    { label: 'مواد مفعّلة', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
-                    { label: 'اليوم النشط', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
+                    { label: 'الحصص', val: allEvents.length, icon: LayoutGrid, color: 'bg-blue-400' },
+                    { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'bg-emerald-400' },
+                    { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
+                    { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white border-2 border-gray-950 p-2 md:p-3 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black]">
-                        <div className={cn("w-6 h-6 md:w-8 md:h-8 border-2 border-gray-950 flex items-center justify-center text-gray-950 mb-1.5 md:mb-2 shadow-[1px_1px_0px_0px_black]", stat.color)}>
-                            <stat.icon size={12} className="md:size-[16px]" strokeWidth={3} />
+                    <div key={i} className="bg-white border-2 border-gray-950 p-1.5 md:p-3 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] flex items-center gap-2">
+                        <div className={cn("w-6 h-6 md:w-8 md:h-8 border-2 border-gray-950 flex items-center justify-center text-gray-950 shadow-[1px_1px_0px_0px_black] shrink-0", stat.color)}>
+                            <stat.icon size={11} className="md:size-[16px]" strokeWidth={3} />
                         </div>
-                        <p className="text-[7px] md:text-[8px] font-black text-gray-400 uppercase mb-0.5">{stat.label}</p>
-                        <h3 className="text-xs md:text-base font-black text-gray-950 truncate">{stat.val}</h3>
+                        <div className="min-w-0">
+                            <p className="text-[7px] md:text-[8px] font-black text-gray-400 uppercase leading-none mb-0.5 truncate">{stat.label}</p>
+                            <h3 className="text-[10px] md:text-base font-black text-gray-950 truncate leading-none">{stat.val}</h3>
+                        </div>
                     </div>
                 ))}
             </div>
 
             {/* Filter Bar */}
-            <div className="mx-1 md:mx-4 bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black]">
+            <div className="mx-0.5 md:mx-4 bg-gray-50 border-2 border-gray-950 p-2 md:p-3 flex flex-col md:flex-row items-end gap-2 md:gap-3 no-print shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black]">
                 <div className="w-full md:flex-1">
                     <div className="relative">
                         <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-950" size={13} />
@@ -389,16 +391,19 @@ export const Schedule = () => {
                                 {/* Time Pillar */}
                                 <div className="flex flex-col items-center pt-2">
                                     <div className="bg-white border-[1.5px] border-gray-950 px-1.5 py-0.5 shadow-[1.5px_1.5px_0px_0px_black] text-[8px] font-black tracking-tighter whitespace-nowrap mb-1.5">
+                                <div className="flex flex-col items-center pt-1">
+                                    <div className="bg-white border-[1.5px] border-gray-950 px-1 py-0.5 shadow-[1.5px_1.5px_0px_0px_black] text-[7px] font-black tracking-tighter whitespace-nowrap mb-1">
                                         {slot.label}
                                     </div>
-                                    <div className="w-[1.5px] h-full min-h-[45px] bg-gray-200 relative">
-                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-950 rounded-full border-2 border-white shadow-sm" />
+                                    <div className="w-[1.5px] h-full min-h-[40px] bg-gray-200 relative">
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-gray-950 rounded-full border border-white shadow-sm" />
                                     </div>
                                 </div>
-
-                                {/* Sessions Content - Optimized for mobile width */}
-                                <div className="space-y-3 pb-2 pl-2 md:pl-6 min-w-0">
-                                    {events.length > 0 ? (
+                                <main className={cn(
+                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative",
+                    (isChatOnly || location.pathname.includes('/chat')) ? "p-0" : "px-4 pt-1 md:px-5 lg:px-8 pb-32 lg:pb-8"
+                )}>
+                    {events.length > 0 ? (
                                         events.map(ev => {
                                             const style = getTeacherStyle(ev.teacherName);
                                             return (
