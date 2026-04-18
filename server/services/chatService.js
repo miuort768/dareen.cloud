@@ -16,8 +16,9 @@ class ChatService {
         const teachers = await this.db.all('SELECT id, name, username, "teacher" as type FROM teachers WHERE username IS NOT NULL');
         const admins = await this.db.all('SELECT id, name, username, "admin" as type FROM users');
         const parents = await this.db.all('SELECT id, name, username, "parent" as type FROM parents WHERE username IS NOT NULL');
+        const students = await this.db.all('SELECT id, name, username, "student" as type FROM students WHERE username IS NOT NULL');
         const chatProfiles = await this.db.all('SELECT id, name, username, "chat_user" as type FROM chat_profiles');
-        return [...teachers, ...admins, ...parents, ...chatProfiles];
+        return [...teachers, ...admins, ...parents, ...students, ...chatProfiles];
     }
 
     async getConversations(userId) {
@@ -27,7 +28,7 @@ class ChatService {
                 c.*, 
                 CASE 
                     WHEN c.isGroup = 1 THEN c.name 
-                    ELSE COALESCE(other_u.name, other_t.name, other_p.name, other_cp.name, c.name, 'Unknown User') 
+                    ELSE COALESCE(other_u.name, other_t.name, other_p.name, other_s.name, other_cp.name, c.name, 'Unknown User') 
                 END as displayName,
                 (SELECT content FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessage,
                 (SELECT timestamp FROM messages WHERE conversationId = c.id ORDER BY timestamp DESC LIMIT 1) as lastMessageTime,
@@ -40,6 +41,7 @@ class ChatService {
             LEFT JOIN users other_u ON cm_other.userId = other_u.id
             LEFT JOIN teachers other_t ON cm_other.userId = other_t.id
             LEFT JOIN parents other_p ON cm_other.userId = other_p.id
+            LEFT JOIN students other_s ON cm_other.userId = other_s.id
             LEFT JOIN chat_profiles other_cp ON cm_other.userId = other_cp.id
             GROUP BY c.id
             ORDER BY lastMessageTime DESC
