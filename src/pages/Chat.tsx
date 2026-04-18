@@ -47,6 +47,15 @@ export const Chat: React.FC = () => {
     const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    const openGroupSettings = () => {
+        if (!selectedConv || !selectedConv.isGroup) return;
+        setGroupName(selectedConv.displayName || '');
+        setSelectedUsers(selectedConv.members || []);
+        setIsEditingGroup(true);
+        setIsCreatingGroup(true);
+        setShowNewChatModal(true);
+    };
+
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
         const content = newMessage.trim();
@@ -74,6 +83,7 @@ export const Chat: React.FC = () => {
             setSelectedUsers([]);
             setIsCreatingGroup(false);
             setIsEditingGroup(false);
+            refetchConversations();
         } catch (err) {
             console.error('Failed to save group:', err);
         }
@@ -113,8 +123,8 @@ export const Chat: React.FC = () => {
     return (
         <div className={cn(
             "flex overflow-hidden bg-[#f0f2f5] dark:bg-[#0b141a]",
-            "fixed inset-0 z-50 lg:static lg:z-auto",
-            "h-[100dvh] lg:h-full lg:p-4 lg:gap-0"
+            "relative z-10",
+            "h-[calc(100vh-64px)] lg:h-[calc(100vh-100px)] lg:p-4 lg:gap-0"
         )}>
             <div className="flex w-full h-full max-w-[1600px] mx-auto shadow-2xl overflow-hidden bg-white dark:bg-[#111b21] lg:rounded-md border border-gray-200 dark:border-gray-800 relative z-10">
                 <ChatSidebar
@@ -138,7 +148,7 @@ export const Chat: React.FC = () => {
                         isSending={isSending}
                         currentUser={currentUser}
                         setSelectedConv={setSelectedConv}
-                        openGroupSettings={() => {}}
+                        openGroupSettings={openGroupSettings}
                         confirmDeleteConversation={(conv: Conversation) => {
                             setDeleteType('conversation');
                             setItemToDelete(conv);

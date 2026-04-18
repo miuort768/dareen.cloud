@@ -126,48 +126,58 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
-                    <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
-                        <Video size={20} />
-                    </button>
-                    <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
-                        <Phone size={20} />
-                    </button>
-                    <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-1 hidden sm:block" />
-                    <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
-                        <Search size={20} />
-                    </button>
-                    <div className="relative" ref={menuRef}>
-                        <button
-                            onClick={() => setShowMoreMenu(!showMoreMenu)}
-                            className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors"
-                        >
-                            <MoreVertical size={20} />
+                {currentUser?.role === 'admin' && (
+                    <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
+                        <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
+                            <Video size={20} />
                         </button>
-                        <AnimatePresence>
-                            {showMoreMenu && (
-                                <motion.div 
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#233138] shadow-xl z-[100] py-2 rounded-md"
-                                >
-                                    <button
-                                        onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                        className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
+                        <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
+                            <Phone size={20} />
+                        </button>
+                        <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-1 hidden sm:block" />
+                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
+                            <Search size={20} />
+                        </button>
+                        <div className="relative" ref={menuRef}>
+                            <button
+                                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                                className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors"
+                            >
+                                <MoreVertical size={20} />
+                            </button>
+                            <AnimatePresence>
+                                {showMoreMenu && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#233138] shadow-xl z-[100] py-2 rounded-md"
                                     >
-                                        معلومات المحادثة
-                                    </button>
-                                    <button
-                                        onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
-                                        className="w-full text-right px-4 py-3 text-sm text-rose-500 hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
-                                    >
-                                        حذف الدردشة
-                                    </button>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                                        <button
+                                            onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
+                                            className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
+                                        >
+                                            معلومات المحادثة
+                                        </button>
+                                        {selectedConv.isGroup && (
+                                            <button
+                                                onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
+                                                className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors font-bold"
+                                            >
+                                                تعديل المجموعة
+                                            </button>
+                                        )}
+                                        <button
+                                            onClick={() => { confirmDeleteConversation(selectedConv); setShowMoreMenu(false); }}
+                                            className="w-full text-right px-4 py-3 text-sm text-rose-500 hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors"
+                                        >
+                                            حذف الدردشة
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
-                </div>
+                )}
             </header>
 
             {/* Messages - WhatsApp Bubbles */}

@@ -58,28 +58,30 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2 text-[#54656f] dark:text-[#aebac1]">
-                    <button 
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
-                        title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                    >
-                        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                    </button>
                     {currentUser?.role === 'admin' && (
-                        <button 
-                            onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
-                            className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
-                        >
-                            <MessageSquarePlus size={22} />
-                        </button>
+                        <>
+                            <button 
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+                            >
+                                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                            </button>
+                            <button 
+                                onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
+                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                            >
+                                <MessageSquarePlus size={22} />
+                            </button>
+                            <button 
+                                onClick={logout}
+                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors text-rose-500"
+                                title="خروج"
+                            >
+                                <LogOut size={22} />
+                            </button>
+                        </>
                     )}
-                    <button 
-                        onClick={logout}
-                        className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors text-rose-500"
-                        title="خروج"
-                    >
-                        <LogOut size={22} />
-                    </button>
                 </div>
             </div>
 
