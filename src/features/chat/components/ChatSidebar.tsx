@@ -48,12 +48,16 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         )}>
             <div className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] px-4 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm shrink-0">
                         <img 
                             src="/chat-avatar.jpg" 
                             alt="avatar" 
                             className="w-full h-full object-cover" 
                         />
+                    </div>
+                    <div className="flex flex-col text-right">
+                        <span className="text-sm font-bold text-[#111b21] dark:text-[#e9edef] leading-tight">واتساب دارين</span>
+                        <span className="text-[10px] font-thin text-[#667781] dark:text-[#8696a0]">تواصل أسهل وأسرع</span>
                     </div>
                 </div>
 
@@ -86,7 +90,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             </div>
 
             <div className="p-2 bg-white dark:bg-[#111b21] border-b border-gray-100 dark:border-gray-800">
-                <div className="relative flex items-center bg-[#FF7B7B] rounded-lg px-3 py-1.5 focus-within:shadow-md transition-shadow">
+                <div className="relative flex items-center bg-[#FF7B7B] rounded-lg px-3 py-1.5 border-none outline-none shadow-none">
                     <Search className="text-black" size={18} />
                     <input
                         type="text"
