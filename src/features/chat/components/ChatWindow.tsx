@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { 
     Send, MoreVertical, ChevronRight, 
-    CheckCheck, ArrowDown, Search,
-    Video, Phone
+    CheckCheck, ArrowDown, Search
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
