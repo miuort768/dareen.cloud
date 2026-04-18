@@ -100,20 +100,20 @@ export const ParentStudents = () => {
 
     return (
         <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 -mx-3 md:mx-0 p-3 md:p-0 bg-slate-50 md:bg-transparent dark:bg-slate-900/40">
                 <div>
-                    <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">قائمة الأبناء</h1>
-                    <p className="text-sm text-gray-500 font-bold dark:text-gray-400">إدارة ومتابعة التفاصيل الدراسية لكل ابن</p>
+                    <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-1">قائمة الأبناء</h1>
+                    <p className="text-[10px] md:text-sm text-gray-500 font-bold dark:text-gray-400 uppercase tracking-widest leading-none">إدارة ومتابعة التفاصيل الدراسية</p>
                 </div>
 
                 <div className="relative group w-full md:w-72">
-                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500 transition-colors" size={18} />
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-500 transition-colors" size={16} />
                     <input
                         type="text"
                         placeholder="بحث عن ابن..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pr-10 pl-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:outline-none focus:border-primary-500 font-bold transition-all text-sm"
+                        className="w-full pr-9 pl-4 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:outline-none focus:border-primary-500 font-bold transition-all text-xs"
                     />
                 </div>
             </div>
@@ -122,22 +122,22 @@ export const ParentStudents = () => {
                 {filteredStudents.map((student: any) => (
                     <div key={student.id} className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden group hover:border-primary-500 transition-all duration-300 flex flex-col">
                         {/* Kid Profile Header */}
-                        <div className="bg-gray-900 p-6 relative overflow-hidden">
+                        <div className="bg-gray-900 p-4 md:p-6 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-24 h-24 bg-primary-600/10 -translate-y-12 translate-x-12 rotate-45 group-hover:scale-110 transition-transform"></div>
-                            <div className="relative z-10 flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-14 h-14 bg-white/10 flex items-center justify-center text-white border border-white/20">
-                                        <User size={28} />
+                            <div className="relative z-10 flex items-center justify-between gap-3">
+                                <div className="flex items-center gap-3 md:gap-4">
+                                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white/10 flex items-center justify-center text-white border border-white/20 shrink-0">
+                                        <User size={20} className="md:size-[28px]" />
                                     </div>
-                                    <div>
-                                        <h3 className="text-lg font-black text-white leading-tight">{student.name}</h3>
-                                        <p className="text-primary-400 text-[10px] font-black uppercase tracking-widest mt-1">{student.grade || 'غير محدد'}</p>
+                                    <div className="min-w-0">
+                                        <h3 className="text-base md:text-lg font-black text-white leading-tight truncate">{student.name}</h3>
+                                        <p className="text-primary-400 text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-0.5">{student.grade || 'غير محدد'}</p>
                                     </div>
                                 </div>
                                 {Number(student.totalPoints) > 0 && (
-                                    <div className="flex flex-col items-center gap-1 bg-yellow-400 text-black px-2 py-1 shadow-lg transform rotate-2">
-                                        <Star size={16} className="fill-current" />
-                                        <span className="text-[10px] font-black">{student.totalPoints}</span>
+                                    <div className="flex flex-col items-center gap-0.5 bg-yellow-400 text-black px-1.5 py-1 shadow-lg transform rotate-2 shrink-0">
+                                        <Star size={12} className="fill-current md:size-[16px]" />
+                                        <span className="text-[9px] font-black">{student.totalPoints}</span>
                                     </div>
                                 )}
                             </div>
@@ -145,15 +145,15 @@ export const ParentStudents = () => {
 
                         {/* Kid Rapid Metrics */}
                         <div className="grid grid-cols-2 border-b border-gray-50 dark:border-gray-800">
-                            <div className="p-4 flex flex-col items-center justify-center border-l border-gray-50 dark:border-gray-800">
-                                <BookOpen size={16} className="text-primary-500 mb-1" />
-                                <span className="text-[10px] font-black text-gray-400 uppercase">المواد</span>
-                                <span className="text-lg font-black text-gray-900 dark:text-white">{(student.enrollments || []).length}</span>
+                            <div className="p-3 md:p-4 flex flex-col items-center justify-center border-l border-gray-50 dark:border-gray-800">
+                                <BookOpen size={14} className="text-primary-500 mb-0.5 md:mb-1 md:size-[16px]" />
+                                <span className="text-[8px] md:text-[10px] font-black text-gray-400 uppercase">المواد</span>
+                                <span className="text-base md:text-lg font-black text-gray-900 dark:text-white">{(student.enrollments || []).length}</span>
                             </div>
-                            <div className="p-4 flex flex-col items-center justify-center">
-                                <TrendingUp size={16} className="text-emerald-500 mb-1" />
-                                <span className="text-[10px] font-black text-gray-400 uppercase">نسبة الحضور</span>
-                                <span className="text-lg font-black text-emerald-600">
+                            <div className="p-3 md:p-4 flex flex-col items-center justify-center">
+                                <TrendingUp size={14} className="text-emerald-500 mb-0.5 md:mb-1 md:size-[16px]" />
+                                <span className="text-[8px] md:text-[10px] font-black text-gray-400 uppercase">الالتزام</span>
+                                <span className="text-base md:text-lg font-black text-emerald-600">
                                     {(() => {
                                         const enrolled = student.enrollments || [];
                                         if (enrolled.length === 0) return '0%';
@@ -204,26 +204,26 @@ export const ParentStudents = () => {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="p-6 pt-0 mt-auto grid grid-cols-1 gap-2">
+                        <div className="p-4 md:p-6 pt-0 mt-auto flex flex-col gap-2">
                             <div className="grid grid-cols-2 gap-2">
                                 <button
                                     onClick={() => handleViewDates(student)}
-                                    className="py-2.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center justify-center gap-2"
+                                    className="py-2.5 bg-gray-900 text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-black transition-all flex items-center justify-center gap-1.5 md:gap-2"
                                 >
-                                    <Calendar size={14} />
+                                    <Calendar size={13} className="md:size-[14px]" />
                                     حصص الطالب
                                 </button>
                                 <button
                                     onClick={() => handleViewAttendance(student)}
-                                    className="py-2.5 bg-white border-2 border-gray-950 text-gray-900 text-[10px] font-black uppercase tracking-widest hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                                    className="py-2.5 bg-white border-2 border-gray-950 text-gray-900 text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-gray-50 transition-all flex items-center justify-center gap-1.5 md:gap-2"
                                 >
-                                    <TrendingUp size={14} />
+                                    <TrendingUp size={13} className="md:size-[14px]" />
                                     نسبة الحضور
                                 </button>
                             </div>
                             <button
                                 onClick={() => handleViewAchievements(student)}
-                                className="py-2.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
+                                className="py-2.5 bg-primary-600 text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
                             >
                                 <Trophy size={14} />
                                 عرض حصاد الإنجازات والأوسمة

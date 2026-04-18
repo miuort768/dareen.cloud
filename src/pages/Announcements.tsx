@@ -144,16 +144,16 @@ export const Announcements = () => {
         <div className="space-y-8 pb-32 animate-in fade-in slide-in-from-bottom-2 duration-700" dir="rtl">
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
-            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 lg:p-10 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
+            <div className="-mx-3 lg:mx-0 relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-10 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-5">
-                        <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 shadow-lg">
+                    <div className="flex items-center gap-3 md:gap-5">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 shadow-lg">
                             <div className="w-full h-full bg-slate-900/40 backdrop-blur-md flex items-center justify-center border border-white/20">
-                                <Megaphone size={24} className="text-white" strokeWidth={1.5} />
+                                <Megaphone size={18} className="text-white md:size-[24px]" strokeWidth={1.5} />
                             </div>
                         </div>
                         <div>
@@ -163,14 +163,14 @@ export const Announcements = () => {
                                     {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-emerald-500 animate-pulse" style={{ animationDelay: `${i*0.2}s` }} />)}
                                 </div>
                             </div>
-                            <h1 className="text-xl md:text-2xl font-black text-white italic tracking-tight uppercase leading-none">النشرة الإخبارية والتعميمات</h1>
+                            <h1 className="text-base md:text-2xl font-black text-white italic tracking-tight uppercase leading-none">النشرة والتعميمات</h1>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="bg-white/5 border border-white/10 px-4 py-2.5 flex items-center gap-3 backdrop-blur-xl">
-                            <span className="text-xl font-black text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
-                            <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-3">إعلانات نشطة<br/>بالمنصـة</span>
+                        <div className="bg-white/5 border border-white/10 px-3 py-2 flex items-center gap-2 backdrop-blur-xl shrink-0">
+                            <span className="text-lg md:text-xl font-black text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
+                            <span className="text-[6px] md:text-[7px] font-black text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-2 md:pr-3">نشطة<br/>بالمنصـة</span>
                         </div>
                         <button
                             onClick={() => {
@@ -178,24 +178,24 @@ export const Announcements = () => {
                                 setFormData({ title: '', content: '', type: 'general', isActive: true });
                                 setIsModalOpen(true);
                             }}
-                            className="bg-primary-600 text-white h-12 px-6 flex items-center justify-center gap-3 hover:bg-white hover:text-primary-600 transition-all font-black shadow-lg shadow-primary-500/20 group"
+                            className="bg-primary-600 text-white h-10 md:h-12 px-4 md:px-6 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-black shadow-lg group"
                         >
-                            <Plus size={18} className="group-hover:rotate-90 transition-transform" />
-                            <span className="text-[10px] uppercase tracking-[0.2em] font-black">إصدار تعميم</span>
+                            <Plus size={16} className="md:size-[18px] group-hover:rotate-90 transition-transform" />
+                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-black">إصدار تعميم</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             {/* ═══════════════ ANNOUNCEMENTS GRID ═══════════════ */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {announcements.map((ann) => {
                     const styles = getTypeStyles(ann.type);
                     return (
                         <div 
                             key={ann.id} 
                             className={cn(
-                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl relative flex flex-col",
+                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 md:p-5 transition-all duration-300 hover:shadow-2xl relative flex flex-col",
                                 !ann.isActive && "opacity-60 grayscale border-dashed"
                             )}
                         >
@@ -229,9 +229,9 @@ export const Announcements = () => {
                                     </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <h3 className="text-[17px] font-black text-slate-900 dark:text-white leading-tight italic tracking-tight uppercase group-hover:text-primary-600 transition-colors">{ann.title}</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 font-medium text-[11px] leading-relaxed line-clamp-4 border-r-2 border-slate-100 dark:border-slate-800 pr-3 italic">
+                                <div className="space-y-2 md:space-y-3">
+                                    <h3 className="text-sm md:text-[17px] font-black text-slate-900 dark:text-white leading-tight italic tracking-tight uppercase group-hover:text-primary-600 transition-colors">{ann.title}</h3>
+                                    <p className="text-slate-500 dark:text-slate-400 font-medium text-[10px] md:text-[11px] leading-relaxed line-clamp-4 border-r-2 border-slate-100 dark:border-slate-800 pr-2 md:pr-3 italic">
                                         {ann.content}
                                     </p>
                                 </div>
