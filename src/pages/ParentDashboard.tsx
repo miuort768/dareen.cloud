@@ -68,11 +68,20 @@ export const ParentDashboard = () => {
         const academicProgress = sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0;
         const upcomingSessions = sessions.filter(s => s.status !== 'completed' && s.status !== 'cancelled').length;
 
+        // Calculate unique teachers
+        const teachersSet = new Set();
+        children.forEach(c => {
+            (c.enrollments || []).forEach((en: any) => {
+                if (en.teacher) teachersSet.add(en.teacher);
+            });
+        });
+
         return {
             childCount: children.length,
             upcomingSessions,
             attendanceRate,
             academicProgress,
+            teacherCount: teachersSet.size,
             totalPoints: children.reduce((sum, c) => sum + (c.totalPoints || 0), 0)
         };
     }, [sessions, children]);
@@ -151,7 +160,7 @@ export const ParentDashboard = () => {
             <div className="grid grid-cols-3 gap-2 md:gap-4">
                 <QuickStatCard icon={Users} label="الأبناء" value={stats.childCount} color="indigo" />
                 <QuickStatCard icon={CalendarDays} label="الحصص" value={stats.upcomingSessions} color="blue" />
-                <QuickStatCard icon={Award} label="المعلمات" value={children.length > 0 ? "نشط" : "0"} color="rose" />
+                <QuickStatCard icon={Award} label="المعلمات" value={stats.teacherCount} color="rose" />
             </div>
 
             {/* ═══════════════ NAVIGATION GRID (Updated: Added Forum) ═══════════════ */}
