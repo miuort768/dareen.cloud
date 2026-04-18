@@ -127,7 +127,7 @@ export const ModernAnnouncements: React.FC = () => {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-slate-900/60 transition-all animate-in fade-in">
                     <div className="bg-white dark:bg-slate-950 border-2 border-slate-900 dark:border-white p-5 md:p-8 max-w-md w-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] relative animate-in slide-in-from-bottom-5">
                         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-                            <type.icon className={cn("shrink-0", type.color)} size={24} className="md:size-[32px]" />
+                            <type.icon size={24} className={cn("shrink-0 md:size-[32px]", type.color)} />
                             <div>
                                 <h3 className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">قمت برؤية التنبيه</h3>
                                 <p className="text-[8px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Acknowledgment of information</p>
