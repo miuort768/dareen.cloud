@@ -109,17 +109,37 @@ export const StudentDashboard = () => {
                 <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
                 
                 <div className="relative z-10 flex flex-col items-center text-center">
-                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-2">الحصة القادمة</span>
+                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-3">الحصة القادمة</span>
                     {todaySchedule.length > 0 ? (
-                        <>
-                            <h2 className="text-xl md:text-2xl font-black mb-1">{todaySchedule[0].slots[0].subject}</h2>
-                            <p className="text-sm font-bold opacity-90">اليوم الساعة {todaySchedule[0].slots[0].time} مساءً</p>
-                        </>
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="flex items-center gap-3">
+                                {/* Decorative Circles */}
+                                <div className="flex gap-1.5 grayscale opacity-60">
+                                    <div className="w-2 h-2 rounded-full border border-white" />
+                                    <div className="w-2 h-2 rounded-full border border-white" />
+                                </div>
+
+                                {/* Neon Subject Group */}
+                                <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center justify-center">
+                                    <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-md">
+                                        {todaySchedule[0].slots[0].subject}
+                                    </h2>
+                                </div>
+
+                                <div className="flex gap-1.5 grayscale opacity-60">
+                                    <div className="w-2 h-2 rounded-full border border-white" />
+                                    <div className="w-2 h-2 rounded-full border border-white" />
+                                </div>
+                            </div>
+                            <p className="text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                                اليوم الساعة {todaySchedule[0].slots[0].time} مساءً
+                            </p>
+                        </div>
                     ) : (
-                        <>
+                        <div className="flex flex-col items-center gap-2">
                             <h2 className="text-xl md:text-2xl font-black mb-1">لا توجد حصص مجدولة</h2>
                             <p className="text-sm font-bold opacity-90">استغل اليوم لمراجعة ما درسته!</p>
-                        </>
+                        </div>
                     )}
                 </div>
             </motion.div>
