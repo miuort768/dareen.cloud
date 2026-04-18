@@ -193,7 +193,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+            <div className="px-1">
                 <div className="flex items-center gap-2 mb-6">
                     <Activity className="text-[#8b5cf6]" size={20} />
                     <h3 className="text-lg font-black text-slate-900 dark:text-white">مستشار الإنجاز</h3>
@@ -282,7 +282,8 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-[32px] shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-lg shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+
 
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
                 
