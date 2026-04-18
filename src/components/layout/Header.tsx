@@ -1,4 +1,4 @@
-import { Moon, Sun, User } from 'lucide-react';
+import { Moon, Sun, User, GraduationCap, Sparkles } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
@@ -49,7 +49,7 @@ export const Header = () => {
             case '/forum':
                 return { title: 'منتدى دارين', subtitle: 'مساحة لمشاركة الأفكار والنقاشات الهادفة.' };
             case '/settings':
-                return { title: 'الإعدادات', subtitle: 'تكوين إعدادات النظام.' };
+                return { title: 'إعدادات النظام', subtitle: 'تكوين إعدادات النظام.' };
 
             case '/parent-dashboard':
                 return { title: 'لوحة التحكم', subtitle: 'نظرة عامة على أداء أبنائك.' };
@@ -81,22 +81,23 @@ export const Header = () => {
             "sticky top-2 lg:top-4 mx-auto w-[94%] rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.12)] px-4 lg:px-6"
         )}>
 
-            {/* Removed Edge Accents for Floating Design */}
-
-
-
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-3 lg:gap-6 flex-1 min-w-0 relative">
-                {/* Unified Logo Image */}
+                {/* Unified Premium Icon with Shine Effect */}
                 <Link to="/" className="flex items-center gap-2 pr-1 group shrink-0">
-                    <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95">
-                        <img src="/logo.png" alt="Darin Logo" className="w-full h-full object-contain" />
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-red-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
+                            <GraduationCap size={22} strokeWidth={2.5} className="relative z-10" />
+                        </div>
+                        <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
                     </div>
                 </Link>
 
-
                 {/* Vertical Separator */}
                 <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden md:block" />
+
 
 
 
