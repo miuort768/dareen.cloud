@@ -71,14 +71,15 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-[70px] lg:h-[80px] bg-white/95 backdrop-blur-md border-b-2 border-gray-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 dark:bg-slate-950/95 dark:border-white/5 shadow-sm transition-all duration-500">
-            {/* Edge Design Accent */}
+        <header className="h-[75px] lg:h-[80px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500 overflow-hidden">
+            {/* Edge Design Accent - Slanted Side */}
+            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 -skew-x-[25deg] -translate-x-20 lg:hidden" />
             <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent" />
             <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50" />
 
             {/* Left Section: Branding & Title */}
-            <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
-                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/10 dark:border-white/10 pl-4 py-1 shrink-0">
+            <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0 relative">
+                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/20 dark:border-white/10 pl-4 py-1 shrink-0 bg-white/40 dark:bg-slate-900/40 rounded-r-xl pr-2 lg:bg-transparent lg:rounded-none lg:p-0">
                     <span className="text-[10px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
                     <span className="text-[9px] md:text-[11px] font-black text-primary-700/80 dark:text-teal-300/80 mt-1 whitespace-nowrap">
                         {getRoleLabel(user.role)}
@@ -98,7 +99,7 @@ export const Header = () => {
                 {/* Dark Mode Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-2xl bg-gray-50 dark:bg-slate-900 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-teal-400 transition-all duration-300 shadow-sm border border-transparent hover:border-primary-100 dark:hover:border-teal-800 shrink-0"
+                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-none bg-gray-100/50 dark:bg-slate-900 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-teal-400 transition-all duration-300 shadow-sm border border-gray-200 dark:border-slate-800 shrink-0"
                 >
                     {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>

@@ -124,7 +124,7 @@ export const Chat: React.FC = () => {
         <div className={cn(
             "flex overflow-hidden bg-[#f0f2f5] dark:bg-[#0b141a]",
             "relative z-10",
-            "h-[calc(100vh-64px)] lg:h-[calc(100vh-100px)] lg:p-4 lg:gap-0"
+            "h-[calc(100vh-75px)] lg:h-[calc(100vh-100px)] lg:p-4 lg:gap-0"
         )}>
             <div className="flex w-full h-full max-w-[1600px] mx-auto shadow-2xl overflow-hidden bg-white dark:bg-[#111b21] lg:rounded-md border border-gray-200 dark:border-gray-800 relative z-10">
                 <ChatSidebar
