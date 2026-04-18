@@ -98,33 +98,27 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                     {step === 'select' ? (
                         <>
-                            {/* Search Bar */}
-                            {!isCreatingGroup && (
-                                <div className="p-3 border-b border-gray-100 dark:border-gray-800">
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            value={searchUser}
-                                            onChange={(e) => setSearchUser(e.target.value)}
-                                            placeholder="ابحث عن اسم أو رقم..."
-                                            className="w-full bg-[#f0f2f5] dark:bg-[#202c33] border-none py-2 pr-10 pl-4 rounded-lg text-sm focus:ring-0 text-right"
-                                        />
-                                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold" size={18} />
-                                    </div>
+                            {/* Search Bar - Now always visible in select step */}
+                            <div className="p-3 border-b border-gray-100 dark:border-gray-800">
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        value={searchUser}
+                                        onChange={(e) => setSearchUser(e.target.value)}
+                                        placeholder="ابحث عن اسم أو رقم..."
+                                        className="w-full bg-[#f0f2f5] dark:bg-[#202c33] border-none py-2 pr-10 pl-4 rounded-lg text-sm focus:ring-0 text-right"
+                                    />
+                                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold" size={18} />
                                 </div>
-                            )}
+                            </div>
 
                             {/* Selected Chips Horizontal List */}
                             {selectedUsers.length > 0 && (
                                 <div className="p-3 border-b border-gray-100 dark:border-gray-800 flex gap-3 overflow-x-auto custom-scrollbar bg-gray-50/50 dark:bg-[#111b21]/50 grow-0 shrink-0 min-h-[85px]">
                                     {selectedUsersObjects.map(user => (
                                         <div key={user.id} className="flex flex-col items-center gap-1 shrink-0 relative px-1">
-                                            <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center relative shadow-sm">
-                                                <img 
-                                                    src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}&background=random`} 
-                                                    className="w-full h-full rounded-full object-cover" 
-                                                    alt={user.name} 
-                                                />
+                                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center relative shadow-sm text-indigo-600 dark:text-indigo-400 font-black text-xs">
+                                                {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
                                                     className="absolute -top-0 -right-0 bg-gray-500 text-white rounded-full p-0.5 border-2 border-white dark:border-[#111b21] hover:bg-rose-500 transition-colors"
@@ -169,12 +163,8 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                             className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-[#202c33] transition-colors border-b border-gray-50 dark:border-gray-800"
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center font-bold text-gray-500 overflow-hidden shadow-sm">
-                                                    <img 
-                                                        src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}&background=random`} 
-                                                        className="w-full h-full object-cover" 
-                                                        alt={user.name} 
-                                                    />
+                                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center font-black text-indigo-600 dark:text-indigo-400 shadow-sm transition-all border-2 border-white dark:border-slate-800">
+                                                    {user.name.charAt(0)}
                                                 </div>
                                                 <div className="text-right">
                                                     <p className="font-bold text-base text-[#111b21] dark:text-[#e9edef]">{user.name}</p>
@@ -268,36 +258,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                 </div>
             </div>
 
-            {/* Profile Form Modal - Simplified */}
-            {showProfileForm && (
-                <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div className="bg-white dark:bg-[#111b21] w-full max-w-md shadow-2xl rounded-lg overflow-hidden">
-                        <div className="p-4 bg-[#00a884] text-white flex items-center justify-between">
-                            <h3 className="font-bold">{editingProfile ? 'تعديل مستخدم' : 'مستخدم جديد'}</h3>
-                            <button onClick={() => setShowProfileForm(false)}><X size={24} /></button>
-                        </div>
-                        <form onSubmit={handleSaveProfile} className="p-6 space-y-4">
-                            <input
-                                type="text"
-                                value={profileData.name}
-                                onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                                placeholder="الاسم"
-                                className="w-full bg-gray-50 dark:bg-[#202c33] border-none p-3 rounded-lg dark:text-white"
-                                required
-                            />
-                            <input
-                                type="text"
-                                value={profileData.username}
-                                onChange={(e) => setProfileData({ ...profileData, username: e.target.value })}
-                                placeholder="اسم المستخدم"
-                                className="w-full bg-gray-50 dark:bg-[#202c33] border-none p-3 rounded-lg dark:text-white"
-                                required
-                            />
-                            <button type="submit" className="w-full bg-[#00a884] text-white py-3 rounded-lg font-bold">حفظ</button>
-                        </form>
-                    </div>
-                </div>
-            )}
+
 
             {/* Delete Confirmation UI */}
             {showDeleteConfirm && (

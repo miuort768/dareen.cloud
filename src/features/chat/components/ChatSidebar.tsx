@@ -63,13 +63,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     {currentUser?.role === 'admin' && (
                         <>
                             <button 
-                                onClick={() => setView(view === 'chat' ? 'management' : 'chat')}
-                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
-                                title="إدارة الدردشات"
-                            >
-                                <LayoutDashboard size={22} />
-                            </button>
-                            <button 
                                 onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
                                 className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
                             >

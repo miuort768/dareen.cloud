@@ -1,14 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
-import { ChatManagement } from '../features/chat/components/ChatManagement';
 import { ChatModals } from '../features/chat/components/ChatModals';
-import type { ProfileFormData } from '../features/chat/components/ChatModals';
 import { useApp } from '../context/AppContext';
 import { useChatContext } from '../context/ChatContext';
 import { useChat } from '../hooks/useChat';
 import { cn } from '../lib/utils';
-import type { Conversation, ChatView, DeleteType, ChatUser } from '../types/chat.types';
+import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
     const { currentUser, logout } = useApp();
@@ -31,7 +29,6 @@ export const Chat: React.FC = () => {
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
     const { setActiveConversationId } = useChatContext();
     const [newMessage, setNewMessage] = useState('');
-    const [view, setView] = useState<ChatView>('chat');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -50,11 +47,6 @@ export const Chat: React.FC = () => {
     const [deleteType, setDeleteType] = useState<DeleteType>('conversation');
     const [itemToDelete, setItemToDelete] = useState<Conversation | ChatUser | { displayName: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
-
-    // Profile Management
-    const [showProfileForm, setShowProfileForm] = useState(false);
-    const [editingProfile, setEditingProfile] = useState<ChatUser | null>(null);
-    const [profileData, setProfileData] = useState<ProfileFormData>({ name: '', username: '', password: '' });
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -135,60 +127,43 @@ export const Chat: React.FC = () => {
                     setIsEditingGroup={setIsEditingGroup}
                     logout={logout}
                     typingUsers={typingUsers}
-                    view={view}
-                    setView={setView}
                 />
 
-                {view === 'chat' ? (
-                    selectedConv ? (
-                        <ChatWindow
-                            selectedConv={selectedConv}
-                            messages={messages}
-                            newMessage={newMessage}
-                            setNewMessage={setNewMessage}
-                            handleSendMessage={handleSendMessage}
-                            isSending={isSending}
-                            currentUser={currentUser}
-                            setSelectedConv={setSelectedConv}
-                            openGroupSettings={() => {}}
-                            confirmDeleteConversation={(conv: Conversation) => {
-                                setDeleteType('conversation');
-                                setItemToDelete(conv);
-                                setShowDeleteConfirm(true);
-                            }}
-                            showMoreMenu={showMoreMenu}
-                            setShowMoreMenu={setShowMoreMenu}
-                            menuRef={menuRef}
-                            setTyping={setTyping}
-                            markAsRead={markAsRead}
-                        />
-                    ) : (
-                        <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#222e35] relative border-l border-gray-200 dark:border-gray-800">
-                            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
-                            <div className="z-10 text-center">
-                                <div className="w-24 h-24 bg-gray-200 dark:bg-[#2a3942] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                    <img src="/logo.png" alt="Dareen" className="w-16 h-16 grayscale opacity-40" />
-                                </div>
-                                <h2 className="text-3xl font-light text-[#41525d] dark:text-[#e9edef] mb-2 tracking-tight">واتساب دارين للكمبيوتر</h2>
-                                <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-sm mx-auto leading-relaxed">
-                                    أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة وبدون انقطاع.
-                                </p>
-                            </div>
-                        </div>
-                    )
-                ) : (
-                    <ChatManagement
-                        profiles={profiles}
-                        setEditingProfile={setEditingProfile}
-                        setProfileData={(data) => setProfileData({ ...data, password: '' })}
-                        setShowProfileForm={setShowProfileForm}
-                        confirmDeleteProfile={(id: string) => {
-                            setDeleteType('profile');
-                            const profile = profiles.find(p => p.id === id);
-                            if (profile) setItemToDelete(profile);
+                {selectedConv ? (
+                    <ChatWindow
+                        selectedConv={selectedConv}
+                        messages={messages}
+                        newMessage={newMessage}
+                        setNewMessage={setNewMessage}
+                        handleSendMessage={handleSendMessage}
+                        isSending={isSending}
+                        currentUser={currentUser}
+                        setSelectedConv={setSelectedConv}
+                        openGroupSettings={() => {}}
+                        confirmDeleteConversation={(conv: Conversation) => {
+                            setDeleteType('conversation');
+                            setItemToDelete(conv);
                             setShowDeleteConfirm(true);
                         }}
+                        showMoreMenu={showMoreMenu}
+                        setShowMoreMenu={setShowMoreMenu}
+                        menuRef={menuRef}
+                        setTyping={setTyping}
+                        markAsRead={markAsRead}
                     />
+                ) : (
+                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#222e35] relative border-l border-gray-200 dark:border-gray-800">
+                        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
+                        <div className="z-10 text-center">
+                            <div className="w-24 h-24 bg-gray-200 dark:bg-[#2a3942] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                                <img src="/logo.png" alt="Dareen" className="w-16 h-16 grayscale opacity-40" />
+                            </div>
+                            <h2 className="text-3xl font-light text-[#41525d] dark:text-[#e9edef] mb-2 tracking-tight">واتساب دارين للكمبيوتر</h2>
+                            <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-sm mx-auto leading-relaxed">
+                                أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة وبدون انقطاع.
+                            </p>
+                        </div>
+                    </div>
                 )}
             </div>
 
@@ -207,11 +182,11 @@ export const Chat: React.FC = () => {
                 setIsCreatingGroup={setIsCreatingGroup}
                 handleCreateConversation={handleCreateConversation}
                 handleCreateDirectChat={handleCreateDirectChat}
-                showProfileForm={showProfileForm}
-                setShowProfileForm={setShowProfileForm}
-                editingProfile={editingProfile}
-                profileData={profileData}
-                setProfileData={setProfileData}
+                showProfileForm={false}
+                setShowProfileForm={() => {}}
+                editingProfile={null}
+                profileData={{ name: '', username: '' }}
+                setProfileData={() => {}}
                 isSavingProfile={false}
                 handleSaveProfile={() => {}}
                 showDeleteConfirm={showDeleteConfirm}
