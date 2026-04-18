@@ -86,13 +86,13 @@ export const Header = () => {
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-3 lg:gap-6 flex-1 min-w-0 relative">
-                {/* Unified Logo (Homepage Style) */}
+                {/* Unified Logo Image */}
                 <Link to="/" className="flex items-center gap-2 pr-1 group shrink-0">
-                    <div className="relative w-9 h-9 md:w-11 md:h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-lg md:rounded-xl flex items-center justify-center text-white shadow-md border border-white/20 transition-transform group-hover:scale-105 active:scale-95">
-                        <GraduationCap size={20} strokeWidth={2.5} />
-                        <Sparkles size={10} className="absolute top-1 right-1 text-yellow-400 animate-pulse" />
+                    <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95">
+                        <img src="/logo.png" alt="Darin Logo" className="w-full h-full object-contain" />
                     </div>
                 </Link>
+
 
                 {/* Vertical Separator */}
                 <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden md:block" />
