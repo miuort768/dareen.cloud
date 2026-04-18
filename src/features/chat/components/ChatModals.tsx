@@ -25,14 +25,6 @@ interface ChatModalsProps {
     handleCreateConversation: () => void;
     handleCreateDirectChat: (userId: string) => void;
 
-    showProfileForm: boolean;
-    setShowProfileForm: (val: boolean) => void;
-    editingProfile: ChatUser | null;
-    profileData: ProfileFormData;
-    setProfileData: (val: ProfileFormData) => void;
-    isSavingProfile: boolean;
-    handleSaveProfile: (e: React.FormEvent) => void;
-
     showDeleteConfirm: boolean;
     setShowDeleteConfirm: (val: boolean) => void;
     deleteType: DeleteType;
@@ -46,8 +38,6 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     showNewChatModal, setShowNewChatModal, isEditingGroup, groupName, setGroupName,
     searchUser, setSearchUser, availableUsers, selectedUsers, setSelectedUsers,
     isCreatingGroup, setIsCreatingGroup, handleCreateConversation, handleCreateDirectChat,
-    showProfileForm, setShowProfileForm, editingProfile, profileData, setProfileData,
-    handleSaveProfile,
     showDeleteConfirm, setShowDeleteConfirm, setItemToDelete,
     isDeleting, handleDeleteAction
 }) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
     Search, LogOut, 
-    ShieldCheck, LayoutDashboard, MessageSquarePlus
+    ShieldCheck, MessageSquarePlus
 } from 'lucide-react';
 import { useChatContext } from '../../../context/ChatContext';
 import { format } from 'date-fns';
@@ -16,11 +16,8 @@ interface ChatSidebarProps {
     setSelectedConv: (conv: Conversation | null) => void;
     currentUser: User | null;
     setShowNewChatModal: (val: boolean) => void;
-    setIsEditingGroup: (val: boolean) => void;
     logout: () => void;
     typingUsers: any[];
-    view: ChatView;
-    setView: (view: ChatView) => void;
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -29,11 +26,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setSelectedConv,
     currentUser,
     setShowNewChatModal,
-    setIsEditingGroup,
     logout,
-    typingUsers,
-    view,
-    setView
+    typingUsers
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const { isConnected } = useChatContext();

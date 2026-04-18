@@ -12,7 +12,6 @@ export const Chat: React.FC = () => {
     const { currentUser, logout } = useApp();
     const {
         conversations,
-        profiles,
         availableUsers,
         useMessages,
         sendMessage,
@@ -182,13 +181,6 @@ export const Chat: React.FC = () => {
                 setIsCreatingGroup={setIsCreatingGroup}
                 handleCreateConversation={handleCreateConversation}
                 handleCreateDirectChat={handleCreateDirectChat}
-                showProfileForm={false}
-                setShowProfileForm={() => {}}
-                editingProfile={null}
-                profileData={{ name: '', username: '' }}
-                setProfileData={() => {}}
-                isSavingProfile={false}
-                handleSaveProfile={() => {}}
                 showDeleteConfirm={showDeleteConfirm}
                 setShowDeleteConfirm={setShowDeleteConfirm}
                 deleteType={deleteType}
