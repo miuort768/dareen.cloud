@@ -152,7 +152,7 @@ export const StudentDashboard = () => {
                         </div>
                         <div className="min-w-0">
                             <h1 className="text-[12px] md:text-sm font-black text-white leading-tight truncate">أهلاً يا بطل، {studentData?.name}</h1>
-                            <p className="text-slate-400 text-[8px] font-medium truncate">{todayArabic}</p>
+                            <p className="text-slate-400 text-[10px] font-medium truncate">{todayArabic}</p>
                         </div>
                     </div>
                     <div className="shrink-0 flex items-center gap-1 bg-white/10 border border-white/20 px-1.5 py-0.5 md:px-2 md:py-1 rounded">

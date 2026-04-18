@@ -125,33 +125,33 @@ export const ModernAnnouncements: React.FC = () => {
             {/* Acknowledgment Dialog (Sharp Technical Modal) */}
             {showAcknowledge && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-slate-900/60 transition-all animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-950 border-2 border-slate-900 dark:border-white p-8 max-w-md w-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] relative animate-in slide-in-from-bottom-5">
-                        <div className="flex items-center gap-4 mb-6">
-                            <type.icon className={cn("shrink-0", type.color)} size={32} />
+                    <div className="bg-white dark:bg-slate-950 border-2 border-slate-900 dark:border-white p-5 md:p-8 max-w-md w-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] relative animate-in slide-in-from-bottom-5">
+                        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                            <type.icon className={cn("shrink-0", type.color)} size={24} className="md:size-[32px]" />
                             <div>
-                                <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">قمت برؤية التنبيه</h3>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Acknowledgment of information</p>
+                                <h3 className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">قمت برؤية التنبيه</h3>
+                                <p className="text-[8px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Acknowledgment of information</p>
                             </div>
                         </div>
 
-                        <p className="text-xs font-bold text-slate-600 dark:text-slate-400 mb-8 leading-relaxed italic border-r-2 border-indigo-500 pr-4">
+                        <p className="text-[11px] md:text-xs font-bold text-slate-600 dark:text-slate-400 mb-6 md:mb-8 leading-relaxed italic border-r-2 border-indigo-500 pr-3 md:pr-4">
                             "{current.content}"
                         </p>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-3 md:gap-4">
                             <button 
                                 onClick={handleDismiss}
-                                className="flex items-center justify-center gap-2 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all"
+                                className="flex items-center justify-center gap-2 py-3 md:py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all"
                             >
                                 <Check size={14} />
-                                موافق (إخفاء)
+                                موافق
                             </button>
                             <button 
                                 onClick={() => setShowAcknowledge(false)}
-                                className="flex items-center justify-center gap-2 py-4 border-2 border-slate-900 dark:border-white font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                                className="flex items-center justify-center gap-2 py-3 md:py-4 border-2 border-slate-900 dark:border-white font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
                             >
                                 <X size={14} />
-                                ترك (إبقاء)
+                                ترك
                             </button>
                         </div>
                     </div>
