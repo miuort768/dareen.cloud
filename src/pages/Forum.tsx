@@ -179,7 +179,7 @@ export const Forum = () => {
                         </div>
                         <button 
                             onClick={() => document.getElementById('new-post-input')?.focus()}
-                            className="flex-1 bg-[#ff6b6b] hover:bg-[#ff5252] px-4 py-3 text-right text-gray-950 font-black text-sm transition-all"
+                            className="flex-1 bg-gradient-to-l from-[#ff6b6b] via-[#ff6b6b] to-transparent px-4 py-3 text-right text-black font-black text-sm transition-all hover:pr-6"
                         >
                             بم تفكر يا {currentUser?.name?.split(' ')[0]}؟
                         </button>

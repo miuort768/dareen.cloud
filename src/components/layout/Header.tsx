@@ -98,8 +98,11 @@ export const Header = () => {
             <div className="flex items-center gap-3 lg:gap-6 shrink-0">
                 {/* Dark Mode Toggle */}
                 <button
-                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-none bg-gray-100/50 dark:bg-slate-900 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-teal-400 transition-all duration-300 shadow-sm border border-gray-200 dark:border-slate-800 shrink-0"
+                    onClick={() => {
+                        console.log('Switching theme from:', theme);
+                        setTheme(theme === 'dark' ? 'light' : 'dark');
+                    }}
+                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-none bg-transparent hover:bg-gray-100 dark:hover:bg-slate-900 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-teal-400 transition-all duration-300 shadow-none border border-transparent hover:border-gray-200 dark:hover:border-slate-800 shrink-0"
                 >
                     {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
