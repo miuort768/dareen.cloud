@@ -4,6 +4,8 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
+import { PageLoader } from '../ui/PageLoader';
+
 
 
 export const Layout = () => {
@@ -32,14 +34,7 @@ export const Layout = () => {
                         !isChatOnly && "slide-in-from-bottom-4"
                     )}>
                         {/* We use specific loaders inside pages, but this handles lazy chunk loading */}
-                        <React.Suspense fallback={
-                            <div className="flex items-center justify-center h-full min-h-[50vh]">
-                                <div className="flex flex-col items-center gap-4">
-                                    <div className="w-12 h-12 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
-                                    <p className="text-gray-400 font-bold text-sm">جاري تحميل المحتوى...</p>
-                                </div>
-                            </div>
-                        }>
+                        <React.Suspense fallback={<PageLoader />}>
 
                             <Outlet />
                         </React.Suspense>

@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { PageLoader } from './components/ui/PageLoader';
+import { usePageLoader } from './hooks/usePageLoader';
+
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { Login } from './pages/Login';
@@ -79,11 +82,13 @@ const DashboardRedirect = () => {
   return <Navigate to="/admin-dashboard" replace />;
 };
 
+
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
-
-
+  
+  // Use the elegant NProgress loader
+  usePageLoader();
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
@@ -95,15 +100,9 @@ function App() {
   }, [location.pathname]);
 
   if (isLoading || isSettingsLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
-        <div className="relative w-12 h-12">
-          <div className="absolute inset-0 border-4 border-primary-200 dark:border-primary-900 rounded-full"></div>
-          <div className="absolute inset-0 border-4 border-primary-600 rounded-full border-t-transparent animate-spin"></div>
-        </div>
-      </div>
-    );
+    return <PageLoader />;
   }
+
 
   // Maintenance Gate: Show screen if mode is active and user is NOT admin
   const isAdmin = isAuthenticated && currentUser?.role === 'admin';
