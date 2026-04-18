@@ -39,8 +39,9 @@ import { RefundPolicy } from './pages/public/RefundPolicy';
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
-import { InstallPWA } from './components/ui/InstallPWA';
 import { Classroom } from './pages/Classroom';
+
+
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
