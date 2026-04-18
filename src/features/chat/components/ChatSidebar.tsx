@@ -86,14 +86,14 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             </div>
 
             <div className="p-2 bg-white dark:bg-[#111b21] border-b border-gray-100 dark:border-gray-800">
-                <div className="relative flex items-center bg-[#f0f2f5] dark:bg-[#202c33] rounded-lg px-3 py-1.5 focus-within:shadow-sm">
-                    <Search className="text-[#667781] dark:text-[#8696a0]" size={18} />
+                <div className="relative flex items-center bg-[#FF7B7B] rounded-lg px-3 py-1.5 focus-within:shadow-md transition-shadow">
+                    <Search className="text-black" size={18} />
                     <input
                         type="text"
                         placeholder="البحث أو بدء دردشة جديدة"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="flex-1 bg-transparent border-none focus:ring-0 text-sm py-1 px-4 text-right text-[#111b21] dark:text-[#e9edef]"
+                        className="flex-1 bg-transparent border-none focus:ring-0 text-sm py-1 px-4 text-right text-black placeholder:text-black/60 font-medium"
                     />
                 </div>
             </div>
