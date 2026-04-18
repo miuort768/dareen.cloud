@@ -71,15 +71,15 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-[75px] lg:h-[80px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500">
+        <header className="h-[65px] lg:h-[72px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500">
             {/* Edge Design Accent - Wide Curved Side */}
-            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 rounded-br-[80px] lg:hidden" />
-            <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent" />
-            <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50" />
+            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 rounded-br-[80px] lg:hidden pointer-events-none" />
+            <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50 pointer-events-none" />
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0 relative">
-                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/20 dark:border-white/10 pl-4 py-1 shrink-0 bg-white/40 dark:bg-slate-900/40 rounded-r-xl pr-2 lg:bg-transparent lg:rounded-none lg:p-0">
+                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/20 dark:border-white/10 pl-4 py-1 shrink-0 bg-white/40 dark:bg-slate-900/40 rounded-r-xl pr-2 lg:bg-transparent lg:rounded-none lg:pl-10 lg:pr-4">
                     <span className="text-[10px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
                     <span className="text-[9px] md:text-[11px] font-black text-primary-700/80 dark:text-teal-300/80 mt-1 whitespace-nowrap">
                         {getRoleLabel(user.role)}
