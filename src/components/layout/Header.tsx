@@ -57,7 +57,8 @@ export const Header = () => {
         }
     };
 
-    const getRoleLabel = (role: string) => {
+    const getRoleLabel = (role?: string) => {
+        if (!role) return 'مستخدم';
         switch (role) {
             case 'admin': return 'مدير النظام';
             case 'teacher': return 'معلمة';
