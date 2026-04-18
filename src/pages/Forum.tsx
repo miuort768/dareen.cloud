@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageSquare, ThumbsUp, ThumbsDown, Send, MoreHorizontal, AlertTriangle } from 'lucide-react';
+import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
