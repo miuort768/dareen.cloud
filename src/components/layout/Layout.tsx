@@ -5,6 +5,8 @@ import { Header } from './Header';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
 import { PageLoader } from '../ui/PageLoader';
+import { InstallPWA } from '../ui/InstallPWA';
+
 
 
 
@@ -42,6 +44,8 @@ export const Layout = () => {
                 </main>
             </div>
 
+            <InstallPWA />
         </div>
     );
 };
+
