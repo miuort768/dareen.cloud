@@ -103,7 +103,7 @@ export const StudentDashboard = () => {
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-[24px] shadow-lg shadow-purple-500/20 text-white"
+                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-3xl shadow-lg shadow-purple-500/20 text-white"
             >
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
                 <BookOpen className="absolute bottom-4 left-4 text-white/10" size={100} />
@@ -126,14 +126,14 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ STATS ROW ═══════════════ */}
             <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-[20px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
                     <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-3">
                         <Star size={20} fill="currentColor" />
                     </div>
                     <span className="text-2xl font-black text-slate-900 dark:text-white">{points}</span>
                     <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1">مجموع النقاط</span>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-[20px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center">
                     <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-3">
                         <CalendarDays size={20} />
                     </div>
@@ -143,7 +143,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
-            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-5 rounded-[20px] border border-indigo-100/50 dark:border-indigo-900/20">
+            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-5 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">
                 <div className="flex justify-between items-start mb-4">
                     <div className="text-right">
                         <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-1">المستوى الحالي</span>
@@ -166,7 +166,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-[24px] shadow-sm border border-slate-100 dark:border-slate-800">
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-6">
                     <Activity className="text-[#8b5cf6]" size={20} />
                     <h3 className="text-lg font-black text-slate-900 dark:text-white">مستشار الإنجاز</h3>
@@ -186,9 +186,9 @@ export const StudentDashboard = () => {
                 </div>
                 <div className="space-y-3">
                     {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot: any, i: number) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-[20px] shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-[15px] flex items-center justify-center">
+                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-2xl flex items-center justify-center">
                                     <BookOpen size={20} />
                                 </div>
                                 <div>
@@ -202,7 +202,7 @@ export const StudentDashboard = () => {
                             </div>
                         </div>
                     )) : (
-                        <p className="text-center py-6 text-slate-400 text-xs font-bold bg-white dark:bg-slate-900 rounded-[20px] border border-dashed border-slate-200 dark:border-slate-800">لا توجد مهام اليوم</p>
+                        <p className="text-center py-6 text-slate-400 text-xs font-bold bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800">لا توجد مهام اليوم</p>
                     )}
                 </div>
             </div>
@@ -211,13 +211,13 @@ export const StudentDashboard = () => {
             <div className="grid grid-cols-2 gap-4">
                 <button 
                     onClick={() => navigate('/chat')}
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-[20px] border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
+                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
                 >
                     <MessageSquare className="text-[#8b5cf6]" size={18} />
                     <span className="text-sm font-black text-slate-800 dark:text-indigo-300">المحادثات</span>
                 </button>
                 <button 
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-[20px] border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
+                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
                 >
                     <Award className="text-[#8b5cf6]" size={18} />
                     <span className="text-sm font-black text-slate-800 dark:text-indigo-300">الأوسمة</span>
@@ -229,9 +229,9 @@ export const StudentDashboard = () => {
                 <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4">آخر النشاطات</h3>
                 <div className="space-y-3">
                     {pointLogs.slice(0, 3).map((log, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-[20px] shadow-sm border border-slate-50 dark:border-slate-800">
+                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800">
                             <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-[15px] flex items-center justify-center shrink-0">
+                                <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-2xl flex items-center justify-center shrink-0">
                                     <Star size={22} />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -255,7 +255,8 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-[30px] shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-[32px] shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
                 
                 <div className="text-center md:text-right relative z-10 w-full md:w-auto">
