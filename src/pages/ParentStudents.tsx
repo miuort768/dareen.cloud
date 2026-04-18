@@ -99,7 +99,8 @@ export const ParentStudents = () => {
     }
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
+        <div className="pt-6 md:pt-10 space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
+
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 -mx-3 md:mx-0 p-3 md:p-0 bg-slate-50 md:bg-transparent dark:bg-slate-900/40">
                 <div>
                     <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-1">قائمة الأبناء</h1>

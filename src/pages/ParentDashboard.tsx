@@ -140,7 +140,8 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="space-y-8 pb-32" dir="rtl">
+        <div className="pt-6 md:pt-10 space-y-8 pb-32" dir="rtl">
+
 
             {/* ═══════════════ PREMIUM PARENT HEADER ═══════════════ */}
             <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-5 lg:p-8 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
