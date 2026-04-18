@@ -215,11 +215,12 @@ export const Schedule = () => {
     if (loading) return <div className="p-20 text-center font-black animate-pulse text-gray-400">جاري تحميل الجدول...</div>;
 
     return (
-        <div className="space-y-4 pb-32 animate-in fade-in duration-500 overflow-x-hidden" dir="rtl">
-            {/* Master Header */}
-            <div className="relative bg-white border-2 border-gray-950 p-3 md:p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 translate-x-10 pointer-events-none"></div>
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
+        <div className="px-3 md:px-0 w-full max-w-full overflow-hidden block">
+            <div className="space-y-5 pb-32 animate-in fade-in duration-500 overflow-x-hidden container mx-auto max-w-5xl" dir="rtl">
+                {/* Master Header */}
+                <div className="relative bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-full bg-primary-600/5 -skew-x-12 pointer-events-none"></div>
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div className="flex items-center gap-2 md:gap-3 text-right">
                         <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-950 text-white border-2 border-primary-500 shadow-[2px_2px_0px_0px_rgba(37,99,235,1)] md:shadow-[3px_3px_0px_0px_rgba(37,99,235,1)] flex items-center justify-center shrink-0">
                             <Calendar size={20} className="md:size-[28px]" />
@@ -246,15 +247,14 @@ export const Schedule = () => {
                     { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'bg-purple-400' },
                     { label: 'اليوم', val: mobileActiveDay, icon: Clock, color: 'bg-amber-400' }
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white border-2 border-gray-950 p-2 md:p-3 shadow-[2px_2px_0px_0px_black] flex items-center gap-2 overflow-hidden">
-                        <div className={cn("w-6 h-6 md:w-8 md:h-8 border-2 border-gray-950 flex items-center justify-center text-gray-950 shadow-[1px_1px_0px_0px_black] shrink-0", stat.color)}>
-                            <stat.icon size={11} className="md:size-[16px]" strokeWidth={3} />
+                    <div key={i} className="bg-white border-2 border-gray-950 p-2 shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] flex items-center justify-between overflow-hidden relative">
+                        <div className="flex flex-col min-w-0 z-10 w-full overflow-hidden">
+                            <p className="text-[9px] md:text-xs font-black text-gray-500 uppercase leading-none mb-1 truncate">{stat.label}</p>
+                            <h3 className="text-sm md:text-xl font-black text-gray-950 truncate leading-none">{stat.val}</h3>
                         </div>
-                        <div className="min-w-0">
-                            <p className="text-[7px] md:text-[8px] font-black text-gray-400 uppercase leading-none mb-0.5 truncate">{stat.label}</p>
-                            <h3 className="text-[10px] md:text-base font-black text-gray-950 truncate leading-none">{stat.val}</h3>
+                        <div className={cn("shrink-0 w-8 h-8 rounded-full flex items-center justify-center border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] z-10", stat.color)}>
+                            <stat.icon size={12} strokeWidth={3} className="text-gray-950" />
                         </div>
-                    </div>
                 ))}
             </div>
 
@@ -514,7 +514,8 @@ export const Schedule = () => {
                         </form>
                     </div>
                 </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };
