@@ -9,10 +9,7 @@ import {
     Calendar,
     X,
     CheckCircle2,
-    ArrowLeftRight,
-    Zap,
-    MapPin,
-    Users
+    ArrowLeftRight
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
