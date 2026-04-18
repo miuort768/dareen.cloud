@@ -113,7 +113,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </div>
 
                     <div className="flex flex-col text-right">
-                        <h2 className="text-base font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate max-w-[150px] md:max-w-[300px]">
+                        <h2 className={cn(
+                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate max-w-[150px] md:max-w-[300px]",
+                            selectedConv.isGroup ? "text-sm" : "text-base"
+                        )}>
                             {selectedConv.displayName}
                         </h2>
                         {typingInThisConv.length > 0 ? (
@@ -128,13 +131,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                 {currentUser?.role === 'admin' && (
                     <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
-                        <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
-                            <Video size={20} />
-                        </button>
-                        <button className="hidden sm:block hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
-                            <Phone size={20} />
-                        </button>
-                        <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-1 hidden sm:block" />
                         <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
                             <Search size={20} />
                         </button>

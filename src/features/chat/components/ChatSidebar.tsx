@@ -130,7 +130,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                     <div className="flex items-center justify-between mb-0.5">
                                         <div className="flex items-center gap-1.5 overflow-hidden">
                                             {conv.isGroup && <ShieldCheck size={14} className="text-[#8696a0] shrink-0" />}
-                                            <h3 className="text-base font-normal text-[#111b21] dark:text-[#e9edef] truncate">
+                                            <h3 className={cn(
+                                                "font-normal text-[#111b21] dark:text-[#e9edef] truncate",
+                                                conv.isGroup ? "text-[15px]" : "text-base"
+                                            )}>
                                                 {conv.displayName}
                                             </h3>
                                         </div>
