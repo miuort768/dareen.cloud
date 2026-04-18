@@ -240,8 +240,9 @@ export const InstallPWA = () => {
                         onClick={handleDismiss}
                         className="p-2.5 md:p-2 text-black/40 dark:text-white/40 hover:text-red-500 transition-colors"
                     >
-                        <X size={18} md:size={14} />
+                        <X size={isDesktop ? 16 : 20} />
                     </button>
+
                 </div>
             </div>
         </div>
