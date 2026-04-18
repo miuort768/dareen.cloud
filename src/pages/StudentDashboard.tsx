@@ -177,27 +177,28 @@ export const StudentDashboard = () => {
 
 
             {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
-            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-5 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">
-                <div className="flex justify-between items-start mb-4">
+            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-4 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">
+                <div className="flex justify-between items-start mb-3">
                     <div className="text-right">
-                        <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-1">المستوى الحالي</span>
-                        <h3 className="text-xl font-black text-slate-900 dark:text-white">{rank.name}</h3>
+                        <span className="text-[9px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-0.5">المستوى الحالي</span>
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">{rank.name}</h3>
                     </div>
-                    <div className="px-3 py-1 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[10px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
-                        المستوى {Math.floor(points / 100) + 1}
+                    <div className="px-2.5 py-0.5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[9px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
+                        مستوى {Math.floor(points / 100) + 1}
                     </div>
                 </div>
-                <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
+                <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-2.5">
                     <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.min((points % 100), 100)}%` }}
                         className="h-full bg-[#8b5cf6]"
                     />
                 </div>
-                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center">
+                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center tracking-tight">
                     تبقي {(Math.floor(points / 100) + 1) * 100 - points} نقطة للمستوى التالي
                 </p>
             </div>
+
 
             {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
             <div className="px-1">
