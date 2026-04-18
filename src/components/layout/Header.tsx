@@ -1,8 +1,9 @@
-import { Moon, Sun, User } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Moon, Sun, User, GraduationCap, Sparkles } from 'lucide-react';
+import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { useApp } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
+import { cn } from '../../lib/utils';
 
 export const Header = () => {
     const [theme, setTheme] = useDarkMode();
@@ -71,20 +72,34 @@ export const Header = () => {
     const { title, subtitle } = getPageTitle(location.pathname);
 
     return (
-        <header className="h-[65px] lg:h-[72px] bg-[#f2f8ff]/95 dark:bg-slate-950/95 backdrop-blur-md border-b-2 border-primary-100/50 flex items-center justify-between px-4 lg:px-10 sticky top-0 z-40 shadow-sm transition-all duration-500">
-            {/* Edge Design Accent - Wide Curved Side */}
-            <div className="absolute top-0 left-0 w-48 h-full bg-primary-600/5 rounded-br-[80px] lg:hidden pointer-events-none" />
-            <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50 pointer-events-none" />
+        <header className={cn(
+            "h-[60px] lg:h-[72px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-800/60 flex items-center justify-between transition-all duration-500 z-50",
+            "sticky top-2 mx-auto w-[94%] rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.12)] px-4",
+            "lg:top-0 lg:w-full lg:rounded-none lg:shadow-sm lg:px-10 lg:bg-[#f2f8ff]/95 lg:dark:bg-slate-950/95 lg:border-b-2 lg:border-primary-100/50"
+        )}>
+            {/* Edge Design Accent - Wide Curved Side (Desktop Only) */}
+            <div className="absolute top-0 left-0 w-32 h-[2px] bg-gradient-to-r from-primary-600 to-transparent pointer-events-none hidden lg:block" />
+            <div className="absolute bottom-0 right-0 w-32 h-[2px] bg-gradient-to-l from-primary-300 to-transparent dark:from-teal-500/50 pointer-events-none hidden lg:block" />
+
 
             {/* Left Section: Branding & Title */}
-            <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0 relative">
-                <div className="flex flex-col items-center justify-center border-l-2 border-primary-500/20 dark:border-white/10 pl-4 py-1 shrink-0 bg-white/40 dark:bg-slate-900/40 rounded-r-xl pr-2 lg:bg-transparent lg:rounded-none lg:pl-10 lg:pr-4">
-                    <span className="text-[10px] md:text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
-                    <span className="text-[9px] md:text-[11px] font-black text-primary-700/80 dark:text-teal-300/80 mt-1 whitespace-nowrap">
+            <div className="flex items-center gap-3 lg:gap-8 flex-1 min-w-0 relative">
+                {/* Mobile Logo (Homepage Style) */}
+                <Link to="/" className="flex lg:hidden items-center gap-2 pr-1 group shrink-0">
+                    <div className="relative w-9 h-9 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-lg flex items-center justify-center text-white shadow-md border border-white/20">
+                        <GraduationCap size={18} strokeWidth={2.5} />
+                        <Sparkles size={8} className="absolute top-1 right-1 text-yellow-400 animate-pulse" />
+                    </div>
+                </Link>
+
+                {/* Desktop Branding */}
+                <div className="hidden lg:flex flex-col items-center justify-center border-l-2 border-primary-500/20 dark:border-white/10 pl-10 py-1 shrink-0 lg:pr-4">
+                    <span className="text-xs font-black text-primary-600 dark:text-teal-400 leading-none uppercase tracking-[0.2em]">DARIN</span>
+                    <span className="text-[11px] font-black text-primary-700/80 dark:text-teal-300/80 mt-1 whitespace-nowrap">
                         {getRoleLabel(user.role)}
                     </span>
                 </div>
+
 
                 {title && (
                     <div className="animate-in fade-in slide-in-from-right-4 duration-300 min-w-0 overflow-hidden">
