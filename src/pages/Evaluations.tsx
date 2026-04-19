@@ -12,7 +12,8 @@ import {
     Zap,
     X,
     BookOpen,
-    TrendingUp
+    TrendingUp,
+    Search
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -33,6 +34,7 @@ export const Evaluations = () => {
         points: 0,
         notes: ''
     });
+    const [searchTerm, setSearchTerm] = useState('');
 
     const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
 
@@ -160,10 +162,32 @@ export const Evaluations = () => {
                 </div>
             </div>
 
-            {/* ─── Student Cards Grid ─── */}
+            {/* ─── Full-width Search Bar ─── */}
+            <div className="relative">
+                <Search size={15} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="ابحث عن طالب باسمه أو صفه..."
+                    className="w-full pr-10 pl-10 py-2.5 border border-slate-200 dark:border-slate-700 dark:bg-slate-900 bg-white text-sm font-bold text-slate-700 dark:text-white placeholder:text-slate-300 placeholder:font-normal outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"
+                />
+                {searchTerm && (
+                    <button
+                        onClick={() => setSearchTerm('')}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors"
+                    >
+                        <X size={14} />
+                    </button>
+                )}
+            </div>
             <div className="px-2 md:px-0">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                    {teacherStudents.map((student) => {
+                    {teacherStudents.filter(s =>
+                        !searchTerm ||
+                        (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        (s.grade || '').toLowerCase().includes(searchTerm.toLowerCase())
+                    ).map((student) => {
                         const studentEvals = evaluations
                             .filter(ev => ev.studentId === student.id)
                             .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime());
