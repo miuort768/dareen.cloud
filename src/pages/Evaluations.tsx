@@ -317,16 +317,16 @@ export const Evaluations = () => {
                             </button>
                         </div>
                         
-                        <div className="p-6 overflow-y-auto space-y-6">
-                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-6">
+                        <div className="p-3 md:p-6 overflow-y-auto space-y-4 md:space-y-6">
+                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4 md:space-y-6">
                                 {!formData.studentId && (
                                     <div>
-                                        <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">اختر الطالب</label>
+                                        <label className="block text-[9px] md:text-xs font-black text-slate-500 mb-1.5 uppercase tracking-widest">اختر الطالب</label>
                                         <select
                                             value={formData.studentId}
                                             onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
                                             required
-                                            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-3 font-bold text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
+                                            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-3 py-2 md:px-4 md:py-3 font-bold text-xs md:text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
                                         >
                                             <option value="">-- اختر من قائمة طلابك --</option>
                                             {teacherStudents.map(s => (
@@ -337,8 +337,8 @@ export const Evaluations = () => {
                                 )}
 
                                 <div>
-                                    <label className="block text-xs font-black text-slate-500 mb-3 uppercase tracking-widest">مستوى التميز</label>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    <label className="block text-[9px] md:text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">مستوى التميز</label>
+                                    <div className="grid grid-cols-4 gap-1.5 md:gap-3">
                                         {ratingOptions.map((opt) => {
                                             const isSelected = formData.rating === opt.value;
                                             const OptIcon = opt.icon;
@@ -348,14 +348,14 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
+                                                        "p-2 md:p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1 md:gap-2",
                                                         isSelected
                                                             ? cn(opt.bg, opt.border, opt.color, "shadow-md scale-105")
                                                             : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:border-slate-300"
                                                     )}
                                                 >
-                                                    <OptIcon size={18} strokeWidth={isSelected ? 3 : 2} className={cn(isSelected && "animate-bounce")} />
-                                                    <span className="text-[9px] font-black uppercase tracking-widest leading-none">{opt.value}</span>
+                                                    <OptIcon size={14} strokeWidth={isSelected ? 3 : 2} className={cn(isSelected && "animate-bounce")} />
+                                                    <span className="text-[7px] md:text-[9px] font-black uppercase tracking-widest leading-none">{opt.value}</span>
                                                 </button>
                                             );
                                         })}
@@ -364,7 +364,7 @@ export const Evaluations = () => {
 
                                 <div>
                                     <div className="flex items-center justify-between mb-2">
-                                        <label className="text-xs font-black text-slate-500 uppercase tracking-widest">نقاط المكافأة (XP)</label>
+                                        <label className="text-[9px] md:text-xs font-black text-slate-500 uppercase tracking-widest">نقاط المكافأة (XP)</label>
                                         <div className="flex gap-1.5">
                                             {[5, 10, 20, 50].map(p => (
                                                 <button
@@ -377,7 +377,7 @@ export const Evaluations = () => {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <div className="w-10 h-10 bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
                                             <Zap size={16} className="text-amber-500 fill-current" />
                                         </div>
                                         <input
@@ -392,7 +392,7 @@ export const Evaluations = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
+                                    <label className="block text-[9px] md:text-xs font-black text-slate-500 mb-1.5 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
                                     <textarea
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Clock, CalendarCheck, PlayCircle } from 'lucide-react';
+import { GraduationCap, Clock, CalendarCheck, PlayCircle, Zap } from 'lucide-react';
 import type { User } from '../../../types/auth';
 
 interface ActiveSession {
@@ -24,10 +24,8 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
         return () => clearInterval(timer);
     }, []);
 
-    // Poll active sessions every 5 seconds (for teacher only)
     useEffect(() => {
         if (!isTeacher) return;
-
         const fetchActive = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -40,7 +38,6 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 }
             } catch { /* silent */ }
         };
-
         fetchActive();
         const interval = setInterval(fetchActive, 5000);
         return () => clearInterval(interval);
@@ -54,58 +51,75 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     };
 
     return (
-        <div className="flex flex-col md:flex-row md:items-center justify-center gap-10 xl:gap-40 relative z-10 w-full max-w-6xl mx-auto">
-            {/* User Greeting Section */}
-            <div className="flex items-center gap-5">
-                <div className="relative group">
-                    <div className="w-14 h-14 bg-slate-900 dark:bg-slate-800 rounded-none flex items-center justify-center border-2 border-indigo-500 shadow-none transform transition-transform duration-500 group-hover:rotate-6">
-                        <GraduationCap size={28} className="text-white" />
+        <div
+            className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20"
+            dir="rtl"
+        >
+            {/* dot pattern */}
+            <div
+                className="absolute inset-0 opacity-10 pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}
+            />
+
+            <div className="relative z-10 px-4 md:px-6 py-5 md:py-7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                {/* Left: Name + date */}
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 border border-white/20 flex items-center justify-center shrink-0">
+                        <GraduationCap size={20} className="text-white" />
                     </div>
-                </div>
-                
-                <div>
-                    <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
-                        {isTeacher ? `أهلاً بك، أ. ${currentUser?.name}` : 'لوحة التحكم الاستراتيجية'}
-                    </h1>
-                    <div className="flex items-center gap-3 mt-1.5">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-white/50 dark:bg-slate-900/50 rounded-none border border-slate-200 dark:border-slate-800 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                            <CalendarCheck size={12} className="text-indigo-600" />
-                            {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
+                    <div>
+                        <h1 className="text-base md:text-xl font-black text-white tracking-tight leading-none">
+                            {isTeacher ? `أهلاً، أ. ${currentUser?.name}` : 'لوحة التحكم'}
+                        </h1>
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                            <div className="flex items-center gap-1.5 bg-white/15 border border-white/20 px-2 py-0.5">
+                                <CalendarCheck size={10} className="text-white/70" />
+                                <span className="text-[9px] font-black text-white/80 whitespace-nowrap">
+                                    {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
+                                </span>
+                            </div>
+                            <span className="text-[8px] font-bold text-white/40 hidden sm:inline">معهد دارين للتعليم والتدريب</span>
                         </div>
-                        <div className="w-1 h-1 bg-slate-300 dark:bg-slate-700"></div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">معهد دارين للتعليم والتدريب</span>
                     </div>
                 </div>
-            </div>
 
-            {/* Top Dashboard Actions */}
-            <div className="hidden lg:items-center lg:gap-4 lg:flex flex-wrap">
+                {/* Right: Clock + Active session */}
+                <div className="flex items-center gap-2 shrink-0 flex-wrap">
 
-                {/* 🟢 Active Session Live Timer - only for teacher */}
-                {isTeacher && activeSessions.length > 0 && activeSessions.map(session => (
-                    <div key={session.id} className="flex items-center px-4 py-2 bg-emerald-700 text-white rounded-none border-2 border-emerald-900 gap-3 animate-pulse-slow shadow-lg shadow-emerald-500/30">
-                        <PlayCircle size={16} className="text-emerald-200 shrink-0" />
-                        <div className="text-right">
-                            <p className="text-[8px] font-black opacity-70 uppercase tracking-widest leading-none mb-0.5">{session.subject} — جارٍ الآن</p>
-                            <p className="text-base font-black tracking-tighter leading-none tabular-nums font-mono">
-                                {formatElapsed(session.startedAt)}
+                    {/* Active Session Live Timer */}
+                    {isTeacher && activeSessions.length > 0 && activeSessions.map(session => (
+                        <div
+                            key={session.id}
+                            className="flex items-center gap-2 px-3 py-2 bg-emerald-500/20 border border-emerald-400/40 text-white animate-pulse"
+                        >
+                            <PlayCircle size={14} className="text-emerald-300 shrink-0" />
+                            <div>
+                                <p className="text-[8px] font-black opacity-70 uppercase leading-none mb-0.5">{session.subject} — جارٍ الآن</p>
+                                <p className="text-sm font-black tabular-nums font-mono leading-none">
+                                    {formatElapsed(session.startedAt)}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Clock Widget */}
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white/15 border border-white/20">
+                        <Clock size={13} className="text-white/70" />
+                        <div>
+                            <p className="text-[7px] font-black text-white/40 uppercase leading-none mb-0.5">توقيت دارين</p>
+                            <p className="text-sm font-black text-white tabular-nums font-mono leading-none">
+                                {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </p>
                         </div>
                     </div>
-                ))}
 
-                {/* 🕒 Sharp Clock Widget */}
-                <div className="flex items-center px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-none border-2 border-slate-950 gap-4 group">
-                    <div className="text-right">
-                        <p className="text-[9px] font-black opacity-40 uppercase tracking-widest leading-none mb-1 text-left">توقيت دارين</p>
-                        <p className="text-base font-black tracking-tighter leading-none tabular-nums font-mono italic">
-                           {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                        </p>
-                    </div>
-                    <div className="w-px h-6 bg-white/20 dark:bg-slate-900/20"></div>
-                    <div className="w-8 h-8 bg-white/10 dark:bg-slate-900/5 rounded-none flex items-center justify-center">
-                        <Clock size={16} />
-                    </div>
+                    {/* XP badge for teacher */}
+                    {isTeacher && (
+                        <div className="flex items-center gap-1.5 px-3 py-2 bg-amber-400/20 border border-amber-400/30">
+                            <Zap size={12} className="text-amber-300 fill-current" />
+                            <span className="text-[10px] font-black text-amber-200">نظام XP نشط</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

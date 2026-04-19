@@ -57,15 +57,13 @@ export const Dashboard = () => {
     return (
         <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-10 overflow-x-hidden text-sm" dir="rtl">
             
-            {/* Premium Header Section */}
-            <div className="relative pt-4 pb-12">
-                <DashboardHeader
-                    isTeacher={isTeacher}
-                    currentUser={currentUser}
-                />
-            </div>
+            {/* Modern Gradient Header */}
+            <DashboardHeader
+                isTeacher={isTeacher}
+                currentUser={currentUser}
+            />
 
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 -mt-8 space-y-8">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 mt-6 space-y-6">
                 
                 {/* Row 1: Key Statistics (Sharp Floating Cards) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
