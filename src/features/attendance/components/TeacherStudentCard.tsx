@@ -372,12 +372,12 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         </button>
                     </div>
 
-                    <div className="flex gap-2">
-                        <div className="relative flex-1">
-                            <input type="date" value={logDate} onChange={(e) => onDateChange(e.target.value)} className="w-full text-[10px] p-2.5 bg-gray-50 dark:bg-gray-900 border-none ring-1 ring-gray-100 dark:ring-gray-700 focus:ring-primary-500 transition-all dark:text-white rounded" />
+                    <div className="flex gap-2 items-stretch">
+                        <div className="relative flex-1 min-w-0">
+                            <input type="date" value={logDate} onChange={(e) => onDateChange(e.target.value)} className="w-full text-[10px] p-2 bg-gray-50 dark:bg-gray-900 border-none ring-1 ring-gray-100 dark:ring-gray-700 focus:ring-primary-500 transition-all dark:text-white rounded appearance-none" />
                         </div>
-                        <button onClick={() => onLogAttendance(student, en)} className="bg-emerald-600 text-white px-5 text-[10px] font-black hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/10 active:scale-95 rounded-none">
-                            <CheckCircle2 size={14} /> تسجيل الحضور
+                        <button onClick={() => onLogAttendance(student, en)} className="bg-emerald-600 text-white px-3 md:px-5 text-[10px] font-black hover:bg-emerald-700 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/10 active:scale-95 rounded-none whitespace-nowrap shrink-0">
+                            <CheckCircle2 size={13} /> تسجيل
                         </button>
                     </div>
                 </div>

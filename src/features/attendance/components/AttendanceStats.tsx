@@ -12,7 +12,7 @@ interface AttendanceStatsProps {
 export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher }) => {
     if (isTeacher && teacherStats) {
         return (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-6">
                 {/* 1. Expected */}
                 <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-50 flex flex-col justify-between h-28">
                     <div className="flex items-center justify-between pointer-events-none">
@@ -66,7 +66,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
     }
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-6">
             <StatsCard title="مجدولة (اليوم)" value={stats.todayScheduled} icon={Calendar} color="blue" trend="حصة" />
             <StatsCard title="حضور (اليوم)" value={stats.todayCompleted} icon={CheckCircle2} color="emerald" trend={stats.todayTotal > 0 ? Math.round((stats.todayCompleted / stats.todayTotal) * 100) + '%' : '0%'} />
             <StatsCard title="غياب (اليوم)" value={stats.todayCancelled} icon={XCircle} color="rose" trend={stats.todayTotal > 0 ? Math.round((stats.todayCancelled / stats.todayTotal) * 100) + '%' : '0%'} />

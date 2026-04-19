@@ -90,6 +90,7 @@
     transition: background-color 0.5s ease, color 0.5s ease;
     overflow-x: hidden;
     position: relative;
+    touch-action: pan-y;
   }
 
   #root {
