@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
     Search, LogOut, 
     ShieldCheck, MessageSquarePlus,
-    Sun, Moon
+    Sun, Moon, Bell
 } from 'lucide-react';
 import { useDarkMode } from '../../../hooks/useDarkMode';
 import { useChatContext } from '../../../context/ChatContext';
@@ -47,7 +47,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
             <div className="h-[60px] bg-[#f8f9fa] dark:bg-[#1a2226] px-4 flex items-center justify-between shrink-0 border-b border-gray-200/50 dark:border-white/5">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-400/30 dark:border-emerald-500/30 shadow-[0_0_8px_rgba(52,211,153,0.2)] shrink-0">
                         <img 
                             src="/chat-avatar.jpg" 
@@ -59,21 +59,27 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         <span className="text-sm font-bold text-[#111b21] dark:text-[#e9edef] leading-tight">واتساب دارين</span>
                         <span className="text-[10px] font-thin text-[#667781] dark:text-[#8696a0]">تواصل أسهل وأسرع</span>
                     </div>
+
+                    <div className="flex items-center gap-1.5 mr-3 border-r border-gray-200 dark:border-white/10 pr-2">
+                        <button 
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            className="p-1.5 text-[#54656f] dark:text-[#aebac1] hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                        >
+                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                        </button>
+                        <button className="p-1.5 text-[#54656f] dark:text-[#aebac1] hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors">
+                            <Bell size={18} />
+                        </button>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-2 text-[#54656f] dark:text-[#aebac1]">
                     {currentUser?.role === 'admin' && (
                         <>
                             <button 
-                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
-                                title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                            >
-                                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                            </button>
-                            <button 
                                 onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
                                 className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                                title="دردشة جديدة"
                             >
                                 <MessageSquarePlus size={22} />
                             </button>

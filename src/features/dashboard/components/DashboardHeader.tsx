@@ -61,7 +61,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}
             />
 
-            <div className="relative z-10 px-4 md:px-6 py-4 md:py-6 flex items-center justify-between gap-3">
+            <div className="relative z-10 px-4 md:px-6 py-6 md:py-8 flex items-center justify-between gap-3">
 
                 {/* ── Left: Icon + Name (no box) ── */}
                 <div className="flex items-center gap-2.5 min-w-0">
