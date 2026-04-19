@@ -15,7 +15,7 @@ export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDate
     return (
         <div className="mb-6 flex flex-col items-center justify-center text-center">
              <h1 className="text-xl md:text-2xl font-black text-blue-600 mb-1 tracking-tight">تحضير الطلاب والمتابعة</h1>
-             <p className="text-[11px] md:text-sm font-bold text-slate-500 mb-4">إدارة جدول الحضور والغياب المباشر</p>
+             <p className="text-[11px] md:text-sm font-bold text-slate-500 mt-2 mb-4">إدارة جدول الحضور والغياب المباشر</p>
 
              {/* Minimal Date Selection */}
              {!isTeacher && (

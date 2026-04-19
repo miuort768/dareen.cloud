@@ -65,7 +65,7 @@ export const Header = () => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between transition-all duration-500 z-50",
+            "h-[60px] lg:h-[75px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between transition-all duration-500 z-[9999]",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl shadow-md lg:shadow-[0_20px_50px_rgba(0,0,0,0.1)] px-4 md:px-8 overflow-hidden max-w-full"
         )}>
 
@@ -94,9 +94,9 @@ export const Header = () => {
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
+                    className="w-11 h-11 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
 
                 {/* Notifications */}
@@ -106,8 +106,8 @@ export const Header = () => {
 
                 {/* User Identity */}
                 <div className="flex items-center pl-1 border-r border-slate-200 dark:border-slate-800 shrink-0">
-                    <div className="w-9 h-9 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
-                        <User size={18} />
+                    <div className="w-11 h-11 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
+                        <User size={22} />
                     </div>
                 </div>
             </div>

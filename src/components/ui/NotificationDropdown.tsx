@@ -143,9 +143,9 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-none dark:hover:bg-gray-800 dark:text-gray-400"
+                className="relative w-11 h-11 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-none dark:hover:bg-gray-800 dark:text-gray-400"
             >
-                <Bell size={20} className={unreadCount > 0 ? "text-indigo-600" : ""} />
+                <Bell size={24} className={unreadCount > 0 ? "text-indigo-600" : ""} />
                 {notificationsEnabled && unreadCount > 0 && (
                     <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-gray-900">
                         {unreadCount > 9 ? '9+' : unreadCount}
@@ -154,7 +154,7 @@ export const NotificationDropdown = () => {
             </button>
 
             {isOpen && (
-                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-slate-900/98 backdrop-blur-xl border-2 border-slate-900 dark:border-slate-800 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[100] animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-slate-900/98 backdrop-blur-xl border-2 border-slate-900 dark:border-slate-800 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="absolute -top-[10px] left-4 md:left-8 w-4 h-4 bg-white dark:bg-slate-900 border-t-2 border-l-2 border-slate-900 dark:border-slate-800 rotate-45 hidden md:block" />
                     
                     {/* Header */}

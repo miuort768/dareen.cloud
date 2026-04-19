@@ -23,13 +23,13 @@ export const RankBadge = ({ rank, className, showName = true, size = 'md' }: Ran
 
     return (
         <div className={cn(
-            "inline-flex items-center font-black uppercase text-white border-gray-950 shadow-[2px_2px_0px_0px_black] transform skew-x-[-12deg]",
+            "inline-flex items-center font-black uppercase text-white shadow-sm rounded-xl",
             rank.badgeColor,
             sizeClasses[size],
             className
         )}>
-            <span className={cn("transform skew-x-[12deg]", iconSizes[size])}>{rank.icon}</span>
-            {showName && <span className="transform skew-x-[12deg] tracking-tighter">{rank.name}</span>}
+            <span className={cn(iconSizes[size])}>{rank.icon}</span>
+            {showName && <span className="tracking-tighter">{rank.name}</span>}
         </div>
     );
 };

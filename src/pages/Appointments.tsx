@@ -223,7 +223,7 @@ export const Appointments = () => {
                         <div className="w-6 h-6 bg-indigo-600 flex items-center justify-center">
                             <SlidersHorizontal size={12} className="text-white" />
                         </div>
-                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">فلترة النتائج</span>
+                        <span className="text-xs font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">فلترة النتائج</span>
                         {hasActiveFilters && (
                             <span className="bg-indigo-100 text-indigo-700 text-[7px] font-black px-1.5 py-0.5 uppercase">فلتر نشط</span>
                         )}
@@ -231,9 +231,9 @@ export const Appointments = () => {
                     {hasActiveFilters && (
                         <button
                             onClick={() => { setSearchTerm(''); setFilterDay('all'); setFilterTeacher('all'); }}
-                            className="flex items-center gap-1 text-[9px] font-black text-rose-500 hover:text-rose-700 transition-colors"
+                            className="flex items-center gap-1 border border-rose-200 dark:border-rose-900/50 px-2 py-1 bg-white dark:bg-slate-900 text-[10px] font-black text-rose-500 hover:text-rose-700 transition-colors"
                         >
-                            <X size={10} /> إعادة ضبط
+                            <X size={12} /> إعادة ضبط
                         </button>
                     )}
                 </div>
@@ -260,7 +260,7 @@ export const Appointments = () => {
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
+                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-[10px] font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
                             <option value="all">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
@@ -272,7 +272,7 @@ export const Appointments = () => {
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
+                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-[10px] font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
                             <option value="all">جميع المعلمات</option>
                             {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
@@ -337,9 +337,9 @@ export const Appointments = () => {
 
                                                 <button
                                                     onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 font-black text-[10px] transition-all flex items-center justify-center gap-1"
+                                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 font-black text-xs transition-all flex items-center justify-center gap-1.5"
                                                 >
-                                                    <CheckCircle2 size={11} /> تأكيد الإنجاز
+                                                    <CheckCircle2 size={14} /> تأكيد الإنجاز
                                                 </button>
                                             </div>
                                         );
