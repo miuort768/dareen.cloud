@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Clock, CalendarCheck, PlayCircle, Zap } from 'lucide-react';
+import { GraduationCap, Clock, PlayCircle, Zap, HeadphoneOff, Headphones } from 'lucide-react';
 import type { User } from '../../../types/auth';
 
 interface ActiveSession {
@@ -61,39 +61,40 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}
             />
 
-            <div className="relative z-10 px-4 md:px-6 py-4 md:py-7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                {/* Left: Icon + Name */}
-                <div className="flex items-center gap-3">
-                    {/* Icon box — sharp rectangle, no rotation */}
-                    <div className="bg-white/15 border border-white/20 px-3 py-2 flex items-center gap-2 shrink-0">
-                        <GraduationCap size={16} className="text-white/80" />
-                        <span className="text-xs md:text-sm font-black text-white whitespace-nowrap truncate max-w-[140px] md:max-w-none">
+            <div className="relative z-10 px-4 md:px-6 py-4 md:py-6 flex items-center justify-between gap-3">
+
+                {/* ── Left: Icon + Name (no box) ── */}
+                <div className="flex items-center gap-2.5 min-w-0">
+                    <GraduationCap size={18} className="text-white/80 shrink-0" />
+                    <div className="min-w-0">
+                        <p className="text-[8px] font-black text-white/40 uppercase tracking-widest leading-none mb-0.5 hidden md:block">
+                            {isTeacher ? 'معلمة دارين' : 'مدير النظام'}
+                        </p>
+                        <h1 className="text-sm md:text-base font-black text-white truncate leading-none">
                             {isTeacher ? `أ. ${currentUser?.name}` : 'لوحة التحكم'}
-                        </span>
+                        </h1>
                     </div>
 
-                    {/* Date — hidden on mobile */}
-                    <div className="hidden md:flex items-center gap-1.5 bg-white/10 border border-white/15 px-2.5 py-1.5">
-                        <CalendarCheck size={10} className="text-white/60" />
-                        <span className="text-[9px] font-black text-white/70 whitespace-nowrap">
+                    {/* Date on md+ only */}
+                    <div className="hidden md:flex items-center gap-1.5 text-white/50 mr-2">
+                        <span className="text-[9px] font-bold">
                             {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
                         </span>
                     </div>
-                    <span className="text-[8px] font-bold text-white/30 hidden lg:inline">معهد دارين للتعليم والتدريب</span>
                 </div>
 
-                {/* Right: Clock + Active session + XP */}
-                <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                {/* ── Right: Active session + Clock (no box) + Support btn ── */}
+                <div className="flex items-center gap-3 shrink-0">
 
-                    {/* Active Session Live Timer */}
+                    {/* Active Session */}
                     {isTeacher && activeSessions.length > 0 && activeSessions.map(session => (
                         <div
                             key={session.id}
-                            className="flex items-center gap-2 px-3 py-2 bg-emerald-500/20 border border-emerald-400/40 text-white animate-pulse"
+                            className="hidden sm:flex items-center gap-1.5 text-white animate-pulse"
                         >
                             <PlayCircle size={13} className="text-emerald-300 shrink-0" />
                             <div>
-                                <p className="text-[7px] font-black opacity-70 uppercase leading-none mb-0.5">{session.subject} — جارٍ الآن</p>
+                                <p className="text-[7px] font-black opacity-60 uppercase leading-none">{session.subject}</p>
                                 <p className="text-xs font-black tabular-nums font-mono leading-none">
                                     {formatElapsed(session.startedAt)}
                                 </p>
@@ -101,24 +102,30 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                         </div>
                     ))}
 
-                    {/* Clock Widget */}
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white/15 border border-white/20">
-                        <Clock size={12} className="text-white/60" />
-                        <div>
-                            <p className="text-[7px] font-black text-white/40 uppercase leading-none mb-0.5 hidden md:block">توقيت دارين</p>
-                            <p className="text-xs md:text-sm font-black text-white tabular-nums font-mono leading-none">
-                                {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                            </p>
-                        </div>
+                    {/* Clock — no box, just text */}
+                    <div className="flex items-center gap-1.5 text-white">
+                        <Clock size={12} className="text-white/50 shrink-0" />
+                        <p className="text-xs md:text-sm font-black tabular-nums font-mono leading-none">
+                            {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </p>
                     </div>
 
-                    {/* XP badge for teacher */}
+                    {/* XP indicator — teacher only, desktop */}
                     {isTeacher && (
-                        <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 bg-amber-400/20 border border-amber-400/30">
-                            <Zap size={11} className="text-amber-300 fill-current" />
-                            <span className="text-[9px] font-black text-amber-200">XP نشط</span>
+                        <div className="hidden sm:flex items-center gap-1 text-amber-200">
+                            <Zap size={11} className="fill-current shrink-0" />
+                            <span className="text-[9px] font-black">XP</span>
                         </div>
                     )}
+
+                    {/* Support Request Button */}
+                    <button
+                        onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
+                        className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white px-2.5 py-1.5 text-[9px] md:text-[10px] font-black uppercase tracking-wider transition-all"
+                    >
+                        <Headphones size={12} className="shrink-0" />
+                        <span className="hidden sm:inline">طلب دعم</span>
+                    </button>
                 </div>
             </div>
         </div>

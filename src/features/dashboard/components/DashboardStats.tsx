@@ -20,24 +20,25 @@ const colorMap = {
 
 const PremiumStatsCard = ({ title, value, icon: Icon, color, trendUp, trendText }: { title: string, value: string | number, icon: LucideIcon, color: keyof typeof colorMap, trendUp?: boolean, trendText?: string }) => {
     return (
-        <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-none shadow-sm transition-all hover:bg-slate-50">
-            <div className="flex items-center gap-4">
+        <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 md:p-4 rounded-none shadow-sm transition-all hover:bg-slate-50">
+            <div className="flex items-center gap-2 md:gap-4">
                 <div className={cn(
-                    "w-10 h-10 flex items-center justify-center rounded-none border-2 transition-transform",
+                    "w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-none border-2 transition-transform shrink-0",
                     colorMap[color]
                 )}>
-                    <Icon size={18} />
+                    <Icon size={14} className="md:hidden" />
+                    <Icon size={18} className="hidden md:block" />
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                    <p className="text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-1">{title}</p>
-                    <div className="flex items-baseline gap-2">
-                        <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tighter tabular-nums leading-none">
+                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 md:mb-1 truncate">{title}</p>
+                    <div className="flex items-baseline gap-1.5">
+                        <h3 className="text-base md:text-xl font-black text-slate-900 dark:text-white tracking-tighter tabular-nums leading-none">
                             {value}
                         </h3>
                         {trendText && (
                             <span className={cn(
-                                "text-[9px] font-bold px-1 py-0.5 rounded-none border",
+                                "text-[7px] md:text-[9px] font-bold px-1 py-0.5 rounded-none border hidden sm:inline",
                                 trendUp ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100"
                             )}>
                                 {trendUp ? '+' : ''}{trendText}
