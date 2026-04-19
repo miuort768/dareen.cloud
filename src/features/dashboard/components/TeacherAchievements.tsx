@@ -15,7 +15,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-sm rounded-none h-full flex flex-col overflow-hidden animate-in fade-in duration-700">
+        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border-y md:border border-slate-200 dark:border-slate-800 shadow-sm rounded-none h-full flex flex-col overflow-hidden animate-in fade-in duration-700">
             {/* Upper Header Decoration */}
             <div className="h-1 w-full bg-gradient-to-r from-emerald-500 via-indigo-500 to-indigo-600"></div>
             
@@ -26,13 +26,13 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         <div className="w-9 h-9 md:w-12 md:h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                             <TrendingUp size={24} strokeWidth={2.5} />
                         </div>
-                        <div>
-                            <h3 className="font-black text-xs md:text-sm text-slate-900 dark:text-white leading-none">
+                        <div className="min-w-0">
+                            <h3 className="font-black text-[10px] md:text-sm text-slate-900 dark:text-white leading-none truncate">
                                 {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي المتوقع'}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
                                 <span className="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                                <span className="text-[8px] font-black text-slate-400 tracking-widest uppercase">مؤشرات الأداء</span>
+                                <span className="text-[7px] md:text-[8px] font-black text-slate-400 tracking-widest uppercase">مؤشرات الأداء</span>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-3 md:p-6 shadow-sm rounded-none border-t-2 border-t-amber-500 h-full flex flex-col animate-in fade-in duration-700">
+        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border-y md:border border-slate-200 dark:border-slate-800 p-3 md:p-6 shadow-sm rounded-none border-t-2 border-t-amber-500 h-full flex flex-col animate-in fade-in duration-700">
             <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 md:w-10 md:h-10 bg-amber-50 text-amber-600 flex items-center justify-center">

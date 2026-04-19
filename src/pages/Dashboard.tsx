@@ -55,7 +55,7 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-10 overflow-x-hidden text-sm" dir="rtl">
+        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-[120px] overflow-x-hidden text-sm" dir="rtl">
             
             {/* Modern Gradient Header */}
             <DashboardHeader
@@ -63,7 +63,7 @@ export const Dashboard = () => {
                 currentUser={currentUser}
             />
 
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 mt-6 space-y-6">
+            <div className="max-w-[1600px] mx-auto px-0 md:px-6 mt-6 space-y-6">
                 
                 {/* Row 1: Key Statistics (Sharp Floating Cards) */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -84,7 +84,7 @@ export const Dashboard = () => {
 
                         {/* Session Timeline Card - only shows if sessions exist */}
                         {(stats.todayTimeline || []).length > 0 && (
-                            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+                            <div className="bg-white dark:bg-slate-900 border-y md:border border-slate-200 dark:border-slate-800 shadow-sm p-4">
                                 <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
                             </div>
                         )}
