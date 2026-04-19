@@ -249,7 +249,7 @@ export const Sidebar = () => {
             </div>
 
             {/* Mobile Bottom Navigation - Redesigned to match image */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] overflow-hidden">
                 {[
                     ...filteredNavigation.slice(0, 4)
                 ].map((item) => (
@@ -298,7 +298,7 @@ export const Sidebar = () => {
 
             {/* Mobile Full Menu Overlay - Modern Sheet Design */}
             <div className={cn(
-                "fixed inset-0 z-[110] bg-gray-950/40 backdrop-blur-md lg:hidden transition-all duration-500",
+                "fixed inset-0 z-[110] bg-gray-950/40 backdrop-blur-md lg:hidden transition-all duration-500 overflow-hidden",
                 mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             )}>
                 <div

@@ -28,12 +28,12 @@ export const Layout = () => {
                     "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
                         ? "p-0" 
-                        : "px-2 md:px-5 lg:px-8 pt-10 md:pt-12 pb-[140px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
+                        : "px-2 md:px-5 lg:px-8 pt-10 md:pt-12 pb-[140px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 md:shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(
                         "animate-in fade-in duration-500 ease-out h-full",
-                        !isChatOnly && "slide-in-from-bottom-4"
+                        !isChatOnly && "md:slide-in-from-bottom-4"
                     )}>
                         {/* We use specific loaders inside pages, but this handles lazy chunk loading */}
                         <React.Suspense fallback={<PageLoader />}>

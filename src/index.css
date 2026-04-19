@@ -50,7 +50,18 @@
     padding: 0;
     scrollbar-gutter: stable;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
     position: relative;
+    background-color: rgb(var(--bg-surface));
+    color: rgb(var(--text-main));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    touch-action: pan-y;
   }
 
   /* Custom Premium Scrollbar */
@@ -79,18 +90,6 @@
 
   .dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(var(--color-primary), 0.4);
-  }
-
-  body {
-    background-color: rgb(var(--bg-surface));
-    color: rgb(var(--text-main));
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.5s ease, color 0.5s ease;
-    overflow-x: hidden;
-    position: relative;
-    touch-action: pan-y;
   }
 
   #root {
@@ -431,11 +430,6 @@
     backdrop-filter: blur(24px);
   }
 
-  /* --- Sharp Premium Design System --- */
-  .sharp-card {
-    @apply bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all;
-  }
-
   .sharp-card-primary {
     @apply bg-white dark:bg-slate-900 border-2 border-primary-600 dark:border-teal-400 rounded-none shadow-[2px_2px_0px_0px_rgba(var(--color-primary),0.2)] transition-all;
   }
@@ -498,17 +492,6 @@
   .premium-table tr:last-child {
     @apply border-b-0;
   }
-
-  .table-cell-id {
-    @apply font-mono text-xs text-gray-400 bg-gray-50 px-2 py-1 dark:bg-gray-800 dark:text-gray-500;
-  }
-
-  .table-action-btn {
-    @apply p-2 rounded-none transition-none shadow-none;
-  }
-
-  /* --- Mobile Optimization (Phone Only) --- */
-  @media (max-width: 768px) {
 
 
 
