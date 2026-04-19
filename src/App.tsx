@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
-import { usePageLoader } from './hooks/usePageLoader';
 
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
@@ -89,9 +88,6 @@ const DashboardRedirect = () => {
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
-  
-  // Use the elegant NProgress loader
-  usePageLoader();
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
