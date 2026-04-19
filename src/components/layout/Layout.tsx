@@ -28,7 +28,7 @@ export const Layout = () => {
                     "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
                         ? "p-0" 
-                        : "px-4 pt-6 md:pt-8 md:px-5 lg:px-8 pb-32 lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
+                        : "px-4 pt-6 md:pt-8 md:px-5 lg:px-8 pb-[90px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(
