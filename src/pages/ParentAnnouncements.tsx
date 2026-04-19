@@ -115,7 +115,7 @@ export const ParentAnnouncements = () => {
                 
                 <div className="relative z-10 space-y-2 mt-4 md:mt-0">
                     <h1 className="text-xl md:text-5xl font-black italic tracking-tighter leading-none">نشرة إعلانات المنصة</h1>
-                    <p className="text-indigo-100/70 text-[10px] md:text-sm font-bold max-w-lg mx-auto leading-relaxed">ابق على اطلاع بأحدث التنبيهات والفعاليات داخل المؤسسة</p>
+                    <p className="text-indigo-100/70 text-[8px] md:text-sm font-bold max-w-lg mx-auto leading-relaxed">ابق على اطلاع بأحدث التنبيهات والفعاليات داخل المؤسسة</p>
                 </div>
 
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" />
