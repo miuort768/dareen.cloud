@@ -79,23 +79,21 @@ export const Dashboard = () => {
 
                 {/* Main Content Area */}
                 {isTeacher ? (
-                    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <ModernAnnouncements />
-                        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md rounded-none border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+
+                        {/* Session Timeline Card */}
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-4">
                             <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-                            <div>
-                                <TeacherAchievements
-                                    stats={stats}
-                                    lowBalanceStudents={lowBalanceStudents}
-                                    isTeacher={true}
-                                />
-                            </div>
-                            <div>
-                                <TasksAndRequests tasks={tasks} />
-                            </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <TeacherAchievements
+                                stats={stats}
+                                lowBalanceStudents={lowBalanceStudents}
+                                isTeacher={true}
+                            />
+                            <TasksAndRequests tasks={tasks} />
                         </div>
                     </div>
                 ) : (
