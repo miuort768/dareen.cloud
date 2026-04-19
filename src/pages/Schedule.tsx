@@ -226,7 +226,7 @@ export const Schedule = () => {
     );
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 px-4 lg:px-8 pb-[150px] pt-2" dir="rtl">
+        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 px-4 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
             <div className="space-y-4 pb-[120px] md:pb-6 animate-in fade-in duration-500">
 
                 {/* ── Gradient Header ── */}
