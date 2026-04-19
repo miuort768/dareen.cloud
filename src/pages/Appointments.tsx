@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { 
     Calendar, Clock, Search, User, GraduationCap, 
-    BookOpen, Filter, X, CheckCircle2, Zap, Target,
+    BookOpen, Filter, X, CheckCircle2,
     ShieldCheck, Activity, ArrowRight, SlidersHorizontal
 } from 'lucide-react';
-import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
