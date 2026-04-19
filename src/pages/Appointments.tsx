@@ -184,7 +184,6 @@ export const Appointments = () => {
     }
 
     return (
-    return (
         <div className="space-y-4 pb-20 min-h-full md:animate-in md:fade-in md:duration-700" dir="rtl">
 
             {/* ─── Modern Header Banner ─── */}
