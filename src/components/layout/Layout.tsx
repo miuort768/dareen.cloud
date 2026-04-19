@@ -16,19 +16,19 @@ export const Layout = () => {
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
-        <div className="h-screen overflow-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
+        <div className="h-screen overflow-x-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
             {/* Sidebar - Hidden for chat users */}
             {!isChatOnly && <Sidebar />}
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col transition-all duration-300">
+            <div className="flex-1 flex flex-col transition-all duration-300 w-full overflow-x-hidden">
                 {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
 
                 <main className={cn(
-                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full",
+                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
                         ? "p-0" 
-                        : "px-4 pt-10 md:pt-12 md:px-5 lg:px-8 pb-[140px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
+                        : "px-2 md:px-5 lg:px-8 pt-10 md:pt-12 pb-[140px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(
