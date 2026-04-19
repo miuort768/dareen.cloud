@@ -2,7 +2,6 @@ import { Moon, Sun, User, GraduationCap } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
-import { useApp } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { cn } from '../../lib/utils';
 
