@@ -9,13 +9,15 @@ import {
     Trash2,
     User,
     History,
-    Zap
+    Zap,
+    X,
+    BookOpen,
+    TrendingUp
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
-// ar is not used here but could be for date formatting in the future, removing to fix build error
 
 export const Evaluations = () => {
     const { currentUser } = useApp();
@@ -25,7 +27,6 @@ export const Evaluations = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [historyModalStudent, setHistoryModalStudent] = useState<any | null>(null);
     
-    // Form state
     const [formData, setFormData] = useState({
         studentId: '',
         rating: 'ممتاز',
@@ -35,29 +36,22 @@ export const Evaluations = () => {
 
     const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
 
-    useEffect(() => {
-        fetchData();
-    }, [currentUser]);
+    useEffect(() => { fetchData(); }, [currentUser]);
 
     const fetchData = async () => {
         try {
             setIsLoading(true);
-            
             if (currentUser?.role === 'parent') {
                 const myChildren = await api.get<any[]>('/parents/my-children');
                 setStudents(myChildren);
-                
                 const evalsPromises = myChildren.map(c => api.get<any[]>(`/evaluations/student/${c.id}`));
                 const allEvalsResults = await Promise.all(evalsPromises);
                 setEvaluations(allEvalsResults.flat());
             } else {
                 const studentsRes = await api.get<any[]>('/students');
                 setStudents(studentsRes);
-
                 let evalsUrl = '/evaluations';
-                if (currentUser?.role === 'teacher') {
-                    evalsUrl = `/evaluations/teacher/${currentUser.id}`;
-                }
+                if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
                 const evalsRes = await api.get<any[]>(evalsUrl);
                 setEvaluations(evalsRes);
             }
@@ -79,7 +73,7 @@ export const Evaluations = () => {
                 )
             );
         }
-        return students; // For parents/others, show whatever students state has
+        return students;
     }, [students, currentUser]);
 
     const onSubmit = async (e: any) => {
@@ -110,47 +104,65 @@ export const Evaluations = () => {
     };
 
     const ratingOptions = [
-        { value: 'ممتاز', icon: Star, color: 'text-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-200' },
-        { value: 'جيد جدًا', icon: ThumbsUp, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200' },
-        { value: 'جيد', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' },
-        { value: 'يحتاج تحسين', icon: ThumbsDown, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200' }
+        { value: 'ممتاز', icon: Star, color: 'text-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-200', pill: 'bg-yellow-100 text-yellow-700' },
+        { value: 'جيد جدًا', icon: ThumbsUp, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', pill: 'bg-emerald-100 text-emerald-700' },
+        { value: 'جيد', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200', pill: 'bg-blue-100 text-blue-700' },
+        { value: 'يحتاج تحسين', icon: ThumbsDown, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200', pill: 'bg-rose-100 text-rose-700' }
     ];
 
-    if (isLoading) return <div className="p-8 text-center text-gray-500 animate-pulse font-black">جاري تحميل سجل التقييمات...</div>;
+    // --- Total XP for the group
+    const totalXP = useMemo(() => evaluations.reduce((sum, ev) => sum + (ev.points || 0), 0), [evaluations]);
+
+    if (isLoading) return (
+        <div className="space-y-4 p-6">
+            {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-40 bg-slate-100 animate-pulse rounded-2xl" />
+            ))}
+        </div>
+    );
 
     return (
-        <div className="space-y-8 pb-20 animate-in fade-in duration-500" dir="rtl">
-            {/* Header Banner - Redesigned with White Theme and Geometric Patterns */}
-            <div className="relative bg-white dark:bg-slate-950 p-8 border-b border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
-                {/* Geometric Background Patterns */}
-                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
-                    <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px), radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
-                    <div className="absolute top-10 right-10 w-64 h-64 border-2 border-indigo-500 rotate-45"></div>
-                    <div className="absolute -bottom-20 -left-10 w-48 h-48 border border-emerald-500 rounded-full"></div>
-                </div>
+        <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
 
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
-                            <div className="absolute inset-0 bg-indigo-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                            <Award size={32} strokeWidth={2.5} className="relative z-10" />
+            {/* ─── Soft Modern Header ─── */}
+            <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 px-6 py-8 text-white shadow-lg shadow-indigo-500/20">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
+                <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-inner">
+                            <Award size={28} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tighter uppercase italic">تقييم الطلاب والتحفيز</h1>
-                            <div className="flex items-center gap-3">
-                                <span className="h-[2px] w-8 bg-indigo-500"></span>
-                                <p className="text-slate-500 dark:text-slate-400 text-[8px] sm:text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center gap-2">
-                                    <Zap size={12} className="text-amber-500 fill-current" />
-                                    نظام المكافآت الذكي والتقييم الأكاديمي الشامل
-                                </p>
-                            </div>
+                            <h1 className="text-xl md:text-2xl font-black tracking-tight leading-none mb-1">تقييم الطلاب والتحفيز</h1>
+                            <p className="text-white/70 text-[11px] font-bold flex items-center gap-1.5">
+                                <Zap size={11} className="fill-current" />
+                                نظام المكافآت الذكي والتقييم الأكاديمي الشامل
+                            </p>
                         </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        {/* XP summary chip */}
+                        <div className="bg-white/15 border border-white/20 rounded-xl px-4 py-2 text-center backdrop-blur-sm">
+                            <p className="text-[9px] font-black opacity-60 uppercase tracking-widest">إجمالي النقاط</p>
+                            <p className="text-xl font-black tabular-nums">{totalXP} <span className="text-xs opacity-60">XP</span></p>
+                        </div>
+                        {currentUser?.role !== 'parent' && (
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="flex items-center gap-2 bg-white text-indigo-700 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                            >
+                                <Plus size={16} strokeWidth={3} />
+                                تقييم جديد
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <div className="px-6 md:px-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {/* ─── Student Cards Grid ─── */}
+            <div className="px-2 md:px-0">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                     {teacherStudents.map((student) => {
                         const studentEvals = evaluations
                             .filter(ev => ev.studentId === student.id)
@@ -158,113 +170,139 @@ export const Evaluations = () => {
                         
                         const lastEval = studentEvals[0];
                         const lastRating = lastEval ? ratingOptions.find(r => r.value === lastEval.rating) || ratingOptions[0] : null;
+                        const totalStudentXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0);
 
                         return (
-                            <div key={student.id} className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] flex flex-col group transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_black]">
-                                {/* Student Profile Header */}
-                                <div className="p-4 border-b-2 border-gray-950 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                        <div className="w-10 h-10 bg-white border-2 border-gray-950 flex items-center justify-center text-gray-400 shrink-0">
-                                            <User size={20} />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h4 className="font-black text-sm text-gray-950 dark:text-white truncate">{student.name}</h4>
-                                            <p className="text-[8px] font-black text-gray-500 uppercase tracking-widest">{student.grade}</p>
-                                        </div>
+                            <div key={student.id}
+                                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group"
+                            >
+                                {/* Card Top Accent */}
+                                <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-slate-100')} style={{ background: lastRating ? undefined : '#e2e8f0' }}>
+                                    <div className={cn("h-full w-full", lastRating?.bg ?? 'bg-slate-200')} />
+                                </div>
+
+                                {/* Student Info */}
+                                <div className="p-4 flex items-center gap-3 border-b border-slate-50 dark:border-slate-800">
+                                    <div className="w-11 h-11 rounded-full bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-indigo-900">
+                                        <User size={18} className="text-indigo-500" />
                                     </div>
-                                    <div className="flex flex-col items-end gap-1">
-                                        <span className="bg-yellow-400 text-gray-950 px-2 py-0.5 border-2 border-gray-950 text-[9px] font-black shadow-[1px_1px_0px_0px_black]">
-                                            {student.totalPoints || 0} XP
+                                    <div className="min-w-0 flex-1">
+                                        <h4 className="font-black text-sm text-slate-900 dark:text-white truncate">{student.name}</h4>
+                                        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate flex items-center gap-1">
+                                            <BookOpen size={8} className="shrink-0" />{student.grade}
+                                        </p>
+                                    </div>
+                                    <div className="shrink-0 text-center">
+                                        <span className="bg-amber-400/20 text-amber-700 dark:text-amber-400 text-[9px] font-black px-2 py-0.5 rounded-full border border-amber-200/50">
+                                            {totalStudentXP} XP
                                         </span>
                                     </div>
                                 </div>
 
-                                {/* Last Evaluation Status */}
-                                <div className="p-4 flex-1 flex flex-col">
+                                {/* Last Evaluation */}
+                                <div className="p-4 flex-1 flex flex-col gap-3">
                                     {lastEval ? (
-                                        <div className="space-y-3 mb-4">
+                                        <div className="space-y-2">
                                             <div className="flex items-center justify-between">
-                                                <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest">آخر تقييم</span>
-                                                <div className={cn("flex items-center gap-1 px-2 py-0.5 text-[9px] font-black border-2 border-gray-950 transition-none", lastRating?.bg, lastRating?.color)}>
-                                                    {lastRating?.icon && <lastRating.icon size={10} strokeWidth={3} />}
-                                                    {lastEval.rating}
-                                                </div>
+                                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">آخر تقييم</span>
+                                                {lastRating && (
+                                                    <span className={cn("flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full", lastRating.pill)}>
+                                                        <lastRating.icon size={9} />
+                                                        {lastEval.rating}
+                                                    </span>
+                                                )}
                                             </div>
-                                            <div className="bg-gray-50 dark:bg-gray-800 p-3 border-2 border-dashed border-gray-200 dark:border-gray-700 relative">
-                                                <p className="text-[10px] font-bold text-gray-700 dark:text-gray-300 italic line-clamp-2">
+                                            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-700">
+                                                <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 italic line-clamp-2 leading-relaxed">
                                                     "{lastEval.notes || 'بدون ملاحظات'}"
                                                 </p>
-                                                <History size={10} className="absolute bottom-1.5 left-1.5 text-gray-300" />
+                                                <p className="text-[8px] text-slate-400 mt-1.5">
+                                                    {format(new Date(lastEval.created_at || lastEval.date), 'dd/MM/yyyy')}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                                <TrendingUp size={10} className="text-indigo-400" />
+                                                <span className="text-[9px] text-slate-400 font-bold">{studentEvals.length} تقييم مسجل</span>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="flex-1 flex flex-col items-center justify-center py-4 text-center space-y-2 opacity-40">
-                                            <Award size={24} className="text-gray-300" />
-                                            <p className="text-[8px] font-black uppercase tracking-widest">لم يتم التقييم بعد</p>
+                                        <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
+                                            <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-2 border border-dashed border-slate-200 dark:border-slate-700">
+                                                <Award size={20} className="text-slate-300" />
+                                            </div>
+                                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">لم يتم التقييم بعد</p>
                                         </div>
                                     )}
+                                </div>
 
-                                    {/* Action Buttons */}
-                                    <div className="grid grid-cols-2 gap-2 mt-auto">
+                                {/* Action Buttons */}
+                                {currentUser?.role !== 'parent' && (
+                                    <div className="px-4 pb-4 grid grid-cols-2 gap-2">
                                         <button
                                             onClick={() => { setFormData({ ...formData, studentId: student.id }); setIsModalOpen(true); }}
-                                            className="bg-primary-600 text-white border-2 border-gray-950 px-3 py-2 text-[10px] font-black uppercase tracking-tighter shadow-[2px_2px_0px_0px_black] hover:bg-primary-700 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2"
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20"
                                         >
-                                            <Plus size={14} strokeWidth={3} />
-                                            أضف تقييم
+                                            <Plus size={12} strokeWidth={3} /> أضف تقييم
                                         </button>
                                         <button
                                             onClick={() => setHistoryModalStudent(student)}
-                                            className="bg-white dark:bg-gray-800 text-gray-950 dark:text-white border-2 border-gray-950 px-3 py-2 text-[10px] font-black uppercase tracking-tighter shadow-[2px_2px_0px_0px_black] hover:bg-gray-50 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2"
+                                            className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
                                         >
-                                            <History size={14} strokeWidth={3} />
-                                            السجل ({studentEvals.length})
+                                            <History size={12} /> السجل ({studentEvals.length})
                                         </button>
                                     </div>
-                                </div>
-
-
+                                )}
+                                {currentUser?.role === 'parent' && (
+                                    <div className="px-4 pb-4">
+                                        <button
+                                            onClick={() => setHistoryModalStudent(student)}
+                                            className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
+                                        >
+                                            <History size={12} /> عرض السجل الكامل ({studentEvals.length})
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         );
                     })}
 
                     {teacherStudents.length === 0 && (
-                        <div className="col-span-full py-20 px-4 text-center bg-gray-50 dark:bg-gray-800/20 border-4 border-dashed border-gray-950">
-                            <div className="w-24 h-24 mx-auto bg-white dark:bg-gray-800 shadow-xl border-4 border-gray-950 flex items-center justify-center mb-6">
-                                <User size={48} className="text-gray-300" />
+                        <div className="col-span-full py-20 flex flex-col items-center justify-center text-center bg-slate-50 dark:bg-slate-900/30 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800">
+                            <div className="w-20 h-20 mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-700">
+                                <User size={36} className="text-slate-300" />
                             </div>
-                            <h3 className="text-2xl font-black text-gray-950 dark:text-white mb-2 uppercase tracking-tighter">لا يوجد طلاب مسجلون حالياً</h3>
-                            <p className="text-sm font-black text-gray-500 max-w-md mx-auto uppercase">بمجرد تعيين طلاب لكِ في البرامج التعليمية، سيظهرون هنا تلقائياً لتقييمهم.</p>
+                            <h3 className="text-lg font-black text-slate-700 dark:text-white mb-1">لا يوجد طلاب مسجلون حالياً</h3>
+                            <p className="text-sm text-slate-400 max-w-xs">بمجرد تعيين طلاب لكِ، سيظهرون هنا تلقائياً.</p>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Modal - Unified Form */}
+            {/* ─── Add Evaluation Modal ─── */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden">
-                        <div className="p-4 border-b-2 border-gray-950 bg-primary-600 text-white flex justify-between items-center relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-                            <h3 className="text-lg font-black flex items-center gap-2 relative z-10 uppercase tracking-tighter">
-                                <Award size={20} />
-                                {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'تقييم طالب جديد'}
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
+                        {/* Modal Header */}
+                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 rounded-t-2xl text-white">
+                            <h3 className="text-base font-black flex items-center gap-2">
+                                <Award size={18} />
+                                {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'إضافة تقييم جديد'}
                             </h3>
-                            <button onClick={() => setIsModalOpen(false)} className="bg-white text-gray-950 w-8 h-8 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] hover:bg-gray-100 transition-colors font-black text-lg">
-                                &times;
+                            <button onClick={() => { setIsModalOpen(false); resetForm(); }} className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors">
+                                <X size={16} />
                             </button>
                         </div>
                         
-                        <div className="p-6 overflow-y-auto custom-scrollbar">
+                        <div className="p-6 overflow-y-auto space-y-6">
                             <form id="evaluation-form" onSubmit={onSubmit} className="space-y-6">
                                 {!formData.studentId && (
                                     <div>
-                                        <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em]">اختر الطالب</label>
+                                        <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">اختر الطالب</label>
                                         <select
                                             value={formData.studentId}
                                             onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
                                             required
-                                            className="w-full border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-2.5 font-black text-xs text-gray-950 dark:text-white focus:ring-2 focus:ring-primary-600/20 outline-none appearance-none cursor-pointer"
+                                            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-3 font-bold text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
                                         >
                                             <option value="">-- اختر من قائمة طلابك --</option>
                                             {teacherStudents.map(s => (
@@ -275,8 +313,8 @@ export const Evaluations = () => {
                                 )}
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-[0.2em]">مستوى التميز</label>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <label className="block text-xs font-black text-slate-500 mb-3 uppercase tracking-widest">مستوى التميز</label>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                         {ratingOptions.map((opt) => {
                                             const isSelected = formData.rating === opt.value;
                                             const OptIcon = opt.icon;
@@ -286,174 +324,147 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
-                                                        isSelected 
-                                                            ? cn(opt.bg, "border-gray-950 translate-x-0.5 translate-y-0.5 shadow-none", opt.color) 
-                                                            : "border-gray-950 bg-white dark:bg-gray-800 text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-[2px_2px_0px_0px_black]"
+                                                        "p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
+                                                        isSelected
+                                                            ? cn(opt.bg, opt.border, opt.color, "shadow-md scale-105")
+                                                            : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:border-slate-300"
                                                     )}
                                                 >
-                                                    <OptIcon size={18} strokeWidth={isSelected ? 4 : 2} className={cn(isSelected && "animate-bounce")} />
-                                                    <span className="text-[9px] font-black uppercase tracking-widest">{opt.value}</span>
+                                                    <OptIcon size={18} strokeWidth={isSelected ? 3 : 2} className={cn(isSelected && "animate-bounce")} />
+                                                    <span className="text-[9px] font-black uppercase tracking-widest leading-none">{opt.value}</span>
                                                 </button>
-                                            )
+                                            );
                                         })}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em] flex justify-between">
-                                        <span>نقاط المكافأة (XP)</span>
-                                        <div className="flex gap-2">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-xs font-black text-slate-500 uppercase tracking-widest">نقاط المكافأة (XP)</label>
+                                        <div className="flex gap-1.5">
                                             {[5, 10, 20, 50].map(p => (
-                                                <button 
-                                                    key={p} 
-                                                    type="button" 
+                                                <button
+                                                    key={p}
+                                                    type="button"
                                                     onClick={() => setFormData({...formData, points: p})}
-                                                    className="bg-yellow-400 text-gray-950 border-2 border-gray-950 px-2 font-black text-[9px] hover:bg-yellow-500"
-                                                >
-                                                    +{p}
-                                                </button>
+                                                    className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 rounded-lg px-2 py-0.5 font-black text-[9px] transition-colors"
+                                                >+{p}</button>
                                             ))}
                                         </div>
-                                    </label>
-                                    <div className="flex">
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-10 h-10 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-center shrink-0">
+                                            <Zap size={16} className="text-amber-500 fill-current" />
+                                        </div>
                                         <input
                                             type="number"
                                             value={formData.points || ''}
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
                                             placeholder="0"
                                             min="0"
-                                            className="w-full border-2 border-l-0 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-2.5 font-black text-xl text-yellow-600 text-center outline-none focus:bg-yellow-50 transition-colors"
+                                            className="flex-1 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-2.5 font-black text-lg text-amber-600 text-center outline-none focus:ring-2 focus:ring-amber-400/30"
                                         />
-                                        <div className="bg-yellow-400 text-gray-950 px-4 flex items-center justify-center border-2 border-gray-950 border-r-0 shrink-0 shadow-[2px_0px_0px_0px_black_inset]">
-                                            <Zap size={18} className="fill-current" />
-                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-black text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-[0.2em]">رسالة الإشادة (تظهر لولي الأمر)</label>
+                                    <label className="block text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">رسالة الإشادة (تظهر لولي الأمر)</label>
                                     <textarea
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                                         rows={3}
-                                        className="w-full border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 p-3 shadow-inner text-xs font-bold transition-all focus:bg-gray-50 dark:focus:bg-gray-700 outline-none resize-none placeholder:text-gray-300"
+                                        className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none placeholder:text-slate-300 transition-all"
                                         placeholder="مثال: أداء ممتاز اليوم..."
                                     />
                                 </div>
                             </form>
                         </div>
                         
-                        <div className="p-4 border-t-2 border-gray-950 bg-gray-50 dark:bg-gray-800 flex justify-end gap-3 shrink-0">
-                            <button
-                                type="button"
-                                onClick={() => setIsModalOpen(false)}
-                                className="px-6 py-2.5 bg-white dark:bg-gray-700 border-2 border-gray-950 text-gray-950 dark:text-white text-[10px] font-black uppercase tracking-widest hover:bg-gray-100 transition-all shadow-[2px_2px_0px_0px_black] active:translate-y-0.5 active:shadow-none"
-                            >
+                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+                            <button type="button" onClick={() => { setIsModalOpen(false); resetForm(); }} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white rounded-xl text-xs font-black hover:bg-slate-200 transition-all">
                                 إلغاء
                             </button>
-                            <button
-                                type="submit"
-                                form="evaluation-form"
-                                className="px-8 py-2.5 bg-primary-600 text-white border-2 border-gray-950 text-[10px] font-black uppercase tracking-widest hover:bg-primary-700 transition-all shadow-[3px_3px_0px_0px_black] active:translate-y-0.5 active:shadow-none flex items-center gap-2"
-                            >
-                                <CheckCircle2 size={16} />
-                                إرسال التقييم
+                            <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                                <CheckCircle2 size={14} /> إرسال التقييم
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* History Modal - Technical Sharp Style (Refined & Compact) */}
+            {/* ─── History Modal ─── */}
             {historyModalStudent && (
-                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden">
-                        {/* Header - White with Pattern */}
-                        <div className="p-4 border-b-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-slate-950 flex justify-between items-center relative overflow-hidden shrink-0">
-                            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '12px 12px' }}></div>
-                            <div className="flex items-center gap-3 relative z-10">
-                                <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-400">
-                                    <User size={20} />
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100 dark:border-slate-800">
+                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center rounded-t-2xl bg-slate-50 dark:bg-slate-950">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl flex items-center justify-center border border-indigo-100 dark:border-indigo-900">
+                                    <User size={18} className="text-indigo-500" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-black uppercase tracking-tighter text-slate-900 dark:text-white">سجل التقييمات الكامل</h3>
-                                    <p className="text-indigo-600 dark:text-indigo-400 text-[9px] font-black uppercase tracking-widest">{historyModalStudent.name}</p>
+                                    <h3 className="text-sm font-black text-slate-900 dark:text-white">سجل التقييمات الكامل</h3>
+                                    <p className="text-indigo-600 dark:text-indigo-400 text-[10px] font-black">{historyModalStudent.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setHistoryModalStudent(null)} className="w-8 h-8 flex items-center justify-center bg-slate-900 text-white border border-slate-900 hover:bg-rose-600 transition-all font-black text-lg relative z-10">
-                                &times;
+                            <button onClick={() => setHistoryModalStudent(null)} className="w-8 h-8 bg-slate-200 dark:bg-slate-700 hover:bg-rose-100 hover:text-rose-600 rounded-lg flex items-center justify-center transition-colors">
+                                <X size={16} />
                             </button>
                         </div>
 
-                        {/* Content area - More compact */}
-                        <div className="p-4 overflow-y-auto custom-scrollbar bg-slate-50/50 dark:bg-slate-950">
-                            <div className="space-y-4">
-                                {evaluations
-                                    .filter(ev => ev.studentId === historyModalStudent.id)
-                                    .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
-                                    .map((ev) => {
-                                        const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
-                                        return (
-                                            <div key={ev.id} className="relative pl-6 border-l border-slate-200 dark:border-slate-800 pb-4 last:pb-0">
-                                                <div className="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-slate-900 dark:bg-white border border-white dark:border-slate-900 rounded-none z-10"></div>
-                                                
-                                                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 shadow-none hover:border-indigo-500 transition-all group">
-                                                    <div className="flex items-center justify-between mb-2">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className={cn("px-2 py-0.5 text-[8px] font-black border tracking-widest uppercase flex items-center gap-1.5", r.bg, r.color, "border-current opacity-90")}>
-                                                                <r.icon size={10} strokeWidth={3} />
-                                                                {ev.rating}
-                                                            </div>
-                                                            {ev.points > 0 && (
-                                                                <span className="text-[8px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 border border-amber-100">
-                                                                    +{ev.points} XP
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-[9px] font-black text-slate-400 font-mono tracking-tighter">
-                                                                {format(new Date(ev.created_at || ev.date), 'dd/MM/yy')}
-                                                            </span>
-                                                            {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
-                                                                <button 
-                                                                    onClick={() => handleDelete(ev.id)}
-                                                                    className="text-slate-300 hover:text-rose-500 transition-colors p-1"
-                                                                >
-                                                                    <Trash2 size={12} />
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 italic leading-snug border-r-2 border-indigo-500/10 pr-3">
-                                                        "{ev.notes || 'لا يوجد ملاحظات'}"
-                                                    </p>
-                                                    <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2">
-                                                        <User size={8} className="text-slate-300" />
-                                                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest opacity-60">
-                                                            بواسطة: {ev.teacherName || 'نظام آلي'}
+                        <div className="p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-950">
+                            {evaluations
+                                .filter(ev => ev.studentId === historyModalStudent.id)
+                                .sort((a, b) => new Date(b.created_at || b.date).getTime() - new Date(a.created_at || a.date).getTime())
+                                .map((ev) => {
+                                    const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
+                                    return (
+                                        <div key={ev.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm hover:border-indigo-200 transition-all group">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <div className="flex items-center gap-2">
+                                                    <span className={cn("flex items-center gap-1.5 text-[9px] font-black px-2 py-1 rounded-full", r.pill)}>
+                                                        <r.icon size={10} strokeWidth={3} />
+                                                        {ev.rating}
+                                                    </span>
+                                                    {ev.points > 0 && (
+                                                        <span className="text-[8px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                                                            +{ev.points} XP
                                                         </span>
-                                                    </div>
+                                                    )}
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[9px] font-bold text-slate-400 tabular-nums">
+                                                        {format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}
+                                                    </span>
+                                                    {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
+                                                        <button onClick={() => handleDelete(ev.id)} className="text-slate-300 hover:text-rose-500 transition-colors p-1 rounded-lg hover:bg-rose-50">
+                                                            <Trash2 size={12} />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
-                                        );
-                                    })}
-                                
-                                {evaluations.filter(ev => ev.studentId === historyModalStudent.id).length === 0 && (
-                                    <div className="py-12 text-center border-2 border-dashed border-slate-100 dark:border-slate-800">
-                                        <History size={32} className="mx-auto text-slate-100 mb-3" />
-                                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات حالياً</p>
-                                    </div>
-                                )}
-                            </div>
+                                            <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 italic leading-relaxed border-r-2 border-indigo-200 pr-3">
+                                                "{ev.notes || 'لا يوجد ملاحظات'}"
+                                            </p>
+                                            <div className="mt-2 pt-2 border-t border-slate-50 dark:border-slate-800 flex items-center gap-1.5">
+                                                <User size={8} className="text-slate-300" />
+                                                <span className="text-[8px] font-bold text-slate-400">بواسطة: {ev.teacherName || 'نظام آلي'}</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
+
+                            {evaluations.filter(ev => ev.studentId === historyModalStudent.id).length === 0 && (
+                                <div className="py-12 text-center rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                                    <History size={28} className="mx-auto text-slate-200 mb-3" />
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات حالياً</p>
+                                </div>
+                            )}
                         </div>
 
-                        <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-center shrink-0">
-                            <button 
-                                onClick={() => setHistoryModalStudent(null)}
-                                className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] hover:bg-slate-800 transition-all border border-transparent"
-                            >
-                                إغلاق النافذة
+                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center rounded-b-2xl bg-white dark:bg-slate-900">
+                            <button onClick={() => setHistoryModalStudent(null)} className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs rounded-xl hover:opacity-90 transition-all">
+                                إغلاق
                             </button>
                         </div>
                     </div>
