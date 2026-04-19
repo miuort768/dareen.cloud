@@ -32,14 +32,14 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     };
 
     return (
-        <div className="group relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between">
+        <div className="group relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-sm md:shadow-[8px_8px_0px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between">
             {/* Design accents */}
             <div className="absolute top-0 right-0 w-2 h-full bg-primary-600"></div>
             
             <div className="space-y-6">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[3px_3px_0px_0px_black] transform -rotate-3 text-lg md:text-xl font-black shrink-0">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-sm md:shadow-[3px_3px_0px_0px_black] transform -rotate-3 text-lg md:text-xl font-black shrink-0">
                             {getGradeDisplay(studentGrade)}
                         </div>
                         <div className="min-w-0">
@@ -64,7 +64,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                         <Clock size={14} className="text-gray-950 md:size-[16px]" />
                         <span className="text-[8px] md:text-[10px] font-black text-gray-950 uppercase tracking-widest italic">الموعد</span>
                     </div>
-                    <div className="text-base md:text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-3 md:px-4 py-1 inline-block shadow-[2px_2px_0px_0px_black] tracking-tight">
+                    <div className="text-base md:text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-3 md:px-4 py-1 inline-block shadow-sm md:shadow-[2px_2px_0px_0px_black] tracking-tight">
                         {session.time}
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <button
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     className={cn(
-                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-sm md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
                         session.status === 'completed'
                             ? 'bg-emerald-500 text-white border-gray-950'
                             : 'bg-white border-gray-950 text-emerald-600 hover:bg-emerald-50'
@@ -107,7 +107,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <button
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     className={cn(
-                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
+                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-sm md:shadow-[4px_4px_0px_0px_black] active:shadow-none",
                         session.status === 'cancelled'
                             ? 'bg-rose-600 text-white border-gray-950'
                             : 'bg-white border-gray-950 text-rose-600 hover:bg-rose-50'

@@ -50,6 +50,7 @@
     padding: 0;
     scrollbar-gutter: stable;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
 
   /* Custom Premium Scrollbar */
@@ -88,6 +89,7 @@
     padding: 0;
     transition: background-color 0.5s ease, color 0.5s ease;
     overflow-x: hidden;
+    position: relative;
   }
 
   #root {
@@ -525,7 +527,7 @@
     }
 
     .premium-table tbody tr {
-      @apply mb-4 bg-white border-2 border-gray-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] p-4 dark:bg-gray-900 dark:border-gray-800 rounded-none !important;
+      @apply mb-4 bg-white border-2 border-gray-900 shadow-sm p-4 dark:bg-gray-900 dark:border-gray-800 rounded-none !important;
     }
 
     .premium-table td {
