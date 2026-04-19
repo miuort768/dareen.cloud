@@ -1,5 +1,4 @@
 import { API_BASE_URL } from '../config/api';
-import NProgress from 'nprogress';
 
 type FetchOptions = RequestInit & {
     params?: Record<string, string>;

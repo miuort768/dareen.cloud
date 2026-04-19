@@ -4,7 +4,6 @@ import {
     BookOpen, Filter, X, CheckCircle2,
     ShieldCheck, Activity, ArrowRight, SlidersHorizontal
 } from 'lucide-react';
-import { Skeleton } from '../components/ui/Skeleton';
 import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';

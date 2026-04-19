@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { StatsCard } from '../shared/components/StatsCard';
-import { Skeleton } from '../components/ui/Skeleton';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { useApp } from '../context/useApp';
@@ -16,6 +15,7 @@ import {
     type TeacherInvoiceFormData,
     type InvoiceStats,
     type InvoiceStatus,
+    INVOICE_STATUS,
 } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
 

@@ -6,7 +6,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 
 // Shared Components
-import { Skeleton } from '../shared/components/Skeleton';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { PageLoader } from '../components/ui/PageLoader';
 // Feature Components
