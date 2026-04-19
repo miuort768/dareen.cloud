@@ -78,7 +78,7 @@ export const Header = () => {
     return (
         <header className={cn(
             "h-[60px] lg:h-[75px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-800/60 flex items-center justify-between transition-all duration-500 z-50",
-            "sticky top-2 lg:top-4 mx-auto w-[94%] rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.12)] px-4 lg:px-6"
+            "sticky top-2 lg:top-4 mx-auto w-[94%] mb-4 lg:mb-6 rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.12)] px-4 lg:px-6"
         )}>
 
             {/* Left Section: Branding & Title */}
