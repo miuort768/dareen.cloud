@@ -26,7 +26,7 @@ export const PageLoader = () => {
                         <img 
                             src="/logo.png" 
                             alt="Darin Logo" 
-                            className="w-full h-full object-contain animate-[float_3s_ease-in-out_infinite]" 
+                            className="w-full h-full object-contain" 
                         />
                     </div>
                 </motion.div>
@@ -71,13 +71,6 @@ export const PageLoader = () => {
                 </div>
             </div>
 
-            {/* Custom Styles for the Hexagon and Floating Animation */}
-            <style dangerouslySetInnerHTML={{ __html: `
-                @keyframes float {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-10px); }
-                }
-            `}} />
         </div>
     );
 };
