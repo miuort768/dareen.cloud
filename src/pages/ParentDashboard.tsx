@@ -214,21 +214,78 @@ export const ParentDashboard = () => {
                 </div>
             </div>
 
-            {/* ═══════════════ SUCCESS ADVISOR (Neon Green Styled) ═══════════════ */}
-            <div className="py-6 px-4 space-y-6 border-2 border-dashed border-emerald-400/30 dark:border-emerald-500/20 shadow-[0_0_15px_rgba(52,211,153,0.15)] rounded-none bg-emerald-50/5 dark:bg-emerald-900/5 transition-all">
-                <div className="flex items-center gap-2 mb-2 px-1">
-                    <Activity className="text-emerald-500 dark:text-emerald-400" size={18} />
-                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مستشار الإنجاز</h3>
+            {/* ═══════════════ SUCCESS ADVISOR (Redesigned from image) ═══════════════ */}
+            <div className="py-2 space-y-4">
+                {/* Header Section */}
+                <div className="flex items-center justify-between px-1 mb-2">
+                    <span className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 text-[8px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
+                        LIVE INSIGHT
+                    </span>
+                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white">مستشار الإنجاز</h3>
                 </div>
 
-                <div className="space-y-6">
-                    <ProgressRow label="معدل الحضور" value={stats.attendanceRate} />
-                    <ProgressRow label="التقدم الأكاديمي" value={stats.academicProgress} />
-                    <ProgressRow 
-                        label='نحو لقب "طالب مجتهد"' 
-                        value={Math.min(stats.academicProgress, 100)} 
-                        subLabel={`${stats.attendanceRate}% / 100%`} 
-                    />
+                {/* 2-Column Stats Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                    {/* Academic Progress Card */}
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
+                        <div className="flex items-center justify-end gap-2 mb-3 text-slate-600 dark:text-slate-400">
+                            <span className="text-[9px] md:text-xs font-black">التقدم الأكاديمي</span>
+                            <BookOpen size={14} />
+                        </div>
+                        <div className="text-center mb-4 flex items-baseline justify-center gap-1 flex-row-reverse">
+                            <span className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-none">{stats.academicProgress}</span>
+                            <span className="text-xl font-black text-slate-600 dark:text-slate-400">%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-2.5">
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${stats.academicProgress}%` }} className="h-full bg-[#3b2a9e] dark:bg-indigo-500 rounded-full" />
+                        </div>
+                        <p className="text-[7px] md:text-[9px] text-slate-400 dark:text-slate-500 font-bold text-center">أداء استثنائي في المواد العلمية</p>
+                    </div>
+
+                    {/* Attendance Card */}
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
+                        <div className="flex items-center justify-end gap-2 mb-3 text-slate-600 dark:text-slate-400">
+                            <span className="text-[9px] md:text-xs font-black">معدل الحضور</span>
+                            <CalendarDays size={14} />
+                        </div>
+                        <div className="text-center mb-4 flex items-baseline justify-center gap-1 flex-row-reverse">
+                            <span className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}</span>
+                            <span className="text-xl font-black text-slate-600 dark:text-slate-400">%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-2.5">
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${stats.attendanceRate}%` }} className="h-full bg-[#3b2a9e] dark:bg-indigo-500 rounded-full" />
+                        </div>
+                        <p className="text-[7px] md:text-[9px] text-slate-400 dark:text-slate-500 font-bold text-center">متفوق بـ 5% عن المتوسط العام</p>
+                    </div>
+                </div>
+
+                {/* Purple Goal Card */}
+                <div className="bg-[#5c4fb1] dark:bg-[#4a3f9e] p-5 rounded-[1.5rem] text-white shadow-lg shadow-indigo-500/20">
+                    <div className="flex justify-between items-start mb-8">
+                        <div className="flex-1 text-right mr-4">
+                            <h4 className="text-base md:text-xl font-black leading-tight mb-2">نحو لقب "طالب مجتهد"</h4>
+                            <p className="text-[9px] md:text-[11px] text-indigo-100/90 leading-relaxed font-bold">أنت على بعد خطوات قليلة من الحصول على وسام التميز لهذا الفصل.</p>
+                        </div>
+                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center shrink-0 border border-white/10 shadow-sm">
+                            <Award size={24} className="text-white drop-shadow-md" />
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-2.5">
+                        <div className="flex justify-between items-center text-[10px] md:text-[11px] font-black tracking-wide text-indigo-100/90">
+                            <span>الهدف: 100</span>
+                            <span>المرحلة الحالية: {stats.academicProgress}</span>
+                        </div>
+                        <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden shadow-inner border border-white/5">
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }}
+                                className="h-full bg-white rounded-full shadow-[0_0_15px_rgba(255,255,255,0.7)] relative overflow-hidden"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[shimmer_2s_infinite]" />
+                            </motion.div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
