@@ -343,6 +343,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('sessions', 'topics', 'TEXT');
     await addColumnIfNotExists('sessions', 'homework', 'TEXT');
     await addColumnIfNotExists('sessions', 'needsCompensation', 'INTEGER DEFAULT 0');
+    await addColumnIfNotExists('tasks', 'userId', 'TEXT');
 
     // Create unique index for parent username separately (SQLite restriction)
     try {
