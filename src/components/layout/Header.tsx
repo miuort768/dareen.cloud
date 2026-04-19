@@ -82,53 +82,41 @@ export const Header = () => {
         )}>
 
             {/* Left Section: Branding & Title */}
-            <div className="flex items-center gap-2 lg:gap-6 flex-1 min-w-0 relative">
-                {/* Unified Premium Icon with Shine Effect */}
-                <Link to="/" className="flex items-center gap-2 pr-1 group shrink-0">
-                    <div className="relative group scale-90 md:scale-100">
-                        <div className="absolute inset-0 bg-red-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div className="relative w-10 h-10 md:w-11 md:h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
-                            <GraduationCap size={20} md:size={22} strokeWidth={2.5} className="relative z-10" />
-                        </div>
-                        <Sparkles size={10} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+                <Link to="/" className="shrink-0 pr-1">
+                    <div className="w-10 h-10 bg-red-600 flex items-center justify-center text-white shadow-sm rounded-none border border-red-700">
+                        <GraduationCap size={20} strokeWidth={2.5} />
                     </div>
                 </Link>
 
                 {title && (
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-300 min-w-0 flex-1 overflow-hidden pr-1">
-                        <h1 className="text-[10px] sm:text-xs md:text-xl font-black text-gray-900 dark:text-gray-100 truncate pr-1">
+                    <div className="min-w-0 overflow-hidden">
+                        <h1 className="text-xs md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight pr-1">
                             {title}
                         </h1>
-                        <p className="text-[10px] lg:text-xs text-gray-500 dark:text-gray-400 hidden lg:block truncate">{subtitle}</p>
                     </div>
                 )}
             </div>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-1 md:gap-4 shrink-0 px-1 ml-auto md:ml-0">
-                {/* Dark Mode Toggle */}
+            {/* Right Actions - Fixed Layout */}
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-gray-500 dark:text-gray-400 shrink-0"
+                    className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
 
-                {/* Notifications Dropdown */}
+                {/* Notifications */}
                 <div className="shrink-0">
                     <NotificationDropdown />
                 </div>
 
-                {/* User Profile */}
-                <div className="flex items-center gap-1.5 pl-1 border-r border-slate-200 dark:border-white/10 shrink-0">
-                    <div className="text-right hidden xs:block">
-                        <p className="text-[10px] md:text-sm font-black text-gray-900 dark:text-slate-100 leading-tight">
-                            {user.name?.split(' ')[0]}
-                        </p>
-                    </div>
-                    <div className="w-8 h-8 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 dark:from-slate-800 dark:to-slate-900 dark:text-teal-300 border border-primary-400/30 dark:border-teal-500/30 shadow-sm overflow-hidden shrink-0">
-                        <User size={16} />
+                {/* User Identity - Simplified and Consistent */}
+                <div className="flex items-center gap-2 pl-2 border-r border-slate-200 dark:border-slate-800 shrink-0">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700">
+                        <User size={20} />
                     </div>
                 </div>
             </div>
