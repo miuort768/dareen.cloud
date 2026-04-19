@@ -405,10 +405,10 @@ export const Schedule = () => {
                                     key={day}
                                     onClick={() => setMobileActiveDay(day)}
                                     className={cn(
-                                        "shrink-0 px-2.5 py-1.5 font-black text-[9px] uppercase transition-all relative",
+                                        "shrink-0 px-3 py-2 font-black text-[11px] uppercase transition-all relative",
                                         mobileActiveDay === day
                                             ? "bg-indigo-600 text-white"
-                                            : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500"
+                                            : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600"
                                     )}
                                 >
                                     {day}
@@ -450,12 +450,12 @@ export const Schedule = () => {
                                                     <div className="flex-1 p-2.5 min-w-0">
                                                         <div className="flex items-start justify-between gap-2">
                                                             <div className="min-w-0">
-                                                                <h3 className="text-[11px] font-black text-slate-900 dark:text-white truncate">{ev.studentName}</h3>
-                                                                <p className="text-[8px] font-bold text-slate-500 truncate">{ev.subject} — {ev.teacherName}</p>
+                                                                <h3 className="text-[12px] font-black text-slate-900 dark:text-white truncate leading-tight">{ev.studentName}</h3>
+                                                                <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 truncate mt-0.5">{ev.subject} — {ev.teacherName}</p>
                                                             </div>
                                                             <div className="flex items-center gap-0.5 shrink-0">
-                                                                <Zap size={9} className="text-amber-500 fill-current" />
-                                                                <span className="text-[8px] font-black text-slate-700 dark:text-slate-300">{ev.studentPoints}</span>
+                                                                <Zap size={10} className="text-amber-500 fill-current" />
+                                                                <span className="text-[10px] font-black text-slate-700 dark:text-slate-300">{ev.studentPoints}</span>
                                                             </div>
                                                         </div>
                                                     </div>
