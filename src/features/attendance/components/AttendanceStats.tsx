@@ -12,7 +12,7 @@ interface AttendanceStatsProps {
 export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher }) => {
     if (isTeacher && teacherStats) {
         return (
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 {/* 1. Expected */}
                 <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-50 flex flex-col justify-between h-28">
                     <div className="flex items-center justify-between pointer-events-none">
