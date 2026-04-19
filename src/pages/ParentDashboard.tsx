@@ -226,7 +226,7 @@ export const ParentDashboard = () => {
                 {/* 2-Column Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
                     {/* Academic Progress Card */}
-                    <div className="bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-lg shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
                         <div className="flex items-center justify-end gap-2 mb-3 text-slate-600 dark:text-slate-400">
                             <span className="text-[9px] md:text-xs font-black">التقدم الأكاديمي</span>
                             <BookOpen size={14} />
@@ -242,7 +242,7 @@ export const ParentDashboard = () => {
                     </div>
 
                     {/* Attendance Card */}
-                    <div className="bg-white dark:bg-slate-900 p-4 rounded-[1.5rem] shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
+                    <div className="bg-white dark:bg-slate-900 p-4 rounded-lg shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col justify-between">
                         <div className="flex items-center justify-end gap-2 mb-3 text-slate-600 dark:text-slate-400">
                             <span className="text-[9px] md:text-xs font-black">معدل الحضور</span>
                             <CalendarDays size={14} />
@@ -259,7 +259,7 @@ export const ParentDashboard = () => {
                 </div>
 
                 {/* Purple Goal Card */}
-                <div className="bg-[#5c4fb1] dark:bg-[#4a3f9e] p-5 rounded-[1.5rem] text-white shadow-lg shadow-indigo-500/20">
+                <div className="bg-[#5c4fb1] dark:bg-[#4a3f9e] p-5 rounded-lg text-white shadow-lg shadow-indigo-500/20">
                     <div className="flex justify-between items-start mb-8">
                         <div className="flex-1 text-right mr-4">
                             <h4 className="text-base md:text-xl font-black leading-tight mb-2">نحو لقب "طالب مجتهد"</h4>
