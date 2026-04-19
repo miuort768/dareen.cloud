@@ -116,7 +116,7 @@ export const Evaluations = () => {
     if (isLoading) return (
         <div className="space-y-4 p-6">
             {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-40 bg-slate-100 animate-pulse rounded-2xl" />
+                <div key={i} className="h-40 bg-slate-100 animate-pulse" />
             ))}
         </div>
     );
@@ -129,7 +129,7 @@ export const Evaluations = () => {
                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                 <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-inner">
+                        <div className="w-14 h-14 bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-inner">
                             <Award size={28} className="text-white" />
                         </div>
                         <div>
@@ -143,14 +143,14 @@ export const Evaluations = () => {
 
                     <div className="flex items-center gap-3">
                         {/* XP summary chip */}
-                        <div className="bg-white/15 border border-white/20 rounded-xl px-4 py-2 text-center backdrop-blur-sm">
-                            <p className="text-[9px] font-black opacity-60 uppercase tracking-widest">إجمالي النقاط</p>
-                            <p className="text-xl font-black tabular-nums">{totalXP} <span className="text-xs opacity-60">XP</span></p>
+                        <div className="bg-white/15 border border-white/20 px-4 py-2 backdrop-blur-sm flex items-center gap-2">
+                            <p className="text-[9px] font-black opacity-60 uppercase tracking-widest whitespace-nowrap">إجمالي النقاط:</p>
+                            <p className="text-base font-black tabular-nums whitespace-nowrap">{totalXP} <span className="text-xs opacity-60">XP</span></p>
                         </div>
                         {currentUser?.role !== 'parent' && (
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-2 bg-white text-indigo-700 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                                className="flex items-center gap-2 bg-white text-indigo-700 font-black text-xs px-4 py-2.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all"
                             >
                                 <Plus size={16} strokeWidth={3} />
                                 تقييم جديد
@@ -174,7 +174,7 @@ export const Evaluations = () => {
 
                         return (
                             <div key={student.id}
-                                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group"
+                                className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group"
                             >
                                 {/* Card Top Accent */}
                                 <div className={cn("h-1.5 w-full", lastRating ? lastRating.bg.replace('bg-', 'bg-') : 'bg-slate-100')} style={{ background: lastRating ? undefined : '#e2e8f0' }}>
@@ -183,7 +183,7 @@ export const Evaluations = () => {
 
                                 {/* Student Info */}
                                 <div className="p-4 flex items-center gap-3 border-b border-slate-50 dark:border-slate-800">
-                                    <div className="w-11 h-11 rounded-full bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-indigo-900">
+                                    <div className="w-11 h-11 bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-indigo-900">
                                         <User size={18} className="text-indigo-500" />
                                     </div>
                                     <div className="min-w-0 flex-1">
@@ -193,7 +193,7 @@ export const Evaluations = () => {
                                         </p>
                                     </div>
                                     <div className="shrink-0 text-center">
-                                        <span className="bg-amber-400/20 text-amber-700 dark:text-amber-400 text-[9px] font-black px-2 py-0.5 rounded-full border border-amber-200/50">
+                                        <span className="bg-amber-400/20 text-amber-700 dark:text-amber-400 text-[9px] font-black px-2 py-0.5 border border-amber-200/50">
                                             {totalStudentXP} XP
                                         </span>
                                     </div>
@@ -206,13 +206,13 @@ export const Evaluations = () => {
                                             <div className="flex items-center justify-between">
                                                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">آخر تقييم</span>
                                                 {lastRating && (
-                                                    <span className={cn("flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-full", lastRating.pill)}>
+                                                    <span className={cn("flex items-center gap-1 text-[9px] font-bold px-2 py-0.5", lastRating.pill)}>
                                                         <lastRating.icon size={9} />
                                                         {lastEval.rating}
                                                     </span>
                                                 )}
                                             </div>
-                                            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-700">
+                                            <div className="bg-slate-50 dark:bg-slate-800/50 p-3 border border-slate-100 dark:border-slate-700">
                                                 <p className="text-[10px] font-bold text-slate-600 dark:text-slate-300 italic line-clamp-2 leading-relaxed">
                                                     "{lastEval.notes || 'بدون ملاحظات'}"
                                                 </p>
@@ -227,7 +227,7 @@ export const Evaluations = () => {
                                         </div>
                                     ) : (
                                         <div className="flex-1 flex flex-col items-center justify-center py-6 text-center">
-                                            <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-2 border border-dashed border-slate-200 dark:border-slate-700">
+                                            <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-2 border border-dashed border-slate-200 dark:border-slate-700">
                                                 <Award size={20} className="text-slate-300" />
                                             </div>
                                             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">لم يتم التقييم بعد</p>
@@ -240,13 +240,13 @@ export const Evaluations = () => {
                                     <div className="px-4 pb-4 grid grid-cols-2 gap-2">
                                         <button
                                             onClick={() => { setFormData({ ...formData, studentId: student.id }); setIsModalOpen(true); }}
-                                            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20"
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20"
                                         >
                                             <Plus size={12} strokeWidth={3} /> أضف تقييم
                                         </button>
                                         <button
                                             onClick={() => setHistoryModalStudent(student)}
-                                            className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
+                                            className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
                                         >
                                             <History size={12} /> السجل ({studentEvals.length})
                                         </button>
@@ -256,7 +256,7 @@ export const Evaluations = () => {
                                     <div className="px-4 pb-4">
                                         <button
                                             onClick={() => setHistoryModalStudent(student)}
-                                            className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 rounded-xl py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
+                                            className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5"
                                         >
                                             <History size={12} /> عرض السجل الكامل ({studentEvals.length})
                                         </button>
@@ -281,14 +281,14 @@ export const Evaluations = () => {
             {/* ─── Add Evaluation Modal ─── */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
+                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
                         {/* Modal Header */}
-                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 rounded-t-2xl text-white">
+                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white">
                             <h3 className="text-base font-black flex items-center gap-2">
                                 <Award size={18} />
                                 {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'إضافة تقييم جديد'}
                             </h3>
-                            <button onClick={() => { setIsModalOpen(false); resetForm(); }} className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors">
+                            <button onClick={() => { setIsModalOpen(false); resetForm(); }} className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
                                 <X size={16} />
                             </button>
                         </div>
@@ -302,7 +302,7 @@ export const Evaluations = () => {
                                             value={formData.studentId}
                                             onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
                                             required
-                                            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-3 font-bold text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
+                                            className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-3 font-bold text-sm text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
                                         >
                                             <option value="">-- اختر من قائمة طلابك --</option>
                                             {teacherStudents.map(s => (
@@ -324,7 +324,7 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-3 rounded-xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
+                                                        "p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-2",
                                                         isSelected
                                                             ? cn(opt.bg, opt.border, opt.color, "shadow-md scale-105")
                                                             : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:border-slate-300"
@@ -347,13 +347,13 @@ export const Evaluations = () => {
                                                     key={p}
                                                     type="button"
                                                     onClick={() => setFormData({...formData, points: p})}
-                                                    className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 rounded-lg px-2 py-0.5 font-black text-[9px] transition-colors"
+                                                    className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 px-2 py-0.5 font-black text-[9px] transition-colors"
                                                 >+{p}</button>
                                             ))}
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <div className="w-10 h-10 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-center shrink-0">
+                                        <div className="w-10 h-10 bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
                                             <Zap size={16} className="text-amber-500 fill-current" />
                                         </div>
                                         <input
@@ -362,7 +362,7 @@ export const Evaluations = () => {
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
                                             placeholder="0"
                                             min="0"
-                                            className="flex-1 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-2.5 font-black text-lg text-amber-600 text-center outline-none focus:ring-2 focus:ring-amber-400/30"
+                                            className="flex-1 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-2.5 font-black text-lg text-amber-600 text-center outline-none focus:ring-2 focus:ring-amber-400/30"
                                         />
                                     </div>
                                 </div>
@@ -373,7 +373,7 @@ export const Evaluations = () => {
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                                         rows={3}
-                                        className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none placeholder:text-slate-300 transition-all"
+                                        className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none placeholder:text-slate-300 transition-all"
                                         placeholder="مثال: أداء ممتاز اليوم..."
                                     />
                                 </div>
@@ -381,10 +381,10 @@ export const Evaluations = () => {
                         </div>
                         
                         <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
-                            <button type="button" onClick={() => { setIsModalOpen(false); resetForm(); }} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white rounded-xl text-xs font-black hover:bg-slate-200 transition-all">
+                            <button type="button" onClick={() => { setIsModalOpen(false); resetForm(); }} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-black hover:bg-slate-200 transition-all">
                                 إلغاء
                             </button>
-                            <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                            <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
                                 <CheckCircle2 size={14} /> إرسال التقييم
                             </button>
                         </div>
@@ -395,10 +395,10 @@ export const Evaluations = () => {
             {/* ─── History Modal ─── */}
             {historyModalStudent && (
                 <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100 dark:border-slate-800">
-                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center rounded-t-2xl bg-slate-50 dark:bg-slate-950">
+                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100 dark:border-slate-800">
+                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl flex items-center justify-center border border-indigo-100 dark:border-indigo-900">
+                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/30 flex items-center justify-center border border-indigo-100 dark:border-indigo-900">
                                     <User size={18} className="text-indigo-500" />
                                 </div>
                                 <div>
@@ -406,7 +406,7 @@ export const Evaluations = () => {
                                     <p className="text-indigo-600 dark:text-indigo-400 text-[10px] font-black">{historyModalStudent.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setHistoryModalStudent(null)} className="w-8 h-8 bg-slate-200 dark:bg-slate-700 hover:bg-rose-100 hover:text-rose-600 rounded-lg flex items-center justify-center transition-colors">
+                            <button onClick={() => setHistoryModalStudent(null)} className="w-8 h-8 bg-slate-200 dark:bg-slate-700 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center transition-colors">
                                 <X size={16} />
                             </button>
                         </div>
@@ -418,15 +418,15 @@ export const Evaluations = () => {
                                 .map((ev) => {
                                     const r = ratingOptions.find(ro => ro.value === ev.rating) || ratingOptions[0];
                                     return (
-                                        <div key={ev.id} className="bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 p-4 shadow-sm hover:border-indigo-200 transition-all group">
+                                        <div key={ev.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 shadow-sm hover:border-indigo-200 transition-all group">
                                             <div className="flex items-center justify-between mb-2">
                                                 <div className="flex items-center gap-2">
-                                                    <span className={cn("flex items-center gap-1.5 text-[9px] font-black px-2 py-1 rounded-full", r.pill)}>
+                                                    <span className={cn("flex items-center gap-1.5 text-[9px] font-black px-2 py-1", r.pill)}>
                                                         <r.icon size={10} strokeWidth={3} />
                                                         {ev.rating}
                                                     </span>
                                                     {ev.points > 0 && (
-                                                        <span className="text-[8px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                                                        <span className="text-[8px] font-black text-amber-600 bg-amber-50 px-2 py-0.5 border border-amber-100">
                                                             +{ev.points} XP
                                                         </span>
                                                     )}
@@ -436,7 +436,7 @@ export const Evaluations = () => {
                                                         {format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}
                                                     </span>
                                                     {(currentUser?.role === 'admin' || currentUser?.id === ev.teacherId) && (
-                                                        <button onClick={() => handleDelete(ev.id)} className="text-slate-300 hover:text-rose-500 transition-colors p-1 rounded-lg hover:bg-rose-50">
+                                                        <button onClick={() => handleDelete(ev.id)} className="text-slate-300 hover:text-rose-500 transition-colors p-1 hover:bg-rose-50">
                                                             <Trash2 size={12} />
                                                         </button>
                                                     )}
@@ -455,15 +455,15 @@ export const Evaluations = () => {
                             }
 
                             {evaluations.filter(ev => ev.studentId === historyModalStudent.id).length === 0 && (
-                                <div className="py-12 text-center rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+                                <div className="py-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
                                     <History size={28} className="mx-auto text-slate-200 mb-3" />
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">لا يوجد سجل تقييمات حالياً</p>
                                 </div>
                             )}
                         </div>
 
-                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center rounded-b-2xl bg-white dark:bg-slate-900">
-                            <button onClick={() => setHistoryModalStudent(null)} className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs rounded-xl hover:opacity-90 transition-all">
+                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
+                            <button onClick={() => setHistoryModalStudent(null)} className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs hover:opacity-90 transition-all">
                                 إغلاق
                             </button>
                         </div>
