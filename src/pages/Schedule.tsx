@@ -227,7 +227,7 @@ export const Schedule = () => {
 
     return (
         <div className="w-full max-w-full overflow-hidden" dir="rtl">
-            <div className="space-y-4 pb-6 animate-in fade-in duration-500">
+            <div className="space-y-4 pb-[120px] md:pb-6 animate-in fade-in duration-500">
 
                 {/* ── Gradient Header ── */}
                 <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-4 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
