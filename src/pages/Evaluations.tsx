@@ -152,10 +152,10 @@ export const Evaluations = () => {
                         {currentUser?.role !== 'parent' && (
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-2 bg-white text-indigo-700 font-black text-xs px-4 py-2.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                                className="flex items-center gap-1.5 bg-white text-indigo-700 font-black text-[10px] md:text-xs px-2.5 md:px-4 py-2 md:py-2.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all shrink-0"
                             >
-                                <Plus size={16} strokeWidth={3} />
-                                تقييم جديد
+                                <Plus size={14} strokeWidth={3} />
+                                <span className="hidden sm:inline">تقييم جديد</span>
                             </button>
                         )}
                     </div>

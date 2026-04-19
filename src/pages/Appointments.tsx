@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
     Calendar, Clock, Search, User, GraduationCap, 
     BookOpen, Filter, X, CheckCircle2, Zap, Target,
-    ShieldCheck, Activity, ArrowRight
+    ShieldCheck, Activity, ArrowRight, SlidersHorizontal
 } from 'lucide-react';
 import { StatsCard } from '../shared/components/StatsCard';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -61,7 +61,6 @@ export const Appointments = () => {
     const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Simulated 24h reset logic
     useEffect(() => {
         const checkAndReset = async () => {
             try {
@@ -69,7 +68,6 @@ export const Appointments = () => {
                     const settings = await api.get<any>('/system/settings');
                     const lastResetDate = settings?.last_appointment_reset;
                     const todayStr = new Date().toDateString();
-
                     if (lastResetDate !== todayStr) {
                         await api.delete('/appointments/completed-sessions/reset');
                         setCompletedSessionIds([]);
@@ -111,9 +109,7 @@ export const Appointments = () => {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    useEffect(() => { fetchData(); }, []);
 
     const teacherToMatch = currentUser?.teacherName || currentUser?.name;
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>
@@ -172,316 +168,284 @@ export const Appointments = () => {
         return a.day === today && !completedSessionIds.includes(a.id);
     }).length;
 
+    const hasActiveFilters = searchTerm || filterDay !== 'all' || filterTeacher !== 'all';
+
     if (loading) {
         return (
-            <div className="space-y-6">
-                <Skeleton className="h-64 rounded-none" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Skeleton className="h-40 rounded-none" />
-                    <Skeleton className="h-40 rounded-none" />
-                    <Skeleton className="h-40 rounded-none" />
+            <div className="space-y-4 p-2">
+                <Skeleton className="h-28" />
+                <div className="grid grid-cols-3 gap-3">
+                    {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-24" />)}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {[...Array(3)].map((_, i) => (
-                        <Skeleton key={i} className="h-96 rounded-none" />
-                    ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-48" />)}
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6 pb-20">
-            {/* Ultra-Brutalist Command Header */}
-            <div className="relative bg-gray-950 p-4 shadow-[3px_3px_0px_0px_#ef4444] border-2 border-gray-950 overflow-hidden rounded-none mb-6">
-                <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" 
-                     style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
-                
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <motion.div 
-                            whileHover={{ rotate: -5, scale: 1.05 }}
-                            className="w-12 h-12 bg-primary-600 text-white border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] flex items-center justify-center transform -rotate-3"
-                        >
-                            <Calendar size={24} strokeWidth={3} />
-                        </motion.div>
+        <div className="space-y-4 pb-20" dir="rtl">
+
+            {/* ─── Modern Header Banner ─── */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 px-5 py-7 text-white shadow-lg shadow-indigo-500/20">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
+                <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-white/15 flex items-center justify-center border border-white/20 shrink-0">
+                            <Calendar size={24} className="text-white" />
+                        </div>
                         <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="px-2 py-0.5 bg-primary-600 text-white text-[8px] font-black uppercase tracking-widest italic">جدول المهام</span>
+                            <div className="flex items-center gap-2 mb-0.5">
+                                <span className="bg-white/20 text-white text-[8px] font-black px-2 py-0.5 uppercase tracking-widest">جدول المواعيد</span>
                                 <div className="flex gap-1">
-                                    {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-500 animate-pulse" />)}
+                                    {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-emerald-400 animate-pulse" />)}
                                 </div>
                             </div>
-                            <h1 className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase italic leading-none">إدارة المهمات والمواعيد</h1>
-                            <p className="text-gray-400 text-[10px] font-bold mt-2 flex items-center gap-2 uppercase tracking-wider">
-                                <Activity size={14} className="text-primary-500" />
+                            <h1 className="text-lg md:text-2xl font-black tracking-tight leading-none">إدارة المواعيد والجلسات</h1>
+                            <p className="text-white/60 text-[9px] md:text-[11px] font-bold flex items-center gap-1.5 mt-1">
+                                <Activity size={10} className="shrink-0" />
                                 مراقبة وتوجيه الجلسات التعليمية لشركاء النجاح
                             </p>
+                        </div>
+                    </div>
+                    {/* Quick stats inline */}
+                    <div className="flex items-center gap-2 shrink-0">
+                        <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
+                            <p className="text-[8px] opacity-60 font-black uppercase">اليوم</p>
+                            <p className="text-xl font-black tabular-nums leading-none">{todayAppointments}</p>
+                        </div>
+                        <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
+                            <p className="text-[8px] opacity-60 font-black uppercase">متبقي</p>
+                            <p className="text-xl font-black tabular-nums leading-none text-emerald-300">{remainingToday}</p>
+                        </div>
+                        <div className="bg-white/15 border border-white/20 px-3 py-1.5 text-center">
+                            <p className="text-[8px] opacity-60 font-black uppercase">إجمالي</p>
+                            <p className="text-xl font-black tabular-nums leading-none">{totalAppointments}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* High-Impact Insight Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <motion.div whileHover={{ y: -3 }}>
-                    <StatsCard
-                        title="الجلسات المجدولة"
-                        value={totalAppointments}
-                        icon={Calendar}
-                        color="indigo"
-                        trend="القوة الإجمالية"
-                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#4f46e5] rounded-none p-3"
-                    />
-                </motion.div>
-                <motion.div whileHover={{ y: -3 }}>
-                    <StatsCard
-                        title="عمليات اليوم"
-                        value={todayAppointments}
-                        icon={Zap}
-                        color="blue"
-                        trend="الهدف اليومي"
-                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#3b82f6] rounded-none p-3"
-                    />
-                </motion.div>
-                <motion.div whileHover={{ y: -3 }}>
-                    <StatsCard
-                        title="قيد التنفيذ المتبقي"
-                        value={remainingToday}
-                        icon={Target}
-                        color="emerald"
-                        trend="العمليات النشطة"
-                        className="border-2 border-gray-950 shadow-[3px_3px_0px_0px_#10b981] rounded-none p-3"
-                    />
-                </motion.div>
-            </div>
-
-            {/* Operational Filters - Brutalist Panel */}
-            <div className="bg-white border-2 border-gray-950 p-4 shadow-[4px_4px_0px_0px_black] relative">
-                <div className="absolute top-0 right-0 w-16 h-full bg-gray-50 -skew-x-12 translate-x-8 pointer-events-none"></div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-                    <div className="relative group">
-                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">البحث الرقمي</label>
-                        <Search className="absolute right-3 top-[30px] text-gray-950" size={16} />
+            {/* ─── Compact Filters Strip ─── */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+                    <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 bg-indigo-600 flex items-center justify-center">
+                            <SlidersHorizontal size={12} className="text-white" />
+                        </div>
+                        <span className="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">فلترة النتائج</span>
+                        {hasActiveFilters && (
+                            <span className="bg-indigo-100 text-indigo-700 text-[7px] font-black px-1.5 py-0.5 uppercase">فلتر نشط</span>
+                        )}
+                    </div>
+                    {hasActiveFilters && (
+                        <button
+                            onClick={() => { setSearchTerm(''); setFilterDay('all'); setFilterTeacher('all'); }}
+                            className="flex items-center gap-1 text-[9px] font-black text-rose-500 hover:text-rose-700 transition-colors"
+                        >
+                            <X size={10} /> إعادة ضبط
+                        </button>
+                    )}
+                </div>
+                <div className="p-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {/* Search */}
+                    <div className="relative">
+                        <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <input
                             type="text"
-                            placeholder="بحث في السجلات..."
+                            placeholder="بحث عن طالب أو مادة..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-yellow-50 outline-none transition-all placeholder:text-gray-300 italic text-right text-xs"
+                            className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 transition-all placeholder:text-slate-300 text-slate-700 dark:text-white"
                         />
+                        {searchTerm && (
+                            <button onClick={() => setSearchTerm('')} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors">
+                                <X size={11} />
+                            </button>
+                        )}
                     </div>
-
+                    {/* Day Filter */}
                     <div className="relative">
-                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">الفلترة الزمنية</label>
-                        <Filter className="absolute right-3 top-[30px] text-gray-950" size={16} />
+                        <Filter size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <select
                             value={filterDay}
                             onChange={(e) => setFilterDay(e.target.value)}
-                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-primary-50 outline-none appearance-none cursor-pointer uppercase italic text-right text-xs"
+                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
                             <option value="all">كل الأيام</option>
-                            {DAYS_OF_WEEK.map(day => (
-                                <option key={day} value={day}>{day}</option>
-                            ))}
+                            {DAYS_OF_WEEK.map(day => <option key={day} value={day}>{day}</option>)}
                         </select>
                     </div>
-
+                    {/* Teacher Filter */}
                     <div className="relative">
-                        <label className="block text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1">قائد الفريق</label>
-                        <GraduationCap className="absolute right-3 top-[30px] text-gray-950" size={16} />
+                        <GraduationCap size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <select
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
-                            className="w-full pl-6 pr-10 py-2.5 border-2 border-gray-950 font-black focus:bg-emerald-50 outline-none appearance-none cursor-pointer uppercase italic text-right text-xs"
+                            className="w-full pr-8 pl-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
                         >
-                            <option value="all">كل الكوادر</option>
-                            {uniqueTeachers.map(teacher => (
-                                <option key={teacher} value={teacher}>{teacher}</option>
-                            ))}
+                            <option value="all">جميع المعلمات</option>
+                            {uniqueTeachers.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
                         </select>
                     </div>
                 </div>
             </div>
 
-            {/* Main Schedule Grid - Strategic Layout */}
+            {/* ─── Main Schedule Grid + Details Panel ─── */}
             <div className={`grid gap-4 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
                 <div className={`${showDetails ? 'lg:col-span-2' : ''} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
                     {appointmentsByDay.map(({ day, appointments }) => (
-                        <motion.div 
+                        <motion.div
                             layout
-                            key={day} 
-                            className="bg-white border-2 border-gray-950 shadow-[3px_3px_0px_0px_#ef4444] group hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+                            key={day}
+                            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col"
                         >
-                            <div className="p-3 border-b-2 border-gray-950 flex items-center justify-between bg-gray-950">
-                                <div className="flex items-center gap-2">
-                                    <h3 className="font-black text-white uppercase tracking-tighter text-base italic">{day}</h3>
-                                </div>
-                                <div className="flex items-center gap-1 bg-primary-600 px-2 py-0.5 border border-white">
-                                    <span className="text-white text-sm font-black leading-none">{appointments.length}</span>
-                                    <span className="text-white text-[8px] font-bold uppercase tracking-widest">مهمة</span>
-                                </div>
+                            {/* Day header */}
+                            <div className="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950">
+                                <h3 className="font-black text-sm text-slate-900 dark:text-white">{day}</h3>
+                                <span className={cn(
+                                    "text-[9px] font-black px-2 py-0.5 tabular-nums",
+                                    appointments.length > 0
+                                        ? "bg-indigo-600 text-white"
+                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                )}>
+                                    {appointments.length} جلسة
+                                </span>
                             </div>
 
-                            <div className="p-3 min-h-[150px] flex flex-col justify-start">
+                            <div className="p-3 flex-1 flex flex-col justify-start min-h-[140px]">
                                 {appointments.length > 0 ? (() => {
                                     const remainingSessions = appointments.filter(a => !completedSessionIds.includes(a.id));
-
                                     if (remainingSessions.length > 0) {
                                         const nextSession = remainingSessions[0];
                                         return (
                                             <div
                                                 key={nextSession.id}
-                                                onClick={() => {
-                                                    setSelectedAppointment(nextSession);
-                                                    setShowDetails(true);
-                                                }}
-                                                className="p-3 bg-white border-2 border-gray-200 hover:border-primary-600 transition-all cursor-pointer relative overflow-hidden shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5"
+                                                onClick={() => { setSelectedAppointment(nextSession); setShowDetails(true); }}
+                                                className="flex flex-col gap-2 cursor-pointer group"
                                             >
-                                                {/* Status Badge */}
-                                                <div className="absolute top-0 left-0 bg-primary-600 text-white px-2 py-0.5 text-[7px] font-black uppercase italic tracking-tighter">التالي</div>
-                                                
-                                                <div className="flex items-center justify-between mt-2 mb-3">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="p-1.5 bg-gray-950 text-white border border-gray-950 transform -rotate-3">
-                                                            <Clock size={14} strokeWidth={3} />
-                                                        </div>
-                                                        <span className="text-lg font-black text-gray-950 italic tracking-tighter">{nextSession.time}</span>
+                                                {/* Time row */}
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <Clock size={12} className="text-indigo-500" />
+                                                        <span className="font-black text-indigo-600 text-sm tabular-nums">{nextSession.time}</span>
                                                     </div>
+                                                    <span className="bg-indigo-50 text-indigo-600 text-[8px] font-black px-1.5 py-0.5">التالي</span>
                                                 </div>
 
-                                                <div className="space-y-2">
-                                                    <div className="flex items-center gap-2 p-1.5 bg-gray-50 border-r-2 border-gray-950">
-                                                        <User size={14} className="text-gray-950" />
-                                                        <div className="flex flex-col">
-                                                            <span className="text-xs font-black text-gray-950">{nextSession.studentName}</span>
-                                                            <span className="text-[8px] text-primary-600 font-bold tracking-widest uppercase">{nextSession.curriculum}</span>
-                                                        </div>
+                                                {/* Student */}
+                                                <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-2 group-hover:border-indigo-200 transition-colors">
+                                                    <div className="flex items-center gap-1.5 mb-1">
+                                                        <User size={11} className="text-slate-400 shrink-0" />
+                                                        <span className="text-xs font-black text-slate-800 dark:text-white truncate">{nextSession.studentName}</span>
                                                     </div>
-                                                    <div className="flex items-center gap-2 px-1">
-                                                        <ShieldCheck size={14} className="text-emerald-500" />
-                                                        <span className="text-[9px] font-black text-gray-400 uppercase italic">القائد: {nextSession.teacherName}</span>
+                                                    <div className="flex items-center gap-1.5">
+                                                        <ShieldCheck size={10} className="text-emerald-500 shrink-0" />
+                                                        <span className="text-[9px] font-bold text-slate-400 truncate">{nextSession.teacherName}</span>
                                                     </div>
                                                 </div>
 
                                                 <button
                                                     onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                    className="w-full mt-3 bg-emerald-500 hover:bg-emerald-600 text-white border-2 border-gray-950 py-1.5 font-black text-[10px] uppercase italic shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-center"
+                                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-1.5 font-black text-[10px] transition-all flex items-center justify-center gap-1"
                                                 >
-                                                    تأكيد الإنجاز
+                                                    <CheckCircle2 size={11} /> تأكيد الإنجاز
                                                 </button>
                                             </div>
                                         );
                                     } else {
                                         return (
-                                            <div className="text-center py-6 bg-emerald-50 border-2 border-emerald-500 flex flex-col items-center">
-                                                <div className="w-10 h-10 bg-white border-2 border-emerald-500 flex items-center justify-center mb-2 transform rotate-12">
-                                                    <CheckCircle2 size={20} className="text-emerald-600" />
-                                                </div>
-                                                <h4 className="text-emerald-950 font-black text-xs uppercase tracking-tighter mb-1 italic">مكتمل</h4>
-                                                <p className="text-[8px] text-emerald-600 font-bold uppercase tracking-widest">جميع المهمات مكتملة</p>
+                                            <div className="flex-1 flex flex-col items-center justify-center py-6 text-center bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900">
+                                                <CheckCircle2 size={22} className="text-emerald-500 mb-2" />
+                                                <p className="text-xs font-black text-emerald-700 dark:text-emerald-400">مكتمل</p>
+                                                <p className="text-[8px] text-emerald-500 font-bold uppercase mt-0.5">جميع الجلسات منجزة</p>
                                             </div>
                                         );
                                     }
                                 })() : (
-                                    <div className="text-center py-8 border-2 border-dashed border-gray-200 opacity-30 grayscale">
-                                        <Calendar size={32} className="mx-auto mb-2" />
-                                        <p className="text-[10px] font-black uppercase tracking-widest italic">لا يوجد بيانات</p>
+                                    <div className="flex-1 flex flex-col items-center justify-center py-6 opacity-30">
+                                        <Calendar size={24} className="mb-2" />
+                                        <p className="text-[9px] font-black uppercase tracking-widest">لا يوجد جلسات</p>
                                     </div>
                                 )}
                             </div>
                         </motion.div>
                     ))}
 
-                    {/* Integrated Empty Status / Filler Block */}
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className={cn(
-                            "bg-white border-2 border-gray-950 flex flex-col items-center justify-center shadow-[3px_3px_0px_0px_black] text-center p-4",
-                            appointmentsByDay.length % 3 === 1 ? "lg:col-span-2" : 
-                            appointmentsByDay.length % 3 === 2 ? "lg:col-span-1" :
-                            appointmentsByDay.length === 0 ? "lg:col-span-3 min-h-[200px]" : "hidden lg:flex"
-                        )}
-                    >
-                         <div className="flex flex-col items-center gap-4">
-                            <motion.div 
-                                animate={{ rotate: [0, 5, -5, 0] }} 
-                                transition={{ repeat: Infinity, duration: 5 }}
-                                className="w-10 h-10 bg-gray-50 border-2 border-gray-950 flex items-center justify-center transform rotate-3"
-                            >
-                                <Calendar size={20} strokeWidth={1} className="text-gray-400" />
-                            </motion.div>
-                            <div className="text-center">
-                                <h3 className="font-black text-xl text-gray-950 uppercase italic tracking-tighter mb-1">لا توجد إشارات</h3>
-                                <p className="text-gray-400 font-bold uppercase tracking-widest text-[8px] max-w-[200px] mx-auto leading-relaxed">
-                                    نظام الجدولة يعمل بكفاءة قصوى.
-                                </p>
-                            </div>
-                         </div>
-                    </motion.div>
+                    {/* Empty state */}
+                    {appointmentsByDay.length === 0 && (
+                        <div className="col-span-full py-20 flex flex-col items-center text-center bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800">
+                            <Calendar size={36} className="text-slate-200 mb-3" />
+                            <h3 className="font-black text-slate-600 dark:text-white text-base mb-1">لا توجد مواعيد</h3>
+                            <p className="text-slate-400 text-xs max-w-xs">لا توجد نتائج تطابق الفلاتر المحددة حالياً</p>
+                        </div>
+                    )}
                 </div>
 
-                {/* Details Panel - The Control Bunker */}
+                {/* ─── Details Panel ─── */}
                 <AnimatePresence>
                     {showDetails && selectedAppointment && (
-                        <motion.div 
-                            initial={{ opacity: 0, x: 50 }}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 50 }}
-                            className="bg-white border-2 border-gray-950 h-fit shadow-[4px_4px_0px_0px_black] sticky top-4 overflow-hidden"
+                            exit={{ opacity: 0, x: 30 }}
+                            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm h-fit sticky top-4 overflow-hidden"
                         >
-                            <div className="p-4 bg-gray-950 text-white relative">
-                                <button 
-                                    onClick={() => setShowDetails(false)} 
-                                    className="absolute left-4 top-4 w-6 h-6 border border-white flex items-center justify-center hover:bg-rose-500 hover:border-rose-500 transition-all"
-                                >
-                                    <X size={14} />
-                                </button>
-                                <div className="text-center pt-2">
-                                    <div className="inline-block p-2 border-2 border-primary-500 mb-2 transform -rotate-6">
-                                        <Zap className="text-primary-500" size={24} />
+                            {/* Panel Header */}
+                            <div className="px-4 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white flex items-center justify-between">
+                                <div>
+                                    <p className="text-[8px] font-black opacity-60 uppercase tracking-widest">تفاصيل الموعد</p>
+                                    <h3 className="font-black text-base">{selectedAppointment.day}</h3>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="bg-white/20 border border-white/20 px-3 py-1 text-center">
+                                        <p className="font-black text-lg tabular-nums leading-none">{selectedAppointment.time}</p>
                                     </div>
-                                    <h4 className="text-[8px] font-black text-gray-500 uppercase tracking-[2px] mb-1 leading-none">لوجستيات المهمة</h4>
-                                    <h3 className="font-black text-xl uppercase italic tracking-tighter mb-1">{selectedAppointment.day}</h3>
-                                    <div className="inline-block px-3 py-1 bg-primary-600 text-white border border-white text-lg font-black italic">
-                                        {selectedAppointment.time}
-                                    </div>
+                                    <button
+                                        onClick={() => setShowDetails(false)}
+                                        className="w-7 h-7 bg-white/20 hover:bg-rose-500 flex items-center justify-center transition-colors"
+                                    >
+                                        <X size={13} />
+                                    </button>
                                 </div>
                             </div>
 
-                            <div className="p-4 space-y-3">
-                                <div className="p-3 bg-gray-50 border-r-4 border-primary-600 flex items-center justify-between group">
+                            <div className="p-4 space-y-2.5">
+                                {/* Student */}
+                                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-indigo-500">
                                     <div>
-                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">الطالب المستهدف</label>
-                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.studentName}</h4>
-                                        <span className="text-[8px] font-bold text-primary-600 uppercase tracking-widest">{selectedAppointment.studentGrade}</span>
+                                        <label className="block text-[8px] font-black text-slate-400 uppercase mb-0.5">الطالب</label>
+                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{selectedAppointment.studentName}</h4>
+                                        <span className="text-[9px] font-bold text-indigo-600">{selectedAppointment.studentGrade}</span>
                                     </div>
-                                    <User size={24} className="text-gray-200 group-hover:text-primary-600 transition-colors" />
+                                    <User size={20} className="text-slate-200" />
                                 </div>
 
-                                <div className="p-3 bg-gray-50 border-r-4 border-emerald-500 flex items-center justify-between group">
+                                {/* Teacher */}
+                                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-emerald-500">
                                     <div>
-                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">قائد المجموعة</label>
-                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.teacherName}</h4>
+                                        <label className="block text-[8px] font-black text-slate-400 uppercase mb-0.5">المعلمة</label>
+                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{selectedAppointment.teacherName}</h4>
                                     </div>
-                                    <ShieldCheck size={24} className="text-gray-200 group-hover:text-emerald-500 transition-colors" />
+                                    <ShieldCheck size={20} className="text-slate-200" />
                                 </div>
 
-                                <div className="p-3 bg-gray-50 border-r-4 border-amber-500 flex items-center justify-between group">
+                                {/* Subject */}
+                                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-r-2 border-amber-500">
                                     <div>
-                                        <label className="block text-[8px] font-black text-gray-400 uppercase mb-0.5">نطاق المادة</label>
-                                        <h4 className="text-sm font-black text-gray-950 uppercase italic">{selectedAppointment.subject}</h4>
-                                        <span className="inline-block mt-1 px-2 py-0.5 bg-amber-500 text-white text-[8px] font-black uppercase italic">{selectedAppointment.curriculum}</span>
+                                        <label className="block text-[8px] font-black text-slate-400 uppercase mb-0.5">المادة</label>
+                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{selectedAppointment.subject}</h4>
+                                        <span className="text-[8px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 mt-1 inline-block">{selectedAppointment.curriculum}</span>
                                     </div>
-                                    <BookOpen size={24} className="text-gray-200 group-hover:text-amber-500 transition-colors" />
+                                    <BookOpen size={20} className="text-slate-200" />
                                 </div>
 
-                                <button 
+                                <button
                                     onClick={() => setShowDetails(false)}
-                                    className="w-full flex items-center justify-center gap-2 py-3 bg-gray-950 text-white border-2 border-gray-950 font-black uppercase text-[10px] italic shadow-[4px_4px_0px_0px_#ef4444] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+                                    className="w-full flex items-center justify-center gap-2 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs transition-all hover:opacity-90"
                                 >
-                                    إغلاق التقرير <ArrowRight size={14} />
+                                    إغلاق <ArrowRight size={13} />
                                 </button>
                             </div>
                         </motion.div>
