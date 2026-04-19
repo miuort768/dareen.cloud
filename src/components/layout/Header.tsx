@@ -66,14 +66,14 @@ export const Header = () => {
     return (
         <header className={cn(
             "h-[60px] lg:h-[75px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between transition-all duration-500 z-50",
-            "sticky top-0 lg:top-4 mx-auto w-full lg:w-[94%] mb-4 lg:mb-6 lg:rounded-none md:shadow-[0_8px_40px_rgba(0,0,0,0.08)] px-4 md:px-6 overflow-hidden max-w-full"
+            "sticky top-0 lg:top-4 mx-auto w-full lg:w-[96%] mb-4 lg:mb-8 rounded-none lg:rounded-2xl shadow-md lg:shadow-[0_20px_50px_rgba(0,0,0,0.1)] px-4 md:px-8 overflow-hidden max-w-full"
         )}>
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-9 h-9 bg-red-600 flex items-center justify-center text-white shadow-sm rounded-none border border-red-700">
-                        <GraduationCap size={18} strokeWidth={2.5} />
+                    <div className="w-10 h-10 bg-red-600 flex items-center justify-center text-white shadow-lg rounded-xl border border-red-700 transform lg:-rotate-3">
+                        <GraduationCap size={20} strokeWidth={2.5} />
                     </div>
                 </Link>
 
