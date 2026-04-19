@@ -226,11 +226,11 @@ export const Schedule = () => {
     );
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 px-4 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
+        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
             <div className="space-y-4 pb-[120px] md:pb-6 animate-in fade-in duration-500">
 
                 {/* ── Gradient Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-4 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                     <div className="relative flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
