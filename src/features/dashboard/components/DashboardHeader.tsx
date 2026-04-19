@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Clock, PlayCircle, Zap, HeadphoneOff, Headphones } from 'lucide-react';
+import { GraduationCap, Clock, PlayCircle, Zap, Headphones } from 'lucide-react';
 import type { User } from '../../../types/auth';
 
 interface ActiveSession {
