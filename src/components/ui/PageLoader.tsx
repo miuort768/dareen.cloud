@@ -22,7 +22,7 @@ export const PageLoader = () => {
                     <div className="absolute inset-0 rounded-full bg-primary-500/20 dark:bg-primary-500/30 animate-ping opacity-20" />
                     <div className="absolute inset-[-10px] rounded-full border border-primary-500/10 dark:border-primary-500/20 animate-[spin_10s_linear_infinite]" />
                     
-                    <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-900 rounded-3xl [clip-path:polygon(50%_0%,_100%_25%,_100%_75%,_50%_100%,_0%_75%,_0%_25%)] flex items-center justify-center shadow-2xl p-2 border border-white/50 dark:border-white/10">
+                    <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl p-2 border border-slate-200 dark:border-white/10 overflow-hidden">
                         <img 
                             src="/logo.png" 
                             alt="Darin Logo" 
