@@ -90,6 +90,7 @@ const ACCENT_COLORS = [
 
 export const Schedule = () => {
     const { currentUser } = useApp();
+    const isTeacher = currentUser?.role === 'teacher';
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
