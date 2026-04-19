@@ -128,7 +128,7 @@ export const Tasks = () => {
         <div className="max-w-4xl mx-auto space-y-6 pb-24 animate-in fade-in duration-500" dir="rtl">
             
             {/* Header Card (Purple) */}
-            <div className="bg-[#5c4fb1] text-white p-6 rounded-3xl mx-2 md:mx-0 shadow-xl shadow-indigo-500/20 text-center relative overflow-hidden">
+            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-xl shadow-indigo-500/20 text-center relative overflow-hidden">
                 <div className="absolute top-6 left-6 opacity-20">
                     <Activity size={40} />
                 </div>
@@ -137,7 +137,7 @@ export const Tasks = () => {
                     <p className="text-[10px] md:text-xs font-bold text-indigo-100/90 mb-6 drop-shadow-sm">إدارة وتحليل المهام المركزية</p>
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="w-full max-w-[280px] md:max-w-xs bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-2xl py-3.5 font-bold text-xs md:text-sm transition-all flex items-center justify-center gap-2 shadow-inner"
+                        className="w-full max-w-[280px] md:max-w-xs bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-lg py-3.5 font-bold text-xs md:text-sm transition-all flex items-center justify-center gap-2 shadow-inner"
                     >
                         إطلاق مهمة جديدة <Rocket size={16} className="fill-white/20" />
                     </button>
@@ -145,84 +145,84 @@ export const Tasks = () => {
             </div>
 
             {/* Analytics Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-2 md:px-0">
+            <div className="grid grid-cols-4 gap-2 md:gap-3 px-2 md:px-0">
                 {/* 1. Pending (Active) */}
-                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col justify-between gap-3">
-                    <div className="flex items-center justify-between pointer-events-none">
-                        <span className="text-[11px] font-black text-blue-600">نشط</span>
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
-                            <Clock size={16} />
+                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
+                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
+                        <span className="text-[8px] md:text-[11px] font-black text-blue-600 order-2 md:order-1 mt-1 md:mt-0">نشط</span>
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0 order-1 md:order-2">
+                            <Clock size={16} className="w-3 h-3 md:w-4 md:h-4" />
                         </div>
                     </div>
-                    <div className="text-center">
-                        <h3 className="text-3xl font-black text-slate-800 leading-none">{stats.pending}</h3>
-                        <p className="text-[9px] font-bold text-slate-400 mt-1">مهام معلقة</p>
+                    <div className="text-center w-full">
+                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.pending}</h3>
+                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">مهام معلقة</p>
                     </div>
                 </div>
 
                 {/* 2. In Progress */}
-                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col justify-between gap-3">
-                    <div className="flex items-center justify-between pointer-events-none">
-                        <span className="text-[11px] font-black text-orange-600">جاري</span>
-                        <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
-                            <RefreshCcw size={16} />
+                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
+                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
+                        <span className="text-[8px] md:text-[11px] font-black text-orange-600 order-2 md:order-1 mt-1 md:mt-0">جاري</span>
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 order-1 md:order-2">
+                            <RefreshCcw size={16} className="w-3 h-3 md:w-4 md:h-4" />
                         </div>
                     </div>
-                    <div className="text-center">
-                        <h3 className="text-3xl font-black text-slate-800 leading-none">{stats.inProgress}</h3>
-                        <p className="text-[9px] font-bold text-slate-400 mt-1">قيد التنفيذ</p>
+                    <div className="text-center w-full">
+                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.inProgress}</h3>
+                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">قيد التنفيذ</p>
                     </div>
                 </div>
 
                 {/* 3. Indicator */}
-                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col justify-between gap-3">
-                    <div className="flex items-center justify-between pointer-events-none">
-                        <span className="text-[11px] font-black text-yellow-600">المؤشر</span>
-                        <div className="w-8 h-8 rounded-lg bg-yellow-50 text-yellow-500 flex items-center justify-center shrink-0">
-                            <TrendingUp size={16} />
+                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
+                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
+                        <span className="text-[8px] md:text-[11px] font-black text-yellow-600 order-2 md:order-1 mt-1 md:mt-0">المؤشر</span>
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-yellow-50 text-yellow-500 flex items-center justify-center shrink-0 order-1 md:order-2">
+                            <TrendingUp size={16} className="w-3 h-3 md:w-4 md:h-4" />
                         </div>
                     </div>
-                    <div className="text-center">
-                        <h3 className="text-3xl font-black text-slate-800 leading-none">{stats.score}%</h3>
-                        <p className="text-[9px] font-bold text-slate-400 mt-1">مستوى الإنجاز</p>
+                    <div className="text-center w-full">
+                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.score}%</h3>
+                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">الإنجاز</p>
                     </div>
                 </div>
 
                 {/* 4. Completed */}
-                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col justify-between gap-3">
-                    <div className="flex items-center justify-between pointer-events-none">
-                        <span className="text-[11px] font-black text-emerald-600">منتهي</span>
-                        <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
-                            <CheckCircle2 size={16} />
+                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
+                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
+                        <span className="text-[8px] md:text-[11px] font-black text-emerald-600 order-2 md:order-1 mt-1 md:mt-0">منتهي</span>
+                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 order-1 md:order-2">
+                            <CheckCircle2 size={16} className="w-3 h-3 md:w-4 md:h-4" />
                         </div>
                     </div>
-                    <div className="text-center">
-                        <h3 className="text-3xl font-black text-slate-800 leading-none">{stats.completed}</h3>
-                        <p className="text-[9px] font-bold text-slate-400 mt-1">تم الانتهاء</p>
+                    <div className="text-center w-full">
+                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.completed}</h3>
+                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">تم الانتهاء</p>
                     </div>
                 </div>
             </div>
 
             {/* Smart Search & Filter */}
-            <div className="mx-2 md:mx-0 space-y-4 pt-2 max-w-[340px] md:max-w-md mx-auto">
-                <div className="relative">
+            <div className="mx-2 md:mx-0 pt-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 md:max-w-2xl mx-auto">
+                <div className="relative w-full">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                     <input 
                         type="text" 
                         placeholder="ابحث عن مهمة..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-xl py-3 px-4 pr-11 text-[11px] font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder:text-slate-400"
+                        className="w-full bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-xl py-3.5 px-4 pr-11 text-[11px] font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder:text-slate-400"
                     />
                 </div>
 
-                <div className="flex items-center justify-center gap-2 flex-row-reverse">
+                <div className="flex items-center justify-between md:justify-start gap-2 flex-row-reverse w-full md:w-auto overflow-hidden">
                     {['low', 'medium', 'high', 'all'].map(p => (
                         <button 
                             key={p}
                             onClick={() => setFilterPriority(p as any)}
                             className={cn(
-                                "px-4 py-1.5 rounded-full font-black text-[9px] transition-all",
+                                "flex-1 md:flex-none px-2 md:px-5 py-2.5 md:py-2 rounded-xl md:rounded-full font-black text-[10px] md:text-[11px] transition-all whitespace-nowrap",
                                 filterPriority === p ? "bg-[#5c4fb1] text-white shadow-lg shadow-indigo-500/20" : "bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200"
                             )}
                         >
