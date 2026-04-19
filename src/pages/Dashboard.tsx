@@ -55,7 +55,7 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-[120px] overflow-x-hidden text-sm" dir="rtl">
+        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-[150px] pt-1 overflow-x-hidden text-sm" dir="rtl">
             
             {/* Modern Gradient Header */}
             <DashboardHeader
