@@ -127,9 +127,11 @@ export const Header = () => {
 
                 {/* User Profile */}
                 <div className="flex items-center gap-3 pr-4 border-r-2 border-primary-500/10 dark:border-white/10 shrink-0">
-                    <div className="text-right hidden sm:block">
-                        <p className="text-xs lg:text-sm font-black text-gray-900 dark:text-slate-100 leading-tight">{user.name}</p>
-                        <p className="text-[10px] font-bold text-primary-600 dark:text-teal-400 opacity-70">
+                    <div className="text-right">
+                        <p className="text-[10px] md:text-sm font-black text-gray-900 dark:text-slate-100 leading-tight truncate max-w-[80px] md:max-w-none">
+                            {user.name?.split(' ')[0]}
+                        </p>
+                        <p className="text-[8px] md:text-[10px] font-bold text-primary-600 dark:text-teal-400 opacity-70">
                             {getRoleLabel(user.role)}
                         </p>
                     </div>

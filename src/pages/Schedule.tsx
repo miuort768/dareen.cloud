@@ -229,14 +229,16 @@ export const Schedule = () => {
             <div className="space-y-4 pb-6 animate-in fade-in duration-500">
 
                 {/* ── Gradient Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-4 md:px-6 py-5 md:py-7">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-4 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                     <div className="relative flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                             <Calendar size={18} className="text-white/80 shrink-0" />
                             <div>
-                                <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">الجدول الأسبوعي</h1>
-                                <p className="text-[9px] md:text-[11px] font-bold text-white/60 mt-0.5">إدارة المواعيد والحصص</p>
+                                <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">
+                                    {isTeacher ? `جدول أ. ${currentUser?.name.split(' ')[0]}` : 'الجدول الأسبوعي'}
+                                </h1>
+                                <p className="text-[9px] md:text-[11px] font-bold text-white/60 mt-1">إدارة المواعيد والحصص</p>
                             </div>
                         </div>
                         <button
@@ -249,14 +251,14 @@ export const Schedule = () => {
                 </div>
 
                 {/* ── Stats Row ── */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-0 md:px-0">
                     {[
                         { label: 'إجمالي الحصص', val: allEvents.length, icon: LayoutGrid, color: 'text-indigo-600 bg-indigo-50' },
                         { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'text-emerald-600 bg-emerald-50' },
                         { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'text-purple-600 bg-purple-50' },
                         { label: 'اليوم النشط', val: mobileActiveDay, icon: Clock, color: 'text-amber-600 bg-amber-50' }
                     ].map((stat, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 md:p-4 shadow-sm flex items-center gap-2 md:gap-3">
+                        <div key={i} className="bg-white dark:bg-slate-900 border-y md:border border-slate-200 dark:border-slate-800 p-2.5 md:p-4 shadow-sm flex items-center gap-2 md:gap-3">
                             <div className={cn('w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shrink-0', stat.color)}>
                                 <stat.icon size={14} className="md:hidden" />
                                 <stat.icon size={18} className="hidden md:block" />
@@ -437,7 +439,7 @@ export const Schedule = () => {
                                                     key={ev.id}
                                                     onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
                                                     className={cn(
-                                                        "flex items-stretch overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:shadow-md transition-shadow",
+                                                        "flex items-stretch overflow-hidden border-y border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:shadow-md transition-shadow",
                                                         style.bg
                                                     )}
                                                 >
