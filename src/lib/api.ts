@@ -1,7 +1,27 @@
 import { API_BASE_URL } from '../config/api';
+import NProgress from 'nprogress';
 
 type FetchOptions = RequestInit & {
     params?: Record<string, string>;
+};
+
+let activeRequests = 0;
+
+const fetchWithProgress = async (input: RequestInfo | URL, init?: RequestInit) => {
+    if (activeRequests === 0) {
+        NProgress.start();
+    }
+    activeRequests++;
+    
+    try {
+        const response = await fetch(input, init);
+        return response;
+    } finally {
+        activeRequests = Math.max(0, activeRequests - 1);
+        if (activeRequests === 0) {
+            NProgress.done();
+        }
+    }
 };
 
 const getAuthHeader = (): Record<string, string> => {
@@ -36,7 +56,7 @@ export const api = {
             const params = new URLSearchParams(options.params).toString();
             fullUrl += `?${params}`;
         }
-        const response = await fetch(fullUrl, {
+        const response = await fetchWithProgress(fullUrl, {
             ...options,
             method: 'GET',
             headers: {
@@ -49,7 +69,7 @@ export const api = {
 
     async post<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetch(fullUrl, {
+        const response = await fetchWithProgress(fullUrl, {
             ...options,
             method: 'POST',
             headers: {
@@ -64,7 +84,7 @@ export const api = {
 
     async put<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetch(fullUrl, {
+        const response = await fetchWithProgress(fullUrl, {
             ...options,
             method: 'PUT',
             headers: {
@@ -79,7 +99,7 @@ export const api = {
 
     async patch<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
         const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetch(fullUrl, {
+        const response = await fetchWithProgress(fullUrl, {
             ...options,
             method: 'PATCH',
             headers: {
@@ -94,7 +114,7 @@ export const api = {
 
     async delete<T>(url: string, options: FetchOptions = {}): Promise<T> {
         const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetch(fullUrl, {
+        const response = await fetchWithProgress(fullUrl, {
             ...options,
             method: 'DELETE',
             headers: {
