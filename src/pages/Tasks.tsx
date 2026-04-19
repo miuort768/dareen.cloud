@@ -204,8 +204,8 @@ export const Tasks = () => {
             </div>
 
             {/* Smart Search & Filter */}
-            <div className="mx-2 md:mx-0 pt-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 md:max-w-2xl mx-auto">
-                <div className="relative w-full">
+            <div className="mx-2 md:mx-0 pt-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full">
+                <div className="relative flex-1 w-full">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                     <input 
                         type="text" 
@@ -216,7 +216,7 @@ export const Tasks = () => {
                     />
                 </div>
 
-                <div className="flex items-center justify-between md:justify-start gap-2 flex-row-reverse w-full md:w-auto overflow-hidden">
+                <div className="flex items-center justify-between md:justify-end gap-1.5 md:gap-2 flex-row-reverse w-full md:w-auto shrink-0 overflow-x-auto no-scrollbar pb-1 md:pb-0">
                     {['low', 'medium', 'high', 'all'].map(p => (
                         <button 
                             key={p}
