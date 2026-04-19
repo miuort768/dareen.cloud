@@ -9,7 +9,7 @@ let activeRequests = 0;
 
 const fetchWithProgress = async (input: RequestInfo | URL, init?: RequestInit) => {
     if (activeRequests === 0) {
-        NProgress.start();
+        // NProgress.start();
     }
     activeRequests++;
     
@@ -19,7 +19,7 @@ const fetchWithProgress = async (input: RequestInfo | URL, init?: RequestInit) =
     } finally {
         activeRequests = Math.max(0, activeRequests - 1);
         if (activeRequests === 0) {
-            NProgress.done();
+            // NProgress.done();
         }
     }
 };

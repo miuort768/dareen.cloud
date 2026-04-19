@@ -20,7 +20,7 @@ import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { api } from '../lib/api';
-
+import { PageLoader } from '../components/ui/PageLoader';
 export const ParentStudents = () => {
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -88,14 +88,7 @@ export const ParentStudents = () => {
     );
 
     if (isLoading) {
-        return (
-            <div className="space-y-6">
-                <div className="h-12 w-48 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[...Array(3)].map((_, i) => <div key={i} className="h-64 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>)}
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

@@ -16,16 +16,16 @@ export const usePageLoader = () => {
 
     useEffect(() => {
         // Start progress on location change
-        NProgress.start();
+        // NProgress.start();
 
         // Finish progress after a short delay to ensure content is rendered
         const timer = setTimeout(() => {
-            NProgress.done();
+            // NProgress.done();
         }, 300);
 
         return () => {
             clearTimeout(timer);
-            NProgress.done();
+            // NProgress.done();
         };
     }, [location.pathname]);
 };

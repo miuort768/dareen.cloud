@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
+import { PageLoader } from '../components/ui/PageLoader';
 
 import { useChatContext } from '../context/ChatContext';
 
@@ -84,12 +85,7 @@ export const StudentDashboard = () => {
     const todaySchedule = weeklySchedule.filter(d => d.day === todayArabic);
 
     if (isLoading) {
-        return (
-            <div className="space-y-4 p-4 text-center py-20 min-h-full md:animate-in md:fade-in">
-                <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-slate-500 font-bold">جاري تحميل بياناتك يا بطل...</p>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

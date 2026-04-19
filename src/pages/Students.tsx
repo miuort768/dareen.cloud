@@ -8,7 +8,7 @@ import { api } from '../lib/api';
 // Shared Components
 import { Skeleton } from '../shared/components/Skeleton';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
-
+import { PageLoader } from '../components/ui/PageLoader';
 // Feature Components
 import { StudentHeader } from '../features/students/components/StudentHeader';
 import { StudentToolbar } from '../features/students/components/StudentToolbar';
@@ -288,15 +288,7 @@ export const Students = () => {
     };
 
     if (loading) {
-        return (
-            <div className="space-y-6 min-h-full">
-                <Skeleton className="h-48 rounded-none" />
-                <Skeleton className="h-16 rounded-none" />
-                <div className="grid grid-cols-1 gap-4">
-                    {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-20 rounded-none" />)}
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

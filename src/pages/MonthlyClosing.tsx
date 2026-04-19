@@ -15,6 +15,7 @@ import { attendanceService } from '../features/attendance/services/attendanceSer
 import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
+import { PageLoader } from '../components/ui/PageLoader';
 
 // --- Salary Slip Modal Component ---
 const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
@@ -265,11 +266,7 @@ export const MonthlyClosing: React.FC = () => {
     const netActualCashFlow = totalActualCollections - totalTeacherPayout;
 
     if (isLoading) {
-        return (
-            <div className="flex min-h-full items-center justify-center bg-gray-50/50 dark:bg-gray-950/50">
-                <div className="w-12 h-12 border-4 border-gray-200 border-t-emerald-600 rounded-full animate-spin"></div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

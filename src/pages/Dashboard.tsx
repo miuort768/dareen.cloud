@@ -16,8 +16,7 @@ import { RecentActivityFeed } from '../features/dashboard/components/RecentActiv
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
-
-
+import { PageLoader } from '../components/ui/PageLoader';
 export const Dashboard = () => {
     const { currentUser } = useApp();
 
@@ -42,16 +41,7 @@ export const Dashboard = () => {
     }
 
     if (loading) {
-        return (
-            <div className="space-y-4 p-4 lg:p-6 bg-gray-50 dark:bg-gray-950 min-h-full md:animate-in md:fade-in">
-                <div className="h-48 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
-                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4">
-                    {[...Array(8)].map((_, i) => (
-                        <div key={i} className="h-24 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
-                    ))}
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

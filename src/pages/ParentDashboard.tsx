@@ -19,6 +19,7 @@ import { useApp } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import { PageLoader } from '../components/ui/PageLoader';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone, logout } = useApp();
@@ -106,12 +107,7 @@ export const ParentDashboard = () => {
     }, [children, todayArabic]);
 
     if (isLoading) {
-        return (
-            <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
-                <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="text-slate-500 dark:text-slate-400 font-bold tracking-tight text-xs">جاري التحميل...</p>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

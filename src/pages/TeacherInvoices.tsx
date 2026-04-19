@@ -16,8 +16,8 @@ import {
     type TeacherInvoiceFormData,
     type InvoiceStats,
     type InvoiceStatus,
-    INVOICE_STATUS
 } from '../types/invoice';
+import { PageLoader } from '../components/ui/PageLoader';
 
 interface TeacherInvoicesHeaderProps {
     stats: InvoiceStats;
@@ -435,19 +435,7 @@ export const TeacherInvoices = () => {
     }, []);
 
     if (loading) {
-        return (
-            <div className="space-y-6 min-h-full">
-                <Skeleton className="h-48 rounded-none" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {[...Array(6)].map((_, i) => (
-                        <Skeleton key={i} className="h-32 rounded-2xl" />
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 gap-6">
-                    <Skeleton className="h-96 rounded-none" />
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

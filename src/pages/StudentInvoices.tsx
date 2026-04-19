@@ -10,7 +10,7 @@ import { useApp } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
 import { api } from '../lib/api';
-
+import { PageLoader } from '../components/ui/PageLoader';
 interface StudentInvoice {
     id: string;
     studentId: string;
@@ -380,11 +380,7 @@ export const StudentInvoices = () => {
     const pendingCount = invoices.filter(i => i.status === 'pending').length;
 
     if (loading) {
-        return (
-            <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-950 md:animate-in md:fade-in">
-                <div className="w-12 h-12 border-4 border-gray-200 border-t-gray-950 rounded-full animate-spin"></div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

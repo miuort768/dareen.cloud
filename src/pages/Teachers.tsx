@@ -18,7 +18,7 @@ import { TeacherToolbar } from '../features/teachers/components/TeacherToolbar';
 import { TeacherForm } from '../features/teachers/components/TeacherForm';
 import { TeacherTable } from '../features/teachers/components/TeacherTable';
 import { TeacherDetails } from '../features/teachers/components/TeacherDetails';
-
+import { PageLoader } from '../components/ui/PageLoader';
 // Types
 import type { Teacher, Session, Student, Enrollment } from '../types';
 
@@ -303,25 +303,7 @@ export const Teachers = () => {
     });
 
     if (loading) {
-        return (
-            <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in">
-                <PageHeader
-                    title="إدارة المعلمات"
-                    subtitle="تنظيم وإدارة بيانات الكادر التعليمي"
-                    icon={GraduationCap}
-                    stats={[
-                        { label: 'إجمالي المعلمات', value: 0 }
-                    ]}
-                    color="indigo"
-                />
-                <div className="flex items-center justify-center py-12">
-                    <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-500 dark:text-gray-400 font-bold">جاري تحميل بيانات المعلمات...</p>
-                    </div>
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

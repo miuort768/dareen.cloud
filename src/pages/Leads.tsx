@@ -20,6 +20,7 @@ import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
 import type { Lead, LeadStatus } from '../features/crm/types';
+import { PageLoader } from '../components/ui/PageLoader';
 
 export const Leads: React.FC = () => {
     const queryClient = useQueryClient();
@@ -74,11 +75,7 @@ export const Leads: React.FC = () => {
     };
 
     if (isLoading) {
-        return (
-            <div className="flex min-h-full items-center justify-center md:animate-in md:fade-in">
-                <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

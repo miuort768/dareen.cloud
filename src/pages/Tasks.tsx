@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
+import { PageLoader } from '../components/ui/PageLoader';
 
 interface Task {
     id: string;
@@ -117,11 +118,7 @@ export const Tasks = () => {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-[50vh]">
-                <div className="text-slate-400 font-bold text-sm animate-pulse">جاري تحميل لوحة المهام...</div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

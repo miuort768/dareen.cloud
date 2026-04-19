@@ -11,6 +11,7 @@ import {
 import { api } from '../lib/api';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import { PageLoader } from '../components/ui/PageLoader';
 
 export const ParentAttendance = () => {
     const [children, setChildren] = useState<any[]>([]);
@@ -47,12 +48,7 @@ export const ParentAttendance = () => {
     }, [selectedChildId, sessions]);
 
     if (isLoading) {
-        return (
-            <div className="space-y-6">
-                <div className="h-12 w-48 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>
-                <div className="h-96 bg-gray-100 dark:bg-gray-800 animate-pulse"></div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (

@@ -9,6 +9,7 @@ import { useApp } from '../context/AppContext';
 import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { PageLoader } from '../components/ui/PageLoader';
 
 // Interfaces
 interface Student {
@@ -170,17 +171,7 @@ export const Appointments = () => {
     const hasActiveFilters = searchTerm || filterDay !== 'all' || filterTeacher !== 'all';
 
     if (loading) {
-        return (
-            <div className="space-y-4 p-2">
-                <Skeleton className="h-28" />
-                <div className="grid grid-cols-3 gap-3">
-                    {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-24" />)}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-48" />)}
-                </div>
-            </div>
-        );
+        return <PageLoader />;
     }
 
     return (
