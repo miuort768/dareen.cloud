@@ -115,22 +115,22 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     return (
         <div className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-900/50 transition-all duration-300 flex flex-col group overflow-hidden rounded-none">
 
-            <div className="p-6 flex-1 flex flex-col">
+            <div className="p-4 md:p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-5 pb-4 border-b border-gray-50 dark:border-gray-700/50">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-primary-600 dark:bg-primary-500 flex items-center justify-center text-white font-black text-xl rounded-none shadow-lg shadow-primary-500/20">
+                    <div className="flex items-center gap-3 md:gap-4">
+                        <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 bg-primary-600 dark:bg-primary-500 flex items-center justify-center text-white font-black text-base md:text-xl rounded-none shadow-lg shadow-primary-500/20">
                             {getGradeDisplay(student.grade)}
                         </div>
-                        <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <h4 className="font-black text-gray-900 dark:text-white text-lg leading-tight">{student.name}</h4>
-                                <span className="text-[9px] font-black bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 px-2 py-0.5 rounded-none uppercase tracking-tighter">
+                        <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-1">
+                                <h4 className="font-black text-gray-900 dark:text-white text-sm md:text-lg leading-tight truncate max-w-[120px] sm:max-w-xs">{student.name}</h4>
+                                <span className="text-[8px] md:text-[9px] font-black bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 px-1.5 md:px-2 py-0.5 rounded-none uppercase tracking-tighter shrink-0">
                                     {student.grade}
                                 </span>
                             </div>
-                            <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-1">
-                                <BookOpen size={10} className="text-primary-500" />
-                                {en.subject}
+                            <span className="text-[9px] md:text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-1 truncate">
+                                <BookOpen size={10} className="text-primary-500 shrink-0" />
+                                <span className="truncate">{en.subject}</span>
                             </span>
                         </div>
                     </div>
