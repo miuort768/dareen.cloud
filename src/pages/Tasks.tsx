@@ -127,8 +127,8 @@ export const Tasks = () => {
     return (
         <div className="max-w-4xl mx-auto space-y-6 pb-24 animate-in fade-in duration-500" dir="rtl">
             
-            {/* Header Card (Purple) */}
-            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-xl shadow-indigo-500/20 text-center relative overflow-hidden">
+            {/* Header Card (Purple with Green Neon Glow) */}
+            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-[0_0_30px_rgba(74,222,128,0.35)] border border-green-400/20 text-center relative overflow-hidden">
                 <div className="absolute top-6 left-6 opacity-20">
                     <Activity size={40} />
                 </div>
