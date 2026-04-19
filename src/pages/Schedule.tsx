@@ -394,9 +394,9 @@ export const Schedule = () => {
                 </div>
 
                 {/* ── Mobile View ── */}
-                <div className="md:hidden space-y-3">
+                <div className="md:hidden space-y-3 max-w-full overflow-hidden">
                     {/* Day Picker */}
-                    <div className="flex overflow-x-auto gap-1.5 pb-1 no-scrollbar">
+                    <div className="flex overflow-x-auto gap-1.5 pb-2 no-scrollbar overscroll-behavior-x-contain touch-pan-x">
                         {DAYS_OF_WEEK.map(day => {
                             const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                             const dayEventCount = filteredEvents.filter(e => e.day === day).length;

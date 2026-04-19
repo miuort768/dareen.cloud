@@ -118,12 +118,12 @@ export const ParentDashboard = () => {
         <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-[150px] px-2 md:px-4 lg:px-8 pt-2 space-y-6 animate-in fade-in duration-700 overflow-x-hidden w-full" dir="rtl">
             
             {/* ═══════════════ HEADER (Updated responsiveness & Logout positioning) ═══════════════ */}
-            <div className="flex justify-between items-start mb-2 pr-1">
-                <div className="max-w-[82%]">
-                    <h1 className="text-[13px] md:text-2xl font-black text-slate-900 dark:text-white leading-tight">
-                        مرحباً بك شريك النجاح، <span className="text-indigo-600 dark:text-indigo-400 block md:inline">أ/ {currentUser?.name}</span>
+            <div className="flex justify-between items-start mb-2 px-1">
+                <div className="max-w-[75%] min-w-0">
+                    <h1 className="text-[12px] md:text-2xl font-black text-slate-900 dark:text-white leading-tight truncate">
+                        مرحباً، <span className="text-indigo-600 dark:text-indigo-400">أ/ {currentUser?.name.split(' ')[0]}</span>
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-[8px] md:text-xs font-medium mt-0.5 opacity-80">رحلة تميز أبنائك تبدأ من هنا</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-[8px] md:text-xs font-medium mt-0.5 opacity-80 truncate">رحلة تميز أبنائك تبدأ من هنا</p>
                 </div>
                 <button 
                     onClick={logout}
@@ -140,8 +140,8 @@ export const ParentDashboard = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-5 rounded-2xl shadow-lg shadow-purple-500/10 text-white"
             >
-                <div className="absolute top-0 right-0 w-10 h-10 pointer-events-none overflow-hidden z-20">
-                    <div className="absolute top-[-20px] right-[-20px] w-10 h-10 bg-cyan-400 rotate-45 shadow-[0_0_15px_#22d3ee]" />
+                <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden z-20">
+                    <div className="absolute top-[-15px] right-[-15px] w-8 h-8 bg-cyan-400 rotate-45 shadow-[0_0_10px_#22d3ee]" />
                 </div>
                 <Trophy className="absolute bottom-2 left-2 text-white/5" size={50} />
                 

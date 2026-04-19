@@ -144,7 +144,7 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="space-y-4 pb-32 max-w-full overflow-x-hidden">
+        <div className="space-y-4 pb-32 w-full max-w-full overflow-x-hidden p-0">
             <AttendanceHeader
                 date={date}
                 onDateChange={setDate}
@@ -233,7 +233,7 @@ export const Attendance = () => {
                                 />
                             </div>
                         </div>
-                        <div className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-y-8 gap-x-2 md:gap-x-6">
+                        <div className="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-y-8 gap-x-1 md:gap-x-6 max-w-full overflow-hidden">
                             {(matchedEnrollments || []).filter(me =>
                                 (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                                 (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
@@ -290,7 +290,7 @@ export const Attendance = () => {
                                     </span>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-y-8 gap-x-2 md:gap-x-6 px-1">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-y-8 gap-x-1 md:gap-x-6 px-1 max-w-full overflow-hidden">
                                     {filteredTStudents.map(student => {
                                         const enrollment = student.enrollments.find(e => e.teacher === teacher)!;
                                         const session = filteredSessions.find(s =>

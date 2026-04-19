@@ -178,7 +178,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     <button 
                         onClick={toggleTimer}
                         className={cn(
-                            "flex-1 flex items-center justify-between p-3 border-2 border-gray-950 shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all",
+                            "flex-1 flex items-center justify-between p-3 border-2 border-gray-950 shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all",
                             timerRunning ? "bg-rose-500 text-white" : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/10"
                         )}
                     >
@@ -191,7 +191,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="p-3 bg-white border-2 border-gray-950 text-gray-950 hover:bg-amber-100 transition-colors shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                        className="p-3 bg-white border-2 border-gray-950 text-gray-950 hover:bg-amber-100 transition-colors shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:active:translate-x-0.5 md:active:translate-y-0.5 md:active:shadow-none"
                     >
                         <Calendar size={18} />
                     </button>
@@ -282,7 +282,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     </div>
 
                     {isEditing && (
-                        <div className="p-4 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 space-y-3 mt-4 animate-in fade-in slide-in-from-top-1 rounded-lg">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 space-y-3 mt-4 md:animate-in md:fade-in md:slide-in-from-top-1 rounded-lg">
                             <div className="grid grid-cols-2 gap-2">
                                 <div className="col-span-1">
                                     <p className="text-[8px] font-black text-gray-400 mb-1">اليوم</p>

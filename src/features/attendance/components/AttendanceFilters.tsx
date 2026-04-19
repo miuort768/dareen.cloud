@@ -26,13 +26,13 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-6 overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-                <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 bg-indigo-600 flex items-center justify-center">
+                <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-7 h-7 bg-indigo-600 flex items-center justify-center shrink-0">
                         <SlidersHorizontal size={14} className="text-white" />
                     </div>
-                    <h3 className="text-xs font-black text-slate-700 dark:text-white uppercase tracking-widest">لوحة التحكم في فرز السجلات</h3>
+                    <h3 className="text-[10px] md:text-xs font-black text-slate-700 dark:text-white uppercase tracking-widest truncate">لوحة التحكم في السجلات</h3>
                     {hasActiveFilters && (
-                        <span className="bg-indigo-100 text-indigo-700 text-[8px] font-black px-1.5 py-0.5 uppercase tracking-wider">
+                        <span className="bg-indigo-100 text-indigo-700 text-[8px] font-black px-1.5 py-0.5 uppercase tracking-wider shrink-0 hidden xs:inline-block">
                             فلتر نشط
                         </span>
                     )}
@@ -57,7 +57,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                         <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <input
                             type="text"
-                            placeholder="اسم الطالب أو المعلمة..."
+                            placeholder="بحث..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 transition-all placeholder:text-slate-300 placeholder:font-normal text-slate-700 dark:text-white"
