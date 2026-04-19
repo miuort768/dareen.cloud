@@ -11,7 +11,6 @@ import {
     LogOut,
     MessageSquare,
     ChevronLeft,
-    Activity,
     BookOpen,
     LayoutDashboard
 } from 'lucide-react';
@@ -376,18 +375,3 @@ const NavButton = ({ label, icon: Icon, onClick }: any) => (
     </button>
 );
 
-const ProgressRow = ({ label, value, subLabel }: { label: string; value: number; subLabel?: string }) => (
-    <div className="space-y-2">
-        <div className="flex justify-between items-center px-1">
-            <span className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic tracking-tighter">{label}</span>
-            <span className="text-[8px] md:text-xs font-black text-slate-500 dark:text-slate-400">{subLabel || `${value}%`}</span>
-        </div>
-        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${value}%` }}
-                className="h-full bg-indigo-600 dark:bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-            />
-        </div>
-    </div>
-);
