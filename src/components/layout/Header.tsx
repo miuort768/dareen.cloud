@@ -78,20 +78,20 @@ export const Header = () => {
     return (
         <header className={cn(
             "h-[60px] lg:h-[75px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-800/60 flex items-center justify-between transition-all duration-500 z-50",
-            "sticky top-2 lg:top-4 mx-auto w-[96%] lg:w-[94%] mb-4 lg:mb-6 rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.12)] px-2 md:px-6"
+            "sticky top-2 lg:top-4 mx-auto w-[94%] mb-4 lg:mb-6 rounded-none shadow-[0_8px_40px_rgba(0,0,0,0.08)] px-3 md:px-6"
         )}>
 
             {/* Left Section: Branding & Title */}
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-                <Link to="/" className="shrink-0 pr-1">
-                    <div className="w-10 h-10 bg-red-600 flex items-center justify-center text-white shadow-sm rounded-none border border-red-700">
-                        <GraduationCap size={20} strokeWidth={2.5} />
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+                <Link to="/" className="shrink-0">
+                    <div className="w-9 h-9 bg-red-600 flex items-center justify-center text-white shadow-sm rounded-none border border-red-700">
+                        <GraduationCap size={18} strokeWidth={2.5} />
                     </div>
                 </Link>
 
                 {title && (
-                    <div className="min-w-0 overflow-hidden">
-                        <h1 className="text-xs md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight pr-1">
+                    <div className="min-w-0 overflow-hidden pr-1">
+                        <h1 className="text-[10px] md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight">
                             {title}
                         </h1>
                     </div>
@@ -99,13 +99,13 @@ export const Header = () => {
             </div>
 
             {/* Right Actions - Fixed Layout */}
-            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-0.5 sm:gap-2 shrink-0">
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-10 h-10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
+                    className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
 
                 {/* Notifications */}
@@ -113,10 +113,10 @@ export const Header = () => {
                     <NotificationDropdown />
                 </div>
 
-                {/* User Identity - Simplified and Consistent */}
-                <div className="flex items-center gap-2 pl-2 border-r border-slate-200 dark:border-slate-800 shrink-0">
-                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700">
-                        <User size={20} />
+                {/* User Identity */}
+                <div className="flex items-center pl-1 border-r border-slate-200 dark:border-slate-800 shrink-0">
+                    <div className="w-9 h-9 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
+                        <User size={18} />
                     </div>
                 </div>
             </div>
