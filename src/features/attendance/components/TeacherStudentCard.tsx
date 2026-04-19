@@ -143,7 +143,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-900/50 transition-all duration-300 flex flex-col group overflow-hidden rounded-none">
+        <div className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-sm md:shadow-md hover:shadow-xl hover:border-primary-200 dark:hover:border-primary-900/50 transition-all duration-300 flex flex-col group overflow-hidden rounded-none">
 
             <div className="p-4 md:p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-5 pb-4 border-b border-gray-50 dark:border-gray-700/50">
@@ -178,7 +178,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     <button 
                         onClick={toggleTimer}
                         className={cn(
-                            "flex-1 flex items-center justify-between p-3 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all",
+                            "flex-1 flex items-center justify-between p-3 border-2 border-gray-950 shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all",
                             timerRunning ? "bg-rose-500 text-white" : "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/10"
                         )}
                     >
@@ -191,7 +191,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="p-3 bg-white border-2 border-gray-950 text-gray-950 hover:bg-amber-100 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                        className="p-3 bg-white border-2 border-gray-950 text-gray-950 hover:bg-amber-100 transition-colors shadow-sm md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                     >
                         <Calendar size={18} />
                     </button>
@@ -303,7 +303,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <button onClick={handleSaveSlot} className="flex-1 bg-primary-600 text-white text-[10px] font-black py-2.5 hover:bg-primary-700 shadow-lg shadow-primary-500/20 rounded-none transition-all active:scale-[0.98]">
+                                <button onClick={handleSaveSlot} className="flex-1 bg-primary-600 text-white text-[10px] font-black py-2.5 hover:bg-primary-700 shadow-sm md:shadow-lg md:shadow-primary-500/20 rounded-none transition-all active:scale-[0.98]">
                                     {editSlotIndex !== null ? 'حفظ التعديل' : 'إضافة للجداول'}
                                 </button>
                                 <button onClick={() => { setEditSlotIndex(null); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); }} className="px-4 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] font-black rounded-none hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">إلغاء</button>
