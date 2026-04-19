@@ -80,7 +80,10 @@ export const Header = () => {
 
                 {title && (
                     <div className="min-w-0 overflow-hidden pr-1">
-                        <h1 className="text-[10px] md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight">
+                        <h1 className={cn(
+                            "text-[10px] md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight",
+                            (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
+                        )}>
                             {title}
                         </h1>
                     </div>
