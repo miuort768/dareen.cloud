@@ -91,7 +91,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             />
 
             {/* Header - WhatsApp Style */}
-            <header className="h-[60px] shrink-0 bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-10">
+            <header className="sticky top-0 h-[60px] shrink-0 bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-[50] shadow-sm">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
