@@ -134,7 +134,7 @@ export const Evaluations = () => {
                         </div>
                         <div>
                             <h1 className="text-xl md:text-2xl font-black tracking-tight leading-none mb-1">تقييم الطلاب والتحفيز</h1>
-                            <p className="text-white/70 text-[11px] font-bold flex items-center gap-1.5">
+                            <p className="text-white/70 text-[9px] md:text-[11px] font-bold flex items-center gap-1.5 truncate max-w-[200px] sm:max-w-none">
                                 <Zap size={11} className="fill-current" />
                                 نظام المكافآت الذكي والتقييم الأكاديمي الشامل
                             </p>
