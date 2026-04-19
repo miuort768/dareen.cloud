@@ -77,4 +77,28 @@ async function sendPushToUser(db, userId, title, message, url = '/') {
     }
 }
 
+// 3. Notify student's parent(s) when a session starts
+router.post('/notify-student-parent', async (req, res) => {
+    try {
+        const { studentId, title, body } = req.body;
+        if (!studentId) return res.status(400).json({ error: 'studentId required' });
+
+        // Find all parents whose children includes this student
+        const parents = await req.db.all(`SELECT * FROM parents`);
+        let notified = 0;
+        for (const parent of parents) {
+            let children = [];
+            try { children = JSON.parse(parent.children || '[]'); } catch { children = []; }
+            if (children.includes(studentId)) {
+                await sendPushToUser(req.db, parent.id, title || '🎓 بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
+                notified++;
+            }
+        }
+        res.json({ success: true, notified });
+    } catch (err) {
+        console.error('notify-student-parent error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = { pushRouter: router, sendPushToUser };

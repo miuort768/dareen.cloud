@@ -58,17 +58,47 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     const [timerSeconds, setTimerSeconds] = useState(0);
     const [timerInterval, setTimerInterval] = useState<any>(null);
 
-    const toggleTimer = () => {
+    const toggleTimer = async () => {
         if (timerRunning) {
+            // Stop timer
             clearInterval(timerInterval);
             setTimerRunning(false);
+            // Remove active session from backend
+            try {
+                const token = localStorage.getItem('token');
+                await fetch('/api/active-sessions', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ studentId: student.id, subject: en.subject })
+                });
+            } catch (e) { /* silent */ }
         } else {
+            // Start timer
             const start = Date.now() - timerSeconds * 1000;
             const interval = setInterval(() => {
                 setTimerSeconds(Math.floor((Date.now() - start) / 1000));
             }, 1000);
             setTimerInterval(interval);
             setTimerRunning(true);
+            // Register active session in backend + notify parent
+            try {
+                const token = localStorage.getItem('token');
+                await fetch('/api/active-sessions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ studentId: student.id, subject: en.subject })
+                });
+                // Send push notification to parent
+                await fetch('/api/push/notify-student-parent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({
+                        studentId: student.id,
+                        title: '🎓 بدأت الحصة الآن!',
+                        body: `حصة ${en.subject} للطالب ${student.name} مع الأستاذة ${en.teacher} قد بدأت الآن.`
+                    })
+                });
+            } catch (e) { /* silent */ }
         }
     };
 

@@ -303,6 +303,16 @@ async function setupDatabase() {
             FOREIGN KEY(postId) REFERENCES forum_posts(id) ON DELETE CASCADE
         );
 
+        CREATE TABLE IF NOT EXISTS active_sessions (
+            id TEXT PRIMARY KEY,
+            studentId TEXT NOT NULL,
+            teacherId TEXT NOT NULL,
+            teacherName TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            timerSeconds INTEGER DEFAULT 0,
+            startedAt TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         -- Tables created above
     `);
 
