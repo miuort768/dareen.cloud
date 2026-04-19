@@ -4,6 +4,7 @@ import {
     Calendar, 
     Clock, 
     User, 
+    Users, 
     BookOpen, 
     Search,
     Zap,
@@ -94,6 +95,8 @@ export const Schedule = () => {
     const [filterDay, setFilterDay] = useState<string>('all');
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
+    const [showSharedModal, setShowSharedModal] = useState(false);
+    const [sharedEvents, setSharedEvents] = useState<ScheduleEvent[]>([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [enrollData, setEnrollData] = useState({
         studentId: '',
@@ -342,7 +345,7 @@ export const Schedule = () => {
                                                 }}
                                             >
                                                 <div className="flex flex-col gap-1">
-                                                    {events.length > 0 ? (
+                                                    {events.length === 1 ? (
                                                         events.map(ev => {
                                                             const style = getTeacherStyle(ev.teacherName);
                                                             return (
@@ -363,6 +366,15 @@ export const Schedule = () => {
                                                                 </div>
                                                             );
                                                         })
+                                                    ) : events.length > 1 ? (
+                                                        <div
+                                                            onClick={(e) => { e.stopPropagation(); setSharedEvents(events); setShowSharedModal(true); }}
+                                                            className="p-1.5 bg-indigo-600 text-white flex flex-col items-center justify-center gap-1 hover:bg-indigo-700 transition-colors shadow-sm"
+                                                        >
+                                                            <Users size={14} strokeWidth={2.5} />
+                                                            <span className="text-[9px] font-black text-center leading-tight">يوجد حصص مشتركة</span>
+                                                            <span className="text-[7px] font-bold opacity-80">({events.length} حصص)</span>
+                                                        </div>
                                                     ) : (
                                                         <div className="opacity-0 group-hover/cell:opacity-100 transition-opacity flex justify-center py-2">
                                                             <Plus size={11} className="text-slate-300" />
@@ -409,54 +421,73 @@ export const Schedule = () => {
                         })}
                     </div>
 
-                    {/* Events for selected day */}
-                    {mobileEvents.length > 0 ? (
-                        <div className="space-y-2">
-                            {mobileEvents
-                                .sort((a, b) => {
-                                    const aH = Number(a.hour) + (a.period === 'pm' && Number(a.hour) !== 12 ? 12 : 0);
-                                    const bH = Number(b.hour) + (b.period === 'pm' && Number(b.hour) !== 12 ? 12 : 0);
-                                    return aH - bH;
-                                })
-                                .map(ev => {
-                                    const style = getTeacherStyle(ev.teacherName);
-                                    return (
-                                        <div
-                                            key={ev.id}
-                                            onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
-                                            className={cn(
-                                                "flex items-stretch overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:shadow-md transition-shadow",
-                                                style.bg
-                                            )}
-                                        >
-                                            {/* Time bar */}
-                                            <div className={cn("w-12 shrink-0 flex flex-col items-center justify-center py-3 text-white", style.bar)}>
-                                                <span className="text-[8px] font-black leading-none">{ev.time}</span>
-                                            </div>
-                                            {/* Content */}
-                                            <div className="flex-1 p-2.5 min-w-0">
-                                                <div className="flex items-start justify-between gap-2">
-                                                    <div className="min-w-0">
-                                                        <h3 className="text-[11px] font-black text-slate-900 dark:text-white truncate">{ev.studentName}</h3>
-                                                        <p className="text-[8px] font-bold text-slate-500 truncate">{ev.subject} — {ev.teacherName}</p>
+                    {/* Events for selected day - Grouped by time */}
+                    <div className="space-y-2">
+                        {TIME_SLOTS.map(slot => {
+                            const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
+                            if (events.length === 0) return null;
+
+                            return (
+                                <div key={`${slot.hour}-${slot.period}`}>
+                                    {events.length === 1 ? (
+                                        events.map(ev => {
+                                            const style = getTeacherStyle(ev.teacherName);
+                                            return (
+                                                <div
+                                                    key={ev.id}
+                                                    onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
+                                                    className={cn(
+                                                        "flex items-stretch overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:shadow-md transition-shadow",
+                                                        style.bg
+                                                    )}
+                                                >
+                                                    <div className={cn("w-12 shrink-0 flex flex-col items-center justify-center py-3 text-white", style.bar)}>
+                                                        <span className="text-[8px] font-black leading-none">{ev.time}</span>
                                                     </div>
-                                                    <div className="flex items-center gap-0.5 shrink-0">
-                                                        <Zap size={9} className="text-amber-500 fill-current" />
-                                                        <span className="text-[8px] font-black text-slate-700 dark:text-slate-300">{ev.studentPoints}</span>
+                                                    <div className="flex-1 p-2.5 min-w-0">
+                                                        <div className="flex items-start justify-between gap-2">
+                                                            <div className="min-w-0">
+                                                                <h3 className="text-[11px] font-black text-slate-900 dark:text-white truncate">{ev.studentName}</h3>
+                                                                <p className="text-[8px] font-bold text-slate-500 truncate">{ev.subject} — {ev.teacherName}</p>
+                                                            </div>
+                                                            <div className="flex items-center gap-0.5 shrink-0">
+                                                                <Zap size={9} className="text-amber-500 fill-current" />
+                                                                <span className="text-[8px] font-black text-slate-700 dark:text-slate-300">{ev.studentPoints}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            );
+                                        })
+                                    ) : (
+                                        <div
+                                            onClick={() => { setSharedEvents(events); setShowSharedModal(true); }}
+                                            className="flex items-stretch overflow-hidden border border-indigo-200 bg-indigo-50 shadow-sm cursor-pointer hover:bg-indigo-100 transition-colors"
+                                        >
+                                            <div className="w-12 shrink-0 bg-indigo-600 flex flex-col items-center justify-center py-3 text-white">
+                                                <span className="text-[8px] font-black leading-none">{events[0].time}</span>
+                                            </div>
+                                            <div className="flex-1 p-2.5 flex items-center justify-between">
+                                                <div className="flex items-center gap-2">
+                                                    <Users size={14} className="text-indigo-600" />
+                                                    <span className="text-[10px] font-black text-indigo-900">يوجد حصص مشتركة</span>
+                                                </div>
+                                                <span className="text-[9px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full">
+                                                    {events.length}
+                                                </span>
                                             </div>
                                         </div>
-                                    );
-                                })
-                            }
-                        </div>
-                    ) : (
-                        <div className="py-12 flex flex-col items-center gap-2 text-center">
-                            <Calendar size={28} className="text-slate-200" />
-                            <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">لا توجد حصص في {mobileActiveDay}</p>
-                        </div>
-                    )}
+                                    )}
+                                </div>
+                            );
+                        })}
+                        {mobileEvents.length === 0 && (
+                            <div className="py-12 flex flex-col items-center gap-2 text-center">
+                                <Calendar size={28} className="text-slate-200" />
+                                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">لا توجد حصص في {mobileActiveDay}</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* ── Details Modal ── */}
@@ -559,6 +590,56 @@ export const Schedule = () => {
                                     إلغاء
                                 </button>
                             </form>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── Shared Sessions Modal ── */}
+                {showSharedModal && (
+                    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-md shadow-xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                            <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 text-white px-5 py-4 flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <Users size={18} />
+                                    <h3 className="text-sm font-black">الحصص المشتركة — {sharedEvents[0]?.time}</h3>
+                                </div>
+                                <button onClick={() => setShowSharedModal(false)} className="text-white/70 hover:text-white">
+                                    <X size={18} />
+                                </button>
+                            </div>
+                            <div className="p-4 bg-slate-50 dark:bg-slate-800/20 max-h-[60vh] overflow-y-auto space-y-3 custom-scrollbar">
+                                {sharedEvents.map(ev => {
+                                    const style = getTeacherStyle(ev.teacherName);
+                                    return (
+                                        <div
+                                            key={ev.id}
+                                            onClick={() => { setSelectedEvent(ev); setShowDetails(true); setShowSharedModal(false); }}
+                                            className={cn(
+                                                "flex items-stretch bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition-all group",
+                                            )}
+                                        >
+                                            <div className={cn("w-1.5 shrink-0", style.bar)} />
+                                            <div className="flex-1 p-3">
+                                                <div className="flex justify-between items-start">
+                                                    <div>
+                                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{ev.studentName}</h4>
+                                                        <p className="text-[10px] font-bold text-slate-500">{ev.subject} — {ev.teacherName}</p>
+                                                    </div>
+                                                    <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-800 px-2 py-1">
+                                                        <Zap size={10} className="text-amber-500 fill-current" />
+                                                        <span className="text-[10px] font-black">{ev.studentPoints}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div className="p-4 border-t border-slate-100 dark:border-slate-800">
+                                <button onClick={() => setShowSharedModal(false)} className="w-full bg-slate-900 text-white py-2.5 font-black text-[10px] uppercase tracking-widest">
+                                    إغلاق
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
