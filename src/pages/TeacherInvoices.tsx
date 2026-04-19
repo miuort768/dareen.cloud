@@ -436,7 +436,7 @@ export const TeacherInvoices = () => {
 
     if (loading) {
         return (
-            <div className="space-y-6">
+            <div className="space-y-6 min-h-full">
                 <Skeleton className="h-48 rounded-none" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {[...Array(6)].map((_, i) => (
@@ -451,7 +451,7 @@ export const TeacherInvoices = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
             <TeacherInvoicesHeader stats={stats} />
 
             <TeacherInvoicesStats stats={stats} />
@@ -534,7 +534,7 @@ export const TeacherInvoices = () => {
 
             {/* Add/Edit Form */}
             {showForm && (
-                <div className="bg-white p-6 border border-primary-200 shadow-lg dark:bg-gray-900 dark:border-gray-800 animate-in slide-in-from-top-4">
+                <div className="bg-white p-6 border border-primary-200 shadow-lg dark:bg-gray-900 dark:border-gray-800 md:animate-in md:slide-in-from-top-4">
                     <div className="flex items-center gap-2 mb-4 text-primary-700 font-bold border-b border-gray-200 pb-3 dark:border-gray-700 dark:text-primary-400">
                         {editingId ? <Edit size={20} /> : <Plus size={20} />}
                         <h3 className="text-lg">{editingId ? 'تعديل الفاتورة' : 'إضافة فاتورة جديدة'}</h3>

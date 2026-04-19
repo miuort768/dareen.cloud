@@ -197,7 +197,7 @@ export const Sidebar = () => {
                             </span>
                             {item.id === 'chat' && totalUnreadCount > 0 && (
                                 <span className={cn(
-                                    "absolute top-1 right-2 w-5 h-5 flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full animate-bounce-slow",
+                                    "absolute top-1 right-2 w-5 h-5 flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full md:animate-bounce-slow",
                                     collapsed && "top-1 right-1"
                                 )}>
                                     {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
@@ -249,7 +249,7 @@ export const Sidebar = () => {
             </div>
 
             {/* Mobile Bottom Navigation - Redesigned to match image */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] overflow-hidden">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)] overflow-hidden max-w-full">
                 {[
                     ...filteredNavigation.slice(0, 4)
                 ].map((item) => (
@@ -277,7 +277,7 @@ export const Sidebar = () => {
                                     
                                     {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm animate-pulse">
+                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
                                             {totalUnreadCount > 9 ? '+' : totalUnreadCount}
                                         </span>
                                     )}
@@ -306,7 +306,7 @@ export const Sidebar = () => {
                     onClick={() => setMobileMenuOpen(false)}
                 />
                 <div className={cn(
-                    "absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-950 rounded-none p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10",
+                    "absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-950 rounded-none p-4 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_-10px_25px_rgba(0,0,0,0.15)] overflow-hidden max-h-[90vh] flex flex-col border-t border-white/10 w-full max-w-full",
                     mobileMenuOpen ? "translate-y-0" : "translate-y-full"
                 )}>
                     {/* Pull Bar */}

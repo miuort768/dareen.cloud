@@ -12,7 +12,7 @@ export const Parents = () => {
 
     if (state.loading) {
         return (
-            <div className="space-y-6">
+            <div className="space-y-6 min-h-full md:animate-in md:fade-in">
                 <Skeleton className="h-48 rounded-none" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Skeleton className="h-32 rounded-2xl" />
@@ -28,7 +28,7 @@ export const Parents = () => {
     const isEdit = !!state.editId;
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
             <ParentsHeader
                 totalParents={state.totalParents}
                 totalLinkedStudents={state.totalLinkedStudents}

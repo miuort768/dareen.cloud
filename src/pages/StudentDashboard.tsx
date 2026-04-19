@@ -85,7 +85,7 @@ export const StudentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="space-y-4 p-4 text-center py-20">
+            <div className="space-y-4 p-4 text-center py-20 min-h-full md:animate-in md:fade-in">
                 <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                 <p className="text-slate-500 font-bold">جاري تحميل بياناتك يا بطل...</p>
             </div>
@@ -93,7 +93,7 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-20 px-2 lg:px-8 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 pb-20 px-2 lg:px-8 pt-6 space-y-6 md:animate-in md:fade-in md:duration-700" dir="rtl">
             
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="mb-6 pr-2 lg:pr-0">
@@ -105,13 +105,13 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ NEXT CLASS CARD ═══════════════ */}
             <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={window.innerWidth >= 768 ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-none shadow-lg shadow-purple-500/20 text-white"
             >
                 {/* Neon Corner Triangle */}
                 <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none overflow-hidden z-20">
-                    <div className="absolute top-[-25px] right-[-25px] w-12 h-12 bg-cyan-400 rotate-45 shadow-[0_0_15px_#22d3ee]" />
+                    <div className="absolute top-[-25px] right-[-25px] w-12 h-12 bg-cyan-400 rotate-45 md:shadow-[0_0_15px_#22d3ee] shadow-sm" />
                 </div>
 
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
@@ -130,7 +130,7 @@ export const StudentDashboard = () => {
                                 </div>
 
                                 {/* Neon Subject Group */}
-                                <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center justify-center">
+                                <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl md:shadow-[0_0_25px_rgba(255,255,255,0.25)] shadow-sm flex items-center justify-center">
                                     <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-md">
                                         {todaySchedule[0].slots[0].subject}
                                     </h2>
@@ -145,7 +145,7 @@ export const StudentDashboard = () => {
                             {(liveSession || studentData?.isLive) ? (
                                 <button 
                                     onClick={() => navigate(`/classroom/${liveSession?.teacherId || studentData?.activeSession?.teacherId}`)}
-                                    className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-black text-sm md:text-base shadow-[0_0_15px_rgba(16,185,129,0.4)] animate-pulse transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                                    className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-black text-sm md:text-base md:shadow-[0_0_15px_rgba(16,185,129,0.4)] shadow-sm animate-pulse transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
                                 >
                                     <div className="w-2 h-2 bg-white rounded-full animate-ping" />
                                     انضم للحصة الآن
@@ -169,7 +169,7 @@ export const StudentDashboard = () => {
             {/* ═══════════════ STATS ROW ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {/* Points Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(244,63,94,0.15)] dark:shadow-[0_0_20px_rgba(244,63,94,0.1)] border border-rose-100/50 dark:border-rose-900/20 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(244,63,94,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(244,63,94,0.1)] border border-rose-100/50 dark:border-rose-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
                         <Star size={16} fill="currentColor" />
                     </div>
@@ -177,7 +177,7 @@ export const StudentDashboard = () => {
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
                 </div>
                 {/* Attendance Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(59,130,246,0.15)] dark:shadow-[0_0_20px_rgba(59,130,246,0.1)] border border-blue-100/50 dark:border-blue-900/20 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(59,130,246,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(59,130,246,0.1)] border border-blue-100/50 dark:border-blue-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
                         <CalendarDays size={16} />
                     </div>
@@ -185,7 +185,7 @@ export const StudentDashboard = () => {
                     <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
                 </div>
                 {/* Subjects Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] shadow-[0_0_15px_rgba(16,185,129,0.15)] dark:shadow-[0_0_20px_rgba(16,185,129,0.1)] border border-emerald-100/50 dark:border-emerald-900/20 flex flex-col items-center justify-center text-center">
+                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(16,185,129,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(16,185,129,0.1)] border border-emerald-100/50 dark:border-emerald-900/20 flex flex-col items-center justify-center text-center">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
                         <BookOpen size={16} />
                     </div>

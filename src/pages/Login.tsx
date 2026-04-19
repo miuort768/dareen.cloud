@@ -77,7 +77,7 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-hidden relative transition-colors duration-500">
+        <div className="min-h-full bg-[rgb(var(--bg-surface))] flex font-sans overflow-hidden relative transition-colors duration-500">
             <SEO
                 title="تسجيل الدخول"
                 description="تسجيل الدخول إلى بوابة معهد دارين - طموح لا يعرف الحدود."

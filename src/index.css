@@ -44,11 +44,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
-    overflow-x: hidden;
-    width: 100%;
+    overflow-x: hidden !important;
+    width: 100vw;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
 
   @media (min-width: 1024px) {
@@ -61,12 +63,14 @@
     position: relative;
     background-color: rgb(var(--bg-surface));
     color: rgb(var(--text-main));
-    width: 100%;
+    width: 100vw;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     transition: background-color 0.5s ease, color 0.5s ease;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Custom Premium Scrollbar */
@@ -98,11 +102,13 @@
   }
 
   #root {
-    width: 100%;
+    width: 100vw;
+    max-width: 100%;
     min-height: 100vh;
     min-height: 100svh;
     /* Modern mobile viewport height */
     isolation: isolate;
+    overflow-x: hidden !important;
   }
 
   h1,
@@ -518,6 +524,8 @@
 
     .premium-table tbody tr {
       @apply mb-4 bg-white border-2 border-gray-900 md:shadow-sm p-4 dark:bg-gray-900 dark:border-gray-800 rounded-none !important;
+      max-width: calc(100vw - 1rem);
+      overflow-x: hidden;
     }
 
     .premium-table td {
@@ -614,7 +622,14 @@
   filter: blur(80px);
   opacity: 0.15;
   z-index: 0;
-  animation: moveBlob 10s infinite alternate;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-blob {
+    display: block;
+    animation: moveBlob 10s infinite alternate;
+  }
 }
 
 @keyframes moveBlob {
@@ -739,8 +754,10 @@
   0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
   50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); }
 }
-.animate-bounce-slow {
-  animation: bounce-slow 3s infinite;
+@media (min-width: 1024px) {
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+  }
 }
 
 @keyframes pulse-slow {
@@ -755,6 +772,8 @@
   0% { transform: translateX(-150%) skewX(-25deg); }
   100% { transform: translateX(150%) skewX(-25deg); }
 }
-.animate-shine {
-  animation: shine 3s infinite linear;
+@media (min-width: 1024px) {
+  .animate-shine {
+    animation: shine 3s infinite linear;
+  }
 }

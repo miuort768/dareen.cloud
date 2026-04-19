@@ -14,7 +14,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
         return (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-6">
                 {/* 1. Expected */}
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-50 flex flex-col justify-between h-28">
+                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
                     <div className="flex items-center justify-between pointer-events-none">
                         <span className="text-[8px] font-bold bg-indigo-50 text-indigo-500 px-2 py-0.5 rounded-full">اليوم</span>
                         <div className="flex items-center justify-center">
@@ -28,7 +28,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
                 </div>
 
                 {/* 2. Completed */}
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-50 flex flex-col justify-between h-28">
+                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
                     <div className="flex justify-end pointer-events-none">
                         <div className="flex items-center justify-center w-5 h-5 border border-rose-200 rounded-full">
                             <CheckCircle2 size={10} className="text-rose-600" />
@@ -41,7 +41,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
                 </div>
 
                 {/* 3. Percentage */}
-                <div className="bg-[#5c4fb1] rounded-xl p-4 shadow-md flex flex-col justify-between h-28 text-white">
+                <div className="bg-[#5c4fb1] rounded-none p-4 md:shadow-md flex flex-col justify-between h-28 text-white">
                     <div className="flex justify-end pointer-events-none">
                         <TrendingUp size={16} className="text-white/80" />
                     </div>
@@ -52,7 +52,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
                 </div>
 
                 {/* 4. Remaining */}
-                <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-50 flex flex-col justify-between h-28">
+                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
                     <div className="flex justify-end pointer-events-none">
                         <Clock size={14} className="text-slate-500" />
                     </div>

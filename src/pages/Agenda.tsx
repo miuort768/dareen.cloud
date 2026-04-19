@@ -122,7 +122,7 @@ export const Agenda = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
             <PageHeader
                 title="أجندة الحصص اليومية"
                 subtitle="متابعة وتنفيذ الحصص المجدولة لليوم"

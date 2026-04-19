@@ -289,7 +289,7 @@ export const Students = () => {
 
     if (loading) {
         return (
-            <div className="space-y-6">
+            <div className="space-y-6 min-h-full">
                 <Skeleton className="h-48 rounded-none" />
                 <Skeleton className="h-16 rounded-none" />
                 <div className="grid grid-cols-1 gap-4">
@@ -300,7 +300,7 @@ export const Students = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
             <StudentHeader
                 count={students.length}
                 showAddForm={showAddForm}

@@ -144,7 +144,7 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="space-y-4 pb-32 w-full max-w-full overflow-x-hidden p-0">
+        <div className="space-y-4 pb-32 w-full max-w-full overflow-x-hidden p-0 min-h-full md:animate-in md:fade-in md:duration-700">
             <AttendanceHeader
                 date={date}
                 onDateChange={setDate}

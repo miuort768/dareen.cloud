@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const TermsOfService = () => {
     const { adminPhone } = useSettings();
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
+        <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="الشروط والأحكام"
                 description="اتفاقية شروط وأحكام استخدام منصة معهد دارين - تعرف على حقوقك والتزاماتك عند استخدام خدماتنا التعليمية."

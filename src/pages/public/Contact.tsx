@@ -46,7 +46,7 @@ export const Contact = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
+        <div className="min-h-full bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
             <SEO
                 title="اتصل بنا"
                 description="تواصل مع معهد دارين لتعليم والتدريب. نحن هنا للرد على استفساراتكم ومساعدتكم في اختيار المسار التعليمي الأنسب لأبنائكم."

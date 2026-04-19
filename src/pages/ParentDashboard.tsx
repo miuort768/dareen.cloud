@@ -107,7 +107,7 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
+            <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
                 <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4" />
                 <p className="text-slate-500 dark:text-slate-400 font-bold tracking-tight text-xs">جاري التحميل...</p>
             </div>
@@ -115,7 +115,7 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-[150px] px-2 md:px-4 lg:px-8 pt-2 space-y-6 animate-in fade-in duration-700 overflow-x-hidden w-full" dir="rtl">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 pb-[150px] px-2 md:px-4 lg:px-8 pt-2 space-y-6 md:animate-in md:fade-in md:duration-700 overflow-x-hidden w-full max-w-full" dir="rtl">
             
             {/* ═══════════════ HEADER (Updated responsiveness & Logout positioning) ═══════════════ */}
             <div className="flex justify-between items-start mb-2 px-1">
@@ -135,10 +135,8 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ═══════════════ SUMMARY BANNER ═══════════════ */}
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-5 rounded-2xl shadow-lg shadow-purple-500/10 text-white"
+            <div 
+                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-5 rounded-2xl md:shadow-lg shadow-purple-500/10 text-white max-w-full md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700"
             >
                 <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden z-20">
                     <div className="absolute top-[-15px] right-[-15px] w-8 h-8 bg-cyan-400 rotate-45 shadow-[0_0_10px_#22d3ee]" />
@@ -154,7 +152,7 @@ export const ParentDashboard = () => {
                         </p>
                     </div>
                 </div>
-            </motion.div>
+            </div>
 
             {/* ═══════════════ QUICK STATS ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
@@ -281,7 +279,7 @@ export const ParentDashboard = () => {
                                 animate={{ width: `${Math.min(stats.academicProgress, 100)}%` }}
                                 className="h-full bg-white rounded-full shadow-[0_0_15px_rgba(255,255,255,0.7)] relative overflow-hidden"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[shimmer_2s_infinite]" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent md:animate-[shimmer_2s_infinite]" />
                             </motion.div>
                         </div>
                     </div>

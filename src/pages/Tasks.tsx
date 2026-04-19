@@ -125,10 +125,10 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 pb-24 animate-in fade-in duration-500" dir="rtl">
+        <div className="max-w-4xl mx-auto space-y-6 pb-24 min-h-full md:animate-in md:fade-in md:duration-500" dir="rtl">
             
             {/* Header Card (Purple with Green Neon Glow) */}
-            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-[0_0_30px_rgba(74,222,128,0.35)] border border-green-400/20 text-center relative overflow-hidden">
+            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-lg md:shadow-[0_0_30px_rgba(74,222,128,0.35)] border border-green-400/20 text-center relative overflow-hidden">
                 <div className="absolute top-6 left-6 opacity-20">
                     <Activity size={40} />
                 </div>
@@ -321,7 +321,7 @@ export const Tasks = () => {
             {/* Elegant Add Task Modal */}
             {showAddForm && (
                 <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-200">
-                    <div className="bg-white dark:bg-slate-900 rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden transform animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-slate-900 rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden transform md:animate-in md:zoom-in-95 md:duration-300">
                         <div className="p-5 md:p-6 bg-[#5c4fb1] text-white flex justify-between items-center relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                             <h3 className="text-sm md:text-base font-black flex items-center gap-2 relative z-10">

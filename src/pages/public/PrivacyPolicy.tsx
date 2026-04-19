@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const PrivacyPolicy = () => {
     const { adminPhone } = useSettings();
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
+        <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="سياسة الخصوصية"
                 description="سياسة الخصوصية الخاصة بمعهد دارين - تعرف على كيفية حماية بياناتك الشخصية وضمان خصوصيتك عند استخدام منصتنا التعليمية."

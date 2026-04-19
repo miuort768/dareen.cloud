@@ -138,7 +138,7 @@ export const Announcements = () => {
     };
 
     return (
-        <div className="space-y-8 pb-32 animate-in fade-in slide-in-from-bottom-2 duration-700" dir="rtl">
+        <div className="space-y-8 pb-32 min-h-full md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-700" dir="rtl">
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
             <div className="-mx-3 lg:mx-0 relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-10 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
@@ -255,7 +255,7 @@ export const Announcements = () => {
 
             {/* ═══════════════ PREMIUM EDIT MODAL ═══════════════ */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/60 animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/60 md:animate-in md:fade-in md:duration-300">
                     <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-2xl overflow-hidden rounded-none">
                         <div className="p-5 bg-slate-900 text-white flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-3">

@@ -381,16 +381,16 @@ export const StudentInvoices = () => {
 
     if (loading) {
         return (
-            <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-950">
+            <div className="flex min-h-full items-center justify-center bg-gray-50 dark:bg-gray-950 md:animate-in md:fade-in">
                 <div className="w-12 h-12 border-4 border-gray-200 border-t-gray-950 rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6 pb-32 px-4 md:px-6">
+        <div className="space-y-6 pb-32 px-4 md:px-6 min-h-full md:animate-in md:fade-in md:duration-700">
             {/* Header Area */}
-            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-10 shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8 overflow-hidden">
+            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-10 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8 overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gray-950/5 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-rose-600/10 -ml-12 -mb-12 rounded-full pointer-events-none"></div>
 
@@ -470,7 +470,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="bg-white p-6 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8">
+            <div className="bg-white p-6 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8">
                 <div className="flex flex-col lg:flex-row gap-6 items-center" dir="rtl">
                     <div className="relative flex-1 w-full">
                         <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
@@ -524,8 +524,8 @@ export const StudentInvoices = () => {
 
             {/* Inline Form */}
             {showForm && (
-                <div className="animate-in slide-in-from-top-4 duration-300">
-                    <form onSubmit={handleSubmit} className="bg-white border-4 border-gray-950 p-8 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-10">
+                <div className="md:animate-in md:slide-in-from-top-4 md:duration-300">
+                    <form onSubmit={handleSubmit} className="bg-white border-4 border-gray-950 p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-10">
                         <div className="flex items-center gap-2 mb-8 border-b-2 border-gray-100 pb-4">
                             <Plus size={20} className="text-emerald-600" />
                             <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">تفاصيل الفاتورة الجديدة</h2>
@@ -639,7 +639,7 @@ export const StudentInvoices = () => {
                             </button>
                             <button
                                 type="submit"
-                                className="px-12 py-4 bg-emerald-600 text-white border-4 border-gray-950 font-black text-xs uppercase tracking-widest shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                                className="px-12 py-4 bg-emerald-600 text-white border-4 border-gray-950 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                                 dir="rtl"
                             >
                                 {editingId ? 'تحديث الفاتورة' : 'تأكيد وإصدار الفاتورة'}
@@ -650,7 +650,7 @@ export const StudentInvoices = () => {
             )}
 
             {/* Table */}
-            <div className="bg-white border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden">
+            <div className="bg-white border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden">
                 {/* Desktop View */}
                 <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-right border-collapse">

@@ -168,7 +168,7 @@ export const Forum = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#f0f2f5] dark:bg-slate-950 pb-20 animate-in fade-in duration-500" dir="rtl">
+        <div className="min-h-full bg-[#f0f2f5] dark:bg-slate-950 pb-20 md:animate-in md:fade-in md:duration-500" dir="rtl">
             <div className="max-w-[680px] mx-auto pt-2 md:pt-6 space-y-4 -mx-4 md:mx-auto px-1 md:px-0 w-auto md:w-full">
                 
                 {/* 🖊️ Post Creation Box (FB Style) */}
@@ -227,7 +227,7 @@ export const Forum = () => {
                                     key={post.id} 
                                     id={`post-${post.id}`}
                                     className={cn(
-                                        "bg-white dark:bg-slate-900 border shadow-sm overflow-hidden animate-in slide-in-from-bottom-4 duration-500 md:rounded-lg transition-all",
+                                        "bg-white dark:bg-slate-900 border shadow-sm overflow-hidden md:animate-in md:slide-in-from-bottom-4 md:duration-500 md:rounded-lg transition-all",
                                         isHighlighted ? "border-amber-400 ring-2 ring-amber-400/20 bg-amber-50/10" : "border-slate-300 dark:border-slate-800"
                                     )}
                                 >

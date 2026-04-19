@@ -304,7 +304,7 @@ export const Teachers = () => {
 
     if (loading) {
         return (
-            <div className="space-y-6 pb-32">
+            <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in">
                 <PageHeader
                     title="إدارة المعلمات"
                     subtitle="تنظيم وإدارة بيانات الكادر التعليمي"
@@ -325,7 +325,7 @@ export const Teachers = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32">
+        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
             <PageHeader
                 title="إدارة المعلمات"
                 subtitle="تنظيم وإدارة بيانات الكادر التعليمي"

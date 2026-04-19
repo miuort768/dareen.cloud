@@ -175,9 +175,9 @@ const Settings = () => {
     if (loading) return <div className="p-8 space-y-4"><Skeleton className="h-20" /><Skeleton className="h-64" /></div>;
 
     return (
-        <div className="space-y-6 pb-20">
+        <div className="space-y-6 pb-20 min-h-full md:animate-in md:fade-in md:duration-700">
             {/* Premium Brutalist Header */}
-            <div className="relative bg-white border-4 border-gray-950 p-8 shadow-[12px_12px_0px_0px_black] overflow-hidden mb-10 rounded-none">
+            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-8 shadow-lg md:shadow-[12px_12px_0px_0px_black] overflow-hidden mb-10 rounded-none">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
                 
@@ -228,7 +228,7 @@ const Settings = () => {
                 ))}
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-500">
                 {activeTab === 'general' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
@@ -269,7 +269,7 @@ const Settings = () => {
                             </div>
                         </section>
 
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(16,185,129,0.1)] space-y-8">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(16,185,129,0.1)] space-y-8">
                             <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
                                     <Wallet size={28} className="text-emerald-500" />
@@ -339,7 +339,7 @@ const Settings = () => {
 
                             <button 
                                 onClick={handleSaveGeneral} 
-                                className="group relative w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                                className="group relative w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
                             >
                                 {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
                                     <>
@@ -353,9 +353,9 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'appearance' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* System Identity & Logo Preview */}
-                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] space-y-6">
+                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] space-y-6">
                             <div className="flex items-center gap-3 border-b-2 border-gray-950 pb-3">
                                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
                                     <Building2 size={20} />
@@ -400,7 +400,7 @@ const Settings = () => {
                         </section>
 
                         {/* Visual Theme & Color Palette */}
-                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[8px_8px_0px_0px_black] space-y-6">
+                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] space-y-6">
                             <div className="flex items-center gap-3 border-b-2 border-gray-950 pb-3">
                                 <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
                                     <Palette size={20} />
@@ -444,7 +444,7 @@ const Settings = () => {
                         </section>
 
                         {/* Full Width Security & Backup Section */}
-                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-gray-950 p-6 relative overflow-hidden group shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-gray-950 p-6 relative overflow-hidden group shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                                  <div className="flex items-center gap-4">
                                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
@@ -469,9 +469,9 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'chatbot' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* Bot Configuration */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-8">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-8">
                             <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
                                     <MessageSquare size={28} className="text-blue-500" />
@@ -538,7 +538,7 @@ const Settings = () => {
                                         setIsSaving(false);
                                     }
                                 }} 
-                                className="group relative w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[8px_8px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                                className="group relative w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
                             >
                                 {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
                                     <>
@@ -557,7 +557,7 @@ const Settings = () => {
                             
                             <div className="relative z-10 w-full max-w-sm mx-auto space-y-6">
                                 {/* Simulated Message */}
-                                <div className="flex flex-col gap-2 animate-in slide-in-from-left-4 duration-1000">
+                                <div className="flex flex-col gap-2 md:animate-in md:slide-in-from-left-4 md:duration-1000">
                                     <div className="flex items-center gap-2">
                                         <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white border-2 border-white shadow-lg">
                                             <MessageSquare size={14} />
@@ -571,7 +571,7 @@ const Settings = () => {
                                 </div>
 
                                 {/* Simulated Interaction Button */}
-                                <div className="flex justify-end gap-2 animate-in slide-in-from-right-4 duration-1000 delay-300">
+                                <div className="flex justify-end gap-2 md:animate-in md:slide-in-from-right-4 md:duration-1000 md:delay-300">
                                     <div className="bg-blue-600 p-3 rounded-2xl rounded-tl-none text-white text-[10px] font-black shadow-xl">
                                         كيف يمكنني البدء؟
                                     </div>
@@ -597,7 +597,7 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'users' && (
-                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* Users List */}
                         <div className="xl:col-span-2 space-y-6">
                             <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
@@ -610,7 +610,7 @@ const Settings = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {users.map(u => (
-                                    <div key={u.id} className="bg-white dark:bg-gray-950 border-4 border-gray-950 p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all group relative overflow-hidden">
+                                    <div key={u.id} className="bg-white dark:bg-gray-950 border-4 border-gray-950 p-6 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all group relative overflow-hidden">
                                         <div className="flex justify-between items-start mb-6">
                                             <div className="w-12 h-12 bg-gray-950 text-white flex items-center justify-center font-black text-xl border-4 border-primary-500">
                                                 {u.username[0].toUpperCase()}
@@ -638,7 +638,7 @@ const Settings = () => {
                         </div>
 
                         {/* Add/Edit Section */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] h-fit sticky top-4">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] h-fit lg:sticky top-4">
                             <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4 mb-8">
                                 <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-4 border-gray-950">
                                     <UserPlus size={20} />
@@ -684,7 +684,7 @@ const Settings = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-3 pt-4">
-                                    <button onClick={handleUserAction} className="w-full py-5 bg-primary-600 text-white font-black uppercase tracking-[0.2em] text-xs shadow-[8px_8px_0px_0px_black] hover:bg-black transition-all active:translate-x-1 active:translate-y-1 active:shadow-none">
+                                    <button onClick={handleUserAction} className="w-full py-5 bg-primary-600 text-white font-black uppercase tracking-[0.2em] text-xs shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] hover:bg-black transition-all active:translate-x-1 active:translate-y-1 active:shadow-none">
                                         {editingUserId ? 'Update Administrator' : 'Create System Account'}
                                     </button>
                                     {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="w-full py-3 bg-gray-100 dark:bg-gray-800 font-bold uppercase text-[10px] italic border-2 border-gray-950 text-gray-600">Cancel Edit</button>}
@@ -695,9 +695,9 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'advanced' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* WhatsApp Automation Core */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(34,197,94,0.1)] space-y-8">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(34,197,94,0.1)] space-y-8">
                             <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
                                     <Monitor size={28} className="text-green-600" />
@@ -742,7 +742,7 @@ const Settings = () => {
                                 
                                 <button 
                                     onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))} 
-                                    className="w-full py-4 bg-green-600 hover:bg-green-700 text-white font-black uppercase tracking-widest transition-all shadow-[6px_6px_0px_0px_black] active:translate-x-1 active:translate-y-1 active:shadow-none"
+                                    className="w-full py-4 bg-green-600 hover:bg-green-700 text-white font-black uppercase tracking-widest transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] active:translate-x-1 active:translate-y-1 active:shadow-none"
                                 >
                                     حفظ وتفعيل القالب
                                 </button>
@@ -750,7 +750,7 @@ const Settings = () => {
                         </section>
 
                         {/* Archives & Semester Manager */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-10">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-10">
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4">
                                     <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
@@ -785,9 +785,9 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'policies' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* System Safeguards & Record Protection */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(225,29,72,0.1)] space-y-8">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(225,29,72,0.1)] space-y-8">
                             <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
                                     <Lock size={28} className="text-rose-600" />
@@ -851,7 +851,7 @@ const Settings = () => {
                         </section>
 
                         {/* Attendance Policy & Monthly Archive */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_black] space-y-10">
+                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_black] space-y-10">
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4">
                                     <div className="w-12 h-12 bg-sky-50 dark:bg-sky-900/20 text-sky-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
@@ -920,8 +920,8 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'audit' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <section className="bg-white dark:bg-gray-950 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
+                        <section className="bg-white dark:bg-gray-950 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                             <div className="flex items-center justify-between p-6 bg-gray-950 text-white border-b-4 border-gray-950">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 flex items-center justify-center border-2 border-white shadow-[2px_2px_0px_0px_white]">
@@ -995,7 +995,7 @@ const Settings = () => {
 
             {/* Modals & Notifications */}
             {secureAction && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 animate-in fade-in transition-all">
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 md:animate-in md:fade-in transition-all">
                     <div className="bg-white dark:bg-slate-900 border-t-8 border-red-600 rounded-2xl p-8 max-w-lg w-full shadow-2xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
                         <div className="relative z-10 flex flex-col items-center text-center space-y-4">
@@ -1034,7 +1034,7 @@ const Settings = () => {
             )}
 
             {showDeleteModal && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 animate-in fade-in">
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 md:animate-in md:fade-in">
                     <div className="bg-white dark:bg-gray-900 border-t-8 border-red-600 p-8 max-w-md w-full shadow-2xl space-y-4">
                         <h3 className="text-xl font-black">تأكيد حذف المستخدم</h3>
                         <p className="text-sm font-bold opacity-70">هل أنت متأكد من حذف "{showDeleteModal.username}"؟ هذا الإجراء سيمنعه من دخول النظام فوراً.</p>
@@ -1047,8 +1047,8 @@ const Settings = () => {
             )}
 
             {showMaintenanceModal && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-900 border-4 border-amber-500 p-8 max-w-lg w-full shadow-[16px_16px_0px_0px_rgba(245,158,11,0.2)] dark:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.1)] relative overflow-hidden">
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 md:animate-in md:fade-in">
+                    <div className="bg-white dark:bg-slate-900 border-4 border-amber-500 p-8 max-w-lg w-full shadow-lg md:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.2)] dark:md:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.1)] relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 -mr-16 -mt-16 rounded-full blur-3xl"></div>
                         
                         <div className="relative z-10 space-y-6">
@@ -1093,7 +1093,7 @@ const Settings = () => {
             )}
 
             {showSuccess && (
-                <div className="fixed bottom-10 left-10 z-[1000] bg-black text-white p-6 shadow-2xl border-l-4 border-primary-500 flex items-center gap-4 animate-in slide-in-from-left-4 duration-500">
+                <div className="fixed bottom-4 md:bottom-10 left-4 md:left-10 z-[1000] bg-black text-white p-6 shadow-2xl border-l-4 border-primary-500 flex items-center gap-4 md:animate-in md:slide-in-from-left-4 md:duration-500">
                     <CheckCircle2 color="var(--color-primary)" size={28} />
                     <div className="font-black uppercase tracking-tighter">{notificationMessage || 'تمت العملية بنجاح'}</div>
                 </div>

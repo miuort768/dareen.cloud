@@ -22,7 +22,7 @@ const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: str
     
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[10px_10px_0px_0px_black] w-full max-w-xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 md:shadow-[10px_10px_0px_0px_black] shadow-lg w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
                 {/* Header */}
                 <div className="bg-gray-950 text-white p-4 flex justify-between items-center">
                     <div className="flex items-center gap-2">
@@ -266,14 +266,14 @@ export const MonthlyClosing: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="flex h-[80vh] items-center justify-center">
+            <div className="flex min-h-full items-center justify-center bg-gray-50/50 dark:bg-gray-950/50">
                 <div className="w-12 h-12 border-4 border-gray-200 border-t-emerald-600 rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="p-3 lg:p-6 min-h-screen bg-gray-50/50 dark:bg-gray-950/50" dir="rtl">
+        <div className="p-3 lg:p-6 min-h-full bg-gray-50/50 dark:bg-gray-950/50 md:animate-in md:fade-in md:duration-500" dir="rtl">
             {/* Header with Semester & Month Switcher */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div>
@@ -394,7 +394,7 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Tabs */}
-            <div className="flex overflow-x-auto no-scrollbar bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 mb-6 shadow-[4px_4px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] sticky top-0 z-40">
+            <div className="flex overflow-x-auto no-scrollbar bg-white dark:bg-gray-900 border-2 border-gray-950 dark:border-gray-800 mb-6 md:shadow-[4px_4px_0px_0px_black] shadow-sm dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] sticky top-0 z-40">
                 <button 
                     onClick={() => setActiveTab('payroll')}
                     className={cn(
@@ -468,9 +468,9 @@ export const MonthlyClosing: React.FC = () => {
             />
 
             {/* Content Area */}
-            <div className="bg-white border-2 border-gray-950 shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden min-h-[500px]">
+            <div className="bg-white border-2 border-gray-950 md:shadow-[12px_12px_0px_0px_black] shadow-md dark:bg-gray-900 dark:border-gray-800 overflow-hidden min-h-[500px]">
                 {activeTab === 'collections' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         <div className="p-4 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
                             <h2 className="text-base font-black tracking-tight text-gray-900 dark:text-white">تحصيل مبالغ الطلاب - {selectedMonth}</h2>
                             <div className="flex gap-2">
@@ -545,7 +545,7 @@ export const MonthlyClosing: React.FC = () => {
                     </div>
                 )}
                 {activeTab === 'payroll' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         <div className="p-4 border-b-2 border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-950">
                             <h2 className="text-base font-black tracking-tight text-gray-900 dark:text-white">رواتب معلمات الأكاديمية - {selectedMonth}</h2>
                             <button className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white font-black text-[10px] border border-gray-950 shadow-[2px_2px_0px_0px_black] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
@@ -623,7 +623,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'renewals' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         <div className="p-3 border-b-2 border-gray-100 dark:border-gray-800 bg-amber-50 dark:bg-amber-900/10">
                             <h2 className="text-sm font-black tracking-tight text-amber-700 dark:text-amber-500 flex items-center gap-2">
                                 <AlertCircle size={16} /> تنبيهات الطلاب الموشكين على إنهاء الرصيد
@@ -631,7 +631,7 @@ export const MonthlyClosing: React.FC = () => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
                             {renewalsData.length > 0 ? renewalsData.map((item, idx) => (
-                                <div key={idx} className="bg-white border-2 border-gray-950 p-3 relative group dark:bg-gray-900 dark:border-gray-800 shadow-[4px_4px_0px_0px_black] hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                                <div key={idx} className="bg-white border-2 border-gray-950 p-3 relative group dark:bg-gray-900 dark:border-gray-800 md:shadow-[4px_4px_0px_0px_black] shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
                                     <div className="absolute top-3 left-3">
                                         <div className={cn(
                                             "w-7 h-7 border-2 border-gray-950 flex flex-col items-center justify-center font-black shadow-[1px_1px_0px_0px_black]",
@@ -684,7 +684,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'summary' && (
-                    <div className="p-4 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                    <div className="p-4 md:animate-in md:fade-in md:slide-in-from-bottom-5 md:duration-700">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div>
                                 <h1 className="text-xl lg:text-2xl font-black text-gray-950 dark:text-white tracking-tighter mb-2">ملخص الأداء المالي <span className="text-emerald-600">+{((netProjectedProfit / (totalProjectedIncome || 1)) * 100).toFixed(0)}%</span></h1>
@@ -728,7 +728,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'analysis' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500 p-4">
                         <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
                                 <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">تحليل ربحية المواد الدراسية</h2>
@@ -740,7 +740,7 @@ export const MonthlyClosing: React.FC = () => {
                         </div>
 
                         {/* Recharts Visualization */}
-                        <div className="bg-gray-50 dark:bg-gray-900 border-2 border-gray-950 p-4 mb-6 shadow-[6px_6px_0px_0px_black] dark:border-gray-800">
+                        <div className="bg-gray-50 dark:bg-gray-900 border-2 border-gray-950 p-4 mb-6 md:shadow-[6px_6px_0px_0px_black] shadow-sm dark:border-gray-800">
                             <h3 className="text-base font-black text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                                 <div className="w-3 h-3 bg-emerald-600 border border-gray-950"></div>
                                 المخطط التحليلي للمواد
@@ -773,7 +773,7 @@ export const MonthlyClosing: React.FC = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {subjectAnalysis.map((subj, idx) => (
-                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[3px_3px_0px_0px_black] p-3 relative group overflow-hidden">
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 md:shadow-[3px_3px_0px_0px_black] shadow-sm p-3 relative group overflow-hidden">
                                     <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
                                     <div className="mb-4 flex justify-between items-start text-right">
                                         <div>
@@ -816,7 +816,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'teachers' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500 p-4">
                         <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
                                 <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">تحليل أداء المعلمات</h2>
@@ -829,7 +829,7 @@ export const MonthlyClosing: React.FC = () => {
 
                         <div className="space-y-3">
                             {teacherPerformance.map((perf, idx) => (
-                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[3px_3px_0px_0px_black] p-3 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                <div key={idx} className="bg-white border-2 border-gray-950 dark:bg-gray-800 dark:border-gray-700 md:shadow-[3px_3px_0px_0px_black] shadow-sm p-3 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
                                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                                         <div className="flex items-center gap-3 min-w-[200px]">
                                             <div className="w-10 h-10 bg-gray-900 border-2 border-gray-950 flex items-center justify-center text-white text-lg font-black dark:bg-white dark:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
@@ -892,7 +892,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'compensation' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 p-4">
+                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500 p-4">
                         <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-950">
                             <div>
                                 <h2 className="text-base font-black text-gray-950 dark:text-white uppercase tracking-tighter">حصص التعويضات المعلقة</h2>
@@ -903,7 +903,7 @@ export const MonthlyClosing: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="overflow-x-auto bg-white border border-gray-950 dark:bg-gray-800 dark:border-gray-700 shadow-[4px_4px_0px_0px_black]">
+                        <div className="overflow-x-auto bg-white border border-gray-950 dark:bg-gray-800 dark:border-gray-700 md:shadow-[4px_4px_0px_0px_black] shadow-sm">
                             <table className="w-full text-right border-collapse min-w-[500px]">
                                 <thead>
                                     <tr className="bg-gray-950 text-white text-[9px] font-black uppercase tracking-widest border-b border-gray-950">

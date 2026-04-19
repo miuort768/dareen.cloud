@@ -99,7 +99,7 @@ export const ParentStudents = () => {
     }
 
     return (
-        <div className="pt-6 md:pt-10 space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
+        <div className="pt-6 md:pt-10 space-y-6 pb-24 md:animate-in md:fade-in md:duration-500" dir="rtl">
 
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 -mx-3 md:mx-0 p-3 md:p-0 bg-slate-50 md:bg-transparent dark:bg-slate-900/40">
                 <div>
@@ -234,7 +234,7 @@ export const ParentStudents = () => {
                 ))}
 
                 {filteredStudents.length === 0 && (
-                    <div className="col-span-full py-20 bg-gray-50 dark:bg-gray-800/20 text-center border border-dashed border-gray-200 dark:border-gray-800 animate-in slide-in-from-bottom duration-700">
+                    <div className="col-span-full py-20 bg-gray-50 dark:bg-gray-800/20 text-center border border-dashed border-gray-200 dark:border-gray-800 md:animate-in md:slide-in-from-bottom md:duration-700">
                         <Users size={48} className="mx-auto text-gray-300 mb-4" />
                         <h3 className="text-lg font-black text-gray-400 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
                         <p className="text-xs text-gray-500 font-bold mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
@@ -244,7 +244,7 @@ export const ParentStudents = () => {
 
             {/* Session Dates Modal - Modern Drill Down View */}
             {viewingStudent && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 md:animate-in md:fade-in md:duration-300">
                     <div
                         className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
                         onClick={() => setViewingStudent(null)}
@@ -364,7 +364,7 @@ export const ParentStudents = () => {
 
             {/* Total Attendance Report Modal */}
             {viewingAttendanceStudent && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 md:animate-in md:fade-in md:duration-300">
                     <div
                         className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
                         onClick={() => setViewingAttendanceStudent(null)}
@@ -473,8 +473,8 @@ export const ParentStudents = () => {
 
             {/* Achievement Harvest Modal */}
             {viewingAchievements && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-300" dir="rtl">
-                    <div className="bg-white dark:bg-gray-900 w-full max-w-4xl relative shadow-2xl border-t-8 border-primary-600 animate-in slide-in-from-bottom-8">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:animate-in md:fade-in md:duration-300" dir="rtl">
+                    <div className="bg-white dark:bg-gray-900 w-full max-w-4xl relative shadow-2xl border-t-8 border-primary-600 md:animate-in md:slide-in-from-bottom-8">
                         <button 
                             onClick={() => setViewingAchievements(null)}
                             className="absolute -top-4 -right-4 w-10 h-10 bg-primary-600 text-white flex items-center justify-center hover:bg-primary-700 transition-colors z-10"

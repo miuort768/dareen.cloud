@@ -93,7 +93,7 @@ export const ParentAnnouncements = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
+            <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 flex flex-col items-center justify-center p-4">
                 <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4" />
                 <p className="text-slate-500 font-bold text-xs">جاري التحميل...</p>
             </div>
@@ -101,7 +101,7 @@ export const ParentAnnouncements = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-32 px-2 lg:px-8 pt-6 space-y-6" dir="rtl">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 pb-32 px-2 lg:px-8 pt-6 space-y-6 md:animate-in md:fade-in md:duration-500" dir="rtl">
 
             {/* ═══════════════ HERO BANNER ═══════════════ */}
             <motion.div 

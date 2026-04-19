@@ -4,7 +4,7 @@ export const MaintenanceScreen = () => {
     const { adminPhone } = useApp();
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
+        <div className="min-h-full bg-gradient-to-br from-gray-900 via-gray-950 to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden md:animate-in md:fade-in md:duration-700">
             {/* Animated background elements */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse" />

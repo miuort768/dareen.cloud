@@ -196,7 +196,7 @@ export const Classroom = () => {
     };
 
     if (error) return (
-        <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
+        <div className="min-h-full bg-gray-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
             <div className="w-16 h-16 bg-rose-600 mb-6 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_white]">
                 <VideoOff size={32} className="text-white" />
             </div>
@@ -207,7 +207,7 @@ export const Classroom = () => {
     );
 
     if (loading) return (
-        <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center" dir="rtl">
+        <div className="min-h-full bg-gray-950 flex flex-col items-center justify-center" dir="rtl">
             <div className="relative w-16 h-16 mb-8">
                 <div className="absolute inset-0 border-4 border-white/10" />
                 <div className="absolute inset-0 border-4 border-primary-600 border-t-transparent animate-spin" />
@@ -299,7 +299,7 @@ export const Classroom = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-950 text-white flex flex-col font-black italic" dir="rtl">
+        <div className="min-h-full bg-gray-950 text-white flex flex-col font-black italic md:animate-in md:fade-in md:duration-500" dir="rtl">
             {/* Header */}
             <div className="h-16 border-b-4 border-white/10 flex items-center justify-between px-6 bg-gray-950/80 backdrop-blur-md">
                 <div className="flex items-center gap-4">

@@ -6,7 +6,7 @@ import { SEO } from '../../components/SEO';
 
 export const About = () => {
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
+        <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO
                 title="عن المعهد"
                 description="تعرف على معهد دارين وتاريخنا في التميز التعليمي. نهدف لبناء القدرات وتنمية المهارات عبر برامج تعليمية مبتكرة تجمع بين الأصالة والمعاصرة."

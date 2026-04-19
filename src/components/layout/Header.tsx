@@ -1,4 +1,4 @@
-import { Moon, Sun, User, GraduationCap, Sparkles } from 'lucide-react';
+import { Moon, Sun, User, GraduationCap } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
@@ -9,7 +9,7 @@ import { cn } from '../../lib/utils';
 export const Header = () => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
-    const { user } = useApp();
+
 
     const getPageTitle = (path: string) => {
         // Handle generic dashboard paths
@@ -62,23 +62,12 @@ export const Header = () => {
         }
     };
 
-    const getRoleLabel = (role?: string) => {
-        if (!role) return 'مستخدم';
-        switch (role) {
-            case 'admin': return 'مدير النظام';
-            case 'teacher': return 'معلمة';
-            case 'student': return 'طالب';
-            case 'parent': return 'ولي أمر';
-            default: return 'مستخدم';
-        }
-    };
-
-    const { title, subtitle } = getPageTitle(location.pathname);
+    const { title } = getPageTitle(location.pathname);
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-800/60 flex items-center justify-between transition-all duration-500 z-50",
-            "sticky top-2 lg:top-4 mx-auto w-[94%] mb-4 lg:mb-6 rounded-none shadow-[0_8px_40px_rgba(0,0,0,0.08)] px-3 md:px-6"
+            "h-[60px] lg:h-[75px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between transition-all duration-500 z-50",
+            "sticky top-0 lg:top-4 mx-auto w-full lg:w-[94%] mb-4 lg:mb-6 lg:rounded-none md:shadow-[0_8px_40px_rgba(0,0,0,0.08)] px-4 md:px-6 overflow-hidden max-w-full"
         )}>
 
             {/* Left Section: Branding & Title */}

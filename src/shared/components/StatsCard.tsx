@@ -24,7 +24,7 @@ const colorStyles = {
 export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'blue', className }: StatsCardProps) => {
     return (
         <div className={cn(
-            "relative p-3 bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 shadow-[2px_2px_0px_0px_black] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all rounded-none overflow-hidden",
+            "relative p-3 bg-white dark:bg-slate-900 border-2 border-gray-950 dark:border-slate-800 md:shadow-[2px_2px_0px_0px_black] transition-all rounded-none overflow-hidden max-w-full",
             className
         )}>
             <div className="relative flex items-center gap-3 z-10">

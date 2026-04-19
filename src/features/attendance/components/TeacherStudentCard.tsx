@@ -326,7 +326,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                                     جاري الحفظ تلقائياً...
                                 </span>
                             ) : notes.trim() !== (en.nextSessionNotes || '').trim() ? (
-                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200 animate-in fade-in duration-300">جاري الكتابة...</span>
+                                <span className="text-[8px] font-black text-rose-500 bg-white dark:bg-amber-950 px-2 py-0.5 border border-rose-200 md:animate-in md:fade-in duration-300">جاري الكتابة...</span>
                             ) : notes.trim() !== '' && (
                                 <span className="text-[8px] font-black text-emerald-600 bg-white dark:bg-emerald-950 px-2 py-0.5 border border-emerald-200 flex items-center gap-1">
                                     <CheckCircle2 size={8} /> تم الحفظ

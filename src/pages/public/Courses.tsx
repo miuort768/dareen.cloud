@@ -82,7 +82,7 @@ export const Courses = () => {
     });
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
+        <div className="min-h-full bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
                 title="الدورات والبرامج"
                 description="استكشف مجموعة واسعة من الدورات التعليمية المبتكرة في معهد دارين. كورس التأسيس الشامل، المناهج الخليجية، تحفيظ القرآن، ودورات اللغات."

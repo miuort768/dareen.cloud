@@ -184,7 +184,8 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="space-y-4 pb-20" dir="rtl">
+    return (
+        <div className="space-y-4 pb-20 min-h-full md:animate-in md:fade-in md:duration-700" dir="rtl">
 
             {/* ─── Modern Header Banner ─── */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 px-5 py-7 text-white shadow-lg shadow-indigo-500/20">
@@ -386,9 +387,9 @@ export const Appointments = () => {
                 <AnimatePresence>
                     {showDetails && selectedAppointment && (
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
+                            initial={window.innerWidth >= 768 ? { opacity: 0, x: 30 } : { opacity: 1, x: 0 }}
                             animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 30 }}
+                            exit={window.innerWidth >= 768 ? { opacity: 0, x: 30 } : { opacity: 0, x: 0 }}
                             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm h-fit sticky top-4 overflow-hidden"
                         >
                             {/* Panel Header */}

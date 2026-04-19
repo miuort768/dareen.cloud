@@ -29,7 +29,8 @@ export const Finance = () => {
     }
 
     return (
-        <div className="space-y-8 pb-40">
+    return (
+        <div className="space-y-8 pb-40 min-h-full md:animate-in md:fade-in md:duration-700">
             {/* Premium Brutalist Header */}
             <div className="relative bg-white border-2 border-gray-950 p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-6 rounded-none">
                 {/* Background Pattern */}

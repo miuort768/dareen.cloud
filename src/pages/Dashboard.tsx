@@ -38,12 +38,12 @@ export const Dashboard = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard') && currentUser.role !== 'teacher')) {
-        return <div className="min-h-screen bg-gray-50 dark:bg-gray-950" />;
+        return <div className="min-h-full bg-gray-50 dark:bg-gray-950" />;
     }
 
     if (loading) {
         return (
-            <div className="space-y-4 p-4 lg:p-6 bg-gray-50 dark:bg-gray-950 min-h-screen">
+            <div className="space-y-4 p-4 lg:p-6 bg-gray-50 dark:bg-gray-950 min-h-full md:animate-in md:fade-in">
                 <div className="h-48 bg-gray-200/50 dark:bg-slate-800 animate-pulse rounded-none border border-gray-100 dark:border-slate-800"></div>
                 <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-4">
                     {[...Array(8)].map((_, i) => (
@@ -55,7 +55,7 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f1f5f9] dark:bg-[#020617] pb-[150px] pt-1 overflow-x-hidden text-sm" dir="rtl">
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-[150px] pt-1 overflow-x-hidden text-sm" dir="rtl">
             
             {/* Modern Gradient Header */}
             <DashboardHeader
@@ -79,7 +79,7 @@ export const Dashboard = () => {
 
                 {/* Main Content Area */}
                 {isTeacher ? (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="space-y-4 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         <ModernAnnouncements />
 
                         {/* Session Timeline Card - only shows if sessions exist */}
@@ -99,7 +99,7 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="flex flex-col gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         
                         {/* 🏆 1. Announcements & Urgent Alerts (Moved to TOP of content) */}
                         <ModernAnnouncements />

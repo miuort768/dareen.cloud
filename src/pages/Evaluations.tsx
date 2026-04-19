@@ -124,7 +124,7 @@ export const Evaluations = () => {
     );
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500" dir="rtl">
+        <div className="space-y-6 pb-20 md:animate-in md:fade-in md:duration-500" dir="rtl">
 
             {/* ─── Soft Modern Header ─── */}
             <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 px-6 py-8 text-white shadow-lg shadow-indigo-500/20">
@@ -305,7 +305,7 @@ export const Evaluations = () => {
 
             {/* ─── Add Evaluation Modal ─── */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 md:animate-in md:fade-in">
                     <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
                         {/* Modal Header */}
                         <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white">
@@ -419,7 +419,7 @@ export const Evaluations = () => {
 
             {/* ─── History Modal ─── */}
             {historyModalStudent && (
-                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in">
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 md:animate-in md:fade-in">
                     <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-xl flex flex-col max-h-[85vh] overflow-hidden border border-slate-100 dark:border-slate-800">
                         <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950">
                             <div className="flex items-center gap-3">

@@ -16,23 +16,23 @@ export const Layout = () => {
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
-        <div className="h-screen overflow-x-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
+        <div className="min-h-full overflow-x-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
             {/* Sidebar - Hidden for chat users */}
             {!isChatOnly && <Sidebar />}
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col transition-all duration-300 w-full overflow-x-hidden">
+            <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full overflow-x-hidden">
                 {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
 
                 <main className={cn(
-                    "flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative max-w-full w-full",
+                    "flex-1 overflow-x-hidden custom-scrollbar relative max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
                         ? "p-0" 
-                        : "px-2 md:px-5 lg:px-8 pt-10 md:pt-12 pb-[140px] lg:pb-8 lg:rounded-none rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 md:shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
+                        : "px-2 md:px-5 lg:px-8 pt-6 md:pt-12 pb-[140px] lg:pb-8 lg:rounded-none rounded-none md:rounded-t-[32px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 md:shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
                     <div key={location.pathname} className={cn(
-                        "animate-in fade-in duration-500 ease-out h-full",
+                        "md:animate-in md:fade-in duration-500 ease-out h-full max-w-full overflow-x-hidden",
                         !isChatOnly && "md:slide-in-from-bottom-4"
                     )}>
                         {/* We use specific loaders inside pages, but this handles lazy chunk loading */}

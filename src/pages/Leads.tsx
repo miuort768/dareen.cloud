@@ -75,14 +75,14 @@ export const Leads: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="flex h-screen items-center justify-center">
+            <div className="flex min-h-full items-center justify-center md:animate-in md:fade-in">
                 <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
 
     return (
-        <div className="pb-28" dir="rtl">
+        <div className="pb-28 min-h-full md:animate-in md:fade-in md:duration-700" dir="rtl">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>
@@ -107,7 +107,7 @@ export const Leads: React.FC = () => {
 
             {/* Quick Stats Bar */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6">
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group overflow-hidden relative">
+                <div className="bg-white border-2 border-gray-950 p-6 shadow-[3px_3px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 group overflow-hidden relative">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">إجمالي المهتمين</p>
                     <div className="flex items-end justify-between">
                         <h3 className="text-3xl font-black text-gray-900 dark:text-white font-mono">{stats?.total || 0}</h3>
@@ -118,7 +118,7 @@ export const Leads: React.FC = () => {
                     <div className="absolute right-[-10%] bottom-[-20%] w-24 h-24 bg-gray-50 dark:bg-white/5 rounded-full blur-2xl z-0 pointer-events-none"></div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800">
+                <div className="bg-white border-2 border-gray-950 p-6 shadow-[3px_3px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">عملاء جدد</p>
                     <div className="flex items-end justify-between">
                         <h3 className="text-3xl font-black text-blue-600 font-mono">{stats?.new || 0}</h3>
@@ -128,7 +128,7 @@ export const Leads: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-white border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800">
+                <div className="bg-white border-2 border-gray-950 p-6 shadow-[3px_3px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">تم تحويلهم لطلاب</p>
                     <div className="flex items-end justify-between">
                         <h3 className="text-3xl font-black text-emerald-600 font-mono">{stats?.converted || 0}</h3>
@@ -138,7 +138,7 @@ export const Leads: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="border-2 border-gray-950 p-6 shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 bg-emerald-900 text-white">
+                <div className="border-2 border-gray-950 p-6 shadow-[3px_3px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 bg-emerald-900 text-white">
                     <p className="text-[10px] font-black text-emerald-300 uppercase tracking-widest mb-1">معدل التحويل (Success)</p>
                     <div className="flex items-end justify-between">
                         <h3 className="text-3xl font-black font-mono">{stats?.conversionRate.toFixed(1)}%</h3>
@@ -150,7 +150,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Filters & Search */}
-            <div className="bg-white border-2 border-gray-950 p-6 mb-8 shadow-[6px_6px_0px_0px_#10b981] dark:bg-gray-900 dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center">
+            <div className="bg-white border-2 border-gray-950 p-6 mb-8 shadow-[3px_3px_0px_0px_#10b981] md:shadow-[6px_6px_0px_0px_#10b981] dark:bg-gray-900 dark:border-gray-800 flex flex-col md:flex-row gap-4 items-center">
                 <div className="relative flex-1 w-full">
                     <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                     <input 
@@ -177,7 +177,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Leads Table/Grid */}
-            <div className="bg-white border-2 border-gray-950 shadow-[6px_6px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-x-auto">
+            <div className="bg-white border-2 border-gray-950 shadow-[3px_3px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-x-auto">
                 <table className="w-full text-right border-collapse min-w-[600px]">
                     <thead className="bg-gray-900 text-white dark:bg-black">
                         <tr>
@@ -272,8 +272,8 @@ export const Leads: React.FC = () => {
 
             {/* Add Lead Modal (Simplified) */}
             {isAddModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                    <div className="bg-white dark:bg-gray-900 border-4 border-gray-950 shadow-[15px_15px_0px_0px_black] w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+                <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/60 backdrop-blur-sm p-0 md:p-4">
+                    <div className="bg-white dark:bg-gray-900 border-x-4 border-t-4 md:border-4 border-gray-950 shadow-none md:shadow-[15px_15px_0px_0px_black] w-full max-w-lg overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
                         <div className="bg-gray-950 text-white p-6 flex justify-between items-center">
                             <h2 className="text-xl font-black uppercase tracking-tighter">إضافة عميل محتمل جديد</h2>
                             <button onClick={() => setIsAddModalOpen(false)}><X size={24} /></button>

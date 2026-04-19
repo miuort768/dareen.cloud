@@ -219,15 +219,15 @@ export const Schedule = () => {
     , [filteredEvents, mobileActiveDay]);
 
     if (loading) return (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
+        <div className="flex flex-col items-center justify-center min-h-full gap-3 md:animate-in md:fade-in">
             <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
             <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">جاري تحميل الجدول...</p>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
-            <div className="space-y-4 pb-[120px] md:pb-6 animate-in fade-in duration-500">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
+            <div className="space-y-4 pb-[120px] md:pb-6 md:animate-in md:fade-in md:duration-500">
 
                 {/* ── Gradient Header ── */}
                 <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
