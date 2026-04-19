@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users, Search, BookOpen, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Users, Search, BookOpen, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useApp } from '../context/AppContext';

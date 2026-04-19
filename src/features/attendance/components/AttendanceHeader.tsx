@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, CheckCircle2, Sparkles } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 interface AttendanceHeaderProps {
     date: string;
@@ -11,7 +11,7 @@ interface AttendanceHeaderProps {
     isTeacher: boolean;
 }
 
-export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, stats, isTeacher }) => {
+export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, isTeacher }) => {
     return (
         <div className="mb-6 flex flex-col items-center justify-center text-center">
              <h1 className="text-xl md:text-2xl font-black text-slate-900 mb-1 tracking-tight">تحضير الطلاب والمتابعة</h1>
