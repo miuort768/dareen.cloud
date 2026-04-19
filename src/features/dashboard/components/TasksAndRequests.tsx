@@ -9,15 +9,14 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-6 shadow-sm rounded-none border-t-2 border-t-amber-500 h-full flex flex-col animate-in fade-in duration-700">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-50 dark:border-slate-800">
+        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-3 md:p-6 shadow-sm rounded-none border-t-2 border-t-amber-500 h-full flex flex-col animate-in fade-in duration-700">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-amber-500 text-white flex items-center justify-center border border-amber-600">
+                    <div className="w-9 h-9 md:w-10 md:h-10 bg-amber-50 text-amber-600 flex items-center justify-center">
                         <ListTodo size={18} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">المهام والطلبات</h3>
-                        <p className="text-[10px] font-bold text-slate-400 leading-none mt-1 uppercase">Workflow Control</p>
+                        <h3 className="text-xs md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">المهام والطلبات</h3>
                     </div>
                 </div>
                 <Link to="/tasks" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400">
@@ -28,7 +27,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
             <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1">
                 {tasks.length > 0 ? (
                     tasks.slice(0, 5).map((task) => (
-                        <div key={task.id} className="p-4 bg-slate-50/50 dark:bg-slate-800/20 rounded-none border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800 group relative">
+                        <div key={task.id} className="p-3 md:p-4 bg-slate-50/80 dark:bg-slate-800/20 transition-all hover:bg-white dark:hover:bg-slate-800 group relative">
                             <div className="flex items-start gap-4">
                                 <div className={cn(
                                     "w-1 h-8 shrink-0",

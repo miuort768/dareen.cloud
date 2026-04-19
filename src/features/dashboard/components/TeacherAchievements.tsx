@@ -23,7 +23,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                 {/* Header Row */}
                 <div className="flex items-center justify-between mb-4 md:mb-8">
                     <div className="flex items-center gap-4">
-                        <div className="w-9 h-9 md:w-12 md:h-12 bg-slate-100 dark:bg-slate-800/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-slate-200 dark:border-slate-700">
+                        <div className="w-9 h-9 md:w-12 md:h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                             <TrendingUp size={24} strokeWidth={2.5} />
                         </div>
                         <div>
@@ -44,7 +44,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                 </div>
 
                 {/* Main Hero Metric */}
-                    <div className="flex-1 flex flex-col items-center justify-center py-4 md:py-6 border-y border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/20 mb-4 md:mb-6">
+                    <div className="flex-1 flex flex-col items-center justify-center py-4 md:py-6 bg-slate-50/30 dark:bg-slate-800/20 mb-4 md:mb-6">
                     <div className="flex items-center gap-2 mb-2">
                         <Award size={14} className="text-indigo-500" />
                         <span className="text-[10px] font-black text-slate-500 tracking-[0.2em]">
@@ -68,9 +68,9 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                 {/* Bottom Alert Counters */}
                 <div className="grid grid-cols-2 gap-2 md:gap-4">
                     {/* Expired Slot */}
-                    <div className="p-2.5 md:p-4 border border-slate-200 dark:border-slate-800 group hover:border-rose-500 transition-colors bg-white dark:bg-transparent">
+                    <div className="p-2.5 md:p-4 bg-slate-50 dark:bg-slate-800/30 group transition-colors">
                         <div className="flex items-center gap-2 mb-3">
-                            <div className="w-6 h-6 bg-rose-50 dark:bg-rose-900/10 text-rose-600 flex items-center justify-center">
+                            <div className="w-6 h-6 text-rose-500 flex items-center justify-center">
                                 <AlertCircle size={14} />
                             </div>
                             <span className="text-[9px] font-black text-slate-500 tracking-widest">تنبيه انتهاء</span>
@@ -82,9 +82,9 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     </div>
 
                     {/* Low Balance Slot */}
-                    <div className="p-2.5 md:p-4 border border-slate-200 dark:border-slate-800 group hover:border-amber-500 transition-colors bg-white dark:bg-transparent">
+                    <div className="p-2.5 md:p-4 bg-slate-50 dark:bg-slate-800/30 group transition-colors">
                         <div className="flex items-center gap-2 mb-3">
-                            <div className="w-6 h-6 bg-amber-50 dark:bg-amber-900/10 text-amber-600 flex items-center justify-center">
+                            <div className="w-6 h-6 text-amber-500 flex items-center justify-center">
                                 <Clock size={14} />
                             </div>
                             <span className="text-[9px] font-black text-slate-500 tracking-widest">على وشك</span>
