@@ -14,12 +14,7 @@ interface TeacherSessionTimelineProps {
 }
 
 export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps) => {
-    if (!sessions || sessions.length === 0) return (
-        <div className="bg-slate-50 dark:bg-slate-800/30 border border-dashed border-slate-200 dark:border-slate-700 py-8 flex flex-col items-center justify-center text-center">
-            <Clock size={24} className="text-slate-300 mb-2" />
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">لا توجد حصص مبرمجة لليوم</p>
-        </div>
-    );
+    if (!sessions || sessions.length === 0) return null;
 
     const sortedSessions = [...sessions].sort((a, b) => a.time.localeCompare(b.time));
 

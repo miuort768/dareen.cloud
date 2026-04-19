@@ -66,7 +66,7 @@ export const Dashboard = () => {
             <div className="max-w-[1600px] mx-auto px-4 md:px-6 mt-6 space-y-6">
                 
                 {/* Row 1: Key Statistics (Sharp Floating Cards) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                     <DashboardStats stats={stats} isTeacher={isTeacher} />
                 </div>
 
@@ -82,10 +82,12 @@ export const Dashboard = () => {
                     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
                         <ModernAnnouncements />
 
-                        {/* Session Timeline Card */}
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-4">
-                            <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
-                        </div>
+                        {/* Session Timeline Card - only shows if sessions exist */}
+                        {(stats.todayTimeline || []).length > 0 && (
+                            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+                                <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
+                            </div>
+                        )}
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <TeacherAchievements

@@ -27,12 +27,12 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             <TrendingUp size={24} strokeWidth={2.5} />
                         </div>
                         <div>
-                            <h3 className="font-black text-sm text-slate-900 dark:text-white leading-none">
+                            <h3 className="font-black text-xs md:text-sm text-slate-900 dark:text-white leading-none">
                                 {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي المتوقع'}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1.5">
-                                <span className="w-2 h-2 bg-emerald-500 animate-pulse"></span>
-                                <span className="text-[10px] font-black text-slate-400 tracking-widest uppercase">KPI Performance</span>
+                            <div className="flex items-center gap-2 mt-1">
+                                <span className="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                                <span className="text-[8px] font-black text-slate-400 tracking-widest uppercase">مؤشرات الأداء</span>
                             </div>
                         </div>
                     </div>

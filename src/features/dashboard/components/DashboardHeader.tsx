@@ -61,29 +61,28 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}
             />
 
-            <div className="relative z-10 px-4 md:px-6 py-5 md:py-7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                {/* Left: Name + date */}
+            <div className="relative z-10 px-4 md:px-6 py-4 md:py-7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                {/* Left: Icon + Name */}
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 border border-white/20 flex items-center justify-center shrink-0">
-                        <GraduationCap size={20} className="text-white" />
+                    {/* Icon box — sharp rectangle, no rotation */}
+                    <div className="bg-white/15 border border-white/20 px-3 py-2 flex items-center gap-2 shrink-0">
+                        <GraduationCap size={16} className="text-white/80" />
+                        <span className="text-xs md:text-sm font-black text-white whitespace-nowrap truncate max-w-[140px] md:max-w-none">
+                            {isTeacher ? `أ. ${currentUser?.name}` : 'لوحة التحكم'}
+                        </span>
                     </div>
-                    <div>
-                        <h1 className="text-base md:text-xl font-black text-white tracking-tight leading-none">
-                            {isTeacher ? `أهلاً، أ. ${currentUser?.name}` : 'لوحة التحكم'}
-                        </h1>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                            <div className="flex items-center gap-1.5 bg-white/15 border border-white/20 px-2 py-0.5">
-                                <CalendarCheck size={10} className="text-white/70" />
-                                <span className="text-[9px] font-black text-white/80 whitespace-nowrap">
-                                    {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
-                                </span>
-                            </div>
-                            <span className="text-[8px] font-bold text-white/40 hidden sm:inline">معهد دارين للتعليم والتدريب</span>
-                        </div>
+
+                    {/* Date — hidden on mobile */}
+                    <div className="hidden md:flex items-center gap-1.5 bg-white/10 border border-white/15 px-2.5 py-1.5">
+                        <CalendarCheck size={10} className="text-white/60" />
+                        <span className="text-[9px] font-black text-white/70 whitespace-nowrap">
+                            {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
+                        </span>
                     </div>
+                    <span className="text-[8px] font-bold text-white/30 hidden lg:inline">معهد دارين للتعليم والتدريب</span>
                 </div>
 
-                {/* Right: Clock + Active session */}
+                {/* Right: Clock + Active session + XP */}
                 <div className="flex items-center gap-2 shrink-0 flex-wrap">
 
                     {/* Active Session Live Timer */}
@@ -92,10 +91,10 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                             key={session.id}
                             className="flex items-center gap-2 px-3 py-2 bg-emerald-500/20 border border-emerald-400/40 text-white animate-pulse"
                         >
-                            <PlayCircle size={14} className="text-emerald-300 shrink-0" />
+                            <PlayCircle size={13} className="text-emerald-300 shrink-0" />
                             <div>
-                                <p className="text-[8px] font-black opacity-70 uppercase leading-none mb-0.5">{session.subject} — جارٍ الآن</p>
-                                <p className="text-sm font-black tabular-nums font-mono leading-none">
+                                <p className="text-[7px] font-black opacity-70 uppercase leading-none mb-0.5">{session.subject} — جارٍ الآن</p>
+                                <p className="text-xs font-black tabular-nums font-mono leading-none">
                                     {formatElapsed(session.startedAt)}
                                 </p>
                             </div>
@@ -104,10 +103,10 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
                     {/* Clock Widget */}
                     <div className="flex items-center gap-2 px-3 py-2 bg-white/15 border border-white/20">
-                        <Clock size={13} className="text-white/70" />
+                        <Clock size={12} className="text-white/60" />
                         <div>
-                            <p className="text-[7px] font-black text-white/40 uppercase leading-none mb-0.5">توقيت دارين</p>
-                            <p className="text-sm font-black text-white tabular-nums font-mono leading-none">
+                            <p className="text-[7px] font-black text-white/40 uppercase leading-none mb-0.5 hidden md:block">توقيت دارين</p>
+                            <p className="text-xs md:text-sm font-black text-white tabular-nums font-mono leading-none">
                                 {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                             </p>
                         </div>
@@ -115,9 +114,9 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
                     {/* XP badge for teacher */}
                     {isTeacher && (
-                        <div className="flex items-center gap-1.5 px-3 py-2 bg-amber-400/20 border border-amber-400/30">
-                            <Zap size={12} className="text-amber-300 fill-current" />
-                            <span className="text-[10px] font-black text-amber-200">نظام XP نشط</span>
+                        <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 bg-amber-400/20 border border-amber-400/30">
+                            <Zap size={11} className="text-amber-300 fill-current" />
+                            <span className="text-[9px] font-black text-amber-200">XP نشط</span>
                         </div>
                     )}
                 </div>
