@@ -131,11 +131,12 @@ export const Evaluations = () => {
                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                 <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-inner">
-                            <Award size={28} className="text-white" />
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-inner shrink-0">
+                            <Award size={20} className="text-white md:hidden" />
+                            <Award size={28} className="text-white hidden md:block" />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-black tracking-tight leading-none mb-1">تقييم الطلاب والتحفيز</h1>
+                            <h1 className="text-base md:text-2xl font-black tracking-tight leading-none mb-0.5 md:mb-1">تقييم الطلاب والتحفيز</h1>
                             <p className="text-white/70 text-[9px] md:text-[11px] font-bold flex items-center gap-1.5 truncate max-w-[200px] sm:max-w-none">
                                 <Zap size={11} className="fill-current" />
                                 نظام المكافآت الذكي والتقييم الأكاديمي الشامل
@@ -143,19 +144,19 @@ export const Evaluations = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
                         {/* XP summary chip */}
-                        <div className="bg-white/15 border border-white/20 px-4 py-2 backdrop-blur-sm flex items-center gap-2">
-                            <p className="text-[9px] font-black opacity-60 uppercase tracking-widest whitespace-nowrap">إجمالي النقاط:</p>
-                            <p className="text-base font-black tabular-nums whitespace-nowrap">{totalXP} <span className="text-xs opacity-60">XP</span></p>
+                        <div className="bg-white/15 border border-white/20 px-3 md:px-4 py-2 backdrop-blur-sm flex items-center gap-1.5 md:gap-2">
+                            <p className="text-[8px] md:text-[9px] font-black opacity-60 uppercase tracking-widest whitespace-nowrap">إجمالي النقاط:</p>
+                            <p className="text-sm md:text-base font-black tabular-nums whitespace-nowrap">{totalXP} <span className="text-[10px] opacity-60">XP</span></p>
                         </div>
                         {currentUser?.role !== 'parent' && (
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-1.5 bg-white text-indigo-700 font-black text-[10px] md:text-xs px-2.5 md:px-4 py-2 md:py-2.5 shadow-lg hover:shadow-xl hover:scale-105 transition-all shrink-0"
+                                className="flex items-center gap-1.5 bg-white text-indigo-700 font-black text-[10px] md:text-xs px-3 md:px-4 py-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all shrink-0 self-stretch"
                             >
                                 <Plus size={14} strokeWidth={3} />
-                                <span className="hidden sm:inline">تقييم جديد</span>
+                                <span className="hidden sm:inline whitespace-nowrap">تقييم جديد</span>
                             </button>
                         )}
                     </div>
