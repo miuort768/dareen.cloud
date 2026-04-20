@@ -101,8 +101,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </button>
 
                     <div 
-                        className="w-10 h-10 rounded-full overflow-hidden cursor-pointer"
-                        onClick={() => selectedConv.isGroup && openGroupSettings()}
+                        className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
+                        onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
                     >
                         <img 
                             src="/chat-avatar.jpg" 

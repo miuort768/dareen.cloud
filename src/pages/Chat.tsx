@@ -48,7 +48,7 @@ export const Chat: React.FC = () => {
     const [isDeleting, setIsDeleting] = useState(false);
 
     const openGroupSettings = () => {
-        if (!selectedConv || !selectedConv.isGroup) return;
+        if (!selectedConv || !selectedConv.isGroup || currentUser?.role !== 'admin') return;
         setGroupName(selectedConv.displayName || '');
         setSelectedUsers(selectedConv.members || []);
         setIsEditingGroup(true);
