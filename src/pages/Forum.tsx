@@ -329,8 +329,21 @@ export const Forum = () => {
                                                                 <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-normal">{comment.content}</p>
                                                             </div>
                                                             <div className="flex gap-3 mt-1 text-[9px] text-slate-500 font-bold px-1">
-                                                                <button className="hover:underline">أعجبني</button>
-                                                                <button className="hover:underline">رد</button>
+                                                                <button 
+                                                                    onClick={() => showNotification('ميزة الإعجاب بالتعليقات ستتوفر قريباً!', 'info')}
+                                                                    className="hover:underline"
+                                                                >أعجبني</button>
+                                                                <button 
+                                                                    onClick={() => {
+                                                                        const currentText = commentTexts[post.id] || '';
+                                                                        const newText = currentText.startsWith(`@${comment.authorName} `) 
+                                                                            ? currentText 
+                                                                            : `@${comment.authorName} ` + currentText;
+                                                                        setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: newText }));
+                                                                        setTimeout(() => document.getElementById(`comment-input-${post.id}`)?.focus(), 100);
+                                                                    }}
+                                                                    className="hover:underline"
+                                                                >رد</button>
                                                                 <span>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: arEG })}</span>
                                                                 {(isAdmin || currentUser?.id === comment.authorId) && (
                                                                     <button onClick={() => handleDeleteComment(post.id, comment.id)} className="text-rose-500 hover:underline">حذف</button>
@@ -348,6 +361,7 @@ export const Forum = () => {
                                                 </div>
                                                 <div className="flex-1 relative">
                                                     <input 
+                                                        id={`comment-input-${post.id}`}
                                                         type="text"
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: e.target.value }))}
