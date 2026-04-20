@@ -117,7 +117,7 @@ export const ParentDashboard = () => {
             <div className="flex justify-between items-start mb-2 px-1">
                 <div className="max-w-[75%] min-w-0">
                     <h1 className="text-[12px] md:text-2xl font-black text-slate-900 dark:text-white leading-tight truncate">
-                        مرحباً، <span className="text-indigo-600 dark:text-indigo-400">أ/ {currentUser?.name.split(' ')[0]}</span>
+                        مرحباً، <span className="text-indigo-600 dark:text-indigo-400">أ/ {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}</span>
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 text-[8px] md:text-xs font-medium mt-0.5 opacity-80 truncate">رحلة تميز أبنائك تبدأ من هنا</p>
                 </div>
