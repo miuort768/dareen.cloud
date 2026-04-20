@@ -16,12 +16,12 @@ export const Layout = () => {
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
-        <div className="min-h-full bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
+        <div className="h-screen overflow-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
             {/* Sidebar - Hidden for chat users */}
             {!isChatOnly && <Sidebar />}
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full">
+            <div className="flex-1 h-screen overflow-y-auto overflow-x-hidden flex flex-col transition-all duration-300 w-full max-w-full custom-scrollbar">
                 {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
 
                 <main className={cn(
