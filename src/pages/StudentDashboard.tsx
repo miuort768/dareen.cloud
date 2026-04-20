@@ -23,6 +23,7 @@ export const StudentDashboard = () => {
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showAllActivities, setShowAllActivities] = useState(false);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
@@ -232,7 +233,7 @@ export const StudentDashboard = () => {
             {/* ═══════════════ DAILY TASKS ═══════════════ */}
             <div>
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم (السبت)</h3>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم ({todayArabic})</h3>
                     <button className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider">عرض الكل</button>
                 </div>
                 <div className="space-y-3">
@@ -277,9 +278,19 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
             <div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4">آخر النشاطات</h3>
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">آخر النشاطات</h3>
+                    {pointLogs.length > 4 && (
+                        <button 
+                            onClick={() => setShowAllActivities(!showAllActivities)}
+                            className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider"
+                        >
+                            {showAllActivities ? 'إخفاء' : 'عرض الكل'}
+                        </button>
+                    )}
+                </div>
                 <div className="space-y-3">
-                    {pointLogs.slice(0, 3).map((log, i) => (
+                    {pointLogs.slice(0, showAllActivities ? undefined : 4).map((log, i) => (
                         <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800">
                             <div className="flex items-start gap-4">
                                 <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-2xl flex items-center justify-center shrink-0">
