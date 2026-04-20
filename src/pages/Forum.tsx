@@ -181,7 +181,7 @@ export const Forum = () => {
                             onClick={() => document.getElementById('new-post-input')?.focus()}
                             className="flex-1 bg-gradient-to-l from-[#ff6b6b] via-[#ff6b6b] to-transparent px-4 py-3 text-right text-black font-black text-sm transition-all hover:pr-6"
                         >
-                            بم تفكر يا {currentUser?.name?.split(' ')[0]}؟
+                            بما تفكر ؟
                         </button>
                     </div>
                     <div className="border-t border-slate-100 dark:border-slate-800 pt-3">
