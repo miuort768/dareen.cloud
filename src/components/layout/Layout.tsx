@@ -21,7 +21,7 @@ export const Layout = () => {
             {!isChatOnly && <Sidebar />}
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full overflow-x-hidden">
+            <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full">
                 {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
 
                 <main className={cn(
