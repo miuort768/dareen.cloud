@@ -12,16 +12,25 @@ import { PageLoader } from '../ui/PageLoader';
 
 export const Layout = () => {
     const location = useLocation();
-    const { currentUser } = useApp();
+    const { currentUser, sidebarCollapsed } = useApp();
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (
-        <div className="h-screen overflow-hidden bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
-            {/* Sidebar - Hidden for chat users */}
+        <div className="min-h-screen bg-gray-50 flex font-sans dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 relative" dir="rtl">
+            {/* Sidebar - Hidden for chat users, and we use a placeholder div for fixed desktop sidebar */}
+            {!isChatOnly && (
+                <div className={cn(
+                    "hidden lg:block shrink-0 transition-all duration-300",
+                    (location.pathname.includes('/chat') || isChatOnly) ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72")
+                )}>
+                    {/* This div just takes up space on the right so content doesn't go under fixed sidebar */}
+                    <div className={cn("transition-all duration-300", (location.pathname.includes('/chat') || isChatOnly) ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72"))} />
+                </div>
+            )}
             {!isChatOnly && <Sidebar />}
 
-            {/* Main Content */}
-            <div className="flex-1 h-screen overflow-y-auto overflow-x-hidden flex flex-col transition-all duration-300 w-full max-w-full custom-scrollbar">
+            {/* Main Content Area - Now scrolls with the body */}
+            <div className="flex-1 flex flex-col transition-all duration-300 w-full max-w-full">
                 {(!isChatOnly && !location.pathname.includes('/chat')) && <Header />}
 
                 <main className={cn(

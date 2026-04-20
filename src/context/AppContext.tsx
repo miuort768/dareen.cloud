@@ -9,12 +9,18 @@ interface AppContextType {
     toasts: ToastProps[];
     showNotification: (message: string, type?: 'success' | 'error' | 'warning' | 'info') => void;
     requestDesktopNotifications: () => Promise<boolean>;
+    sidebarCollapsed: boolean;
+    setSidebarCollapsed: (collapsed: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+        const saved = localStorage.getItem('sidebar_collapsed');
+        return saved !== null ? saved === 'true' : true;
+    });
 
     const removeToast = useCallback((id: string) => {
         setToasts(prev => prev.filter(t => t.id !== id));
@@ -46,7 +52,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AppContext.Provider value={{ toasts, showNotification, requestDesktopNotifications }}>
+        <AppContext.Provider value={{
+            toasts,
+            showNotification,
+            requestDesktopNotifications,
+            sidebarCollapsed,
+            setSidebarCollapsed
+        }}>
             <AuthProvider>
                 <SettingsProvider>
                     <UserProvider>

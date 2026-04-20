@@ -31,12 +31,15 @@ import { useChatContext } from '../../context/ChatContext';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 
 export const Sidebar = () => {
-    const [collapsed, setCollapsed] = useState(() => {
-        const saved = localStorage.getItem('sidebar_collapsed');
-        return saved !== null ? saved === 'true' : true;
-    });
+    const {
+        academyName,
+        logout,
+        currentUser,
+        isLoading,
+        sidebarCollapsed: collapsed,
+        setSidebarCollapsed: setCollapsed
+    } = useApp();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { academyName, logout, currentUser, isLoading } = useApp();
     const { totalUnreadCount } = useChatContext();
     const navigate = useNavigate();
 
@@ -149,7 +152,7 @@ export const Sidebar = () => {
             {/* Desktop Sidebar - Hidden on Mobile */}
             <div
                 className={cn(
-                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col sticky top-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
+                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
                     collapsed ? "w-20" : "w-72"
                 )}
             >
