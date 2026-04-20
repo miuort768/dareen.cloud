@@ -94,10 +94,10 @@ export const ParentStudents = () => {
     return (
         <div className="pt-6 md:pt-10 space-y-6 pb-24 md:animate-in md:fade-in md:duration-500" dir="rtl">
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 -mx-3 md:mx-0 p-3 md:p-0 bg-slate-50 md:bg-transparent dark:bg-slate-900/40">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4 md:px-0 bg-transparent dark:bg-slate-900/40">
                 <div>
-                    <h1 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-1">قائمة الأبناء</h1>
-                    <p className="text-[10px] md:text-sm text-gray-500 font-bold dark:text-gray-400 uppercase tracking-widest leading-none">إدارة ومتابعة التفاصيل الدراسية</p>
+                    <h1 className="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-1">قائمة الأبناء</h1>
+                    <p className="text-[9px] md:text-sm text-gray-500 font-bold dark:text-gray-400 uppercase tracking-widest leading-none">إدارة ومتابعة التفاصيل الدراسية</p>
                 </div>
 
                 <div className="relative group w-full md:w-72">
@@ -475,14 +475,14 @@ export const ParentStudents = () => {
                             <X size={20} />
                         </button>
                         
-                        <div className="p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
-                            <div className="mb-8 border-b border-gray-100 dark:border-gray-800 pb-6 flex items-center gap-4">
-                                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-primary-600">
-                                    <Star size={32} className="fill-current" />
+                        <div className="p-4 md:p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                            <div className="mb-6 border-b border-gray-100 dark:border-gray-800 pb-4 flex items-center gap-3">
+                                <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 rounded-full">
+                                    <Star size={24} className="fill-current" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">سجل إنجازات {viewingAchievements.name}</h3>
-                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">الأوسمة، النقاط، والنشاط الأكاديمي</p>
+                                    <h3 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tighter">سجل إنجازات {viewingAchievements.name}</h3>
+                                    <p className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">الأوسمة، النقاط، والنشاط الأكاديمي</p>
                                 </div>
                             </div>
 

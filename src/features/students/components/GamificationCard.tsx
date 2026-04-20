@@ -28,19 +28,19 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
     return (
         <div className="space-y-6">
             {/* Total Points Big Card */}
-            <div className="bg-black dark:bg-black p-8 border-r-8 border-primary-600 shadow-2xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 blur-3xl rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="bg-black dark:bg-black p-5 md:p-6 border-r-4 md:border-r-8 border-primary-600 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-primary-600/10 blur-3xl rounded-full -translate-y-12 translate-x-12"></div>
                 <div className="flex items-center justify-between relative z-10">
                     <div>
-                        <p className="text-[10px] font-black text-primary-500 uppercase tracking-[0.3em] mb-2">رصيد الإنجاز الذهبي</p>
-                        <h2 className="text-6xl font-black text-white tracking-tighter flex items-center gap-4">
+                        <p className="text-[9px] md:text-[10px] font-black text-primary-500 uppercase tracking-[0.3em] mb-2">رصيد الإنجاز الذهبي</p>
+                        <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter flex items-center gap-3">
                             {totalPoints.toLocaleString()}
-                            <div className="p-2 bg-primary-600 animate-pulse">
-                                <Star size={24} className="fill-current text-white" />
+                            <div className="p-1.5 md:p-2 bg-primary-600 animate-pulse">
+                                <Star size={18} className="fill-current text-white md:w-5 md:h-5" />
                             </div>
                         </h2>
                     </div>
-                    <Trophy size={80} className="text-primary-600/20 group-hover:scale-110 transition-transform duration-700" />
+                    <Trophy size={48} className="text-primary-600/20 group-hover:scale-110 transition-transform duration-700 md:w-16 md:h-16" />
                 </div>
             </div>
 
@@ -55,7 +55,7 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                             <div 
                                 key={idx} 
                                 className={cn(
-                                    "flex flex-col items-center gap-2 p-4 border-2 transition-all hover:scale-105 cursor-help min-w-[100px]",
+                                    "flex flex-col items-center gap-1.5 p-3 md:p-4 border-2 transition-all hover:scale-105 cursor-help min-w-[80px] md:min-w-[100px]",
                                     badge.color === 'blue' ? "bg-blue-50 border-blue-600 text-blue-700" :
                                     badge.color === 'amber' ? "bg-amber-50 border-amber-600 text-amber-700" :
                                     badge.color === 'emerald' ? "bg-emerald-50 border-emerald-600 text-emerald-700" :
@@ -63,8 +63,8 @@ export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: Gamifi
                                 )}
                                 title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
                             >
-                                <Award size={32} strokeWidth={2.5} />
-                                <span className="text-[10px] font-black uppercase text-center">{badge.name}</span>
+                                <Award size={24} strokeWidth={2.5} className="md:w-[28px] md:h-[28px]" />
+                                <span className="text-[9px] md:text-[10px] font-black uppercase text-center">{badge.name}</span>
                             </div>
                         )) : (
                             <div className="w-full py-8 text-center bg-gray-50 dark:bg-gray-800/20 border-2 border-dashed border-gray-200 dark:border-gray-700 opacity-30">
