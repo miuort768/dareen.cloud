@@ -1,5 +1,6 @@
-import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Cell } from 'recharts';
-import { BarChart2, TrendingUp, TrendingDown, Target } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { BarChart2, Target } from 'lucide-react';
 import type { DashboardMonthData as MonthData } from '../types';
 
 interface DashboardChartsProps {
@@ -8,6 +9,17 @@ interface DashboardChartsProps {
 }
 
 export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps) => {
+    const [fontSize, setFontSize] = useState(11);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setFontSize(window.innerWidth < 768 ? 9 : 11);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl md:rounded-[2.5rem] shadow-sm p-4 md:p-6 overflow-hidden">
             
@@ -24,7 +36,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                     </div>
                 </div>
                 
-                {/* Modern Legend / Indicators - More compact on mobile */}
+                {/* Modern Legend / Indicators */}
                 <div className="flex flex-wrap gap-2 md:gap-3" dir="rtl">
                     <div className="flex items-center gap-2 md:gap-3 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl border border-indigo-100 dark:border-indigo-800/50">
                         <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-[#5c59f2] rounded-full"></div>
@@ -54,7 +66,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                 </div>
             </div>
 
-            {/* Chart Area - BarChart for better differentiation */}
+            {/* Chart Area */}
             <div className="relative h-[280px] md:h-[350px] w-full" dir="ltr">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }} barGap={6}>
@@ -63,13 +75,13 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                             dataKey="month"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fontSize: 9, md: 11, fontWeight: '600', fill: '#94a3b8' }}
+                            tick={{ fontSize: fontSize, fontWeight: '600', fill: '#94a3b8' }}
                             dy={10}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fontSize: 9, md: 11, fontWeight: '600', fill: '#94a3b8' }}
+                            tick={{ fontSize: fontSize, fontWeight: '600', fill: '#94a3b8' }}
                             tickFormatter={(val) => val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val}
                         />
                         <Tooltip
