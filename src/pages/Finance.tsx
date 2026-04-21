@@ -1,7 +1,8 @@
-import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Sparkles, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Sparkles } from 'lucide-react';
 import { Skeleton } from '../shared/components/Skeleton';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
+import { FinanceStats } from '../features/finance/components/FinanceStats';
 import { AddTransactionModal } from '../features/finance/components/AddTransactionModal';
 import { FixedExpensesManager } from '../features/finance/components/FixedExpensesManager';
 import { useFinance } from '../features/finance/hooks/useFinance';
@@ -14,138 +15,94 @@ export const Finance = () => {
     if (state.loading) {
         return (
             <div className="space-y-6">
-                <Skeleton className="h-48 rounded-none" />
+                <div className="h-48 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 animate-pulse" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => (
-                        <Skeleton key={i} className="h-32 rounded-none" />
+                        <div key={i} className="h-32 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 animate-pulse" />
                     ))}
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Skeleton className="lg:col-span-2 h-96 rounded-none" />
-                    <Skeleton className="h-96 rounded-none" />
+                    <div className="lg:col-span-2 h-96 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 animate-pulse" />
+                    <div className="h-96 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 animate-pulse" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-8 pb-40 min-h-full md:animate-in md:fade-in md:duration-700">
-            {/* Premium Brutalist Header */}
-            <div className="relative bg-white border-2 border-gray-950 p-6 shadow-[2px_2px_0px_0px_black] overflow-hidden mb-6 rounded-none">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
-                <div className="absolute top-0 right-0 w-48 h-full bg-primary-600/5 -skew-x-12 transform translate-x-24 pointer-events-none"></div>
-
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-2 border-b border-gray-950 pb-4">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-primary-600 text-white border-2 border-gray-950 flex items-center justify-center transform -rotate-3 shadow-[1px_1px_0px_0px_black] relative">
-                             <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 border-2 border-gray-950"></div>
-                            <DollarSign size={18} strokeWidth={3} />
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-1.5 mb-1">
-                                <Sparkles size={10} className="text-amber-500" />
-                                <span className="text-[8px] font-black text-primary-600 uppercase tracking-[0.2em] italic">نظام الرقابة المالية المتكامل</span>
-                            </div>
-                            <h1 className="text-lg md:text-xl font-black text-gray-950 tracking-tighter uppercase leading-none">الإدارة المالية والحسابات</h1>
-                            <div className="mt-2 flex flex-wrap gap-2">
-                                <div className="bg-gray-950 text-white px-2 py-0.5 text-[9px] font-black uppercase tracking-widest border border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                                    هامش الربح: {state.profitMargin}%
+        <div className="space-y-8 pb-40 min-h-full">
+            {/* Premium Header */}
+            <div className="relative group mb-8" dir="rtl">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-emerald-500 rounded-none blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+                
+                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
+                    <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
+                    
+                    <div className="relative z-10 px-4 py-4 md:px-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div className="flex items-center gap-4 md:gap-5 w-full md:w-auto">
+                            <div className="relative shrink-0">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
+                                    <DollarSign size={24} className="md:size-32" />
                                 </div>
-                                <div className="bg-emerald-50 text-emerald-700 border border-emerald-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest">
-                                    مركز التقارير النشط
+                                <div className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-amber-400 rounded-none border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                                    <Sparkles size={8} className="md:size-[10px] text-white" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 no-print">
-                        <button
-                            onClick={() => navigate('/monthly-closing')}
-                            className="group flex items-center justify-center gap-2 px-3 py-1.5 bg-gray-950 text-white font-black text-[10px] border-2 border-gray-950 shadow-[1px_1px_0px_0px_#444] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all h-8 uppercase tracking-widest"
-                        >
-                            <CalendarCheck size={14} /> تسوية الشهر
-                        </button>
-                        
-                        <button
-                            onClick={() => actions.setShowAddModal(true)}
-                            className="flex items-center justify-center gap-2 px-3 py-1.5 bg-primary-600 text-white font-black text-[10px] border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all h-8 uppercase tracking-widest"
-                        >
-                            <TrendingUp size={14} /> تسجيل معاملة
-                        </button>
+                            <div className="text-right">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none italic">النظام المحاسبي المتكامل</span>
+                                    <TrendingUp className="text-[#5c59f2]" size={12} className="md:size-[14px]" />
+                                </div>
+                                <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">الإدارة المالية والحسابات</h1>
+                                <div className="flex items-center gap-2 mt-2">
+                                    <div className="bg-slate-900 text-white px-2 py-0.5 text-[8px] font-black uppercase tracking-widest">
+                                        هامش الربح: {state.profitMargin}%
+                                    </div>
+                                    <span className="text-slate-400 font-bold text-[9px] uppercase italic">مركز التقارير • تحديث حي</span>
+                                </div>
+                            </div>
+                        </div>
 
-                        <button
-                            onClick={() => alert('ميزة التصدير ستكون متاحة قريباً')}
-                            className="px-2 py-1 bg-white text-gray-950 border-2 border-gray-950 shadow-[1px_1px_0px_0px_black] hover:bg-gray-50 transition-all h-8 flex items-center justify-center"
-                        >
-                            <Download size={14} />
-                        </button>
-                    </div>
-                </div>
+                        <div className="flex flex-wrap items-center gap-3 md:gap-4 w-full md:w-auto justify-end no-print">
+                             <button
+                                onClick={() => navigate('/monthly-closing')}
+                                className="px-4 py-2.5 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-100 dark:border-slate-700 font-black text-[10px] md:text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-sm hover:bg-white"
+                            >
+                                <CalendarCheck size={16} />
+                                <span>تسوية الشهر</span>
+                            </button>
+                            
+                            <button
+                                onClick={() => actions.setShowAddModal(true)}
+                                className="px-4 py-2.5 md:px-6 md:py-3 bg-[#5c59f2] text-white font-black text-[10px] md:text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-indigo-100 dark:shadow-none hover:-translate-y-0.5"
+                            >
+                                <TrendingUp size={16} />
+                                <span>تسجيل معاملة</span>
+                            </button>
 
-                {/* Heavy Brutalist Stats inside Header */}
-                <div className="relative z-10 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Income */}
-                    <div className="bg-emerald-50 border-2 border-gray-950 p-3 flex flex-col justify-between group hover:bg-emerald-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
-                        <div className="absolute top-1 left-1 text-emerald-200">
-                             <ArrowUpRight size={24} strokeWidth={4} />
-                        </div>
-                        <p className="text-emerald-700 text-[9px] font-black uppercase mb-2 tracking-widest border-b border-emerald-200 pb-1 italic">إجمالي الوارد</p>
-                        <div className="flex items-end gap-1.5">
-                             <p className="text-gray-950 text-xl font-black tabular-nums tracking-tighter leading-none">{state.totalIncome.toLocaleString()}</p>
-                             <span className="text-[8px] font-black text-gray-500 mb-0.5 italic">ج.م</span>
-                        </div>
-                        <div className="mt-3 flex items-center gap-2 bg-white/50 border-t border-emerald-200 pt-1">
-                            <span className="text-[9px] font-black text-emerald-800 uppercase italic">الشهر: {state.monthIncome.toLocaleString()}</span>
-                        </div>
-                    </div>
-
-                    {/* Teacher Expenses */}
-                    <div className="bg-rose-50 border-2 border-gray-950 p-3 flex flex-col justify-between group hover:bg-rose-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
-                        <div className="absolute top-1 left-1 text-rose-200">
-                             <ArrowDownRight size={24} strokeWidth={4} />
-                        </div>
-                        <p className="text-rose-700 text-[9px] font-black uppercase mb-2 tracking-widest border-b border-rose-200 pb-1 italic">مستحقات المعلمات</p>
-                        <div className="flex items-end gap-1.5">
-                             <p className="text-gray-950 text-xl font-black tabular-nums tracking-tighter leading-none">{state.totalExpenses.toLocaleString()}</p>
-                             <span className="text-[8px] font-black text-gray-500 mb-0.5 italic">ج.م</span>
-                        </div>
-                        <div className="mt-3 flex items-center gap-2 bg-white/50 border-t border-rose-200 pt-1">
-                            <span className="text-[9px] font-black text-rose-800 uppercase italic">الشهر: {state.monthExpenses.toLocaleString()}</span>
-                        </div>
-                    </div>
-
-                    {/* Fixed Expenses */}
-                    <div className="bg-amber-50 border-2 border-gray-950 p-3 flex flex-col justify-between group hover:bg-amber-100 transition-colors shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
-                        <div className="absolute top-1 left-1 text-amber-200">
-                             <DollarSign size={24} strokeWidth={4} />
-                        </div>
-                        <p className="text-amber-700 text-[9px] font-black uppercase mb-2 tracking-widest border-b border-amber-200 pb-1 italic">المصروفات الثابتة</p>
-                        <div className="flex items-end gap-1.5">
-                             <p className="text-gray-950 text-xl font-black tabular-nums tracking-tighter leading-none">{state.totalFixedExpenses.toLocaleString()}</p>
-                             <span className="text-[8px] font-black text-gray-500 mb-0.5 italic">ج.م</span>
-                        </div>
-                        <div className="mt-3 flex items-center gap-2 bg-white/50 border-t border-amber-200 pt-1">
-                            <span className="text-[9px] font-black text-amber-800 uppercase italic">مصاريف الإدارة</span>
-                        </div>
-                    </div>
-
-                    {/* Net Profit */}
-                    <div className="bg-gray-950 border-2 border-gray-950 p-3 flex flex-col justify-between group shadow-[2px_2px_0px_0px_black] relative overflow-hidden">
-                        <div className="absolute top-1 left-1 text-white/10">
-                             <TrendingUp size={24} strokeWidth={4} />
-                        </div>
-                        <p className="text-emerald-400 text-[9px] font-black uppercase mb-2 tracking-widest border-b border-white/10 pb-1 italic">صافي الأرباح</p>
-                        <div className="flex items-end gap-1.5">
-                             <p className="text-white text-2xl font-black tabular-nums tracking-tighter leading-none italic">{state.netProfit.toLocaleString()}</p>
-                             <span className="text-[8px] font-black text-emerald-400/60 mb-0.5 uppercase">LE</span>
-                        </div>
-                        <div className="mt-3 flex items-center gap-1 border-t border-white/10 pt-1">
-                            <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest leading-none">أداء ممتاز</span>
+                            <button
+                                onClick={() => alert('ميزة التصدير ستكون متاحة قريباً')}
+                                className="w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-[#5c59f2] transition-colors shadow-sm"
+                            >
+                                <Download size={18} />
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div className="p-4 md:p-0 space-y-8">
+                {/* Modern Stats Components */}
+                <FinanceStats 
+                    totalIncome={state.totalIncome}
+                    monthIncome={state.monthIncome}
+                    totalExpenses={state.totalExpenses}
+                    monthExpenses={state.monthExpenses}
+                    totalFixedExpenses={state.totalFixedExpenses}
+                    netProfit={state.netProfit}
+                    monthProfit={state.monthIncome - state.monthExpenses} // Calculated
+                />
 
             {/* Fixed Expenses Panel */}
             <FixedExpensesManager
@@ -162,70 +119,78 @@ export const Finance = () => {
                 totalExpenses={state.totalExpenses}
             />
 
-            {/* Premium Brutalist Filters */}
-            <div className="bg-white border-2 border-gray-950 p-4 shadow-[2px_2px_0px_0px_black] mb-6">
-                 <div className="flex items-center gap-2 mb-3 border-b border-gray-950 pb-2">
-                    <div className="w-6 h-6 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-[1px_1px_0px_0px_black]">
-                        <Search size={12} />
+            {/* Filter Section */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-none shadow-sm space-y-6">
+                <div className="flex items-center gap-3 border-b border-slate-50 dark:border-slate-800 pb-4">
+                    <div className="w-8 h-8 bg-[#5c59f2] text-white flex items-center justify-center shadow-lg">
+                        <Search size={16} />
                     </div>
-                    <h3 className="text-sm font-black text-gray-950 uppercase tracking-tighter italic">فلترة وتعقب المعاملات</h3>
+                    <h3 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tighter italic">محرك البحث وتعقب المعاملات</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {/* Search */}
-                    <div className="relative group">
-                        <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest block mb-1 px-1 italic">كلمة البحث</label>
-                        <Search className="absolute right-2 top-[24px] text-gray-950 w-3 h-3 pointer-events-none" />
-                        <input
-                            type="text"
-                            placeholder="ابحث..."
-                            value={state.searchTerm}
-                            onChange={(e) => actions.setSearchTerm(e.target.value)}
-                            className="w-full pl-3 pr-8 py-1.5 border-2 border-gray-950 focus:outline-none focus:bg-white text-[11px] font-black rounded-none bg-gray-50 transition-all uppercase tracking-tight"
-                        />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Search Input */}
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">البحث في السجلات</label>
+                        <div className="relative group">
+                            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 transition-colors group-focus-within:text-[#5c59f2]" />
+                            <input
+                                type="text"
+                                placeholder="رقم المعاملة، وصف، أو تصنيف..."
+                                value={state.searchTerm}
+                                onChange={(e) => actions.setSearchTerm(e.target.value)}
+                                className="w-full pr-10 pl-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-[#5c59f2] outline-none text-xs font-black rounded-none transition-all dark:text-white"
+                            />
+                        </div>
                     </div>
 
                     {/* Type Filter */}
-                    <div className="relative">
-                        <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest block mb-1 px-1 italic">نوع العملية</label>
-                        <Filter className="absolute right-2 top-[24px] text-gray-950 w-3 h-3 pointer-events-none" />
-                        <select
-                            value={state.filterType}
-                            onChange={(e) => actions.setFilterType(e.target.value as 'all' | 'income' | 'expense')}
-                            className="w-full pl-3 pr-8 py-1.5 border-2 border-gray-950 focus:outline-none bg-gray-50 font-black text-[11px] appearance-none cursor-pointer rounded-none"
-                        >
-                            <option value="all">جميع المعاملات</option>
-                            <option value="income">إيرادات 🟢</option>
-                            <option value="expense">مصروفات 🔴</option>
-                        </select>
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">نوع العملية</label>
+                        <div className="relative">
+                            <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                            <select
+                                value={state.filterType}
+                                onChange={(e) => actions.setFilterType(e.target.value as 'all' | 'income' | 'expense')}
+                                className="w-full pr-10 pl-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-[#5c59f2] outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer"
+                            >
+                                <option value="all">كافة المعاملات المالية</option>
+                                <option value="income">الإيرادات المحصلة (+)</option>
+                                <option value="expense">المصروفات والمدفوعات (-)</option>
+                            </select>
+                        </div>
                     </div>
 
-                    {/* Month Filter */}
-                    <div className="relative">
-                        <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest block mb-1 px-1 italic">الفترة</label>
-                        <Calendar className="absolute right-2 top-[24px] text-gray-950 w-3 h-3 pointer-events-none" />
-                        <select
-                            value={state.filterMonth}
-                            onChange={(e) => actions.setFilterMonth(e.target.value)}
-                            className="w-full pl-3 pr-8 py-1.5 border-2 border-gray-950 focus:outline-none bg-gray-50 font-black text-[11px] appearance-none cursor-pointer rounded-none font-mono"
-                        >
-                            <option value="all">كافة الشهور</option>
-                            {state.uniqueMonths.map(month => (
-                                <option key={month} value={month}>
-                                    {new Date(month + '-01').toLocaleDateString('ar-EG', { year: '2-digit', month: 'short' })}
-                                </option>
-                            ))}
-                        </select>
+                    {/* Period Filter */}
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">نطاق الفترة الزمنية</label>
+                        <div className="relative">
+                            <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                            <select
+                                value={state.filterMonth}
+                                onChange={(e) => actions.setFilterMonth(e.target.value)}
+                                className="w-full pr-10 pl-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-[#5c59f2] outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer"
+                            >
+                                <option value="all">السجل الكامل</option>
+                                {state.uniqueMonths.map(month => (
+                                    <option key={month} value={month}>
+                                        {new Date(month + '-01').toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' })}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Transactions Table */}
-            <TransactionsLog
-                transactions={state.filteredTransactions}
-                totalCount={state.filteredTransactions.length}
-                onDeleteAll={actions.handleDeleteAllTransactions}
-            />
+            {/* Content Display */}
+            <div className="p-4 md:p-0">
+                <TransactionsLog
+                    transactions={state.filteredTransactions}
+                    totalCount={state.filteredTransactions.length}
+                    onDeleteAll={actions.handleDeleteAllTransactions}
+                />
+            </div>
 
             {/* Add Transaction Modal */}
             <AddTransactionModal
