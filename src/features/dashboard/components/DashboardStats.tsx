@@ -18,32 +18,24 @@ const colorMap = {
     green: 'bg-green-600 border-slate-900 shadow-none text-white',
 };
 
-const PremiumStatsCard = ({ title, value, icon: Icon, color, trendUp, trendText }: { title: string, value: string | number, icon: LucideIcon, color: keyof typeof colorMap, trendUp?: boolean, trendText?: string }) => {
+const PremiumStatsCard = ({ title, value, icon: Icon, color }: { title: string, value: string | number, icon: LucideIcon, color: keyof typeof colorMap, trendUp?: boolean, trendText?: string }) => {
     return (
-        <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 md:p-4 rounded-none shadow-sm transition-all hover:bg-slate-50">
-            <div className="flex items-center gap-2 md:gap-4">
+        <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white p-3 md:p-5 rounded-none shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
+            <div className="flex items-center gap-3 md:gap-5">
                 <div className={cn(
-                    "w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-none border-2 transition-transform shrink-0",
+                    "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-none border-2 border-slate-900 dark:border-white transition-transform shrink-0 shadow-lg",
                     colorMap[color]
                 )}>
-                    <Icon size={14} className="md:hidden" />
-                    <Icon size={18} className="hidden md:block" />
+                    <Icon size={16} className="md:hidden" />
+                    <Icon size={20} className="hidden md:block" />
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 md:mb-1 truncate">{title}</p>
-                    <div className="flex items-baseline gap-1.5">
-                        <h3 className="text-base md:text-xl font-black text-slate-900 dark:text-white tracking-tighter tabular-nums leading-none">
+                    <p className="text-[7px] md:text-[9px] font-black text-slate-400 dark:text-gray-500 uppercase tracking-[2px] mb-1 md:mb-1.5 truncate italic">{title}</p>
+                    <div className="flex items-baseline gap-2">
+                        <h3 className="text-sm md:text-2xl font-black text-slate-900 dark:text-white tracking-tighter tabular-nums leading-none italic uppercase">
                             {value}
                         </h3>
-                        {trendText && (
-                            <span className={cn(
-                                "text-[7px] md:text-[9px] font-bold px-1 py-0.5 rounded-none border hidden sm:inline",
-                                trendUp ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100"
-                            )}>
-                                {trendUp ? '+' : ''}{trendText}
-                            </span>
-                        )}
                     </div>
                 </div>
             </div>
@@ -55,7 +47,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
     return (
         <>
             <PremiumStatsCard title="إجمالي الطلاب" value={stats.studentsCount} icon={Users} color="blue" trendUp={true} trendText="12%" />
-            <PremiumStatsCard title="الاشتراكات ناشة" value={stats.totalEnrollments} icon={BookOpen} color="indigo" />
+            <PremiumStatsCard title="الاشتراكات النشطة" value={stats.totalEnrollments} icon={BookOpen} color="indigo" />
             <PremiumStatsCard title="حصص اليوم" value={stats.todaySessions} icon={CalendarCheck} color="amber" />
             <PremiumStatsCard title="الحصص المنفذة" value={stats.completedSessions} icon={CheckCircle2} color="emerald" trendUp={true} trendText="TAM" />
 

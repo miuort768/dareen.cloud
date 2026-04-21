@@ -60,15 +60,15 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
                 <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-purple-50 dark:bg-purple-900/10 rounded-full blur-3xl"></div>
 
-                <div className="relative z-10 px-4 py-3 md:px-5 md:py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="relative z-10 px-4 py-4 md:px-5 md:py-6 flex flex-col md:flex-row items-center justify-between gap-4">
                     
                     {/* --- RIGHT SECTION: Profile & Welcome --- */}
                     <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
                         <div className="relative shrink-0">
-                            <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-indigo-400 rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-indigo-400 rounded-lg md:rounded-2xl flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
                                 <GraduationCap size={20} className="md:size-32" />
                             </div>
-                            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 md:w-4 md:h-4 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-900"></div>
+                            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 md:w-4 md:h-4 bg-emerald-500 rounded-none border-2 border-white dark:border-slate-900"></div>
                         </div>
 
                         <div className="text-right">

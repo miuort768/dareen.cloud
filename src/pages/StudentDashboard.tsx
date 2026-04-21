@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
-    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Zap, Trophy
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -13,6 +13,7 @@ import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ran
 import { PageLoader } from '../components/ui/PageLoader';
 
 import { useChatContext } from '../context/ChatContext';
+import { cn } from '../lib/utils';
 
 export const StudentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
@@ -23,7 +24,7 @@ export const StudentDashboard = () => {
     const [sessions, setSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showAllActivities, setShowAllActivities] = useState(false);
+    const [showAllActivities] = useState(false);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
@@ -45,7 +46,7 @@ export const StudentDashboard = () => {
                 setIsLoading(false);
             }
         };
-        if (currentUser?.role === 'student') fetchStudentData();
+        if (currentUser?.role === 'student' || currentUser?.role === 'parent') fetchStudentData();
     }, [currentUser]);
 
     const stats = useMemo(() => {
@@ -68,7 +69,7 @@ export const StudentDashboard = () => {
 
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const { next } = getNextRank(points, STUDENT_RANKS);
+    // const { next } = getNextRank(points, STUDENT_RANKS);
 
     const weeklySchedule = useMemo(() => {
         if (!studentData) return [];
@@ -90,271 +91,210 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 pb-20 px-2 lg:px-8 pt-6 space-y-6 md:animate-in md:fade-in md:duration-700" dir="rtl">
+        <div className="min-h-full bg-slate-50 dark:bg-[#020617] pb-32 px-4 lg:px-12 pt-8 space-y-10 animate-in fade-in duration-700 font-sans" dir="rtl">
             
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="mb-6 pr-2 lg:pr-0">
-                <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-1">
-                    مرحباً، {studentData?.name?.split(' ')[0]} {studentData?.name?.split(' ')[1] || ''}
-                </h1>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">جاهز لمواصلة رحلتك التعليمية اليوم؟</p>
+            <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(79,70,229,1)]">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 -skew-x-12 transform translate-x-32 -translate-y-32"></div>
+                <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div>
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-0.5 uppercase tracking-[3px] italic">أكاديمية دارين</span>
+                            <Star size={14} className="text-amber-400 fill-current" />
+                        </div>
+                        <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-1 tracking-tighter italic uppercase leading-none">
+                            مرحباً، <span className="text-indigo-600 dark:text-indigo-400">{studentData?.name?.split(' ')[0]}</span>
+                        </h1>
+                        <p className="text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-[2px] italic mt-4 flex items-center gap-2">
+                             <div className="w-10 h-1 bg-indigo-600"></div>
+                             هل أنت مستعد لتحدي جديد اليوم؟
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-slate-900 dark:bg-black border-4 border-indigo-600 flex items-center justify-center text-white italic font-black text-2xl shadow-xl">
+                            {studentData?.name?.charAt(0)}
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* ═══════════════ NEXT CLASS CARD ═══════════════ */}
-            <motion.div 
-                initial={window.innerWidth >= 768 ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-none shadow-lg shadow-purple-500/20 text-white"
-            >
-                {/* Neon Corner Triangle */}
-                <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none overflow-hidden z-20">
-                    <div className="absolute top-[-25px] right-[-25px] w-12 h-12 bg-cyan-400 rotate-45 md:shadow-[0_0_15px_#22d3ee] shadow-sm" />
-                </div>
-
-                <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
-
-                <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
-                
-                <div className="relative z-10 flex flex-col items-center text-center">
-                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-3">الحصة القادمة</span>
-                    {todaySchedule.length > 0 ? (
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="flex items-center gap-3">
-                                {/* Decorative Circles */}
-                                <div className="flex gap-1.5 grayscale opacity-60">
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                </div>
-
-                                {/* Neon Subject Group */}
-                                <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl md:shadow-[0_0_25px_rgba(255,255,255,0.25)] shadow-sm flex items-center justify-center">
-                                    <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-md">
-                                        {todaySchedule[0].slots[0].subject}
-                                    </h2>
-                                </div>
-
-                                <div className="flex gap-1.5 grayscale opacity-60">
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                </div>
+            {/* ═══════════════ NEXT CLASS ═══════════════ */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div className="lg:col-span-2 space-y-10">
+                    <div className="relative bg-slate-900 dark:bg-black p-10 border-r-8 border-indigo-600 shadow-[20px_20px_60px_rgba(0,0,0,0.3)] overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(79,70,229,0.15),transparent)]"></div>
+                        <Zap className="absolute bottom-[-20px] left-[-20px] text-white/5" size={200} />
+                        
+                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                            <div className="space-y-4">
+                                <h3 className="text-xs font-black text-indigo-400 uppercase tracking-[5px] italic flex items-center gap-2 leading-none border-b border-white/10 pb-2 w-fit">
+                                    <CalendarDays size={16} /> الحصة القادمة
+                                </h3>
+                                {todaySchedule.length > 0 ? (
+                                    <div className="space-y-4">
+                                        <h2 className="text-4xl md:text-6xl font-black text-white italic tracking-tighter uppercase leading-none drop-shadow-[0_0_20px_rgba(79,70,229,0.5)]">
+                                            {todaySchedule[0].slots[0].subject}
+                                        </h2>
+                                        <p className="text-indigo-400 font-black italic uppercase tracking-widest text-sm">
+                                            اليوم • الساعة {todaySchedule[0].slots[0].time} مساءً
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <h2 className="text-2xl font-black text-white italic opacity-50">لا توجد حصص مجدولة اليوم</h2>
+                                )}
                             </div>
                             
-                            {(liveSession || studentData?.isLive) ? (
+                            {(liveSession || studentData?.isLive) && (
                                 <button 
                                     onClick={() => navigate(`/classroom/${liveSession?.teacherId || studentData?.activeSession?.teacherId}`)}
-                                    className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-black text-sm md:text-base md:shadow-[0_0_15px_rgba(16,185,129,0.4)] shadow-sm animate-pulse transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                                    className="bg-indigo-600 text-white px-10 py-5 font-black text-sm uppercase tracking-[5px] italic flex items-center gap-4 hover:bg-white hover:text-indigo-600 transition-all shadow-[10px_10px_0px_0px_#312e81] active:translate-x-1 active:translate-y-1 active:shadow-none"
                                 >
-                                    <div className="w-2 h-2 bg-white rounded-full animate-ping" />
-                                    انضم للحصة الآن
+                                    <Activity className="animate-pulse" size={20} />
+                                    انضم الآن
                                 </button>
-                            ) : (
-                                <p className="text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
-                                    اليوم الساعة {todaySchedule[0].slots[0].time} مساءً
-                                </p>
                             )}
-
                         </div>
-                    ) : (
-                        <div className="flex flex-col items-center gap-2">
-                            <h2 className="text-xl md:text-2xl font-black mb-1">لا توجد حصص مجدولة</h2>
-                            <p className="text-sm font-bold opacity-90">استغل اليوم لمراجعة ما درسته!</p>
-                        </div>
-                    )}
-                </div>
-            </motion.div>
-
-            {/* ═══════════════ STATS ROW ═══════════════ */}
-            <div className="grid grid-cols-3 gap-2 md:gap-4">
-                {/* Points Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(244,63,94,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(244,63,94,0.1)] border border-rose-100/50 dark:border-rose-900/20 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
-                        <Star size={16} fill="currentColor" />
                     </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{points}</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
-                </div>
-                {/* Attendance Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(59,130,246,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(59,130,246,0.1)] border border-blue-100/50 dark:border-blue-900/20 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
-                        <CalendarDays size={16} />
+
+                    {/* ═══════════════ STATS ═══════════════ */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <StatCard icon={Star} label="إجمالي النقاط" value={points} color="rose" sub="رصيد التميز" />
+                        <StatCard icon={Activity} label="معدل الحضور" value={`${stats.attendanceRate}%`} color="indigo" sub="الالتزام الشهري" />
+                        <StatCard icon={BookOpen} label="المواد الدراسية" value={(studentData?.enrollments || []).length} color="emerald" sub="نشط حالياً" />
                     </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}%</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
-                </div>
-                {/* Subjects Card */}
-                <div className="bg-white dark:bg-slate-900 py-2.5 md:py-4 px-3 rounded-[22px] md:shadow-[0_0_15px_rgba(16,185,129,0.15)] shadow-sm dark:md:shadow-[0_0_20px_rgba(16,185,129,0.1)] border border-emerald-100/50 dark:border-emerald-900/20 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
-                        <BookOpen size={16} />
-                    </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{(studentData?.enrollments || []).length}</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">عدد المواد</span>
-                </div>
-            </div>
 
-
-
-            {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
-            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-4 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">
-                <div className="flex justify-between items-start mb-3">
-                    <div className="text-right">
-                        <span className="text-[9px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-0.5">المستوى الحالي</span>
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">{rank.name}</h3>
-                    </div>
-                    <div className="px-2.5 py-0.5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[9px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
-                        مستوى {Math.floor(points / 100) + 1}
-                    </div>
-                </div>
-                <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-2.5">
-                    <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Math.min((points % 100), 100)}%` }}
-                        className="h-full bg-[#8b5cf6]"
-                    />
-                </div>
-                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center tracking-tight">
-                    تبقي {(Math.floor(points / 100) + 1) * 100 - points} نقطة للمستوى التالي
-                </p>
-            </div>
-
-
-            {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
-            <div className="px-1">
-                <div className="flex items-center gap-2 mb-6">
-                    <Activity className="text-[#8b5cf6]" size={20} />
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مستشار الإنجاز</h3>
-                </div>
-                <div className="space-y-6">
-                    <ProgressBarSimple label="معدل الحضور" value={stats.attendanceRate} />
-                    <ProgressBarSimple label="التقدم الأكاديمي" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} />
-                    {next && <ProgressBarSimple label={`نحو لقب "${next.name}"`} value={Math.min(Math.round((points / next.minPoints) * 100), 100)} subLabel={`${points} / ${next.minPoints}`} />}
-                </div>
-            </div>
-
-            {/* ═══════════════ DAILY TASKS ═══════════════ */}
-            <div>
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم ({todayArabic})</h3>
-                    <button className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider">عرض الكل</button>
-                </div>
-                <div className="space-y-3">
-                    {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot: any, i: number) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-2xl flex items-center justify-center">
-                                    <BookOpen size={20} />
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-black text-slate-900 dark:text-white leading-tight">{slot.subject}</h4>
-                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 mt-0.5">المعلمة: {slot.teacher}</p>
-                                </div>
-                            </div>
-                            <div className="text-left">
-                                <span className="text-[12px] font-black text-slate-900 dark:text-white block">{slot.time} م</span>
-                                <span className="inline-block px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-400 text-[8px] font-bold rounded-lg mt-1 tracking-tighter uppercase">قادم</span>
+                    {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between border-b-2 border-slate-200 dark:border-slate-800 pb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-rose-600 flex items-center justify-center text-white italic font-black shadow-lg shadow-rose-600/20">L</div>
+                                <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight italic">سجل النشاطات والأوسمة</h2>
                             </div>
                         </div>
-                    )) : (
-                        <p className="text-center py-6 text-slate-400 text-xs font-bold bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800">لا توجد مهام اليوم</p>
-                    )}
-                </div>
-            </div>
 
-            {/* ═══════════════ QUICK CHANNELS ═══════════════ */}
-            <div className="grid grid-cols-2 gap-4">
-                <button 
-                    onClick={() => navigate('/chat')}
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
-                >
-                    <MessageSquare className="text-[#8b5cf6]" size={18} />
-                    <span className="text-sm font-black text-slate-800 dark:text-indigo-300">المحادثات</span>
-                </button>
-                <button 
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
-                >
-                    <Award className="text-[#8b5cf6]" size={18} />
-                    <span className="text-sm font-black text-slate-800 dark:text-indigo-300">الأوسمة</span>
-                </button>
-            </div>
-
-            {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
-            <div>
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">آخر النشاطات</h3>
-                    {pointLogs.length > 4 && (
-                        <button 
-                            onClick={() => setShowAllActivities(!showAllActivities)}
-                            className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider"
-                        >
-                            {showAllActivities ? 'إخفاء' : 'عرض الكل'}
-                        </button>
-                    )}
-                </div>
-                <div className="space-y-3">
-                    {pointLogs.slice(0, showAllActivities ? undefined : 4).map((log, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800">
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-2xl flex items-center justify-center shrink-0">
-                                    <Star size={22} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <h4 className="text-xs md:text-sm font-bold text-slate-800 dark:text-slate-200 leading-normal">
-                                        تلقيت {log.amount} نقطة جديدة: {log.action}
-                                    </h4>
-                                    <div className="flex items-center gap-1 mt-1.5">
-                                        {[1, 2, 3, 4, 5].map(starIdx => (
-                                            <Star key={starIdx} size={10} className="text-yellow-400 fill-yellow-400" />
-                                        ))}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {pointLogs.slice(0, showAllActivities ? undefined : 4).map((log, i) => (
+                                <div key={i} className="bg-white dark:bg-slate-900 p-6 border-4 border-slate-900 dark:border-slate-800 flex items-center gap-6 group hover:border-rose-600 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,0.02)]">
+                                    <div className="w-14 h-14 bg-slate-900 dark:bg-black border-2 border-rose-600/30 flex items-center justify-center text-rose-500 shadow-xl group-hover:scale-105 transition-transform">
+                                        <Star size={24} fill="currentColor" />
                                     </div>
-                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-2">منذ ساعتين</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight italic mb-1">+{log.amount} نقطة تميز</h4>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic truncate">{log.action}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-10">
+                    {/* ═══════════════ RANK CARD ═══════════════ */}
+                    <div className="bg-slate-900 dark:bg-black p-8 border-l-[12px] border-indigo-600 shadow-[20px_20px_40px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+                        <Trophy className="absolute top-[-20px] right-[-20px] text-white/5" size={120} />
+                        <h3 className="text-xs font-black text-indigo-400 uppercase tracking-[4px] mb-8 flex items-center gap-3 italic leading-none border-b border-white/10 pb-4">
+                            <Award size={16} /> المستوى والترتيب
+                        </h3>
+                        
+                        <div className="relative z-10 space-y-8">
+                            <div>
+                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 italic">اللقب الحالي</p>
+                                <h4 className="text-3xl font-black text-white italic tracking-tighter uppercase leading-none mb-4">{rank.name}</h4>
+                                <div className="w-full h-3 bg-white/5 border border-white/10 p-[2px]">
+                                    <motion.div 
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${Math.min((points % 100), 100)}%` }}
+                                        className="h-full bg-indigo-600 shadow-[0_0_15px_rgba(79,70,229,0.8)]"
+                                    />
+                                </div>
+                                <div className="flex justify-between mt-2">
+                                    <span className="text-[10px] font-black text-slate-500 italic uppercase">المستوى {Math.floor(points / 100) + 1}</span>
+                                    <span className="text-[10px] font-black text-indigo-400 italic uppercase">باقي {100 - (points % 100)} نقطة للتطور</span>
                                 </div>
                             </div>
+
+                            <div className="pt-6 border-t border-white/5 space-y-4">
+                                <ProgressBarSimple label="معدل الحضور والالتزام" value={stats.attendanceRate} color="emerald" />
+                                <ProgressBarSimple label="التقدم في المنهج" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} color="indigo" />
+                            </div>
                         </div>
-                    ))}
-                    {pointLogs.length === 0 && (
-                        <p className="text-center py-6 text-slate-400 text-xs font-bold">لا توجد نشاطات حديثة</p>
-                    )}
-                </div>
-            </div>
-
-            {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-lg shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-
-
-                <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
-                
-                <div className="text-center md:text-right relative z-10 w-full md:w-auto">
-                    <h4 className="text-lg font-black mb-1">هل تحتاج لمساعدة؟</h4>
-                    <p className="text-xs font-bold opacity-80 leading-normal">فريق الدعم متاح دائماً لخدمتك</p>
-                </div>
-
-                <a 
-                    href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-[#5c4fb1] px-6 py-3 rounded-[20px] font-black text-sm flex items-center gap-3 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
-                >
-                    <div className="w-8 h-8 bg-[#5c4fb1] text-white rounded-[10px] flex items-center justify-center">
-                        <MessageSquare size={16} fill="currentColor" />
                     </div>
-                    واتساب
-                </a>
-            </div>
 
+                    {/* ═══════════════ CHANNELS ═══════════════ */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <button onClick={() => navigate('/chat')} className="bg-white dark:bg-slate-900 p-6 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_white] flex items-center justify-between group hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                             <div className="text-right">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">مركز التواصل</span>
+                                <span className="text-sm font-black text-slate-900 dark:text-white italic uppercase tracking-tighter">محادثات الأكاديمية</span>
+                             </div>
+                             <MessageSquare className="text-indigo-600" size={24} />
+                        </button>
+                    </div>
+
+                    {/* ═══════════════ SUPPORT FOOTER ═══════════════ */}
+                    <div className="bg-indigo-600 p-10 border-4 border-slate-900 dark:border-white shadow-[12px_12px_0px_0px_black] relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,rgba(0,0,0,0.1)_25%,transparent_25%,transparent_50%,rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.1)_75%,transparent_75%,transparent)] bg-[length:20px_20px] opacity-10"></div>
+                        <div className="relative z-10 flex flex-col gap-8">
+                            <h4 className="text-2xl font-black text-white italic uppercase tracking-tight leading-none">فريق الدعم الفني</h4>
+                            <p className="text-[11px] font-black text-indigo-100 uppercase tracking-widest italic opacity-80 leading-relaxed">تواصل معنا مباشرة عبر واتساب لأي استفسار تقني أو إداري.</p>
+                            <a 
+                                href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="w-full bg-slate-900 text-white py-4 font-black text-xs uppercase tracking-[5px] italic flex items-center justify-center gap-4 hover:bg-white hover:text-slate-900 transition-all shadow-2xl border-2 border-transparent hover:border-slate-900"
+                            >
+                                <MessageSquare size={18} fill="currentColor" />
+                                <span>واتساب</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
-const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: number; subLabel?: string }) => (
-    <div>
-        <div className="flex justify-between items-center mb-2.5">
-            <span className="text-xs font-black text-slate-700 dark:text-slate-300">{label}</span>
-            <span className="text-xs font-black text-slate-500 dark:text-slate-400">{subLabel || `${value}%`}</span>
+const StatCard = ({ icon: Icon, label, value, color, sub }: any) => {
+    const colors: any = {
+        indigo: "border-indigo-600 text-indigo-600 bg-indigo-50/10 shadow-indigo-600/20",
+        emerald: "border-emerald-500 text-emerald-500 bg-emerald-50/10 shadow-emerald-500/20",
+        rose: "border-rose-500 text-rose-500 bg-rose-50/10 shadow-rose-500/20"
+    };
+    return (
+        <div className="bg-white dark:bg-slate-900 p-8 border-4 border-slate-900 dark:border-slate-800 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] group hover:border-indigo-600 transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
+            <div className="flex justify-between items-start mb-6">
+                <div className={cn("w-12 h-12 border-2 flex items-center justify-center", colors[color])}>
+                    <Icon size={20} strokeWidth={2.5} />
+                </div>
+                <div className="text-left">
+                    <span className="text-4xl font-black text-slate-900 dark:text-white font-mono italic leading-none block">{value}</span>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic mt-1 block">{sub}</span>
+                </div>
+            </div>
+            <div className="pt-4 border-t-2 border-slate-50 dark:border-slate-800">
+                <span className="text-[10px] font-black text-slate-800 dark:text-slate-200 uppercase tracking-[2px] italic">{label}</span>
+            </div>
         </div>
-        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${value}%` }}
-                className="h-full bg-[#8b5cf6]"
-            />
+    );
+};
+
+const ProgressBarSimple = ({ label, value, color }: { label: string; value: number, color: string }) => {
+    const colors: any = {
+        indigo: "bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.5)]",
+        emerald: "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+    };
+    return (
+        <div className="space-y-2">
+            <div className="flex justify-between items-end">
+                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic">{label}</span>
+                <span className="text-xs font-black text-white italic font-mono leading-none">{value}%</span>
+            </div>
+            <div className="w-full h-1.5 bg-white/5 border border-white/10 p-[1px]">
+                <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${value}%` }}
+                    className={cn("h-full", colors[color])}
+                />
+            </div>
         </div>
-    </div>
-);
+    );
+};

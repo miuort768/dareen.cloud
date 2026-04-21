@@ -11,71 +11,77 @@ interface StudentStatsProps {
 export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, averageSessionsPerStudent }: StudentStatsProps) => {
     const stats = [
         {
-            label: 'إجمالي الطلاب',
+            label: 'إجمالي القوة الطلابية',
             value: totalStudents,
             icon: Users,
-            color: 'indigo',
-            desc: 'في قاعدة البيانات'
+            color: 'slate',
+            symbol: 'طالب'
         },
         {
-            label: 'الاشتراكات النشطة',
+            label: 'التراخيص النشطة',
             value: activeEnrollments,
             icon: UserCheck,
             color: 'emerald',
-            desc: 'طلاب مسجلون حالياً'
+            symbol: 'عقد'
         },
         {
-            label: 'المراحل الدراسية',
+            label: 'التنوع الأكاديمي',
             value: uniqueGrades,
             icon: GraduationCap,
-            color: 'amber',
-            desc: 'تنوع أكاديمي'
+            color: 'indigo',
+            symbol: 'مرحلة'
         },
         {
-            label: 'معدل الحصص',
+            label: 'الكثافة التشغيلية',
             value: averageSessionsPerStudent,
             icon: BookOpen,
-            color: 'purple',
-            desc: 'لكل طالب شهرياً'
+            color: 'rose',
+            symbol: 'ساعة'
         }
     ];
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {stats.map((stat, i) => (
                 <div 
                     key={i}
-                    className="relative group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 rounded-none overflow-hidden"
+                    className="group bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.02)] hover:border-slate-900 dark:hover:border-white transition-all relative overflow-hidden"
                 >
-                    {/* Background Accent */}
-                    <div className={cn(
-                        "absolute top-0 left-0 w-1 h-full opacity-50",
-                        stat.color === 'indigo' ? "bg-[#5c59f2]" :
-                        stat.color === 'emerald' ? "bg-emerald-500" :
-                        stat.color === 'amber' ? "bg-amber-500" : "bg-purple-500"
-                    )}></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 dark:bg-slate-800/50 -skew-x-12 translate-x-12 -translate-y-12"></div>
+                    
+                    <div className="relative z-10 space-y-6">
+                        <div className="flex justify-between items-start">
+                            <div className={cn(
+                                "w-12 h-12 flex items-center justify-center border-2 shadow-sm transition-transform group-hover:rotate-6",
+                                stat.color === 'slate' ? "border-slate-900 text-slate-900 dark:border-white dark:text-white" :
+                                stat.color === 'emerald' ? "border-emerald-500 text-emerald-500" :
+                                stat.color === 'indigo' ? "border-indigo-500 text-indigo-500" : "border-rose-500 text-rose-500"
+                            )}>
+                                <stat.icon size={20} />
+                            </div>
+                            <span className="text-[10px] font-black text-slate-300 dark:text-slate-700 font-mono italic">0{i+1}</span>
+                        </div>
 
-                    <div className="flex items-start justify-between relative z-10">
-                        <div className="space-y-1">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">{stat.label}</p>
+                        <div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[3px] mb-2 italic">{stat.label}</p>
                             <div className="flex items-baseline gap-2">
-                                <h3 className="text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tighter">
+                                <h3 className="text-4xl font-black text-slate-900 dark:text-white font-mono italic tracking-tighter leading-none">
                                     {stat.value}
                                 </h3>
-                                <TrendingUp size={12} className={cn(
-                                    "opacity-20",
-                                    stat.color === 'emerald' ? "text-emerald-500" : "text-[#5c59f2]"
-                                )} />
+                                <span className={cn(
+                                    "text-[10px] font-black uppercase italic leading-none",
+                                    stat.color === 'emerald' ? "text-emerald-500" : "text-indigo-500"
+                                )}>
+                                    {stat.symbol}
+                                </span>
                             </div>
-                            <p className="text-[9px] font-bold text-slate-400 italic mt-2">{stat.desc}</p>
                         </div>
-                        <div className={cn(
-                            "w-10 h-10 flex items-center justify-center rounded-none shadow-inner rotate-3 group-hover:rotate-0 transition-transform",
-                            stat.color === 'indigo' ? "bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2]" :
-                            stat.color === 'emerald' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600" :
-                            stat.color === 'amber' ? "bg-amber-50 dark:bg-amber-900/20 text-amber-600" : "bg-purple-50 dark:bg-purple-900/20 text-purple-600"
-                        )}>
-                            <stat.icon size={20} />
+
+                        <div className="pt-4 border-t border-slate-50 dark:border-slate-800">
+                             <div className="flex items-center gap-2">
+                                <TrendingUp size={12} className="text-emerald-500" />
+                                <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest italic">نمو مستقر +١٢٪</span>
+                             </div>
                         </div>
                     </div>
                 </div>

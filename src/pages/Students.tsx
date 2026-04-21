@@ -4,6 +4,7 @@ import { useTeachers } from '../features/teachers/hooks/useTeachers';
 import { useApp } from '../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
+import { cn } from '../lib/utils';
 
 // Shared Components
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -300,14 +301,14 @@ export const Students = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32 min-h-full">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-40">
             <StudentHeader
                 count={allStudents.length}
                 showAddForm={showAddForm}
                 onToggleAddForm={() => { setShowAddForm(!showAddForm); setEditId(null); }}
             />
 
-            <div className="p-4 md:p-0 space-y-6">
+            <div className="container mx-auto px-4 md:px-8 space-y-12">
                 <StudentStats 
                     totalStudents={allStudents.length}
                     activeEnrollments={activeEnrollments}
@@ -325,68 +326,80 @@ export const Students = () => {
                     totalCount={allStudents.length}
                 />
 
-            <input
-                ref={fileInputRef}
-                type="file"
-                accept=".json,.csv"
-                onChange={handleImportFile}
-                className="hidden"
-            />
-
-            {showAddForm && (
-                <StudentForm
-                    onSubmit={handleAddOrUpdateStudent}
-                    initialData={editId ? students.find(s => s.id === editId) : null}
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".json,.csv"
+                    onChange={handleImportFile}
+                    className="hidden"
                 />
-            )}
 
-            <div className={`grid gap-6 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                <div className={showDetails ? 'lg:col-span-2' : ''}>
-                    <StudentTable
-                        students={students}
-                        selectedId={selectedStudent?.id}
-                        onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
-                        onEdit={handleEditStudent}
-                        onDelete={setDeletingId}
-                        showDetails={showDetails}
-                        isTeacherView={isTeacher}
-                    />
+                {showAddForm && (
+                    <div className="animate-in fade-in slide-in-from-top-6 duration-500 mb-12">
+                        <StudentForm
+                            onSubmit={handleAddOrUpdateStudent}
+                            initialData={editId ? students.find(s => s.id === editId) : null}
+                        />
+                    </div>
+                )}
+
+                <div className={cn(
+                    "grid gap-10 transition-all duration-700",
+                    showDetails ? "lg:grid-cols-12" : "grid-cols-1"
+                )}>
+                    <div className={cn(
+                        "transition-all duration-700",
+                        showDetails ? "lg:col-span-7" : "w-full"
+                    )}>
+                         <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
+                            <StudentTable
+                                students={students}
+                                selectedId={selectedStudent?.id}
+                                onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
+                                onEdit={handleEditStudent}
+                                onDelete={setDeletingId}
+                                showDetails={showDetails}
+                                isTeacherView={isTeacher}
+                            />
+                         </div>
+                    </div>
+
+                    {showDetails && selectedStudent && (
+                        <div className="lg:col-span-5 animate-in fade-in slide-in-from-left-10 duration-700 sticky top-10 h-fit">
+                            <StudentDetails
+                                student={selectedStudent}
+                                onClose={() => setShowDetails(false)}
+                                teachers={teachers}
+                                onAddEnrollment={handleAddEnrollment}
+                                onDeleteEnrollment={(i) => {
+                                    const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
+                                    updateStudent(updated);
+                                    setSelectedStudent(updated);
+                                }}
+                                onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
+                                onAddSessions={handleAddSessionsToEnrollment}
+                                onFreezeEnrollment={handleFreezeEnrollment}
+                                onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
+                            />
+                        </div>
+                    )}
                 </div>
 
-                {showDetails && selectedStudent && (
-                    <StudentDetails
-                        student={selectedStudent}
-                        onClose={() => setShowDetails(false)}
-                        teachers={teachers}
-                        onAddEnrollment={handleAddEnrollment}
-                        onDeleteEnrollment={(i) => {
-                            const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
-                            updateStudent(updated);
-                            setSelectedStudent(updated);
-                        }}
-                        onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
-                        onAddSessions={handleAddSessionsToEnrollment}
-                        onFreezeEnrollment={handleFreezeEnrollment}
-                        onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
-                    />
-                )}
-            </div>
+                <ConfirmModal
+                    isOpen={!!deletingId}
+                    title="حذف طالب"
+                    message="هل أنت متأكد من حذف هذا طالب؟ لا يمكن التراجع عن هذا الإجراء."
+                    onConfirm={() => { if (deletingId) deleteStudent(deletingId); setDeletingId(null); }}
+                    onClose={() => setDeletingId(null)}
+                />
 
-            <ConfirmModal
-                isOpen={!!deletingId}
-                title="حذف طالب"
-                message="هل أنت متأكد من حذف هذا الطالب؟ لا يمكن التراجع عن هذا الإجراء."
-                onConfirm={() => { if (deletingId) deleteStudent(deletingId); setDeletingId(null); }}
-                onClose={() => setDeletingId(null)}
-            />
-
-            <ConfirmModal
-                isOpen={isDeletingAll}
-                title="حذف جميع الطلاب"
-                message="هل أنت متأكد من حذف جميع بيانات الطلاب؟ هذا الإجراء خطير جداً."
-                onConfirm={() => { deleteAllStudents(); setIsDeletingAll(false); }}
-                onClose={() => setIsDeletingAll(false)}
-            />
+                <ConfirmModal
+                    isOpen={isDeletingAll}
+                    title="تصفير قاعدة البيانات"
+                    message="هل أنت متأكد من حذف جميع بيانات الطلاب؟ هذا الإجراء سيقوم بمسح كلي للقاعدة."
+                    onConfirm={() => { deleteAllStudents(); setIsDeletingAll(false); }}
+                    onClose={() => setIsDeletingAll(false)}
+                />
             </div>
         </div>
     );

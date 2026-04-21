@@ -37,23 +37,23 @@ export const Finance = () => {
                 <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
                     <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
                     
-                    <div className="relative z-10 px-4 py-4 md:px-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="relative z-10 px-4 py-6 md:px-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="flex items-center gap-4 md:gap-5 w-full md:w-auto">
                             <div className="relative shrink-0">
-                                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
-                                    <DollarSign size={24} className="md:size-32" />
+                                <div className="w-10 h-10 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
+                                    <DollarSign size={20} className="md:size-32" />
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-amber-400 rounded-none border-2 border-white dark:border-slate-900 flex items-center justify-center">
-                                    <Sparkles size={8} className="md:size-[10px] text-white" />
+                                <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-5 md:h-5 bg-amber-400 rounded-none border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                                    <Sparkles size={6} className="md:size-[10px] text-white" />
                                 </div>
                             </div>
 
                             <div className="text-right">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none italic">النظام المحاسبي المتكامل</span>
-                                    <TrendingUp className="text-[#5c59f2] md:size-[14px]" size={12} />
+                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[8px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none italic">النظام المحاسبي المتكامل</span>
+                                    <TrendingUp className="text-[#5c59f2] md:size-[14px]" size={10} />
                                 </div>
-                                <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">الإدارة المالية والحسابات</h1>
+                                <h1 className="text-sm md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">الإدارة المالية والحسابات</h1>
                                 <div className="flex items-center gap-2 mt-2">
                                     <div className="bg-slate-900 text-white px-2 py-0.5 text-[8px] font-black uppercase tracking-widest">
                                         هامش الربح: {state.profitMargin}%

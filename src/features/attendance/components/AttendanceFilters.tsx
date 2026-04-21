@@ -23,99 +23,73 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
     const hasActiveFilters = searchTerm || filterStatus !== 'all' || filterTeacher !== 'all';
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-6 overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-                <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 bg-indigo-600 flex items-center justify-center shrink-0">
-                        <SlidersHorizontal size={14} className="text-white" />
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm mb-10 overflow-hidden px-4 lg:px-0">
+            <div className="bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-800">
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-indigo-600 flex items-center justify-center text-white shadow-lg">
+                        <SlidersHorizontal size={14} />
                     </div>
-                    <h3 className="text-[10px] md:text-xs font-black text-slate-700 dark:text-white uppercase tracking-widest truncate">لوحة التحكم في السجلات</h3>
-                    {hasActiveFilters && (
-                        <span className="bg-indigo-100 text-indigo-700 text-[8px] font-black px-1.5 py-0.5 uppercase tracking-wider shrink-0 hidden xs:inline-block">
-                            فلتر نشط
-                        </span>
-                    )}
+                    <div>
+                        <h3 className="text-xs font-black text-white uppercase italic tracking-tighter leading-none">محرك فلترة وتخصيص السجلات</h3>
+                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">إعدادات العرض • ذكاء البيانات</p>
+                    </div>
                 </div>
                 {hasActiveFilters && (
                     <button
                         onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                        className="flex items-center gap-1 text-[9px] font-black text-rose-500 hover:text-rose-700 uppercase tracking-wider transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-rose-600/10 text-rose-500 hover:bg-rose-600 hover:text-white font-black text-[9px] uppercase tracking-widest transition-all italic border border-rose-500/20"
                     >
-                        <X size={11} /> إعادة ضبط
+                        <X size={12} /> إعادة التعيين
                     </button>
                 )}
             </div>
 
-            {/* Filters Row */}
-            <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-
-                {/* Search */}
-                <div className="relative">
-                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">بحث</label>
-                    <div className="relative">
-                        <Search size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">البحث المباشر</label>
+                    <div className="relative group">
+                        <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                         <input
                             type="text"
-                            placeholder="بحث..."
+                            placeholder="اسم الطالب، المادة العلمية..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pr-8 pl-8 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 transition-all placeholder:text-slate-300 placeholder:font-normal text-slate-700 dark:text-white"
+                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white uppercase italic"
                         />
-                        {searchTerm && (
-                            <button
-                                onClick={() => onSearchChange('')}
-                                className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-rose-500 transition-colors"
-                            >
-                                <X size={12} />
-                            </button>
-                        )}
                     </div>
                 </div>
 
-                {/* Status Filter */}
-                <div>
-                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">
-                        <Filter size={9} className="inline ml-1" />
-                        حالة الحصة
-                    </label>
-                    <div className="relative">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">تصنيف الحالة</label>
+                    <div className="relative group">
+                        <Filter size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none" />
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
+                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer uppercase italic"
                         >
-                            <option value="all">كافة الحالات</option>
+                            <option value="all">بيانات الجلسات (الكل)</option>
                             <option value="scheduled">مجدولة ⏳</option>
-                            <option value="completed">تم الحضور 🟢</option>
-                            <option value="cancelled">غياب 🔴</option>
+                            <option value="completed">تم التنفيذ 🟢</option>
+                            <option value="cancelled">إلغاء النشاط 🔴</option>
                         </select>
-                        <div className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
-                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="square"/></svg>
-                        </div>
                     </div>
                 </div>
 
-                {/* Teacher Filter */}
-                <div>
-                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5">
-                        <GraduationCap size={9} className="inline ml-1" />
-                        المعلمة
-                    </label>
-                    <div className="relative">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">فرز حسب المعلمة</label>
+                    <div className="relative group">
+                        <GraduationCap size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none" />
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 bg-slate-50 dark:bg-slate-900 appearance-none cursor-pointer text-slate-700 dark:text-white transition-all"
+                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer uppercase italic"
                         >
-                            <option value="all">جميع المعلمات</option>
+                            <option value="all">كافة الكوادر التعليمية</option>
                             {uniqueTeachers.map(teacher => (
                                 <option key={teacher} value={teacher}>{teacher}</option>
                             ))}
                         </select>
-                        <div className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
-                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="square"/></svg>
-                        </div>
                     </div>
                 </div>
             </div>

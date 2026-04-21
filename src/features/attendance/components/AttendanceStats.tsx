@@ -1,7 +1,7 @@
 import React from 'react';
-import { Calendar, Clock, TrendingUp, CheckCircle2, XCircle } from 'lucide-react';
-import { StatsCard } from '../../../shared/components/StatsCard';
+import { Calendar, Clock, TrendingUp, CheckCircle2, XCircle, ArrowUpRight, Activity } from 'lucide-react';
 import type { AttendanceStats as IStats, TeacherStats as ITeacherStats } from '../types';
+import { cn } from '../../../lib/utils';
 
 interface AttendanceStatsProps {
     stats: IStats;
@@ -9,68 +9,106 @@ interface AttendanceStatsProps {
     isTeacher: boolean;
 }
 
+const StatItem = ({ title, value, icon: Icon, color, subValue, subLabel }: { title: string, value: number, icon: any, color: string, subValue?: string | number, subLabel?: string }) => (
+    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-none relative overflow-hidden group shadow-sm transition-all hover:shadow-xl">
+        <div className={cn("absolute top-0 right-0 w-24 h-full opacity-5 -skew-x-12 transform translate-x-12 pointer-events-none transition-transform group-hover:translate-x-8", color)}></div>
+        <div className="flex items-center justify-between mb-4">
+            <div className={cn("w-10 h-10 flex items-center justify-center shadow-sm", color.replace('bg-', 'bg-opacity-10 text-').replace('text-', 'text-'))}>
+                <Icon size={20} />
+            </div>
+            {subValue && (
+                <div className="flex items-center gap-1 text-[10px] font-black text-slate-400 italic">
+                    <ArrowUpRight size={12} className="text-emerald-500" />
+                    <span>{subValue}</span>
+                </div>
+            )}
+        </div>
+        <div className="space-y-1">
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic">{title}</p>
+            <div className="flex items-baseline gap-2">
+                 <h3 className="text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tighter italic">{value}</h3>
+                 {subLabel && <span className="text-[10px] font-black text-slate-400 uppercase italic">{subLabel}</span>}
+            </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
+            <span className="text-[8px] font-black text-slate-400 uppercase tracking-tight italic">بيانات معالجة حالياً</span>
+            <div className="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></div>
+        </div>
+    </div>
+);
+
 export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher }) => {
     if (isTeacher && teacherStats) {
         return (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-6">
-                {/* 1. Expected */}
-                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
-                    <div className="flex items-center justify-between pointer-events-none">
-                        <span className="text-[8px] font-bold bg-indigo-50 text-indigo-500 px-2 py-0.5 rounded-full">اليوم</span>
-                        <div className="flex items-center justify-center">
-                            <Calendar size={14} className="text-slate-500" />
-                        </div>
-                    </div>
-                    <div className="text-center mt-2">
-                        <h3 className="text-2xl font-black text-slate-900 leading-none">{teacherStats.expected}</h3>
-                        <p className="text-[8px] font-bold text-slate-400 mt-1">الحصص المتوقعة</p>
-                    </div>
-                </div>
-
-                {/* 2. Completed */}
-                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
-                    <div className="flex justify-end pointer-events-none">
-                        <div className="flex items-center justify-center w-5 h-5 border border-rose-200 rounded-full">
-                            <CheckCircle2 size={10} className="text-rose-600" />
-                        </div>
-                    </div>
-                    <div className="text-center mt-2">
-                        <h3 className="text-2xl font-black text-slate-900 leading-none">{teacherStats.used}</h3>
-                        <p className="text-[8px] font-bold text-slate-400 mt-1">المنعقدة</p>
-                    </div>
-                </div>
-
-                {/* 3. Percentage */}
-                <div className="bg-[#5c4fb1] rounded-none p-4 md:shadow-md flex flex-col justify-between h-28 text-white">
-                    <div className="flex justify-end pointer-events-none">
-                        <TrendingUp size={16} className="text-white/80" />
-                    </div>
-                    <div className="text-center mt-auto">
-                        <h3 className="text-2xl font-black leading-none">{teacherStats.rate}%</h3>
-                        <p className="text-[8px] font-bold text-white/70 mt-1">نسبة الحضور</p>
-                    </div>
-                </div>
-
-                {/* 4. Remaining */}
-                <div className="bg-white rounded-none p-4 md:shadow-sm border border-slate-50 flex flex-col justify-between h-28">
-                    <div className="flex justify-end pointer-events-none">
-                        <Clock size={14} className="text-slate-500" />
-                    </div>
-                    <div className="text-center mt-2">
-                        <h3 className="text-2xl font-black text-slate-900 leading-none">{teacherStats.remaining}</h3>
-                        <p className="text-[8px] font-bold text-slate-400 mt-1">المتبقية</p>
-                    </div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 px-4 lg:px-0" dir="rtl">
+                <StatItem 
+                    title="الحصص المتوقعة" 
+                    value={teacherStats.expected} 
+                    icon={Calendar} 
+                    color="bg-indigo-600" 
+                    subValue="اليوم"
+                    subLabel="قيد التنفيذ"
+                />
+                <StatItem 
+                    title="الحصص المنعقدة" 
+                    value={teacherStats.used} 
+                    icon={CheckCircle2} 
+                    color="bg-emerald-600" 
+                    subValue={`${teacherStats.rate}%`}
+                    subLabel="تم التوثيق"
+                />
+                <StatItem 
+                    title="نسبة الإنجاز" 
+                    value={teacherStats.rate} 
+                    icon={TrendingUp} 
+                    color="bg-amber-600" 
+                    subLabel="%"
+                />
+                <StatItem 
+                    title="الحصص المتبقية" 
+                    value={teacherStats.remaining} 
+                    icon={Clock} 
+                    color="bg-rose-600" 
+                    subLabel="حصة"
+                />
             </div>
         );
     }
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-6">
-            <StatsCard title="مجدولة (اليوم)" value={stats.todayScheduled} icon={Calendar} color="blue" trend="حصة" />
-            <StatsCard title="حضور (اليوم)" value={stats.todayCompleted} icon={CheckCircle2} color="emerald" trend={stats.todayTotal > 0 ? Math.round((stats.todayCompleted / stats.todayTotal) * 100) + '%' : '0%'} />
-            <StatsCard title="غياب (اليوم)" value={stats.todayCancelled} icon={XCircle} color="rose" trend={stats.todayTotal > 0 ? Math.round((stats.todayCancelled / stats.todayTotal) * 100) + '%' : '0%'} />
-            <StatsCard title="إجمالي المنفذة" value={stats.totalCompleted} icon={TrendingUp} color="amber" trend="الكل" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 px-4 lg:px-0" dir="rtl">
+            <StatItem 
+                title="مجدولة (اليوم)" 
+                value={stats.todayScheduled} 
+                icon={Calendar} 
+                color="bg-indigo-600" 
+                subValue={stats.todayTotal}
+                subLabel="جلسة"
+            />
+            <StatItem 
+                title="حضور (اليوم)" 
+                value={stats.todayCompleted} 
+                icon={CheckCircle2} 
+                color="bg-emerald-600" 
+                subValue={stats.todayTotal > 0 ? Math.round((stats.todayCompleted / stats.todayTotal) * 100) + '%' : '0%'}
+                subLabel="تم التحضير"
+            />
+            <StatItem 
+                title="غياب (اليوم)" 
+                value={stats.todayCancelled} 
+                icon={XCircle} 
+                color="bg-rose-600" 
+                subValue={stats.todayTotal > 0 ? Math.round((stats.todayCancelled / stats.todayTotal) * 100) + '%' : '0%'}
+                subLabel="إلغاءات"
+            />
+            <StatItem 
+                title="إجمالي المنفذة" 
+                value={stats.totalCompleted} 
+                icon={Activity} 
+                color="bg-slate-900" 
+                subValue="100%"
+                subLabel="حصة مؤرشفة"
+            />
         </div>
     );
 };

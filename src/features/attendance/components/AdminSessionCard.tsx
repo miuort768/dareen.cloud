@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, XCircle, BookOpen, Clock, GraduationCap } from 'lucide-react';
+import { CheckCircle2, XCircle, BookOpen, Clock, Activity } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Session } from '../types';
 
@@ -32,59 +32,67 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     };
 
     return (
-        <div className="group relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-6 shadow-sm md:shadow-[8px_8px_0px_0px_black] md:hover:translate-x-1 md:hover:translate-y-1 md:hover:shadow-none transition-all rounded-none overflow-hidden h-full flex flex-col justify-between max-w-full">
-            {/* Design accents */}
-            <div className="absolute top-0 right-0 w-2 h-full bg-primary-600"></div>
+        <div className="group relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 shadow-sm transition-all hover:shadow-2xl rounded-none overflow-hidden h-full flex flex-col justify-between" dir="rtl">
+            {/* Action Bar Accent */}
+            <div className={cn(
+                "absolute top-0 right-0 w-1.5 h-full transition-colors duration-500",
+                session.status === 'completed' ? 'bg-emerald-500' : session.status === 'cancelled' ? 'bg-rose-500' : 'bg-indigo-600'
+            )}></div>
             
             <div className="space-y-6">
                 <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gray-950 text-white flex items-center justify-center border-2 border-gray-950 shadow-sm md:shadow-[3px_3px_0px_0px_black] md:transform md:-rotate-3 text-lg md:text-xl font-black shrink-0">
+                    <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black text-xl italic shadow-2xl rotate-3 group-hover:rotate-0 transition-transform">
                             {getGradeDisplay(studentGrade)}
                         </div>
-                        <div className="min-w-0">
-                            <div className="flex flex-col md:flex-row md:items-center gap-1 mb-1">
-                                <h4 className="font-black text-gray-950 text-base md:text-xl tracking-tighter uppercase leading-none truncate">{session.studentName}</h4>
-                                {studentGrade && (
-                                    <span className="w-fit text-[8px] md:text-[10px] font-black bg-gray-950 text-white px-1.5 md:px-2 py-0.5 border md:border-2 border-gray-950 md:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)]">
-                                        {studentGrade}
-                                    </span>
-                                )}
+                        <div>
+                            <div className="flex items-center gap-2 mb-1">
+                                <h4 className="font-black text-slate-800 dark:text-white text-base leading-none uppercase italic tracking-tighter">{session.studentName}</h4>
+                                <div className="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <BookOpen size={12} className="text-primary-600 md:size-[14px]" />
-                                <p className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest italic truncate">{session.subject}</p>
+                                <BookOpen size={12} className="text-indigo-600" />
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{session.subject}</p>
                             </div>
                         </div>
                     </div>
+                    {session.status !== 'scheduled' && (
+                        <div className={cn(
+                            "px-3 py-1 text-[9px] font-black uppercase italic tracking-widest border",
+                            session.status === 'completed' ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-rose-50 text-rose-600 border-rose-100"
+                        )}>
+                            {session.status === 'completed' ? 'منفذة' : 'ملغاة'}
+                        </div>
+                    )}
                 </div>
 
-                <div className="bg-gray-50 border-2 border-dashed border-gray-300 p-3 md:p-4">
-                     <div className="flex items-center gap-2 mb-2 md:mb-3">
-                        <Clock size={14} className="text-gray-950 md:size-[16px]" />
-                        <span className="text-[8px] md:text-[10px] font-black text-gray-950 uppercase tracking-widest italic">الموعد</span>
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-800 relative overflow-hidden group/box">
+                    <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-slate-900/5 rotate-12 transition-transform group-hover/box:rotate-45"></div>
+                    <div className="flex items-center gap-2 mb-3">
+                        <Clock size={14} className="text-indigo-600" />
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic">الموعد الزمني</span>
                     </div>
-                    <div className="text-base md:text-lg font-black font-mono text-gray-950 bg-white border-2 border-gray-950 px-3 md:px-4 py-1 inline-block shadow-sm md:shadow-[2px_2px_0px_0px_black] tracking-tight">
+                    <div className="text-lg font-black font-mono text-slate-800 dark:text-white tabular-nums leading-none tracking-tight">
                         {session.time}
                     </div>
                 </div>
 
-                <div className="space-y-3">
-                    <div className="flex justify-between items-center px-1">
+                <div className="space-y-3 pt-2">
+                    <div className="flex justify-between items-center text-[10px] font-black uppercase italic tracking-widest text-slate-400">
                         <div className="flex items-center gap-2">
-                            <GraduationCap size={16} className="text-primary-600" />
-                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest italic">معدل التقدم</span>
+                            <Activity size={14} className="text-indigo-600" />
+                            <span>مستوى تغطية الرصيد</span>
                         </div>
-                        <div className="flex items-baseline gap-1">
-                            <span className="text-xl font-black text-gray-950">{used}</span>
-                            <span className="text-[10px] font-black text-gray-400">/ {total} حواجز</span>
+                        <div className="flex items-baseline gap-1 text-slate-900 dark:text-white font-mono">
+                            <span className="text-base">{used}</span>
+                            <span>/ {total}</span>
                         </div>
                     </div>
-                    <div className="h-4 bg-white border-2 border-gray-950 p-0.5 shadow-inner">
+                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden relative">
                         <div
                             className={cn(
-                                "h-full transition-all duration-1000 ease-out",
-                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-400' : 'bg-emerald-500'
+                                "h-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.1)]",
+                                progress > 85 ? 'bg-rose-500' : progress > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                             )}
                             style={{ width: `${Math.min(100, progress)}%` }}
                         />
@@ -92,28 +100,28 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 </div>
             </div>
 
-            <div className="flex gap-2 md:gap-4 pt-6 md:pt-8">
+            <div className="flex gap-4 pt-8">
                 <button
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     className={cn(
-                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-sm md:shadow-[4px_4px_0px_0px_black] md:active:shadow-none",
+                        "flex-1 py-3.5 font-black text-[10px] uppercase tracking-[2px] transition-all italic flex items-center justify-center gap-2",
                         session.status === 'completed'
-                            ? 'bg-emerald-500 text-white border-gray-950'
-                            : 'bg-white border-gray-950 text-emerald-600 hover:bg-emerald-50'
+                            ? 'bg-emerald-600 text-white shadow-xl shadow-emerald-500/20'
+                            : 'bg-slate-900 border border-slate-800 text-white hover:bg-black'
                     )}
                 >
-                    <CheckCircle2 size={16} className="md:size-[18px]" strokeWidth={3} /> حاضر
+                    <CheckCircle2 size={16} /> <span>إثبات</span>
                 </button>
                 <button
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     className={cn(
-                        "flex-1 py-3 md:py-4 border-2 md:border-4 font-black text-[10px] md:text-xs uppercase tracking-widest flex items-center justify-center gap-1.5 md:gap-2 transition-all shadow-sm md:shadow-[4px_4px_0px_0px_black] md:active:shadow-none",
+                        "flex-1 py-3.5 font-black text-[10px] uppercase tracking-[2px] transition-all italic flex items-center justify-center gap-2",
                         session.status === 'cancelled'
-                            ? 'bg-rose-600 text-white border-gray-950'
-                            : 'bg-white border-gray-950 text-rose-600 hover:bg-rose-50'
+                            ? 'bg-rose-600 text-white shadow-xl shadow-rose-500/20'
+                            : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600'
                     )}
                 >
-                    <XCircle size={16} className="md:size-[18px]" strokeWidth={3} /> غائب
+                    <XCircle size={16} /> <span>إلغاء</span>
                 </button>
             </div>
         </div>
