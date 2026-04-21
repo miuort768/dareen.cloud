@@ -1,5 +1,5 @@
 import { QRCodeSVG } from 'qrcode.react';
-import { GraduationCap, Phone, User, X, Printer, Award, BookOpen } from 'lucide-react';
+import { GraduationCap, Phone, User, X, Printer, Award } from 'lucide-react';
 import type { Teacher } from '../types';
 
 interface TeacherCardProps {

@@ -1,4 +1,5 @@
-import { Search, Plus, X, Upload, Download, Trash2, Filter } from 'lucide-react';
+import { Search, Plus, X, Upload, Download, Trash2 } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
 interface TeacherToolbarProps {
     searchTerm: string;

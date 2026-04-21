@@ -11,7 +11,6 @@ import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModa
 import { SendNotificationModal } from '../shared/components/SendNotificationModal';
 
 // Feature Components
-import { PageHeader } from '../shared/components/ui/PageHeader';
 import { GraduationCap } from 'lucide-react';
 import { TeacherStats } from '../features/teachers/components/TeacherStats';
 import { TeacherToolbar } from '../features/teachers/components/TeacherToolbar';
