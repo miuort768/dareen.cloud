@@ -9,6 +9,7 @@ import { TasksAndRequests } from '../features/dashboard/components/TasksAndReque
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
+import { HonorRoll } from '../features/dashboard/components/HonorRoll';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
 import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
@@ -112,6 +113,9 @@ export const Dashboard = () => {
                                 sessions={rawSessions}
                                 monthlyData={monthlyData}
                             />
+
+                            {/* 5. Hall of Fame (Premium Redesign) */}
+                            <HonorRoll students={rawStudents} />
                         </div>
 
                         {/* 5. Secondary Operations Row: More Side-by-Side (Renewal & Activity) */}

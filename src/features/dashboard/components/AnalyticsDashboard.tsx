@@ -186,46 +186,6 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            {/* 🏅 LOYALTY HALL OF FAME (Desktop Full Width, Mobile Adjusted) */}
-            {topStudents.length > 0 && (
-                <div className="mt-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 md:p-10 rounded-[2.5rem] shadow-sm relative overflow-hidden group">
-                     {/* Decorative Background Elements */}
-                     <div className="absolute top-0 left-1/4 w-px h-full bg-slate-50 dark:bg-slate-800"></div>
-                     <div className="absolute top-0 right-1/4 w-px h-full bg-slate-50 dark:bg-slate-800"></div>
-                    
-                    <div className="flex flex-col lg:flex-row items-center gap-10 relative z-10">
-                        {/* Title Badge */}
-                        <div className="shrink-0 flex flex-col items-center lg:items-start min-w-[180px]">
-                            <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-[1.5rem] flex items-center justify-center mb-4 rotate-3 group-hover:rotate-0 transition-transform">
-                                <Award size={36} />
-                            </div>
-                            <h4 className="text-3xl font-black text-slate-800 dark:text-white uppercase tracking-tighter italic leading-none mb-2">لوحة الشرف</h4>
-                            <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">نجوم الشهر اللامعة</p>
-                        </div>
-
-                        {/* Top Students List */}
-                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">
-                            {topStudents.map((s: any, i: number) => (
-                                <div key={s.id} className="relative p-6 bg-slate-50/50 dark:bg-slate-800/30 rounded-3xl border border-transparent hover:border-amber-200 dark:hover:border-amber-900 transition-all hover:-translate-y-1">
-                                    <div className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-700 text-slate-300 font-black text-sm rounded-full border border-slate-100 dark:border-slate-600">
-                                        0{i + 1}
-                                    </div>
-                                    <div className="pt-4">
-                                        <p className="text-sm font-black text-slate-800 dark:text-white truncate mb-4">{s.name}</p>
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-1">
-                                                <span className="text-lg font-black text-amber-500 tabular-nums">{s.totalPoints}</span>
-                                                <span className="text-[9px] font-bold text-slate-400 uppercase">نقطة</span>
-                                            </div>
-                                            <TrendingUp size={14} className="text-emerald-500 opacity-50" />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
