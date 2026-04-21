@@ -3,12 +3,11 @@ import { useApp } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
-import { ImportantNotifications } from '../features/dashboard/components/ImportantNotifications';
+import { NotificationsCenter } from '../features/dashboard/components/NotificationsCenter';
 import { DashboardCharts } from '../features/dashboard/components/DashboardCharts';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
-import { SmartAlerts } from '../features/dashboard/components/SmartAlerts';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
@@ -91,19 +90,17 @@ export const Dashboard = () => {
                 ) : (
                     <div className="flex flex-col gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
                         
-                        {/* 🏆 1. Announcements & Urgent Alerts (Moved to TOP of content) */}
+                        {/* 🏆 1. Announcements & Urgent Alerts */}
                         <ModernAnnouncements />
 
-                        {/* 2. Primary Operations Row: Side by Side (Alerts) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <ImportantNotifications tasks={tasks} lowBalanceStudents={lowBalanceStudents} />
-                            <SmartAlerts
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                studentInvoices={rawStudentInvoices}
-                                lowBalanceStudents={lowBalanceStudents}
-                            />
-                        </div>
+                        {/* 2. Primary Operations Row: Unified Notifications Center */}
+                        <NotificationsCenter
+                            tasks={tasks}
+                            lowBalanceStudents={lowBalanceStudents}
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                        />
 
                         {/* 3. Full Width Analysis Center (Charts) */}
                         <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">

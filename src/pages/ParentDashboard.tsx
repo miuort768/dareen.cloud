@@ -111,7 +111,7 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 pb-[150px] px-2 md:px-4 lg:px-8 pt-2 space-y-6 md:animate-in md:fade-in md:duration-700 overflow-x-hidden w-full max-w-full" dir="rtl">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 md:px-4 lg:px-8 pt-2 space-y-6 md:animate-in md:fade-in md:duration-700 overflow-x-hidden w-full max-w-full" dir="rtl">
             
             {/* ═══════════════ HEADER (Updated responsiveness & Logout positioning) ═══════════════ */}
             <div className="flex justify-between items-start mb-2 px-1">
