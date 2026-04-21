@@ -50,65 +50,65 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
 
     return (
-        <div className="space-y-6" dir="rtl">
+        <div className="space-y-4" dir="rtl">
             {/* --- MOBILE TABS NAVIGATION --- */}
-            <div className="lg:hidden bg-white dark:bg-slate-900 p-2 rounded-2xl flex gap-2 border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="lg:hidden bg-white dark:bg-slate-900 p-1.5 rounded-2xl flex gap-1.5 border border-slate-100 dark:border-slate-800 shadow-sm mb-4">
                 <button 
                     onClick={() => setActiveTab('commitment')}
                     className={cn(
-                        "flex-1 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
+                        "flex-1 py-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2",
                         activeTab === 'commitment' ? "bg-emerald-50 text-emerald-600 shadow-sm" : "text-slate-400"
                     )}
                 >
-                    <ShieldCheck size={16} />
+                    <ShieldCheck size={14} />
                     معدل الالتزام
                 </button>
                 <button 
                     onClick={() => setActiveTab('database')}
                     className={cn(
-                        "flex-1 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
+                        "flex-1 py-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2",
                         activeTab === 'database' ? "bg-indigo-50 text-indigo-600 shadow-sm" : "text-slate-400"
                     )}
                 >
-                    <LayoutGrid size={16} />
+                    <LayoutGrid size={14} />
                     قاعدة البيانات
                 </button>
             </div>
 
             {/* --- CONTENT SECTION --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {/* 1. COMMITMENT SECTION */}
                 <div className={cn(
-                    "flex flex-col gap-6",
+                    "flex flex-col gap-5",
                     activeTab !== 'commitment' && "hidden lg:flex"
                 )}>
                     {/* Header Card */}
-                    <div className="bg-emerald-600 p-6 rounded-[2rem] shadow-lg shadow-emerald-100 dark:shadow-none relative overflow-hidden text-white">
-                        <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-                        <div className="flex items-center gap-5 relative z-10">
-                            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
-                                <ShieldCheck size={28} />
+                    <div className="bg-emerald-600 p-5 rounded-[1.5rem] shadow-lg shadow-emerald-100 dark:shadow-none relative overflow-hidden text-white">
+                        <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="flex items-center gap-4 relative z-10">
+                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
+                                <ShieldCheck size={24} />
                             </div>
                             <div>
-                                <p className="text-emerald-100 text-xs font-bold uppercase tracking-wider mb-1">إجمالي معدل الالتزام</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-4xl font-black">{overallRate}%</span>
-                                    <span className="text-emerald-100/60 text-xs">نمو مستقر</span>
+                                <p className="text-emerald-100 text-[10px] font-bold uppercase tracking-wider mb-0.5">معدل الالتزام الكلي</p>
+                                <div className="flex items-baseline gap-1.5">
+                                    <span className="text-2xl font-black">{overallRate}%</span>
+                                    <span className="text-emerald-100/60 text-[10px]">نمو مستقر</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Chart Card */}
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 lg:p-8 shadow-sm flex flex-col h-[350px]">
-                        <div className="flex items-center justify-between mb-8">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[1.5rem] p-5 md:p-6 shadow-sm flex flex-col h-[280px]">
+                        <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-3">
-                                <TrendingUp size={20} className="text-emerald-600" />
-                                <h4 className="text-lg font-bold text-slate-800 dark:text-white">تطور الالتزام</h4>
+                                <TrendingUp size={18} className="text-emerald-600" />
+                                <h4 className="text-sm font-black text-slate-800 dark:text-white">تطور المستوى</h4>
                             </div>
-                            <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800">
-                                <span className="text-[10px] font-bold text-emerald-600">نشط الآن</span>
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-lg">
+                                <span className="text-[9px] font-bold text-emerald-600">نشط الآن</span>
                             </div>
                         </div>
                         <div className="flex-1 w-full" dir="ltr">
@@ -121,12 +121,12 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                    <XAxis dataKey="month" tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                                    <YAxis tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
+                                    <XAxis dataKey="month" tick={{ fontSize: 9, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                                    <YAxis tick={{ fontSize: 9, fontWeight: 700, fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
                                     <Tooltip 
-                                        contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                                        contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '10px' }}
                                     />
-                                    <Area type="monotone" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} />
+                                    <Area type="monotone" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={2.5} dot={{ r: 3, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
@@ -135,50 +135,49 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
                 {/* 2. DATABASE SECTION */}
                 <div className={cn(
-                    "flex flex-col gap-6",
+                    "flex flex-col gap-5",
                     activeTab !== 'database' && "hidden lg:flex"
                 )}>
                      {/* Header Card */}
-                     <div className="bg-[#5c59f2] p-6 rounded-[2rem] shadow-lg shadow-indigo-100 dark:shadow-none relative overflow-hidden text-white">
-                        <div className="absolute -left-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-                        <div className="flex items-center gap-5 relative z-10">
-                            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
-                                <Users size={28} />
+                     <div className="bg-[#5c59f2] p-5 rounded-[1.5rem] shadow-lg shadow-indigo-100 dark:shadow-none relative overflow-hidden text-white">
+                        <div className="absolute -left-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="flex items-center gap-4 relative z-10">
+                            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/30">
+                                <Users size={24} />
                             </div>
                             <div>
-                                <p className="text-indigo-100 text-xs font-bold uppercase tracking-wider mb-1">قاعدة بيانات الطلاب</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-4xl font-black">{students.length}</span>
-                                    <span className="text-indigo-100/60 text-xs uppercase font-medium">طالب مسجل</span>
+                                <p className="text-indigo-100 text-[10px] font-bold uppercase tracking-wider mb-0.5">إحصائيات الطلاب</p>
+                                <div className="flex items-baseline gap-1.5">
+                                    <span className="text-2xl font-black">{students.length}</span>
+                                    <span className="text-indigo-100/60 text-[10px] uppercase font-medium">طالب</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Distribution Chart Card */}
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 lg:p-8 shadow-sm flex flex-col h-[350px]">
-                        <div className="flex items-center justify-between mb-8">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[1.5rem] p-5 md:p-6 shadow-sm flex flex-col h-[280px]">
+                        <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-3">
-                                <BarChart3 size={20} className="text-indigo-600" />
-                                <h4 className="text-lg font-bold text-slate-800 dark:text-white">توزيع المواد</h4>
+                                <BarChart3 size={18} className="text-indigo-600" />
+                                <h4 className="text-sm font-black text-slate-800 dark:text-white">توزيع المواد</h4>
                             </div>
-                            <CheckCircle2 size={20} className="text-slate-300" />
+                            <CheckCircle2 size={16} className="text-slate-300" />
                         </div>
                         <div className="flex-1 w-full" dir="ltr">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 30 }}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
                                     <XAxis type="number" hide />
-                                    <YAxis type="category" dataKey="subject" tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }} width={80} axisLine={false} tickLine={false} />
-                                    <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9' }} />
-                                    <Bar dataKey="sessions" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={16} />
+                                    <YAxis type="category" dataKey="subject" tick={{ fontSize: 9, fontWeight: 700, fill: '#64748b' }} width={70} axisLine={false} tickLine={false} />
+                                    <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9', fontSize: '10px' }} />
+                                    <Bar dataKey="sessions" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={12} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
