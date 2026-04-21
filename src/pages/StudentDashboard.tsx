@@ -9,7 +9,7 @@ import { useApp } from '../context/AppContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
-import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
+import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { PageLoader } from '../components/ui/PageLoader';
 
 import { useChatContext } from '../context/ChatContext';
