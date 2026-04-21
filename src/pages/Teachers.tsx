@@ -260,17 +260,53 @@ export const Teachers = () => {
 
     return (
         <div className="space-y-6 pb-32 min-h-full" dir="rtl">
-            {/* Minimal High-Density Header */}
-            <div className="bg-slate-900 text-white p-4 md:p-6 border-b border-white/5 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[100px]"></div>
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center border border-white/10 group-hover:rotate-6 transition-transform">
-                            <GraduationCap size={28} className="text-indigo-400" />
+            {/* Premium Personalized Header - Matching Dashboard Identity */}
+            <div className="relative group mb-6" dir="rtl">
+                {/* Background Glow */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-emerald-500 rounded-none blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+                
+                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
+                    {/* Decorative Background Circles */}
+                    <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-50 dark:bg-emerald-900/10 rounded-full blur-3xl"></div>
+
+                    <div className="relative z-10 px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                        {/* Right Section: Identity */}
+                        <div className="flex items-center gap-5 w-full md:w-auto">
+                            <div className="relative shrink-0">
+                                <div className="w-16 h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
+                                    <GraduationCap size={32} />
+                                </div>
+                                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-indigo-500 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                            </div>
+
+                            <div className="text-right">
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">الأقسام الأكاديمية</span>
+                                    <Sparkles className="text-amber-400" size={14} />
+                                </div>
+                                <h1 className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">إدارة الكوادر التعليمية</h1>
+                                <p className="text-slate-400 font-bold mt-2 text-xs opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب والمواد العلمية</p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-xl md:text-2xl font-black tracking-tight leading-none mb-1 uppercase italic">إدارة الكوادر التعليمية</h1>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب</p>
+
+                        {/* Left Section: Contextual Info */}
+                        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+                            <div className="hidden md:flex flex-col items-end px-4 border-r-2 border-slate-100 dark:border-slate-800">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">إجمالي الطاقم</span>
+                                <span className="text-xl font-black text-[#5c59f2] tabular-nums">{teachers.length} معلمة</span>
+                            </div>
+                            <div className="bg-slate-900 dark:bg-slate-800 text-white px-5 py-3 flex items-center gap-3 shadow-xl">
+                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase leading-none mb-1 opacity-60">حالة النظام</p>
+                                    <p className="text-xs font-bold leading-none">مزامنة نشطة</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -52,9 +52,9 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     return (
         <div className="relative group" dir="rtl">
             {/* Background Glow */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-purple-500 rounded-[2rem] blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-purple-500 rounded-none blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
             
-            <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] shadow-sm">
+            <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
                 
                 {/* Decorative Background Circles */}
                 <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
