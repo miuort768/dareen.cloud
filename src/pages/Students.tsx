@@ -386,6 +386,7 @@ export const Students = () => {
                 message="هل أنت متأكد من حذف جميع بيانات الطلاب؟ هذا الإجراء خطير جداً."
                 onConfirm={() => { deleteAllStudents(); setIsDeletingAll(false); }}
                 onClose={() => setIsDeletingAll(false)}
+            />
             </div>
         </div>
     );
