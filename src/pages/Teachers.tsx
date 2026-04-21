@@ -261,7 +261,7 @@ export const Teachers = () => {
     return (
         <div className="space-y-6 pb-32 min-h-full" dir="rtl">
             {/* Premium Personalized Header - Matching Dashboard Identity */}
-            <div className="relative group mb-6" dir="rtl">
+            <div className="relative group mb-6">
                 {/* Background Glow */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-emerald-500 rounded-none blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
                 
@@ -270,25 +270,25 @@ export const Teachers = () => {
                     <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
                     <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-50 dark:bg-emerald-900/10 rounded-full blur-3xl"></div>
 
-                    <div className="relative z-10 px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="relative z-10 px-4 py-4 md:px-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
                         {/* Right Section: Identity */}
-                        <div className="flex items-center gap-5 w-full md:w-auto">
+                        <div className="flex items-center gap-4 md:gap-5 w-full md:w-auto">
                             <div className="relative shrink-0">
-                                <div className="w-16 h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
-                                    <GraduationCap size={32} />
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
+                                    <GraduationCap size={24} className="md:size-32" />
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-indigo-500 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
+                                <div className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-indigo-500 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
                                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                                 </div>
                             </div>
 
                             <div className="text-right">
-                                <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">الأقسام الأكاديمية</span>
-                                    <Sparkles className="text-amber-400" size={14} />
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">الأقسام الأكاديمية</span>
+                                    <Sparkles className="text-amber-400" size={12} className="md:size-[14px]" />
                                 </div>
-                                <h1 className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">إدارة الكوادر التعليمية</h1>
-                                <p className="text-slate-400 font-bold mt-2 text-xs opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب والمواد العلمية</p>
+                                <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">إدارة الكوادر التعليمية</h1>
+                                <p className="hidden sm:block text-slate-400 font-bold mt-2 text-xs opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب والمواد</p>
                             </div>
                         </div>
 
