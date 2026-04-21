@@ -103,9 +103,7 @@ export const Dashboard = () => {
                         />
 
                         {/* 3. Full Width Analysis Center (Charts) */}
-                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                        </div>
+                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
 
                         {/* 4. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
                         <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
