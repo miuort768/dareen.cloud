@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GraduationCap, Clock, PlayCircle, Zap, Headphones, Calendar, Sparkles } from 'lucide-react';
 import type { User } from '../../../types/auth';
-import { cn } from '../../../lib/utils';
 
 interface ActiveSession {
     id: string;
