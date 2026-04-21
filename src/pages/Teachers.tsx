@@ -285,7 +285,7 @@ export const Teachers = () => {
                             <div className="text-right">
                                 <div className="flex items-center gap-2 mb-1">
                                     <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">الأقسام الأكاديمية</span>
-                                    <Sparkles className="text-amber-400" size={12} className="md:size-[14px]" />
+                                    <Sparkles className="text-amber-400 md:size-[14px]" size={12} />
                                 </div>
                                 <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">إدارة الكوادر التعليمية</h1>
                                 <p className="hidden sm:block text-slate-400 font-bold mt-2 text-xs opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب والمواد</p>

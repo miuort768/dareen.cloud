@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap, Clock, PlayCircle, Zap, Headphones, Calendar, Sparkles } from 'lucide-react';
+import { GraduationCap, Clock, PlayCircle, Headphones, Calendar, Sparkles } from 'lucide-react';
 import type { User } from '../../../types/auth';
 
 interface ActiveSession {
@@ -76,7 +76,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                                 <span className="bg-indigo-50 dark:bg-indigo-900/30 text-[#5c59f2] text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-lg uppercase tracking-tighter">
                                     {isTeacher ? 'معلمة معتمدة' : 'مدير النظام'}
                                 </span>
-                                <Sparkles className="text-amber-400" size={10} className="md:size-3" />
+                                <Sparkles className="text-amber-400 md:size-3" size={10} />
                              </div>
                              <h1 className="text-sm md:text-xl font-black text-slate-800 dark:text-white leading-none">
                                 {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'لوحة التحكم'}

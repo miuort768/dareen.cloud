@@ -33,7 +33,7 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
                         <div className="text-right">
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">إدارة شؤون الطلاب</span>
-                                <GraduationCap className="text-emerald-500" size={12} className="md:size-[14px]" />
+                                <GraduationCap className="text-emerald-500 md:size-[14px]" size={12} />
                             </div>
                             <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">قاعدة بيانات الطلاب</h1>
                             <p className="hidden sm:block text-slate-400 font-bold mt-2 text-xs opacity-70">المتابعة الأكاديمية، سجلات الحضور، وإدارة الاشتراكات</p>
