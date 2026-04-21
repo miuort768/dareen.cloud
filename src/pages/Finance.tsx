@@ -199,5 +199,6 @@ export const Finance = () => {
                 onAdd={actions.handleAddTransaction}
             />
         </div>
-    );
+    </div>
+);
 };
