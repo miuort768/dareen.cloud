@@ -1,4 +1,5 @@
-import { Search, Download, Upload, Trash2, X, Filter } from 'lucide-react';
+import React from 'react';
+import { Search, Download, Upload, Trash2, Filter } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface StudentToolbarProps {
@@ -21,72 +22,50 @@ export const StudentToolbar = ({
     totalCount
 }: StudentToolbarProps) => {
     return (
-        <div className="bg-white p-3 border-2 border-gray-950 dark:bg-gray-900 dark:border-gray-800 flex flex-col lg:flex-row items-center justify-between gap-4 rounded-none shadow-[4px_4px_0px_0px_black] transition-all mb-4">
-
-            {/* Search Group */}
-            <div className="relative w-full lg:max-w-2xl group">
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none transition-colors group-focus-within:text-primary-600">
-                    <Search size={18} className="text-gray-950 group-focus-within:text-primary-600 transition-colors" />
-                    <div className="h-4 w-0.5 bg-gray-950 hidden sm:block"></div>
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 md:p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-sm mb-6 rounded-none" dir="rtl">
+            
+            {/* Search Input */}
+            <div className="relative w-full md:max-w-md group">
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors">
+                    <Search size={18} />
                 </div>
-
                 <input
                     type="text"
-                    placeholder="ابحث عن طالب..."
+                    placeholder="ابحث عن طالب، رقم هاتف، أو مرحلة دراسية..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-12 pr-12 py-2.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-950 rounded-none focus:outline-none focus:bg-white dark:focus:bg-gray-700 dark:text-white font-black text-sm shadow-inner transition-all placeholder:text-gray-400 placeholder:font-black uppercase tracking-tight"
+                    className="w-full pl-6 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border-r-2 border-r-emerald-500 focus:outline-none focus:bg-white dark:focus:bg-slate-700 dark:text-white font-bold text-sm transition-all placeholder:text-slate-300"
                 />
-
-                {/* Status Indicator / Clear Button */}
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
-                    {searchTerm && (
-                        <button
-                            onClick={() => onSearchChange('')}
-                            className="bg-gray-200 p-2 hover:bg-gray-950 hover:text-white border-2 border-gray-950 transition-all font-black"
-                            title="مسح البحث"
-                        >
-                            <X size={18} />
-                        </button>
-                    )}
-
-                    <div className={cn(
-                        "px-4 py-1.5 border-2 border-gray-950 font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2 shadow-[2px_2px_0px_0px_black]",
-                        searchTerm
-                            ? "bg-primary-600 text-white"
-                            : "bg-amber-400 text-gray-950"
-                    )}>
-                        <Filter size={12} />
-                        <span>
-                            {searchTerm ? `نتائج: ${filteredCount}` : `${totalCount} طالب`}
-                        </span>
-                    </div>
-                </div>
             </div>
 
-            {/* Actions Group */}
-            <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto no-print justify-center lg:justify-end">
+            {/* Actions & Status */}
+            <div className="flex flex-wrap items-center gap-2 justify-center md:justify-end">
+                {/* Stats Badge */}
+                <div className="px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 text-[10px] font-black uppercase tracking-tighter text-slate-400">
+                    عرض <span className="text-emerald-600 dark:text-emerald-500">{filteredCount}</span> من <span className="text-slate-600 dark:text-slate-300">{totalCount}</span> طالب
+                </div>
 
+                <div className="h-8 w-px bg-slate-100 dark:bg-slate-800 hidden md:block mx-1"></div>
 
-                <div className="flex items-center gap-2 bg-gray-50 p-1.5 border-2 border-dashed border-gray-300">
+                <div className="flex items-center gap-1.5">
                     <button
                         onClick={onExport}
                         title="تصدير البيانات"
-                        className="p-2 bg-white text-gray-950 border-2 border-gray-950 hover:bg-primary-500 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                        className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-500 border border-slate-100 dark:border-slate-800 hover:bg-[#5c59f2] hover:text-white transition-all shadow-sm"
                     >
                         <Download size={18} />
                     </button>
                     <button
                         onClick={onImport}
-                        title="استيراد بيانات"
-                        className="p-2 bg-white text-gray-950 border-2 border-gray-950 hover:bg-blue-500 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                        title="استيراد البيانات"
+                        className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-500 border border-slate-100 dark:border-slate-800 hover:bg-emerald-500 hover:text-white transition-all shadow-sm"
                     >
                         <Upload size={18} />
                     </button>
                     <button
                         onClick={onDeleteAll}
-                        title="حذف جميع السجلات"
-                        className="p-2 bg-white text-rose-600 border-2 border-gray-950 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                        title="حذف جميع البيانات"
+                        className="p-2.5 bg-slate-50 dark:bg-slate-800 text-rose-400 border border-slate-100 dark:border-slate-800 hover:bg-rose-500 hover:text-white transition-all shadow-sm"
                     >
                         <Trash2 size={18} />
                     </button>

@@ -10,6 +10,7 @@ import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { PageLoader } from '../components/ui/PageLoader';
 // Feature Components
 import { StudentHeader } from '../features/students/components/StudentHeader';
+import { StudentStats } from '../features/students/components/StudentStats';
 import { StudentToolbar } from '../features/students/components/StudentToolbar';
 import { StudentForm } from '../features/students/components/StudentForm';
 import { StudentTable } from '../features/students/components/StudentTable';
@@ -58,6 +59,14 @@ export const Students = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const loading = loadingStudents || loadingTeachers;
+
+    // Calculate Stats
+    const activeEnrollments = allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0);
+    const uniqueGrades = new Set(allStudents.map(s => s.grade)).size;
+    const totalExpectedSessions = allStudents.reduce((acc, s) => 
+        acc + (s.enrollments?.reduce((enAcc, en) => enAcc + (en.sessionsTotal || 0), 0) || 0), 0
+    );
+    const averageSessions = allStudents.length > 0 ? Math.round(totalExpectedSessions / allStudents.length) : 0;
 
     // Handlers
     const handleAddOrUpdateStudent = (data: Omit<Student, 'id' | 'enrollments'>) => {
@@ -291,22 +300,30 @@ export const Students = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
+        <div className="space-y-6 pb-32 min-h-full">
             <StudentHeader
-                count={students.length}
+                count={allStudents.length}
                 showAddForm={showAddForm}
                 onToggleAddForm={() => { setShowAddForm(!showAddForm); setEditId(null); }}
             />
 
-            <StudentToolbar
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                onExport={handleExport}
-                onImport={() => fileInputRef.current?.click()}
-                onDeleteAll={() => setIsDeletingAll(true)}
-                filteredCount={students.length}
-                totalCount={allStudents.length}
-            />
+            <div className="p-4 md:p-0 space-y-6">
+                <StudentStats 
+                    totalStudents={allStudents.length}
+                    activeEnrollments={activeEnrollments}
+                    uniqueGrades={uniqueGrades}
+                    averageSessionsPerStudent={averageSessions}
+                />
+
+                <StudentToolbar
+                    searchTerm={searchTerm}
+                    onSearchChange={setSearchTerm}
+                    onExport={handleExport}
+                    onImport={() => fileInputRef.current?.click()}
+                    onDeleteAll={() => setIsDeletingAll(true)}
+                    filteredCount={students.length}
+                    totalCount={allStudents.length}
+                />
 
             <input
                 ref={fileInputRef}
@@ -369,7 +386,7 @@ export const Students = () => {
                 message="هل أنت متأكد من حذف جميع بيانات الطلاب؟ هذا الإجراء خطير جداً."
                 onConfirm={() => { deleteAllStudents(); setIsDeletingAll(false); }}
                 onClose={() => setIsDeletingAll(false)}
-            />
+            </div>
         </div>
     );
 };
