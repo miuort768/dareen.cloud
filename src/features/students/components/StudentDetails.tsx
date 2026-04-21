@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap, Star, Zap, AlertCircle, Info, Shield, Trophy } from 'lucide-react';
+import { useState } from 'react';
+import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, GraduationCap, Zap, Shield, Trophy, Plus } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
@@ -329,6 +329,3 @@ export const StudentDetails = ({
         </div>
     );
 };
-
-// Add missing Plus icon to the imports at top
-import { Plus } from 'lucide-react';

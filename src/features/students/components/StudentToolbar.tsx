@@ -1,6 +1,4 @@
-import React from 'react';
-import { Search, Download, Upload, Trash2, Filter } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import { Search, Download, Upload, Trash2 } from 'lucide-react';
 
 interface StudentToolbarProps {
     searchTerm: string;

@@ -1,5 +1,4 @@
-import React from 'react';
-import { Users, GraduationCap, Award, TrendingUp, UserCheck, BookOpen } from 'lucide-react';
+import { Users, GraduationCap, TrendingUp, UserCheck, BookOpen } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface StudentStatsProps {

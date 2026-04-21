@@ -1,4 +1,3 @@
-import React from 'react';
 import { GraduationCap, Sparkles, Plus, X, Users } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 

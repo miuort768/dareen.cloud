@@ -1,5 +1,4 @@
-import React from 'react';
-import { Edit, Trash, GraduationCap, AlertCircle, Eye, User } from 'lucide-react';
+import { Edit, Trash, GraduationCap, Eye, User } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
 
@@ -13,7 +12,7 @@ interface StudentTableProps {
     isTeacherView: boolean;
 }
 
-export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, showDetails, isTeacherView: _isTeacherView }: StudentTableProps) => {
+export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, showDetails: _showDetails, isTeacherView: _isTeacherView }: StudentTableProps) => {
     return (
         <div className="w-full overflow-hidden">
             {/* Desktop View: High-Density Premium Table */}
