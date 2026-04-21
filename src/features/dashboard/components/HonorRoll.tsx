@@ -1,3 +1,4 @@
+import React from 'react';
 import { Award, Star, TrendingUp, Trophy, Crown, Sparkles, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
@@ -12,7 +13,7 @@ interface HonorRollProps {
     students: Student[];
 }
 
-export const HonorRoll = ({ students }: HonorRollProps) => {
+export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
     const topStudents = [...students]
         .filter(s => (s.totalPoints || 0) > 0)
         .sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0))
@@ -21,12 +22,11 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
     if (topStudents.length === 0) return null;
 
     return (
-    return (
-        <div className="w-full mt-6 relative group">
+        <div className="w-full mt-6 relative group" dir="rtl">
             {/* Background Glow Effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 via-[#5c59f2] to-emerald-500 rounded-[2rem] blur opacity-10 group-hover:opacity-20 transition duration-1000 group-hover:duration-200"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 via-[#5c59f2] to-emerald-500 rounded-[2rem] blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
             
-            <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 md:p-8 overflow-hidden shadow-xl">
+            <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 md:p-8 shadow-2xl overflow-hidden">
                 
                 {/* Header Decoration */}
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-10">
@@ -44,19 +44,8 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                                 لوحة الشرف
                                 <Sparkles className="text-amber-400" size={18} />
                             </h2>
-                            <p className="text-slate-400 font-bold mt-0.5 text-sm">نحتفي بأفضل خمسة طلاب حققوا أعلى نقاط تميز</p>
+                            <p className="text-slate-400 font-bold mt-0.5 text-sm uppercase tracking-widest opacity-60">نخبة الدارسين الأكثر تميزاً</p>
                         </div>
-                    </div>
-                    
-                    <div className="hidden lg:flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
-                        <div className="flex -space-x-2.5 rtl:space-x-reverse">
-                            {topStudents.map((s) => (
-                                <div key={s.id} className="w-8 h-8 rounded-full border-2 border-white dark:border-slate-900 bg-[#5c59f2] flex items-center justify-center text-[9px] font-bold text-white shadow-sm overflow-hidden">
-                                    {s.name.charAt(0)}
-                                </div>
-                            ))}
-                        </div>
-                        <span className="px-2 text-[10px] font-bold text-slate-500">نخبة الدارسين</span>
                     </div>
                 </div>
 
@@ -71,16 +60,15 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                             <div 
                                 key={student.id} 
                                 className={cn(
-                                    "relative group/card p-5 rounded-3xl border transition-all duration-500 hover:-translate-y-1 flex flex-col items-center text-center",
-                                    isFirst ? "bg-amber-50/50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-900/40 ring-2 ring-amber-50/50" : 
-                                    isSecond ? "bg-slate-50/50 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700" :
+                                    "relative p-5 rounded-3xl border transition-all duration-500 hover:-translate-y-1 flex flex-col items-center text-center group/card",
+                                    isFirst ? "bg-amber-50/50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-900/40" : 
+                                    isSecond ? "bg-slate-50 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700" :
                                     isThird ? "bg-orange-50/20 border-orange-200 dark:bg-orange-900/5" :
                                     "bg-white dark:bg-slate-800/20 border-slate-100 dark:border-slate-800"
                                 )}
                             >
-                                {/* Rank Icon / Medal */}
                                 <div className={cn(
-                                    "w-10 h-10 rounded-xl flex items-center justify-center mb-5 shadow-sm shadow-black/5",
+                                    "w-10 h-10 rounded-xl flex items-center justify-center mb-5 shadow-sm",
                                     isFirst ? "bg-amber-400 text-white" : 
                                     isSecond ? "bg-slate-300 text-slate-700" :
                                     isThird ? "bg-orange-400 text-white" :
@@ -91,10 +79,8 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                                      <Star size={16} fill="currentColor" />}
                                 </div>
 
-                                {/* Student Face */}
-                                <div className="w-16 h-16 bg-white dark:bg-slate-700 rounded-full border-2 border-slate-100 dark:border-slate-800 shadow-lg flex items-center justify-center mb-3 relative overflow-hidden">
+                                <div className="w-16 h-16 bg-white dark:bg-slate-700 rounded-full border-2 border-slate-100 shadow-lg flex items-center justify-center mb-3 relative overflow-hidden">
                                      <span className="text-xl font-black text-slate-300">{student.name.charAt(0)}</span>
-                                     {isFirst && <div className="absolute inset-0 bg-amber-400/10 animate-pulse"></div>}
                                 </div>
 
                                 <div className="space-y-0.5 w-full overflow-hidden">
@@ -105,16 +91,11 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                                         {student.name}
                                     </p>
                                     <div className="flex flex-col items-center gap-1 mt-2">
-                                        <div className="px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-100 dark:border-slate-700 shadow-sm flex items-center gap-1.5">
+                                        <div className="px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-100 shadow-sm flex items-center gap-1.5">
                                             <span className="text-sm font-black text-[#5c59f2]">{student.totalPoints}</span>
                                             <span className="text-[9px] font-bold text-slate-400 uppercase">نقطة</span>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Small Indicator Overlay */}
-                                <div className="absolute top-4 left-4">
-                                     <TrendingUp size={12} className={cn(isFirst ? "text-amber-500" : "text-emerald-500 opacity-20")} />
                                 </div>
                             </div>
                         );
@@ -122,14 +103,12 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                 </div>
 
                 {/* Footer Message */}
-                <div className="mt-8 text-center border-t border-slate-50 dark:border-slate-800 pt-6" dir="rtl">
-                    <p className="text-slate-400 text-[11px] font-bold flex items-center justify-center gap-2">
+                <div className="mt-8 text-center border-t border-slate-50 dark:border-slate-800 pt-6">
+                    <p className="text-slate-400 text-[11px] font-bold flex items-center justify-center gap-2 italic">
                         <CheckCircle2 size={14} className="text-[#5c59f2]" />
-                        تحديث تلقائي بناءً على تقييمات المعلمين والنشاط الأكاديمي
+                        تحديث تلقائي بناءً على تقييمات النشاط الأكاديمي والتميز السلوكي
                     </p>
                 </div>
-            </div>
-        </div>
             </div>
         </div>
     );

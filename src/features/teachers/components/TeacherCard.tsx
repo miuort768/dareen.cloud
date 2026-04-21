@@ -13,18 +13,18 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
     };
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white dark:bg-gray-950 w-full max-w-md border-4 border-gray-900 shadow-[20px_20px_0px_0px_rgba(0,0,0,0.3)] relative overflow-hidden group">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-sm border border-slate-100 dark:border-slate-800 shadow-2xl relative overflow-hidden group">
                 
                 {/* Header Actions - Hidden on Print */}
-                <div className="p-4 flex justify-between items-center border-b-2 border-gray-100 dark:border-gray-800 print:hidden">
-                    <h3 className="font-black text-xs uppercase tracking-[0.3em] text-gray-400 italic">Teacher ID Card</h3>
-                    <div className="flex gap-2">
-                        <button onClick={handlePrint} className="p-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-colors border-2 border-emerald-100">
-                            <Printer size={18} />
+                <div className="p-3 flex justify-between items-center border-b border-slate-50 dark:border-slate-800 print:hidden bg-slate-50 dark:bg-slate-800/50">
+                    <h3 className="font-black text-[10px] uppercase tracking-widest text-slate-400 italic">Faculty Identity Card</h3>
+                    <div className="flex gap-1.5">
+                        <button onClick={handlePrint} className="p-1.5 bg-white dark:bg-slate-800 text-slate-500 hover:text-[#5c59f2] transition-colors shadow-sm">
+                            <Printer size={16} />
                         </button>
-                        <button onClick={onClose} className="p-2 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-colors border-2 border-rose-100">
-                            <X size={18} />
+                        <button onClick={onClose} className="p-1.5 bg-white dark:bg-slate-800 text-rose-400 hover:bg-rose-500 hover:text-white transition-colors shadow-sm">
+                            <X size={16} />
                         </button>
                     </div>
                 </div>
@@ -32,70 +32,67 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 {/* THE CARD CONTENT */}
                 <div className="p-8 relative print:p-0">
                     {/* Background Pattern */}
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-gray-50 dark:bg-gray-900 border-r-8 border-t-8 border-gray-100 dark:border-gray-800 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 dark:bg-indigo-500/10 -mr-8 -mt-8 rotate-45 pointer-events-none border border-indigo-500/10"></div>
                     
                     {/* Academy Name Tag */}
                     <div className="flex justify-between items-start mb-10 relative z-10">
                         <div className="space-y-1">
-                            <div className="flex items-center gap-2 text-primary-600">
-                                <Award size={20} className="fill-current/10" />
-                                <span className="font-black text-xs uppercase tracking-widest">Dareen Academy</span>
+                            <div className="flex items-center gap-2 text-[#5c59f2]">
+                                <Award size={18} />
+                                <span className="font-black text-[10px] uppercase tracking-widest leading-none">DAREEN ACADEMY</span>
                             </div>
-                            <h2 className="text-xl font-black text-gray-900 dark:text-white leading-none">بطاقة هوية معلم</h2>
+                            <h2 className="text-xl font-black text-slate-800 dark:text-white leading-none tracking-tighter">بطاقة هوية معلم</h2>
                         </div>
-                        <div className="w-16 h-16 bg-primary-600 border-4 border-white/20 flex items-center justify-center shadow-lg">
-                            <GraduationCap size={32} className="text-white" />
+                        <div className="w-12 h-12 bg-slate-900 dark:bg-slate-800 flex items-center justify-center shadow-lg shadow-indigo-100/20 dark:shadow-none">
+                            <GraduationCap size={24} className="text-white" />
                         </div>
                     </div>
 
                     {/* Main Info Section */}
-                    <div className="flex flex-col md:flex-row gap-8 relative z-10">
+                    <div className="flex flex-col items-center gap-6 relative z-10">
                         {/* Photo Placeholder */}
-                        <div className="w-32 h-40 bg-gray-100 dark:bg-gray-800 border-4 border-gray-900 flex items-center justify-center relative shadow-inner overflow-hidden">
-                            <User size={64} className="text-gray-300 dark:text-gray-700" />
-                            <div className="absolute bottom-0 left-0 w-full h-1 bg-emerald-500"></div>
+                        <div className="w-28 h-32 bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 flex items-center justify-center relative shadow-inner overflow-hidden">
+                            <User size={48} className="text-slate-200 dark:text-slate-700" />
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-[#5c59f2]"></div>
                         </div>
 
                         {/* Details */}
-                        <div className="flex-1 space-y-4 text-right" dir="rtl">
+                        <div className="w-full space-y-4 text-center" dir="rtl">
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">الاسم الكامل</label>
-                                <p className="text-lg font-black text-gray-900 dark:text-white tracking-tighter">{teacher.name}</p>
+                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">الاسم الثلاثي المعتمد</label>
+                                <p className="text-lg font-black text-slate-800 dark:text-white tracking-tighter leading-none">{teacher.name}</p>
                             </div>
                             
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-4 pt-2">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">التخصص</label>
-                                    <p className="text-sm font-bold text-emerald-600 flex items-center gap-1 justify-end">
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block text-center">التخصص</label>
+                                    <p className="text-xs font-black text-[#5c59f2] uppercase tracking-tighter text-center">
                                         {teacher.subject}
-                                        <BookOpen size={10} />
                                     </p>
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">كود المعلم</label>
-                                    <p className="text-sm font-bold text-gray-700 dark:text-gray-300">#{teacher.id.slice(0, 6).toUpperCase()}</p>
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block text-center">كود الموظف</label>
+                                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 text-center uppercase">#{teacher.id.slice(0, 6)}</p>
                                 </div>
                             </div>
 
-                            <div className="space-y-1 pt-2 border-t border-gray-100 dark:border-gray-800">
-                                <div className="flex items-center justify-end gap-2 text-emerald-600">
-                                    <span className="text-xs font-bold tabular-nums">{teacher.phone1}</span>
-                                    <Phone size={14} />
-                                </div>
+                            <div className="flex items-center justify-center gap-2 text-slate-400 pt-4 border-t border-slate-50 dark:border-slate-800">
+                                <Phone size={14} className="text-emerald-500 opacity-50" />
+                                <span className="text-xs font-black tabular-nums">{teacher.phone1}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Footer / QR Code */}
-                    <div className="mt-10 pt-6 border-t-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-between relative z-10">
-                        <div className="space-y-1 text-right" dir="rtl">
-                            <p className="text-[9px] font-black text-gray-400 uppercase">القسم الأكاديمي - أكاديمية دارين</p>
-                            <p className="text-[8px] text-gray-500 font-bold">هذه البطاقة تثبت الصفة الوظيفية لحاملها</p>
+                    <div className="mt-8 pt-6 border-t-2 border-dashed border-slate-100 dark:border-slate-800 flex items-center justify-between relative z-10">
+                        <div className="space-y-0.5 text-right" dir="rtl">
+                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
+                            <p className="text-[7px] text-slate-400 font-bold max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل أكاديمية دارين</p>
                         </div>
-                        <div className="p-2 bg-white border-2 border-gray-900">
+                        <div className="p-1.5 bg-white border border-slate-100">
                             <QRCodeSVG 
                                 value={`dareen-teacher://${teacher.id}`}
-                                size={48}
+                                size={40}
                                 level="M"
                             />
                         </div>
@@ -103,7 +100,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                 </div>
 
                 {/* Print Footer Background */}
-                <div className="h-2 bg-emerald-500 w-full"></div>
+                <div className="h-1 bg-[#5c59f2] w-full"></div>
             </div>
         </div>
     );

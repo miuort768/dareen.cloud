@@ -37,7 +37,6 @@ export const Teachers = () => {
         deleteTeacher
     } = useTeachers();
 
-    // Fetch Other Data (Students, Sessions) 
     const { data: studentsData = [], isLoading: loadingStudents } = useQuery<Student[]>({
         queryKey: ['students'],
         queryFn: async () => {
@@ -134,8 +133,7 @@ export const Teachers = () => {
                 date: logDate,
                 time: currentTime,
                 status,
-                // price: '', // Leave empty to let backend fetch student's default price
-                teacherPrice: selectedTeacher.price // Explicitly set what the teacher should get
+                teacherPrice: selectedTeacher.price
             });
             showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
             queryClient.invalidateQueries({ queryKey: ['students'] });
@@ -179,9 +177,9 @@ export const Teachers = () => {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-            showNotification('تم تصدير بيانات المعلمات بنجاح', 'success');
+            showNotification('تم تصدير البيانات بنجاح', 'success');
         } catch (error) {
-            showNotification('حدث خطأ أثناء تصدير البيانات', 'error');
+            showNotification('حدث خطأ أثناء التصدير', 'error');
         }
     };
 
@@ -198,96 +196,53 @@ export const Teachers = () => {
                 if (file.name.endsWith('.json')) {
                     const json = JSON.parse(content);
                     parsedData = Array.isArray(json) ? json : (json.data || json.teachers || []);
-                } else if (file.name.endsWith('.csv')) {
-                    const lines = content.split('\n');
-                    const headers = lines[0].split(',').map(h => h.trim());
-                    parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
-                        const values = line.split(',').map(v => v.trim());
-                        const obj: Record<string, string> = {};
-                        headers.forEach((header, i) => {
-                            obj[header] = values[i];
-                        });
-                        return obj;
-                    });
                 }
 
                 if (parsedData.length === 0) {
-                    showNotification('لم يتم العثور على بيانات صالحة للاستيراد', 'error');
+                    showNotification('لم يتم العثور على بيانات صالحة', 'error');
                     return;
                 }
 
-                showNotification(`جاري استيراد ${parsedData.length} معلمة...`, 'info');
-
-                let successCount = 0;
-                let failCount = 0;
+                showNotification(`جاري استيراد المعلمات...`, 'info');
 
                 for (const item of parsedData) {
                     try {
                         const teacherData = {
-                            name: item.name || item.Name || item['الاسم'] || '',
-                            subject: item.subject || item.Subject || item['المادة'] || item['التخصص'] || '',
-                            phone1: item.phone1 || item.Phone1 || item['رقم الهاتف 1'] || item['رقم الهاتف'] || '',
-                            phone2: item.phone2 || item.Phone2 || item['رقم الهاتف 2'] || '',
-                            price: Number(item.price || item.Price || item['سعر الحصة'] || 0),
-                            email: item.email || item['البريد الالكتروني'] || item['البريد'] || ''
+                            name: item.name || '',
+                            subject: item.subject || '',
+                            phone1: item.phone1 || '',
+                            phone2: item.phone2 || '',
+                            price: Number(item.price || 0)
                         };
 
                         if (teacherData.name) {
                             await createTeacherAsync(teacherData as Omit<Teacher, 'id'>);
-                            // Add small delay to prevent SQLite contention
                             await new Promise(resolve => setTimeout(resolve, 50));
-                            successCount++;
                         }
                     } catch (err) {
-                        console.error('Import error for item:', item, err);
-                        failCount++;
+                        console.error('Import error:', err);
                     }
                 }
 
-                if (failCount === 0) {
-                    showNotification(`تم استيراد ${successCount} معلمة بنجاح`, 'success');
-                } else {
-                    showNotification(`تم استيراد ${successCount} معلمة، وفشل ${failCount}`, 'warning');
-                }
-
+                showNotification(`اكتملت عملية الاستيراد`, 'success');
                 queryClient.invalidateQueries({ queryKey: ['teachers'] });
             } catch (error) {
-                console.error('Import process error:', error);
-                showNotification('حدث خطأ أثناء قراءة الملف أو استيراد البيانات', 'error');
+                showNotification('فشل قراءة الملف', 'error');
             }
         };
 
-        if (file.name.endsWith('.json')) {
-            reader.readAsText(file);
-        } else if (file.name.endsWith('.csv')) {
-            reader.readAsText(file, 'UTF-8');
-        } else {
-            showNotification('صيغة الملف غير مدعومة. يرجى استخدام JSON أو CSV', 'error');
-        }
-
+        reader.readAsText(file);
         e.target.value = '';
     };
 
     const handleDeleteAll = async () => {
-        if (!window.confirm('⚠️ تحذير: هل أنت متأكد من حذف جميع المعلمات؟ هذا الإجراء لا يمكن التراجع عنه!')) {
-            return;
-        }
-
-        if (!window.confirm('⚠️ تأكيد نهائي: سيتم حذف جميع بيانات المعلمات نهائياً. هل تريد المتابعة؟')) {
-            return;
-        }
-
+        if (!window.confirm('⚠️ حذف جميع المعلمات؟ لا يمكن التراجع!')) return;
         try {
-            showNotification('جاري حذف جميع المعلمات...', 'info');
-
-            // Delete all teachers in one request (Admin only endpoint)
             await api.delete('/teachers');
-
             queryClient.invalidateQueries({ queryKey: ['teachers'] });
-            showNotification(`تم حذف جميع المعلمات بنجاح`, 'success');
+            showNotification(`تم الحذف بنجاح`, 'success');
         } catch (error) {
-            console.error('Delete all error:', error);
-            showNotification('حدث خطأ أثناء حذف المعلمات', 'error');
+            showNotification('فشل الحذف', 'error');
         }
     };
 
@@ -302,93 +257,103 @@ export const Teachers = () => {
         }
     });
 
-    if (loading) {
-        return <PageLoader />;
-    }
+    if (loading) return <PageLoader />;
 
     return (
-        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
-            <PageHeader
-                title="إدارة المعلمات"
-                subtitle="تنظيم وإدارة بيانات الكادر التعليمي"
-                icon={GraduationCap}
-                stats={[
-                    { label: 'إجمالي المعلمات', value: teachers.length }
-                ]}
-                color="indigo"
-            />
-
-            <TeacherStats
-                totalTeachers={teachers.length}
-                totalStudents={totalStudentsCount}
-                uniqueSubjects={uniqueSubjects}
-                averagePrice={averagePrice}
-            />
-
-            <TeacherToolbar
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                showAddForm={showAddForm}
-                onToggleAddForm={() => {
-                    setShowAddForm(!showAddForm);
-                    if (showAddForm) setEditId(null);
-                }}
-                onImport={() => fileInputRef.current?.click()}
-                onExport={handleExport}
-                onDeleteAll={handleDeleteAll}
-            />
-
-            <input
-                ref={fileInputRef}
-                type="file"
-                accept=".json,.csv"
-                className="hidden"
-                onChange={handleImportFile}
-            />
-
-            {showAddForm && (
-                <TeacherForm
-                    onSubmit={handleAddTeacher}
-                    initialData={editId ? teachers.find(t => t.id === editId) : null}
-                    onCancel={() => { setShowAddForm(false); setEditId(null); }}
-                />
-            )}
-
-            <div className={`grid gap-6 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                <div className={showDetails ? 'lg:col-span-2' : ''}>
-                    <TeacherTable
-                        teachers={filteredTeachers}
-                        onEdit={handleEditTeacher}
-                        onDelete={setDeletingTeacherId}
-                        onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
-                        onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-                        selectedId={selectedTeacher?.id}
-                        studentCounts={studentCounts}
-                    />
+        <div className="space-y-6 pb-32 min-h-full" dir="rtl">
+            {/* Minimal High-Density Header */}
+            <div className="bg-slate-900 text-white p-4 md:p-6 border-b border-white/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[100px]"></div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-white/10 flex items-center justify-center border border-white/10 group-hover:rotate-6 transition-transform">
+                            <GraduationCap size={28} className="text-indigo-400" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-2xl font-black tracking-tight leading-none mb-1 uppercase italic">إدارة الكوادر التعليمية</h1>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                {showDetails && selectedTeacher && (
-                    <TeacherDetails
-                        teacher={selectedTeacher}
-                        onClose={() => setShowDetails(false)}
-                        students={students}
-                        sessions={sessions}
-                        onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                        onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
-                        onDeleteSession={async (id) => {
-                            await api.delete(`/sessions/${id}`);
-                            queryClient.invalidateQueries({ queryKey: ['sessions'] });
-                        }}
-                        onSendNotification={(t) => setNotifyingTeacher(t)}
-                        isTeacherView={isTeacher}
-                    />
+            <div className="p-4 md:p-0 space-y-6">
+                <TeacherStats
+                    totalTeachers={teachers.length}
+                    totalStudents={totalStudentsCount}
+                    uniqueSubjects={uniqueSubjects}
+                    averagePrice={averagePrice}
+                />
+
+                <TeacherToolbar
+                    searchTerm={searchTerm}
+                    onSearchChange={setSearchTerm}
+                    showAddForm={showAddForm}
+                    onToggleAddForm={() => {
+                        setShowAddForm(!showAddForm);
+                        if (showAddForm) setEditId(null);
+                    }}
+                    onImport={() => fileInputRef.current?.click()}
+                    onExport={handleExport}
+                    onDeleteAll={handleDeleteAll}
+                />
+
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    onChange={handleImportFile}
+                />
+
+                {showAddForm && (
+                    <div className="animate-in fade-in slide-in-from-top-4 duration-500">
+                        <TeacherForm
+                            onSubmit={handleAddTeacher}
+                            initialData={editId ? teachers.find(t => t.id === editId) : null}
+                            onCancel={() => { setShowAddForm(false); setEditId(null); }}
+                        />
+                    </div>
                 )}
+
+                <div className={`grid gap-6 ${showDetails ? 'grid-cols-1 lg:grid-cols-12' : 'grid-cols-1'}`}>
+                    <div className={showDetails ? 'lg:col-span-8' : ''}>
+                        <TeacherTable
+                            teachers={filteredTeachers}
+                            onEdit={handleEditTeacher}
+                            onDelete={setDeletingTeacherId}
+                            onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
+                            onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
+                            selectedId={selectedTeacher?.id}
+                            studentCounts={studentCounts}
+                        />
+                    </div>
+
+                    {showDetails && selectedTeacher && (
+                        <div className="lg:col-span-4 animate-in slide-in-from-left-4 duration-500">
+                            <TeacherDetails
+                                teacher={selectedTeacher}
+                                onClose={() => setShowDetails(false)}
+                                students={students}
+                                sessions={sessions}
+                                onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
+                                onDeleteSession={async (id) => {
+                                    await api.delete(`/sessions/${id}`);
+                                    queryClient.invalidateQueries({ queryKey: ['sessions'] });
+                                }}
+                                onSendNotification={(t) => setNotifyingTeacher(t)}
+                                isTeacherView={isTeacher}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
 
             <ConfirmModal
                 isOpen={!!deletingTeacherId}
                 title="حذف معلمة"
-                message="هل أنت متأكد من حذف هذه المعلمة؟ لا يمكن التراجع عن هذا الإجراء."
+                message="سيتم حذف كافة البيانات المتعلقة بهذه المعلمة. هل أنت متأكد؟"
                 onConfirm={handleDeleteTeacher}
                 onClose={() => setDeletingTeacherId(null)}
             />
