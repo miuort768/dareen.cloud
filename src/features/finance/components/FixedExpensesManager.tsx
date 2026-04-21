@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Wallet, RefreshCcw, Trash2, Zap } from 'lucide-react';
 import type { FixedExpense } from '../../../types';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
-import { cn } from '../../../lib/utils';
 
 interface FixedExpensesManagerProps {
     expenses: FixedExpense[];

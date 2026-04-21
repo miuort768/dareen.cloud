@@ -1,5 +1,4 @@
 import { DollarSign, TrendingDown, TrendingUp, Wallet, ArrowUpRight, ArrowDownRight, Zap } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface FinanceStatsProps {
     totalIncome: number;

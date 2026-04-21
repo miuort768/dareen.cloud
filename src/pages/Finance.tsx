@@ -1,5 +1,4 @@
 import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Sparkles } from 'lucide-react';
-import { Skeleton } from '../shared/components/Skeleton';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
 import { FinanceStats } from '../features/finance/components/FinanceStats';
@@ -52,7 +51,7 @@ export const Finance = () => {
                             <div className="text-right">
                                 <div className="flex items-center gap-2 mb-1">
                                     <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none italic">النظام المحاسبي المتكامل</span>
-                                    <TrendingUp className="text-[#5c59f2]" size={12} className="md:size-[14px]" />
+                                    <TrendingUp className="text-[#5c59f2] md:size-[14px]" size={12} />
                                 </div>
                                 <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">الإدارة المالية والحسابات</h1>
                                 <div className="flex items-center gap-2 mt-2">

@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight, CheckCircle2, Clock, DollarSign, X, History, Trash2, Search } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, CheckCircle2, Clock, DollarSign, X, History, Trash2 } from 'lucide-react';
 import type { Transaction } from '../../../types';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { cn } from '../../../lib/utils';
