@@ -1,11 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
-    BarChart2, TrendingUp, Users, Award, ShieldCheck
+    BarChart3, TrendingUp, Users, Award, ShieldCheck, ChevronDown, CheckCircle2, LayoutGrid
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     AreaChart, Area
 } from 'recharts';
+import { cn } from '../../../lib/utils';
 
 interface AnalyticsDashboardProps {
     students: any[];
@@ -14,6 +15,7 @@ interface AnalyticsDashboardProps {
 }
 
 export const AnalyticsDashboard = ({ students, sessions, monthlyData }: AnalyticsDashboardProps) => {
+    const [activeTab, setActiveTab] = useState<'commitment' | 'database'>('commitment');
     
     // Subject popularity analytics
     const subjectStats = useMemo(() => {
@@ -47,118 +49,179 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     const totalCancelled = sessions.filter(s => s.status === 'cancelled').length;
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
 
+    const topStudents = useMemo(() => {
+        return [...students]
+            .filter((s: any) => (s.totalPoints || 0) > 0)
+            .sort((a: any, b: any) => (b.totalPoints || 0) - (a.totalPoints || 0))
+            .slice(0, 5);
+    }, [students]);
 
     return (
         <div className="space-y-6" dir="rtl">
-            {/* Top Overview Horizontal Rectangles (Sharp & Small) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-emerald-600 p-5 rounded-none shadow-sm relative overflow-hidden group border border-slate-900">
-                    <div className="flex items-center gap-4 relative z-10">
-                        <div className="w-10 h-10 bg-white/20 rounded-none flex items-center justify-center border border-white/30 text-white">
-                            <ShieldCheck size={20} />
-                        </div>
-                        <div>
-                            <p className="text-emerald-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1 text-right">معدل الالتزام</p>
-                            <p className="text-2xl font-black text-white tabular-nums leading-none text-right">{overallRate}%</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-indigo-600 p-5 rounded-none shadow-sm relative overflow-hidden group border border-slate-900">
-                    <div className="flex items-center gap-4 relative z-10">
-                        <div className="w-10 h-10 bg-white/20 rounded-none flex items-center justify-center border border-white/30 text-white">
-                            <Users size={20} />
-                        </div>
-                        <div>
-                            <p className="text-indigo-100/80 text-[10px] font-bold uppercase tracking-widest leading-none mb-1 text-right">قاعدة الطلاب</p>
-                            <p className="text-2xl font-black text-white tabular-nums leading-none text-right">{students.length}</p>
-                        </div>
-                    </div>
-                </div>
+            {/* --- MOBILE TABS NAVIGATION --- */}
+            <div className="lg:hidden bg-white dark:bg-slate-900 p-2 rounded-2xl flex gap-2 border border-slate-100 dark:border-slate-800 shadow-sm">
+                <button 
+                    onClick={() => setActiveTab('commitment')}
+                    className={cn(
+                        "flex-1 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
+                        activeTab === 'commitment' ? "bg-emerald-50 text-emerald-600 shadow-sm" : "text-slate-400"
+                    )}
+                >
+                    <ShieldCheck size={16} />
+                    معدل الالتزام
+                </button>
+                <button 
+                    onClick={() => setActiveTab('database')}
+                    className={cn(
+                        "flex-1 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
+                        activeTab === 'database' ? "bg-indigo-50 text-indigo-600 shadow-sm" : "text-slate-400"
+                    )}
+                >
+                    <LayoutGrid size={16} />
+                    قاعدة البيانات
+                </button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white dark:bg-slate-900/50 p-6 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm h-[320px] flex flex-col">
-                    <div className="flex items-center gap-3 mb-6 border-b border-slate-50 pb-3">
-                        <TrendingUp size={16} className="text-emerald-600" />
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight italic">تطور الالتزام</h4>
-                    </div>
-                    <div className="flex-1 w-full" dir="ltr">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={attendanceData}>
-                                <defs>
-                                    <linearGradient id="colorRateSmall" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.1}/>
-                                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                <XAxis dataKey="month" tick={{ fontSize: 9, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                                <YAxis tick={{ fontSize: 9, fontWeight: 700, fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
-                                <Tooltip contentStyle={{ fontSize: '10px', borderRadius: '0', border: '1px solid #e2e8f0' }} />
-                                <Area type="monotone" dataKey="rate" stroke="#10b981" fill="url(#colorRateSmall)" strokeWidth={2} />
-                            </AreaChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-                <div className="bg-white dark:bg-slate-900/50 p-6 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm h-[320px] flex flex-col">
-                    <div className="flex items-center gap-3 mb-6 border-b border-slate-50 pb-3">
-                        <BarChart2 size={16} className="text-indigo-600" />
-                        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight italic">توزيع المسارات</h4>
-                    </div>
-                    <div className="flex-1 w-full" dir="ltr">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={subjectStats} layout="vertical">
-                                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
-                                <XAxis type="number" hide />
-                                <YAxis type="category" dataKey="subject" tick={{ fontSize: 9, fontWeight: 800, fill: '#64748b' }} width={60} axisLine={false} tickLine={false} />
-                                <Tooltip contentStyle={{ fontSize: '10px', borderRadius: '0' }} />
-                                <Bar dataKey="sessions" fill="#6366f1" radius={0} barSize={12} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
-
-            {/* 🏅 Premium Hall of Fame (Redesigned لوحة الشرف) */}
-            {students.some((s: any) => (s.totalPoints || 0) > 0) && (
-                <div className="bg-white border-2 border-slate-900 p-6 rounded-none shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
-                    <div className="flex flex-col md:flex-row items-center gap-10">
-                        {/* Title Badge */}
-                        <div className="shrink-0 flex flex-col items-start min-w-[140px]">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Award size={24} className="text-yellow-500" />
-                                <h4 className="text-2xl font-black text-slate-900 uppercase tracking-tighter italic leading-none">لوحة الشرف</h4>
+            {/* --- CONTENT SECTION --- */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                {/* 1. COMMITMENT SECTION */}
+                <div className={cn(
+                    "flex flex-col gap-6",
+                    activeTab !== 'commitment' && "hidden lg:flex"
+                )}>
+                    {/* Header Card */}
+                    <div className="bg-emerald-600 p-6 rounded-[2rem] shadow-lg shadow-emerald-100 dark:shadow-none relative overflow-hidden text-white">
+                        <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="flex items-center gap-5 relative z-10">
+                            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
+                                <ShieldCheck size={28} />
                             </div>
-                            <p className="text-[9px] font-black text-slate-400 tracking-[0.2em] uppercase italic">أفضل الأداء لهذا الشهر</p>
-                            <div className="h-1 w-1/2 bg-yellow-500 mt-2"></div>
+                            <div>
+                                <p className="text-emerald-100 text-xs font-bold uppercase tracking-wider mb-1">إجمالي معدل الالتزام</p>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-4xl font-black">{overallRate}%</span>
+                                    <span className="text-emerald-100/60 text-xs">نمو مستقر</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Chart Card */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 lg:p-8 shadow-sm flex flex-col h-[350px]">
+                        <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-3">
+                                <TrendingUp size={20} className="text-emerald-600" />
+                                <h4 className="text-lg font-bold text-slate-800 dark:text-white">تطور الالتزام</h4>
+                            </div>
+                            <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800">
+                                <span className="text-[10px] font-bold text-emerald-600">نشط الآن</span>
+                            </div>
+                        </div>
+                        <div className="flex-1 w-full" dir="ltr">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={attendanceData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                                    <defs>
+                                        <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.15}/>
+                                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                    <XAxis dataKey="month" tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                                    <YAxis tick={{ fontSize: 10, fontWeight: 700, fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
+                                    <Tooltip 
+                                        contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                                    />
+                                    <Area type="monotone" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 2. DATABASE SECTION */}
+                <div className={cn(
+                    "flex flex-col gap-6",
+                    activeTab !== 'database' && "hidden lg:flex"
+                )}>
+                     {/* Header Card */}
+                     <div className="bg-[#5c59f2] p-6 rounded-[2rem] shadow-lg shadow-indigo-100 dark:shadow-none relative overflow-hidden text-white">
+                        <div className="absolute -left-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="flex items-center gap-5 relative z-10">
+                            <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
+                                <Users size={28} />
+                            </div>
+                            <div>
+                                <p className="text-indigo-100 text-xs font-bold uppercase tracking-wider mb-1">قاعدة بيانات الطلاب</p>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-4xl font-black">{students.length}</span>
+                                    <span className="text-indigo-100/60 text-xs uppercase font-medium">طالب مسجل</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Distribution Chart Card */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 lg:p-8 shadow-sm flex flex-col h-[350px]">
+                        <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-3">
+                                <BarChart3 size={20} className="text-indigo-600" />
+                                <h4 className="text-lg font-bold text-slate-800 dark:text-white">توزيع المواد</h4>
+                            </div>
+                            <CheckCircle2 size={20} className="text-slate-300" />
+                        </div>
+                        <div className="flex-1 w-full" dir="ltr">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 30 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+                                    <XAxis type="number" hide />
+                                    <YAxis type="category" dataKey="subject" tick={{ fontSize: 10, fontWeight: 800, fill: '#64748b' }} width={80} axisLine={false} tickLine={false} />
+                                    <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '1rem', border: '1px solid #f1f5f9' }} />
+                                    <Bar dataKey="sessions" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={16} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 🏅 LOYALTY HALL OF FAME (Desktop Full Width, Mobile Adjusted) */}
+            {topStudents.length > 0 && (
+                <div className="mt-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 md:p-10 rounded-[2.5rem] shadow-sm relative overflow-hidden group">
+                     {/* Decorative Background Elements */}
+                     <div className="absolute top-0 left-1/4 w-px h-full bg-slate-50 dark:bg-slate-800"></div>
+                     <div className="absolute top-0 right-1/4 w-px h-full bg-slate-50 dark:bg-slate-800"></div>
+                    
+                    <div className="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+                        {/* Title Badge */}
+                        <div className="shrink-0 flex flex-col items-center lg:items-start min-w-[180px]">
+                            <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-[1.5rem] flex items-center justify-center mb-4 rotate-3 group-hover:rotate-0 transition-transform">
+                                <Award size={36} />
+                            </div>
+                            <h4 className="text-3xl font-black text-slate-800 dark:text-white uppercase tracking-tighter italic leading-none mb-2">لوحة الشرف</h4>
+                            <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">نجوم الشهر اللامعة</p>
                         </div>
 
-                        {/* Top Students High-Contrast List */}
-                        <div className="flex-1 grid grid-cols-2 lg:grid-cols-5 gap-4 w-full">
-                            {[...students]
-                                .filter((s: any) => (s.totalPoints || 0) > 0)
-                                .sort((a: any, b: any) => (b.totalPoints || 0) - (a.totalPoints || 0))
-                                .slice(0, 5)
-                                .map((s: any, i: number) => (
-                                    <div key={s.id} className="relative p-3 border border-slate-100 hover:border-slate-900 transition-all group overflow-hidden">
-                                        {/* Rank Number Background */}
-                                        <span className="absolute -top-2 -left-2 text-4xl font-black text-slate-50 opacity-10 group-hover:opacity-20 transition-opacity">0{i + 1}</span>
-                                        
-                                        <div className="relative z-10 pt-2 text-center md:text-right">
-                                            <p className="text-[11px] font-black text-slate-900 truncate mb-2">{s.name}</p>
-                                            <div className="flex items-center justify-between">
-                                                <div className="h-0.5 flex-1 bg-slate-100 group-hover:bg-yellow-500 transition-colors mr-2"></div>
-                                                <div className="flex flex-col items-end">
-                                                    <span className="text-[10px] font-black text-slate-950 tabular-nums">{s.totalPoints}</span>
-                                                    <span className="text-[8px] font-bold text-slate-400 uppercase leading-none">نقطة تميز</span>
-                                                </div>
+                        {/* Top Students List */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">
+                            {topStudents.map((s: any, i: number) => (
+                                <div key={s.id} className="relative p-6 bg-slate-50/50 dark:bg-slate-800/30 rounded-3xl border border-transparent hover:border-amber-200 dark:hover:border-amber-900 transition-all hover:-translate-y-1">
+                                    <div className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-700 text-slate-300 font-black text-sm rounded-full border border-slate-100 dark:border-slate-600">
+                                        0{i + 1}
+                                    </div>
+                                    <div className="pt-4">
+                                        <p className="text-sm font-black text-slate-800 dark:text-white truncate mb-4">{s.name}</p>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-lg font-black text-amber-500 tabular-nums">{s.totalPoints}</span>
+                                                <span className="text-[9px] font-bold text-slate-400 uppercase">نقطة</span>
                                             </div>
+                                            <TrendingUp size={14} className="text-emerald-500 opacity-50" />
                                         </div>
                                     </div>
-                                ))
-                            }
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
