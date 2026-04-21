@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-    BarChart3, TrendingUp, Users, Award, ShieldCheck, CheckCircle2, LayoutGrid
+    BarChart3, TrendingUp, Users, ShieldCheck, CheckCircle2, LayoutGrid
 } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -48,13 +48,6 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     const totalCompleted = sessions.filter(s => s.status === 'completed').length;
     const totalCancelled = sessions.filter(s => s.status === 'cancelled').length;
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
-
-    const topStudents = useMemo(() => {
-        return [...students]
-            .filter((s: any) => (s.totalPoints || 0) > 0)
-            .sort((a: any, b: any) => (b.totalPoints || 0) - (a.totalPoints || 0))
-            .slice(0, 5);
-    }, [students]);
 
     return (
         <div className="space-y-6" dir="rtl">

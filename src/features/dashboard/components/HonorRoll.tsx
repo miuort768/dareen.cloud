@@ -1,5 +1,4 @@
-import React from 'react';
-import { Award, Star, TrendingUp, Trophy, Crown, Sparkles } from 'lucide-react';
+import { Award, Star, TrendingUp, Trophy, Crown, Sparkles, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface Student {
@@ -50,7 +49,7 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                     
                     <div className="hidden lg:flex items-center gap-4 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-2xl border border-slate-100 dark:border-slate-700">
                         <div className="flex -space-x-3 rtl:space-x-reverse">
-                            {topStudents.map((s, i) => (
+                            {topStudents.map((s) => (
                                 <div key={s.id} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 bg-[#5c59f2] flex items-center justify-center text-[10px] font-bold text-white shadow-sm overflow-hidden">
                                     {s.name.charAt(0)}
                                 </div>
@@ -75,7 +74,7 @@ export const HonorRoll = ({ students }: HonorRollProps) => {
                                     isFirst ? "bg-amber-50/50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-900/50 ring-4 ring-amber-50/50" : 
                                     isSecond ? "bg-slate-50/50 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700" :
                                     isThird ? "bg-orange-50/30 border-orange-200 dark:bg-orange-900/5" :
-                                    "bg-white dark:bg-slate-800/20 border-slate-50 dark:border-slate-800"
+                                    "bg-white dark:bg-slate-800/20 border-slate-800 dark:border-slate-800"
                                 )}
                             >
                                 {/* Rank Icon / Medal */}
