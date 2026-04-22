@@ -692,8 +692,6 @@ const Settings = () => {
                         </section>
                     </div>
                 )}
-                    </div>
-                )}
 
                 {activeTab === 'advanced' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
