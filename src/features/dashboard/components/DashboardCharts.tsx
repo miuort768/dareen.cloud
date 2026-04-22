@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { BarChart2, Target } from 'lucide-react';
 import type { DashboardMonthData as MonthData } from '../types';
+import { cn } from '../../../lib/utils';
 
 interface DashboardChartsProps {
     isTeacher: boolean;

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
@@ -37,8 +37,6 @@ export const NotificationsCenter = ({
 }: NotificationsCenterProps) => {
     const { adminPhone } = useApp();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<'smart' | 'alerts'>('smart');
-    const [isAlertsExpanded, setIsAlertsExpanded] = useState(true);
     const [, setDismissedIds] = useState<string[]>([]);
 
     useEffect(() => {
@@ -148,7 +146,6 @@ export const NotificationsCenter = ({
     }, [tasks, lowBalanceStudents, adminPhone]);
 
     const [smartFilter, setSmartFilter] = useState<'all' | 'balance' | 'attendance' | 'invoices'>('all');
-    const [roomFilter, setRoomFilter] = useState<'all' | 'low_balance' | 'task'>('all');
 
     const filteredSmartAlerts = useMemo(() => {
         if (smartFilter === 'all') return smartAlerts;
@@ -158,10 +155,7 @@ export const NotificationsCenter = ({
         return smartAlerts;
     }, [smartAlerts, smartFilter]);
 
-    const filteredRoomAlerts = useMemo(() => {
-        if (roomFilter === 'all') return roomAlerts;
-        return roomAlerts.filter(a => a.type === roomFilter);
-    }, [roomAlerts, roomFilter]);
+    const filteredRoomAlerts = roomAlerts;
 
     return (
         <div className="w-full space-y-6" dir="rtl">

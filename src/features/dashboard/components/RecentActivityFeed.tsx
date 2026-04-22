@@ -1,4 +1,4 @@
-import { CheckCircle2, ListTodo, History, Clock, Calendar } from 'lucide-react';
+import { ListTodo, History, Clock, Calendar } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface Activity {
