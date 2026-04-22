@@ -263,7 +263,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             sunset: '234 88 12', ocean: '37 99 235', forest: '16 185 129', royal: '147 51 234',
             electric: '139 92 246', mint: '20 184 166', berry: '190 24 93', gold: '234 179 8',
             crimson: '190 18 60', midnight: '15 23 42', lava: '220 38 38', lavender: '167 139 250',
-            spring: '132 204 22', flame: '249 115 22'
+            spring: '132 204 22', flame: '249 115 22', nebula: '139 92 246', aurora: '34 197 94',
+            fire: '239 68 68', ice: '14 165 233', jungle: '21 128 61', desert: '180 83 9',
+            coffee: '120 113 108'
         };
         root.style.setProperty('--color-primary', colors[themeColor] || colors.indigo);
     }, [themeColor]);

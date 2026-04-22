@@ -48,6 +48,16 @@ const THEME_COLORS = [
     { id: 'midnight', label: 'ليلي', class: 'bg-slate-900' },
     { id: 'lava', label: 'حمم', class: 'bg-orange-600' },
     { id: 'mint', label: 'نعناع', class: 'bg-emerald-400' },
+    { id: 'lavender', label: 'خزامي', class: 'bg-indigo-300' },
+    { id: 'spring', label: 'ربيعي', class: 'bg-lime-400' },
+    { id: 'flame', label: 'لهب', class: 'bg-orange-500' },
+    { id: 'nebula', label: 'سديم', class: 'bg-gradient-to-tr from-violet-600 to-indigo-400' },
+    { id: 'aurora', label: 'شفق', class: 'bg-gradient-to-tr from-emerald-400 to-cyan-400' },
+    { id: 'fire', label: 'نار', class: 'bg-gradient-to-tr from-red-600 to-orange-500' },
+    { id: 'ice', label: 'جليد', class: 'bg-gradient-to-tr from-sky-400 to-blue-500' },
+    { id: 'jungle', label: 'أدغال', class: 'bg-gradient-to-tr from-green-600 to-emerald-400' },
+    { id: 'desert', label: 'صحراء', class: 'bg-gradient-to-tr from-yellow-600 to-amber-500' },
+    { id: 'coffee', label: 'قهوة', class: 'bg-stone-600' },
 ];
 
 type TabId = 'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit';
