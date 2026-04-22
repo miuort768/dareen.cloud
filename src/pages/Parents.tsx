@@ -1,7 +1,6 @@
-import React from 'react';
-import { Search, AlertCircle, X } from 'lucide-react';
+import { Search, AlertCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { Skeleton } from '../components/ui/Skeleton';
+
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
 import { ParentsTable } from '../features/parents/components/ParentsTable';
 import { ParentDetails } from '../features/parents/components/ParentDetails';

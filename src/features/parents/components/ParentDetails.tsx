@@ -1,5 +1,6 @@
 import React from 'react';
 import { User, X, Phone, Mail, Users, GraduationCap, Calendar, TrendingUp } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
 

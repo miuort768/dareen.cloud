@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, UserPlus, Download, X, Plus } from 'lucide-react';
+import { Users, Download, X, Plus } from 'lucide-react';
 
 interface ParentsHeaderProps {
     totalParents: number;
