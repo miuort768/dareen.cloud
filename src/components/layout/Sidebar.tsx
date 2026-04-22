@@ -339,7 +339,7 @@ export const Sidebar = () => {
                                     to={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={({ isActive }) => cn(
-                                        "flex items-center gap-2 p-2.5 rounded-xl transition-all duration-200",
+                                        "flex items-center gap-2 py-1.5 px-2.5 rounded-xl transition-all duration-200",
                                         isActive
                                             ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/20 dark:text-primary-400 shadow-sm border border-primary-100 dark:border-primary-900/30"
                                             : "bg-gray-50/50 text-gray-600 hover:bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
@@ -348,10 +348,10 @@ export const Sidebar = () => {
                                     {({ isActive }) => (
                                         <>
                                             <div className={cn(
-                                                "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
+                                                "w-7 h-7 rounded-lg flex items-center justify-center transition-all",
                                                 isActive ? "bg-white text-primary-600 shadow-sm dark:bg-gray-800" : "bg-white/50 text-gray-400 dark:bg-gray-800/50"
                                             )}>
-                                                <item.icon size={16} />
+                                                <item.icon size={14} />
                                             </div>
                                             <span className="text-[11px] font-bold tracking-tight truncate">{item.name}</span>
                                         </>
