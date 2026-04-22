@@ -63,16 +63,16 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-xl overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
-            <div className="bg-slate-900 dark:bg-black px-6 py-8 flex items-center justify-between gap-6">
+            <div className="bg-slate-950 px-6 py-6 flex items-center justify-between gap-6 border-b border-white/5">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#5c59f2] text-white flex items-center justify-center rounded-2xl shadow-lg">
-                        {initialData ? <Edit size={24} /> : <Plus size={24} />}
+                    <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] text-white flex items-center justify-center rounded-none shadow-lg">
+                        {initialData ? <Edit size={20} /> : <Plus size={20} />}
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-white tracking-tight">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
+                        <h3 className="text-lg font-black text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
+                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-0.5">
                             {initialData ? 'تحديث السجل الأكاديمي' : 'فتح سجل كادر جديد'}
                         </p>
                     </div>
@@ -80,88 +80,93 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 <button 
                     type="button" 
                     onClick={onCancel}
-                    className="w-10 h-10 flex items-center justify-center text-slate-400 hover:bg-white/10 rounded-xl transition-all"
+                    className="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white/10 rounded-none transition-all"
                 >
-                    <X size={20} />
+                    <X size={18} />
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-8 space-y-10">
+            <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Basic Info Section */}
-                <div className="space-y-6">
-                    <div className="flex items-center gap-3 pb-3 border-b border-slate-50 dark:border-slate-800">
-                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
-                            <Info size={16} className="text-[#5c59f2]" />
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3 pb-2 border-b border-slate-50 dark:border-slate-800">
+                        <div className="w-6 h-6 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-none">
+                            <Info size={12} className="text-[var(--primary-color,#5c59f2)]" />
                         </div>
-                        <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-tight">بيانات التعريف الأساسية</h4>
+                        <h4 className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest">بيانات التعريف الأساسية</h4>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <FormInput label="الاسم الكامل" icon={User} value={formData.name} onChange={(val: any) => setFormData({ ...formData, name: val })} required placeholder="مثال: سارة محمد" />
-                        <FormInput label="رقم الهاتف" icon={Phone} type="tel" value={formData.phone1} onChange={(val: any) => setFormData({ ...formData, phone1: val })} required placeholder="05XXXXXXXX" dir="ltr" />
-                        <FormInput label="التخصص الأكاديمي" icon={Tag} value={formData.subject} onChange={(val: any) => setFormData({ ...formData, subject: val })} required placeholder="مثال: لغة عربية" />
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">تعريفة الحصة</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <FormInput label="الاسم الكامل" icon={User} value={formData.name} onChange={(val: any) => setFormData({ ...formData, name: val })} required placeholder="سارة محمد" />
+                        <FormInput label="رقم الهاتف (1)" icon={Phone} type="tel" value={formData.phone1} onChange={(val: any) => setFormData({ ...formData, phone1: val })} required placeholder="05XXXXXXXX" dir="ltr" />
+                        <FormInput label="رقم الهاتف (2)" icon={Phone} type="tel" value={formData.phone2} onChange={(val: any) => setFormData({ ...formData, phone2: val })} placeholder="اختياري" dir="ltr" />
+                        <FormInput label="التخصص" icon={Tag} value={formData.subject} onChange={(val: any) => setFormData({ ...formData, subject: val })} required placeholder="لغة عربية" />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <FormInput label="الرقم القومي / الهوية" icon={Key} value={(formData as any).nationalId || ''} onChange={(val: any) => setFormData({ ...formData, nationalId: val } as any)} placeholder="اختياري" dir="ltr" />
+                        <div className="space-y-1.5">
+                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">تعريفة الحصة</label>
                             <div className="relative group">
-                                <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors" size={14} />
+                                <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
                                 <input
                                     required
                                     type="number"
                                     value={formData.price}
                                     onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-xl text-xs font-bold transition-all"
+                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-none text-[11px] font-black transition-all"
                                     placeholder="0.00"
                                 />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[9px] font-bold text-emerald-500 uppercase">ج.م</span>
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-black text-emerald-500 uppercase">ج.م</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-transparent">
+                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 rounded-none border border-slate-100 dark:border-slate-800/50">
                     <label 
                         onClick={() => setEnableLogin(!enableLogin)}
                         className="flex items-center gap-3 cursor-pointer group mb-6"
                     >
                         <div className={cn(
-                            "w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all",
-                            enableLogin ? "bg-[#5c59f2] border-[#5c59f2]" : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
+                            "w-4 h-4 rounded-none border flex items-center justify-center transition-all",
+                            enableLogin ? "bg-[var(--primary-color,#5c59f2)] border-[var(--primary-color,#5c59f2)]" : "bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700"
                         )}>
-                            {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />}
+                            {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-none" />}
                         </div>
-                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300">تفعيل حساب المعلمة على المنصة</span>
+                        <span className="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">تفعيل حساب المعلمة على المنصة</span>
                     </label>
 
                     {enableLogin && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-top-2 duration-300">
-                            <div className="space-y-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase">اسم المستخدم</label>
-                                    <button type="button" onClick={generateUsername} className="text-[9px] text-[#5c59f2] font-bold hover:underline uppercase">توليد تلقائي</button>
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">اسم المستخدم</label>
+                                    <button type="button" onClick={generateUsername} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-black hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
+                                    <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-xl text-xs font-bold font-mono"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-black font-mono"
                                         placeholder="username"
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase">كلمة المرور</label>
-                                    <button type="button" onClick={generatePassword} className="text-[9px] text-[#5c59f2] font-bold hover:underline uppercase">توليد تلقائي</button>
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">كلمة المرور</label>
+                                    <button type="button" onClick={generatePassword} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-black hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
-                                    <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
+                                    <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
                                     <input
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-xl text-xs font-bold font-mono tracking-widest"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-black font-mono tracking-widest"
                                         placeholder="password"
                                     />
                                 </div>
@@ -170,12 +175,12 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                     )}
                 </div>
 
-                <div className="flex items-center justify-end pt-6 border-t border-slate-50 dark:border-slate-800">
+                <div className="flex items-center justify-end pt-4 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-10 py-3 bg-[#5c59f2] text-white text-[11px] font-bold uppercase tracking-widest hover:bg-indigo-700 rounded-xl flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-8 py-3 bg-[var(--primary-color,#5c59f2)] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:opacity-90 rounded-none flex items-center gap-2 shadow-xl active:scale-95 transition-all"
                     >
-                        <Save size={16} />
+                        <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
                     </button>
                 </div>
@@ -185,10 +190,10 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
 };
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: any) => (
-    <div className="space-y-2">
-        <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">{label}</label>
+    <div className="space-y-1.5">
+        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">
-            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#5c59f2] transition-colors" size={14} />}
+            {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--primary-color,#5c59f2)] transition-colors" size={12} />}
             <input
                 required={required}
                 type={type}
@@ -196,7 +201,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] dark:text-white rounded-xl text-xs font-bold transition-all",
+                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] dark:text-white rounded-none text-[11px] font-black transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}
