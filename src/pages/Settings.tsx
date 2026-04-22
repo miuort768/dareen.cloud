@@ -338,21 +338,21 @@ const Settings = () => {
             </div>
 
             {/* ── Tab Navigation ── */}
-            <div className="px-4 md:px-6">
-                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-1.5 shadow-sm">
-                    <div className="flex overflow-x-auto no-scrollbar gap-1">
+            <div className="px-0 md:px-0">
+                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-2 shadow-sm">
+                    <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 md:px-6">
                         {TABS.map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={cn(
-                                    'flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-bold whitespace-nowrap transition-all',
+                                    'flex items-center gap-2 px-4 py-3 rounded-xl text-[13px] font-black whitespace-nowrap transition-all uppercase tracking-tight',
                                     activeTab === tab.id
-                                        ? 'bg-[#5c59f2] text-white shadow-sm'
-                                        : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
+                                        ? 'bg-[#5c59f2] text-white shadow-md transform scale-105 z-10'
+                                        : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 bg-slate-50/50 dark:bg-slate-800/50'
                                 )}
                             >
-                                <tab.icon size={13} />
+                                <tab.icon size={15} />
                                 {tab.label}
                             </button>
                         ))}
