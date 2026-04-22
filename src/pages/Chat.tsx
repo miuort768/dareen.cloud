@@ -122,12 +122,11 @@ export const Chat: React.FC = () => {
 
     return (
         <div className={cn(
-            "flex overflow-hidden bg-[#f0f2f5] dark:bg-[#0b141a]",
-            "fixed inset-0 lg:relative lg:inset-auto z-[40]",
-            "h-[100dvh] lg:p-4 lg:gap-0"
+            "flex overflow-hidden bg-white dark:bg-[#111b21]",
+            "w-full h-[calc(100dvh-70px)] lg:h-screen lg:relative lg:inset-auto z-10"
         )}>
 
-            <div className="flex w-full h-full max-w-[1600px] mx-auto shadow-2xl overflow-hidden bg-white dark:bg-[#111b21] lg:rounded-md border border-gray-200 dark:border-gray-800 relative z-10">
+            <div className="flex w-full h-full max-w-full mx-auto relative z-10">
                 <ChatSidebar
                     conversations={conversations}
                     selectedConv={selectedConv}

@@ -79,7 +79,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
     return (
-        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full pb-[65px] lg:pb-0">
+        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
             {/* WhatsApp Doodle Background Pattern */}
             <div 
                 className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
