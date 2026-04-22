@@ -287,7 +287,11 @@ const Settings = () => {
     const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        if (!window.confirm('⚠️ تحذير: استيراد البيانات سيؤدي إلى استبدال البيانات الحالية. هل أنت متأكد؟')) return;
+
+        if (!window.confirm('⚠️ تحذير: استيراد البيانات سيؤدي إلى استبدال كافة البيانات الحالية بالبيانات الموجودة في الملف. هل أنت متأكد؟')) {
+            e.target.value = '';
+            return;
+        }
 
         const formData = new FormData();
         formData.append('file', file);
@@ -295,22 +299,34 @@ const Settings = () => {
         setIsSaving(true);
         try {
             const token = localStorage.getItem('auth_token');
-            const url = API_BASE_URL.startsWith('http') ? `${API_BASE_URL}/system/backup/import` : `${window.location.origin}${API_BASE_URL}/system/backup/import`;
-            const response = await fetch(url, {
+            const cleanBaseUrl = API_BASE_URL.startsWith('http') ? API_BASE_URL : `${window.location.origin}${API_BASE_URL}`;
+            const endpoint = `${cleanBaseUrl.replace(/\/$/, '')}/system/backup/import`;
+            
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {},
                 body: formData
             });
+
             if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error || 'فشل استيراد البيانات');
+                let errorMsg = 'فشل استيراد البيانات';
+                try {
+                    const err = await response.json();
+                    errorMsg = err.error || err.message || errorMsg;
+                } catch (parseErr) {
+                    errorMsg = `خطأ في السيرفر (${response.status})`;
+                }
+                throw new Error(errorMsg);
             }
-            showNotify('تم استيراد البيانات بنجاح');
+
+            showNotify('تم استيراد البيانات بنجاح! سيتم تحديث الصفحة...');
             setTimeout(() => window.location.reload(), 2000);
         } catch (e: any) {
-            alert(e.message);
+            console.error('Import Error:', e);
+            alert(`⚠️ عذراً: ${e.message}`);
         } finally {
             setIsSaving(false);
+            if (e.target) e.target.value = '';
         }
     };
 
