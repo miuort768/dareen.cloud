@@ -32,6 +32,7 @@ export const TeacherDetails = ({
 }: TeacherDetailsProps) => {
     const navigate = useNavigate();
     const [showCard, setShowCard] = useState(false);
+    const [showActivityModal, setShowActivityModal] = useState(false);
 
     // Filter students enrolled with this teacher
     const enrolledStudents = students.filter(s =>
@@ -42,8 +43,6 @@ export const TeacherDetails = ({
     const teacherSessions = sessions
         .filter(s => s.teacherName === teacher.name)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-    const recentSessions = teacherSessions.slice(0, 15);
 
     // Performance Calculations
     const now = new Date();
@@ -66,35 +65,35 @@ export const TeacherDetails = ({
 
     return (
         <div className={cn(
-            "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit rounded-2xl overflow-hidden shadow-xl animate-in slide-in-from-left-4 duration-300",
+            "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit rounded-none overflow-hidden shadow-2xl animate-in slide-in-from-left-4 duration-300",
             "fixed inset-0 z-[100] m-4 lg:m-0 lg:static lg:h-fit lg:sticky lg:top-4"
         )} dir="rtl">
             {/* Header Section */}
-            <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+            <div className="relative p-6 bg-slate-950 border-b border-white/5">
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-slate-400 hover:text-rose-500 p-2 hover:bg-rose-50 rounded-xl transition-all"
+                    className="absolute left-4 top-4 text-slate-500 hover:text-rose-500 p-2 hover:bg-white/5 rounded-none transition-all"
                 >
                     <X size={18} />
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg shrink-0">
-                        {teacher.name.charAt(0)}
+                    <div className="w-16 h-16 bg-[var(--primary-color,#5c59f2)] text-white rounded-none flex items-center justify-center font-black text-2xl shadow-xl shrink-0 rotate-3">
+                        <div className="-rotate-3">{teacher.name.charAt(0)}</div>
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-bold text-lg text-slate-800 dark:text-white truncate">{teacher.name}</h3>
-                            <button onClick={() => setShowCard(true)} className="text-slate-300 hover:text-indigo-500 transition-colors">
+                            <h3 className="font-black text-lg text-white truncate uppercase tracking-tighter italic">{teacher.name}</h3>
+                            <button onClick={() => setShowCard(true)} className="text-slate-500 hover:text-indigo-400 transition-colors">
                                 <Shield size={14} />
                             </button>
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">{teacher.subject}</span>
+                            <span className="text-[9px] font-black text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-none uppercase tracking-widest">{teacher.subject}</span>
                             {!isTeacherView && (
                                 <div className="flex items-center gap-1 mr-auto">
-                                    <button onClick={() => onSendNotification(teacher)} className="p-1.5 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all"><Bell size={14} /></button>
-                                    <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all"><MessageCircle size={14} /></button>
+                                    <button onClick={() => onSendNotification(teacher)} className="p-2 text-amber-500 hover:bg-amber-500/10 rounded-none transition-all"><Bell size={16} strokeWidth={2.5} /></button>
+                                    <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="p-2 text-emerald-500 hover:bg-emerald-500/10 rounded-none transition-all"><MessageCircle size={16} strokeWidth={2.5} /></button>
                                 </div>
                             )}
                         </div>
@@ -102,26 +101,27 @@ export const TeacherDetails = ({
                 </div>
             </div>
 
-            <div className="p-6 space-y-8 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none">
+            <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none">
                 {/* Performance Gauge */}
-                <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
+                <div className="p-5 bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/50 rounded-none shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
                     <div className="flex justify-between items-start mb-4">
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">الأداء (الشهر الحالي)</p>
+                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-xl font-black text-slate-800 dark:text-white">{monthlySessions}</span>
-                                <span className="text-[10px] font-bold text-slate-400">حصة منجزة</span>
+                                <span className="text-2xl font-black text-slate-800 dark:text-white italic tracking-tighter">{monthlySessions}</span>
+                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">جلسة منجزة</span>
                             </div>
                         </div>
                         <div className={cn(
-                            "flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold",
-                            performanceChange >= 0 ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
+                            "flex items-center gap-1 px-2.5 py-1 rounded-none text-[10px] font-black uppercase tracking-tighter",
+                            performanceChange >= 0 ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "bg-rose-500 text-white shadow-lg shadow-rose-500/20"
                         )}>
                             <TrendingUp size={10} className={performanceChange < 0 ? "rotate-180" : ""} />
                             {performanceChange > 0 ? `+${performanceChange}%` : `${performanceChange}%`}
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-none overflow-hidden">
                         <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${Math.min(100, (monthlySessions / (prevMonthSessions || 1)) * 50)}%` }}
@@ -132,33 +132,38 @@ export const TeacherDetails = ({
 
                 {/* Enrollment Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
-                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">الطلاب المسجلون ({enrolledStudents.length})</h4>
+                    <div className="flex items-center gap-0">
+                        <div className="bg-slate-900 text-white px-3 py-1.5 rounded-none">
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em]">الطلاب المسجلون</h4>
+                        </div>
+                        <div className="bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-sm border-y border-l border-slate-200 dark:border-slate-700">
+                            <span className="text-[10px] font-black text-slate-600 dark:border-slate-700">{enrolledStudents.length}</span>
+                        </div>
                     </div>
                     <div className="space-y-2">
                         {enrolledStudents.map(student => {
                             const enrollment = student.enrollments.find((e: Enrollment) => e.teacher === teacher.name)!;
                             return (
-                                <div key={student.id} className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-transparent flex justify-between items-center group hover:border-slate-100 dark:hover:border-slate-700 transition-all">
+                                <div key={student.id} className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none flex justify-between items-center group hover:border-[var(--primary-color,#5c59f2)] transition-all">
                                     <div className="min-w-0">
-                                        <p className="text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">{student.name}</p>
-                                        <p className="text-[9px] font-bold text-slate-400">{student.grade} • {enrollment?.subject}</p>
+                                        <p className="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate uppercase tracking-tight">{student.name}</p>
+                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">{student.grade} • {enrollment?.subject}</p>
                                     </div>
                                     <div className="flex gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button
                                             onClick={() => onLogAttendance(student, enrollment)}
-                                            className="w-7 h-7 flex items-center justify-center text-emerald-500 hover:bg-emerald-100 rounded-lg transition-all"
+                                            className="w-8 h-8 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-none transition-all"
                                             title="تسجيل حضور"
                                         >
-                                            <CheckCircle2 size={14} />
+                                            <CheckCircle2 size={16} strokeWidth={2.5} />
                                         </button>
                                         {!isTeacherView && (
                                             <button
                                                 onClick={() => onUnenroll(student, teacher.name)}
-                                                className="w-7 h-7 flex items-center justify-center text-rose-500 hover:bg-rose-100 rounded-lg transition-all"
+                                                className="w-8 h-8 flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white rounded-none transition-all"
                                                 title="إلغاء التسجيل"
                                             >
-                                                <Trash2 size={14} />
+                                                <Trash2 size={16} strokeWidth={2.5} />
                                             </button>
                                         )}
                                     </div>
@@ -168,43 +173,98 @@ export const TeacherDetails = ({
                     </div>
                 </div>
 
-                {/* Recent Sessions */}
-                <div className="space-y-4 border-t border-slate-50 dark:border-slate-800 pt-6">
-                    <div className="flex items-center justify-between">
-                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">آخر النشاطات</h4>
-                        <span className="text-[8px] font-bold bg-slate-50 text-slate-400 px-2 py-0.5 rounded">15 جلسة</span>
-                    </div>
-                    <div className="space-y-2">
-                        {recentSessions.map(session => (
-                            <div key={session.id} className="flex items-center justify-between p-2.5 bg-white dark:bg-slate-900 border border-slate-50 dark:border-slate-800 rounded-xl">
-                                <div className="flex items-center gap-3">
-                                    <div className={cn(
-                                        "w-1.5 h-1.5 rounded-full",
-                                        session.status === 'completed' ? "bg-emerald-500" : "bg-rose-500"
-                                    )} />
-                                    <div className="min-w-0">
-                                        <p className="font-bold text-[10px] text-slate-600 dark:text-slate-300 truncate">{session.studentName}</p>
-                                        <div className="flex items-center gap-2 text-[8px] text-slate-400 mt-0.5 font-bold">
-                                            <Calendar size={8} /> {session.date}
-                                            <Clock size={8} /> {session.time}
-                                        </div>
-                                    </div>
-                                </div>
-                                {!isTeacherView && (
-                                    <button 
-                                        onClick={() => onDeleteSession(session.id)} 
-                                        className="text-slate-300 hover:text-rose-500 transition-colors"
-                                    >
-                                        <Trash2 size={12} />
-                                    </button>
-                                )}
+                {/* Detailed Activity Button */}
+                <div className="pt-4">
+                    <button
+                        onClick={() => setShowActivityModal(true)}
+                        className="w-full h-14 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 flex items-center justify-between px-6 hover:border-[var(--primary-color,#5c59f2)] hover:bg-slate-50 dark:hover:bg-slate-800 transition-all group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 flex items-center justify-center group-hover:bg-[var(--primary-color,#5c59f2)] group-hover:text-white transition-colors">
+                                <Clock size={18} />
                             </div>
-                        ))}
-                    </div>
+                            <div className="text-right">
+                                <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest">سجل النشاطات المفصل</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
+                            </div>
+                        </div>
+                        <CheckCircle2 size={16} className="text-slate-300 group-hover:text-[var(--primary-color,#5c59f2)]" />
+                    </button>
                 </div>
             </div>
 
             {showCard && <TeacherCard teacher={teacher} onClose={() => setShowCard(false)} />}
+
+            {/* Detailed Activity Modal */}
+            {showActivityModal && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl">
+                    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setShowActivityModal(false)}></div>
+                    <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl w-full max-w-4xl h-full max-h-[80vh] flex flex-col rounded-none overflow-hidden animate-in zoom-in-95">
+                        <div className="p-6 bg-slate-950 text-white flex items-center justify-between border-b border-white/5">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-[var(--primary-color,#5c59f2)] flex items-center justify-center rounded-none shadow-xl">
+                                    <Clock size={24} />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-black uppercase tracking-tighter italic">سجل نشاطات المعلمة</h3>
+                                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{teacher.name} • تفاصيل الجلسات والعمليات</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setShowActivityModal(false)} className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-rose-500 transition-all">
+                                <X size={20} />
+                            </button>
+                        </div>
+                        
+                        <div className="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900/50">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {teacherSessions.map(session => (
+                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                                        <div className={cn(
+                                            "absolute top-0 right-0 w-1 h-full",
+                                            session.status === 'completed' ? "bg-emerald-500" : "bg-rose-500"
+                                        )} />
+                                        
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all">
+                                                    <Calendar size={16} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[11px] font-black text-slate-800 dark:text-white uppercase tracking-tight">{session.studentName}</p>
+                                                    <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{session.date}</p>
+                                                </div>
+                                            </div>
+                                            <span className={cn(
+                                                "text-[8px] font-black uppercase tracking-widest px-2 py-0.5",
+                                                session.status === 'completed' ? "text-emerald-500 bg-emerald-50" : "text-rose-500 bg-rose-50"
+                                            )}>
+                                                {session.status === 'completed' ? 'تم الإنجاز' : 'ملغاة'}
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+                                            <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                <Clock size={10} /> {session.time}
+                                            </div>
+                                            {!isTeacherView && (
+                                                <button onClick={() => onDeleteSession(session.id)} className="w-7 h-7 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-colors">
+                                                    <Trash2 size={12} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {teacherSessions.length === 0 && (
+                                <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
+                                    <Clock size={64} className="mb-4" />
+                                    <p className="font-black uppercase tracking-[0.3em]">لا توجد نشاطات مسجلة</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
