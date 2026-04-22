@@ -1,4 +1,5 @@
 import { TrendingUp, TrendingDown, DollarSign, FileText } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
 interface FinancialReportProps {
     totalRevenue: number;
@@ -8,6 +9,19 @@ interface FinancialReportProps {
     completedSessions: number;
 }
 
+const FinancialCard = ({ title, value, subValue, icon: Icon, color, bg, subColor }: any) => (
+    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+            <div className={cn("p-1.5 rounded-lg", bg)}>
+                <Icon size={14} className={color} />
+            </div>
+            <h3 className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">{title}</h3>
+        </div>
+        <p className="text-lg font-black text-slate-800 dark:text-white tabular-nums">{value.toLocaleString()} ج.م</p>
+        <p className={cn("text-[10px] font-bold mt-1", subColor)}>هذا الشهر: {subValue.toLocaleString()} ج.م</p>
+    </div>
+);
+
 export const FinancialReport = ({
     totalRevenue,
     monthRevenue,
@@ -15,62 +29,52 @@ export const FinancialReport = ({
     monthExpenses,
     completedSessions
 }: FinancialReportProps) => {
+    const netProfit = totalRevenue - totalExpenses;
+    const monthNetProfit = monthRevenue - monthExpenses;
+
     return (
         <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Total Revenue Card */}
-                <div className="bg-white p-3 border border-gray-200 dark:bg-gray-900 dark:border-gray-800 shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                        <div className="p-2 bg-emerald-100 rounded-none dark:bg-emerald-900/30">
-                            <TrendingUp className="text-emerald-600 dark:text-emerald-400" size={16} />
-                        </div>
-                        <h3 className="text-xs font-bold text-gray-600 dark:text-gray-400">إجمالي الإيرادات</h3>
-                    </div>
-                    <p className="text-xl font-black text-gray-950 dark:text-white mb-1 tabular-nums">{totalRevenue.toLocaleString()} ج.م</p>
-                    <p className="text-[10px] text-emerald-600 font-bold">هذا الشهر: {monthRevenue.toLocaleString()} ج.م</p>
-                </div>
-
-                {/* Total Expenses Card */}
-                <div className="bg-white p-3 border border-gray-200 dark:bg-gray-900 dark:border-gray-800 shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                        <div className="p-2 bg-rose-100 rounded-none dark:bg-rose-900/30">
-                            <TrendingDown className="text-rose-600 dark:text-rose-400" size={16} />
-                        </div>
-                        <h3 className="text-xs font-bold text-gray-600 dark:text-gray-400">إجمالي المصروفات</h3>
-                    </div>
-                    <p className="text-xl font-black text-gray-950 dark:text-white mb-1 tabular-nums">{totalExpenses.toLocaleString()} ج.م</p>
-                    <p className="text-[10px] text-rose-600 font-bold">هذا الشهر: {monthExpenses.toLocaleString()} ج.م</p>
-                </div>
-
-                {/* Net Profit Card */}
-                <div className="bg-white p-3 border border-gray-200 dark:bg-gray-900 dark:border-gray-800 shadow-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                        <div className="p-2 bg-indigo-100 rounded-none dark:bg-indigo-900/30">
-                            <DollarSign className="text-indigo-600 dark:text-indigo-400" size={16} />
-                        </div>
-                        <h3 className="text-xs font-bold text-gray-600 dark:text-gray-400">صافي الربح</h3>
-                    </div>
-                    <p className="text-xl font-black text-gray-950 dark:text-white mb-1 tabular-nums">
-                        {(totalRevenue - totalExpenses).toLocaleString()} ج.م
-                    </p>
-                    <p className="text-[10px] text-indigo-600 font-bold">
-                        هذا الشهر: {(monthRevenue - monthExpenses).toLocaleString()} ج.م
-                    </p>
-                </div>
+                <FinancialCard
+                    title="إجمالي الإيرادات"
+                    value={totalRevenue}
+                    subValue={monthRevenue}
+                    icon={TrendingUp}
+                    color="text-emerald-500"
+                    bg="bg-emerald-50 dark:bg-emerald-900/20"
+                    subColor="text-emerald-600"
+                />
+                <FinancialCard
+                    title="إجمالي المصروفات"
+                    value={totalExpenses}
+                    subValue={monthExpenses}
+                    icon={TrendingDown}
+                    color="text-rose-500"
+                    bg="bg-rose-50 dark:bg-rose-900/20"
+                    subColor="text-rose-600"
+                />
+                <FinancialCard
+                    title="صافي الربح"
+                    value={netProfit}
+                    subValue={monthNetProfit}
+                    icon={DollarSign}
+                    color="text-[#5c59f2]"
+                    bg="bg-[#eef2ff] dark:bg-indigo-900/30"
+                    subColor="text-[#5c59f2]"
+                />
             </div>
 
-            {/* Financial Summary Message */}
-            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 p-3 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-900/30">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-start gap-3">
-                    <div className="p-1.5 bg-purple-100 rounded-none dark:bg-purple-900/40">
-                        <FileText className="text-purple-600 dark:text-purple-400" size={16} />
+                    <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+                        <FileText size={16} className="text-[#5c59f2]" />
                     </div>
                     <div>
-                        <h3 className="text-xs font-bold text-purple-900 dark:text-purple-200 mb-1">ملخص التقرير المالي</h3>
-                        <p className="text-[11px] text-purple-700 dark:text-purple-300 leading-relaxed">
-                            تم تسجيل <strong>{completedSessions}</strong> حصة مكتملة بإجمالي إيرادات <strong>{totalRevenue.toLocaleString()} ج.م</strong>.
-                            المصروفات الإجمالية للمعلمات بلغت <strong>{totalExpenses.toLocaleString()} ج.م</strong>،
-                            مما حقق صافي ربح قدره <strong>{(totalRevenue - totalExpenses).toLocaleString()} ج.م</strong>.
+                        <h3 className="text-xs font-bold text-slate-800 dark:text-white mb-1">ملخص التقرير المالي</h3>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                            تم تسجيل <span className="font-bold text-slate-700 dark:text-slate-200">{completedSessions}</span> حصة مكتملة بإجمالي إيرادات <span className="font-bold text-emerald-600">{totalRevenue.toLocaleString()} ج.م</span>.
+                            المصروفات الإجمالية للمعلمات بلغت <span className="font-bold text-rose-600">{totalExpenses.toLocaleString()} ج.م</span>،
+                            مما حقق صافي ربح قدره <span className="font-bold text-[#5c59f2]">{netProfit.toLocaleString()} ج.م</span>.
                         </p>
                     </div>
                 </div>
