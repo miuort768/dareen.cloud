@@ -2,8 +2,8 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     Search, DollarSign, Users, AlertCircle, CreditCard, Percent,
     Plus, Edit, Trash2, Check, X, GraduationCap,
-    CheckCircle2, Printer, UserPlus, RefreshCw, ChevronRight,
-    Sparkles, Layout
+    CheckCircle2, Printer, UserPlus, RefreshCw,
+    Sparkles
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -13,7 +13,6 @@ import {
     type TeacherInvoice,
     type Teacher,
     type TeacherInvoiceFormData,
-    type InvoiceStats,
     type InvoiceStatus,
     INVOICE_STATUS,
 } from '../types/invoice';
