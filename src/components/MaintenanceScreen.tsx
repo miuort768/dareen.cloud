@@ -5,66 +5,70 @@ export const MaintenanceScreen = () => {
     const { adminPhone } = useApp();
 
     return (
-        <div className="h-dvh w-full bg-[#020617] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
-            {/* Geometric Accents */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-amber-500/10" />
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary-500/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-primary-500/10" />
+        <div className="h-dvh w-full bg-[#f1f5f9] dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
+                 style={{ backgroundImage: 'radial-gradient(#5c59f2 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
-            <div className="relative z-10 max-w-xl w-full">
-                {/* Branding Tag */}
-                <div className="mb-12 inline-block bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 px-4 py-2 shadow-[4px_4px_0px_#e2e8f0] dark:shadow-[4px_4px_0px_#1e293b]">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Academy Management System</p>
-                </div>
+            <div className="relative z-10 max-w-lg w-full">
+                {/* Main Card Container */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none shadow-[12px_12px_0px_rgba(92,89,242,0.1)] overflow-hidden">
+                    
+                    {/* Top Accent Bar */}
+                    <div className="h-1.5 bg-[#5c59f2] w-full" />
 
-                {/* Main Visual */}
-                <div className="relative mb-10 group">
-                    <div className="w-24 h-24 mx-auto bg-amber-500 flex items-center justify-center border-4 border-black dark:border-white shadow-[8px_8px_0px_#b45309] transform -rotate-3 group-hover:rotate-0 transition-transform">
-                        <Snowflake size={40} className="text-white animate-spin-slow" />
+                    <div className="p-8 md:p-12">
+                        {/* Status Icon */}
+                        <div className="mb-8">
+                            <div className="w-20 h-20 mx-auto bg-[#eef2ff] dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-800 shadow-sm">
+                                <Snowflake size={36} className="text-[#5c59f2] animate-spin-slow" />
+                            </div>
+                        </div>
+
+                        {/* Title */}
+                        <div className="space-y-3 mb-8">
+                            <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tighter uppercase">
+                                المنصة في وضع <br/> 
+                                <span className="text-[#5c59f2]">الصيانة الدورية</span>
+                            </h1>
+                            <p className="text-slate-500 dark:text-slate-400 font-bold text-[13px] md:text-sm leading-relaxed max-w-xs mx-auto">
+                                نحن بصدد تحديث النظام وتطوير البنية التحتية لتقديم خدمة أفضل.
+                            </p>
+                        </div>
+
+                        {/* Progress Bar - Settings Style */}
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 mb-8">
+                            <div className="flex justify-between items-center mb-2 px-1">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">System Update</span>
+                                <span className="text-[10px] font-black text-[#5c59f2] uppercase tracking-widest">75% Complete</span>
+                            </div>
+                            <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div className="h-full bg-[#5c59f2] animate-pulse" style={{ width: '75%' }} />
+                            </div>
+                        </div>
+
+                        {/* WhatsApp Button - Settings Button Style */}
+                        {adminPhone && (
+                            <a
+                                href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-3 bg-[#5c59f2] hover:bg-indigo-700 text-white px-6 py-4 rounded-xl text-[13px] font-black uppercase tracking-tight shadow-md transition-all transform hover:scale-[1.02] active:scale-95"
+                            >
+                                📱 تواصل مع الدعم الفني
+                            </a>
+                        )}
+                    </div>
+
+                    {/* Footer Info */}
+                    <div className="bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 px-6 py-4 flex justify-between items-center">
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">© 2024 Dareen Academy</span>
+                        <div className="flex items-center gap-1.5">
+                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
+                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Server v2.4.0</span>
+                        </div>
                     </div>
                 </div>
-
-                {/* Title Section */}
-                <div className="space-y-4 mb-10">
-                    <h1 className="text-4xl md:text-6xl font-black text-white leading-none tracking-tighter uppercase">
-                        المنصة في وضع <br/> 
-                        <span className="text-amber-500 underline decoration-8 decoration-amber-500/30 underline-offset-8">الصيانة</span>
-                    </h1>
-                    <p className="text-slate-400 font-bold text-sm md:text-base leading-relaxed max-w-md mx-auto">
-                        نقوم حالياً بإجراء تحديثات جذرية لضمان أفضل تجربة تعليمية. 
-                        سنكون متاحين خلال وقت قصير جداً.
-                    </p>
-                </div>
-
-                {/* Progress Indicator */}
-                <div className="flex flex-col items-center gap-4 mb-12">
-                    <div className="w-full max-w-xs h-3 bg-slate-900 border border-slate-800 overflow-hidden p-0.5">
-                        <div className="h-full bg-amber-500 animate-loading-bar" style={{ width: '60%' }} />
-                    </div>
-                    <span className="text-[11px] font-black text-amber-500 uppercase tracking-widest animate-pulse">
-                        العمل جاري الآن — انتظرونا
-                    </span>
-                </div>
-
-                {/* Contact Footer */}
-                {adminPhone && (
-                    <div className="pt-8 border-t border-slate-800/50">
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">للحالات الطارئة تواصل معنا</p>
-                        <a
-                            href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 font-black text-xs uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all shadow-[6px_6px_0px_#1e293b] active:translate-y-1 active:shadow-none"
-                        >
-                            📱 تواصل واتساب الآن
-                        </a>
-                    </div>
-                )}
-            </div>
-
-            {/* Bottom Bar */}
-            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center opacity-30">
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">© 2024 Dareen Academy</span>
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">v2.4.0 Stable</span>
             </div>
         </div>
     );
