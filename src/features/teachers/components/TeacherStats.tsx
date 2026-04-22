@@ -10,17 +10,17 @@ interface TeacherStatsProps {
 
 const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: any) => (
     <div className={cn(
-        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col items-start relative overflow-hidden transition-all hover:shadow-md",
+        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-none shadow-sm flex flex-col items-start relative overflow-hidden transition-all hover:shadow-md",
         borderColor
     )}>
-        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center mb-4 border border-white/10 shadow-sm", bg)}>
-            <Icon size={18} className={color} />
+        <div className={cn("w-8 h-8 rounded-none flex items-center justify-center mb-3 border border-white/10 shadow-sm", bg)}>
+            <Icon size={14} className={color} />
         </div>
-        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</p>
-        <p className="text-xl font-black text-slate-800 dark:text-white mt-1 tracking-tighter italic">{value}</p>
-        <div className="mt-4 flex items-center gap-1.5">
+        <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</p>
+        <p className="text-base font-black text-slate-800 dark:text-white mt-0.5 tracking-tighter italic">{value}</p>
+        <div className="mt-3 flex items-center gap-1.5">
             <span className={cn("w-1 h-1 rounded-full", color.replace('text-', 'bg-'))}></span>
-            <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{trend}</p>
+            <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{trend}</p>
         </div>
     </div>
 );
