@@ -5,14 +5,14 @@ export const MaintenanceScreen = () => {
     const { adminPhone } = useApp();
 
     return (
-        <div className="h-dvh w-full bg-[#f1f5f9] dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
-                 style={{ backgroundImage: 'radial-gradient(#5c59f2 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        <div className="h-dvh w-full bg-gradient-to-br from-[#020617] via-[#0f172a] to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">
+            {/* Geometric Accents */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#5c59f2]/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-[#5c59f2]/10" />
+            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-500/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-indigo-500/10" />
 
             <div className="relative z-10 max-w-lg w-full">
                 {/* Main Card Container */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none shadow-[12px_12px_0px_rgba(92,89,242,0.1)] overflow-hidden">
+                <div className="bg-white dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-none shadow-none overflow-hidden">
                     
                     {/* Top Accent Bar */}
                     <div className="h-1.5 bg-[#5c59f2] w-full" />
