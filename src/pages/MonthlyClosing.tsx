@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
     Calendar, Filter, Download, RefreshCw, Printer, 
     ArrowDownRight,
-    TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2, Star,
+    TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2,
     Activity as ActivityIcon, Wallet
 } from 'lucide-react';
 import { 
