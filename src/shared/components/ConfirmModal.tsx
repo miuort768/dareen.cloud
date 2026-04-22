@@ -19,71 +19,77 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     onConfirm,
     title,
     message,
-    confirmText = 'تأكيد',
-    cancelText = 'إلغاء',
+    confirmText = 'تأكيد العملية',
+    cancelText = 'تراجع',
     isDestructive = true
 }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl">
             <div
-                className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm"
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-300"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto rounded-none">
+            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+                {/* Visual Header Accent */}
                 <div className={cn(
                     "h-1.5 w-full",
-                    isDestructive ? "bg-red-600" : "bg-primary-600"
+                    isDestructive ? "bg-rose-600 shadow-[0_0_15px_rgba(225,29,72,0.4)]" : "bg-[var(--primary-color,#5c59f2)] shadow-[0_0_15px_rgba(92,89,242,0.4)]"
                 )}></div>
 
-                <div className="p-8">
+                {/* Decorative Geometric Background */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+                <div className="p-10 relative z-10">
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                        className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                     >
-                        <X size={20} />
+                        <X size={18} />
                     </button>
 
                     <div className="flex flex-col items-center text-center">
                         <div className={cn(
-                            "w-16 h-16 rounded-none flex items-center justify-center mb-6 shadow-inner border",
+                            "w-20 h-20 rounded-none flex items-center justify-center mb-8 border-2 rotate-3 shadow-xl",
                             isDestructive
-                                ? "bg-red-50 text-red-600 border-red-100 dark:bg-red-900/20 dark:border-red-900/30"
-                                : "bg-primary-50 text-primary-600 border-primary-100 dark:bg-primary-900/20 dark:border-primary-900/30"
+                                ? "bg-rose-50 text-rose-600 border-rose-100 dark:bg-rose-900/20 dark:border-rose-900/30"
+                                : "bg-indigo-50 text-[var(--primary-color,#5c59f2)] border-indigo-100 dark:bg-indigo-900/20 dark:border-indigo-900/30"
                         )}>
-                            {isDestructive ? <Trash2 size={32} /> : <AlertCircle size={32} />}
+                            <div className="-rotate-3">
+                                {isDestructive ? <Trash2 size={36} strokeWidth={1.5} /> : <AlertCircle size={36} strokeWidth={1.5} />}
+                            </div>
                         </div>
 
-                        <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3 uppercase tracking-tight">
+                        <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tighter italic">
                             {title}
                         </h3>
 
-                        <p className="text-gray-500 dark:text-gray-400 font-bold text-sm leading-relaxed mb-8 whitespace-pre-line text-right">
+                        <p className="text-slate-500 dark:text-slate-400 font-bold text-xs leading-relaxed mb-10 text-center max-w-[280px]">
                             {message}
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-3 w-full">
-                            <button
-                                onClick={onClose}
-                                className="flex-1 px-6 h-12 border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-slate-400 font-black text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-gray-800 rounded-none"
-                            >
-                                {cancelText}
-                            </button>
+                        <div className="flex flex-col gap-3 w-full">
                             <button
                                 onClick={() => {
                                     onConfirm();
                                     onClose();
                                 }}
                                 className={cn(
-                                    "flex-1 px-6 h-12 text-white font-black text-sm uppercase tracking-widest shadow-lg rounded-none",
+                                    "px-6 h-14 text-white font-black text-[11px] uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95 rounded-none",
                                     isDestructive
-                                        ? "bg-red-600 hover:bg-red-700 shadow-red-600/20"
-                                        : "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/20"
+                                        ? "bg-rose-600 hover:bg-rose-700 shadow-rose-600/20"
+                                        : "bg-[var(--primary-color,#5c59f2)] hover:opacity-90 shadow-indigo-600/20"
                                 )}
                             >
                                 {confirmText}
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="px-6 h-12 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-black text-[10px] uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-all rounded-none"
+                            >
+                                {cancelText}
                             </button>
                         </div>
                     </div>
