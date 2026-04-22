@@ -263,32 +263,35 @@ export const Teachers = () => {
     return (
         <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
             {/* Header Section */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 text-[#5c59f2] rounded-xl shadow-sm">
-                        <GraduationCap size={18} />
+            <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/5">
+                {/* Geometric Background Element */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#5c59f2]/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+                
+                <div className="relative z-10 flex items-center gap-5">
+                    <div className="w-14 h-14 flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 text-[#5c59f2] rounded-none shadow-2xl">
+                        <GraduationCap size={28} strokeWidth={1.5} />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-tight">إدارة الكوادر التعليمية</h1>
-                        <div className="flex items-center gap-2">
-                             <p className="text-[10px] text-slate-400 italic font-bold">الأقسام الأكاديمية • {teachers.length} معلمة</p>
-                             <span className="w-1 h-1 bg-slate-200 rounded-full"></span>
-                             <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">مزامنة نشطة</span>
+                        <h1 className="text-xl font-black text-white uppercase tracking-tighter">إدارة الكوادر التعليمية</h1>
+                        <div className="flex items-center gap-3 mt-1.5">
+                             <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</p>
+                             <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.5)]"></span>
+                             <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5">مزامنة نشطة</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 no-print">
+                <div className="relative z-10 flex items-center gap-3 no-print">
                     <button
                         onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                         className={cn(
-                            "h-9 px-4 flex items-center gap-2 text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
+                            "h-11 px-8 flex items-center gap-3 text-[11px] font-black uppercase tracking-widest rounded-none transition-all shadow-xl active:scale-95",
                             showAddForm 
-                            ? "bg-rose-50 text-rose-600 hover:bg-rose-100" 
-                            : "bg-[#5c59f2] text-white hover:bg-indigo-700 shadow-indigo-500/10"
+                            ? "bg-rose-500 text-white hover:bg-rose-600" 
+                            : "bg-[#5c59f2] text-white hover:bg-indigo-700 shadow-indigo-500/20"
                         )}
                     >
-                        {showAddForm ? <X size={14} /> : <Plus size={14} />}
+                        {showAddForm ? <X size={16} /> : <Plus size={16} />}
                         <span>{showAddForm ? 'إلغاء العملية' : 'إضافة معلمة جديدة'}</span>
                     </button>
                 </div>
