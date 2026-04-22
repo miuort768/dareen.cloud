@@ -21,10 +21,10 @@ export const Layout = () => {
             {!isChatOnly && (
                 <div className={cn(
                     "hidden lg:block shrink-0 transition-all duration-300",
-                    (location.pathname.includes('/chat') || isChatOnly) ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72")
+                    isChatOnly ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72")
                 )}>
                     {/* This div just takes up space on the right so content doesn't go under fixed sidebar */}
-                    <div className={cn("transition-all duration-300", (location.pathname.includes('/chat') || isChatOnly) ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72"))} />
+                    <div className={cn("transition-all duration-300", isChatOnly ? "w-0" : (sidebarCollapsed ? "w-20" : "w-72"))} />
                 </div>
             )}
             {!isChatOnly && <Sidebar />}

@@ -122,8 +122,8 @@ export const Chat: React.FC = () => {
 
     return (
         <div className={cn(
-            "flex overflow-hidden bg-white dark:bg-[#111b21]",
-            "w-full h-[calc(100dvh-70px)] lg:h-screen lg:relative lg:inset-auto z-10"
+            "flex overflow-hidden bg-white dark:bg-slate-900",
+            "w-full h-[calc(100dvh-70px)] lg:h-screen relative z-10"
         )}>
 
             <div className="flex w-full h-full max-w-full mx-auto relative z-10">
