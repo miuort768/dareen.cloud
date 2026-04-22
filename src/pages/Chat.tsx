@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
@@ -30,10 +31,21 @@ export const Chat: React.FC = () => {
     const [newMessage, setNewMessage] = useState('');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
 
     React.useEffect(() => {
         setActiveConversationId(selectedConv?.id || null);
     }, [selectedConv, setActiveConversationId]);
+
+    // Handle "Start Chat With" from other pages
+    React.useEffect(() => {
+        const targetUserId = location.state?.startChatWith;
+        if (targetUserId && availableUsers.length > 0) {
+            handleCreateDirectChat(targetUserId);
+            // Clear the state so it doesn't re-trigger
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state, availableUsers]);
 
     // Modal States
     const [showNewChatModal, setShowNewChatModal] = useState(false);
