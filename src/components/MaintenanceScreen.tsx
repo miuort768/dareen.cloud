@@ -18,43 +18,42 @@ export const MaintenanceScreen = () => {
                     </div>
                 </div>
 
-                {/* Title */}
-                <div className="space-y-3 mb-10">
-                    <h1 className="text-2xl md:text-4xl font-black text-white leading-tight tracking-tighter uppercase">
+                {/* Title Section */}
+                <div className="mb-12">
+                    <h1 className="text-2xl md:text-4xl font-black text-white leading-tight tracking-tighter uppercase mb-8">
                         المنصة في وضع <br/> 
                         <span className="text-[#5c59f2] underline decoration-4 decoration-[#5c59f2]/20 underline-offset-4">الصيانة الدورية</span>
                     </h1>
-                    <p className="text-slate-400 font-bold text-xs md:text-sm leading-relaxed max-w-xs mx-auto">
+                    <p className="text-slate-400 font-bold text-sm md:text-base leading-relaxed max-w-xs mx-auto">
                         نحن بصدد إجراء تحديثات جذرية لضمان أفضل تجربة تعليمية. 
                         سنكون متاحين خلال وقت قصير جداً.
                     </p>
                 </div>
 
-                {/* Progress Indicator - High Contrast */}
-                <div className="flex flex-col items-center gap-4 mb-12">
-                    <div className="w-full max-w-[240px] h-2 bg-white/5 border border-white/10 rounded-full overflow-hidden p-0.5">
-                        <div className="h-full bg-[#5c59f2] rounded-full shadow-[0_0_10px_rgba(92,89,242,0.4)]" style={{ width: '75%' }} />
+                {/* Progress Indicator - Cleaner */}
+                <div className="flex flex-col items-center gap-4 mb-16">
+                    <div className="w-full max-w-[280px] h-2 bg-white/5 border border-white/10 rounded-full overflow-hidden p-0.5">
+                        <div className="h-full bg-[#5c59f2] rounded-full shadow-[0_0_15px_rgba(92,89,242,0.5)]" style={{ width: '75%' }} />
                     </div>
-                    <span className="text-[9px] font-black text-[#5c59f2] uppercase tracking-[0.4em] animate-pulse">
-                        System Update — 75%
+                    <span className="text-[10px] font-black text-[#5c59f2] uppercase tracking-[0.5em] animate-pulse">
+                        العمل جاري الآن
                     </span>
                 </div>
-
-                {/* WhatsApp Button - Premium Sleek Style */}
-                {adminPhone && (
-                    <div className="flex flex-col items-center gap-6">
-                        <a
-                            href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center bg-white hover:bg-[#5c59f2] text-[#020617] hover:text-white px-12 py-4 rounded-full text-[12px] font-black uppercase tracking-widest shadow-xl transition-all transform hover:scale-[1.05] active:scale-95 border-2 border-white"
-                        >
-                            تواصل مع الدعم الفني
-                        </a>
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em]">Urgent Matters Only</p>
-                    </div>
-                )}
             </div>
+
+            {/* Bottom Button Area */}
+            {adminPhone && (
+                <div className="absolute bottom-12 left-6 right-6 flex flex-col items-center">
+                    <a
+                        href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center bg-white hover:bg-[#5c59f2] text-[#020617] hover:text-white px-14 py-5 rounded-full text-sm md:text-base font-black uppercase tracking-widest shadow-2xl transition-all transform hover:scale-[1.05] active:scale-95 border-2 border-white"
+                    >
+                        تواصل مع الدعم الفني
+                    </a>
+                </div>
+            )}
         </div>
     );
 };
