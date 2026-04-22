@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, Sparkles, X, Check } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Announcement {
     id: string;
@@ -51,10 +52,10 @@ export const ModernAnnouncements: React.FC = () => {
 
     const getTypeDetails = (type: string) => {
         switch (type) {
-            case 'urgent': return { icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200', label: 'تنبيه عاجل', gradient: 'bg-rose-600' };
-            case 'holiday': return { icon: Calendar, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'إجازة رسمية', gradient: 'bg-amber-500' };
-            case 'event': return { icon: Megaphone, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-200', label: 'فعالية قادمة', gradient: 'bg-indigo-600' };
-            default: return { icon: Info, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', label: 'إعلان عام', gradient: 'bg-emerald-600' };
+            case 'urgent': return { icon: AlertTriangle, color: 'text-rose-600', bg: 'bg-rose-50 dark:bg-rose-900/20', label: 'تنبيه عاجل' };
+            case 'holiday': return { icon: Calendar, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20', label: 'إجازة رسمية' };
+            case 'event': return { icon: Megaphone, color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-900/20', label: 'فعالية قادمة' };
+            default: return { icon: Info, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20', label: 'إعلان عام' };
         }
     };
 
@@ -69,94 +70,115 @@ export const ModernAnnouncements: React.FC = () => {
     };
 
     return (
-        <div className="relative group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-none overflow-hidden transition-all duration-500">
-            {/* Animated Progress Bar (Sharp) */}
-            <div className="absolute bottom-0 right-0 h-1 bg-indigo-500 transition-all duration-[8000ms] ease-linear z-20" 
-                 style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }} />
-            
-            <div className="flex flex-col md:flex-row items-stretch min-h-[100px]">
-                {/* Type Badge - Technical Box (Sharp & Small) */}
-                <div onClick={() => setShowAcknowledge(true)} className={cn("w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-3 md:p-4 gap-2 transition-all duration-700 relative cursor-pointer hover:opacity-80 active:scale-95", type.bg)}>
-                    <div className={cn("p-1.5 md:p-2 rounded-none bg-white dark:bg-slate-900 border-2 border-slate-900 text-slate-900", type.color)}>
-                        <type.icon size={16} className="md:size-[20px]" />
+        <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden mb-6" dir="rtl">
+            <div className="flex flex-col md:flex-row items-stretch">
+                {/* Type Indicator */}
+                <div 
+                    onClick={() => setShowAcknowledge(true)}
+                    className={cn(
+                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-4 gap-3 cursor-pointer transition-all hover:bg-opacity-80",
+                        type.bg
+                    )}
+                >
+                    <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm">
+                        <type.icon size={20} className={type.color} />
                     </div>
-                    <span className={cn("text-[8px] md:text-[9px] font-black uppercase tracking-widest leading-none", type.color)}>
+                    <span className={cn("text-[9px] font-black uppercase tracking-widest leading-none text-center", type.color)}>
                         {type.label}
                     </span>
-                    <div className="hidden md:block absolute top-1 right-1 opacity-20 group-hover:opacity-100 italic font-black text-[8px] tracking-tighter">ACKNOWLEDGE</div>
                 </div>
 
-                {/* Content Area (Smaller Fonts) */}
-                <div onClick={() => setShowAcknowledge(true)} className="flex-1 p-4 md:p-8 flex flex-col justify-center relative cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                    <div className="absolute top-2 left-4 md:top-4 md:left-6 flex items-center gap-2 px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800 rounded-none border border-slate-100 dark:border-slate-700">
-                        <Sparkles size={8} className="text-amber-500" />
-                        <span className="text-[7px] md:text-[8px] font-bold text-slate-400 uppercase tracking-widest">{currentIndex + 1} / {announcements.length}</span>
+                {/* Content */}
+                <div 
+                    onClick={() => setShowAcknowledge(true)}
+                    className="flex-1 p-6 md:p-8 relative cursor-pointer group"
+                >
+                    <div className="absolute top-4 left-6 flex items-center gap-2 px-2 py-1 bg-slate-50 dark:bg-slate-800 rounded-full">
+                        <Sparkles size={10} className="text-amber-400" />
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
-                    <div className="animate-in fade-in slide-in-from-right-4 duration-500 pr-1 py-4 md:py-0">
-                        <h4 className="text-slate-900 dark:text-white font-black text-sm md:text-lg mb-1 tracking-tighter uppercase italic leading-tight">
-                            {current.title}
-                        </h4>
-                        <p className="text-slate-500 dark:text-gray-400 text-[10px] md:text-[11px] font-bold leading-relaxed max-w-4xl line-clamp-3 md:line-clamp-none">
-                            {current.content}
-                        </p>
-                    </div>
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={current.id}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.5 }}
+                            className="pr-2"
+                        >
+                            <h4 className="text-slate-800 dark:text-white font-bold text-lg mb-2 leading-tight">
+                                {current.title}
+                            </h4>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2 md:line-clamp-none">
+                                {current.content}
+                            </p>
+                        </motion.div>
+                    </AnimatePresence>
 
-                    {/* Navigation Control (Sharp) */}
+                    {/* Navigation */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-2 left-4 md:bottom-4 md:left-6 flex gap-1.5" onClick={(e) => e.stopPropagation()}>
-                            <button 
-                                onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)}
-                                className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
-                            >
-                                <ChevronRight size={12} className="md:size-[14px]" />
-                            </button>
-                            <button 
-                                onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)}
-                                className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-none bg-slate-900 text-white hover:bg-indigo-600 transition-all border border-slate-950"
-                            >
-                                <ChevronLeft size={12} className="md:size-[14px]" />
-                            </button>
+                        <div className="absolute bottom-4 left-6 flex gap-2" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-[#5c59f2] rounded-xl transition-all shadow-sm"><ChevronRight size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-[#5c59f2] rounded-xl transition-all shadow-sm"><ChevronLeft size={16} /></button>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Acknowledgment Dialog (Sharp Technical Modal) */}
-            {showAcknowledge && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-slate-900/60 transition-all animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-950 border-2 border-slate-900 dark:border-white p-5 md:p-8 max-w-md w-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] relative animate-in slide-in-from-bottom-5">
-                        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-                            <type.icon size={24} className={cn("shrink-0 md:size-[32px]", type.color)} />
-                            <div>
-                                <h3 className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">قمت برؤية التنبيه</h3>
-                                <p className="text-[8px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Acknowledgment of information</p>
+            {/* Progress Bar */}
+            <div className="absolute bottom-0 right-0 h-1 bg-[#5c59f2] opacity-20 w-full" />
+            <motion.div 
+                className="absolute bottom-0 right-0 h-1 bg-[#5c59f2]"
+                initial={{ width: "0%" }}
+                animate={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
+                transition={{ duration: 0.5 }}
+            />
+
+            {/* Acknowledgment Modal */}
+            <AnimatePresence>
+                {showAcknowledge && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-900/40">
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-8 max-w-md w-full shadow-2xl"
+                        >
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center", type.bg)}>
+                                    <type.icon size={28} className={type.color} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">تأكيد القراءة</h3>
+                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">إشعار إداري هام</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <p className="text-[11px] md:text-xs font-bold text-slate-600 dark:text-slate-400 mb-6 md:mb-8 leading-relaxed italic border-r-2 border-indigo-500 pr-3 md:pr-4">
-                            "{current.content}"
-                        </p>
+                            <p className="text-sm font-bold text-slate-600 dark:text-slate-400 mb-8 leading-relaxed italic border-r-4 border-indigo-500 pr-4">
+                                "{current.content}"
+                            </p>
 
-                        <div className="grid grid-cols-2 gap-3 md:gap-4">
-                            <button 
-                                onClick={handleDismiss}
-                                className="flex items-center justify-center gap-2 py-3 md:py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all"
-                            >
-                                <Check size={14} />
-                                موافق
-                            </button>
-                            <button 
-                                onClick={() => setShowAcknowledge(false)}
-                                className="flex items-center justify-center gap-2 py-3 md:py-4 border-2 border-slate-900 dark:border-white font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
-                            >
-                                <X size={14} />
-                                ترك
-                            </button>
-                        </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <button 
+                                    onClick={handleDismiss}
+                                    className="h-12 bg-[#5c59f2] text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-100"
+                                >
+                                    <Check size={18} />
+                                    موافق، قرأت
+                                </button>
+                                <button 
+                                    onClick={() => setShowAcknowledge(false)}
+                                    className="h-12 bg-slate-50 dark:bg-slate-800 text-slate-400 font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-100 transition-all active:scale-95"
+                                >
+                                    <X size={18} />
+                                    إغلاق
+                                </button>
+                            </div>
+                        </motion.div>
                     </div>
-                </div>
-            )}
+                )}
+            </AnimatePresence>
         </div>
     );
 };

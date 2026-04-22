@@ -8,29 +8,33 @@ export const QuickActionsHub = () => {
             title: 'إضافة طالب جديد', 
             icon: UserPlus, 
             href: '/students?action=new', 
-            color: 'bg-indigo-600',
-            description: 'تسجيل طالب جديد في النظام'
+            color: 'text-[#5c59f2]',
+            bg: 'bg-indigo-50 dark:bg-indigo-900/20',
+            description: 'تسجيل طالب جديد'
         },
         { 
             title: 'إصدار فاتورة', 
             icon: FilePlus, 
             href: '/student-invoices?action=new', 
-            color: 'bg-emerald-600',
-            description: 'إنشاء فاتورة رسوم دراسية'
+            color: 'text-emerald-600',
+            bg: 'bg-emerald-50 dark:bg-emerald-900/20',
+            description: 'رسوم دراسية'
         },
         { 
             title: 'تعديل الجدول', 
             icon: Calendar, 
             href: '/schedule', 
-            color: 'bg-amber-500',
-            description: 'إدارة مواعيد الحصص'
+            color: 'text-amber-500',
+            bg: 'bg-amber-50 dark:bg-amber-900/20',
+            description: 'مواعيد الحصص'
         },
         { 
             title: 'إعلان عام', 
             icon: Megaphone, 
             href: '/announcements?action=new', 
-            color: 'bg-rose-600',
-            description: 'تنبيه لجميع المستخدمين'
+            color: 'text-rose-600',
+            bg: 'bg-rose-50 dark:bg-rose-900/20',
+            description: 'تنبيه للجميع'
         }
     ];
 
@@ -40,21 +44,18 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="group relative bg-white dark:bg-slate-900 p-4 rounded-none border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:bg-slate-50 flex flex-col gap-3"
+                    className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col gap-3 active:scale-95"
                 >
                     <div className="flex items-center justify-between">
-                        <div className={cn(
-                            "w-8 h-8 flex items-center justify-center rounded-none text-white border border-slate-900 shadow-none",
-                            action.color
-                        )}>
-                            <action.icon size={16} />
+                        <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105", action.bg)}>
+                            <action.icon size={18} className={action.color} />
                         </div>
-                        <ArrowLeft size={16} className="text-slate-200 group-hover:text-slate-400 group-hover:-translate-x-1 transition-all" />
+                        <ArrowLeft size={16} className="text-slate-300 group-hover:text-slate-500 group-hover:-translate-x-1 transition-all" />
                     </div>
                     
                     <div className="min-w-0">
-                        <h3 className="font-bold text-slate-900 dark:text-white text-[11px] mb-1 leading-none uppercase tracking-tight">{action.title}</h3>
-                        <p className="text-[9px] font-medium text-slate-400 dark:text-gray-500 leading-none truncate italic">{action.description}</p>
+                        <h3 className="font-bold text-slate-800 dark:text-white text-xs mb-1 tracking-tight">{action.title}</h3>
+                        <p className="text-[10px] font-bold text-slate-400 leading-none truncate opacity-60 uppercase italic">{action.description}</p>
                     </div>
                 </Link>
             ))}

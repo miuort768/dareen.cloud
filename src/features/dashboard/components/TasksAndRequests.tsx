@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ListTodo, ChevronLeft } from 'lucide-react';
+import { ListTodo, ChevronLeft, Clock, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardTask as Task } from '../types';
 
@@ -9,61 +9,63 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <div className="bg-white/90 dark:bg-slate-900/50 backdrop-blur-md border-y md:border border-slate-200 dark:border-slate-800 p-3 md:p-6 shadow-sm rounded-none border-t-2 border-t-amber-500 h-full flex flex-col animate-in fade-in duration-700">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 md:w-10 md:h-10 bg-amber-50 text-amber-600 flex items-center justify-center">
-                        <ListTodo size={18} />
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm h-full flex flex-col">
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-2xl flex items-center justify-center">
+                        <ListTodo size={20} />
                     </div>
                     <div>
-                        <h3 className="text-xs md:text-sm font-black text-slate-900 dark:text-white uppercase tracking-tighter">المهام والطلبات</h3>
+                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">المهام والطلبات</h3>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">قائمة المتابعة اليومية</p>
                     </div>
                 </div>
-                <Link to="/tasks" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400">
-                    <ChevronLeft size={18} />
+                <Link to="/tasks" className="w-9 h-9 flex items-center justify-center text-slate-300 hover:text-indigo-500 hover:bg-indigo-50 rounded-xl transition-all">
+                    <ChevronLeft size={20} />
                 </Link>
             </div>
 
-            <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1">
+            <div className="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-2 -mr-2">
                 {tasks.length > 0 ? (
                     tasks.slice(0, 5).map((task) => (
-                        <div key={task.id} className="p-3 md:p-4 bg-slate-50/80 dark:bg-slate-800/20 transition-all hover:bg-white dark:hover:bg-slate-800 group relative">
+                        <div key={task.id} className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all group">
                             <div className="flex items-start gap-4">
                                 <div className={cn(
-                                    "w-1 h-8 shrink-0",
-                                    task.priority === 'high' ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" :
+                                    "w-1.5 h-10 rounded-full shrink-0",
+                                    task.priority === 'high' ? "bg-rose-500" :
                                     task.priority === 'medium' ? "bg-amber-500" : "bg-indigo-500"
-                                )}></div>
+                                )} />
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-black text-[12px] text-slate-800 dark:text-white leading-tight mb-2 truncate uppercase tracking-tight">{task.title}</p>
+                                    <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight mb-2 truncate group-hover:text-indigo-500 transition-colors">{task.title}</h4>
                                     <div className="flex items-center gap-3">
-                                        <div className="flex items-center gap-1.5 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-                                            <span className="text-[10px] font-black text-slate-500 font-mono tracking-tighter">{task.dueDate}</span>
+                                        <div className="flex items-center gap-1.5 text-slate-400">
+                                            <Clock size={10} />
+                                            <span className="text-[10px] font-bold tabular-nums">{task.dueDate}</span>
                                         </div>
-                                        <span className={cn(
-                                            "text-[9px] font-black px-2 py-0.5 border tracking-widest uppercase",
-                                            task.priority === 'high' ? "bg-red-50 text-red-600 border-red-100 dark:bg-red-950/20" : "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-700/50"
-                                        )}>
-                                            {task.priority === 'high' ? 'عاجل' : 'مجدول'}
-                                        </span>
+                                        {task.priority === 'high' && (
+                                            <span className="flex items-center gap-1 text-[9px] font-bold text-rose-500 bg-rose-50 px-2 py-0.5 rounded-lg uppercase">
+                                                <AlertCircle size={8} />
+                                                عاجل
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="h-full flex flex-col items-center justify-center border-2 border-dashed border-slate-100 dark:border-slate-800/50 p-10 grayscale opacity-30">
-                        <ListTodo size={40} className="mb-4 text-slate-300" />
-                        <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">لا توجد مهام حالياً</p>
+                    <div className="h-full flex flex-col items-center justify-center opacity-30 py-10">
+                        <ListTodo size={48} className="text-slate-300 mb-4" />
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">لا توجد مهام معلقة</p>
                     </div>
                 )}
             </div>
             
             <Link 
                 to="/tasks" 
-                className="mt-6 w-full py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[11px] uppercase tracking-[0.2em] text-center hover:bg-slate-800 dark:hover:bg-slate-100 transition-all border border-transparent shadow-xl shadow-slate-900/10"
+                className="mt-6 w-full h-11 flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-[10px] uppercase tracking-widest rounded-2xl hover:bg-indigo-600 dark:hover:bg-indigo-50 transition-all active:scale-95"
             >
-                عرض كافة الطلبات
+                عرض كافة المهام
             </Link>
         </div>
     );

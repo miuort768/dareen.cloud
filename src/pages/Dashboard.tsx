@@ -17,6 +17,7 @@ import { TeacherSessionTimeline } from '../features/dashboard/components/Teacher
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
+
 export const Dashboard = () => {
     const { currentUser } = useApp();
 
@@ -37,7 +38,7 @@ export const Dashboard = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard') && currentUser.role !== 'teacher')) {
-        return <div className="min-h-full bg-gray-50 dark:bg-gray-950" />;
+        return <div className="min-h-full bg-slate-50 dark:bg-slate-950" />;
     }
 
     if (loading) {
@@ -45,56 +46,59 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-[150px] pt-1 overflow-x-hidden text-sm" dir="rtl">
-            
-            {/* Modern Gradient Header */}
-            <DashboardHeader
-                isTeacher={isTeacher}
-                currentUser={currentUser}
-            />
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 pt-4 overflow-x-hidden" dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
+                {/* 1. Header & Quick Actions */}
+                <DashboardHeader
+                    isTeacher={isTeacher}
+                    currentUser={currentUser}
+                />
 
-            <div className="max-w-[1600px] mx-auto px-0 md:px-6 mt-6 space-y-6">
-                
-                {/* Row 1: Key Statistics (Sharp Floating Cards) */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                    <DashboardStats stats={stats} isTeacher={isTeacher} />
-                </div>
-
-                {/* Quick Command Bar */}
                 {!isTeacher && (
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         <QuickActionsHub />
                     </div>
                 )}
 
-                {/* Main Content Area */}
+                {/* 2. Stats Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <DashboardStats stats={stats} isTeacher={isTeacher} />
+                </div>
+
+                {/* 3. Main Content Section */}
                 {isTeacher ? (
-                    <div className="space-y-4 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
-                        <ModernAnnouncements />
-
-                        {/* Session Timeline Card - only shows if sessions exist */}
-                        {(stats.todayTimeline || []).length > 0 && (
-                            <div className="bg-white dark:bg-slate-900 border-y md:border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in slide-in-from-bottom-4 duration-500">
+                        <div className="lg:col-span-8 space-y-6">
+                            <ModernAnnouncements />
+                            
+                            {(stats.todayTimeline || []).length > 0 && (
                                 <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
-                            </div>
-                        )}
+                            )}
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <TeacherAchievements
-                                stats={stats}
-                                lowBalanceStudents={lowBalanceStudents}
-                                isTeacher={true}
-                            />
-                            <TasksAndRequests tasks={tasks} />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <TeacherAchievements
+                                    stats={stats}
+                                    lowBalanceStudents={lowBalanceStudents}
+                                    isTeacher={true}
+                                />
+                                <TasksAndRequests tasks={tasks} />
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-4 space-y-6">
+                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                         </div>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-500">
-                        
-                        {/* 🏆 1. Announcements & Urgent Alerts */}
-                        <ModernAnnouncements />
+                    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        {/* Urgent / Announcements Row */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-12">
+                                <ModernAnnouncements />
+                            </div>
+                        </div>
 
-                        {/* 2. Primary Operations Row: Unified Notifications Center */}
+                        {/* Critical Operations Center */}
                         <NotificationsCenter
                             tasks={tasks}
                             lowBalanceStudents={lowBalanceStudents}
@@ -103,36 +107,43 @@ export const Dashboard = () => {
                             studentInvoices={rawStudentInvoices}
                         />
 
-                        {/* 3. Full Width Analysis Center (Charts) */}
-                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        {/* Data & Analytics Hub */}
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        </div>
 
-                        {/* 4. The Analytical Core (Commitment, Subject Stats, Honor Roll) */}
-                        <div className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
-                            <AnalyticsDashboard
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                             <AnalyticsDashboard
                                 students={rawStudents}
                                 sessions={rawSessions}
                                 monthlyData={monthlyData}
                             />
-
-                            {/* 5. Hall of Fame (Premium Redesign) */}
-                            <HonorRoll students={rawStudents} />
                         </div>
 
-                        {/* 5. Secondary Operations Row: More Side-by-Side (Renewal & Activity) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                        {/* Hall of Fame */}
+                        <HonorRoll students={rawStudents} />
+
+                        {/* Secondary Operations Row */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-7">
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            </div>
+                            <div className="lg:col-span-5">
+                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
+                            </div>
                         </div>
 
-                        {/* 6. Tasks & Requests (Now occupies single column area) */}
-                        <div className="w-full">
-                            <TasksAndRequests tasks={tasks} />
+                        {/* Bottom Row Tasks */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-12">
+                                <TasksAndRequests tasks={tasks} />
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* Suggen 2: Quick Brief Modal */}
+            {/* Modals */}
             {isTeacher && briefingStudent && (
                 <StudentQuickBrief
                     isOpen={!!briefingStudent}
