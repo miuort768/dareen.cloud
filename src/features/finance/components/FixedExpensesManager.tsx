@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Wallet, RefreshCcw, Trash2, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Wallet, RefreshCcw, Trash2 } from 'lucide-react';
 import type { FixedExpense } from '../../../types';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 

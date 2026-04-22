@@ -1,5 +1,5 @@
 import React from 'react';
-import { DollarSign, TrendingUp, Search, Filter, Calendar, CalendarCheck, Download, Sparkles, Plus } from 'lucide-react';
+import { DollarSign, Search, Filter, Calendar, CalendarCheck, Download, Plus } from 'lucide-react';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
 import { FinanceStats } from '../features/finance/components/FinanceStats';

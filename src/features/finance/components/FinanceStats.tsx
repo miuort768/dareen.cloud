@@ -1,5 +1,4 @@
-import React from 'react';
-import { DollarSign, TrendingDown, TrendingUp, Wallet, ArrowUpRight, ArrowDownRight, Zap } from 'lucide-react';
+import { DollarSign, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface FinanceStatsProps {
@@ -12,7 +11,7 @@ interface FinanceStatsProps {
     monthProfit: number;
 }
 
-const StatItem = ({ title, value, icon: Icon, color, subValue, subLabel, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, subLabel?: string, bg: string }) => (
+const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
     <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
         <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
             <Icon size={16} className={color} />

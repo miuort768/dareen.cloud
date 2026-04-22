@@ -1,7 +1,6 @@
-import React from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, PieChart, Pie, Cell } from 'recharts';
 import { Calendar, Filter, PieChart as PieChartIcon } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+
 
 interface MonthlyData {
     month: string;
