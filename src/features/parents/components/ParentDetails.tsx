@@ -22,35 +22,30 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
     onClose
 }) => {
     return (
-        <div className="bg-white border border-slate-200 flex flex-col h-fit dark:bg-gray-900 dark:border-gray-800 sticky top-6 rounded-none overflow-hidden shadow-2xl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit sticky top-6 rounded-2xl overflow-hidden shadow-xl animate-in slide-in-from-left-4 duration-300">
             {/* Header Section */}
-            <div className="relative p-4 md:p-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-100 dark:from-gray-800 dark:to-gray-900 dark:border-gray-700 overflow-hidden">
-                <div className="absolute top-0 right-0 w-full h-1 bg-primary-600"></div>
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary-500/5 rotate-45 pointer-events-none"></div>
-
+            <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-slate-400 hover:text-red-600 p-2 hover:bg-red-50 rounded-none"
+                    className="absolute left-4 top-4 text-slate-400 hover:text-rose-500 p-2 hover:bg-rose-50 rounded-xl transition-all"
                 >
-                    <X size={20} />
+                    <X size={18} />
                 </button>
 
-                <div className="text-center pt-2 relative z-10">
-                    <div className="w-20 h-20 mx-auto mb-4 bg-primary-600 flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-700 rounded-none">
-                        <User size={40} className="text-white" />
+                <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-slate-900 dark:bg-slate-800 flex items-center justify-center rounded-2xl shadow-lg">
+                        <User size={32} className="text-white" />
                     </div>
-                    <h3 className="font-black text-2xl text-slate-900 dark:text-white mb-2 tracking-tight uppercase">
-                        {parent.name}
-                    </h3>
-
-                    <div className="flex flex-col gap-2 max-w-[260px] mx-auto">
-                        <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-black text-primary-600 font-mono shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-none">
-                            <Phone size={14} />
+                    <h3 className="font-bold text-lg text-slate-800 dark:text-white mb-2">{parent.name}</h3>
+                    
+                    <div className="flex flex-col gap-1.5 max-w-[240px] mx-auto">
+                        <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 text-[11px] font-bold text-slate-600 dark:text-slate-300 rounded-lg">
+                            <Phone size={12} className="text-emerald-500" />
                             {parent.phone}
                         </div>
                         {parent.email && (
-                            <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-200 text-xs font-bold text-slate-400 font-mono italic shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-none">
-                                <Mail size={14} />
+                            <div dir="ltr" className="flex items-center justify-center gap-2 px-3 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 text-[10px] font-bold text-slate-400 rounded-lg">
+                                <Mail size={12} />
                                 {parent.email}
                             </div>
                         )}
@@ -58,64 +53,60 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 </div>
             </div>
 
-            <div className="p-4 md:p-8 space-y-8">
+            <div className="p-6 space-y-8">
                 {/* Quick Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3">
                     {[
-                        { label: 'الأبناء', value: details.children.length, icon: Users, color: 'blue' },
-                        { label: 'الاشتراكات', value: details.totalEnrollments, icon: GraduationCap, color: 'purple' },
-                        { label: 'تحصيل الحصص', value: `${details.completedSessions}/${details.totalSessions}`, icon: Calendar, color: 'emerald' },
-                        { label: 'نسبة الإنجاز', value: `${details.completionRate}%`, icon: TrendingUp, color: 'amber' },
+                        { label: 'الأبناء', value: details.children.length, icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+                        { label: 'الاشتراكات', value: details.totalEnrollments, icon: GraduationCap, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+                        { label: 'تحصيل الحصص', value: `${details.completedSessions}/${details.totalSessions}`, icon: Calendar, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+                        { label: 'الإنجاز', value: `${details.completionRate}%`, icon: TrendingUp, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
                     ].map((stat, idx) => (
-                        <div key={idx} className={`bg-${stat.color}-50/50 p-4 border border-${stat.color}-100 dark:bg-${stat.color}-900/10 dark:border-${stat.color}-900/20 rounded-none`}>
-                            <div className="flex items-center gap-2 mb-2">
-                                <stat.icon size={16} className={`text-${stat.color}-600`} />
-                                <p className={`text-[10px] font-black uppercase text-${stat.color}-600 tracking-widest`}>{stat.label}</p>
+                        <div key={idx} className={cn("p-3 border border-transparent rounded-2xl", stat.bg)}>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <stat.icon size={14} className={stat.color} />
+                                <p className="text-[9px] font-bold uppercase text-slate-400 tracking-tight">{stat.label}</p>
                             </div>
-                            <p className={`text-xl font-black text-${stat.color}-700 dark:text-${stat.color}-400`}>{stat.value}</p>
+                            <p className="text-sm font-black text-slate-800 dark:text-white">{stat.value}</p>
                         </div>
                     ))}
                 </div>
 
                 {/* Children List */}
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between border-r-4 border-r-primary-600 pr-4">
-                        <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">الأبناء المسجلين</h4>
-                        <span className="text-[10px] font-black bg-primary-100 text-primary-700 px-2 py-0.5 dark:bg-primary-900/30 dark:text-primary-400 rounded-none">
-                            {details.children.length} أبناء
+                    <div className="flex items-center justify-between">
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">الأبناء المسجلين</h4>
+                        <span className="text-[9px] font-bold bg-slate-50 dark:bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md">
+                            {details.children.length} طلاب
                         </span>
                     </div>
 
-                    <div className="grid gap-3">
+                    <div className="space-y-3">
                         {details.children.length > 0 ? details.children.map(child => (
-                            <div key={child.id} className="group bg-slate-50 border border-slate-100 p-4 hover:border-primary-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden rounded-none">
-                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-slate-200 group-hover:bg-primary-600"></div>
-                                <div className="flex justify-between items-start mb-3">
+                            <div key={child.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl">
+                                <div className="flex justify-between items-center mb-3">
                                     <div>
-                                        <p className="font-black text-base text-slate-900 dark:text-white mb-0.5">{child.name}</p>
-                                        <p className="text-[10px] font-black text-primary-600 uppercase tracking-tighter">{child.grade}</p>
+                                        <p className="font-bold text-xs text-slate-800 dark:text-white">{child.name}</p>
+                                        <p className="text-[9px] font-bold text-indigo-500 uppercase">{child.grade}</p>
                                     </div>
                                 </div>
                                 {child.enrollments && child.enrollments.length > 0 && (
-                                    <div className="grid gap-1.5 border-t border-slate-200 pt-3 dark:border-gray-700">
+                                    <div className="space-y-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                                         {child.enrollments.map((en, idx) => (
-                                            <div key={idx} className="flex items-center justify-between text-[11px] font-bold">
-                                                <div className="flex items-center gap-2 text-slate-600 dark:text-gray-400">
-                                                    <div className="w-1.5 h-1.5 bg-primary-500 rounded-none"></div>
-                                                    {en.subject}
-                                                </div>
-                                                <div className="bg-white px-2 py-0.5 border border-slate-200 font-mono text-primary-600 dark:bg-gray-900 dark:border-gray-700 rounded-none">
+                                            <div key={idx} className="flex items-center justify-between text-[10px] font-bold">
+                                                <span className="text-slate-500 dark:text-slate-400">{en.subject}</span>
+                                                <span className="px-2 py-0.5 bg-white dark:bg-slate-900 text-indigo-500 border border-slate-100 dark:border-slate-800 rounded-md font-mono">
                                                     {en.sessionsUsed}/{en.sessionsTotal}
-                                                </div>
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800 rounded-none">
-                                <Users size={32} className="mx-auto text-slate-200 mb-2" />
-                                <p className="text-slate-400 text-xs font-bold">لا يوجد أبناء مرتبطين</p>
+                            <div className="text-center py-8 border-2 border-dashed border-slate-50 dark:border-slate-800 rounded-2xl">
+                                <Users size={32} className="mx-auto text-slate-100 mb-2" />
+                                <p className="text-slate-300 text-[10px] font-bold uppercase">لا يوجد أبناء</p>
                             </div>
                         )}
                     </div>
@@ -123,51 +114,41 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
 
                 {/* Schedule Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between border-r-4 border-r-amber-500 pr-4">
-                        <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">الجدول العائلي</h4>
-                        <span className="text-[10px] font-black bg-amber-100 text-amber-700 px-2 py-0.5 dark:bg-amber-900/30 dark:text-amber-400 rounded-none">
-                            إدارة الحصص
-                        </span>
+                    <div className="flex items-center justify-between">
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">الجدول العائلي الموحد</h4>
                     </div>
 
-                    <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1 custom-scrollbar">
+                    <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
                         {details.familySchedule.length > 0 ? (() => {
                             const grouped = details.familySchedule.reduce((acc, current) => {
                                 const key = `${current.studentName}-${current.subject}`;
                                 if (!acc[key]) {
-                                    acc[key] = {
-                                        student: current.studentName,
-                                        subject: current.subject,
-                                        times: []
-                                    };
+                                    acc[key] = { student: current.studentName, subject: current.subject, times: [] };
                                 }
                                 acc[key].times.push(current);
                                 return acc;
                             }, {} as Record<string, { student: string, subject: string, times: FamilyScheduleItem[] }>);
 
                             return Object.values(grouped).map((group, idx) => (
-                                <div key={idx} className="bg-slate-50 border border-slate-100 p-4 hover:border-amber-200 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:bg-gray-800 shadow-sm relative overflow-hidden rounded-none">
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div>
-                                            <p className="font-black text-sm text-slate-900 dark:text-white mb-0.5">{group.subject}</p>
-                                            <p className="text-[10px] font-bold text-amber-600 uppercase tracking-tighter">{group.student}</p>
-                                        </div>
+                                <div key={idx} className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
+                                    <div className="mb-2">
+                                        <p className="font-bold text-xs text-slate-800 dark:text-white">{group.subject}</p>
+                                        <p className="text-[9px] font-bold text-amber-500 uppercase">{group.student}</p>
                                     </div>
-                                    <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-gray-700">
+                                    <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-50 dark:border-slate-800">
                                         {group.times.map((t, i) => (
-                                            <div key={i} className="flex items-center gap-2 px-2 py-1 bg-white border border-slate-200 dark:bg-gray-900 dark:border-gray-600 rounded-none shadow-sm">
-                                                <span className="text-[9px] font-black text-slate-400 border-l border-slate-100 pl-1 ml-1 uppercase">{t.day}</span>
-                                                <span className="text-[10px] font-black text-primary-600">{t.hour} {t.period === 'am' ? 'ص' : 'م'}</span>
+                                            <div key={i} className="flex items-center gap-2 px-2 py-1 bg-slate-50 dark:bg-slate-800 text-[9px] font-bold text-slate-500 rounded-lg">
+                                                <span className="opacity-50">{t.day}</span>
+                                                <span className="text-[#5c59f2]">{t.hour} {t.period === 'am' ? 'ص' : 'م'}</span>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
                             ));
                         })() : (
-                            <div className="text-center py-8 border-2 border-dashed border-slate-100 dark:border-gray-800 rounded-none">
-                                <Calendar size={32} className="mx-auto text-slate-200 mb-2" />
-                                <p className="text-slate-400 text-xs font-bold">لا توجد حصص مجدولة لعائلتكم</p>
+                            <div className="text-center py-8 opacity-30">
+                                <Calendar size={32} className="mx-auto text-slate-400 mb-2" />
+                                <p className="text-[10px] font-bold uppercase">لا يوجد حصص مجدولة</p>
                             </div>
                         )}
                     </div>

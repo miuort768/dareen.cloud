@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit, Trash2, Users } from 'lucide-react';
+import { Edit, Trash2, Users, Phone, Mail } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
 
@@ -23,22 +23,20 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
     onDelete
 }) => {
     return (
-
         <div className={cn("bg-transparent", showDetails ? "lg:col-span-2" : "col-span-3")}>
-            {/* Desktop View */}
-            <div className="hidden md:block bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-800 rounded-none">
-                <div className="overflow-x-auto overflow-y-auto max-h-[700px]">
-                    <table className="premium-table w-full">
-                        <thead>
+            {/* Desktop Table View */}
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-right border-collapse">
+                        <thead className="bg-slate-50 dark:bg-slate-800">
                             <tr>
-                                <th className="text-center">الاسم الكامل</th>
-                                <th className="text-center">رقم الاتصال</th>
-                                <th className="text-center">البريد</th>
-                                <th className="text-center">عدد الأبناء</th>
-                                <th className="text-center">الإجراءات</th>
+                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase">ولي الأمر</th>
+                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase">بيانات الاتصال</th>
+                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase text-center">عدد الأبناء</th>
+                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase text-center">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                             {parents.length > 0 ? parents.map((parent) => {
                                 const children = students.filter(s => s.parentPhone === parent.phone);
                                 const isSelected = selectedParentId === parent.id;
@@ -46,47 +44,57 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                 return (
                                     <tr
                                         key={parent.id}
-                                        className={isSelected ? "bg-primary-50 dark:bg-primary-900/20 shadow-inner" : ""}
                                         onClick={() => onSelectParent(parent)}
+                                        className={cn(
+                                            "hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer",
+                                            isSelected ? "bg-indigo-50/50 dark:bg-indigo-900/20" : ""
+                                        )}
                                     >
-                                        <td className="text-center">
-                                            <span className="font-bold text-gray-900 dark:text-white">
-                                                {parent.name}
-                                            </span>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm">
+                                                    {parent.name.charAt(0)}
+                                                </div>
+                                                <span className="font-bold text-xs text-slate-800 dark:text-white">
+                                                    {parent.name}
+                                                </span>
+                                            </div>
                                         </td>
-                                        <td className="text-center">
-                                            <span className="font-mono text-[13px] font-bold" dir="ltr">
-                                                {parent.phone}
-                                            </span>
+                                        <td className="px-6 py-4">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5" dir="ltr">
+                                                    <Phone size={12} className="text-emerald-500" />
+                                                    {parent.phone}
+                                                </span>
+                                                {parent.email && (
+                                                    <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1.5" dir="ltr">
+                                                        <Mail size={12} className="text-slate-300" />
+                                                        {parent.email}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </td>
-                                        <td className="text-center">
-                                            <span className="text-[12px] font-bold text-gray-400 italic" dir="ltr">
-                                                {parent.email || '—'}
-                                            </span>
-                                        </td>
-                                        <td className="text-center">
+                                        <td className="px-6 py-4">
                                             <div className="flex justify-center">
-                                                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-600 font-black text-[10px] rounded-none dark:bg-gray-800 dark:text-gray-400">
-                                                    <Users size={12} />
-                                                    {children.length}
+                                                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 text-slate-400 font-bold text-[10px] rounded-md">
+                                                    <Users size={10} />
+                                                    {children.length} طلاب
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div className="flex items-center justify-center gap-1">
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center justify-center gap-2">
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
-                                                    className="table-action-btn text-primary-600 hover:bg-primary-50"
-                                                    title="تعديل الحساب"
+                                                    className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-[#5c59f2] rounded-lg transition-all"
                                                 >
-                                                    <Edit size={16} />
+                                                    <Edit size={14} />
                                                 </button>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                                    className="table-action-btn text-red-600 hover:bg-red-50"
-                                                    title="حذف الحساب"
+                                                    className="w-8 h-8 flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 rounded-lg transition-all"
                                                 >
-                                                    <Trash2 size={16} />
+                                                    <Trash2 size={14} />
                                                 </button>
                                             </div>
                                         </td>
@@ -94,7 +102,10 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                                 );
                             }) : (
                                 <tr>
-                                    <td colSpan={5} className="py-20 text-center text-gray-400 font-bold">لا يوجد سجلات متاحة</td>
+                                    <td colSpan={4} className="py-16 text-center">
+                                        <Users size={32} className="mx-auto text-slate-100 mb-2" />
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase">لا توجد سجلات</p>
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
@@ -113,57 +124,37 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
                             key={parent.id}
                             onClick={() => onSelectParent(parent)}
                             className={cn(
-                                "bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-none shadow-sm relative overflow-hidden",
-                                isSelected ? 'ring-2 ring-primary-500 border-primary-500' : 'border-r-4 border-r-primary-500'
+                                "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm relative",
+                                isSelected ? 'ring-2 ring-[#5c59f2]' : ''
                             )}
                         >
                             <div className="flex items-start justify-between mb-3">
-                                <div>
-                                    <h3 className="text-base font-black text-gray-900 dark:text-white mb-1">{parent.name}</h3>
-                                    <span className="text-[10px] font-bold text-gray-400" dir="ltr">
-                                        {parent.email || 'لا يوجد بريد إلكتروني'}
-                                    </span>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold">
+                                        {parent.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{parent.name}</h3>
+                                        <span className="text-[10px] font-bold text-slate-400" dir="ltr">
+                                            {parent.phone}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="flex gap-1">
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); onEdit(parent); }}
-                                        className="w-8 h-8 rounded-none bg-blue-50 text-blue-600 flex items-center justify-center"
-                                    >
-                                        <Edit size={14} />
-                                    </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }}
-                                        className="w-8 h-8 rounded-none bg-rose-50 text-rose-600 flex items-center justify-center"
-                                    >
-                                        <Trash2 size={14} />
-                                    </button>
+                                    <button onClick={(e) => { e.stopPropagation(); onEdit(parent); }} className="w-8 h-8 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center"><Edit size={14} /></button>
+                                    <button onClick={(e) => { e.stopPropagation(); onDelete(parent.id); }} className="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center"><Trash2 size={14} /></button>
                                 </div>
                             </div>
-
-                            <div className="grid grid-cols-2 gap-2 text-sm">
-                                <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
-                                    <span className="text-[10px] text-gray-500 block mb-0.5">رقم الهاتف</span>
-                                    <span className="font-mono font-bold text-gray-800 dark:text-gray-200" dir="ltr">
-                                        {parent.phone}
-                                    </span>
-                                </div>
-                                <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
-                                    <span className="text-[10px] text-gray-500 block mb-0.5">الأبناء المسجلين</span>
-                                    <div className="flex items-center gap-1 font-bold text-primary-600">
-                                        <Users size={12} />
-                                        {children.length} طالب
-                                    </div>
+                            <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-50 dark:border-slate-800">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">الأبناء المسجلين</span>
+                                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-indigo-50 text-[#5c59f2] text-[10px] font-bold rounded-md">
+                                    <Users size={12} />
+                                    {children.length} طالب
                                 </div>
                             </div>
                         </div>
                     );
                 })}
-                {parents.length === 0 && (
-                    <div className="py-20 text-center bg-white dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-800 rounded-none">
-                        <Users size={48} className="mx-auto mb-4 text-gray-200" />
-                        <p className="text-gray-400 font-bold">لا يوجد سجلات متاحة</p>
-                    </div>
-                )}
             </div>
         </div>
     );

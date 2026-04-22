@@ -1,4 +1,5 @@
-import { Search, AlertCircle } from 'lucide-react';
+import React from 'react';
+import { Search, AlertCircle, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Skeleton } from '../components/ui/Skeleton';
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
@@ -12,15 +13,13 @@ export const Parents = () => {
 
     if (state.loading) {
         return (
-            <div className="space-y-6 min-h-full md:animate-in md:fade-in">
-                <Skeleton className="h-48 rounded-none" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Skeleton className="h-32 rounded-2xl" />
-                    <Skeleton className="h-32 rounded-2xl" />
+            <div className="space-y-6 p-4">
+                <div className="h-20 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="h-24 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
+                    <div className="h-24 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Skeleton className="lg:col-span-2 h-96 rounded-none" />
-                </div>
+                <div className="h-96 bg-white dark:bg-slate-900 rounded-2xl animate-pulse" />
             </div>
         );
     }
@@ -28,7 +27,8 @@ export const Parents = () => {
     const isEdit = !!state.editId;
 
     return (
-        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+            {/* Header */}
             <ParentsHeader
                 totalParents={state.totalParents}
                 totalLinkedStudents={state.totalLinkedStudents}
@@ -44,82 +44,86 @@ export const Parents = () => {
                 onExport={actions.handleExportParents}
             />
 
-            {state.showAddForm && (
-                <ParentForm
-                    isEdit={isEdit}
-                    formData={state.newParent}
-                    onChange={actions.setNewParent}
-                    onSubmit={actions.handleAddParent}
-                />
-            )}
-
-            <div className="bg-white p-3 md:p-5 shadow-sm border border-slate-100 dark:bg-gray-900 dark:border-gray-800 flex items-center gap-4 rounded-none">
-                <div className="relative flex-1 group">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors" size={18} />
-                    <input
-                        type="text"
-                        placeholder="البحث في سجلات أولياء الأمور (الاسم، الجوال، البريد)..."
-                        value={state.searchTerm}
-                        onChange={(e) => actions.setSearchTerm(e.target.value)}
-                        className="w-full pl-6 pr-12 py-3.5 border border-slate-200 focus:outline-none focus:border-primary-500 text-sm font-bold rounded-none bg-slate-50 focus:bg-white transition-all dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+            <div className="py-6 space-y-6">
+                {state.showAddForm && (
+                    <ParentForm
+                        isEdit={isEdit}
+                        formData={state.newParent}
+                        onChange={actions.setNewParent}
+                        onSubmit={actions.handleAddParent}
                     />
+                )}
+
+                {/* Search Bar */}
+                <div className="px-4 md:px-6">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex items-center gap-4">
+                        <div className="relative flex-1">
+                            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
+                            <input
+                                type="text"
+                                placeholder="البحث في سجلات أولياء الأمور (الاسم، الجوال، البريد)..."
+                                value={state.searchTerm}
+                                onChange={(e) => actions.setSearchTerm(e.target.value)}
+                                className="w-full pl-6 pr-11 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl outline-none text-xs font-bold focus:border-[#5c59f2]"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content Grid */}
+                <div className="px-4 md:px-6">
+                    <div className={`grid gap-6 ${state.showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                        <ParentsTable
+                            parents={state.filteredParents}
+                            students={state.students}
+                            selectedParentId={state.selectedParent?.id || null}
+                            showDetails={state.showDetails}
+                            onSelectParent={(parent) => {
+                                actions.setSelectedParent(parent);
+                                actions.setShowDetails(true);
+                            }}
+                            onEdit={actions.handleEditParent}
+                            onDelete={actions.handleDeleteParent}
+                        />
+
+                        {state.showDetails && state.selectedParent && state.selectedParentData && (
+                            <ParentDetails
+                                parent={state.selectedParent}
+                                details={state.selectedParentData}
+                                onClose={() => actions.setShowDetails(false)}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
 
-            <div className={`grid gap-6 ${state.showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                <ParentsTable
-                    parents={state.filteredParents}
-                    students={state.students}
-                    selectedParentId={state.selectedParent?.id || null}
-                    showDetails={state.showDetails}
-                    onSelectParent={(parent) => {
-                        actions.setSelectedParent(parent);
-                        actions.setShowDetails(true);
-                    }}
-                    onEdit={actions.handleEditParent}
-                    onDelete={actions.handleDeleteParent}
-                />
-
-                {state.showDetails && state.selectedParent && state.selectedParentData && (
-                    <ParentDetails
-                        parent={state.selectedParent}
-                        details={state.selectedParentData}
-                        onClose={() => actions.setShowDetails(false)}
-                    />
-                )}
-            </div>
-
+            {/* Confirm Modal */}
             {state.confirmModal.show && (
-                <div className="fixed bottom-6 right-6 z-[100] animate-in slide-in-from-bottom-5 fade-in">
-                    <div className="bg-white dark:bg-gray-800 rounded-none shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden min-w-[380px] max-w-md">
-                        <div className="p-5">
-                            <div className="flex items-start gap-4">
-                                <div className="p-2 bg-amber-100 rounded-none dark:bg-amber-900/30">
-                                    <AlertCircle className="text-amber-600 dark:text-amber-400" size={24} />
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-base">تأكيد الإجراء</h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{state.confirmModal.message}</p>
-                                </div>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6">
+                            <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-2xl flex items-center justify-center mb-4">
+                                <AlertCircle size={24} />
                             </div>
-                            <div className="flex gap-2 mt-4">
+                            <h3 className="font-bold text-slate-800 dark:text-white mb-2">تأكيد الإجراء</h3>
+                            <p className="text-xs text-slate-500 leading-relaxed mb-6">{state.confirmModal.message}</p>
+                            
+                            <div className="flex gap-3">
                                 <button
                                     onClick={() => {
                                         if (state.confirmModal.action) state.confirmModal.action();
                                         actions.setConfirmModal({ ...state.confirmModal, show: false });
                                     }}
                                     className={cn(
-                                        "flex-1 px-4 py-2.5 text-white font-bold text-sm rounded-none transition-colors shadow-sm",
-                                        state.confirmModal.variant === 'primary'
-                                            ? "bg-primary-600 hover:bg-primary-700"
-                                            : "bg-red-600 hover:bg-red-700"
+                                        "flex-1 py-2.5 text-white font-bold text-[11px] rounded-xl shadow-sm transition-all active:scale-95",
+                                        state.confirmModal.variant === 'primary' ? "bg-[#5c59f2]" : "bg-rose-500"
                                     )}
                                 >
                                     {state.confirmModal.confirmText || 'تأكيد'}
                                 </button>
                                 <button
                                     onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                    className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 font-bold text-sm rounded-none hover:bg-gray-200 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                                    className="flex-1 py-2.5 bg-slate-50 text-slate-500 font-bold text-[11px] rounded-xl hover:bg-slate-100 transition-all"
                                 >
                                     إلغاء
                                 </button>

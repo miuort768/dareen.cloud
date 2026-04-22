@@ -1,6 +1,5 @@
 import React from 'react';
-import { Users, TrendingUp, UserPlus, Download, X } from 'lucide-react';
-import { StatsCard } from '../../../shared/components/StatsCard';
+import { Users, UserPlus, Download, X, Plus } from 'lucide-react';
 
 interface ParentsHeaderProps {
     totalParents: number;
@@ -20,81 +19,43 @@ export const ParentsHeader: React.FC<ParentsHeaderProps> = ({
     onExport
 }) => {
     return (
-        <div className="space-y-6">
-            <div className="relative bg-primary-600 p-4 md:p-8 shadow-xl overflow-hidden border-b-4 border-primary-500 rounded-none">
-                {/* Background Geometric Enhancement */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -mr-20 -mt-40 blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/5 rounded-full -ml-40 -mb-60 blur-[150px] pointer-events-none"></div>
-
-                <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] border-[1px] border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45 pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45 pointer-events-none"></div>
-
-                <div className="absolute top-[-20%] left-[-5%] w-[35%] h-[140%] bg-gradient-to-br from-white/5 to-transparent rotate-12 pointer-events-none hidden lg:block"></div>
-                <div className="absolute top-[-30%] right-[15%] w-[120px] h-[160%] bg-white/5 -rotate-12 pointer-events-none hidden lg:block"></div>
-
-                <div className="absolute top-1/2 right-10 w-80 h-80 border-[30px] border-white/5 rounded-full -translate-y-1/2 pointer-events-none"></div>
-
-                {/* Pattern Layer */}
-                <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }}></div>
-
-                <div className="relative flex items-center justify-between flex-wrap gap-4 md:gap-6 px-2">
-                    <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                            <Users size={36} className="text-white relative z-10" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl md:text-3xl font-black text-white mb-1 tracking-tight uppercase">أولياء الأمور</h1>
-                            <p className="text-white/80 text-[10px] md:text-sm font-bold flex items-center gap-2">
-                                <TrendingUp size={14} className="text-white" />
-                                إدارة أولياء الأمور والبيانات العائلية
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-wrap no-print w-full md:w-auto mt-2 md:mt-0">
-                        <div className="flex gap-2 w-full md:w-auto">
-                            <button
-                                onClick={onToggleAddForm}
-                                className="flex-1 md:flex-none justify-center bg-white text-primary-700 px-4 py-2 md:px-6 md:py-3 rounded-none flex items-center gap-2 md:gap-3 hover:bg-white active:bg-white font-black text-xs md:text-base shadow-lg"
-                            >
-                                {showAddForm ? <X size={16} className="md:w-5 md:h-5" /> : <UserPlus size={16} className="md:w-5 md:h-5" />}
-                                <span>{showAddForm ? 'إلغاء' : 'إضافة ولي أمر'}</span>
-                            </button>
-                            <button
-                                onClick={onImport}
-                                className="flex-1 md:flex-none justify-center bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-4 py-2 md:px-6 md:py-3 rounded-none flex items-center gap-2 md:gap-3 hover:bg-primary-900/50 font-black text-xs md:text-base shadow-lg"
-                            >
-                                <Download size={16} className="md:w-5 md:h-5" />
-                                <span>استيراد</span>
-                            </button>
-                            <button
-                                onClick={onExport}
-                                className="flex-1 md:flex-none justify-center bg-primary-900/40 backdrop-blur-md text-white border border-white/20 px-4 py-2 md:px-6 md:py-3 rounded-none flex items-center gap-2 md:gap-3 hover:bg-primary-900/50 font-black text-xs md:text-base shadow-lg"
-                            >
-                                <Download size={16} className="md:w-5 md:h-5 rotate-180" />
-                                <span>تصدير</span>
-                            </button>
-                        </div>
+        <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+                <div className="w-9 h-9 flex items-center justify-center bg-[#5c59f2] text-white rounded-xl shadow-lg shadow-indigo-500/20">
+                    <Users size={18} />
+                </div>
+                <div>
+                    <h1 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-tight">سجل أولياء الأمور</h1>
+                    <div className="flex items-center gap-2">
+                         <p className="text-[10px] text-slate-400 italic font-bold">إدارة البيانات العائلية • {totalParents} ولي أمر</p>
+                         <span className="w-1 h-1 bg-slate-200 rounded-full"></span>
+                         <span className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 px-1.5 py-0.5 rounded-md">{totalLinkedStudents} طالب مرتبط</span>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-                <StatsCard
-                    title="إجمالي أولياء الأمور"
-                    value={totalParents}
-                    icon={Users}
-                    color="blue"
-                    trend="نشط"
-                />
-                <StatsCard
-                    title="الطلاب المرتبطين"
-                    value={totalLinkedStudents}
-                    icon={Users}
-                    color="blue"
-                    trend="طالب"
-                />
+            <div className="flex items-center gap-2 no-print">
+                <button
+                    onClick={onImport}
+                    className="h-9 px-3 flex items-center gap-2 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-bold rounded-xl hover:bg-slate-100 transition-all"
+                >
+                    <Download size={14} />
+                    استيراد
+                </button>
+                <button
+                    onClick={onExport}
+                    className="h-9 px-3 flex items-center gap-2 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-bold rounded-xl hover:bg-slate-100 transition-all"
+                >
+                    <Download size={14} className="rotate-180" />
+                    تصدير
+                </button>
+                <button
+                    onClick={onToggleAddForm}
+                    className="h-9 px-4 flex items-center gap-2 bg-[#5c59f2] text-white text-[11px] font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-sm active:scale-95"
+                >
+                    {showAddForm ? <X size={14} /> : <Plus size={14} />}
+                    <span>{showAddForm ? 'إلغاء' : 'إضافة ولي أمر'}</span>
+                </button>
             </div>
         </div>
     );
