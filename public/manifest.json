@@ -1,6 +1,6 @@
 {
-  "name": "معهد دارين",
-  "short_name": "معهد دارين",
+  "name": "دارين للتعليم والتدريب",
+  "short_name": "دارين",
 
   "description": "نظام إدارة شامل لأكاديمية دارين لتعليم و التدريب - منصة تعليمية متكاملة للمدربين والطلاب",
   "start_url": "/dashboard?pwa=1",
@@ -20,6 +20,12 @@
   "dir": "rtl",
   "id": "darin.academy.pwa",
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
     {
       "src": "/logo.png",
       "sizes": "192x192",

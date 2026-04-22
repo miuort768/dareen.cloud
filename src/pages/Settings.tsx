@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { 
-    Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus, 
-    Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload, 
+import {
+    Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus,
+    Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload,
     RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare,
-    Sparkles
+    Sparkles, ChevronRight, Phone
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { GuestChatManager } from '../features/chat/components/GuestChatManager';
@@ -23,36 +23,163 @@ const AVAILABLE_PERMISSIONS = [
 ];
 
 const THEME_COLORS = [
-    { id: 'indigo', label: 'نيلي', class: 'bg-indigo-600' },
-    { id: 'blue', label: 'أزرق', class: 'bg-blue-600' },
-    { id: 'emerald', label: 'زمردي', class: 'bg-emerald-600' },
-    { id: 'rose', label: 'وردي', class: 'bg-rose-600' },
-    { id: 'amber', label: 'كهرماني', class: 'bg-amber-600' },
-    { id: 'purple', label: 'أرجواني', class: 'bg-purple-600' },
-    { id: 'cyan', label: 'سيان', class: 'bg-cyan-600' },
-    { id: 'teal', label: 'تركواز', class: 'bg-teal-600' },
-    { id: 'orange', label: 'برتقالي', class: 'bg-orange-600' },
-    { id: 'slate', label: 'صخري', class: 'bg-slate-600' },
-    { id: 'pink', label: 'زهري', class: 'bg-pink-600' },
-    { id: 'lime', label: 'ليموني', class: 'bg-lime-600' },
-    { id: 'sky', label: 'سماوي', class: 'bg-sky-600' },
-    { id: 'fuchsia', label: 'فوشيا', class: 'bg-fuchsia-600' },
-    // 14 New Vibrant/Gradient-inspired Colors
-    { id: 'sunset', label: 'غروب', class: 'bg-gradient-to-tr from-orange-600 to-rose-600' },
-    { id: 'ocean', label: 'محيط', class: 'bg-gradient-to-tr from-blue-600 to-cyan-500' },
-    { id: 'forest', label: 'غابة', class: 'bg-gradient-to-tr from-emerald-600 to-lime-500' },
-    { id: 'royal', label: 'ملكي', class: 'bg-gradient-to-tr from-purple-700 to-indigo-600' },
-    { id: 'electric', label: 'كهربائي', class: 'bg-gradient-to-tr from-violet-600 to-fuchsia-500' },
-    { id: 'mint', label: 'نعناع', class: 'bg-gradient-to-tr from-teal-500 to-emerald-400' },
-    { id: 'berry', label: 'توت', class: 'bg-gradient-to-tr from-pink-600 to-purple-500' },
-    { id: 'gold', label: 'ذهبي', class: 'bg-gradient-to-tr from-amber-500 to-yellow-400' },
-    { id: 'crimson', label: 'قرمزي', class: 'bg-gradient-to-tr from-red-700 to-rose-600' },
-    { id: 'midnight', label: 'ليل', class: 'bg-gradient-to-tr from-slate-900 to-indigo-900' },
-    { id: 'lava', label: 'حمم', class: 'bg-gradient-to-tr from-red-600 to-orange-500' },
-    { id: 'lavender', label: 'لافندر', class: 'bg-gradient-to-tr from-purple-400 to-indigo-300' },
-    { id: 'spring', label: 'ربيع', class: 'bg-gradient-to-tr from-lime-400 to-emerald-400' },
-    { id: 'flame', label: 'لهب', class: 'bg-gradient-to-tr from-orange-500 to-yellow-500' }
+    { id: 'indigo', label: 'نيلي', class: 'bg-indigo-500' },
+    { id: 'blue', label: 'أزرق', class: 'bg-blue-500' },
+    { id: 'emerald', label: 'زمردي', class: 'bg-emerald-500' },
+    { id: 'rose', label: 'وردي', class: 'bg-rose-500' },
+    { id: 'amber', label: 'كهرماني', class: 'bg-amber-500' },
+    { id: 'purple', label: 'أرجواني', class: 'bg-purple-500' },
+    { id: 'cyan', label: 'سيان', class: 'bg-cyan-500' },
+    { id: 'teal', label: 'تركواز', class: 'bg-teal-500' },
+    { id: 'orange', label: 'برتقالي', class: 'bg-orange-500' },
+    { id: 'slate', label: 'صخري', class: 'bg-slate-500' },
+    { id: 'pink', label: 'زهري', class: 'bg-pink-500' },
+    { id: 'lime', label: 'ليموني', class: 'bg-lime-500' },
+    { id: 'sky', label: 'سماوي', class: 'bg-sky-500' },
+    { id: 'fuchsia', label: 'فوشيا', class: 'bg-fuchsia-500' },
+    { id: 'sunset', label: 'غروب', class: 'bg-gradient-to-tr from-orange-500 to-rose-500' },
+    { id: 'ocean', label: 'محيط', class: 'bg-gradient-to-tr from-blue-500 to-cyan-400' },
+    { id: 'forest', label: 'غابة', class: 'bg-gradient-to-tr from-emerald-500 to-lime-400' },
+    { id: 'royal', label: 'ملكي', class: 'bg-gradient-to-tr from-purple-600 to-indigo-500' },
+    { id: 'electric', label: 'كهربائي', class: 'bg-gradient-to-tr from-violet-500 to-fuchsia-400' },
+    { id: 'berry', label: 'توت', class: 'bg-gradient-to-tr from-pink-500 to-purple-400' },
 ];
+
+type TabId = 'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit';
+
+// ── Reusable sub-components ───────────────────────────────────────────────────
+
+const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-5',
+        className
+    )}>
+        {children}
+    </div>
+);
+
+const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+            <Icon size={16} className="text-[#5c59f2]" />
+        </div>
+        <div>
+            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+        </div>
+    </div>
+);
+
+const FieldLabel = ({ children }: { children: React.ReactNode }) => (
+    <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+        {children}
+    </label>
+);
+
+const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+    <input
+        {...props}
+        className={cn(
+            'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
+            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
+            'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
+            props.className
+        )}
+    />
+);
+
+const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
+    <textarea
+        {...props}
+        className={cn(
+            'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
+            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white resize-none',
+            'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
+            props.className
+        )}
+    />
+);
+
+const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
+    <button
+        onClick={onChange}
+        className={cn(
+            'w-11 h-6 rounded-full relative transition-all duration-300 shrink-0',
+            checked ? 'bg-[#5c59f2]' : 'bg-slate-200 dark:bg-slate-700'
+        )}
+    >
+        <div className={cn(
+            'absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300',
+            checked ? 'translate-x-5' : 'translate-x-0.5'
+        )} />
+    </button>
+);
+
+const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
+    onClick?: () => void; loading?: boolean; children: React.ReactNode; className?: string
+}) => (
+    <button
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all',
+            className
+        )}
+    >
+        {loading ? <RefreshCw size={14} className="animate-spin" /> : children}
+    </button>
+);
+
+const SecondaryBtn = ({ onClick, children, className = '' }: {
+    onClick?: () => void; children: React.ReactNode; className?: string
+}) => (
+    <button
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800',
+            'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
+            'text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-all',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+const DangerBtn = ({ onClick, children, className = '' }: {
+    onClick?: () => void; children: React.ReactNode; className?: string
+}) => (
+    <button
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-900/20',
+            'hover:bg-rose-600 hover:text-white text-rose-600',
+            'text-xs font-bold px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-800 transition-all',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+const ToggleRow = ({
+    icon: Icon, label, sub, checked, onChange
+}: { icon: any; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
+    <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-3">
+            <div className="w-7 h-7 flex items-center justify-center bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                <Icon size={14} className="text-slate-400" />
+            </div>
+            <div>
+                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{label}</p>
+                {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+            </div>
+        </div>
+        <Toggle checked={checked} onChange={onChange} />
+    </div>
+);
+
+// ── Main Settings Component ────────────────────────────────────────────────────
 
 const Settings = () => {
     const {
@@ -81,13 +208,12 @@ const Settings = () => {
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
-    const [activeTab, setActiveTab] = useState<'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit'>('general');
+    const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [auditLogs, setAuditLogs] = useState<any[]>([]);
 
-    // Local form states
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAcademyLogo, setLocalAcademyLogo] = useState(academyLogo);
     const [localAcademyTagline, setLocalAcademyTagline] = useState(academyTagline);
@@ -103,15 +229,16 @@ const Settings = () => {
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
 
-    // Users form state
     const [newUser, setNewUser] = useState({ username: '', password: '', permissions: [] as string[] });
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState<any>(null);
-
-    // Security Modal State
-    const [secureAction, setSecureAction] = useState<{type: 'reset' | 'archive', title: string, description: string, confirmWord: string, actionFn: () => void} | null>(null);
+    const [secureAction, setSecureAction] = useState<{
+        type: 'reset' | 'archive'; title: string; description: string;
+        confirmWord: string; actionFn: () => void
+    } | null>(null);
     const [secureInput, setSecureInput] = useState('');
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -131,6 +258,12 @@ const Settings = () => {
             const logs = await settingsService.getAuditLogs();
             setAuditLogs(logs || []);
         } catch (e) { console.error(e); }
+    };
+
+    const showNotify = (msg: string) => {
+        setNotificationMessage(msg);
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 3000);
     };
 
     const handleSaveGeneral = async () => {
@@ -153,14 +286,6 @@ const Settings = () => {
         finally { setIsSaving(false); }
     };
 
-    const [notificationMessage, setNotificationMessage] = useState('');
-
-    const showNotify = (msg: string) => {
-        setNotificationMessage(msg);
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 3000);
-    };
-
     const handleUserAction = () => {
         if (!newUser.username) return;
         if (editingUserId) {
@@ -172,857 +297,756 @@ const Settings = () => {
         setNewUser({ username: '', password: '', permissions: [] });
     };
 
-    if (loading) return <div className="p-8 space-y-4"><Skeleton className="h-20" /><Skeleton className="h-64" /></div>;
+    const TABS: { id: TabId; label: string; icon: any }[] = [
+        { id: 'general', label: 'الإعدادات', icon: SettingsIcon },
+        { id: 'appearance', label: 'الهوية', icon: Palette },
+        { id: 'users', label: 'المستخدمون', icon: Users },
+        { id: 'chatbot', label: 'الذكاء الاصطناعي', icon: MessageSquare },
+        { id: 'policies', label: 'السياسات', icon: Lock },
+        { id: 'advanced', label: 'الأرشيف', icon: Shield },
+        { id: 'audit', label: 'السجلات', icon: Activity },
+    ];
+
+    if (loading) return (
+        <div className="p-4 space-y-3">
+            <Skeleton className="h-14 rounded-2xl" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-10 rounded-xl" />)}
+            </div>
+            <Skeleton className="h-64 rounded-2xl" />
+        </div>
+    );
 
     return (
-        <div className="space-y-6 pb-20 min-h-full bg-slate-50 dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
-            
-            {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] mb-10">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 -skew-x-12 transform translate-x-32 -translate-y-32 pointer-events-none"></div>
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+
+            {/* ── Header ── */}
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+                        <SettingsIcon size={18} className="text-[#5c59f2]" />
+                    </div>
                     <div>
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-0.5 uppercase tracking-[3px] italic">إعدادات النظام</span>
-                            <SettingsIcon size={14} className="text-amber-400" />
-                        </div>
-                        <h1 className="text-2xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
-                            <span className="text-indigo-600 dark:text-indigo-400">لوحة تحكم</span> الإعدادات والضوابط
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-[2px] italic mt-4 flex items-center gap-2">
-                            <div className="w-10 h-1 bg-indigo-600"></div>
-                            إدارة السياسات، الهوية، وصلاحيات النظام المركزية
-                        </p>
+                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">إعدادات النظام</h1>
+                        <p className="text-[10px] text-slate-400">إدارة السياسات والهوية والصلاحيات</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700">
+                    <Sparkles size={12} className="text-amber-400" />
+                    {activeTab && TABS.find(t => t.id === activeTab)?.label}
+                </div>
+            </div>
+
+            {/* ── Tab Navigation ── */}
+            <div className="px-4 md:px-6">
+                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-1.5 shadow-sm">
+                    <div className="flex overflow-x-auto no-scrollbar gap-1">
+                        {TABS.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={cn(
+                                    'flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-bold whitespace-nowrap transition-all',
+                                    activeTab === tab.id
+                                        ? 'bg-[#5c59f2] text-white shadow-sm'
+                                        : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
+                                )}
+                            >
+                                <tab.icon size={13} />
+                                {tab.label}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
 
-            {/* Ultra-Compact Tabs Navigation - Ensuring all 7 fit */}
-            <div className="grid grid-cols-2 lg:flex lg:flex-row gap-2 md:gap-3 mb-10 no-print">
-                {[
-                    { id: 'general', label: 'الإعدادات العامة', icon: Building2 },
-                    { id: 'appearance', label: 'الهوية والمظهر', icon: Palette },
-                    { id: 'users', label: 'إدارة المستخدمين', icon: Users },
-                    { id: 'chatbot', label: 'المساعد الذكي', icon: MessageSquare },
-                    { id: 'policies', label: 'السياسات والقيود', icon: Lock },
-                    { id: 'advanced', label: 'الأرشيف والأدوات', icon: Shield },
-                    { id: 'audit', label: 'سجل الرقابة', icon: Activity },
-                ].map((tab: any) => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={cn(
-                            "flex flex-1 items-center justify-center lg:justify-center gap-1.5 md:gap-2 px-1.5 lg:px-2 py-3 lg:py-4 font-black text-[9px] lg:text-[11px] uppercase transition-all tracking-tighter border-4 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 whitespace-nowrap overflow-hidden group",
-                            activeTab === tab.id 
-                                ? "bg-indigo-600 text-white border-slate-900 dark:border-white" 
-                                : "bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-900 dark:border-white hover:bg-slate-50 dark:hover:bg-slate-800"
-                        )}
-                    >
-                        <tab.icon size={14} lg:size={16} strokeWidth={3} className={cn("shrink-0", activeTab === tab.id ? "text-amber-400" : "text-slate-400 group-hover:text-indigo-600")} />
-                        <span className="truncate">{tab.label}</span>
-                    </button>
-                ))}
-            </div>
+            {/* ── Tab Content ── */}
+            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
 
-            <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-500">
+                {/* ── GENERAL ── */}
                 {activeTab === 'general' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
-                            <h2 className="font-black text-xl flex items-center gap-3 uppercase"><Building2 size={24} className="text-indigo-600"/> الهوية الأساسية للأكاديمية</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">اسم الأكاديمية</label>
-                                    <input value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard>
+                            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="Academy Identity" />
+                            <div className="space-y-3">
+                                <div>
+                                    <FieldLabel>اسم الأكاديمية</FieldLabel>
+                                    <InputField value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} />
                                 </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">رابط الشعار (URL)</label>
-                                    <input value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono" />
+                                <div>
+                                    <FieldLabel>رابط الشعار (URL)</FieldLabel>
+                                    <InputField value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." dir="ltr" className="font-mono text-xs" />
                                 </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">الشعار اللفظي (Tagline)</label>
-                                    <input value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none" />
+                                <div>
+                                    <FieldLabel>الشعار اللفظي</FieldLabel>
+                                    <InputField value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} />
                                 </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">رقم هاتف المسؤول الرئيسي</label>
-                                    <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono tracking-widest" />
+                                <div>
+                                    <FieldLabel>رقم هاتف المسؤول</FieldLabel>
+                                    <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} dir="ltr" className="font-mono tracking-wider" />
                                 </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">قناة تليجرام (Telegram Handle)</label>
-                                    <input value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono tracking-widest" />
+                                <div>
+                                    <FieldLabel>قناة تليجرام</FieldLabel>
+                                    <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" dir="ltr" className="font-mono" />
                                 </div>
+                                <ToggleRow
+                                    icon={Monitor}
+                                    label="وضع الصيانة"
+                                    sub="تعطيل وصول المستخدمين العاديين"
+                                    checked={maintenanceMode}
+                                    onChange={() => {
+                                        if (!maintenanceMode) setShowMaintenanceModal(true);
+                                        else setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة'));
+                                    }}
+                                />
                             </div>
-                            <div className="p-5 mt-4 bg-amber-50 dark:bg-amber-900/10 border-4 border-slate-900 dark:border-amber-900/50 flex items-center justify-between shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                <div><p className="text-sm font-black uppercase">وضع الصيانة</p><p className="text-[10px] font-bold text-slate-500 italic mt-1 pb-1">تعطيل وصول المستخدمين العاديين</p></div>
-                                <button onClick={() => {
-                                    if (!maintenanceMode) {
-                                        setShowMaintenanceModal(true);
-                                    } else {
-                                        setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة، المنصة متاحة للجميع الآن.'));
-                                    }
-                                }} className={cn("w-14 h-8 relative transition-colors shrink-0 border-4 border-slate-900", maintenanceMode ? "bg-amber-500" : "bg-slate-300 dark:bg-slate-700")}>
-                                    <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all", maintenanceMode ? "translate-x-7" : "translate-x-1")} />
-                                </button>
-                            </div>
-                        </section>
+                        </SectionCard>
 
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
-                            <div className="flex items-center justify-between pb-2">
-                                <h2 className="font-black text-xl flex items-center gap-3 uppercase">
-                                    <Wallet size={24} className="text-indigo-600" />
-                                    الإعدادات الأكاديمية والمالية
-                                </h2>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {/* Academic Controls */}
-                                <div className="space-y-6">
-                                    <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
-                                        <Calendar size={14} /> الضوابط الأكاديمية
-                                    </h3>
-                                    
-                                    <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 transition-colors tracking-widest">
-                                            تسمية الفصل الدراسي المنشط
-                                        </label>
-                                        <div className="relative">
-                                            <input 
-                                                value={localSemesterName} 
-                                                onChange={e => setLocalSemesterName(e.target.value)} 
-                                                className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all"
-                                                placeholder="مثلاً: الفصل الدراسي الأول 2024"
-                                            />
-                                            <Edit size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
-                                        </div>
-                                        <p className="text-[9px] font-bold text-slate-500 mt-2 italic pb-2">* يظهر هذا الاسم في كافة تقارير الطلاب وفواتيرهم.</p>
+                        <SectionCard>
+                            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="Financial & Academic" />
+                            <div className="space-y-3">
+                                <div>
+                                    <FieldLabel>تسمية الفصل الدراسي</FieldLabel>
+                                    <InputField value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} placeholder="الفصل الأول 2024" />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <FieldLabel>سعر الطالب</FieldLabel>
+                                        <InputField type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} />
+                                    </div>
+                                    <div>
+                                        <FieldLabel>سعر المعلم</FieldLabel>
+                                        <InputField type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} />
+                                    </div>
+                                    <div>
+                                        <FieldLabel>رمز العملة</FieldLabel>
+                                        <InputField value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="text-center" />
+                                    </div>
+                                    <div>
+                                        <FieldLabel>تنبيه الرصيد</FieldLabel>
+                                        <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-rose-600 bg-rose-50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800" />
                                     </div>
                                 </div>
-
-                                {/* Financial Controls */}
-                                <div className="space-y-6">
-                                    <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                                        <Activity size={14} /> المعايير المالية الافتراضية
-                                    </h3>
-
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">سعر الطالب</label>
-                                            <div className="relative">
-                                                <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10 tracking-widest font-mono" />
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-slate-400 text-[10px]">{localCurrency}</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">سعر المعلمة</label>
-                                            <div className="relative">
-                                                <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10 tracking-widest font-mono" />
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-slate-400 text-[10px]">{localCurrency}</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">رمز العملة</label>
-                                            <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all text-center" />
-                                        </div>
-                                        <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 text-rose-600 group tracking-widest">تنبيه الرصيد <AlertCircle size={10} className="inline"/></label>
-                                            <input type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="w-full bg-rose-50 dark:bg-rose-900/10 border-4 border-rose-300 dark:border-rose-900 focus:border-rose-600 p-4 font-black outline-none transition-all text-center text-rose-600 tracking-widest font-mono" />
-                                        </div>
-                                    </div>
-                                    <p className="text-[10px] font-bold text-slate-500 italic bg-amber-50 dark:bg-amber-900/10 p-3 border-r-4 border-amber-500 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                        * هذه القيم يتم تطبيقها تلقائياً عند تسجيل طالب أو معلم جديد لتوفير الوقت.
-                                    </p>
-                                </div>
+                                <p className="text-[10px] text-slate-400 bg-amber-50 dark:bg-amber-900/10 px-3 py-2 rounded-lg border-r-2 border-amber-400">
+                                    القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
+                                </p>
+                                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
+                                    <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
+                                </PrimaryBtn>
                             </div>
-
-                            <button 
-                                onClick={handleSaveGeneral} 
-                                className="group relative w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4 mt-6"
-                            >
-                                {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
-                                    <>
-                                        <CheckCircle2 size={24} />
-                                        حفظ الضوابط الجوهرية للنظام
-                                    </>
-                                )}
-                            </button>
-                        </section>
+                        </SectionCard>
                     </div>
                 )}
 
+                {/* ── APPEARANCE ── */}
                 {activeTab === 'appearance' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* System Identity & Logo Preview */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
-                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <Building2 size={24} className="text-indigo-600" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard>
+                            <SectionTitle icon={Building2} label="معاينة هوية المنصة" sub="Identity & Branding" />
+                            <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-5 flex flex-col items-center text-center border border-dashed border-slate-200 dark:border-slate-700 mb-4">
+                                <div className="w-16 h-16 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center mb-3 overflow-hidden">
+                                    {academyLogo
+                                        ? <img src={academyLogo} alt="Logo" className="max-w-full max-h-full object-contain" />
+                                        : <Monitor size={28} className="text-slate-300" />}
                                 </div>
-                                <div>
-                                    <h2 className="text-xl font-black uppercase tracking-tighter">معاينة هوية المنصة</h2>
-                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1 italic">Identity & Branding Preview</p>
-                                </div>
+                                <p className="font-bold text-sm text-slate-800 dark:text-white">{academyName}</p>
+                                <p className="text-[10px] text-slate-400 mt-1">{academyTagline}</p>
                             </div>
+                            <ToggleRow
+                                icon={Bell}
+                                label="الإشعارات المكتبية"
+                                sub="Desktop Push Notifications"
+                                checked={notificationsEnabled}
+                                onChange={() => setNotificationsEnabled(!notificationsEnabled)}
+                            />
+                        </SectionCard>
 
-                            <div className="space-y-6">
-                                <div className="p-6 bg-slate-50 dark:bg-slate-800 border-4 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center text-center group">
-                                    <div className="w-24 h-24 bg-white dark:bg-slate-950 border-4 border-slate-900 dark:border-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)] mb-4 flex items-center justify-center p-3 relative overflow-hidden transition-transform group-hover:scale-105">
-                                        {academyLogo ? (
-                                            <img src={academyLogo} alt="Logo" className="max-w-full max-h-full object-contain relative z-10" />
-                                        ) : (
-                                            <Monitor size={36} className="text-slate-300 dark:text-slate-700" />
+                        <SectionCard>
+                            <SectionTitle icon={Palette} label="لوحة الألوان والسمات" sub="Theme Palette" />
+                            <p className="text-[10px] text-slate-400 mb-3 flex items-center gap-1.5">
+                                <Sparkles size={11} className="text-amber-400" /> اختر اللون المميز للنظام
+                            </p>
+                            <div className="grid grid-cols-7 gap-2 mb-4">
+                                {THEME_COLORS.map(c => (
+                                    <button
+                                        key={c.id}
+                                        onClick={() => setThemeColor(c.id)}
+                                        title={c.label}
+                                        className={cn(
+                                            'w-8 h-8 rounded-lg transition-all relative mx-auto',
+                                            c.class,
+                                            themeColor === c.id
+                                                ? 'ring-2 ring-offset-2 ring-[#5c59f2] scale-110'
+                                                : 'hover:scale-110 opacity-70 hover:opacity-100'
                                         )}
-                                    </div>
-                                    <h3 className="font-black text-lg text-slate-900 dark:text-white uppercase tracking-tighter">{academyName}</h3>
-                                    <p className="text-[11px] font-bold text-slate-500 mt-2 italic opacity-80">{academyTagline}</p>
-                                </div>
-
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div className="p-4 bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 flex items-center justify-between shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center">
-                                                <Bell size={18} className="text-amber-500" />
-                                            </div>
-                                            <div>
-                                                <p className="text-xs font-black uppercase tracking-widest">الإشعارات المكتبية</p>
-                                                <p className="text-[9px] font-bold text-slate-500 italic mt-1 pb-1">Desktop Push Notifications</p>
-                                            </div>
-                                        </div>
-                                        <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", notificationsEnabled ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-700")}>
-                                            <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all", notificationsEnabled ? "translate-x-7" : "translate-x-1")} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Visual Theme & Color Palette */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
-                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <Palette size={24} className="text-indigo-600" />
-                                </div>
-                                <div>
-                                    <h2 className="text-xl font-black uppercase tracking-tighter">قالب الألوان والسمات</h2>
-                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1 italic">System Skin & Theme Palette</p>
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div>
-                                    <p className="text-[11px] font-black mb-6 uppercase tracking-widest text-slate-500 flex items-center gap-2 italic">
-                                        <Sparkles size={14} className="text-amber-500" /> اختر اللون المميز لنظامك
-                                    </p>
-                                    <div className="grid grid-cols-7 gap-4">
-                                        {THEME_COLORS.map(c => (
-                                            <button 
-                                                key={c.id} 
-                                                onClick={() => setThemeColor(c.id)} 
-                                                className={cn(
-                                                    "group relative h-10 w-10 md:h-12 md:w-12 rounded-none transition-all duration-300 p-1 border-4 mx-auto", 
-                                                    themeColor === c.id 
-                                                        ? "border-slate-900 dark:border-white scale-110 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]" 
-                                                        : "border-transparent hover:scale-110"
-                                                )}
-                                            >
-                                                <div className={cn("w-full h-full transform transition-transform group-hover:rotate-6", c.class)} title={c.label} />
-                                                {themeColor === c.id && (
-                                                    <div className="absolute inset-0 flex items-center justify-center">
-                                                        <div className="w-5 h-5 bg-black/30 dark:bg-white/30 flex items-center justify-center backdrop-blur-sm shadow-inner">
-                                                            <CheckCircle2 size={12} className="text-white dark:text-white" strokeWidth={4} />
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Full Width Security & Backup Section */}
-                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-slate-900 p-8 relative overflow-hidden group shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
-                             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                                 <div className="flex items-center gap-5">
-                                     <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                         <Shield size={28} strokeWidth={3} className="text-blue-600" />
-                                     </div>
-                                     <div>
-                                         <h3 className="text-base font-black uppercase tracking-widest text-slate-800 dark:text-white italic">إدارة الأمان والنسخ الاحتياطي</h3>
-                                         <p className="text-[11px] font-bold text-slate-500 mt-1">تأمين قاعدة البيانات والملفات بشكل دوري (System Restore Point)</p>
-                                     </div>
-                                 </div>
-                                 <div className="flex flex-col sm:flex-row w-full md:w-auto gap-4">
-                                    <button className="px-8 py-4 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 font-black uppercase text-[11px] tracking-widest shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-3">
-                                        <Download size={18} className="text-blue-600" /> تحميل نسخة احتياطية
+                                    >
+                                        {themeColor === c.id && (
+                                            <CheckCircle2 size={12} className="absolute inset-0 m-auto text-white drop-shadow" />
+                                        )}
                                     </button>
-                                    <button className="px-8 py-4 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 font-black uppercase text-[11px] tracking-widest shadow-[4px_4px_0px_0px_rgba(16,185,129,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-3">
-                                        <Upload size={18} className="text-emerald-600" /> استيراد بيانات سابقة
-                                    </button>
-                                 </div>
-                             </div>
-                        </section>
+                                ))}
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="lg:col-span-2">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-9 h-9 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center">
+                                        <Shield size={16} className="text-blue-500" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-slate-800 dark:text-white">إدارة الأمان والنسخ الاحتياطي</p>
+                                        <p className="text-[10px] text-slate-400 mt-0.5">System Restore Point</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 w-full md:w-auto">
+                                    <SecondaryBtn className="flex-1 md:flex-none">
+                                        <Download size={14} className="text-blue-500" /> تحميل نسخة احتياطية
+                                    </SecondaryBtn>
+                                    <SecondaryBtn className="flex-1 md:flex-none">
+                                        <Upload size={14} className="text-emerald-500" /> استيراد بيانات
+                                    </SecondaryBtn>
+                                </div>
+                            </div>
+                        </SectionCard>
                     </div>
                 )}
 
+                {/* ── CHATBOT ── */}
                 {activeTab === 'chatbot' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* Bot Configuration */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <h2 className="font-black text-xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <MessageSquare size={24} className="text-indigo-600" />
-                                    تخصيص المساعد الذكي
-                                </h2>
-                                <button 
-                                    onClick={() => setChatbotEnabled(!chatbotEnabled)} 
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard>
+                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+                                        <MessageSquare size={16} className="text-[#5c59f2]" />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-slate-800 dark:text-white">تخصيص المساعد الذكي</p>
+                                        <p className="text-[10px] text-slate-400">AI Concierge Config</p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setChatbotEnabled(!chatbotEnabled)}
                                     className={cn(
-                                        "px-4 py-2 border-4 border-slate-900 font-black text-[10px] uppercase transition-all flex items-center gap-2 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
-                                        chatbotEnabled ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-400"
+                                        'text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5',
+                                        chatbotEnabled
+                                            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border-emerald-200 dark:border-emerald-800'
+                                            : 'bg-slate-50 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
                                     )}
                                 >
-                                    {chatbotEnabled ? <CheckCircle2 size={14}/> : <Lock size={14}/>}
-                                    {chatbotEnabled ? "نشط الآن" : "معطل حالياً"}
+                                    {chatbotEnabled ? <><CheckCircle2 size={12} /> نشط</> : <><Lock size={12} /> معطل</>}
                                 </button>
                             </div>
-
-                            <div className="space-y-6">
-                                <div className="p-4 bg-indigo-50 dark:bg-indigo-900/10 border-4 border-slate-900 dark:border-slate-800 flex items-center justify-between group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <div>
-                                        <p className="font-black text-sm text-indigo-900 dark:text-indigo-100 italic">حوار الزوار التلقائي</p>
-                                        <p className="text-[10px] font-bold text-indigo-600/60 uppercase tracking-widest mt-1">Enable Automated Concierge</p>
-                                    </div>
-                                    <button onClick={() => setChatbotEnabled(!chatbotEnabled)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", chatbotEnabled ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-700")}>
-                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", chatbotEnabled ? "translate-x-7" : "translate-x-1")} />
-                                    </button>
+                            <div className="space-y-3">
+                                <ToggleRow
+                                    icon={MessageSquare}
+                                    label="حوار الزوار التلقائي"
+                                    sub="Automated Concierge"
+                                    checked={chatbotEnabled}
+                                    onChange={() => setChatbotEnabled(!chatbotEnabled)}
+                                />
+                                <div>
+                                    <FieldLabel>اسم المساعد</FieldLabel>
+                                    <InputField value={localChatbotName} onChange={e => setLocalChatbotName(e.target.value)} />
                                 </div>
-
-                                <div className="space-y-5">
-                                    <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 tracking-widest">اسم المساعد (Bot Name)</label>
-                                        <div className="relative">
-                                            <input 
-                                                value={localChatbotName} 
-                                                onChange={e => setLocalChatbotName(e.target.value)} 
-                                                className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10"
-                                            />
-                                            <Sparkles size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:text-indigo-500 transition-colors" />
-                                        </div>
-                                    </div>
-
-                                    <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 tracking-widest">رسالة الترحيب الافتتاحية</label>
-                                        <textarea 
-                                            value={localChatbotWelcomeMsg} 
-                                            onChange={e => setLocalChatbotWelcomeMsg(e.target.value)} 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all h-28 resize-none text-base leading-relaxed"
-                                            placeholder="اكتب رسالة الترحيب هنا..."
-                                        />
-                                    </div>
+                                <div>
+                                    <FieldLabel>رسالة الترحيب</FieldLabel>
+                                    <TextAreaField value={localChatbotWelcomeMsg} onChange={e => setLocalChatbotWelcomeMsg(e.target.value)} rows={4} placeholder="اكتب رسالة الترحيب هنا..." />
                                 </div>
+                                <PrimaryBtn
+                                    loading={isSaving}
+                                    className="w-full"
+                                    onClick={async () => {
+                                        setIsSaving(true);
+                                        try {
+                                            await setChatbotName(localChatbotName);
+                                            await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
+                                            showNotify('تم تحديث إعدادات الشات بوت');
+                                        } finally { setIsSaving(false); }
+                                    }}
+                                >
+                                    <Shield size={14} /> حفظ إعدادات المساعد
+                                </PrimaryBtn>
                             </div>
+                        </SectionCard>
 
-                            <button 
-                                onClick={async () => {
-                                    setIsSaving(true);
-                                    try {
-                                        await setChatbotName(localChatbotName);
-                                        await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
-                                        showNotify('تم تحديث إعدادات الشات بوت بنجاح');
-                                    } catch (e) {
-                                        showNotify('حدث خطأ أثناء الحفظ');
-                                    } finally {
-                                        setIsSaving(false);
-                                    }
-                                }} 
-                                className="group relative w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4 mt-6"
-                            >
-                                {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
-                                    <>
-                                        <Shield size={24} />
-                                        تحديث برنامج الذكاء الاصطناعي
-                                    </>
-                                )}
-                            </button>
-                        </section>
-
-                        {/* Live Bot Preview */}
-                        <section className="bg-slate-900 p-8 border-4 border-slate-900 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] relative overflow-hidden flex flex-col justify-center min-vh-[400px]">
-                            <div className="absolute top-0 right-0 p-4">
-                                <span className="text-[10px] font-black text-indigo-400 border border-indigo-500/30 px-3 py-1 uppercase tracking-widest">Live Simulator</span>
+                        <SectionCard className="bg-slate-900 dark:bg-slate-950 border-slate-800">
+                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                                <p className="text-xs font-bold text-white/60 uppercase tracking-widest">محاكاة مباشرة</p>
+                                <span className="text-[9px] font-bold text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded-md">Live Simulator</span>
                             </div>
-                            
-                            <div className="relative z-10 w-full max-w-sm mx-auto space-y-6">
-                                {/* Simulated Message */}
-                                <div className="flex flex-col gap-2 md:animate-in md:slide-in-from-left-4 md:duration-1000">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center text-white border-2 border-white shadow-[2px_2px_0px_0px_black]">
-                                            <MessageSquare size={18} />
-                                        </div>
-                                        <span className="text-[11px] font-black text-white/50 uppercase tracking-widest">{localChatbotName}</span>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <div className="w-8 h-8 bg-[#5c59f2] rounded-xl flex items-center justify-center">
+                                        <MessageSquare size={14} className="text-white" />
                                     </div>
-                                    <div className="bg-white/10 backdrop-blur-md p-5 border-2 border-white/20 text-white text-sm font-bold leading-relaxed shadow-lg">
-                                        {localChatbotWelcomeMsg}
-                                    </div>
-                                    <span className="text-[9px] font-black text-white/30 uppercase text-left tracking-widest mt-1">Just Now</span>
+                                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{localChatbotName}</span>
                                 </div>
-
-                                {/* Simulated Interaction Button */}
-                                <div className="flex justify-end gap-2 md:animate-in md:slide-in-from-right-4 md:duration-1000 md:delay-300">
-                                    <div className="bg-indigo-600 px-5 py-3 border-2 border-white text-white text-[11px] font-black shadow-[4px_4px_0px_0px_black] cursor-pointer hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                                <div className="bg-white/10 p-4 rounded-xl text-white text-xs font-medium leading-relaxed">
+                                    {localChatbotWelcomeMsg}
+                                </div>
+                                <div className="flex justify-end">
+                                    <div className="bg-[#5c59f2] px-4 py-2 rounded-xl text-white text-[11px] font-bold cursor-pointer">
                                         كيف يمكنني البدء؟
                                     </div>
                                 </div>
-
-                                {/* Simulated Floating Bubble */}
-                                <div className="absolute -bottom-10 right-0 transform translate-y-20 flex flex-col items-center gap-3">
-                                    <div className="bg-white py-2 px-4 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black]">
-                                        <p className="text-[11px] font-black text-slate-900 uppercase">أنا متواجد للمساعدة!</p>
-                                    </div>
-                                    <div className="w-16 h-16 bg-indigo-600 flex items-center justify-center text-white border-4 border-slate-900 shadow-[6px_6px_0px_0px_black] animate-bounce cursor-pointer">
-                                        <MessageSquare size={28} />
-                                    </div>
-                                </div>
                             </div>
-                        </section>
-                        
-                        {/* Guest Conversations Manager - Now full width below */}
-                        <div className="col-span-1 lg:col-span-2 mt-4">
-                            {chatbotEnabled && user?.id && <GuestChatManager adminId={user.id} />}
-                        </div>
+                        </SectionCard>
+
+                        {chatbotEnabled && user?.id && (
+                            <div className="lg:col-span-2">
+                                <GuestChatManager adminId={user.id} />
+                            </div>
+                        )}
                     </div>
                 )}
 
+                {/* ── USERS ── */}
                 {activeTab === 'users' && (
-                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* Users List */}
-                        <div className="xl:col-span-2 space-y-6">
-                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <h2 className="font-black text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Users size={32} className="text-indigo-600" />
-                                    الحسابات والمسؤولين
-                                </h2>
-                                <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-3 py-1 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] uppercase italic">Admin Registry</span>
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+                        <div className="xl:col-span-2 space-y-3">
+                            <div className="flex items-center justify-between mb-1">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl flex items-center justify-center">
+                                        <Users size={16} className="text-[#5c59f2]" />
+                                    </div>
+                                    <p className="text-sm font-bold text-slate-800 dark:text-white">الحسابات والمسؤولون</p>
+                                </div>
+                                <span className="text-[10px] font-bold text-[#5c59f2] bg-[#eef2ff] dark:bg-indigo-900/30 px-2.5 py-1 rounded-lg">
+                                    {users.length} حسابات
+                                </span>
                             </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {users.map(u => (
-                                    <div key={u.id} className="bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white p-6 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all group relative overflow-hidden">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <div className="w-14 h-14 bg-indigo-600 text-white flex items-center justify-center font-black text-2xl border-4 border-slate-900 shadow-[4px_4px_0px_0px_black]">
+                                    <div key={u.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm group hover:border-[#5c59f2]/30 transition-all">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div className="w-10 h-10 bg-[#5c59f2] text-white rounded-xl flex items-center justify-center font-bold text-sm">
                                                 {u.username[0].toUpperCase()}
                                             </div>
-                                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button onClick={() => { setEditingUserId(u.id); setNewUser({username: u.username, password: '', permissions: u.permissions || []}); }} className="p-3 bg-white text-indigo-600 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-slate-900 hover:text-white transition-all"><Edit size={18}/></button>
-                                                {u.id !== user?.id && <button onClick={() => setShowDeleteModal(u)} className="p-3 bg-rose-50 text-rose-600 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-rose-600 hover:text-white transition-all"><Trash2 size={18}/></button>}
+                                            <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button
+                                                    onClick={() => { setEditingUserId(u.id); setNewUser({ username: u.username, password: '', permissions: u.permissions || [] }); }}
+                                                    className="p-1.5 bg-slate-50 dark:bg-slate-800 text-slate-500 rounded-lg border border-slate-200 dark:border-slate-700 hover:text-[#5c59f2] hover:border-[#5c59f2]/30 transition-all"
+                                                >
+                                                    <Edit size={13} />
+                                                </button>
+                                                {u.id !== user?.id && (
+                                                    <button
+                                                        onClick={() => setShowDeleteModal(u)}
+                                                        className="p-1.5 bg-rose-50 dark:bg-rose-900/20 text-rose-400 rounded-lg border border-rose-100 dark:border-rose-800 hover:text-rose-600 transition-all"
+                                                    >
+                                                        <Trash2 size={13} />
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
-                                        <div className="space-y-1">
-                                            <p className="font-black text-xl tracking-tight uppercase truncate dark:text-white">{u.name || u.username}</p>
-                                            <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest mt-2">
-                                                <Shield size={12} className="text-indigo-600" /> {u.permissions?.includes('*') ? 'Full System Admin' : `${u.permissions?.length || 0} Permissions`}
-                                            </p>
-                                        </div>
-                                        <div className="mt-5 flex flex-wrap gap-2 pt-5 border-t-4 border-dashed border-slate-200 dark:border-slate-800">
+                                        <p className="font-bold text-sm text-slate-800 dark:text-white truncate">{u.name || u.username}</p>
+                                        <p className="text-[10px] text-slate-400 flex items-center gap-1 mt-1">
+                                            <Shield size={10} className="text-[#5c59f2]" />
+                                            {u.permissions?.includes('*') ? 'Admin كامل' : `${u.permissions?.length || 0} صلاحيات`}
+                                        </p>
+                                        <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-slate-50 dark:border-slate-800">
                                             {u.permissions?.slice(0, 3).map(p => (
-                                                <span key={p} className="text-[9px] font-black bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-1 border-2 border-slate-900 dark:border-slate-700 uppercase italic whitespace-nowrap">{p}</span>
+                                                <span key={p} className="text-[9px] font-bold bg-slate-50 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
+                                                    {p}
+                                                </span>
                                             ))}
-                                            {(u.permissions?.length || 0) > 3 && <span className="text-[9px] font-black bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 px-2 py-1 border-2 border-slate-900 dark:border-slate-700">+{(u.permissions?.length || 0) - 3}</span>}
+                                            {(u.permissions?.length || 0) > 3 && (
+                                                <span className="text-[9px] font-bold bg-[#eef2ff] dark:bg-indigo-900/30 text-[#5c59f2] px-1.5 py-0.5 rounded-md">
+                                                    +{(u.permissions?.length || 0) - 3}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Add/Edit Section */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] h-fit lg:sticky top-4">
-                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4 mb-8">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <UserPlus size={24} className="text-indigo-600" />
+                        <SectionCard className="h-fit xl:sticky top-4">
+                            <SectionTitle
+                                icon={editingUserId ? Edit : UserPlus}
+                                label={editingUserId ? 'تعديل المسؤول' : 'إضافة حساب جديد'}
+                                sub="User Management"
+                            />
+                            <div className="space-y-3">
+                                <div>
+                                    <FieldLabel>اسم الدخول</FieldLabel>
+                                    <InputField
+                                        value={newUser.username}
+                                        onChange={e => setNewUser({ ...newUser, username: e.target.value })}
+                                        placeholder="admin_username"
+                                    />
                                 </div>
-                                <h2 className="text-xl font-black uppercase tracking-tighter">{editingUserId ? 'تعديل المسؤول' : 'إضافة حساب جديد'}</h2>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="grid grid-cols-1 gap-5">
-                                    <div className="space-y-2">
-                                        <label className="text-[11px] font-black uppercase opacity-70 tracking-widest">اسم الدخول</label>
-                                        <input value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600 transition-all text-sm" placeholder="ADMIN_USERNAME" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[11px] font-black uppercase opacity-70 tracking-widest">الرقم السري</label>
-                                        <input type="password" value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600 transition-all text-sm font-mono" placeholder="********" />
-                                    </div>
+                                <div>
+                                    <FieldLabel>الرقم السري</FieldLabel>
+                                    <InputField
+                                        type="password"
+                                        value={newUser.password}
+                                        onChange={e => setNewUser({ ...newUser, password: e.target.value })}
+                                        placeholder="••••••••"
+                                    />
                                 </div>
 
-                                <div className="space-y-5 pt-5 border-t-4 border-dashed border-slate-200 dark:border-slate-800">
-                                    <p className="text-[11px] font-black uppercase text-indigo-600 opacity-90 flex items-center gap-2 tracking-widest">
-                                        <Shield size={14} /> قوالب صلاحيات سريعة
+                                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                                    <p className="text-[10px] font-bold text-[#5c59f2] flex items-center gap-1.5 mb-2">
+                                        <Shield size={11} /> قوالب صلاحيات سريعة
                                     </p>
-                                    <div className="flex flex-wrap gap-3">
+                                    <div className="flex flex-wrap gap-1.5 mb-3">
                                         {[
                                             { label: 'مدير نظام', perms: ['*'] },
                                             { label: 'محاسب', perms: ['view_finance', 'manage_finance'] },
-                                            { label: 'مشرف تربوي', perms: ['view_students', 'manage_students', 'view_teachers'] },
+                                            { label: 'مشرف', perms: ['view_students', 'manage_students', 'view_teachers'] },
                                         ].map(role => (
-                                            <button key={role.label} onClick={() => setNewUser({...newUser, permissions: role.perms})} className="px-3 py-2 bg-white dark:bg-slate-800 text-[10px] font-black border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-slate-900 hover:text-white transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none whitespace-nowrap">{role.label}</button>
+                                            <button
+                                                key={role.label}
+                                                onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
+                                                className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-[#eef2ff] dark:hover:bg-indigo-900/30 hover:text-[#5c59f2] text-slate-500 text-[10px] font-bold rounded-lg border border-slate-200 dark:border-slate-700 transition-all"
+                                            >
+                                                {role.label}
+                                            </button>
                                         ))}
                                     </div>
-                                    
-                                    <p className="text-[11px] font-black uppercase opacity-60 tracking-widest mt-8">تخصيص الصلاحيات يدوياً</p>
-                                    <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto p-3 border-4 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                                    <p className="text-[10px] text-slate-400 mb-2">تخصيص يدوي</p>
+                                    <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                                         {AVAILABLE_PERMISSIONS.map(p => (
-                                            <button key={p.id} onClick={() => {
-                                                const perms = newUser.permissions.includes(p.id) ? newUser.permissions.filter(x => x !== p.id) : [...newUser.permissions, p.id];
-                                                setNewUser({...newUser, permissions: perms});
-                                            }} className={cn("p-3 text-[9px] font-black border-4 transition-all text-right uppercase shadow-[2px_2px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none", newUser.permissions.includes(p.id) ? "bg-indigo-600 text-white border-slate-900" : "bg-white dark:bg-slate-800 border-slate-900 dark:border-slate-700 text-slate-600 dark:text-slate-300")}>
+                                            <button
+                                                key={p.id}
+                                                onClick={() => {
+                                                    const perms = newUser.permissions.includes(p.id)
+                                                        ? newUser.permissions.filter(x => x !== p.id)
+                                                        : [...newUser.permissions, p.id];
+                                                    setNewUser({ ...newUser, permissions: perms });
+                                                }}
+                                                className={cn(
+                                                    'p-2 text-[9px] font-bold rounded-lg border text-right transition-all',
+                                                    newUser.permissions.includes(p.id)
+                                                        ? 'bg-[#5c59f2] text-white border-[#5c59f2]'
+                                                        : 'bg-white dark:bg-slate-900 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#5c59f2]/30'
+                                                )}
+                                            >
                                                 {p.label}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-4 pt-6 mt-4">
-                                    <button onClick={handleUserAction} className="w-full py-5 bg-indigo-600 text-white font-black uppercase tracking-[0.2em] text-xs border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-700 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2">
-                                        {editingUserId ? <><RefreshCw size={18} /> Update Administrator</> : <><UserPlus size={18} /> Create System Account</>}
-                                    </button>
-                                    {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="w-full py-4 bg-slate-100 dark:bg-slate-800 font-black uppercase text-[11px] tracking-widest border-4 border-slate-900 text-slate-600 dark:text-slate-300 shadow-[4px_4px_0px_0px_black] hover:bg-slate-200 dark:hover:bg-slate-700 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">Cancel Edit</button>}
+                                <div className="flex flex-col gap-2 pt-2">
+                                    <PrimaryBtn onClick={handleUserAction} className="w-full">
+                                        {editingUserId ? <><RefreshCw size={13} /> تحديث الحساب</> : <><UserPlus size={13} /> إنشاء حساب</>}
+                                    </PrimaryBtn>
+                                    {editingUserId && (
+                                        <SecondaryBtn onClick={() => { setEditingUserId(null); setNewUser({ username: '', password: '', permissions: [] }); }} className="w-full">
+                                            إلغاء التعديل
+                                        </SecondaryBtn>
+                                    )}
                                 </div>
                             </div>
-                        </section>
+                        </SectionCard>
                     </div>
                 )}
 
-                {activeTab === 'advanced' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* WhatsApp Automation Core */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Monitor size={28} className="text-indigo-600" />
-                                    أتمتة الواتساب والرسائل
-                                </h2>
-                                <span className="hidden md:block text-[10px] font-black text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] uppercase italic tracking-widest">Automation Engine</span>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="p-5 bg-indigo-50 dark:bg-indigo-900/10 border-4 border-slate-900 flex items-center justify-between group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <div>
-                                        <p className="font-black text-sm text-indigo-900 dark:text-indigo-100 italic">إرسال الفواتير تلقائياً</p>
-                                        <p className="text-[10px] font-bold text-indigo-600/70 uppercase lg:tracking-widest mt-1">Automatic Notifications</p>
+                {/* ── POLICIES ── */}
+                {activeTab === 'policies' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard>
+                            <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="System Safeguards" />
+                            <div className="space-y-3">
+                                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-xl border border-rose-100 dark:border-rose-900">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex-1">
+                                            <p className="text-xs font-bold text-rose-800 dark:text-rose-200 flex items-center gap-1.5">
+                                                <AlertCircle size={13} /> قفل التعديل بأثر رجعي
+                                            </p>
+                                            <p className="text-[10px] text-rose-500 mt-1.5 leading-relaxed">
+                                                يمنع الموظفين من إضافة أو تعديل حصص في تواريخ قديمة لضمان دقة السجلات المالية.
+                                            </p>
+                                        </div>
+                                        <Toggle
+                                            checked={backdateLockEnabled}
+                                            onChange={() => setBackdateLockEnabled(!backdateLockEnabled).then(() => showNotify('تم تحديث خيار الحماية'))}
+                                        />
                                     </div>
-                                    <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", whatsappAutoNotify ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-800")}>
-                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", whatsappAutoNotify ? "translate-x-7" : "translate-x-1")} />
-                                    </button>
                                 </div>
-                                
-                                <div className="space-y-4">
-                                    <label className="flex items-center gap-2 text-[11px] font-black uppercase opacity-70 italic tracking-widest">
-                                        <Edit size={14} /> قالب رسالة الحضور
-                                    </label>
-                                    <textarea 
-                                        value={localWhatsappTemplate} 
-                                        onChange={e => setLocalWhatsappTemplate(e.target.value)}
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-5 font-bold outline-none focus:border-indigo-600 transition-all min-h-[120px] text-sm leading-relaxed"
-                                        placeholder="اكتب رسالتك هنا..."
-                                    />
-                                    <div className="flex flex-wrap gap-2">
-                                        {['{Student}', '{Subject}', '{Date}', '{Teacher}', '{Price}'].map(tag => (
-                                            <button 
-                                                key={tag}
-                                                onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
-                                                className="px-3 py-2 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 text-[10px] font-black hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 hover:translate-x-0.5 hover:translate-y-0.5"
+
+                                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                                    <p className="text-[11px] font-bold text-[#5c59f2] flex items-center gap-1.5 mb-3">
+                                        <Wallet size={13} /> سياسة حساب العمولات
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {[
+                                            { id: 'fixed', label: 'مبلغ ثابت', sub: 'Fixed Amount' },
+                                            { id: 'percentage', label: 'نسبة مئوية', sub: 'Percentage %' }
+                                        ].map(opt => (
+                                            <button
+                                                key={opt.id}
+                                                onClick={() => setTeacherCommissionType(opt.id as any).then(() => showNotify(`الحساب: ${opt.label}`))}
+                                                className={cn(
+                                                    'p-3 rounded-xl border text-right transition-all',
+                                                    teacherCommissionType === opt.id
+                                                        ? 'bg-[#5c59f2] text-white border-[#5c59f2] shadow-sm'
+                                                        : 'bg-slate-50 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700 hover:border-[#5c59f2]/30'
+                                                )}
                                             >
-                                                + {tag}
+                                                <p className="text-xs font-bold">{opt.label}</p>
+                                                <p className={cn('text-[9px] mt-0.5', teacherCommissionType === opt.id ? 'text-white/60' : 'text-slate-400')}>{opt.sub}</p>
+                                                {teacherCommissionType === opt.id && <CheckCircle2 size={12} className="mt-1 text-white/80" />}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
-                                
-                                <button 
-                                    onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))} 
-                                    className="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none mt-4"
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard>
+                            <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="Auto-Freeze Mechanism" />
+                            <div className="space-y-3">
+                                <div className="p-4 bg-sky-50 dark:bg-sky-900/10 rounded-xl border border-sky-100 dark:border-sky-900">
+                                    <p className="text-xs font-bold text-sky-800 dark:text-sky-200 mb-1">حد الغياب المسموح</p>
+                                    <p className="text-[10px] text-sky-500 leading-relaxed mb-3">
+                                        إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
+                                    </p>
+                                    <div className="flex items-center gap-3">
+                                        <InputField
+                                            type="number"
+                                            value={autoFreezeThreshold}
+                                            onChange={e => setAutoFreezeThreshold(Number(e.target.value))}
+                                            min={1} max={15}
+                                            className="w-20 text-center font-bold text-lg"
+                                        />
+                                        <PrimaryBtn
+                                            onClick={() => setAutoFreezeThreshold(autoFreezeThreshold).then(() => showNotify('تم حفظ السياسة'))}
+                                            className="flex-1"
+                                        >
+                                            <CheckCircle2 size={13} /> تفعيل
+                                        </PrimaryBtn>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-xl border border-rose-200 dark:border-rose-800">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 bg-rose-500 rounded-xl flex items-center justify-center">
+                                            <Archive size={14} className="text-white" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-rose-700 dark:text-rose-300">إقفال الشهر المالي</p>
+                                            <p className="text-[9px] text-rose-400">Danger Zone</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">
+                                        أرشفة كافة الحصص الحالية وتصفير الإحصائيات الشهرية. لا تستخدم هذا إلا بنهاية الشهر الفعلي.
+                                    </p>
+                                    <DangerBtn
+                                        className="w-full"
+                                        onClick={() => setSecureAction({
+                                            type: 'archive',
+                                            title: 'إقفال الشهر المالي',
+                                            description: 'سيتم أرشفة الإحصائيات الحالية لبدء فترة مالية جديدة. لا يمكن التراجع بسهولة.',
+                                            confirmWord: 'إقفال الشهر',
+                                            actionFn: () => settingsService.archiveMonth().then(() => {
+                                                showNotify('تم تجميد وأرشفة بيانات الشهر المالي!');
+                                                setTimeout(() => window.location.reload(), 2000);
+                                            }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'))
+                                        })}
+                                    >
+                                        <Lock size={13} /> إقفال الفترة الحالية
+                                    </DangerBtn>
+                                </div>
+                            </div>
+                        </SectionCard>
+                    </div>
+                )}
+
+                {/* ── ADVANCED ── */}
+                {activeTab === 'advanced' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard>
+                            <SectionTitle icon={Phone} label="أتمتة الواتساب والرسائل" sub="WhatsApp Automation" />
+                            <div className="space-y-3">
+                                <ToggleRow
+                                    icon={Bell}
+                                    label="إرسال الفواتير تلقائياً"
+                                    sub="Automatic Notifications"
+                                    checked={whatsappAutoNotify}
+                                    onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
+                                />
+                                <div>
+                                    <FieldLabel>قالب رسالة الحضور</FieldLabel>
+                                    <TextAreaField
+                                        value={localWhatsappTemplate}
+                                        onChange={e => setLocalWhatsappTemplate(e.target.value)}
+                                        rows={5}
+                                        placeholder="اكتب رسالتك هنا..."
+                                    />
+                                </div>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['{Student}', '{Subject}', '{Date}', '{Teacher}', '{Price}'].map(tag => (
+                                        <button
+                                            key={tag}
+                                            onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
+                                            className="px-2.5 py-1 bg-slate-50 dark:bg-slate-800 hover:bg-[#eef2ff] dark:hover:bg-indigo-900/30 hover:text-[#5c59f2] text-slate-500 text-[10px] font-bold rounded-lg border border-slate-200 dark:border-slate-700 transition-all font-mono"
+                                        >
+                                            {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                                <PrimaryBtn
+                                    className="w-full"
+                                    onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))}
                                 >
-                                    حفظ وتفعيل القالب
-                                </button>
+                                    <CheckCircle2 size={13} /> حفظ وتفعيل القالب
+                                </PrimaryBtn>
                             </div>
-                        </section>
+                        </SectionCard>
 
-                        {/* Archives & Semester Manager */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-10">
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                    <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                        <Calendar size={28} />
-                                    </div>
-                                    <div>
-                                        <h2 className="text-xl font-black uppercase tracking-tighter">إدارة الفصول والأرشيف</h2>
-                                        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Academic Ledger</p>
-                                    </div>
+                        <SectionCard>
+                            <SectionTitle icon={Calendar} label="إدارة الفصول والأرشيف" sub="Academic Ledger" />
+                            <div className="space-y-3">
+                                <div>
+                                    <FieldLabel>الفصل الحالي</FieldLabel>
+                                    <InputField value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} placeholder="الفصل الأول 2024" />
                                 </div>
-                                <div className="space-y-5">
-                                    <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600" placeholder="الفصل الحالي" />
-                                    <textarea value={localSemesters} onChange={e => setLocalSemesters(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-bold outline-none h-28 resize-none italic" placeholder="الأرشيف التاريخي" />
-                                    <button onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))} className="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase text-xs border-4 border-slate-900 dark:border-white shadow-[6px_6px_0px_0px_indigo] dark:shadow-[6px_6px_0px_0px_rgba(79,70,229,1)] active:translate-x-1 active:translate-y-1 active:shadow-none hover:bg-black transition-all">مزامنة الفصول الدراسية</button>
+                                <div>
+                                    <FieldLabel>الأرشيف التاريخي</FieldLabel>
+                                    <TextAreaField
+                                        value={localSemesters}
+                                        onChange={e => setLocalSemesters(e.target.value)}
+                                        rows={4}
+                                        placeholder="الأرشيف التاريخي..."
+                                    />
                                 </div>
+                                <PrimaryBtn
+                                    className="w-full"
+                                    onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))}
+                                >
+                                    <RefreshCw size={13} /> مزامنة الفصول
+                                </PrimaryBtn>
                             </div>
 
-                            {/* Danger Zone */}
-                            <div className="pt-8 border-t-8 border-slate-900/10 dark:border-white/5 text-center">
-                                <button onClick={() => setSecureAction({
-                                    type: 'reset',
-                                    title: 'تصفير النظام بالكامل',
-                                    description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب المعلمين الإيرادات والمصروفات بالكامل لبدء دورة جديدة تماماً للمنصة. هذا الإجراء نهائي ولا يمكن التراجع عنه بأي شكل.',
-                                    confirmWord: 'إعادة ضبط المنصة',
-                                    actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
-                                })} className="w-full py-5 bg-rose-50 dark:bg-rose-900/10 text-rose-600 border-4 border-rose-600 border-dashed font-black hover:bg-rose-600 hover:text-white transition-all text-xs shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none">
-                                    إعادة ضبط المصنع (Factory Reset)
-                                </button>
+                            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                                <DangerBtn
+                                    className="w-full"
+                                    onClick={() => setSecureAction({
+                                        type: 'reset',
+                                        title: 'تصفير النظام بالكامل',
+                                        description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب والمعلمين والإيرادات للبدء من جديد. هذا الإجراء نهائي.',
+                                        confirmWord: 'إعادة ضبط المنصة',
+                                        actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
+                                    })}
+                                >
+                                    <Trash2 size={13} /> إعادة ضبط المصنع (Factory Reset)
+                                </DangerBtn>
                             </div>
-                        </section>
+                        </SectionCard>
                     </div>
                 )}
 
-                {activeTab === 'policies' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* System Safeguards & Record Protection */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(225,29,72,1)] dark:shadow-[8px_8px_0px_0px_rgba(225,29,72,0.5)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Lock size={28} className="text-rose-600" />
-                                    حماية السجلات والقيود
-                                </h2>
-                                <span className="hidden md:block text-[10px] font-black text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-3 py-1 border-4 border-rose-500 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] uppercase italic tracking-widest">System Safeguards</span>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="p-6 bg-rose-50 dark:bg-rose-900/10 border-4 border-slate-900 dark:border-rose-900 relative overflow-hidden group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-                                        <div className="flex-1 text-center sm:text-right">
-                                            <p className="font-black text-lg text-rose-900 dark:text-rose-100 flex items-center justify-center sm:justify-start gap-2">
-                                                <AlertCircle size={20} /> قفل التعديل بأثر رجعي
-                                            </p>
-                                            <p className="text-[11px] font-bold text-rose-600/80 mt-2 leading-relaxed italic">
-                                                تفعيل هذا الخيار يمنع الموظفين والمعلمين من إضافة أو تعديل الحصص في تواريخ قديمة أو مستقبلية، مما يضمن دقة السجلات المالية ومنع التلاعب.
-                                            </p>
-                                        </div>
-                                        <button onClick={() => setBackdateLockEnabled(!backdateLockEnabled).then(() => showNotify('تـم تحديث خيار الحماية'))} className={cn("w-16 h-8 relative transition-all duration-300 border-4 border-slate-900", backdateLockEnabled ? "bg-rose-600" : "bg-slate-300 dark:bg-slate-700")}>
-                                            <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", backdateLockEnabled ? "translate-x-9" : "translate-x-1")} />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-6 pt-6 border-t-4 border-slate-900 dark:border-slate-800">
-                                    <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-3 font-black text-indigo-600 tracking-widest italic">
-                                        <Wallet size={20} /> سياسة حساب العمولات
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <button 
-                                            onClick={() => setTeacherCommissionType('fixed').then(() => showNotify('تم تغيير الحساب إلى: مبلغ ثابت'))}
-                                            className={cn(
-                                                "relative p-6 border-4 transition-all group overflow-hidden text-right leading-none", 
-                                                teacherCommissionType === 'fixed' 
-                                                    ? "border-slate-900 dark:border-white bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]" 
-                                                    : "border-slate-300 dark:border-slate-700 hover:border-slate-900 dark:hover:border-white bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                                            )}
-                                        >
-                                            <p className="font-black text-sm uppercase mb-2">مبلغ ثابت</p>
-                                            <p className="text-[10px] font-bold opacity-60">Fixed Amount</p>
-                                            {teacherCommissionType === 'fixed' && <CheckCircle2 size={20} className="absolute left-3 top-3 text-white" />}
-                                        </button>
-
-                                        <button 
-                                            onClick={() => setTeacherCommissionType('percentage').then(() => showNotify('تم تغيير الحساب إلى: نسبة مئوية'))}
-                                            className={cn(
-                                                "relative p-6 border-4 transition-all group overflow-hidden text-right leading-none", 
-                                                teacherCommissionType === 'percentage' 
-                                                    ? "border-slate-900 dark:border-white bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]" 
-                                                    : "border-slate-300 dark:border-slate-700 hover:border-slate-900 dark:hover:border-white bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                                            )}
-                                        >
-                                            <p className="font-black text-sm uppercase mb-2">نسبة مئوية</p>
-                                            <p className="text-[10px] font-bold opacity-60">Percentage %</p>
-                                            {teacherCommissionType === 'percentage' && <CheckCircle2 size={20} className="absolute left-3 top-3 text-white" />}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Attendance Policy & Monthly Archive */}
-                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-10">
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
-                                    <div className="w-14 h-14 bg-sky-50 dark:bg-sky-900/20 text-sky-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                        <Snowflake size={28} />
-                                    </div>
-                                    <div>
-                                        <h2 className="text-xl font-black uppercase tracking-tighter">سياسة الحضور والغياب</h2>
-                                        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Auto-Freeze Mechanism</p>
-                                    </div>
-                                </div>
-
-                                <div className="bg-slate-50 dark:bg-slate-900 border-4 border-slate-900 p-6 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                    <div className="flex flex-col md:flex-row items-center gap-6">
-                                        <div className="flex-1 text-center md:text-right">
-                                            <p className="text-sm font-black uppercase mb-2">حد الغياب المسموح</p>
-                                            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 italic leading-relaxed">إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، سيتم تجميد اشتراكه تلقائياً لحماية رصيده.</p>
-                                        </div>
-                                        <div className="flex items-center gap-3 bg-white dark:bg-slate-800 border-4 border-slate-900 p-3 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-                                            <input 
-                                                type="number" 
-                                                value={autoFreezeThreshold} 
-                                                onChange={(e) => setAutoFreezeThreshold(Number(e.target.value))} 
-                                                className="w-16 bg-transparent font-black text-3xl text-center outline-none" 
-                                                min="1" 
-                                                max="15" 
-                                            />
-                                            <button 
-                                                onClick={() => setAutoFreezeThreshold(autoFreezeThreshold).then(() => showNotify('تم حفظ السياسة'))} 
-                                                className="bg-indigo-600 text-white px-5 py-3 font-black uppercase text-[10px] hover:bg-slate-900 transition-all border-2 border-slate-900 shadow-[2px_2px_0px_0px_black] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
-                                            >تفعيل</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Month Archive Warning Card */}
-                            <div className="pt-8 border-t-8 border-slate-900/10 dark:border-white/5 bg-rose-50/50 dark:bg-rose-950/20 p-6 md:p-8 border-4 border-rose-600 dark:border-rose-900 mt-8 shadow-[8px_8px_0px_0px_rgba(225,29,72,1)] dark:shadow-[8px_8px_0px_0px_rgba(225,29,72,0.3)] group hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-16 h-16 bg-rose-600 text-white flex items-center justify-center border-4 border-slate-900 shadow-[6px_6px_0px_0px_rgba(225,29,72,0.2)] dark:shadow-[4px_4px_0px_0px_black] group-hover:animate-pulse">
-                                        <Archive size={32} />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-black text-xl text-rose-700 dark:text-rose-400 uppercase tracking-tighter leading-none mb-2">إقفال الشهر المالي والأكاديمي</h3>
-                                        <p className="text-[10px] font-black text-rose-600/60 uppercase tracking-widest mt-1 italic">DANGER ZONE: FULL MONTHLY ARCHIVE</p>
-                                    </div>
-                                </div>
-                                <p className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-6 bg-white dark:bg-slate-900 p-5 border-4 border-rose-600/30 italic leading-relaxed">
-                                    هذه العملية ستقوم بأرشفة كافة الحصص الحالية وتصفير الإحصائيات الشهرية للبدء في فترة جديدة تماماً. لا تلجأ لهذا الخيار إلا بنهاية الشهر المالي الفعلي للأكاديمية.
-                                </p>
-                                <button onClick={() => setSecureAction({
-                                    type: 'archive',
-                                    title: 'إقفال الشهر المالي',
-                                    description: 'سيتم أرشفة الإحصائيات الحالية لتتمكن من بدء فترة مالية وأكاديمية جديدة بأرصدة واضحة ومستقلة. لا يمكن التراجع بسهولة.',
-                                    confirmWord: 'إقفال الشهر',
-                                    actionFn: () => settingsService.archiveMonth().then(() => {
-                                        showNotify('تم تجميد وأرشفة بيانات الشهر المالي بنجاح! يتم الآن التحضير...');
-                                        setTimeout(() => window.location.reload(), 2000);
-                                    }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'))
-                                })} className="w-full py-5 bg-rose-600 hover:bg-slate-900 hover:text-white text-white font-black uppercase tracking-[0.2em] text-sm shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(225,29,72,0.5)] border-4 border-slate-900 transition-all flex items-center justify-center gap-4 active:translate-x-1 active:translate-y-1 active:shadow-none">
-                                    <Lock size={20} />
-                                    إقفال الفترة الحالية
-                                </button>
-                            </div>
-                        </section>
-                    </div>
-                )}
-
+                {/* ── AUDIT ── */}
                 {activeTab === 'audit' && (
-                    <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        <section className="bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,0.1)] overflow-hidden">
-                            <div className="flex items-center justify-between p-6 md:p-8 bg-slate-900 text-white border-b-4 border-slate-900 dark:border-white shadow-[inset_0px_-4px_0px_0px_rgba(79,70,229,1)]">
-                                <div className="flex items-center gap-5">
-                                    <div className="w-14 h-14 bg-indigo-600 flex items-center justify-center border-4 border-white shadow-[4px_4px_0px_0px_white]">
-                                        <Activity size={28} />
-                                    </div>
-                                    <div>
-                                        <h2 className="text-2xl font-black uppercase tracking-tighter italic mb-1">Digital Audit Control</h2>
-                                        <p className="text-[11px] font-black text-indigo-400 uppercase tracking-widest italic leading-none">Global Activity Audit Log</p>
-                                    </div>
+                    <SectionCard>
+                        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+                                    <Activity size={16} className="text-[#5c59f2]" />
                                 </div>
-                                <button 
-                                    onClick={fetchLogs} 
-                                    className="p-4 bg-white/10 hover:bg-white text-white hover:text-slate-900 border-4 border-white/20 hover:border-white transition-all flex items-center gap-3 font-black text-[11px] uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1"
-                                >
-                                    <RefreshCw size={20} />
-                                    Refresh Buffer
-                                </button>
+                                <div>
+                                    <p className="text-sm font-bold text-slate-800 dark:text-white">سجل الرقابة</p>
+                                    <p className="text-[10px] text-slate-400">Global Activity Audit Log</p>
+                                </div>
                             </div>
+                            <SecondaryBtn onClick={fetchLogs}>
+                                <RefreshCw size={13} /> تحديث
+                            </SecondaryBtn>
+                        </div>
 
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-right border-collapse">
-                                    <thead className="bg-slate-50 dark:bg-slate-800 border-b-4 border-slate-900 dark:border-slate-700">
-                                        <tr className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] italic">
-                                            <th className="p-6 border-l-4 border-slate-200 dark:border-slate-700">توقيت العملية (Log Time)</th>
-                                            <th className="p-6 border-l-4 border-slate-200 dark:border-slate-700">المسؤول المنفذ (Identity)</th>
-                                            <th className="p-6">طبيعة الإجراء البرمجي (Action)</th>
+                        <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-slate-800">
+                            <table className="w-full text-right text-sm">
+                                <thead>
+                                    <tr className="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
+                                        <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">التوقيت</th>
+                                        <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">المسؤول</th>
+                                        <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">الإجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                                    {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
+                                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                                            <td className="px-4 py-3 font-mono text-[10px] text-slate-400" dir="ltr">
+                                                {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-6 h-6 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-lg flex items-center justify-center text-[10px] font-bold text-[#5c59f2]">
+                                                        {log.username?.[0]?.toUpperCase() || 'A'}
+                                                    </div>
+                                                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{log.username}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 bg-[#5c59f2] rounded-full" />
+                                                    <span className="text-xs text-slate-600 dark:text-slate-300">{log.action}</span>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody className="divide-y-4 divide-slate-100 dark:divide-slate-800">
-                                        {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
-                                            <tr key={idx} className="group hover:bg-indigo-50 dark:hover:bg-indigo-900/10 transition-colors">
-                                                <td className="p-6 font-mono text-xs font-black text-slate-500 dark:text-slate-400 border-l-4 border-slate-100 dark:border-slate-800" dir="ltr">
-                                                    {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
-                                                </td>
-                                                <td className="p-6 font-black text-sm uppercase italic">
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="w-10 h-10 bg-white dark:bg-slate-800 flex items-center justify-center text-xs border-4 border-slate-900 dark:border-slate-700 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-[2px_2px_0px_0px_black]">
-                                                            {log.username?.[0]?.toUpperCase() || 'A'}
-                                                        </div>
-                                                        <span className="tracking-tighter dark:text-white">{log.username}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="p-6">
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="w-3 h-3 bg-indigo-600 animate-pulse border-2 border-slate-900"></div>
-                                                        <span className="font-bold text-sm uppercase tracking-tight text-slate-700 dark:text-slate-300">
-                                                            {log.action}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )) : (
-                                            <tr>
-                                                <td colSpan={3} className="p-24 text-center font-black text-slate-400 dark:text-slate-600 uppercase italic tracking-widest text-lg">
-                                                    No activity recorded in the current buffer.
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
+                                    )) : (
+                                        <tr>
+                                            <td colSpan={3} className="py-16 text-center">
+                                                <CheckCircle2 className="mx-auto mb-2 text-emerald-400" size={24} />
+                                                <p className="text-sm font-bold text-slate-400">لا توجد سجلات</p>
+                                                <p className="text-[10px] text-slate-300 mt-1">No activity recorded</p>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-3 px-1">
+                            <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
+                                Monitor Active
                             </div>
-                            
-                            <div className="p-6 bg-slate-50 dark:bg-slate-800 border-t-4 border-slate-900 dark:border-slate-700 flex justify-between items-center text-[11px] font-black text-slate-500 uppercase italic tracking-[0.2em] shadow-[inset_0px_4px_0px_0px_rgba(0,0,0,0.05)]">
-                                <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 animate-ping"></div> Monitor Status: Active</span>
-                                <span>End of Record Cache</span>
-                            </div>
-                        </section>
-                    </div>
+                            <span className="text-[10px] text-slate-300">{auditLogs.length} سجل</span>
+                        </div>
+                    </SectionCard>
                 )}
             </div>
 
-            {/* Modals & Notifications */}
+            {/* ── Secure Action Modal ── */}
             {secureAction && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 md:animate-in md:fade-in transition-all">
-                    <div className="bg-white dark:bg-slate-900 border-t-8 border-red-600 rounded-2xl p-8 max-w-lg w-full shadow-2xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 -mr-16 -mt-16 rounded-full blur-3xl"></div>
-                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                            <div className="w-16 h-16 bg-red-50 dark:bg-red-900/30 rounded-2xl flex items-center justify-center text-red-600 shadow-inner mb-2 border border-red-100 dark:border-red-800/50">
-                                <AlertCircle size={32} />
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-rose-100 dark:border-rose-900">
+                        <div className="flex flex-col items-center text-center space-y-3">
+                            <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center text-rose-500 mb-1">
+                                <AlertCircle size={24} />
                             </div>
-                            <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{secureAction.title}</h3>
-                            <p className="text-sm font-bold text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{secureAction.description}</p>
-                            
-                            <div className="w-full bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-700/50 space-y-4 mt-6">
-                                <p className="text-xs font-black text-slate-700 dark:text-slate-300">لتأكيد العملية الخطيرة، يرجى كتابة العبارة التالية في الصندوق أناه:</p>
-                                <div className="text-center font-black text-red-600 bg-red-50 dark:bg-red-900/20 py-2 border border-red-100 dark:border-red-800/30 rounded-lg select-all text-base tracking-widest">{secureAction.confirmWord}</div>
-                                
-                                <input 
-                                    type="text" 
+                            <h3 className="text-base font-bold text-slate-800 dark:text-white">{secureAction.title}</h3>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{secureAction.description}</p>
+
+                            <div className="w-full bg-slate-50 dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 space-y-3 text-right mt-2">
+                                <p className="text-[11px] font-bold text-slate-600 dark:text-slate-300">اكتب للتأكيد:</p>
+                                <div className="text-center font-bold text-rose-500 bg-rose-50 dark:bg-rose-900/20 py-1.5 rounded-lg text-xs select-all border border-rose-100 dark:border-rose-800">
+                                    {secureAction.confirmWord}
+                                </div>
+                                <InputField
                                     value={secureInput}
-                                    onChange={(e) => setSecureInput(e.target.value)}
-                                    className="w-full mt-2 bg-white dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-700 p-4 font-black text-center text-slate-800 dark:text-white outline-none focus:border-red-500 focus:ring-4 focus:ring-red-500/10 rounded-xl transition-all"
+                                    onChange={e => setSecureInput(e.target.value)}
                                     placeholder="اكتب العبارة للتحقق..."
+                                    className="text-center"
                                 />
                             </div>
 
-                            <div className="flex gap-3 w-full pt-4">
-                                <button onClick={() => { setSecureAction(null); setSecureInput(''); }} className="flex-1 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black uppercase text-xs rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">تراجع عن القرار</button>
-                                <button 
+                            <div className="flex gap-2 w-full pt-2">
+                                <SecondaryBtn onClick={() => { setSecureAction(null); setSecureInput(''); }} className="flex-1">
+                                    تراجع
+                                </SecondaryBtn>
+                                <button
                                     disabled={secureInput !== secureAction.confirmWord}
-                                    onClick={() => { secureAction.actionFn(); setSecureAction(null); setSecureInput(''); }} 
-                                    className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-xl shadow-red-500/20 disabled:bg-slate-300 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:shadow-none disabled:cursor-not-allowed rounded-xl transition-all"
+                                    onClick={() => { secureAction.actionFn(); setSecureAction(null); setSecureInput(''); }}
+                                    className="flex-1 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                                 >
-                                    تنفيذ نهائي لـ {secureAction.title.split(' ')[0]}
+                                    تنفيذ نهائي
                                 </button>
                             </div>
                         </div>
@@ -1030,69 +1054,81 @@ const Settings = () => {
                 </div>
             )}
 
+            {/* ── Delete User Modal ── */}
             {showDeleteModal && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 md:animate-in md:fade-in">
-                    <div className="bg-white dark:bg-gray-900 border-t-8 border-red-600 p-8 max-w-md w-full shadow-2xl space-y-4">
-                        <h3 className="text-xl font-black">تأكيد حذف المستخدم</h3>
-                        <p className="text-sm font-bold opacity-70">هل أنت متأكد من حذف "{showDeleteModal.username}"؟ هذا الإجراء سيمنعه من دخول النظام فوراً.</p>
-                        <div className="flex gap-4">
-                            <button onClick={() => setShowDeleteModal(null)} className="flex-1 py-4 bg-gray-100 font-black uppercase text-xs">إلغاء</button>
-                            <button onClick={() => { deleteUser(showDeleteModal.id); setShowDeleteModal(null); showNotify('تم حذف المستخدم'); }} className="flex-1 py-4 bg-red-600 text-white font-black uppercase text-xs shadow-lg shadow-red-500/20">تأكيد الحذف</button>
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center">
+                                <Trash2 size={18} className="text-rose-500" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold text-slate-800 dark:text-white">تأكيد حذف المستخدم</p>
+                                <p className="text-[10px] text-slate-400 mt-0.5">هذا الإجراء نهائي</p>
+                            </div>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            هل أنت متأكد من حذف "<span className="font-bold text-slate-700 dark:text-slate-200">{showDeleteModal.username}</span>"؟
+                        </p>
+                        <div className="flex gap-2">
+                            <SecondaryBtn onClick={() => setShowDeleteModal(null)} className="flex-1">إلغاء</SecondaryBtn>
+                            <button
+                                onClick={() => { deleteUser(showDeleteModal.id); setShowDeleteModal(null); showNotify('تم حذف المستخدم'); }}
+                                className="flex-1 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-xl transition-all"
+                            >
+                                تأكيد الحذف
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* ── Maintenance Modal ── */}
             {showMaintenanceModal && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 md:animate-in md:fade-in">
-                    <div className="bg-white dark:bg-slate-900 border-4 border-amber-500 p-8 max-w-lg w-full shadow-lg md:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.2)] dark:md:shadow-[16px_16px_0px_0px_rgba(245,158,11,0.1)] relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 -mr-16 -mt-16 rounded-full blur-3xl"></div>
-                        
-                        <div className="relative z-10 space-y-6">
-                            <div className="flex items-center gap-4">
-                                <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 text-amber-600 flex items-center justify-center border-4 border-amber-500 transform -rotate-3">
-                                    <Snowflake size={32} strokeWidth={3} className="animate-spin-slow" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">تفعيل وضع الصيانة</h3>
-                                    <p className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">System Freeze Protocol</p>
-                                </div>
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-amber-200 dark:border-amber-800">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-xl flex items-center justify-center">
+                                <Snowflake size={18} className="text-amber-500" />
                             </div>
-
-                            <div className="bg-amber-50 dark:bg-amber-900/10 p-4 border-r-4 border-amber-500">
-                                <p className="text-sm font-bold text-amber-900 dark:text-amber-200 leading-relaxed">
-                                    ⚠️ <span className="underline">تحذير هام:</span> تفعيل هذا الوضع سيؤدي فوريًا لـ:
-                                </p>
-                                <ul className="mt-3 space-y-2 text-xs font-bold text-amber-800 dark:text-amber-400">
-                                    <li className="flex items-center gap-2">• طرد كافة المستخدمين الحاليين من المنصة.</li>
-                                    <li className="flex items-center gap-2">• منع المعلمين والطلاب من تسجيل الدخول.</li>
-                                    <li className="flex items-center gap-2">• إغلاق كافة الوظائف البرمجية مؤقتًا.</li>
-                                </ul>
+                            <div>
+                                <p className="text-sm font-bold text-slate-800 dark:text-white">تفعيل وضع الصيانة</p>
+                                <p className="text-[10px] text-amber-500">System Freeze Protocol</p>
                             </div>
-
-                            <div className="flex gap-3 pt-4">
-                                <button onClick={() => setShowMaintenanceModal(false)} className="flex-1 py-4 bg-gray-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black uppercase text-xs hover:bg-gray-200 transition-colors">إلغاء الأمر</button>
-                                <button 
-                                    onClick={() => {
-                                        setMaintenanceMode(true).then(() => {
-                                            setShowMaintenanceModal(false);
-                                            showNotify('تم تفعيل وضع الصيانة، المنصة مغلقة الآن.');
-                                        });
-                                    }} 
-                                    className="flex-1 py-4 bg-amber-500 text-white font-black uppercase text-xs shadow-xl shadow-amber-500/20 hover:bg-amber-600 transition-all"
-                                >
-                                    تأكيد الإغلاق الآن
-                                </button>
-                            </div>
+                        </div>
+                        <div className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100 dark:border-amber-800 mb-4">
+                            <p className="text-xs font-bold text-amber-800 dark:text-amber-200 mb-2">⚠️ تحذير: تفعيل هذا الوضع سيؤدي فوريًا إلى:</p>
+                            <ul className="space-y-1 text-[10px] text-amber-700 dark:text-amber-400">
+                                <li>• طرد كافة المستخدمين الحاليين من المنصة</li>
+                                <li>• منع المعلمين والطلاب من تسجيل الدخول</li>
+                                <li>• إغلاق كافة الوظائف البرمجية مؤقتًا</li>
+                            </ul>
+                        </div>
+                        <div className="flex gap-2">
+                            <SecondaryBtn onClick={() => setShowMaintenanceModal(false)} className="flex-1">إلغاء</SecondaryBtn>
+                            <button
+                                onClick={() => {
+                                    setMaintenanceMode(true).then(() => {
+                                        setShowMaintenanceModal(false);
+                                        showNotify('تم تفعيل وضع الصيانة');
+                                    });
+                                }}
+                                className="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all"
+                            >
+                                تأكيد الإغلاق
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* ── Success Toast ── */}
             {showSuccess && (
-                <div className="fixed bottom-4 md:bottom-10 left-4 md:left-10 z-[1000] bg-black text-white p-6 shadow-2xl border-l-4 border-primary-500 flex items-center gap-4 md:animate-in md:slide-in-from-left-4 md:duration-500">
-                    <CheckCircle2 color="var(--color-primary)" size={28} />
-                    <div className="font-black uppercase tracking-tighter">{notificationMessage || 'تمت العملية بنجاح'}</div>
+                <div className="fixed bottom-6 left-6 z-[2000] flex items-center gap-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl px-4 py-3 shadow-xl animate-in slide-in-from-bottom-4 duration-300">
+                    <div className="w-7 h-7 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center">
+                        <CheckCircle2 size={15} className="text-emerald-500" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{notificationMessage || 'تمت العملية بنجاح'}</p>
                 </div>
             )}
         </div>
