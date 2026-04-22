@@ -332,28 +332,28 @@ export const Sidebar = () => {
                     </div>
 
                     <div className="flex-1 overflow-y-auto no-scrollbar pt-1 pb-4 px-1">
-                        <div className="grid grid-cols-1 gap-1">
+                        <div className="grid grid-cols-2 gap-2">
                             {filteredNavigation.map((item) => (
                                 <NavLink
                                     key={`menu-${item.href}-${item.id}`}
                                     to={item.href}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={({ isActive }) => cn(
-                                        "flex items-center gap-3 p-2 rounded-none transition-all duration-200 border-l-4",
+                                        "flex items-center gap-2 p-2.5 rounded-xl transition-all duration-200",
                                         isActive
-                                            ? "bg-primary-50 border-primary-600 text-primary-700 font-bold dark:bg-primary-900/20 dark:text-primary-400"
-                                            : "bg-white border-transparent text-gray-600 hover:bg-gray-50 dark:bg-transparent dark:text-gray-400"
+                                            ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/20 dark:text-primary-400 shadow-sm border border-primary-100 dark:border-primary-900/30"
+                                            : "bg-gray-50/50 text-gray-600 hover:bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
                                     )}
                                 >
                                     {({ isActive }) => (
                                         <>
                                             <div className={cn(
-                                                "w-6 h-6 rounded-none flex items-center justify-center transition-all",
-                                                isActive ? "text-primary-600" : "text-gray-400"
+                                                "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
+                                                isActive ? "bg-white text-primary-600 shadow-sm dark:bg-gray-800" : "bg-white/50 text-gray-400 dark:bg-gray-800/50"
                                             )}>
                                                 <item.icon size={16} />
                                             </div>
-                                            <span className="text-xs font-bold tracking-tight">{item.name}</span>
+                                            <span className="text-[11px] font-bold tracking-tight truncate">{item.name}</span>
                                         </>
                                     )}
                                 </NavLink>
