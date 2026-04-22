@@ -5,9 +5,9 @@ import { useApp } from '../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { cn } from '../lib/utils';
+import { AlertCircle } from 'lucide-react';
 
 // Shared Components
-import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { PageLoader } from '../components/ui/PageLoader';
 // Feature Components
 import { StudentHeader } from '../features/students/components/StudentHeader';
@@ -49,7 +49,6 @@ export const Students = () => {
     );
 
     const { teachers, isLoading: loadingTeachers } = useTeachers();
-
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
@@ -93,13 +92,9 @@ export const Students = () => {
         if (!selectedStudent) return;
 
         try {
-            // 1. Generate sessions
             const sessionInfos = generateSessionDates(enrollData.schedule, enrollData.totalSessions);
-
-            // 2. Create the sessions in DB
             const teacherObj = teachers.find(t => t.name === enrollData.teacher);
 
-            // Create sessions sequentially to avoid SQLITE_BUSY errors
             for (const info of sessionInfos) {
                 await api.post('/sessions', {
                     studentId: selectedStudent.id,
@@ -115,7 +110,6 @@ export const Students = () => {
                 });
             }
 
-            // 3. Update student with new enrollment
             const newEnrollment: Enrollment = {
                 teacher: enrollData.teacher,
                 teacherId: teacherObj?.id,
@@ -163,7 +157,6 @@ export const Students = () => {
             const sessionInfos = generateSessionDates(enrollment.schedule, amount);
             const teacherObj = teachers.find(t => t.name === enrollment.teacher);
 
-            // Create sessions sequentially
             for (const info of sessionInfos) {
                 await api.post('/sessions', {
                     studentId: selectedStudent.id,
@@ -228,7 +221,6 @@ export const Students = () => {
                     const json = JSON.parse(content);
                     parsedData = Array.isArray(json) ? json : (json.data || json.students || []);
                 } else if (file.name.endsWith('.csv')) {
-                    // Simple CSV parsing
                     const lines = content.split('\n');
                     const headers = lines[0].split(',').map(h => h.trim());
                     parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
@@ -251,7 +243,6 @@ export const Students = () => {
                 let success = 0;
                 for (const item of parsedData) {
                     try {
-                        // Map CSV/Generic fields to Student fields if necessary
                         const studentData = {
                             name: item.name || item.Name || item['الاسم'] || '',
                             grade: item.grade || item.Grade || item['الصف'] || '',
@@ -267,7 +258,6 @@ export const Students = () => {
 
                         if (studentData.name) {
                             await createStudentAsync(studentData as Omit<Student, 'id'>);
-                            // Add small delay to prevent SQLite contention
                             await new Promise(resolve => setTimeout(resolve, 50));
                             success++;
                         }
@@ -291,8 +281,6 @@ export const Students = () => {
         } else {
             showNotification('صيغة الملف غير مدعومة. يرجى استخدام JSON أو CSV', 'error');
         }
-
-        // Reset input
         e.target.value = '';
     };
 
@@ -301,14 +289,14 @@ export const Students = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-40">
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
             <StudentHeader
                 count={allStudents.length}
                 showAddForm={showAddForm}
                 onToggleAddForm={() => { setShowAddForm(!showAddForm); setEditId(null); }}
             />
 
-            <div className="container mx-auto px-4 md:px-8 space-y-12">
+            <div className="py-6 space-y-6">
                 <StudentStats 
                     totalStudents={allStudents.length}
                     activeEnrollments={activeEnrollments}
@@ -326,32 +314,27 @@ export const Students = () => {
                     totalCount={allStudents.length}
                 />
 
-                <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json,.csv"
-                    onChange={handleImportFile}
-                    className="hidden"
-                />
+                <input ref={fileInputRef} type="file" accept=".json,.csv" onChange={handleImportFile} className="hidden" />
 
                 {showAddForm && (
-                    <div className="animate-in fade-in slide-in-from-top-6 duration-500 mb-12">
+                    <div className="px-4 md:px-6">
                         <StudentForm
                             onSubmit={handleAddOrUpdateStudent}
                             initialData={editId ? students.find(s => s.id === editId) : null}
+                            onCancel={() => { setShowAddForm(false); setEditId(null); }}
                         />
                     </div>
                 )}
 
-                <div className={cn(
-                    "grid gap-10 transition-all duration-700",
-                    showDetails ? "lg:grid-cols-12" : "grid-cols-1"
-                )}>
+                <div className="px-4 md:px-6">
                     <div className={cn(
-                        "transition-all duration-700",
-                        showDetails ? "lg:col-span-7" : "w-full"
+                        "grid gap-6 transition-all duration-700",
+                        showDetails ? "lg:grid-cols-12" : "grid-cols-1"
                     )}>
-                         <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
+                        <div className={cn(
+                            "transition-all duration-700",
+                            showDetails ? "lg:col-span-7" : "w-full"
+                        )}>
                             <StudentTable
                                 students={students}
                                 selectedId={selectedStudent?.id}
@@ -361,46 +344,72 @@ export const Students = () => {
                                 showDetails={showDetails}
                                 isTeacherView={isTeacher}
                             />
-                         </div>
-                    </div>
-
-                    {showDetails && selectedStudent && (
-                        <div className="lg:col-span-5 animate-in fade-in slide-in-from-left-10 duration-700 sticky top-10 h-fit">
-                            <StudentDetails
-                                student={selectedStudent}
-                                onClose={() => setShowDetails(false)}
-                                teachers={teachers}
-                                onAddEnrollment={handleAddEnrollment}
-                                onDeleteEnrollment={(i) => {
-                                    const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
-                                    updateStudent(updated);
-                                    setSelectedStudent(updated);
-                                }}
-                                onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
-                                onAddSessions={handleAddSessionsToEnrollment}
-                                onFreezeEnrollment={handleFreezeEnrollment}
-                                onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
-                            />
                         </div>
-                    )}
+
+                        {showDetails && selectedStudent && (
+                            <div className="lg:col-span-5 animate-in slide-in-from-left-4 duration-500">
+                                <StudentDetails
+                                    student={selectedStudent}
+                                    onClose={() => setShowDetails(false)}
+                                    teachers={teachers}
+                                    onAddEnrollment={handleAddEnrollment}
+                                    onDeleteEnrollment={(i) => {
+                                        const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
+                                        updateStudent(updated);
+                                        setSelectedStudent(updated);
+                                    }}
+                                    onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
+                                    onAddSessions={handleAddSessionsToEnrollment}
+                                    onFreezeEnrollment={handleFreezeEnrollment}
+                                    onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
-
-                <ConfirmModal
-                    isOpen={!!deletingId}
-                    title="حذف طالب"
-                    message="هل أنت متأكد من حذف هذا طالب؟ لا يمكن التراجع عن هذا الإجراء."
-                    onConfirm={() => { if (deletingId) deleteStudent(deletingId); setDeletingId(null); }}
-                    onClose={() => setDeletingId(null)}
-                />
-
-                <ConfirmModal
-                    isOpen={isDeletingAll}
-                    title="تصفير قاعدة البيانات"
-                    message="هل أنت متأكد من حذف جميع بيانات الطلاب؟ هذا الإجراء سيقوم بمسح كلي للقاعدة."
-                    onConfirm={() => { deleteAllStudents(); setIsDeletingAll(false); }}
-                    onClose={() => setIsDeletingAll(false)}
-                />
             </div>
+
+            {/* Confirm Modals */}
+            {(deletingId || isDeletingAll) && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6">
+                            <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-2xl flex items-center justify-center mb-4">
+                                <AlertCircle size={24} />
+                            </div>
+                            <h3 className="font-bold text-slate-800 dark:text-white mb-2">
+                                {isDeletingAll ? 'تصفير قاعدة البيانات' : 'تأكيد الحذف'}
+                            </h3>
+                            <p className="text-xs text-slate-500 leading-relaxed mb-6">
+                                {isDeletingAll ? 'هل أنت متأكد من حذف جميع بيانات الطلاب؟ لا يمكن التراجع.' : 'هل أنت متأكد من حذف هذا السجل؟ سيتم مسح كافة البيانات المرتبطة.'}
+                            </p>
+                            
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => {
+                                        if (isDeletingAll) {
+                                            deleteAllStudents();
+                                            setIsDeletingAll(false);
+                                        } else if (deletingId) {
+                                            deleteStudent(deletingId);
+                                            setDeletingId(null);
+                                        }
+                                    }}
+                                    className="flex-1 py-2.5 bg-rose-500 text-white font-bold text-[11px] rounded-xl shadow-sm transition-all active:scale-95"
+                                >
+                                    حذف نهائي
+                                </button>
+                                <button
+                                    onClick={() => { setDeletingId(null); setIsDeletingAll(false); }}
+                                    className="flex-1 py-2.5 bg-slate-50 text-slate-500 font-bold text-[11px] rounded-xl hover:bg-slate-100 transition-all"
+                                >
+                                    إلغاء
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

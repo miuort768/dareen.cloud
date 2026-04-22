@@ -1,3 +1,4 @@
+import React from 'react';
 import { Search, Download, Upload, Trash2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
@@ -21,55 +22,39 @@ export const StudentToolbar = ({
     totalCount
 }: StudentToolbarProps) => {
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-white p-2 md:p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] mb-10" dir="rtl">
-            
-            {/* Search Input Container */}
-            <div className="relative w-full md:max-w-xl group">
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
-                    <Search size={20} />
-                </div>
-                <input
-                    type="text"
-                    placeholder="البحث الذكي في قاعدة البيانات..."
-                    value={searchTerm}
-                    onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-6 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-emerald-500 dark:text-white font-black text-xs transition-all placeholder:text-slate-300 placeholder:uppercase placeholder:tracking-widest italic"
-                />
-            </div>
-
-            {/* Actions & Status */}
-            <div className="flex flex-wrap items-center gap-3 justify-center md:justify-end">
-                {/* Stats Badge */}
-                <div className="px-5 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-black uppercase tracking-[2px] italic border-l-4 border-emerald-500">
-                    <span className="opacity-60">النتائج:</span> {filteredCount} / {totalCount}
+        <div className="px-4 md:px-6 mb-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4" dir="rtl">
+                {/* Search Input */}
+                <div className="relative flex-1 w-full">
+                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
+                    <input
+                        type="text"
+                        placeholder="البحث في قاعدة بيانات الطلاب..."
+                        value={searchTerm}
+                        onChange={(e) => onSearchChange(e.target.value)}
+                        className="w-full pl-6 pr-9 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl outline-none text-xs font-bold focus:border-[#5c59f2]"
+                    />
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <ToolbarButton onClick={onExport} icon={Download} title="تصدير" color="indigo" />
-                    <ToolbarButton onClick={onImport} icon={Upload} title="استيراد" color="emerald" />
-                    <ToolbarButton onClick={onDeleteAll} icon={Trash2} title="تصفير" color="rose" />
+                {/* Actions */}
+                <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+                    <div className="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 text-[10px] font-bold text-slate-400 rounded-lg">
+                        {filteredCount} / {totalCount} طالب
+                    </div>
+                    
+                    <div className="flex items-center gap-1.5 border-r border-slate-100 dark:border-slate-800 pr-2 mr-1">
+                        <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-emerald-500 rounded-lg transition-all" title="استيراد">
+                            <Upload size={14} />
+                        </button>
+                        <button onClick={onExport} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-[#5c59f2] rounded-lg transition-all" title="تصدير">
+                            <Download size={14} />
+                        </button>
+                        <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-rose-500 rounded-lg transition-all" title="تصفير">
+                            <Trash2 size={14} />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    );
-};
-
-const ToolbarButton = ({ onClick, icon: Icon, title, color }: any) => {
-    const colors: any = {
-        indigo: "hover:bg-indigo-600",
-        emerald: "hover:bg-emerald-600",
-        rose: "hover:bg-rose-600"
-    };
-    return (
-        <button
-            onClick={onClick}
-            title={title}
-            className={cn(
-                "w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 border-2 border-transparent hover:text-white transition-all active:scale-95",
-                colors[color]
-            )}
-        >
-            <Icon size={20} />
-        </button>
     );
 };
