@@ -10,65 +10,50 @@ export const MaintenanceScreen = () => {
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#5c59f2]/5 rotate-45 translate-x-1/2 -translate-y-1/2 border border-[#5c59f2]/10" />
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-500/5 -rotate-12 -translate-x-1/3 translate-y-1/3 border border-indigo-500/10" />
 
-            <div className="relative z-10 max-w-lg w-full">
-                {/* Main Card Container */}
-                <div className="bg-white dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-none shadow-none overflow-hidden">
-                    
-                    {/* Top Accent Bar */}
-                    <div className="h-1.5 bg-[#5c59f2] w-full" />
-
-                    <div className="p-8 md:p-12">
-                        {/* Status Icon */}
-                        <div className="mb-8">
-                            <div className="w-20 h-20 mx-auto bg-[#eef2ff] dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-800 shadow-sm">
-                                <Snowflake size={36} className="text-[#5c59f2] animate-spin-slow" />
-                            </div>
-                        </div>
-
-                        {/* Title */}
-                        <div className="space-y-3 mb-8">
-                            <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tighter uppercase">
-                                المنصة في وضع <br/> 
-                                <span className="text-[#5c59f2]">الصيانة الدورية</span>
-                            </h1>
-                            <p className="text-slate-500 dark:text-slate-400 font-bold text-[13px] md:text-sm leading-relaxed max-w-xs mx-auto">
-                                نحن بصدد تحديث النظام وتطوير البنية التحتية لتقديم خدمة أفضل.
-                            </p>
-                        </div>
-
-                        {/* Progress Bar - Settings Style */}
-                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 mb-8">
-                            <div className="flex justify-between items-center mb-2 px-1">
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">System Update</span>
-                                <span className="text-[10px] font-black text-[#5c59f2] uppercase tracking-widest">75% Complete</span>
-                            </div>
-                            <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-[#5c59f2] animate-pulse" style={{ width: '75%' }} />
-                            </div>
-                        </div>
-
-                        {/* WhatsApp Button - Settings Button Style */}
-                        {adminPhone && (
-                            <a
-                                href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full flex items-center justify-center gap-3 bg-[#5c59f2] hover:bg-indigo-700 text-white px-6 py-4 rounded-xl text-[13px] font-black uppercase tracking-tight shadow-md transition-all transform hover:scale-[1.02] active:scale-95"
-                            >
-                                📱 تواصل مع الدعم الفني
-                            </a>
-                        )}
-                    </div>
-
-                    {/* Footer Info */}
-                    <div className="bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 px-6 py-4 flex justify-between items-center">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">© 2024 Dareen Academy</span>
-                        <div className="flex items-center gap-1.5">
-                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Server v2.4.0</span>
-                        </div>
+            <div className="relative z-10 max-w-xl w-full">
+                {/* Status Icon */}
+                <div className="mb-10">
+                    <div className="w-24 h-24 mx-auto bg-[#5c59f2]/20 rounded-3xl flex items-center justify-center border border-[#5c59f2]/30 backdrop-blur-sm shadow-xl">
+                        <Snowflake size={44} className="text-[#5c59f2] animate-spin-slow" />
                     </div>
                 </div>
+
+                {/* Title */}
+                <div className="space-y-4 mb-10">
+                    <h1 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tighter uppercase">
+                        المنصة في وضع <br/> 
+                        <span className="text-[#5c59f2] underline decoration-8 decoration-[#5c59f2]/20 underline-offset-8">الصيانة الدورية</span>
+                    </h1>
+                    <p className="text-slate-400 font-bold text-sm md:text-base leading-relaxed max-w-md mx-auto">
+                        نحن بصدد إجراء تحديثات جذرية لضمان أفضل تجربة تعليمية. 
+                        سنكون متاحين خلال وقت قصير جداً.
+                    </p>
+                </div>
+
+                {/* Progress Indicator - High Contrast */}
+                <div className="flex flex-col items-center gap-4 mb-12">
+                    <div className="w-full max-w-xs h-3 bg-white/5 border border-white/10 rounded-full overflow-hidden p-0.5">
+                        <div className="h-full bg-[#5c59f2] rounded-full shadow-[0_0_15px_rgba(92,89,242,0.5)]" style={{ width: '75%' }} />
+                    </div>
+                    <span className="text-[11px] font-black text-[#5c59f2] uppercase tracking-[0.3em] animate-pulse">
+                        System Update In Progress — 75%
+                    </span>
+                </div>
+
+                {/* WhatsApp Button - Settings Button Style (High Contrast) */}
+                {adminPhone && (
+                    <div className="flex flex-col items-center gap-6">
+                        <a
+                            href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-4 bg-white text-[#020617] px-10 py-5 rounded-2xl text-[14px] font-black uppercase tracking-tight shadow-2xl transition-all transform hover:scale-[1.05] active:scale-95 hover:bg-[#5c59f2] hover:text-white"
+                        >
+                            📱 تواصل مع الدعم الفني الآن
+                        </a>
+                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Available 24/7 for urgent matters</p>
+                    </div>
+                )}
             </div>
         </div>
     );
