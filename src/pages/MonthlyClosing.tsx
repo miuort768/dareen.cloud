@@ -17,113 +17,154 @@ import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
 import { PageLoader } from '../components/ui/PageLoader';
 
+// ── Reusable Styled Components ──────────────────────────────────────────────
+
+const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden',
+        className
+    )}>
+        {children}
+    </div>
+);
+
+const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+            <Icon size={16} className="text-[#5c59f2]" />
+        </div>
+        <div>
+            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+        </div>
+    </div>
+);
+
+const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
+    onClick?: () => void; children: React.ReactNode; className?: string; disabled?: boolean;
+}) => (
+    <button
+        disabled={disabled}
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
+            'text-white text-[11px] font-bold px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+const SecondaryBtn = ({ onClick, children, className = '' }: {
+    onClick?: () => void; children: React.ReactNode; className?: string;
+}) => (
+    <button
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700',
+            'text-slate-600 dark:text-slate-300 text-[11px] font-bold px-4 py-2 rounded-xl transition-all',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
+    <SectionCard className="p-4 flex flex-col items-center text-center">
+        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
+            <Icon size={16} className={color} />
+        </div>
+        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>
+        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value}</p>
+        {subValue && <p className="text-[9px] text-slate-400 mt-0.5">{subValue}</p>}
+    </SectionCard>
+);
+
 // --- Salary Slip Modal Component ---
 const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
     if (!teacher) return null;
     
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none shadow-2xl w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
                 {/* Header */}
-                <div className="bg-slate-900 text-white p-6 flex justify-between items-center border-b border-slate-800">
+                <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <Receipt size={24} className="text-emerald-400" />
+                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                            <Receipt size={20} className="text-white" />
+                        </div>
                         <div>
-                            <h2 className="text-lg font-black uppercase tracking-tighter italic leading-none">قسيمة راتب المعلمة</h2>
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">سجل مالي معتمد</p>
+                            <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
+                            <p className="text-[10px] text-slate-400 uppercase tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-10 h-10 flex items-center justify-center hover:bg-slate-800 transition-colors">
-                        <X size={20} />
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg transition-colors">
+                        <X size={18} />
                     </button>
                 </div>
 
-                <div className="p-8 space-y-8 overflow-y-auto max-h-[80vh]">
-                    {/* Academy & Teacher Info */}
-                    <div className="flex justify-between items-start border-b border-slate-100 dark:border-slate-800 pb-6">
-                        <div className="space-y-1">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">جهة الإصدار</p>
-                            <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">أكاديمية دارين</h3>
-                            <p className="inline-flex items-center gap-2 text-[11px] font-black text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 mt-2 uppercase tracking-tight italic">الفترة: {month}</p>
+                <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh]">
+                    <div className="flex justify-between items-start pb-6 border-b border-slate-50 dark:border-slate-800">
+                        <div>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">المعلمة</p>
+                            <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
+                            <p className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-md inline-block mt-1">{teacher.subject}</p>
                         </div>
-                        <div className="text-left space-y-1">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">اسم المعلمة</p>
-                            <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter leading-none">{teacher.name}</h3>
-                            <p className="text-[11px] font-black text-emerald-600 italic uppercase tracking-widest">{teacher.subject}</p>
+                        <div className="text-left">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">التاريخ</p>
+                            <p className="text-xs font-black text-slate-800 dark:text-white">{new Date().toLocaleDateString('ar-EG')}</p>
                         </div>
                     </div>
 
-                    {/* Financial Summary Box */}
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="bg-slate-50 dark:bg-slate-800/50 p-6 border border-slate-100 dark:border-slate-800 rounded-none relative">
-                            <div className="absolute top-0 right-0 w-1 h-full bg-slate-900"></div>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic mb-2">إجمالي الحصص</p>
-                            <div className="flex items-baseline gap-2">
-                                <p className="text-3xl font-black text-slate-900 dark:text-white font-mono italic leading-none">{teacher.sessionsCount}</p>
-                                <span className="text-[10px] font-black text-slate-500 uppercase italic">حصة</span>
-                            </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">إجمالي الحصص</p>
+                            <p className="text-2xl font-black text-slate-800 dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="bg-emerald-50 dark:bg-emerald-900/20 p-6 border border-emerald-100 dark:border-emerald-800/30 rounded-none relative">
-                            <div className="absolute top-0 right-0 w-1 h-full bg-emerald-600"></div>
-                            <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest italic mb-2">صافي المستحق</p>
-                            <div className="flex items-baseline gap-2">
-                                <p className="text-4xl font-black text-emerald-700 dark:text-emerald-400 font-mono italic leading-none">
-                                    {teacher.totalAmount.toLocaleString()}
-                                </p>
-                                <span className="text-[10px] font-black text-emerald-600 uppercase italic">{CURRENCY_SYMBOL}</span>
+                        <div className="bg-[#eef2ff] dark:bg-indigo-900/20 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-800/30">
+                            <p className="text-[10px] font-bold text-[#5c59f2] uppercase mb-1">صافي المستحق</p>
+                            <div className="flex items-baseline gap-1">
+                                <p className="text-2xl font-black text-[#5c59f2] font-mono">{teacher.totalAmount.toLocaleString()}</p>
+                                <span className="text-[10px] font-bold text-[#5c59f2] uppercase">{CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Detailed Sessions Table (Mini) */}
                     <div>
-                        <h4 className="text-[11px] font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2 uppercase tracking-widest italic leading-none">
-                             <div className="w-1.5 h-4 bg-slate-900"></div>
-                             بيان الحصص المنجزة
-                        </h4>
-                        <div className="border border-slate-100 dark:border-slate-800 overflow-hidden text-[11px] bg-slate-50/30 dark:bg-slate-900/30">
-                            <table className="w-full text-right">
-                                <thead className="bg-slate-900 text-white uppercase tracking-widest italic">
+                        <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
+                        <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <table className="w-full text-right text-[11px]">
+                                <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>
-                                        <th className="p-3 font-black text-[9px]">التاريخ</th>
-                                        <th className="p-3 font-black text-[9px]">الطالب</th>
-                                        <th className="p-3 font-black text-[9px] text-center">القيمة</th>
+                                        <th className="p-2.5 font-bold text-slate-500">التاريخ</th>
+                                        <th className="p-2.5 font-bold text-slate-500">الطالب</th>
+                                        <th className="p-2.5 font-bold text-slate-500 text-center">القيمة</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                                     {teacher.sessionsList?.slice(0, 10).map((s: any, idx: number) => (
-                                        <tr key={idx} className="hover:bg-white dark:hover:bg-white/5 transition-colors">
-                                            <td className="p-3 font-mono text-[10px] tracking-tight">{s.date}</td>
-                                            <td className="p-3 font-black uppercase text-slate-700 dark:text-slate-300 italic">{s.studentName}</td>
-                                            <td className="p-3 font-black text-center text-emerald-600 font-mono italic">{s.teacherPrice || teacher.price} {CURRENCY_SYMBOL}</td>
+                                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                                            <td className="p-2.5 font-mono text-slate-600 dark:text-slate-400">{s.date}</td>
+                                            <td className="p-2.5 font-bold text-slate-700 dark:text-slate-300">{s.studentName}</td>
+                                            <td className="p-2.5 font-bold text-center text-emerald-600 font-mono">{s.teacherPrice || teacher.price} {CURRENCY_SYMBOL}</td>
                                         </tr>
                                     ))}
-                                    {teacher.sessionsList?.length > 10 && (
-                                        <tr>
-                                            <td colSpan={3} className="p-2 text-center text-[9px] text-slate-400 font-black italic uppercase bg-slate-50 dark:bg-slate-900/50">
-                                                و {teacher.sessionsList.length - 10} حصص أخرى مسجلة في البيان الكامل
-                                            </td>
-                                        </tr>
-                                    )}
                                 </tbody>
                             </table>
                         </div>
+                        {teacher.sessionsList?.length > 10 && (
+                            <p className="text-[10px] text-center text-slate-400 mt-2 italic">... و {teacher.sessionsList.length - 10} حصص أخرى في السجل</p>
+                        )}
                     </div>
 
-                    {/* Footer Actions */}
-                    <div className="flex gap-4 pt-4 no-print">
-                        <button 
-                            onClick={onClose}
-                            className="px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 hover:bg-slate-200 font-black text-[10px] uppercase tracking-widest italic transition-all"
-                        >
-                            إغلاق
-                        </button>
-                        <button 
-                            onClick={() => window.print()}
-                            className="flex-1 bg-slate-900 text-white py-4 font-black text-[10px] flex items-center justify-center gap-3 hover:bg-black transition-all uppercase tracking-[2px] italic shadow-xl shadow-slate-900/10"
-                        >
+                    <div className="flex gap-3 pt-2 no-print">
+                        <SecondaryBtn onClick={onClose} className="flex-1">إغلاق</SecondaryBtn>
+                        <PrimaryBtn onClick={() => window.print()} className="flex-[2] py-3 shadow-indigo-500/10">
                             <Printer size={16} /> طباعة القسيمة الرسمية
-                        </button>
+                        </PrimaryBtn>
                     </div>
                 </div>
             </div>
@@ -283,265 +324,168 @@ export const MonthlyClosing: React.FC = () => {
     }
 
     return (
-        <div className="p-4 lg:p-8 min-h-full bg-white dark:bg-slate-950/20" dir="rtl">
-            {/* Premium Header */}
-            <div className="relative group mb-10">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-rose-500 to-indigo-500 rounded-none blur opacity-5 group-hover:opacity-10 transition duration-1000"></div>
-                
-                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
-                    <div className="absolute -top-12 -right-12 w-48 h-48 bg-rose-50 dark:bg-rose-900/10 rounded-full blur-3xl opacity-50"></div>
-                    <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl opacity-50"></div>
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+            {/* Header */}
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-xl">
+                        <ActivityIcon size={18} className="text-rose-500" />
+                    </div>
+                    <div>
+                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">تقفيل الحسابات والأنشطة المالية</h1>
+                        <p className="text-[10px] text-slate-400 italic">التحليل المالي والختامي للفترة الحالية</p>
+                    </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 no-print">
+                    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <Calendar size={14} className="text-slate-400" />
+                        <select 
+                            value={semesterName} 
+                            onChange={(e) => setSemesterName(e.target.value)}
+                            className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none focus:ring-0 cursor-pointer"
+                        >
+                            {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
+                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <Filter size={14} className="text-slate-400" />
+                        <input 
+                            type="month" 
+                            className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                            value={selectedMonth}
+                            onChange={(e) => setSelectedMonth(e.target.value)}
+                        />
+                    </div>
                     
-                    <div className="relative z-10 p-3 md:px-6 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
-                        <div className="flex items-center gap-3 md:gap-5 w-full md:w-auto">
-                            <div className="relative shrink-0">
-                                <div className="w-10 h-10 md:w-16 md:h-16 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white shadow-lg rotate-3 group-hover:rotate-0 transition-transform">
-                                    <ActivityIcon size={20} className="md:size-32" />
-                                </div>
-                                <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-6 md:h-6 bg-rose-500 border-2 border-white dark:border-slate-900 flex items-center justify-center animate-pulse">
-                                    <Star size={8} className="text-white md:size-3" />
-                                </div>
-                            </div>
-
-                            <div className="text-right">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-rose-50 dark:bg-rose-900/40 text-rose-600 text-[8px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none italic">التحليل المالي والختامي</span>
-                                    <AlertCircle size={10} className="text-rose-500 md:size-3" />
-                                </div>
-                                <h1 className="text-sm md:text-4xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic mt-1">تقفيل الحسابات والأنشطة</h1>
-                                <div className="flex items-center gap-2 mt-2">
-                                    <div className="flex items-center gap-1.5 text-[8px] md:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none">
-                                        <Calendar size={10} />
-                                        <span>الفصل: {semesterName}</span>
-                                    </div>
-                                    <span className="w-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></span>
-                                    <div className="flex items-center gap-1.5 text-[8px] md:text-[10px] font-black text-[#5c59f2] uppercase tracking-widest leading-none italic">
-                                        <span>نطاق البحث: {selectedMonth}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-2 md:gap-3 no-print w-full md:w-auto">
-                            <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-3 py-2 flex items-center gap-2 transition-all hover:bg-white dark:hover:bg-slate-700">
-                                <span className="text-[9px] font-black text-slate-400 uppercase leading-none">الفصل:</span>
-                                <select 
-                                    value={semesterName} 
-                                    onChange={(e) => setSemesterName(e.target.value)}
-                                    className="bg-transparent font-black border-none focus:ring-0 text-xs dark:text-white outline-none cursor-pointer p-0 pr-4"
-                                >
-                                    {semesterList.map(s => (
-                                        <option key={s} value={s} className="dark:bg-slate-800">{s}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-3 py-2 flex items-center gap-2 transition-all hover:bg-white dark:hover:bg-slate-700">
-                                <Filter size={14} className="text-slate-400" />
-                                <input 
-                                    type="month" 
-                                    className="bg-transparent font-black border-none focus:ring-0 text-xs dark:text-white outline-none cursor-pointer p-0" 
-                                    value={selectedMonth}
-                                    onChange={(e) => setSelectedMonth(e.target.value)}
-                                />
-                            </div>
-                            
-                            <button 
-                                onClick={handleRefresh}
-                                className="w-11 h-11 bg-slate-900 border border-slate-800 text-white hover:bg-black transition-all flex items-center justify-center shadow-lg"
-                                title="تحديث البيانات"
-                            >
-                                <RefreshCw size={18} className={isLoading ? "animate-spin" : ""} />
-                            </button>
-                            
-                            <button 
-                                onClick={() => window.print()}
-                                className="px-5 py-3 bg-rose-600 text-white font-black text-xs uppercase tracking-widest transition-all hover:bg-rose-700 shadow-xl shadow-rose-100 dark:shadow-none flex items-center gap-2"
-                            >
-                                <Printer size={16} />
-                                <span>طباعة التقارير</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* High-Performance Stats Bar */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-none relative overflow-hidden group shadow-sm transition-all hover:shadow-xl">
-                    <div className="absolute top-0 right-0 w-24 h-full bg-indigo-500/5 -skew-x-12 transform translate-x-12 pointer-events-none transition-transform group-hover:translate-x-8"></div>
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] flex items-center justify-center shadow-sm">
-                            <TrendingUp size={20} />
-                        </div>
-                    </div>
-                    <div className="space-y-1">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">الربح المتوقع للمنشأة</p>
-                        <div className="flex items-baseline gap-2">
-                             <h3 className="text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tighter">{netProjectedProfit.toLocaleString()}</h3>
-                             <span className="text-[10px] font-black text-slate-400 uppercase">{CURRENCY_SYMBOL}</span>
-                        </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tight italic">هامش الربح التشغيلي</span>
-                        <div className="text-[11px] font-black text-[#5c59f2] tabular-nums">
-                            {totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}%
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-none relative overflow-hidden group shadow-sm transition-all hover:shadow-xl">
-                    <div className="absolute top-0 right-0 w-24 h-full bg-emerald-500/5 -skew-x-12 transform translate-x-12 pointer-events-none transition-transform group-hover:translate-x-8"></div>
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center shadow-sm">
-                            <Wallet size={20} />
-                        </div>
-                    </div>
-                    <div className="space-y-1">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">إجمالي التحصيلات النقدية</p>
-                        <div className="flex items-baseline gap-2">
-                             <h3 className="text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tighter">{totalActualCollections.toLocaleString()}</h3>
-                             <span className="text-[10px] font-black text-slate-400 uppercase">{CURRENCY_SYMBOL}</span>
-                        </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tight italic">صافي التدفق المالي</span>
-                        <div className="text-[11px] font-black text-emerald-600 tabular-nums">{netActualCashFlow.toLocaleString()}</div>
-                    </div>
-                </div>
-
-                <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-none relative overflow-hidden group shadow-sm transition-all hover:shadow-xl">
-                    <div className="absolute top-0 right-0 w-24 h-full bg-rose-500/5 -skew-x-12 transform translate-x-12 pointer-events-none transition-transform group-hover:translate-x-8"></div>
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 text-rose-600 flex items-center justify-center shadow-sm">
-                            <ArrowDownRight size={20} />
-                        </div>
-                    </div>
-                    <div className="space-y-1">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">إجمالي رواتب المعلمات</p>
-                        <div className="flex items-baseline gap-2">
-                             <h3 className="text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tighter">{totalTeacherPayout.toLocaleString()}</h3>
-                             <span className="text-[10px] font-black text-slate-400 uppercase">{CURRENCY_SYMBOL}</span>
-                        </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-tight italic">إدارة الكوادر التعليمية</span>
-                        <div className="text-[11px] font-black text-rose-600 tabular-nums">{payrollData.length} معلمة</div>
-                    </div>
-                </div>
-
-                <div className="bg-slate-900 text-white p-6 rounded-none relative overflow-hidden group shadow-2xl transition-all hover:shadow-white/5 border-r-4 border-amber-500">
-                    <div className="absolute top-0 left-0 w-32 h-full bg-amber-500/5 rotate-12 -translate-x-16 pointer-events-none"></div>
-                    <div className="flex items-center justify-between mb-4 relative z-10">
-                        <div className="w-10 h-10 bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/20">
-                            <ActivityIcon size={20} />
-                        </div>
-                    </div>
-                    <div className="space-y-1 relative z-10">
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest italic">حركة النشاط التعليمي</p>
-                        <div className="flex items-baseline gap-2">
-                             <h3 className="text-3xl font-black text-white tabular-nums tracking-tighter leading-none italic">{filteredSessions.length}</h3>
-                             <span className="text-[10px] font-black text-amber-500 uppercase italic">حصة منجزة</span>
-                        </div>
-                    </div>
-                    <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between relative z-10">
-                        <span className="text-[9px] font-black text-slate-500 uppercase tracking-tight italic">متوسط السعر لكل حصة</span>
-                        <div className="flex items-center gap-1 text-amber-400 italic">
-                             <span className="text-[10px] font-black tabular-nums">{filteredSessions.length > 0 ? (totalProjectedIncome / filteredSessions.length).toFixed(1) : 0}</span>
-                             <span className="text-[8px] font-black">ج.م</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Tabs Navigation */}
-            <div className="flex border-b border-slate-100 dark:border-slate-800 mb-8 sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl z-40 no-print overflow-x-auto no-scrollbar">
-                {[
-                    { id: 'payroll', label: 'كشوف الرواتب', icon: Receipt, color: 'text-[#5c59f2]', bar: 'bg-[#5c59f2]' },
-                    { id: 'collections', label: 'التحصيلات النقدية', icon: Wallet, color: 'text-emerald-600', bar: 'bg-emerald-600' },
-                    { id: 'renewals', label: 'تجديدات الرصيد', icon: AlertCircle, color: 'text-amber-600', bar: 'bg-amber-600' },
-                    { id: 'analysis', label: 'تحليل المواد', icon: BarChart3, color: 'text-indigo-600', bar: 'bg-indigo-600' },
-                    { id: 'teachers', label: 'أداء الهيئة', icon: Users, color: 'text-slate-900 dark:text-white', bar: 'bg-slate-900 dark:bg-white' },
-                    { id: 'compensation', label: 'التعويضات', icon: RefreshCw, color: 'text-rose-600', bar: 'bg-rose-600' },
-                    { id: 'summary', label: 'الملخص الاستراتيجي', icon: TrendingUp, color: 'text-slate-900 dark:text-white', bar: 'bg-slate-900 dark:bg-white' }
-                ].map(tab => (
-                    <button 
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id as TabType)}
-                        className={cn(
-                            "group relative px-6 py-5 text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-3",
-                            activeTab === tab.id ? tab.color : "text-slate-400 hover:text-slate-600"
-                        )}
-                    >
-                        <tab.icon size={16} />
-                        <span>{tab.label}</span>
-                        {activeTab === tab.id && (
-                            <div className={cn("absolute bottom-0 left-0 right-0 h-1 animate-in slide-in-from-right duration-300", tab.bar)}></div>
-                        )}
+                    <button onClick={handleRefresh} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all">
+                        <RefreshCw size={16} className={cn("text-slate-400", isLoading && "animate-spin")} />
                     </button>
-                ))}
+                    
+                    <PrimaryBtn onClick={() => window.print()} className="py-2 px-3 bg-slate-900 hover:bg-black">
+                        <Printer size={14} />
+                        طباعة
+                    </PrimaryBtn>
+                </div>
+            </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 py-4">
+                <StatItem 
+                    title="صافي الربح المتوقع" 
+                    value={netProjectedProfit.toLocaleString()} 
+                    icon={TrendingUp} 
+                    color="text-[#5c59f2]" 
+                    bg="bg-[#eef2ff] dark:bg-indigo-900/30"
+                    subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`}
+                />
+                <StatItem 
+                    title="التحصيلات النقدية" 
+                    value={totalActualCollections.toLocaleString()} 
+                    icon={Wallet} 
+                    color="text-emerald-500" 
+                    bg="bg-emerald-50 dark:bg-emerald-900/20"
+                    subValue={`صافي السيولة: ${netActualCashFlow.toLocaleString()}`}
+                />
+                <StatItem 
+                    title="رواتب المعلمات" 
+                    value={totalTeacherPayout.toLocaleString()} 
+                    icon={ArrowDownRight} 
+                    color="text-rose-500" 
+                    bg="bg-rose-50 dark:bg-rose-900/20"
+                    subValue={`${payrollData.length} معلمة نشطة`}
+                />
+                <StatItem 
+                    title="إجمالي النشاط" 
+                    value={filteredSessions.length} 
+                    icon={ActivityIcon} 
+                    color="text-amber-500" 
+                    bg="bg-amber-50 dark:bg-amber-900/20"
+                    subValue="حصة تعليمية منفذة"
+                />
+            </div>
+
+            {/* Navigation Tabs */}
+            <div className="px-4 md:px-6 mb-4">
+                <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
+                    {[
+                        { id: 'payroll', label: 'الرواتب', icon: Receipt },
+                        { id: 'collections', label: 'التحصيلات', icon: Wallet },
+                        { id: 'renewals', label: 'التجديدات', icon: AlertCircle },
+                        { id: 'analysis', label: 'تحليل المواد', icon: BarChart3 },
+                        { id: 'teachers', label: 'أداء الهيئة', icon: Users },
+                        { id: 'compensation', label: 'التعويضات', icon: RefreshCw },
+                        { id: 'summary', label: 'الملخص', icon: TrendingUp }
+                    ].map(tab => (
+                        <button 
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id as TabType)}
+                            className={cn(
+                                "flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-bold transition-all whitespace-nowrap",
+                                activeTab === tab.id 
+                                    ? "bg-[#eef2ff] dark:bg-indigo-900/30 text-[#5c59f2] shadow-sm" 
+                                    : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                            )}
+                        >
+                            <tab.icon size={14} />
+                            {tab.label}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {/* Tab Contents */}
-            <div className="min-h-[500px]">
+            <div className="px-4 md:px-6 md:animate-in md:fade-in md:duration-500">
                 {activeTab === 'payroll' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-900/50">
-                            <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-6 bg-[#5c59f2]"></div>
-                                <div>
-                                    <h2 className="text-sm font-black tracking-tight text-slate-800 dark:text-white uppercase italic">كشوف رواتب الهيئة التعليمية</h2>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic leading-none mt-1">مسير الرواتب لشهر {selectedMonth}</p>
-                                </div>
-                            </div>
-                            <button className="flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white font-black text-[10px] border border-slate-800 shadow-xl hover:bg-black transition-all uppercase tracking-widest italic">
-                                <Download size={14} /> 
-                                <span>تصدير القوائم المالية</span>
-                            </button>
+                    <SectionCard>
+                        <div className="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                            <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`دورة شهر ${selectedMonth}`} />
+                            <SecondaryBtn className="h-8 text-[10px]">
+                                <Download size={14} /> تصدير PDF
+                            </SecondaryBtn>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-right border-collapse">
-                                <thead className="bg-slate-900 dark:bg-black border-y border-slate-800">
+                            <table className="w-full text-right">
+                                <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic">بيانات المعلمة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">إجمالي الحصص</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">الراتب الأساسي</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">تعديلات</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">صافي المستحق</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">المعلمة</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحصص</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الأساسي</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">تعديلات</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الصافي</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                                     {payrollData.map((item) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white font-black text-xs shadow-lg group-hover:bg-[#5c59f2] transition-colors italic">
+                                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                            <td className="px-4 py-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white font-bold text-[10px] rounded-lg">
                                                         {item.name.charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <span className="block font-black text-xs text-slate-800 dark:text-white leading-none mb-1">{item.name}</span>
-                                                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic">{item.subject}</span>
+                                                        <span className="block font-bold text-xs text-slate-800 dark:text-white leading-tight">{item.name}</span>
+                                                        <span className="text-[9px] text-slate-400 font-medium">{item.subject}</span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5 text-center font-mono font-black text-base italic text-slate-800 dark:text-white">{item.sessionsCount}</td>
-                                            <td className="px-6 py-5 text-center font-mono font-black text-xs text-slate-400 italic tabular-nums">{item.baseAmount.toLocaleString()}</td>
-                                            <td className="px-6 py-5 text-center">
+                                            <td className="px-4 py-4 text-center font-bold text-xs text-slate-700 dark:text-slate-300">{item.sessionsCount}</td>
+                                            <td className="px-4 py-4 text-center font-bold text-xs text-slate-400">{item.baseAmount.toLocaleString()}</td>
+                                            <td className="px-4 py-4 text-center">
                                                 <input 
                                                     type="number"
                                                     value={teacherAdjustments[item.id] || ''}
                                                     onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                                    className="w-20 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 p-2 text-center font-black text-xs outline-none"
+                                                    className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-1 text-center font-bold text-[10px] outline-none focus:border-[#5c59f2]"
                                                     placeholder="0"
                                                 />
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex flex-col items-center gap-2">
-                                                    <div className="px-4 py-1.5 bg-emerald-600 text-white font-mono font-black text-base italic shadow-lg shadow-emerald-500/10">
-                                                        {item.totalAmount.toLocaleString()} <span className="text-[9px]">ج.م</span>
-                                                    </div>
-                                                    <button onClick={() => setSelectedTeacherForSlip(item)} className="text-[9px] font-black text-[#5c59f2] hover:underline flex items-center gap-1.5 transition-colors italic uppercase tracking-widest">
-                                                        <Receipt size={10} /> <span>استخراج القسيمة</span>
+                                            <td className="px-4 py-4">
+                                                <div className="flex flex-col items-center gap-1.5">
+                                                    <span className="font-bold text-xs text-emerald-600">{item.totalAmount.toLocaleString()} ج.م</span>
+                                                    <button onClick={() => setSelectedTeacherForSlip(item)} className="text-[9px] font-bold text-[#5c59f2] hover:underline flex items-center gap-1">
+                                                        <Receipt size={10} /> القسيمة
                                                     </button>
                                                 </div>
                                             </td>
@@ -550,42 +494,36 @@ export const MonthlyClosing: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </SectionCard>
                 )}
 
                 {activeTab === 'collections' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50 dark:bg-slate-900/50">
-                            <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-6 bg-emerald-500"></div>
-                                <div>
-                                    <h2 className="text-sm font-black tracking-tight text-slate-800 dark:text-white uppercase italic">تحصيل مبالغ الطلاب</h2>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic leading-none mt-1">الدورة المالية لشهر {selectedMonth}</p>
-                                </div>
-                            </div>
+                    <SectionCard>
+                        <div className="p-4 border-b border-slate-50 dark:border-slate-800">
+                            <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" />
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-right border-collapse">
-                                <thead className="bg-slate-900 dark:bg-black border-y border-slate-800">
+                            <table className="w-full text-right">
+                                <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic">سجل الطالب</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">المبلغ المستحق</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">تاريخ القيد</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">حالة السداد</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">الطالب</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">المبلغ</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">التاريخ</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحالة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                                     {(studentInvoices || []).filter((inv: any) => inv.date.startsWith(selectedMonth)).map((item: any) => (
-                                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <span className="block font-black text-xs text-slate-800 dark:text-white leading-none mb-1">{item.studentName}</span>
-                                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic truncate">{item.description}</span>
+                                        <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                            <td className="px-4 py-4">
+                                                <span className="block font-bold text-xs text-slate-800 dark:text-white mb-0.5">{item.studentName}</span>
+                                                <span className="text-[9px] text-slate-400 font-medium line-clamp-1">{item.description}</span>
                                             </td>
-                                            <td className="px-6 py-5 text-center font-mono font-black text-sm text-emerald-600 italic">
-                                                {item.amount.toLocaleString()} <span className="text-[10px]">ج.م</span>
+                                            <td className="px-4 py-4 text-center font-bold text-xs text-emerald-600">
+                                                {item.amount.toLocaleString()} ج.م
                                             </td>
-                                            <td className="px-6 py-5 text-center font-mono font-black text-[10px] text-slate-400 whitespace-nowrap">{item.date}</td>
-                                            <td className="px-6 py-5 text-center">
+                                            <td className="px-4 py-4 text-center text-[10px] text-slate-400 font-mono">{item.date}</td>
+                                            <td className="px-4 py-4 text-center">
                                                 <button
                                                     onClick={async () => {
                                                         const newStatus = item.status === 'paid' ? 'pending' : 'paid';
@@ -593,11 +531,11 @@ export const MonthlyClosing: React.FC = () => {
                                                         queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                                     }}
                                                     className={cn(
-                                                        "px-4 py-2 font-black text-[9px] uppercase tracking-[2px] transition-all shadow-lg active:scale-95 text-white",
+                                                        "px-3 py-1 rounded-lg font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 text-white",
                                                         item.status === 'paid' ? "bg-emerald-600" : "bg-rose-600"
                                                     )}
                                                 >
-                                                    {item.status === 'paid' ? 'تم السداد' : 'بانتظار التحصيل'}
+                                                    {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}
                                                 </button>
                                             </td>
                                         </tr>
@@ -605,173 +543,182 @@ export const MonthlyClosing: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </SectionCard>
                 )}
 
                 {activeTab === 'renewals' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {renewalsData.map((item, idx) => (
-                                <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 relative group transition-all hover:shadow-xl hover:-translate-y-1">
-                                    <div className="absolute top-0 right-0 w-1.5 h-full bg-amber-500"></div>
-                                    <h3 className="text-base font-black text-slate-800 dark:text-white leading-none tracking-tight mb-2">{item.studentName}</h3>
-                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest italic mb-6">{item.subject}</p>
-                                    <div className="flex justify-between items-center bg-slate-900 p-4 mb-4">
-                                        <span className="text-[10px] font-black text-amber-500 uppercase italic">الحصص المتبقية</span>
-                                        <span className="text-2xl font-black text-white font-mono italic">{item.remaining}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {renewalsData.map((item, idx) => (
+                            <SectionCard key={idx} className="p-5 flex flex-col justify-between h-full">
+                                <div>
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 className="text-sm font-bold text-slate-800 dark:text-white leading-tight">{item.studentName}</h3>
+                                            <p className="text-[10px] font-bold text-[#5c59f2] mt-0.5">{item.subject}</p>
+                                        </div>
+                                        <div className="px-2 py-0.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 rounded-md text-[9px] font-bold">رصيد منخفض</div>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-3 pt-2">
-                                        <a href={item.waLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-3 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest italic"><MessageCircle size={14} /> واتساب</a>
-                                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-2 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest italic"><Phone size={14} /> اتصال</a>
+                                    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 flex items-center justify-between mb-4 border border-slate-100 dark:border-slate-800">
+                                        <span className="text-[10px] font-bold text-slate-400">الحصص المتبقية</span>
+                                        <span className="text-lg font-black text-slate-800 dark:text-white font-mono">{item.remaining}</span>
                                     </div>
                                 </div>
-                            ))}
-                            {renewalsData.length === 0 && (
-                                <div className="col-span-full py-32 text-center text-slate-300 dark:text-slate-700 font-black uppercase tracking-[4px] text-xs italic">
-                                    <CheckCircle2 className="mx-auto mb-6 opacity-5" size={80} />
-                                    لا توجد تنبيهات تجديد معلقة حاليًا
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2 bg-emerald-600 text-white text-[10px] font-bold rounded-xl hover:bg-emerald-700 transition-all"><MessageCircle size={14} /> واتساب</button>
+                                    <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2 bg-slate-900 text-white text-[10px] font-bold rounded-xl hover:bg-black transition-all"><Phone size={14} /> اتصال</a>
                                 </div>
-                            )}
-                        </div>
+                            </SectionCard>
+                        ))}
+                        {renewalsData.length === 0 && (
+                            <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                <CheckCircle2 className="mx-auto mb-3 text-slate-100 dark:text-slate-800" size={48} />
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد تجديدات مطلوبة</p>
+                            </div>
+                        )}
                     </div>
                 )}
 
                 {activeTab === 'analysis' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-8">
-                        <div className="h-[400px] w-full mb-12 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={subjectAnalysis}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                    <XAxis dataKey="name" fontSize={10} fontStyle="italic" />
-                                    <YAxis fontSize={10} fontStyle="italic" />
-                                    <Tooltip contentStyle={{ backgroundColor: '#0f172a', color: '#fff', border: 'none', fontStyle: 'italic', fontSize: '10px' }} />
-                                    <Bar dataKey="income" name="الإيرادات" fill="#5c59f2" />
-                                    <Bar dataKey="payout" name="التكاليف" fill="#f43f5e" />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <div className="space-y-6">
+                        <SectionCard className="p-6">
+                            <SectionTitle icon={BarChart3} label="تحليل ربحية المواد العلمية" sub="مقارنة الإيرادات مقابل المصاريف" />
+                            <div className="h-[300px] w-full mt-6">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={subjectAnalysis}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                        <XAxis dataKey="name" fontSize={9} fontStyle="italic" />
+                                        <YAxis fontSize={9} fontStyle="italic" />
+                                        <Tooltip contentStyle={{ backgroundColor: '#0f172a', color: '#fff', borderRadius: '12px', border: 'none', fontSize: '10px' }} />
+                                        <Bar dataKey="income" name="الإيرادات" fill="#5c59f2" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="payout" name="التكاليف" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </SectionCard>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {subjectAnalysis.map((subj, idx) => (
-                                <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-8 relative overflow-hidden group">
-                                    <div className="absolute top-0 right-0 w-2 h-full bg-indigo-600"></div>
-                                    <h3 className="text-lg font-black text-slate-800 dark:text-white uppercase italic leading-none mb-2">{subj.name}</h3>
-                                    <div className="flex justify-between items-baseline mb-6">
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">صافي الربح التقديري</p>
-                                        <p className="text-xl font-black text-indigo-600 italic font-mono">{subj.profit.toLocaleString()} <span className="text-[10px]">ج.م</span></p>
+                                <SectionCard key={idx} className="p-5 border-t-4 border-indigo-600">
+                                    <h3 className="text-xs font-bold text-slate-800 dark:text-white mb-3">{subj.name}</h3>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="text-slate-400">صافي الربح</span>
+                                            <span className="font-bold text-indigo-600">{subj.profit.toLocaleString()} ج.م</span>
+                                        </div>
+                                        <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
+                                            <div className="h-full bg-indigo-500" style={{ width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
+                                        </div>
+                                        <div className="flex justify-between items-center text-[9px] text-slate-400 mt-1">
+                                            <span>النشاط: {subj.sessionsCount} حصة</span>
+                                        </div>
                                     </div>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between text-[10px] font-black uppercase italic"><span className="text-slate-400">الإيرادات</span><span className="text-slate-900 dark:text-white">{subj.income.toLocaleString()}</span></div>
-                                        <div className="flex justify-between text-[10px] font-black uppercase italic"><span className="text-slate-400">التكاليف</span><span className="text-slate-900 dark:text-white">{subj.payout.toLocaleString()}</span></div>
-                                    </div>
-                                </div>
+                                </SectionCard>
                             ))}
                         </div>
                     </div>
                 )}
 
                 {activeTab === 'teachers' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-8 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {teacherPerformance.map((perf, idx) => (
-                            <div key={idx} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-8 flex flex-col lg:flex-row items-center justify-between gap-8 group">
-                                <div className="flex items-center gap-6 min-w-[300px]">
-                                    <div className="w-16 h-16 bg-slate-900 text-white flex items-center justify-center font-black text-2xl italic group-hover:bg-[#5c59f2] transition-colors">{perf.name.charAt(0)}</div>
-                                    <div>
-                                        <h3 className="text-xl font-black text-slate-800 dark:text-white uppercase italic leading-none mb-1">{perf.name}</h3>
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic leading-none">الحصص المخططة: {perf.total}</p>
+                            <SectionCard key={idx} className="p-5 flex items-center gap-4">
+                                <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-lg">
+                                    {perf.name.charAt(0)}
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="text-sm font-bold text-slate-800 dark:text-white">{perf.name}</h3>
+                                        <span className="text-[9px] font-bold text-slate-400 uppercase">{perf.total} حصة</span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
+                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} /></div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase"><span>التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
+                                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden"><div className="h-full bg-[#5c59f2]" style={{ width: `${perf.documentationRate}%` }} /></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex-1 grid grid-cols-2 md:grid-cols-2 gap-12 w-full">
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-[10px] font-black uppercase italic"><span>معدل الحضور</span><span>{perf.attendanceRate.toFixed(0)}%</span></div>
-                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${perf.attendanceRate}%` }} /></div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-[10px] font-black uppercase italic"><span>جودة التوثيق</span><span>{perf.documentationRate.toFixed(0)}%</span></div>
-                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-800 overflow-hidden"><div className="h-full bg-[#5c59f2]" style={{ width: `${perf.documentationRate}%` }} /></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </SectionCard>
                         ))}
                     </div>
                 )}
 
                 {activeTab === 'compensation' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <SectionCard>
+                        <div className="p-4 border-b border-slate-50 dark:border-slate-800">
+                            <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" />
+                        </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-right border-collapse">
-                                <thead className="bg-slate-900 dark:bg-black border-y border-slate-800">
+                            <table className="w-full text-right">
+                                <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic">الطالب</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic">المعلمة</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">تاريخ الإلغاء</th>
-                                        <th className="px-6 py-4 font-black uppercase tracking-widest text-[9px] text-slate-400 italic text-center">الحالة الإلزامية</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-wider">الطالب</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500">المعلمة</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">التاريخ</th>
+                                        <th className="px-4 py-3 font-bold text-[10px] text-slate-500 text-center">الحالة</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                                     {filteredSessions.filter(s => s.needsCompensation && s.status === 'cancelled').map((session, idx) => (
-                                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <span className="font-black text-xs text-slate-800 dark:text-white uppercase italic">{session.studentName}</span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="font-black text-xs text-slate-800 dark:text-white uppercase italic">{session.teacherName}</span>
-                                            </td>
-                                            <td className="px-6 py-5 text-center font-mono font-black text-xs text-rose-500 italic">{session.date}</td>
-                                            <td className="px-6 py-5 text-center">
-                                                <div className="px-4 py-2 bg-rose-600 text-white font-black text-[9px] uppercase tracking-widest italic">بانتظار التعويض</div>
+                                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                            <td className="px-4 py-4 text-xs font-bold text-slate-800 dark:text-white">{session.studentName}</td>
+                                            <td className="px-4 py-4 text-xs font-bold text-slate-600 dark:text-slate-400">{session.teacherName}</td>
+                                            <td className="px-4 py-4 text-center font-mono text-[10px] text-rose-500">{session.date}</td>
+                                            <td className="px-4 py-4 text-center">
+                                                <div className="inline-block px-2 py-0.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-[9px] font-bold rounded-md">تعويض معلق</div>
                                             </td>
                                         </tr>
                                     ))}
                                     {filteredSessions.filter(s => s.needsCompensation && s.status === 'cancelled').length === 0 && (
                                         <tr>
-                                            <td colSpan={4} className="px-6 py-32 text-center text-slate-300 dark:text-slate-700 font-black uppercase tracking-[4px] text-xs italic">
-                                                <CheckCircle2 className="mx-auto mb-6 opacity-5" size={80} />
-                                                لا توجد تعويضات معلقة حاليًا
+                                            <td colSpan={4} className="px-6 py-20 text-center">
+                                                <CheckCircle2 className="mx-auto mb-3 text-slate-100 dark:text-slate-800" size={48} />
+                                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد تعويضات معلقة</p>
                                             </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </SectionCard>
                 )}
 
                 {activeTab === 'summary' && (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 p-12 bg-slate-900 text-white relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 -skew-x-12 transform translate-x-32 -translate-y-32"></div>
-                        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20">
-                            <div className="space-y-12">
-                                <div>
-                                    <h1 className="text-4xl font-black uppercase tracking-tight italic leading-none mb-4">بيان الاستدامة المـالية</h1>
-                                    <p className="text-xs font-black text-slate-500 uppercase tracking-widest italic max-w-lg leading-relaxed">تقرير استراتيجي يوضح التوازن بين الإيرادات المحصلة والالتزامات التعليمية المنفذة.</p>
-                                </div>
-                                <div className="grid grid-cols-1 gap-12">
-                                    <div className="border-r-4 border-emerald-500 pr-8">
-                                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest italic mb-2">صافي الربح المتوقع للدورة</p>
-                                        <p className="text-5xl font-black italic tabular-nums leading-none">{netProjectedProfit.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                    <SectionCard className="p-8 bg-slate-900 text-white relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                            <div>
+                                <h2 className="text-2xl font-black mb-4">الملخص المالي الاستراتيجي</h2>
+                                <p className="text-xs text-slate-400 mb-8 max-w-md leading-relaxed">تقرير يوضح التوازن بين الإيرادات المحصلة والالتزامات التعليمية المنفذة خلال هذه الفترة المالية.</p>
+                                <div className="space-y-6">
+                                    <div className="border-r-4 border-emerald-500 pr-6">
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">صافي الربح المتوقع</p>
+                                        <p className="text-4xl font-black italic">{netProjectedProfit.toLocaleString()} <span className="text-xs">ج.م</span></p>
                                     </div>
-                                    <div className="border-r-4 border-indigo-600 pr-8">
-                                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest italic mb-2">إجمالي عوائد المنظومة</p>
-                                        <p className="text-5xl font-black italic tabular-nums leading-none">{totalProjectedIncome.toLocaleString()} <span className="text-xs">ج.م</span></p>
+                                    <div className="border-r-4 border-indigo-500 pr-6">
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">إجمالي عوائد المنظومة</p>
+                                        <p className="text-4xl font-black italic">{totalProjectedIncome.toLocaleString()} <span className="text-xs">ج.م</span></p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-12 bg-white/5 border border-white/10 relative group">
-                                <div className="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
-                                <h3 className="text-xs font-black uppercase tracking-[6px] italic text-emerald-400 mb-8">إشعار التدقيق</h3>
-                                <div className="space-y-8">
-                                    <div className="flex gap-6">
-                                        <div className="w-8 h-8 bg-emerald-500 text-slate-950 flex items-center justify-center font-black italic">01</div>
-                                        <p className="text-xs font-black leading-relaxed italic opacity-80 uppercase tracking-tight">تم التحقق من كافة الجلسات المكتملة والموثقة وتطابقها مع سجلات الدفع.</p>
+                            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-6">ملاحظات التدقيق</h3>
+                                <div className="space-y-6">
+                                    <div className="flex gap-4">
+                                        <div className="shrink-0 w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-slate-950 text-xs italic">1</div>
+                                        <p className="text-[11px] font-medium leading-relaxed opacity-80 italic">تم التحقق من تطابق الجلسات الموثقة مع سجلات الدفع والتحصيل النقدي الفعلي.</p>
                                     </div>
-                                    <div className="flex gap-6">
-                                        <div className="w-8 h-8 bg-emerald-500 text-slate-950 flex items-center justify-center font-black italic">02</div>
-                                        <p className="text-xs font-black leading-relaxed italic opacity-80 uppercase tracking-tight">نسبة التحصيل النقدي الفعلي مقارنة بالتوقعات: {totalProjectedIncome > 0 ? ((totalActualCollections / totalProjectedIncome) * 100).toFixed(0) : 0}%</p>
+                                    <div className="flex gap-4">
+                                        <div className="shrink-0 w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-slate-950 text-xs italic">2</div>
+                                        <p className="text-[11px] font-medium leading-relaxed opacity-80 italic">نسبة التحصيل الفعلي: {totalProjectedIncome > 0 ? ((totalActualCollections / totalProjectedIncome) * 100).toFixed(0) : 0}% من التوقعات.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </SectionCard>
                 )}
             </div>
 
