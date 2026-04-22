@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
     Plus, Wallet, TrendingUp, Trash2, CheckCircle, XCircle,
     Search, Edit, X,
     AlertCircle, FileText, Printer, UserPlus, RefreshCw,
-    Sparkles, Check, ChevronRight
+    Sparkles, Check
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useApp } from '../context/AppContext';
