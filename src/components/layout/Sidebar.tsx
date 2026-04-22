@@ -173,7 +173,7 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 px-4 py-2 space-y-0.5 overflow-y-auto custom-scrollbar">
+                <nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
@@ -183,7 +183,7 @@ export const Sidebar = () => {
                                 isActive
                                     ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
-                                collapsed && "justify-center py-2"
+                                collapsed && "justify-center py-1"
                             )}
                             title={collapsed ? item.name : ''}
                         >
