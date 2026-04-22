@@ -158,8 +158,8 @@ export const Sidebar = () => {
             >
                 {/* Search & Logo Area */}
                 <div className={cn(
-                    "h-14 flex items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
-                    collapsed ? "justify-center px-0" : "justify-between px-6"
+                    "h-14 items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
+                    collapsed ? "flex justify-center px-0" : "hidden xl:flex justify-between px-6"
                 )}>
                     <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
                         <GraduationCap size={collapsed ? 24 : 20} className="text-gold shrink-0 border-2 border-current p-1" />
