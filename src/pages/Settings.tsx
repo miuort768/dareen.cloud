@@ -9,8 +9,6 @@ import { useApp } from '../context/useApp';
 import { GuestChatManager } from '../features/chat/components/GuestChatManager';
 import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
-import { api } from '../lib/api';
-import { API_BASE_URL } from '../config/api';
 import { settingsService } from '../features/settings/services/settingsService';
 
 const AVAILABLE_PERMISSIONS = [
