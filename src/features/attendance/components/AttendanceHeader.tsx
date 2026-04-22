@@ -1,6 +1,5 @@
 import React from 'react';
 import { Calendar, Activity, Sparkles } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface AttendanceHeaderProps {
     date: string;

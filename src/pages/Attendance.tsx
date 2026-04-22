@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users, Search, BookOpen, Clock, Activity, FileText } from 'lucide-react';
+import { Users, Search, BookOpen, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useApp } from '../context/AppContext';
@@ -253,7 +253,7 @@ export const Attendance = () => {
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden">
                             <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
-                                <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" className="mb-0 pb-0 border-none" />
+                                <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" />
                                 <div className="relative w-full md:w-80">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input

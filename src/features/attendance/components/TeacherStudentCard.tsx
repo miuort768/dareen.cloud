@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, AlertCircle, MessageSquare } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, MessageSquare } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 

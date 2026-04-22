@@ -1,6 +1,5 @@
 import React from 'react';
 import { Search, Filter, GraduationCap, X, SlidersHorizontal } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface AttendanceFiltersProps {
     searchTerm: string;
