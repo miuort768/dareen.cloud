@@ -262,13 +262,8 @@ const Settings = () => {
     const handleExportBackup = async () => {
         setIsSaving(true);
         try {
-            const token = localStorage.getItem('auth_token');
-            const url = API_BASE_URL.startsWith('http') ? `${API_BASE_URL}/system/backup/export` : `${window.location.origin}${API_BASE_URL}/system/backup/export`;
-            const response = await fetch(url, {
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-            });
-            if (!response.ok) throw new Error('فشل تحميل النسخة الاحتياطية');
-            const blob = await response.blob();
+            const backupData = await settingsService.getBackup();
+            const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
@@ -278,7 +273,7 @@ const Settings = () => {
             a.remove();
             showNotify('تم تحميل النسخة الاحتياطية بنجاح');
         } catch (e: any) {
-            alert(e.message);
+            alert('فشل تصدير البيانات: ' + e.message);
         } finally {
             setIsSaving(false);
         }
@@ -293,41 +288,26 @@ const Settings = () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-
-        setIsSaving(true);
-        try {
-            const token = localStorage.getItem('auth_token');
-            const cleanBaseUrl = API_BASE_URL.startsWith('http') ? API_BASE_URL : `${window.location.origin}${API_BASE_URL}`;
-            const endpoint = `${cleanBaseUrl.replace(/\/$/, '')}/system/backup/import`;
-            
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-                body: formData
-            });
-
-            if (!response.ok) {
-                let errorMsg = 'فشل استيراد البيانات';
-                try {
-                    const err = await response.json();
-                    errorMsg = err.error || err.message || errorMsg;
-                } catch (parseErr) {
-                    errorMsg = `خطأ في السيرفر (${response.status})`;
-                }
-                throw new Error(errorMsg);
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            setIsSaving(true);
+            try {
+                const content = event.target?.result as string;
+                const backupData = JSON.parse(content);
+                
+                await settingsService.restoreBackup(backupData);
+                
+                showNotify('تم استيراد البيانات بنجاح! سيتم تحديث الصفحة...');
+                setTimeout(() => window.location.reload(), 2000);
+            } catch (e: any) {
+                console.error('Import Error:', e);
+                alert(`⚠️ عذراً: فشل الاستيراد - ${e.message}`);
+            } finally {
+                setIsSaving(false);
+                if (e.target) e.target.value = '';
             }
-
-            showNotify('تم استيراد البيانات بنجاح! سيتم تحديث الصفحة...');
-            setTimeout(() => window.location.reload(), 2000);
-        } catch (e: any) {
-            console.error('Import Error:', e);
-            alert(`⚠️ عذراً: ${e.message}`);
-        } finally {
-            setIsSaving(false);
-            if (e.target) e.target.value = '';
-        }
+        };
+        reader.readAsText(file);
     };
 
     const triggerReset = () => {
@@ -339,7 +319,7 @@ const Settings = () => {
             actionFn: async () => {
                 setIsSaving(true);
                 try {
-                    await api.post('/system/advanced/reset-accounts');
+                    await settingsService.systemReset();
                     showNotify('تم تصفير النظام بنجاح');
                     window.location.reload();
                 } catch (e: any) { alert(e.message); }
@@ -351,13 +331,13 @@ const Settings = () => {
     const triggerArchive = () => {
         setSecureAction({
             type: 'archive',
-            title: 'أرشفة بيانات العام الدراسي',
-            description: 'سيتم نقل كافة السجلات الحالية إلى الأرشيف التاريخي وبدء عام دراسي جديد ببيانات نظيفة.',
-            confirmWord: 'ARCHIVE-YEAR',
+            title: 'أرشفة بيانات الموسم الحالي',
+            description: 'سيتم نقل كافة السجلات الحالية إلى الأرشيف التاريخي وبدء موسم جديد ببيانات نظيفة.',
+            confirmWord: 'ARCHIVE-NOW',
             actionFn: async () => {
                 setIsSaving(true);
                 try {
-                    await api.post('/system/advanced/archive-season');
+                    await settingsService.archiveMonth();
                     showNotify('تمت الأرشفة بنجاح');
                 } catch (e: any) { alert(e.message); }
                 finally { setIsSaving(false); }
