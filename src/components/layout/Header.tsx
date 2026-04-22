@@ -107,8 +107,8 @@ export const Header = () => {
                     <NotificationDropdown />
                 </div>
 
-                <div className="flex items-center pl-1 border-r border-slate-200 dark:border-slate-800 shrink-0">
-                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-xl shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
+                <div className="flex items-center pr-3 border-r border-slate-200 dark:border-slate-800 shrink-0">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-xl shrink-0 border border-slate-200 dark:border-slate-700">
                         <User size={20} />
                     </div>
                 </div>
