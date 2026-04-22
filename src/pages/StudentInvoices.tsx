@@ -386,38 +386,38 @@ export const StudentInvoices = () => {
     return (
         <div className="space-y-6 pb-32 px-4 md:px-6 min-h-full md:animate-in md:fade-in md:duration-700">
             {/* Header Area */}
-            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-10 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8 overflow-hidden">
+            <div className="relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-10 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-6 md:mb-8 overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gray-950/5 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-rose-600/10 -ml-12 -mb-12 rounded-full pointer-events-none"></div>
 
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6" dir="rtl">
-                    <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 bg-gray-950 text-white flex items-center justify-center border-4 border-gray-950 transform -rotate-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
-                            <FileText size={36} />
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6" dir="rtl">
+                    <div className="flex items-center gap-3 md:gap-6">
+                        <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-950 text-white flex items-center justify-center border-2 md:border-4 border-gray-950 transform -rotate-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] shrink-0">
+                            <FileText size={20} className="md:size-36" />
                         </div>
                         <div>
-                            <h1 className="text-2xl md:text-4xl font-black text-gray-950 dark:text-white mb-1 tracking-tighter uppercase">فواتير وتحصيل الطلاب</h1>
-                            <p className="text-gray-500 text-xs md:text-sm font-bold flex items-center gap-2">
-                                <TrendingUp size={16} className="text-emerald-600" />
+                            <h1 className="text-xl md:text-4xl font-black text-gray-950 dark:text-white mb-0.5 md:mb-1 tracking-tighter uppercase">فواتير وتحصيل الطلاب</h1>
+                            <p className="text-gray-500 text-[10px] md:text-sm font-bold flex items-center gap-1.5 md:gap-2 leading-tight">
+                                <TrendingUp size={12} className="md:size-[16px] text-emerald-600" />
                                 إدارة التدفقات النقدية والمستحقات الدراسية
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3 flex-wrap no-print">
+                    <div className="flex items-center gap-2 md:gap-3 flex-wrap no-print w-full md:w-auto mt-2 md:mt-0">
                         <button
                             onClick={handleImportStudents}
-                            className="bg-emerald-600 text-white border-4 border-gray-950 px-6 py-3 font-black text-sm shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] transition-all flex items-center gap-2"
+                            className="flex-1 md:flex-none justify-center bg-emerald-600 text-white border-2 md:border-4 border-gray-950 px-3 md:px-6 py-2 md:py-3 font-black text-xs md:text-sm shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_black] transition-all flex items-center gap-1.5 md:gap-2"
                         >
-                            <UserPlus size={18} />
-                            استيراد المديونيات
+                            <UserPlus size={14} className="md:size-18" />
+                            استيراد
                         </button>
                         <button
                             onClick={handlePrint}
-                            className="bg-white text-gray-950 border-4 border-gray-950 px-6 py-3 font-black text-sm shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex items-center gap-2"
+                            className="flex-1 md:flex-none justify-center bg-white text-gray-950 border-2 md:border-4 border-gray-950 px-3 md:px-6 py-2 md:py-3 font-black text-xs md:text-sm shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex items-center gap-1.5 md:gap-2"
                         >
-                            <Printer size={18} />
-                            طباعة الكشف
+                            <Printer size={14} className="md:size-18" />
+                            طباعة
                         </button>
                     </div>
                 </div>
@@ -466,26 +466,26 @@ export const StudentInvoices = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="bg-white p-6 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-8">
-                <div className="flex flex-col lg:flex-row gap-6 items-center" dir="rtl">
+            <div className="bg-white p-4 md:p-6 border-2 md:border-4 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-6 md:mb-8">
+                <div className="flex flex-col lg:flex-row gap-4 md:gap-6 items-stretch md:items-center" dir="rtl">
                     <div className="relative flex-1 w-full">
-                        <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                             placeholder="بحث باسم الطالب أو البيان..."
-                            className="w-full pr-12 pl-4 py-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
+                            className="w-full pr-10 pl-3 py-3 md:py-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all h-[42px] md:h-[58px]"
                         />
                     </div>
 
-                    <div className="flex items-center gap-3 w-full lg:w-auto">
-                        <div className="flex items-center bg-gray-50 border-2 border-gray-200 px-4 dark:bg-gray-800 dark:border-gray-700 w-full md:w-auto">
-                            <span className="text-[10px] font-black text-gray-400 ml-2 uppercase">الحالة:</span>
+                    <div className="flex items-stretch gap-2 md:gap-3 w-full lg:w-auto h-[42px] md:h-[58px]">
+                        <div className="flex items-center bg-gray-50 border-2 border-gray-200 px-2 md:px-4 dark:bg-gray-800 dark:border-gray-700 flex-1 md:flex-none">
+                            <span className="text-[9px] md:text-[10px] font-black text-gray-400 ml-1 md:ml-2 uppercase">الحالة:</span>
                             <select
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
-                                className="bg-transparent py-4 text-sm font-black outline-none dark:text-white cursor-pointer"
+                                className="bg-transparent py-0 text-xs md:text-sm font-black outline-none dark:text-white cursor-pointer w-full h-full"
                             >
                                 <option value="all">الكل</option>
                                 <option value="paid">مدفوعة</option>
@@ -497,22 +497,22 @@ export const StudentInvoices = () => {
                         <button
                             onClick={toggleForm}
                             className={cn(
-                                "flex items-center justify-center gap-3 px-8 h-[58px] font-black text-sm uppercase tracking-widest border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none whitespace-nowrap",
+                                "flex items-center justify-center gap-1.5 md:gap-3 px-3 md:px-8 font-black text-[10px] md:text-sm uppercase tracking-widest border-2 md:border-4 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none whitespace-nowrap",
                                 showForm
                                     ? "bg-rose-600 text-white"
                                     : "bg-gray-950 text-white hover:bg-black"
                             )}
                         >
-                            {showForm ? <X size={20} /> : <Plus size={20} />}
+                            {showForm ? <X size={16} className="md:size-20" /> : <Plus size={16} className="md:size-20" />}
                             <span>{showForm ? 'إلغاء' : 'إصدار فاتورة'}</span>
                         </button>
 
                         <button
                             onClick={() => setDeleteAllModalOpen(true)}
-                            className="h-[58px] w-14 bg-white border-4 border-gray-950 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                            className="w-10 md:w-14 bg-white border-2 md:border-4 border-gray-950 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none shrink-0"
                             title="حذف الكل"
                         >
-                            <Trash2 size={24} />
+                            <Trash2 size={16} className="md:size-24" />
                         </button>
                     </div>
                 </div>
@@ -521,21 +521,21 @@ export const StudentInvoices = () => {
             {/* Inline Form */}
             {showForm && (
                 <div className="md:animate-in md:slide-in-from-top-4 md:duration-300">
-                    <form onSubmit={handleSubmit} className="bg-white border-4 border-gray-950 p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-10">
-                        <div className="flex items-center gap-2 mb-8 border-b-2 border-gray-100 pb-4">
-                            <Plus size={20} className="text-emerald-600" />
-                            <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">تفاصيل الفاتورة الجديدة</h2>
+                    <form onSubmit={handleSubmit} className="bg-white border-2 md:border-4 border-gray-950 p-4 md:p-8 shadow-[4px_4px_0px_0px_black] md:shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-6 md:mb-10">
+                        <div className="flex items-center gap-2 mb-6 md:mb-8 border-b-2 border-gray-100 pb-3 md:pb-4">
+                            <Plus size={18} className="md:size-20 text-emerald-600" />
+                            <h2 className="text-lg md:text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">تفاصيل الفاتورة الجديدة</h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                             {/* Student Selection */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">اختيار الطالب</label>
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">اختيار الطالب</label>
                                 <select
                                     required
                                     value={formData.studentId}
                                     onChange={e => handleStudentChange(e.target.value)}
-                                    className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
+                                    className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
                                     dir="rtl"
                                 >
                                     <option value="">اختر الطالب...</option>
@@ -548,8 +548,8 @@ export const StudentInvoices = () => {
                             </div>
 
                             {/* Amount */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">المبلغ الإجمالي</label>
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">المبلغ الإجمالي</label>
                                 <div className="relative">
                                     <input
                                         type="number"
@@ -557,39 +557,39 @@ export const StudentInvoices = () => {
                                         min="0"
                                         value={formData.amount}
                                         onChange={e => setFormData({ ...formData, amount: e.target.value })}
-                                        className="w-full py-4 pr-4 pl-12 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xl font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all font-mono"
+                                        className="w-full py-3 md:py-4 pr-3 md:pr-4 pl-10 md:pl-12 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-base md:text-xl font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all font-mono"
                                         placeholder="0.00"
                                         dir="rtl"
                                     />
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-gray-400 text-xs uppercase">ج.م</span>
+                                    <span className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px] md:text-xs uppercase">ج.م</span>
                                 </div>
                             </div>
 
                             {/* Description */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">بيان الفاتورة / الملاحظات</label>
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">بيان الفاتورة / الملاحظات</label>
                                 <input
                                     type="text"
                                     required
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
+                                    className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
                                     placeholder="مثال: رسوم شهر أكتوبر"
                                     dir="rtl"
                                 />
                             </div>
 
                             {/* Status Selector */}
-                            <div className="space-y-2 lg:col-span-1">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">حالة الدفع</label>
-                                <div className="grid grid-cols-3 border-2 border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div className="space-y-1 md:space-y-2 lg:col-span-1">
+                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">حالة الدفع</label>
+                                <div className="grid grid-cols-3 border-2 border-gray-200 dark:border-gray-700 overflow-hidden h-11 md:h-14">
                                     {(['paid', 'pending', 'overdue'] as const).map(status => (
                                         <button
                                             key={status}
                                             type="button"
                                             onClick={() => setFormData({ ...formData, status })}
                                             className={cn(
-                                                "py-3 text-[10px] font-black uppercase transition-all",
+                                                "text-[9px] md:text-[10px] font-black uppercase transition-all flex items-center justify-center",
                                                 formData.status === status
                                                     ? status === 'paid' ? "bg-emerald-600 text-white" : status === 'pending' ? "bg-amber-500 text-white" : "bg-rose-600 text-white"
                                                     : "bg-white text-gray-400 hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -602,47 +602,47 @@ export const StudentInvoices = () => {
                             </div>
                             
                             {/* Dates */}
-                            <div className="grid grid-cols-2 gap-4 lg:col-span-2">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الإصدار</label>
+                            <div className="grid grid-cols-2 gap-3 md:gap-4 lg:col-span-2">
+                                <div className="space-y-1 md:space-y-2">
+                                    <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الإصدار</label>
                                     <input 
                                         type="date"
                                         value={formData.date}
                                         onChange={e => setFormData({...formData, date: e.target.value})}
-                                        className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الاستحقاق</label>
+                                <div className="space-y-1 md:space-y-2">
+                                    <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الاستحقاق</label>
                                     <input 
                                         type="date"
                                         value={formData.dueDate}
                                         onChange={e => setFormData({...formData, dueDate: e.target.value})}
-                                        className="w-full py-4 px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-10 pt-6 border-t-2 border-gray-100 flex justify-end gap-3">
+                        <div className="mt-8 md:mt-10 pt-4 md:pt-6 border-t-2 border-gray-100 flex flex-col-reverse md:flex-row justify-end gap-3 md:gap-3">
                             <button
                                 type="button"
                                 onClick={handleCancel}
-                                className="px-8 py-4 border-2 border-gray-200 text-gray-400 font-black text-xs uppercase tracking-widest hover:border-gray-950 hover:text-gray-950 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]"
+                                className="w-full md:w-auto px-6 md:px-8 py-3 md:py-4 border-2 border-gray-200 text-gray-400 font-black text-[10px] md:text-xs uppercase tracking-widest hover:border-gray-950 hover:text-gray-950 transition-all shadow-none md:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]"
                                 dir="rtl"
                             >
                                 تراجع
                             </button>
                             <button
                                 type="submit"
-                                className="px-12 py-4 bg-emerald-600 text-white border-4 border-gray-950 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                                className="w-full md:w-auto px-8 md:px-12 py-3 md:py-4 bg-emerald-600 text-white border-2 md:border-4 border-gray-950 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-[2px_2px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                                 dir="rtl"
                             >
-                                {editingId ? 'تحديث الفاتورة' : 'تأكيد وإصدار الفاتورة'}
+                                {editingId ? 'تحديث الفاتورة' : 'إصدار الفاتورة'}
                             </button>
                         </div>
                     </form>
-                </div >
+                </div>
             )}
 
             {/* Table */}
