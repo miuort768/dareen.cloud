@@ -83,15 +83,6 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-                await fetch('/api/push/notify-student-parent', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                    body: JSON.stringify({
-                        studentId: student.id,
-                        title: '🎓 بدأت الحصة الآن!',
-                        body: `حصة ${en.subject} للطالب ${student.name} مع الأستاذة ${en.teacher} قد بدأت الآن.`
-                    })
-                });
             } catch (e) { /* silent */ }
         }
     };
@@ -104,19 +95,6 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
     const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'مساءً' });
     const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
-
-    const getGradeDisplay = (grade: string) => {
-        const mapping: Record<string, string> = {
-            'الأول': '1', 'الثاني': '2', 'الثالث': '3', 'الرابع': '4', 'الخامس': '5', 'السادس': '6',
-            'سابع': '7', 'ثامن': '8', 'تاسع': '9', 'عاشر': '10'
-        };
-        const numMatch = grade.match(/\d+/);
-        if (numMatch) return numMatch[0];
-        for (const [key, val] of Object.entries(mapping)) {
-            if (grade.includes(key)) return val;
-        }
-        return grade.charAt(0);
-    };
 
     const attendancePercent = en.sessionsTotal > 0 ? (actualSessionsUsed / en.sessionsTotal) * 100 : 0;
 
@@ -131,80 +109,79 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm transition-all hover:shadow-2xl rounded-none overflow-hidden h-full flex flex-col group" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-md">
             {/* Header Accent */}
             <div className={cn(
-                "absolute top-0 right-0 w-1.5 h-full bg-indigo-600 transition-colors duration-500",
+                "h-1.5 w-full bg-slate-100 dark:bg-slate-800 transition-all",
                 timerRunning && "bg-rose-500 animate-pulse"
             )}></div>
 
-            <div className="p-6 flex-1 flex flex-col space-y-6">
+            <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center font-black text-xl italic shadow-2xl skew-x-1 rotate-2 group-hover:rotate-0 group-hover:skew-x-0 transition-transform">
-                            {getGradeDisplay(student.grade)}
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-[10px] font-bold text-[#5c59f2]">
+                            {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <h4 className="font-black text-slate-800 dark:text-white text-base leading-none uppercase italic tracking-tighter truncate max-w-[150px]">{student.name}</h4>
-                                <span className="text-[9px] font-black bg-slate-100 dark:bg-slate-800 text-slate-500 px-2 py-0.5 uppercase italic">
-                                    {student.grade}
-                                </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <BookOpen size={12} className="text-indigo-600" />
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">{en.subject}</p>
+                            <h4 className="font-bold text-slate-800 dark:text-white text-sm leading-tight">{student.name}</h4>
+                            <div className="flex items-center gap-2 mt-0.5">
+                                <span className="text-[9px] font-bold text-slate-400 uppercase">{student.grade}</span>
+                                <span className="w-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></span>
+                                <div className="flex items-center gap-1">
+                                    <BookOpen size={10} className="text-[#5c59f2]" />
+                                    <span className="text-[9px] font-bold text-slate-400">{en.subject}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block italic mb-1">الجاهزية</span>
-                        <div className="flex items-center justify-end gap-1.5">
-                             <TrendingUp size={14} className={cn(attendancePercent > 85 ? "text-rose-500" : "text-emerald-500")} />
-                             <span className="text-xl font-black text-slate-900 dark:text-white leading-none italic">{Math.round(attendancePercent)}%</span>
+                        <span className="text-[10px] font-bold text-slate-400 block mb-0.5">التقدم</span>
+                        <div className="flex items-center justify-end gap-1">
+                             <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-rose-500" : "text-emerald-500")} />
+                             <span className="text-sm font-black text-slate-800 dark:text-white leading-none">{Math.round(attendancePercent)}%</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Control Hub */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                     <button 
                         onClick={toggleTimer}
                         className={cn(
-                            "flex items-center justify-between px-4 py-3.5 border transition-all rounded-none",
+                            "flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all",
                             timerRunning 
-                                ? "bg-rose-600 border-rose-500 text-white shadow-xl shadow-rose-500/20" 
+                                ? "bg-rose-600 border-rose-500 text-white shadow-sm" 
                                 : "bg-slate-900 dark:bg-slate-800 border-slate-800 text-white hover:bg-black"
                         )}
                     >
                         <div className="flex items-center gap-2">
-                            <Clock size={16} className={cn(timerRunning && "animate-spin-slow")} />
-                            <span className="text-sm font-black tracking-tighter font-mono">{formatTime(timerSeconds)}</span>
+                            <Clock size={14} className={cn(timerRunning && "animate-spin-slow")} />
+                            <span className="text-xs font-bold font-mono">{formatTime(timerSeconds)}</span>
                         </div>
-                        <span className="text-[9px] font-black uppercase tracking-widest italic">{timerRunning ? 'إنهاء' : 'بدء الحصة'}</span>
+                        <span className="text-[9px] font-bold uppercase">{timerRunning ? 'إنهاء' : 'بدء'}</span>
                     </button>
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="flex items-center justify-center gap-2 px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-slate-50 font-black text-[9px] uppercase tracking-widest italic rounded-none transition-all"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded-xl font-bold text-[9px] uppercase transition-all"
                     >
-                        <Calendar size={16} /> إعادة جدولة
+                        <Calendar size={14} /> إعادة جدولة
                     </button>
                 </div>
 
-                {/* Progress Analytics */}
-                <div className="space-y-3">
-                    <div className="flex justify-between items-center text-[10px] font-black uppercase italic tracking-widest text-slate-400">
-                        <div className="flex items-center gap-2">
-                            <Activity size={14} className="text-indigo-600" />
-                            <span>معدل تغطية الحصص</span>
+                {/* Progress Bar */}
+                <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-[9px] font-bold uppercase text-slate-400">
+                        <div className="flex items-center gap-1.5">
+                            <Activity size={12} className="text-[#5c59f2]" />
+                            <span>تغطية الحصص</span>
                         </div>
-                        <div className="flex items-baseline gap-1 text-slate-900 dark:text-white font-mono">
-                            <span className="text-base text-indigo-600 font-black">{actualSessionsUsed}</span>
-                            <span>/ {en.sessionsTotal}</span>
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-xs text-[#5c59f2] font-black">{actualSessionsUsed}</span>
+                            <span className="opacity-50">/ {en.sessionsTotal}</span>
                         </div>
                     </div>
-                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden relative">
+                    <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                         <div
                             className={cn(
                                 "h-full transition-all duration-1000 ease-out",
@@ -215,97 +192,98 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     </div>
                 </div>
 
-                {/* Schedule Management */}
-                <div className="space-y-3">
-                    <div className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
-                        <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                            <Clock size={12} className="text-indigo-600" /> الجدول الأسبوعي
+                {/* Schedule */}
+                <div className="space-y-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                    <div className="flex items-center justify-between">
+                        <h5 className="text-[9px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
+                            <Clock size={10} className="text-[#5c59f2]" /> الجدول الإسبوعي
                         </h5>
                         <button
-                            onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); }}
+                            onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
                             className={cn(
-                                "text-[9px] font-black px-3 py-1 transition-all uppercase italic border rounded-none",
+                                "text-[9px] font-bold px-2 py-0.5 rounded-lg transition-all border",
                                 isEditing ? "bg-rose-50 text-rose-600 border-rose-100" : "bg-indigo-50 text-indigo-600 border-indigo-100"
                             )}
                         >
-                            {isEditing ? 'إغلاق المحرر' : 'تعديل الجدول'}
+                            {isEditing ? 'إلغاء' : 'تعديل'}
                         </button>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-[10px] font-black text-slate-700 dark:text-slate-300 italic uppercase">
+                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-[9px] font-bold text-slate-600 dark:text-slate-400 rounded-lg">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
-                                    <div className="flex gap-2 ms-2 ps-2 border-r border-slate-200 dark:border-slate-700">
-                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} className="text-indigo-600 hover:text-indigo-700"><Edit size={12} /></button>
-                                        <button onClick={() => onDeleteSlot(student, en, i)} className="text-rose-600 hover:text-rose-700"><Trash2 size={12} /></button>
+                                    <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-slate-200 dark:border-slate-700">
+                                        <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} className="text-[#5c59f2]"><Edit size={10} /></button>
+                                        <button onClick={() => onDeleteSlot(student, en, i)} className="text-rose-600"><Trash2 size={10} /></button>
                                     </div>
                                 )}
                             </div>
                         )) : (
-                            <p className="text-[10px] text-slate-400 italic">بانتظار تحديد الجدول...</p>
+                            <p className="text-[9px] text-slate-400 italic">لا يوجد جدول محدد</p>
                         )}
                     </div>
 
                     {isEditing && (
-                        <div className="p-4 bg-slate-900 border border-slate-800 text-white space-y-4 md:animate-in md:slide-in-from-top-4">
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 bg-slate-900 rounded-xl text-white space-y-3 mt-2">
+                            <div className="grid grid-cols-2 gap-2">
                                 <div>
-                                    <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1.5">اليوم</p>
-                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-xs font-black p-2 bg-slate-800 border-none outline-none italic uppercase">
+                                    <p className="text-[8px] font-bold text-slate-400 mb-1 uppercase">اليوم</p>
+                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-[10px] font-bold p-1.5 bg-slate-800 border-none rounded-lg outline-none">
                                         {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <p className="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1.5">الساعة</p>
-                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value })} placeholder="مثال: 4" className="w-full text-xs font-black p-2 bg-slate-800 border-none outline-none italic" />
+                                    <p className="text-[8px] font-bold text-slate-400 mb-1 uppercase">الساعة</p>
+                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value })} placeholder="مثال: 4" className="w-full text-[10px] font-bold p-1.5 bg-slate-800 border-none rounded-lg outline-none" />
                                 </div>
                             </div>
-                            <button onClick={handleSaveSlot} className="w-full bg-indigo-600 text-white font-black text-[10px] py-3 uppercase tracking-widest italic hover:bg-indigo-700 transition-colors">
-                                {editSlotIndex !== null ? 'تأكيد التعديلات' : 'إضافة للجداول'}
+                            <button onClick={handleSaveSlot} className="w-full bg-[#5c59f2] text-white font-bold text-[10px] py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                {editSlotIndex !== null ? 'تحديث' : 'إضافة'}
                             </button>
                         </div>
                     )}
                 </div>
 
-                {/* Notes Engine */}
-                <div className="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/20 p-5 relative">
-                     <div className="flex items-center justify-between mb-4">
-                        <h5 className="text-[10px] font-black text-amber-700 dark:text-amber-400 uppercase tracking-widest flex items-center gap-2 italic">
-                            <MessageSquare size={14} /> سجل الملاحظات
+                {/* Notes */}
+                <div className="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/20 p-3 rounded-xl relative">
+                    <div className="flex items-center justify-between mb-2">
+                        <h5 className="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase flex items-center gap-1.5">
+                            <MessageSquare size={12} /> ملاحظات
                         </h5>
-                        {isSavingNotes ? (
-                           <span className="text-[8px] font-black text-amber-600 animate-pulse italic">جاري الحفظ...</span>
-                        ) : notes.trim() !== '' && (
-                           <AlertCircle size={14} className="text-amber-400" />
-                        )}
+                        {isSavingNotes && <span className="text-[8px] font-bold text-amber-600 animate-pulse">جاري الحفظ...</span>}
                     </div>
                     <textarea 
                         value={notes}
                         onChange={(e) => { setNotes(e.target.value); triggerSave(e.target.value); }}
-                        placeholder="وثقي ملاحظات التقوية أو التنبيهات هنا..."
-                        className="w-full bg-transparent border-none focus:ring-0 text-xs font-bold text-slate-700 dark:text-slate-300 placeholder:text-amber-200 dark:placeholder:text-amber-800/50 resize-none min-h-[80px] p-0"
+                        placeholder="وثقي ملاحظات الحصة القادمة..."
+                        className="w-full bg-transparent border-none focus:ring-0 text-[10px] font-medium text-slate-700 dark:text-slate-300 placeholder:text-amber-300 resize-none min-h-[60px] p-0"
                     />
                 </div>
 
-                {/* Attendance Interface */}
-                <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 space-y-4">
+                {/* Attendance Footer */}
+                <div className="pt-4 border-t border-slate-50 dark:border-slate-800 space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
-                        <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                            <Activity size={12} className="text-emerald-500" /> التوثيق السريع
+                        <h5 className="text-[9px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
+                            <Activity size={12} className="text-emerald-500" /> التحضير
                         </h5>
-                        <button onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)} className="text-[9px] font-black text-indigo-600 hover:text-indigo-700 uppercase tracking-widest italic">
+                        <button onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)} className="text-[9px] font-bold text-[#5c59f2] hover:underline">
                             السجل التاريخي
                         </button>
                     </div>
 
-                    <div className="flex gap-3">
-                         <div className="relative flex-1">
-                            <Calendar size={12} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                            <input type="date" value={logDate} onChange={(e) => onDateChange(e.target.value)} className="w-full pr-10 pl-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-[10px] font-black rounded-none outline-none focus:border-indigo-600 transition-all italic" />
-                        </div>
-                        <button onClick={() => onLogAttendance(student, en)} className="bg-emerald-600 text-white px-6 font-black text-[10px] uppercase tracking-widest italic hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/10">
+                    <div className="flex gap-2">
+                        <input 
+                            type="date" 
+                            value={logDate} 
+                            onChange={(e) => onDateChange(e.target.value)} 
+                            className="flex-1 px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
+                        />
+                        <button 
+                            onClick={() => onLogAttendance(student, en)} 
+                            className="bg-emerald-600 text-white px-4 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all"
+                        >
                             تسجيل
                         </button>
                     </div>

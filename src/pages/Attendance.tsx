@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users, Search, BookOpen } from 'lucide-react';
+import { Users, Search, BookOpen, Clock, Activity, FileText } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { useApp } from '../context/AppContext';
@@ -15,6 +15,48 @@ import { RescheduleModal } from '../features/attendance/components/RescheduleMod
 import { useAttendance } from '../features/attendance/hooks/useAttendance';
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
+
+// ── Reusable Styled Components ──────────────────────────────────────────────
+
+const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
+        className
+    )}>
+        {children}
+    </div>
+);
+
+const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+            <Icon size={16} className="text-[#5c59f2]" />
+        </div>
+        <div>
+            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+        </div>
+    </div>
+);
+
+const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
+    onClick?: () => void; children: React.ReactNode; className?: string; disabled?: boolean;
+}) => (
+    <button
+        disabled={disabled}
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+// ── Main Component ────────────────────────────────────────────────────────────
 
 export const Attendance = () => {
     const { currentUser, showNotification, whatsappAutoNotify, whatsappTemplate } = useApp();
@@ -33,9 +75,9 @@ export const Attendance = () => {
         requestReschedule,
         stats,
         matchedEnrollments,
-        teacherStats,
         uniqueTeachers,
-        refresh
+        refresh,
+        teacherStats
     } = useAttendance(currentUser, date);
 
     const [rescheduleData, setRescheduleData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
@@ -137,7 +179,8 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="space-y-6 pb-32 w-full max-w-full overflow-x-hidden p-0 min-h-full md:animate-in md:fade-in md:duration-700 bg-white dark:bg-slate-950/20" dir="rtl">
+        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+            
             <AttendanceHeader
                 date={date}
                 onDateChange={setDate}
@@ -155,8 +198,8 @@ export const Attendance = () => {
             />
 
             {isTeacher && (
-                <div className="mb-8 px-4 lg:px-0">
-                    <button
+                <div className="px-4 md:px-6 mb-2">
+                    <PrimaryBtn
                         onClick={async () => {
                             if (!window.confirm(`هل أنت متأكد من تحضير جميع الطلاب (${matchedEnrollments.length}) كحضور؟`)) return;
                             
@@ -186,10 +229,10 @@ export const Attendance = () => {
                             }
                             showNotification(`تم تسجيل حضور ${successCount} طلاب بنجاح`, 'success');
                         }}
-                        className="w-full bg-slate-900 dark:bg-slate-800 hover:bg-black text-white py-4 border-r-4 border-emerald-500 rounded-none font-black text-xs uppercase tracking-[3px] transition-all flex justify-center items-center gap-3 shadow-xl italic"
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 py-3.5"
                     >
-                        تحضير جماعي وسريع لكافة القوائم <Users size={18} />
-                    </button>
+                        تحضير جماعي وسريع لكافة القوائم <Users size={16} />
+                    </PrimaryBtn>
                 </div>
             )}
 
@@ -205,29 +248,24 @@ export const Attendance = () => {
                 />
             )}
 
-            <div className="px-4 lg:px-0">
+            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
-                    <div className="space-y-6">
-                        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none overflow-hidden relative group">
-                            <div className="p-6 border-b border-slate-50 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-1.5 h-6 bg-indigo-600"></div>
-                                    <h3 className="text-sm font-black text-slate-800 dark:text-white flex items-center gap-2 uppercase italic">
-                                        إدارة السبعينات والنشاطات المباشرة
-                                    </h3>
-                                </div>
+                    <div className="space-y-4">
+                        <SectionCard className="p-0 overflow-hidden">
+                            <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
+                                <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" className="mb-0 pb-0 border-none" />
                                 <div className="relative w-full md:w-80">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
                                         type="text"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        placeholder="ابحث عن طالب، مادة، أو رقم قيد..."
-                                        className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none text-xs font-black outline-none focus:ring-0 focus:border-indigo-600 transition-all dark:text-white uppercase italic"
+                                        placeholder="ابحث عن طالب أو مادة..."
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
                                     />
                                 </div>
                             </div>
-                            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {(matchedEnrollments || []).filter(me =>
                                     (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                                     (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
@@ -251,18 +289,16 @@ export const Attendance = () => {
                                             onDateChange={setLogDate}
                                         />
                                     )) : (
-                                        <div className="col-span-full py-24 text-center text-slate-300 flex flex-col items-center gap-4">
-                                            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 flex items-center justify-center rounded-none shadow-inner">
-                                                <Users size={40} className="opacity-20" />
-                                            </div>
-                                            <p className="text-xs font-black uppercase tracking-[4px] italic">لا توجد بيانات مطابقة لعمليات البحث</p>
+                                        <div className="col-span-full py-16 text-center">
+                                            <Users className="mx-auto mb-2 text-slate-200" size={32} />
+                                            <p className="text-xs font-bold text-slate-400">لا توجد بيانات مطابقة</p>
                                         </div>
                                     )}
                             </div>
-                        </div>
+                        </SectionCard>
                     </div>
                 ) : (
-                    <div className="space-y-12">
+                    <div className="space-y-6">
                         {uniqueTeachers.filter(t => filterTeacher === 'all' || t === filterTeacher).map(teacher => {
                             const teacherStudentsList = students.filter(s => s.enrollments?.some(e => e.teacher === teacher));
                             const filteredTStudents = teacherStudentsList.filter(s =>
@@ -273,23 +309,23 @@ export const Attendance = () => {
                             if (filteredTStudents.length === 0) return null;
 
                             return (
-                                <div key={teacher} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none overflow-hidden relative shadow-sm">
-                                    <div className="bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-800">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center text-white font-black italic shadow-lg">
+                                <SectionCard key={teacher} className="p-0 overflow-hidden">
+                                    <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 bg-[#5c59f2] flex items-center justify-center text-white font-bold rounded-lg text-xs">
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-black text-sm text-white uppercase italic tracking-tighter leading-none">إشراف المعلمة: {teacher}</h3>
-                                                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">كادر تعليمي معتمد • نشط</p>
+                                                <h3 className="font-bold text-xs text-white">إشراف المعلمة: {teacher}</h3>
+                                                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">كادر تعليمي معتمد</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-black bg-slate-800 text-slate-400 px-4 py-1.5 uppercase tracking-widest italic border border-slate-700">
-                                            {filteredTStudents.length} طلاب مسجلين
+                                        <div className="text-[9px] font-bold bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
+                                            {filteredTStudents.length} طلاب
                                         </div>
                                     </div>
 
-                                    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         {filteredTStudents.map(student => {
                                             const enrollment = student.enrollments.find(e => e.teacher === teacher)!;
                                             const session = filteredSessions.find(s =>
@@ -310,39 +346,39 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="group relative bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 hover:border-indigo-500/50 transition-all rounded-none overflow-hidden p-6 space-y-6">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
-                                                            <div className="flex items-center gap-4">
-                                                                <div className="w-12 h-12 bg-slate-900 border border-slate-800 flex items-center justify-center text-white font-black text-lg italic shadow-xl">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-bold rounded-xl text-sm">
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
-                                                                    <h4 className="font-black text-slate-900 dark:text-white text-sm leading-none mb-1.5 uppercase italic">{student.name}</h4>
+                                                                    <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-black bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-400 px-2 py-0.5 uppercase italic">
+                                                                        <span className="text-[9px] font-bold text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
-                                                                        <p className="text-[9px] font-black text-slate-400 flex items-center gap-1 uppercase italic">
-                                                                            <BookOpen size={10} className="text-indigo-500" />
+                                                                        <p className="text-[9px] font-bold text-slate-400 flex items-center gap-1">
+                                                                            <BookOpen size={10} className="text-[#5c59f2]" />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-black bg-amber-500 text-slate-900 px-2 py-1 uppercase tracking-widest italic animate-pulse">
-                                                                قيد المراجعة
+                                                            <div className="text-[8px] font-black bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
+                                                                انتظار
                                                             </div>
                                                         </div>
 
-                                                        <div className="space-y-2">
-                                                            <div className="flex justify-between items-center text-[9px] font-black uppercase italic tracking-widest">
-                                                                <span className="text-slate-400">تحليل رصيد الطالب</span>
-                                                                <span className="text-slate-900 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
+                                                        <div className="space-y-1.5">
+                                                            <div className="flex justify-between items-center text-[9px] font-bold uppercase text-slate-400">
+                                                                <span>الرصيد المتاح</span>
+                                                                <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
-                                                            <div className="h-1 bg-slate-100 dark:bg-slate-900 rounded-none overflow-hidden relative">
+                                                            <div className="h-1 bg-white dark:bg-slate-900 rounded-full overflow-hidden">
                                                                 <div
                                                                     className={cn(
-                                                                        "h-full transition-all duration-1000 ease-out",
+                                                                        "h-full transition-all duration-1000",
                                                                         (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 85 ? 'bg-rose-500' : (enrollment.sessionsUsed / enrollment.sessionsTotal * 100) > 60 ? 'bg-amber-500' : 'bg-emerald-500'
                                                                     )}
                                                                     style={{ width: `${Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)}%` }}
@@ -350,18 +386,18 @@ export const Attendance = () => {
                                                             </div>
                                                         </div>
 
-                                                        <div className="grid grid-cols-2 gap-3">
+                                                        <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-emerald-600 text-white hover:bg-emerald-700 font-black text-[10px] flex items-center justify-center gap-2 transition-all uppercase italic shadow-lg shadow-emerald-500/10"
+                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-[10px] rounded-xl flex items-center justify-center transition-all"
                                                             >
-                                                                إثبات حضور
+                                                                حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2.5 bg-rose-600 text-white hover:bg-rose-700 font-black text-[10px] flex items-center justify-center gap-2 transition-all uppercase italic shadow-lg shadow-rose-500/10"
+                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-bold text-[10px] rounded-xl flex items-center justify-center transition-all"
                                                             >
-                                                                إثبات غياب
+                                                                غياب
                                                             </button>
                                                         </div>
                                                     </div>
@@ -369,7 +405,7 @@ export const Attendance = () => {
                                             }
                                         })}
                                     </div>
-                                </div>
+                                </SectionCard>
                             );
                         })}
                     </div>

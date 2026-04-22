@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Filter, GraduationCap, X, SlidersHorizontal } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
 interface AttendanceFiltersProps {
     searchTerm: string;
@@ -23,69 +24,62 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
     const hasActiveFilters = searchTerm || filterStatus !== 'all' || filterTeacher !== 'all';
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm mb-10 overflow-hidden px-4 lg:px-0">
-            <div className="bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-800">
-                <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-indigo-600 flex items-center justify-center text-white shadow-lg">
-                        <SlidersHorizontal size={14} />
+        <div className="px-4 md:px-6 mb-4">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-[#eef2ff] dark:bg-indigo-900/30 flex items-center justify-center rounded-xl">
+                            <SlidersHorizontal size={14} className="text-[#5c59f2]" />
+                        </div>
+                        <div>
+                            <h3 className="text-xs font-bold text-slate-800 dark:text-white">فلترة السجلات</h3>
+                            <p className="text-[10px] text-slate-400">تخصيص عرض الجلسات</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="text-xs font-black text-white uppercase italic tracking-tighter leading-none">محرك فلترة وتخصيص السجلات</h3>
-                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">إعدادات العرض • ذكاء البيانات</p>
-                    </div>
+                    {hasActiveFilters && (
+                        <button
+                            onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 text-rose-500 hover:bg-rose-500 hover:text-white font-bold text-[10px] rounded-lg transition-all"
+                        >
+                            <X size={12} /> إعادة التعيين
+                        </button>
+                    )}
                 </div>
-                {hasActiveFilters && (
-                    <button
-                        onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                        className="flex items-center gap-2 px-4 py-2 bg-rose-600/10 text-rose-500 hover:bg-rose-600 hover:text-white font-black text-[9px] uppercase tracking-widest transition-all italic border border-rose-500/20"
-                    >
-                        <X size={12} /> إعادة التعيين
-                    </button>
-                )}
-            </div>
 
-            <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">البحث المباشر</label>
-                    <div className="relative group">
-                        <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="relative">
+                        <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input
                             type="text"
-                            placeholder="اسم الطالب، المادة العلمية..."
+                            placeholder="اسم الطالب، المادة..."
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white uppercase italic"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
                         />
                     </div>
-                </div>
 
-                <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">تصنيف الحالة</label>
-                    <div className="relative group">
-                        <Filter size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none" />
+                    <div className="relative">
+                        <Filter size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <select
                             value={filterStatus}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer uppercase italic"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all appearance-none cursor-pointer"
                         >
-                            <option value="all">بيانات الجلسات (الكل)</option>
-                            <option value="scheduled">مجدولة ⏳</option>
-                            <option value="completed">تم التنفيذ 🟢</option>
-                            <option value="cancelled">إلغاء النشاط 🔴</option>
+                            <option value="all">جميع الحالات</option>
+                            <option value="scheduled">مجدولة</option>
+                            <option value="completed">حضور</option>
+                            <option value="cancelled">غياب</option>
                         </select>
                     </div>
-                </div>
 
-                <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block italic">فرز حسب المعلمة</label>
-                    <div className="relative group">
-                        <GraduationCap size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors pointer-events-none" />
+                    <div className="relative">
+                        <GraduationCap size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         <select
                             value={filterTeacher}
                             onChange={(e) => onTeacherChange(e.target.value)}
-                            className="w-full pr-12 pl-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:border-indigo-600 outline-none text-xs font-black rounded-none transition-all dark:text-white appearance-none cursor-pointer uppercase italic"
+                            className="w-full pr-9 pl-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all appearance-none cursor-pointer"
                         >
-                            <option value="all">كافة الكوادر التعليمية</option>
+                            <option value="all">كافة المعلمات</option>
                             {uniqueTeachers.map(teacher => (
                                 <option key={teacher} value={teacher}>{teacher}</option>
                             ))}
