@@ -85,7 +85,7 @@ export const Header = () => {
                         )}>
                             {title}
                         </h1>
-                        <p className="text-[8px] md:text-[10px] font-normal text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mt-0.5">
+                        <p className="text-[7px] md:text-[10px] font-normal text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-tight mt-0.5 mb-1">
                             دارين للتعليم والتدريب
                         </p>
                     </div>
@@ -107,10 +107,9 @@ export const Header = () => {
                     <NotificationDropdown />
                 </div>
 
-                {/* User Identity */}
                 <div className="flex items-center pl-1 border-r border-slate-200 dark:border-slate-800 shrink-0">
-                    <div className="w-11 h-11 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-none shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
-                        <User size={22} />
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-xl shrink-0 border border-slate-200 dark:border-slate-700 ml-1">
+                        <User size={20} />
                     </div>
                 </div>
             </div>
