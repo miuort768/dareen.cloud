@@ -1,5 +1,4 @@
-import React from 'react';
-import { Edit, Trash, GraduationCap, Phone, User } from 'lucide-react';
+import { Edit, Trash, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student } from '../types';
 

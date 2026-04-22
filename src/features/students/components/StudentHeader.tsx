@@ -1,5 +1,4 @@
-import React from 'react';
-import { GraduationCap, Plus, X, Users } from 'lucide-react';
+import { GraduationCap, Plus, X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface StudentHeaderProps {

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Trash, RefreshCw, MessageCircle, BookOpen, Snowflake, Play, UserCircle2, CheckCircle2, Zap, Shield, Trophy, Plus, User, Mail, Phone, ExternalLink } from 'lucide-react';
+import { X, Trash, RefreshCw, MessageCircle, UserCircle2, CheckCircle2, Trophy, Plus, User, Snowflake, Play } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment } from '../types';
 import type { Teacher } from '../../teachers/types';
@@ -62,7 +62,7 @@ export const StudentDetails = ({
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                             <h3 className="font-bold text-lg text-slate-800 dark:text-white truncate">{student.name}</h3>
-                            <RankBadge rank={rank} size="xs" />
+                            <RankBadge rank={rank} size="sm" />
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">{student.grade}</span>
@@ -163,6 +163,11 @@ export const StudentDetails = ({
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
+                                            {onFreezeEnrollment && en.id && (
+                                                <button onClick={() => onFreezeEnrollment(en.id!, !en.isFrozen)} className="w-7 h-7 flex items-center justify-center text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all" title={en.isFrozen ? "تفعيل" : "تجميد"}>
+                                                    {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
+                                                </button>
+                                            )}
                                             <button onClick={() => onSendReminder(en)} className="w-7 h-7 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all" title="تذكير"><MessageCircle size={14} /></button>
                                             <button onClick={() => onRenewEnrollment(i)} className="w-7 h-7 flex items-center justify-center text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all" title="تجديد"><RefreshCw size={14} /></button>
                                             <button onClick={() => onDeleteEnrollment(i)} className="w-7 h-7 flex items-center justify-center text-rose-500 hover:bg-rose-50 rounded-lg transition-all" title="حذف"><Trash size={14} /></button>
