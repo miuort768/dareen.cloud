@@ -594,8 +594,6 @@ const Settings = () => {
                 {activeTab === 'users' && (
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* Users List */}
-                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        {/* Users List */}
                         <div className="xl:col-span-2 space-y-6">
                             <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
                                 <h2 className="font-black text-2xl flex items-center gap-3 uppercase tracking-tighter">
