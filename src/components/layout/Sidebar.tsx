@@ -216,7 +216,7 @@ export const Sidebar = () => {
                 </nav>
 
                 {/* Collapse Toggle */}
-                <div className="px-4 pt-4 pb-1 border-t border-gray-100 dark:border-gray-800">
+                <div className="px-4 pt-2 pb-0 border-t border-gray-100 dark:border-gray-800">
                     <button
                         onClick={() => setCollapsed(!collapsed)}
                         className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
@@ -232,7 +232,7 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Logout */}
-                <div className="px-4 pb-4 pt-1">
+                <div className="px-4 pb-4 pt-0">
                     <button
                         onClick={handleLogout}
                         className={cn(
