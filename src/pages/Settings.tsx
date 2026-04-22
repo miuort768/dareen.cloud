@@ -1102,40 +1102,58 @@ const Settings = () => {
                 </div>
             )}
 
-            {/* ── Maintenance Modal ── */}
             {showMaintenanceModal && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-amber-950/20 animate-in fade-in">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-amber-200 dark:border-amber-800">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-xl flex items-center justify-center">
-                                <Snowflake size={18} className="text-amber-500" />
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/40 animate-in fade-in">
+                    <div className="bg-white dark:bg-slate-900 rounded-none border-4 border-amber-500 max-w-md w-full shadow-[12px_12px_0px_rgba(245,158,11,0.2)] p-0 overflow-hidden">
+                        <div className="bg-amber-500 p-6 flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-3">
+                                <Snowflake size={32} className="animate-spin-slow" />
                             </div>
-                            <div>
-                                <p className="text-sm font-bold text-slate-800 dark:text-white">تفعيل وضع الصيانة</p>
-                                <p className="text-[10px] text-amber-500">System Freeze Protocol</p>
+                            <h3 className="text-xl font-black text-white uppercase tracking-tighter">وضع الصيانة الشامل</h3>
+                            <p className="text-[10px] text-white/80 font-bold uppercase tracking-widest mt-1">System Freeze Protocol</p>
+                        </div>
+
+                        <div className="p-6 space-y-6">
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-9 h-9 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 shrink-0 border border-amber-200 dark:border-amber-800">
+                                        <Lock size={16} />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-black text-slate-800 dark:text-white uppercase">تعطيل الدخول</p>
+                                        <p className="text-[10px] text-slate-500 dark:text-slate-400">سيتم منع كافة الطلاب والمعلمين من تسجيل الدخول فوراً.</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4">
+                                    <div className="w-9 h-9 bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 shrink-0 border border-rose-200 dark:border-rose-800">
+                                        <Activity size={16} />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-black text-slate-800 dark:text-white uppercase">إنهاء الجلسات</p>
+                                        <p className="text-[10px] text-slate-500 dark:text-slate-400">سيتم تسجيل خروج كافة المستخدمين المتصلين حالياً.</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100 dark:border-amber-800 mb-4">
-                            <p className="text-xs font-bold text-amber-800 dark:text-amber-200 mb-2">⚠️ تحذير: تفعيل هذا الوضع سيؤدي فوريًا إلى:</p>
-                            <ul className="space-y-1 text-[10px] text-amber-700 dark:text-amber-400">
-                                <li>• طرد كافة المستخدمين الحاليين من المنصة</li>
-                                <li>• منع المعلمين والطلاب من تسجيل الدخول</li>
-                                <li>• إغلاق كافة الوظائف البرمجية مؤقتًا</li>
-                            </ul>
-                        </div>
-                        <div className="flex gap-2">
-                            <SecondaryBtn onClick={() => setShowMaintenanceModal(false)} className="flex-1">إلغاء</SecondaryBtn>
-                            <button
-                                onClick={() => {
-                                    setMaintenanceMode(true).then(() => {
-                                        setShowMaintenanceModal(false);
-                                        showNotify('تم تفعيل وضع الصيانة');
-                                    });
-                                }}
-                                className="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all"
-                            >
-                                تأكيد الإغلاق
-                            </button>
+
+                            <div className="flex gap-3 pt-2">
+                                <button
+                                    onClick={() => setShowMaintenanceModal(false)}
+                                    className="flex-1 py-3 border-2 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                                >
+                                    إلغاء الأمر
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setMaintenanceMode(true).then(() => {
+                                            setShowMaintenanceModal(false);
+                                            showNotify('تم تفعيل وضع الصيانة بنجاح');
+                                        });
+                                    }}
+                                    className="flex-1 py-3 bg-amber-500 text-white text-[11px] font-black uppercase tracking-widest hover:bg-amber-600 transition-all shadow-[4px_4px_0px_#b45309]"
+                                >
+                                    تأكيد التجميد
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
