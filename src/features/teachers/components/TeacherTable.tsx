@@ -25,16 +25,16 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
     return (
         <div className="w-full" dir="rtl">
             {/* Desktop View */}
-            <div className="hidden lg:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+            <div className="hidden lg:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-right border-collapse">
-                        <thead className="bg-slate-50 dark:bg-slate-800">
+                        <thead className="bg-[var(--primary-color,#5c59f2)] text-white">
                             <tr>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest">المعلمة</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">التخصص</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">الطلاب</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">التعريفة</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">إجراءات</th>
+                                <th className="px-6 py-4 font-black text-[10px] uppercase tracking-[0.2em]">المعلمة</th>
+                                <th className="px-6 py-4 font-black text-[10px] uppercase tracking-[0.2em] text-center">التخصص</th>
+                                <th className="px-6 py-4 font-black text-[10px] uppercase tracking-[0.2em] text-center">الطلاب</th>
+                                <th className="px-6 py-4 font-black text-[10px] uppercase tracking-[0.2em] text-center">التعريفة</th>
+                                <th className="px-6 py-4 font-black text-[10px] uppercase tracking-[0.2em] text-center">إجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -100,8 +100,9 @@ export const TeacherTable = ({ teachers, onEdit, onDelete, onSelect, onChat, sel
                             key={teacher.id} 
                             onClick={() => onSelect(teacher)} 
                             className={cn(
-                                "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
-                                isSelected ? "border-indigo-100 ring-1 ring-indigo-50" : ""
+                                "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
+                                "border-r-4 border-r-[var(--primary-color,#5c59f2)]",
+                                isSelected ? "ring-1 ring-[var(--primary-color,#5c59f2)]/20 shadow-lg" : ""
                             )}
                         >
                             <div className="flex justify-between items-start mb-4">
