@@ -228,6 +228,8 @@ const Settings = () => {
     const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
+    const [localBackdateLock, setLocalBackdateLock] = useState(backdateLockEnabled);
+    const [localAutoFreeze, setLocalAutoFreeze] = useState(autoFreezeThreshold);
 
     const [newUser, setNewUser] = useState({ username: '', password: '', permissions: [] as string[] });
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
@@ -260,11 +262,13 @@ const Settings = () => {
         setLocalCurrency(currencySymbol);
         setLocalThreshold(balanceWarningThreshold);
         setLocalTelegramHandle(telegramHandle);
+        setLocalBackdateLock(backdateLockEnabled);
+        setLocalAutoFreeze(autoFreezeThreshold);
     }, [
         academyName, academyLogo, academyTagline, adminPhone, 
         semesterName, semesters, defaultSessionPrice, 
         defaultTeacherPrice, currencySymbol, balanceWarningThreshold,
-        telegramHandle
+        telegramHandle, backdateLockEnabled, autoFreezeThreshold
     ]);
 
     useEffect(() => {
@@ -298,7 +302,9 @@ const Settings = () => {
                 setDefaultSessionPrice(Number(localPrice)),
                 setDefaultTeacherPrice(Number(localTeacherPrice)),
                 setCurrencySymbol(localCurrency),
-                setBalanceWarningThreshold(Number(localThreshold))
+                setBalanceWarningThreshold(Number(localThreshold)),
+                setBackdateLockEnabled(localBackdateLock),
+                setAutoFreezeThreshold(Number(localAutoFreeze))
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
         } catch (e) { alert('خطأ في الحفظ'); }
@@ -421,7 +427,7 @@ const Settings = () => {
                             </div>
                         </SectionCard>
 
-                        <SectionCard>
+                        <SectionCard className="rounded-none">
                             <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="Financial & Academic" />
                             <div className="space-y-3">
                                 <div>
@@ -446,10 +452,28 @@ const Settings = () => {
                                         <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-rose-600 bg-rose-50 dark:bg-rose-900/10 border-rose-200 dark:border-rose-800" />
                                     </div>
                                 </div>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                                        <FieldLabel>عدد أيام التجميد</FieldLabel>
+                                        <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
+                                        <p className="text-[9px] text-slate-400 mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
+                                    </div>
+                                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                                        <ToggleRow
+                                            icon={Lock}
+                                            label="قفل التاريخ القديم"
+                                            sub="منع تسجيل حصص بتواريخ سابقة"
+                                            checked={localBackdateLock}
+                                            onChange={() => setLocalBackdateLock(!localBackdateLock)}
+                                        />
+                                    </div>
+                                </div>
+
                                 <p className="text-[10px] text-slate-400 bg-amber-50 dark:bg-amber-900/10 px-3 py-2 rounded-lg border-r-2 border-amber-400">
                                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
                                 </p>
-                                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
+                                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2 rounded-none">
                                     <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
                                 </PrimaryBtn>
                             </div>
