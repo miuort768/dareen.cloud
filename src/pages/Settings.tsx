@@ -43,6 +43,11 @@ const THEME_COLORS = [
     { id: 'royal', label: 'ملكي', class: 'bg-gradient-to-tr from-purple-600 to-indigo-500' },
     { id: 'electric', label: 'كهربائي', class: 'bg-gradient-to-tr from-violet-500 to-fuchsia-400' },
     { id: 'berry', label: 'توت', class: 'bg-gradient-to-tr from-pink-500 to-purple-400' },
+    { id: 'gold', label: 'ذهبي', class: 'bg-amber-400' },
+    { id: 'crimson', label: 'قرمزي', class: 'bg-rose-600' },
+    { id: 'midnight', label: 'ليلي', class: 'bg-slate-900' },
+    { id: 'lava', label: 'حمم', class: 'bg-orange-600' },
+    { id: 'mint', label: 'نعناع', class: 'bg-emerald-400' },
 ];
 
 type TabId = 'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit';
