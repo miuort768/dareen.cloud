@@ -269,9 +269,9 @@ const Settings = () => {
             });
             if (!response.ok) throw new Error('فشل تحميل النسخة الاحتياطية');
             const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
+            const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
+            a.href = downloadUrl;
             a.download = `darin_backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
