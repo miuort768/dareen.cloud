@@ -86,8 +86,8 @@ export const Sidebar = () => {
 
         // Admin access ('*')
         if (currentUser.permissions?.includes('*')) {
-            // Admin sees EVERYTHING except portal specific pages
-            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard'].includes(item.id)) return false;
+            // Admin sees EVERYTHING except portal specific pages and tasks
+            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard', 'tasks'].includes(item.id)) return false;
             return true;
         }
 
