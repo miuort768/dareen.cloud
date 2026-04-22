@@ -10,17 +10,31 @@ interface TeacherStatsProps {
 
 const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: any) => (
     <div className={cn(
-        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-none shadow-sm flex flex-col items-start relative overflow-hidden transition-all hover:shadow-md",
+        "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-none shadow-sm relative overflow-hidden transition-all hover:shadow-md group",
         borderColor
     )}>
-        <div className={cn("w-8 h-8 rounded-none flex items-center justify-center mb-3 border border-white/10 shadow-sm", bg)}>
-            <Icon size={14} className={color} />
+        {/* Background Large Digit Accent */}
+        <div className={cn("absolute -left-2 -bottom-4 text-6xl font-black opacity-[0.03] dark:opacity-[0.05] pointer-events-none select-none italic", color)}>
+            {typeof value === 'number' ? value : value.split(' ')[0]}
         </div>
-        <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</p>
-        <p className="text-base font-black text-slate-800 dark:text-white mt-0.5 tracking-tighter italic">{value}</p>
-        <div className="mt-3 flex items-center gap-1.5">
-            <span className={cn("w-1 h-1 rounded-full", color.replace('text-', 'bg-'))}></span>
-            <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{trend}</p>
+
+        <div className="flex justify-between items-start relative z-10">
+            <div className="flex flex-col gap-2">
+                <div className={cn("w-8 h-8 rounded-none flex items-center justify-center border border-white/10 shadow-sm", bg)}>
+                    <Icon size={14} className={color} />
+                </div>
+                <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</p>
+            </div>
+            
+            <div className="text-left flex flex-col items-end">
+                <p className={cn("text-2xl font-black tracking-tighter italic leading-none mb-1", color)}>
+                    {value}
+                </p>
+                <div className="flex items-center gap-1.5">
+                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{trend}</p>
+                    <span className={cn("w-1 h-1 rounded-full", color.replace('text-', 'bg-'))}></span>
+                </div>
+            </div>
         </div>
     </div>
 );
