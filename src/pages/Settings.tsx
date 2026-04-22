@@ -247,6 +247,94 @@ const Settings = () => {
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
+    const handleExportBackup = async () => {
+        setIsSaving(true);
+        try {
+            const token = localStorage.getItem('auth_token');
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api.dareen.cloud'}/system/backup/export`, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
+            if (!response.ok) throw new Error('فشل تحميل النسخة الاحتياطية');
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `darin_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            showNotify('تم تحميل النسخة الاحتياطية بنجاح');
+        } catch (e: any) {
+            alert(e.message);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if (!window.confirm('⚠️ تحذير: استيراد البيانات سيؤدي إلى استبدال البيانات الحالية. هل أنت متأكد؟')) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        setIsSaving(true);
+        try {
+            const token = localStorage.getItem('auth_token');
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api.dareen.cloud'}/system/backup/import`, {
+                method: 'POST',
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: formData
+            });
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || 'فشل استيراد البيانات');
+            }
+            showNotify('تم استيراد البيانات بنجاح');
+            setTimeout(() => window.location.reload(), 2000);
+        } catch (e: any) {
+            alert(e.message);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const triggerReset = () => {
+        setSecureAction({
+            type: 'reset',
+            title: 'تصفير كافة الحسابات والبيانات',
+            description: 'هذا الإجراء سيقوم بحذف كافة السجلات المالية وحصص الطلاب والمعلمين وتصفير الأرصدة. لا يمكن التراجع عن هذا الإجراء.',
+            confirmWord: 'RESET-ALL-DATA',
+            actionFn: async () => {
+                setIsSaving(true);
+                try {
+                    await api.post('/system/advanced/reset-accounts');
+                    showNotify('تم تصفير النظام بنجاح');
+                    window.location.reload();
+                } catch (e: any) { alert(e.message); }
+                finally { setIsSaving(false); }
+            }
+        });
+    };
+
+    const triggerArchive = () => {
+        setSecureAction({
+            type: 'archive',
+            title: 'أرشفة بيانات العام الدراسي',
+            description: 'سيتم نقل كافة السجلات الحالية إلى الأرشيف التاريخي وبدء عام دراسي جديد ببيانات نظيفة.',
+            confirmWord: 'ARCHIVE-YEAR',
+            actionFn: async () => {
+                setIsSaving(true);
+                try {
+                    await api.post('/system/advanced/archive-season');
+                    showNotify('تمت الأرشفة بنجاح');
+                } catch (e: any) { alert(e.message); }
+                finally { setIsSaving(false); }
+            }
+        });
+    };
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -547,13 +635,32 @@ const Settings = () => {
                                         <p className="text-[10px] text-slate-400 mt-0.5">System Restore Point</p>
                                     </div>
                                 </div>
-                                <div className="flex gap-2 w-full md:w-auto">
-                                    <SecondaryBtn className="flex-1 md:flex-none">
+                                <div className="flex flex-wrap gap-2 w-full md:w-auto">
+                                    <input
+                                        type="file"
+                                        id="import-backup"
+                                        className="hidden"
+                                        accept=".json,.sql"
+                                        onChange={handleImportBackup}
+                                    />
+                                    <SecondaryBtn onClick={handleExportBackup} className="flex-1 md:flex-none">
                                         <Download size={14} className="text-blue-500" /> تحميل نسخة احتياطية
                                     </SecondaryBtn>
-                                    <SecondaryBtn className="flex-1 md:flex-none">
+                                    <SecondaryBtn onClick={() => document.getElementById('import-backup')?.click()} className="flex-1 md:flex-none">
                                         <Upload size={14} className="text-emerald-500" /> استيراد بيانات
                                     </SecondaryBtn>
+                                    <button 
+                                        onClick={triggerReset}
+                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[10px] font-black px-4 py-2.5 rounded-xl border border-rose-100 transition-all uppercase tracking-tight"
+                                    >
+                                        <RefreshCw size={14} /> تصفير النظام
+                                    </button>
+                                    <button 
+                                        onClick={triggerArchive}
+                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-600 text-[10px] font-black px-4 py-2.5 rounded-xl border border-amber-100 transition-all uppercase tracking-tight"
+                                    >
+                                        <Archive size={14} /> أرشفة الموسم
+                                    </button>
                                 </div>
                             </div>
                         </SectionCard>
