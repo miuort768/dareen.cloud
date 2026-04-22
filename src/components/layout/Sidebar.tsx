@@ -188,7 +188,7 @@ export const Sidebar = () => {
                             title={collapsed ? item.name : ''}
                         >
                             <item.icon
-                                size={collapsed ? 20 : 16}
+                                size={collapsed ? 18 : 16}
                                 className="shrink-0"
                                 strokeWidth={2}
                             />
