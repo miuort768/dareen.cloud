@@ -1,4 +1,5 @@
 import { useApp } from '../context/AppContext';
+import { Snowflake } from 'lucide-react';
 
 export const MaintenanceScreen = () => {
     const { adminPhone } = useApp();
