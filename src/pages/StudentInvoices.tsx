@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     Plus, Wallet, TrendingUp, Trash2, CheckCircle, XCircle,
     Search, Edit, X,
-    AlertCircle, FileText, Printer, UserPlus
+    AlertCircle, FileText, Printer, UserPlus, RefreshCw,
+    Sparkles, Check, ChevronRight
 } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { StatsCard } from '../shared/components/StatsCard';
 import { useApp } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
+
 interface StudentInvoice {
     id: string;
     studentId: string;
@@ -30,7 +31,7 @@ interface Student {
     name: string;
     grade: string;
     parentPhone: string;
-    sessionPrice?: number; // Price per session specific to student
+    sessionPrice?: number;
     enrollments: {
         teacher: string;
         subject: string;
@@ -40,35 +41,119 @@ interface Student {
     }[];
 }
 
+// ── Reusable Styled Components (Matching Settings.tsx) ────────────────────────
+
+const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn(
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
+        className
+    )}>
+        {children}
+    </div>
+);
+
+const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+            <Icon size={16} className="text-[#5c59f2]" />
+        </div>
+        <div>
+            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+        </div>
+    </div>
+);
+
+const FieldLabel = ({ children }: { children: React.ReactNode }) => (
+    <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+        {children}
+    </label>
+);
+
+const InputField = (props: React.InputHTMLAttributes<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const Component = (props as any).type === 'select' ? 'select' : (props as any).type === 'textarea' ? 'textarea' : 'input';
+    return (
+        <Component
+            {...props as any}
+            className={cn(
+                'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
+                'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
+                'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
+                props.className
+            )}
+        />
+    );
+};
+
+const PrimaryBtn = ({ onClick, loading, children, className = '', disabled, type }: {
+    onClick?: () => void; loading?: boolean; children: React.ReactNode; className?: string; disabled?: boolean; type?: "button" | "submit" | "reset"
+}) => (
+    <button
+        type={type}
+        disabled={disabled || loading}
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
+            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
+            className
+        )}
+    >
+        {loading ? <RefreshCw size={14} className="animate-spin" /> : children}
+    </button>
+);
+
+const SecondaryBtn = ({ onClick, children, className = '', title }: {
+    onClick?: () => void; children: React.ReactNode; className?: string; title?: string
+}) => (
+    <button
+        title={title}
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800',
+            'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
+            'text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-all shadow-xs',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+const DangerBtn = ({ onClick, children, className = '', title }: {
+    onClick?: () => void; children: React.ReactNode; className?: string; title?: string
+}) => (
+    <button
+        title={title}
+        onClick={onClick}
+        className={cn(
+            'flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-900/20',
+            'hover:bg-rose-600 hover:text-white text-rose-600',
+            'text-xs font-bold px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-800 transition-all',
+            className
+        )}
+    >
+        {children}
+    </button>
+);
+
+// ── Main Component ────────────────────────────────────────────────────────────
 
 export const StudentInvoices = () => {
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
     const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
     const [allSessions, setAllSessions] = useState<any[]>([]);
 
-    // Form State
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const { showNotification } = useApp();
     const [previewInvoice, setPreviewInvoice] = useState<StudentInvoice | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);
-    const [confirmModal, setConfirmModal] = useState<{
-        isOpen: boolean;
-        title: string;
-        message: string;
-        onConfirm: () => void;
-    }>({
-        isOpen: false,
-        title: '',
-        message: '',
-        onConfirm: () => { }
-    });
-
-    // ... (rest of state / fetch)
 
     const [formData, setFormData] = useState({
         studentId: '',
@@ -82,17 +167,26 @@ export const StudentInvoices = () => {
         items: [] as { description: string; date?: string; amount: number }[]
     });
 
+    const [confirmModal, setConfirmModal] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
+
     const fetchData = async () => {
         setLoading(true);
         try {
-            // console.log('Fetching invoices...');
             const [invoicesData, studentsData, sessionsData] = await Promise.all([
                 api.get<StudentInvoice[]>('/studentInvoices'),
                 api.get<Student[]>('/students'),
                 api.get<any[]>('/sessions')
             ]);
-
-            // console.log('Invoices fetched:', invoicesData);
             setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as any).data || []);
             setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as any).data || []);
             setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as any).data || []);
@@ -107,15 +201,16 @@ export const StudentInvoices = () => {
         fetchData();
     }, []);
 
-    // Filter invoices
-    const filteredInvoices = invoices.filter(inv => {
-        const sName = inv.studentName || '';
-        const desc = inv.description || '';
-        const matchesSearch = sName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            desc.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesStatus = filterStatus === 'all' || inv.status === filterStatus;
-        return matchesSearch && matchesStatus;
-    });
+    const filteredInvoices = useMemo(() => {
+        return invoices.filter(inv => {
+            const sName = inv.studentName || '';
+            const desc = inv.description || '';
+            const matchesSearch = sName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                desc.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesStatus = filterStatus === 'all' || inv.status === filterStatus;
+            return matchesSearch && matchesStatus;
+        });
+    }, [invoices, searchTerm, filterStatus]);
 
     const handleEdit = (invoice: StudentInvoice) => {
         setEditingId(invoice.id);
@@ -160,7 +255,6 @@ export const StudentInvoices = () => {
                 return sum;
             }, 0) || 0;
 
-            // Fetch sessions for this student to include dates
             const studentSessions = allSessions.filter((sess: any) =>
                 sess.studentId === studentId &&
                 (sess.status === 'completed' || sess.status === 'cancelled')
@@ -184,20 +278,13 @@ export const StudentInvoices = () => {
         }
     };
 
-    const toggleForm = () => {
-        if (showForm) {
-            handleCancel();
-        } else {
-            setShowForm(true);
-            window.scrollTo({ top: 350, behavior: 'smooth' });
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSaving(true);
         const student = students.find(s => s.id === formData.studentId);
         if (!student) {
             showNotification('خطأ: يرجى اختيار طالب صحيح', 'error');
+            setIsSaving(false);
             return;
         }
 
@@ -227,6 +314,8 @@ export const StudentInvoices = () => {
             console.error('Error saving invoice:', error);
             const errorMessage = error.response?.data?.error || error.message || 'حدث خطأ أثناء حفظ البيانات';
             showNotification(errorMessage, 'error');
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -275,21 +364,15 @@ export const StudentInvoices = () => {
         }
     };
 
-    const handlePrint = () => {
-        window.print();
-    };
-
     const handleImportStudents = async () => {
         try {
             setLoading(true);
-            // 1. Fetch fresh data from server (including current invoices)
-            const [studentsList, allSessions, currentInvoices] = await Promise.all([
+            const [studentsList, allSessionsData, currentInvoices] = await Promise.all([
                 api.get<any[]>('/students'),
                 api.get<any[]>('/sessions'),
                 api.get<StudentInvoice[]>('/studentInvoices')
             ]);
 
-            // 2. Identify students who don't have invoices yet AND have recorded sessions
             const currentStudentIds = new Set(
                 (Array.isArray(currentInvoices) ? currentInvoices : (currentInvoices as any).data || [])
                     .map((inv: any) => inv.studentId)
@@ -297,7 +380,7 @@ export const StudentInvoices = () => {
 
             const studentsToImport = studentsList.filter((s: any) => {
                 const hasNoInvoice = !currentStudentIds.has(s.id);
-                const hasSessions = allSessions.some((sess: any) =>
+                const hasSessions = allSessionsData.some((sess: any) =>
                     sess.studentId === s.id &&
                     (sess.status === 'completed' || sess.status === 'cancelled')
                 );
@@ -324,7 +407,7 @@ export const StudentInvoices = () => {
                     try {
                         setLoading(true);
                         const importPromises = studentsToImport.map((s: any) => {
-                            const studentSessions = allSessions.filter((sess: any) =>
+                            const studentSessions = allSessionsData.filter((sess: any) =>
                                 sess.studentId === s.id &&
                                 (sess.status === 'completed' || sess.status === 'cancelled')
                             );
@@ -370,519 +453,298 @@ export const StudentInvoices = () => {
         }
     };
 
+    // Stats
+    const totalRevenue = useMemo(() => invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0), [invoices]);
+    const pendingRevenue = useMemo(() => invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0), [invoices]);
+    const overdueRevenue = useMemo(() => invoices.filter(i => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0), [invoices]);
+    const paidCount = useMemo(() => invoices.filter(i => i.status === 'paid').length, [invoices]);
+    const pendingCount = useMemo(() => invoices.filter(i => i.status === 'pending').length, [invoices]);
 
-    // Stats logic
-    const totalRevenue = invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0);
-    const pendingRevenue = invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0);
-    const overdueRevenue = invoices.filter(i => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0);
-    const totalInvoices = invoices.length;
-    const paidCount = invoices.filter(i => i.status === 'paid').length;
-    const pendingCount = invoices.filter(i => i.status === 'pending').length;
-
-    if (loading) {
-        return <PageLoader />;
-    }
+    if (loading) return <PageLoader />;
 
     return (
-        <div className="space-y-6 pb-32 px-4 md:px-6 min-h-full md:animate-in md:fade-in md:duration-700">
-            {/* Header Area */}
-            <div className="relative bg-white border-2 md:border-4 border-gray-950 p-4 md:p-10 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-6 md:mb-8 overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gray-950/5 -mr-16 -mt-16 rotate-45 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-rose-600/10 -ml-12 -mb-12 rounded-full pointer-events-none"></div>
+        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
 
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6" dir="rtl">
-                    <div className="flex items-center gap-3 md:gap-6">
-                        <div className="w-10 h-10 md:w-16 md:h-16 bg-gray-950 text-white flex items-center justify-center border-2 md:border-4 border-gray-950 transform -rotate-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] shrink-0">
-                            <FileText size={20} className="md:size-36" />
-                        </div>
-                        <div>
-                            <h1 className="text-xl md:text-4xl font-black text-gray-950 dark:text-white mb-0.5 md:mb-1 tracking-tighter uppercase">فواتير وتحصيل الطلاب</h1>
-                            <p className="text-gray-500 text-[10px] md:text-sm font-bold flex items-center gap-1.5 md:gap-2 leading-tight">
-                                <TrendingUp size={12} className="md:size-[16px] text-emerald-600" />
-                                إدارة التدفقات النقدية والمستحقات الدراسية
-                            </p>
-                        </div>
+            {/* ── Header ── */}
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+                        <FileText size={18} className="text-[#5c59f2]" />
                     </div>
-
-                    <div className="flex items-center gap-2 md:gap-3 flex-wrap no-print w-full md:w-auto mt-2 md:mt-0">
-                        <button
-                            onClick={handleImportStudents}
-                            className="flex-1 md:flex-none justify-center bg-emerald-600 text-white border-2 md:border-4 border-gray-950 px-3 md:px-6 py-2 md:py-3 font-black text-xs md:text-sm shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_black] transition-all flex items-center gap-1.5 md:gap-2"
-                        >
-                            <UserPlus size={14} className="md:size-18" />
-                            استيراد
-                        </button>
-                        <button
-                            onClick={handlePrint}
-                            className="flex-1 md:flex-none justify-center bg-white text-gray-950 border-2 md:border-4 border-gray-950 px-3 md:px-6 py-2 md:py-3 font-black text-xs md:text-sm shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all flex items-center gap-1.5 md:gap-2"
-                        >
-                            <Printer size={14} className="md:size-18" />
-                            طباعة
-                        </button>
+                    <div>
+                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">فواتير وتحصيل الطلاب</h1>
+                        <p className="text-[10px] text-slate-400">إدارة التدفقات النقدية والمستحقات الدراسية</p>
                     </div>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700">
+                    <Sparkles size={12} className="text-amber-400" />
+                    {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                 </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
-                <StatsCard
-                    title="إجمالي التحصيلات"
-                    value={totalRevenue.toLocaleString() + ' ج.م'}
-                    icon={TrendingUp}
-                    color="emerald"
-                    trendUp={true}
-                />
-                <StatsCard
-                    title="مبالغ معلقة"
-                    value={pendingRevenue.toLocaleString() + ' ج.م'}
-                    icon={Wallet}
-                    color="amber"
-                />
-                <StatsCard
-                    title="مبالغ متأخرة"
-                    value={overdueRevenue.toLocaleString() + ' ج.م'}
-                    icon={AlertCircle}
-                    color="rose"
-                    trendUp={false}
-                />
-                <StatsCard
-                    title="عدد الفواتير"
-                    value={totalInvoices}
-                    icon={FileText}
-                    color="blue"
-                />
-                <StatsCard
-                    title="فواتير مدفوعة"
-                    value={paidCount}
-                    icon={CheckCircle}
-                    color="emerald"
-                />
-                <StatsCard
-                    title="فواتير معلقة"
-                    value={pendingCount}
-                    icon={XCircle}
-                    color="purple"
-                />
+            {/* ── Stats Grid ── */}
+            <div className="px-4 md:px-6">
+                <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
+                    {[
+                        { label: 'المحصل', value: `${totalRevenue.toLocaleString()} ج.م`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+                        { label: 'معلق', value: `${pendingRevenue.toLocaleString()} ج.م`, icon: Wallet, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+                        { label: 'متأخر', value: `${overdueRevenue.toLocaleString()} ج.م`, icon: AlertCircle, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
+                        { label: 'الفواتير', value: invoices.length, icon: FileText, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+                        { label: 'المدفوعة', value: paidCount, icon: CheckCircle, color: 'text-[#5c59f2]', bg: 'bg-[#eef2ff] dark:bg-indigo-900/30' },
+                        { label: 'المعلقة', value: pendingCount, icon: XCircle, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+                    ].map((stat, i) => (
+                        <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", stat.bg)}>
+                                <stat.icon size={16} className={stat.color} />
+                            </div>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{stat.label}</p>
+                            <p className="text-xs font-black text-slate-800 dark:text-white mt-0.5">{stat.value}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
 
-            {/* Action Bar */}
-            <div className="bg-white p-4 md:p-6 border-2 md:border-4 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 mb-6 md:mb-8">
-                <div className="flex flex-col lg:flex-row gap-4 md:gap-6 items-stretch md:items-center" dir="rtl">
-                    <div className="relative flex-1 w-full">
-                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                        <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                            placeholder="بحث باسم الطالب أو البيان..."
-                            className="w-full pr-10 pl-3 py-3 md:py-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all h-[42px] md:h-[58px]"
-                        />
-                    </div>
-
-                    <div className="flex items-stretch gap-2 md:gap-3 w-full lg:w-auto h-[42px] md:h-[58px]">
-                        <div className="flex items-center bg-gray-50 border-2 border-gray-200 px-2 md:px-4 dark:bg-gray-800 dark:border-gray-700 flex-1 md:flex-none">
-                            <span className="text-[9px] md:text-[10px] font-black text-gray-400 ml-1 md:ml-2 uppercase">الحالة:</span>
-                            <select
+            {/* ── Action Bar ── */}
+            <div className="px-4 md:px-6">
+                <SectionCard className="p-3 md:p-3">
+                    <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
+                        <div className="flex-1 flex gap-3 items-center w-full">
+                            <div className="relative flex-1 max-w-md">
+                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                <InputField
+                                    placeholder="بحث باسم الطالب أو البيان..."
+                                    className="pr-9 py-2 text-xs"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                            </div>
+                            <InputField
+                                type="select"
                                 value={filterStatus}
-                                onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
-                                className="bg-transparent py-0 text-xs md:text-sm font-black outline-none dark:text-white cursor-pointer w-full h-full"
+                                onChange={e => setFilterStatus(e.target.value as any)}
+                                className="w-auto min-w-[140px] py-2 text-xs font-bold"
                             >
-                                <option value="all">الكل</option>
+                                <option value="all">جميع الحالات</option>
                                 <option value="paid">مدفوعة</option>
                                 <option value="pending">معلقة</option>
                                 <option value="overdue">متأخرة</option>
-                            </select>
+                            </InputField>
                         </div>
 
-                        <button
-                            onClick={toggleForm}
-                            className={cn(
-                                "flex items-center justify-center gap-1.5 md:gap-3 px-3 md:px-8 font-black text-[10px] md:text-sm uppercase tracking-widest border-2 md:border-4 border-gray-950 shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none whitespace-nowrap",
-                                showForm
-                                    ? "bg-rose-600 text-white"
-                                    : "bg-gray-950 text-white hover:bg-black"
-                            )}
-                        >
-                            {showForm ? <X size={16} className="md:size-20" /> : <Plus size={16} className="md:size-20" />}
-                            <span>{showForm ? 'إلغاء' : 'إصدار فاتورة'}</span>
-                        </button>
-
-                        <button
-                            onClick={() => setDeleteAllModalOpen(true)}
-                            className="w-10 md:w-14 bg-white border-2 md:border-4 border-gray-950 text-rose-600 flex items-center justify-center hover:bg-rose-600 hover:text-white shadow-[2px_2px_0px_0px_black] md:shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none shrink-0"
-                            title="حذف الكل"
-                        >
-                            <Trash2 size={16} className="md:size-24" />
-                        </button>
+                        <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto no-scrollbar pb-1 lg:pb-0">
+                            <PrimaryBtn onClick={() => setShowForm(!showForm)} className="whitespace-nowrap">
+                                {showForm ? <X size={14} /> : <Plus size={14} />}
+                                {showForm ? 'إلغاء' : 'إصدار فاتورة'}
+                            </PrimaryBtn>
+                            <SecondaryBtn onClick={handleImportStudents} title="استيراد من سجل الحصص">
+                                <UserPlus size={14} /> استيراد
+                            </SecondaryBtn>
+                            <SecondaryBtn onClick={() => window.print()} title="طباعة السجل">
+                                <Printer size={14} />
+                            </SecondaryBtn>
+                            <DangerBtn onClick={() => setDeleteAllModalOpen(true)} title="حذف الكل">
+                                <Trash2 size={14} />
+                            </DangerBtn>
+                        </div>
                     </div>
-                </div>
+                </SectionCard>
             </div>
 
-            {/* Inline Form */}
-            {showForm && (
-                <div className="md:animate-in md:slide-in-from-top-4 md:duration-300">
-                    <form onSubmit={handleSubmit} className="bg-white border-2 md:border-4 border-gray-950 p-4 md:p-8 shadow-[4px_4px_0px_0px_black] md:shadow-[12px_12px_0px_0px_black] dark:bg-gray-900 mb-6 md:mb-10">
-                        <div className="flex items-center gap-2 mb-6 md:mb-8 border-b-2 border-gray-100 pb-3 md:pb-4">
-                            <Plus size={18} className="md:size-20 text-emerald-600" />
-                            <h2 className="text-lg md:text-xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">تفاصيل الفاتورة الجديدة</h2>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                            {/* Student Selection */}
-                            <div className="space-y-1 md:space-y-2">
-                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">اختيار الطالب</label>
-                                <select
+            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+                {/* ── Form ── */}
+                {showForm && (
+                    <SectionCard className="mb-4 animate-in slide-in-from-top-2">
+                        <SectionTitle
+                            icon={editingId ? Edit : Plus}
+                            label={editingId ? 'تعديل الفاتورة' : 'إصدار فاتورة جديدة'}
+                            sub="Student Billing Management"
+                        />
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div>
+                                <FieldLabel>الطالب *</FieldLabel>
+                                <InputField
+                                    type="select"
                                     required
                                     value={formData.studentId}
                                     onChange={e => handleStudentChange(e.target.value)}
-                                    className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
-                                    dir="rtl"
                                 >
-                                    <option value="">اختر الطالب...</option>
+                                    <option value="">-- اختر الطالب --</option>
                                     {students.map(s => (
-                                        <option key={s.id} value={s.id}>
-                                            {s.name} ({s.grade})
-                                        </option>
+                                        <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
                                     ))}
-                                </select>
+                                </InputField>
                             </div>
-
-                            {/* Amount */}
-                            <div className="space-y-1 md:space-y-2">
-                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">المبلغ الإجمالي</label>
-                                <div className="relative">
-                                    <input
-                                        type="number"
-                                        required
-                                        min="0"
-                                        value={formData.amount}
-                                        onChange={e => setFormData({ ...formData, amount: e.target.value })}
-                                        className="w-full py-3 md:py-4 pr-3 md:pr-4 pl-10 md:pl-12 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-base md:text-xl font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all font-mono"
-                                        placeholder="0.00"
-                                        dir="rtl"
-                                    />
-                                    <span className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px] md:text-xs uppercase">ج.م</span>
-                                </div>
-                            </div>
-
-                            {/* Description */}
-                            <div className="space-y-1 md:space-y-2">
-                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">بيان الفاتورة / الملاحظات</label>
-                                <input
-                                    type="text"
+                            <div>
+                                <FieldLabel>المبلغ (ج.م) *</FieldLabel>
+                                <InputField
+                                    type="number"
                                     required
-                                    value={formData.description}
-                                    onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white transition-all"
-                                    placeholder="مثال: رسوم شهر أكتوبر"
-                                    dir="rtl"
+                                    value={formData.amount}
+                                    onChange={e => setFormData({ ...formData, amount: (e.target as HTMLInputElement).value })}
+                                    placeholder="0.00"
                                 />
                             </div>
-
-                            {/* Status Selector */}
-                            <div className="space-y-1 md:space-y-2 lg:col-span-1">
-                                <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">حالة الدفع</label>
-                                <div className="grid grid-cols-3 border-2 border-gray-200 dark:border-gray-700 overflow-hidden h-11 md:h-14">
-                                    {(['paid', 'pending', 'overdue'] as const).map(status => (
-                                        <button
-                                            key={status}
-                                            type="button"
-                                            onClick={() => setFormData({ ...formData, status })}
-                                            className={cn(
-                                                "text-[9px] md:text-[10px] font-black uppercase transition-all flex items-center justify-center",
-                                                formData.status === status
-                                                    ? status === 'paid' ? "bg-emerald-600 text-white" : status === 'pending' ? "bg-amber-500 text-white" : "bg-rose-600 text-white"
-                                                    : "bg-white text-gray-400 hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700"
-                                            )}
-                                        >
-                                            {status === 'paid' ? 'مدفوعة' : status === 'pending' ? 'معلقة' : 'متأخرة'}
-                                        </button>
-                                    ))}
-                                </div>
+                            <div>
+                                <FieldLabel>بيان الفاتورة *</FieldLabel>
+                                <InputField
+                                    required
+                                    value={formData.description}
+                                    onChange={e => setFormData({ ...formData, description: (e.target as HTMLInputElement).value })}
+                                    placeholder="مثال: رسوم شهر أكتوبر"
+                                />
                             </div>
-                            
-                            {/* Dates */}
-                            <div className="grid grid-cols-2 gap-3 md:gap-4 lg:col-span-2">
-                                <div className="space-y-1 md:space-y-2">
-                                    <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الإصدار</label>
-                                    <input 
+                            <div className="lg:col-span-1">
+                                <FieldLabel>حالة الدفع</FieldLabel>
+                                <InputField
+                                    type="select"
+                                    value={formData.status}
+                                    onChange={e => setFormData({ ...formData, status: (e.target as HTMLSelectElement).value as any })}
+                                >
+                                    <option value="pending">معلقة</option>
+                                    <option value="paid">مدفوعة</option>
+                                    <option value="overdue">متأخرة</option>
+                                </InputField>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 lg:col-span-1">
+                                <div>
+                                    <FieldLabel>تاريخ الإصدار</FieldLabel>
+                                    <InputField
                                         type="date"
                                         value={formData.date}
-                                        onChange={e => setFormData({...formData, date: e.target.value})}
-                                        className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        onChange={e => setFormData({ ...formData, date: (e.target as HTMLInputElement).value })}
                                     />
                                 </div>
-                                <div className="space-y-1 md:space-y-2">
-                                    <label className="text-[9px] md:text-[10px] font-black text-gray-400 uppercase tracking-widest block" dir="rtl">تاريخ الاستحقاق</label>
-                                    <input 
+                                <div>
+                                    <FieldLabel>تاريخ الاستحقاق</FieldLabel>
+                                    <InputField
                                         type="date"
                                         value={formData.dueDate}
-                                        onChange={e => setFormData({...formData, dueDate: e.target.value})}
-                                        className="w-full py-3 md:py-4 px-3 md:px-4 bg-gray-50 border-2 border-gray-200 focus:border-gray-950 outline-none text-xs md:text-sm font-black dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                        onChange={e => setFormData({ ...formData, dueDate: (e.target as HTMLInputElement).value })}
                                     />
                                 </div>
                             </div>
-                        </div>
+                            <div className="flex items-end">
+                                <PrimaryBtn type="submit" loading={isSaving} className="w-full">
+                                    <Check size={14} /> {editingId ? 'تحديث الفاتورة' : 'إصدار الفاتورة'}
+                                </PrimaryBtn>
+                            </div>
+                        </form>
+                    </SectionCard>
+                )}
 
-                        <div className="mt-8 md:mt-10 pt-4 md:pt-6 border-t-2 border-gray-100 flex flex-col-reverse md:flex-row justify-end gap-3 md:gap-3">
-                            <button
-                                type="button"
-                                onClick={handleCancel}
-                                className="w-full md:w-auto px-6 md:px-8 py-3 md:py-4 border-2 border-gray-200 text-gray-400 font-black text-[10px] md:text-xs uppercase tracking-widest hover:border-gray-950 hover:text-gray-950 transition-all shadow-none md:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]"
-                                dir="rtl"
-                            >
-                                تراجع
-                            </button>
-                            <button
-                                type="submit"
-                                className="w-full md:w-auto px-8 md:px-12 py-3 md:py-4 bg-emerald-600 text-white border-2 md:border-4 border-gray-950 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-[2px_2px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-                                dir="rtl"
-                            >
-                                {editingId ? 'تحديث الفاتورة' : 'إصدار الفاتورة'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
-
-            {/* Table */}
-            <div className="bg-white border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[10px_10px_0px_0px_black] dark:bg-gray-900 dark:border-gray-800 overflow-hidden">
-                {/* Desktop View */}
-                <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full text-right border-collapse">
-                        <thead className="bg-gray-900 text-white dark:bg-black">
-                            <tr>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10">اسم الطالب</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">البيان</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">المبلغ</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الإصدار</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الاستحقاق</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الوسيلة</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] border-l border-white/10 text-center">الحالة</th>
-                                <th className="px-6 py-4 font-black uppercase tracking-tighter text-[11px] text-center">إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y-4 divide-gray-50 dark:divide-gray-800">
-                            {filteredInvoices.length === 0 ? (
-                                <tr>
-                                    <td colSpan={8} className="py-24 text-center text-gray-400">
-                                        <div className="flex flex-col items-center">
-                                            <FileText size={64} className="mb-4 opacity-10" />
-                                            <h3 className="font-black text-xl text-gray-900 dark:text-white mb-2 uppercase tracking-tighter">
-                                                {searchTerm ? 'لا توجد نتائج مطابقة لبحثك' : 'سجل الفواتير فارغ حالياً'}
-                                            </h3>
-                                            <p className="text-sm font-bold opacity-60">يمكنك البدء بإصدار فاتورة جديدة أو استيراد البيانات</p>
-                                        </div>
-                                    </td>
+                {/* ── Table ── */}
+                <SectionCard className="p-0 overflow-hidden">
+                    <div className="overflow-x-auto rounded-2xl">
+                        <table className="w-full text-right text-sm">
+                            <thead>
+                                <tr className="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">اسم الطالب</th>
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">البيان</th>
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">المبلغ</th>
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">الاستحقاق</th>
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">الحالة</th>
+                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">إجراءات</th>
                                 </tr>
-                            ) : (
-                                filteredInvoices.map(inv => (
-                                    <tr
-                                        key={inv.id}
-                                        className={cn(
-                                            "hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group",
-                                            editingId === inv.id ? 'bg-amber-50 dark:bg-amber-900/10' : ''
-                                        )}
-                                    >
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-gray-950 text-white flex items-center justify-center font-black text-sm border-2 border-gray-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)]">
-                                                    {(inv.studentName || '?').charAt(0)}
+                            </thead>
+                            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                                {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => (
+                                    <tr key={inv.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                                        <td className="px-4 py-3">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-7 h-7 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-lg flex items-center justify-center text-[10px] font-bold text-[#5c59f2]">
+                                                    {(inv.studentName || '?')[0].toUpperCase()}
                                                 </div>
-                                                <div>
-                                                    <p className="font-black text-gray-950 dark:text-white uppercase tracking-tighter leading-none mb-1">{inv.studentName || 'غير معرف'}</p>
-                                                    <p className="text-[10px] font-bold text-gray-400">#{inv.id.slice(0, 6)}</p>
-                                                </div>
+                                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{inv.studentName}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-xs font-bold text-gray-500 italic max-w-xs truncate">
-                                            {inv.description}
+                                        <td className="px-4 py-3">
+                                            <span className="text-[10px] font-medium text-slate-400 truncate max-w-[150px] inline-block">{inv.description}</span>
                                         </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
-                                            <div className="inline-flex items-center gap-1 font-black text-gray-950 dark:text-white font-mono text-lg">
-                                                {inv.amount.toLocaleString()} <span className="text-[10px] opacity-40 uppercase">ج.م</span>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className="font-mono text-[11px] font-black text-slate-700 dark:text-slate-200">{inv.amount.toLocaleString()} ج.م</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className="text-[10px] font-medium text-slate-400 italic">{inv.dueDate}</span>
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <div className="flex justify-center">
+                                                <button
+                                                    onClick={() => toggleStatus(inv)}
+                                                    className={cn(
+                                                        "inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] rounded-lg transition-all",
+                                                        inv.status === 'paid'
+                                                            ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400'
+                                                            : inv.status === 'pending'
+                                                                ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400'
+                                                                : 'bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-400'
+                                                    )}
+                                                >
+                                                    <div className={cn(
+                                                        "w-1 h-1 rounded-full",
+                                                        inv.status === 'paid' ? "bg-emerald-500" :
+                                                            inv.status === 'pending' ? "bg-amber-500" : "bg-rose-500"
+                                                    )}></div>
+                                                    {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
+                                                </button>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono text-xs font-black text-gray-400">
-                                            {inv.date}
-                                        </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center font-mono text-xs font-black text-gray-400 italic">
-                                            {inv.dueDate}
-                                        </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
-                                            <span className="text-[10px] font-black uppercase tracking-widest bg-gray-100 dark:bg-gray-800 px-3 py-1 border-2 border-gray-950">{inv.paymentMethod || 'نقدي'}</span>
-                                        </td>
-                                        <td className="px-6 py-5 border-l border-gray-100 dark:border-gray-800 text-center">
-                                            <button
-                                                onClick={() => toggleStatus(inv)}
-                                                className={cn(
-                                                    "inline-flex items-center px-4 py-2 font-black text-[10px] uppercase tracking-widest border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
-                                                    inv.status === 'paid'
-                                                        ? 'bg-emerald-600 text-white'
-                                                        : inv.status === 'pending'
-                                                            ? 'bg-amber-400 text-gray-950 shadow-[4px_4px_0px_0px_black]'
-                                                            : 'bg-rose-600 text-white'
-                                                )}
-                                            >
-                                                {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
-                                            </button>
-                                        </td>
-                                        <td className="px-6 py-5 text-center">
-                                            <div className="flex items-center justify-center gap-2">
+                                        <td className="px-4 py-3">
+                                            <div className="flex items-center justify-center gap-1">
                                                 <button
                                                     onClick={() => setPreviewInvoice(inv)}
-                                                    className="p-3 bg-white border-2 border-gray-950 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
-                                                    title="معاينة"
+                                                    className="p-1.5 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-all"
+                                                    title="معاينة وطباعة"
                                                 >
-                                                    <Printer size={16} />
+                                                    <Printer size={14} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleEdit(inv)}
-                                                    className="p-3 bg-white border-2 border-gray-950 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                                                    className="p-1.5 text-slate-400 hover:text-[#5c59f2] hover:bg-[#eef2ff] dark:hover:bg-indigo-900/30 rounded-lg transition-all"
                                                     title="تعديل"
                                                 >
-                                                    <Edit size={16} />
+                                                    <Edit size={14} />
                                                 </button>
                                                 <button
                                                     onClick={() => setDeletingId(inv.id)}
-                                                    className="p-3 bg-white border-2 border-gray-950 text-rose-600 hover:bg-rose-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black]"
+                                                    className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all"
                                                     title="حذف"
                                                 >
-                                                    <Trash2 size={16} />
+                                                    <Trash2 size={14} />
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Mobile View (Cards) */}
-                <div className="md:hidden">
-                    {filteredInvoices.length === 0 ? (
-                        <div className="py-20 text-center text-gray-400">
-                            <FileText size={48} className="mx-auto mb-4 text-gray-200" />
-                            <h3 className="font-bold text-base text-gray-900 dark:text-white mb-2">
-                                {searchTerm ? 'لا توجد نتائج للبحث' : 'لا توجد فواتير مسجلة'}
-                            </h3>
-                            <p className="text-xs font-bold">استخدم النموذج أعلاه لإصدار فاتورة جديدة</p>
-                        </div>
-                    ) : (
-                        <div className="divide-y divide-gray-100 dark:divide-gray-800">
-                            {filteredInvoices.map(inv => (
-                                <div
-                                    key={inv.id}
-                                    className={cn(
-                                        "p-4 transition-colors",
-                                        editingId === inv.id ? 'bg-amber-50 dark:bg-amber-900/10' : 'bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-                                    )}
-                                >
-                                    <div className="flex items-start justify-between mb-3">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-10 h-10 bg-primary-100 text-primary-700 flex items-center justify-center font-black text-sm dark:bg-primary-900/40 dark:text-primary-300 shadow-sm border border-primary-100 dark:border-primary-800 shrink-0">
-                                                {(inv.studentName || '?').charAt(0)}
-                                            </div>
-                                            <div>
-                                                <h3 className="font-bold text-sm text-gray-900 dark:text-white">{inv.studentName || 'اسم غير معروف'}</h3>
-                                                <p className="text-[10px] text-gray-500 italic">{inv.description}</p>
-                                            </div>
-                                        </div>
-                                        <div className="text-left">
-                                            <div className="font-black text-base text-slate-900 dark:text-white">{inv.amount.toLocaleString()} <span className="text-xs text-slate-400">ج.م</span></div>
-                                            <button
-                                                onClick={() => toggleStatus(inv)}
-                                                className={cn(
-                                                    "inline-flex items-center px-2 py-0.5 font-black text-[9px] uppercase border transition-all mt-1",
-                                                    inv.status === 'paid'
-                                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                                        : inv.status === 'pending'
-                                                            ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400'
-                                                            : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/20 dark:text-rose-400'
-                                                )}
-                                            >
-                                                {inv.status === 'paid' ? 'مدفوعة' : inv.status === 'pending' ? 'معلقة' : 'متأخرة'}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-2 text-xs mb-3">
-                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
-                                            <div className="text-[10px] text-gray-500 mb-0.5">تاريخ الإصدار</div>
-                                            <div className="font-mono font-bold text-gray-900 dark:text-white" dir="ltr">
-                                                {new Date(inv.date).toLocaleDateString('ar-EG')}
-                                            </div>
-                                        </div>
-                                        <div className="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-none">
-                                            <div className="text-[10px] text-gray-500 mb-0.5">تاريخ الاستحقاق</div>
-                                            <div className="font-mono font-bold text-gray-900 dark:text-white" dir="ltr">
-                                                {new Date(inv.dueDate).toLocaleDateString('ar-EG')}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800">
-                                        <span className="text-[10px] font-bold text-gray-500">
-                                            {inv.paymentMethod || '-'}
-                                        </span>
-                                        <div className="flex gap-1">
-                                            <button
-                                                onClick={() => setPreviewInvoice(inv)}
-                                                className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center"
-                                                title="معاينة"
-                                            >
-                                                <Printer size={14} />
-                                            </button>
-                                            <button
-                                                onClick={() => handleEdit(inv)}
-                                                className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center"
-                                                title="تعديل"
-                                            >
-                                                <Edit size={14} />
-                                            </button>
-                                            <button
-                                                onClick={() => setDeletingId(inv.id)}
-                                                className="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center"
-                                                title="حذف"
-                                            >
-                                                <Trash2 size={14} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                                )) : (
+                                    <tr>
+                                        <td colSpan={6} className="py-16 text-center">
+                                            <FileText className="mx-auto mb-2 text-slate-200" size={32} />
+                                            <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </SectionCard>
             </div>
-            {/* Preview Modal */}
-            {
-                previewInvoice && (
-                    <InvoicePreviewModal
-                        isOpen={!!previewInvoice}
-                        onClose={() => setPreviewInvoice(null)}
-                        invoice={{
-                            id: previewInvoice.id,
-                            studentName: previewInvoice.studentName,
-                            amount: previewInvoice.amount,
-                            date: previewInvoice.date,
-                            dueDate: previewInvoice.dueDate,
-                            description: previewInvoice.description,
-                            status: previewInvoice.status,
-                            notes: previewInvoice.notes,
-                            items: previewInvoice.items
-                        }}
-                    />
-                )
-            }
+
+            {/* Modals */}
+            <ConfirmModal
+                isOpen={!!deletingId}
+                onClose={() => setDeletingId(null)}
+                onConfirm={confirmDelete}
+                title="حذف الفاتورة"
+                message="هل أنت متأكد من حذف هذه الفاتورة نهائياً؟"
+                isDestructive={true}
+            />
 
             <ConfirmModal
                 isOpen={deleteAllModalOpen}
-                title="حذف جميع الفواتير"
-                message={`هل أنت متأكد من حذف جميع فواتير الطلاب (${invoices.length})؟ لا يمكن التراجع عن هذا الإجراء.`}
-                onConfirm={handleDeleteAll}
                 onClose={() => setDeleteAllModalOpen(false)}
+                onConfirm={handleDeleteAll}
+                title="حذف الكل"
+                message="سيتم حذف جميع فواتير الطلاب تماماً. لا يمكن التراجع."
+                isDestructive={true}
             />
 
             <ConfirmModal
@@ -893,15 +755,13 @@ export const StudentInvoices = () => {
                 message={confirmModal.message}
             />
 
-            {/* Delete Confirmation */}
-            <ConfirmModal
-                isOpen={!!deletingId}
-                title="حذف الفاتورة"
-                message="هل أنت متأكد من حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء."
-                onConfirm={confirmDelete}
-                onClose={() => setDeletingId(null)}
-            />
-        </div >
-
+            {previewInvoice && (
+                <InvoicePreviewModal
+                    isOpen={!!previewInvoice}
+                    onClose={() => setPreviewInvoice(null)}
+                    invoice={previewInvoice}
+                />
+            )}
+        </div>
     );
 };
