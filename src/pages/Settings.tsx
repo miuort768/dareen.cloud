@@ -391,7 +391,7 @@ const Settings = () => {
                 {/* ── GENERAL ── */}
                 {activeTab === 'general' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <SectionCard>
+                        <SectionCard className="rounded-none">
                             <SectionTitle icon={Building2} label="الهوية الأساسية" sub="Academy Identity" />
                             <div className="space-y-3">
                                 <div>
