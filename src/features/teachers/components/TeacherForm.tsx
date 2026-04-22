@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Save, Shield, Key, Info, User, Phone, Tag, DollarSign, X } from 'lucide-react';
+import { Plus, Edit, Save, Key, Info, User, Phone, Tag, DollarSign, X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Teacher } from '../types';
 

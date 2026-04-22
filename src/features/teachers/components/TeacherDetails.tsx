@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Bell, CheckCircle2, Trash2, MessageCircle, TrendingUp, User, BookOpen, Clock, Calendar, Shield } from 'lucide-react';
+import { X, Bell, CheckCircle2, Trash2, MessageCircle, TrendingUp, Clock, Calendar, Shield } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
