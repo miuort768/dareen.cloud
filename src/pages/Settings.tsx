@@ -249,6 +249,25 @@ const Settings = () => {
     }, [activeTab]);
 
     useEffect(() => {
+        setLocalAcademyName(academyName);
+        setLocalAcademyLogo(academyLogo);
+        setLocalAcademyTagline(academyTagline);
+        setLocalAdminPhone(adminPhone);
+        setLocalSemesterName(semesterName);
+        setLocalSemesters(semesters);
+        setLocalPrice(defaultSessionPrice);
+        setLocalTeacherPrice(defaultTeacherPrice);
+        setLocalCurrency(currencySymbol);
+        setLocalThreshold(balanceWarningThreshold);
+        setLocalTelegramHandle(telegramHandle);
+    }, [
+        academyName, academyLogo, academyTagline, adminPhone, 
+        semesterName, semesters, defaultSessionPrice, 
+        defaultTeacherPrice, currencySymbol, balanceWarningThreshold,
+        telegramHandle
+    ]);
+
+    useEffect(() => {
         setLocalChatbotName(chatbotName);
         setLocalChatbotWelcomeMsg(chatbotWelcomeMsg);
     }, [chatbotName, chatbotWelcomeMsg]);
