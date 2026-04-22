@@ -78,13 +78,16 @@ export const Header = () => {
                 </Link>
 
                 {title && (
-                    <div className="min-w-0 overflow-hidden pr-1">
+                    <div className="min-w-0 overflow-hidden pr-1 flex flex-col">
                         <h1 className={cn(
-                            "text-[10px] md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight",
+                            "text-sm md:text-xl font-black text-slate-900 dark:text-white truncate tracking-tight leading-tight",
                             (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
                         )}>
                             {title}
                         </h1>
+                        <p className="text-[8px] md:text-[10px] font-normal text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mt-0.5">
+                            دارين للتعليم والتدريب
+                        </p>
                     </div>
                 )}
             </div>
