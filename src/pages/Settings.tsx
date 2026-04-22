@@ -175,34 +175,30 @@ const Settings = () => {
     if (loading) return <div className="p-8 space-y-4"><Skeleton className="h-20" /><Skeleton className="h-64" /></div>;
 
     return (
-        <div className="space-y-6 pb-20 min-h-full md:animate-in md:fade-in md:duration-700">
-            {/* Premium Brutalist Header */}
-            <div className="relative bg-white border-4 border-gray-950 p-6 md:p-8 shadow-lg md:shadow-[12px_12px_0px_0px_black] overflow-hidden mb-10 rounded-none">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '32px 32px' }}></div>
-                
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 px-2">
-                    <div className="flex items-center gap-6">
-                        <div className="w-18 h-18 bg-gray-950 text-white flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] transform rotate-3">
-                            <SettingsIcon size={36} strokeWidth={3} />
+        <div className="space-y-6 pb-20 min-h-full bg-slate-50 dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+            
+            {/* ═══════════════ HEADER ═══════════════ */}
+            <div className="relative group overflow-hidden bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] mb-10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 -skew-x-12 transform translate-x-32 -translate-y-32 pointer-events-none"></div>
+                <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div>
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-0.5 uppercase tracking-[3px] italic">إعدادات النظام</span>
+                            <SettingsIcon size={14} className="text-amber-400" />
                         </div>
-                        <div>
-                            <div className="flex items-center gap-2 mb-2">
-                                <Sparkles size={14} className="text-amber-500" />
-                                <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] font-mono italic">SYSTEM CONFIGURATION CONTROL</span>
-                            </div>
-                            <h1 className="text-2xl md:text-5xl font-black text-gray-950 mb-1 tracking-tighter uppercase leading-none">إعدادات المنصة والنظام</h1>
-                            <p className="text-xs font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
-                                <Shield size={14} className="text-primary-600" />
-                                تخصيص كامل للهوية والأدوات والصلاحيات البرمجية
-                            </p>
-                        </div>
+                        <h1 className="text-2xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic leading-none">
+                            <span className="text-indigo-600 dark:text-indigo-400">لوحة تحكم</span> الإعدادات والضوابط
+                        </h1>
+                        <p className="text-slate-500 dark:text-slate-400 text-xs font-black uppercase tracking-[2px] italic mt-4 flex items-center gap-2">
+                            <div className="w-10 h-1 bg-indigo-600"></div>
+                            إدارة السياسات، الهوية، وصلاحيات النظام المركزية
+                        </p>
                     </div>
                 </div>
             </div>
 
             {/* Ultra-Compact Tabs Navigation - Ensuring all 7 fit */}
-            <div className="grid grid-cols-2 lg:flex lg:flex-row gap-1.5 md:gap-2 mb-10 no-print">
+            <div className="grid grid-cols-2 lg:flex lg:flex-row gap-2 md:gap-3 mb-10 no-print">
                 {[
                     { id: 'general', label: 'الإعدادات العامة', icon: Building2 },
                     { id: 'appearance', label: 'الهوية والمظهر', icon: Palette },
@@ -216,13 +212,13 @@ const Settings = () => {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                            "flex flex-1 items-center justify-center lg:justify-center gap-1.5 md:gap-2 px-1.5 lg:px-2 py-2 md:py-3 font-black text-[8px] lg:text-[10px] uppercase transition-all tracking-tighter border-2 shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 whitespace-nowrap overflow-hidden",
+                            "flex flex-1 items-center justify-center lg:justify-center gap-1.5 md:gap-2 px-1.5 lg:px-2 py-3 lg:py-4 font-black text-[9px] lg:text-[11px] uppercase transition-all tracking-tighter border-4 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 whitespace-nowrap overflow-hidden group",
                             activeTab === tab.id 
-                                ? "bg-gray-950 text-white border-gray-950" 
-                                : "bg-white text-gray-950 border-gray-950 hover:bg-gray-50"
+                                ? "bg-indigo-600 text-white border-slate-900 dark:border-white" 
+                                : "bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-900 dark:border-white hover:bg-slate-50 dark:hover:bg-slate-800"
                         )}
                     >
-                        <tab.icon size={12} lg:size={14} strokeWidth={3} className={cn("shrink-0", activeTab === tab.id ? "text-primary-500" : "text-gray-400")} />
+                        <tab.icon size={14} lg:size={16} strokeWidth={3} className={cn("shrink-0", activeTab === tab.id ? "text-amber-400" : "text-slate-400 group-hover:text-indigo-600")} />
                         <span className="truncate">{tab.label}</span>
                     </button>
                 ))}
@@ -230,49 +226,49 @@ const Settings = () => {
 
             <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-500">
                 {activeTab === 'general' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <section className="bg-white dark:bg-gray-900 p-6 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
-                            <h2 className="font-black text-lg border-b pb-2 flex items-center gap-2 uppercase"><Building2 size={18} className="text-primary-600"/> الهوية الأساسية للأكاديمية</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
+                            <h2 className="font-black text-xl flex items-center gap-3 uppercase"><Building2 size={24} className="text-indigo-600"/> الهوية الأساسية للأكاديمية</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">اسم الأكاديمية</label>
-                                    <input value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
+                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">اسم الأكاديمية</label>
+                                    <input value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none" />
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">رابط الشعار (URL)</label>
-                                    <input value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">رابط الشعار (URL)</label>
+                                    <input value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="https://..." className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono" />
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">الشعار اللفظي (Tagline)</label>
-                                    <input value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none" />
+                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">الشعار اللفظي (Tagline)</label>
+                                    <input value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none" />
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">رقم هاتف المسؤول الرئيسي</label>
-                                    <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">رقم هاتف المسؤول الرئيسي</label>
+                                    <input value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono tracking-widest" />
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="block text-xs font-black mb-1 opacity-60">معرف/رابط قناة تليجرام (Telegram Handle)</label>
-                                    <input value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary-500 p-3 font-bold transition-all outline-none text-left font-mono" />
+                                    <label className="block text-xs font-black mb-2 opacity-60 uppercase tracking-widest">قناة تليجرام (Telegram Handle)</label>
+                                    <input value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="dareen_app" className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black transition-all outline-none text-left font-mono tracking-widest" />
                                 </div>
                             </div>
-                            <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 flex items-center justify-between">
-                                <div><p className="text-sm font-black">وضع الصيانة</p><p className="text-[10px] opacity-60">تعطيل وصول المستخدمين العاديين</p></div>
+                            <div className="p-5 mt-4 bg-amber-50 dark:bg-amber-900/10 border-4 border-slate-900 dark:border-amber-900/50 flex items-center justify-between shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                <div><p className="text-sm font-black uppercase">وضع الصيانة</p><p className="text-[10px] font-bold text-slate-500 italic mt-1 pb-1">تعطيل وصول المستخدمين العاديين</p></div>
                                 <button onClick={() => {
                                     if (!maintenanceMode) {
                                         setShowMaintenanceModal(true);
                                     } else {
                                         setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة، المنصة متاحة للجميع الآن.'));
                                     }
-                                }} className={cn("w-12 h-6 rounded-full relative transition-colors shrink-0", maintenanceMode ? "bg-amber-500" : "bg-gray-300 dark:bg-gray-700")}>
-                                    <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", maintenanceMode ? "translate-x-6" : "translate-x-1")} />
+                                }} className={cn("w-14 h-8 relative transition-colors shrink-0 border-4 border-slate-900", maintenanceMode ? "bg-amber-500" : "bg-slate-300 dark:bg-slate-700")}>
+                                    <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all", maintenanceMode ? "translate-x-7" : "translate-x-1")} />
                                 </button>
                             </div>
                         </section>
 
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(16,185,129,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
-                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Wallet size={28} className="text-emerald-500" />
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
+                            <div className="flex items-center justify-between pb-2">
+                                <h2 className="font-black text-xl flex items-center gap-3 uppercase">
+                                    <Wallet size={24} className="text-indigo-600" />
                                     الإعدادات الأكاديمية والمالية
                                 </h2>
                             </div>
@@ -285,53 +281,53 @@ const Settings = () => {
                                     </h3>
                                     
                                     <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-emerald-600 transition-colors">
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 transition-colors tracking-widest">
                                             تسمية الفصل الدراسي المنشط
                                         </label>
                                         <div className="relative">
                                             <input 
                                                 value={localSemesterName} 
                                                 onChange={e => setLocalSemesterName(e.target.value)} 
-                                                className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all"
+                                                className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all"
                                                 placeholder="مثلاً: الفصل الدراسي الأول 2024"
                                             />
-                                            <Edit size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none" />
+                                            <Edit size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
                                         </div>
-                                        <p className="text-[9px] font-bold text-gray-400 mt-2 italic">* يظهر هذا الاسم في كافة تقارير الطلاب وفواتيرهم.</p>
+                                        <p className="text-[9px] font-bold text-slate-500 mt-2 italic pb-2">* يظهر هذا الاسم في كافة تقارير الطلاب وفواتيرهم.</p>
                                     </div>
                                 </div>
 
                                 {/* Financial Controls */}
                                 <div className="space-y-6">
-                                    <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2 italic">
+                                    <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
                                         <Activity size={14} /> المعايير المالية الافتراضية
                                     </h3>
 
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-2 gap-6">
                                         <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">سعر الطالب</label>
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">سعر الطالب</label>
                                             <div className="relative">
-                                                <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all pl-10" />
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px]">{localCurrency}</span>
+                                                <input type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10 tracking-widest font-mono" />
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-slate-400 text-[10px]">{localCurrency}</span>
                                             </div>
                                         </div>
                                         <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">سعر المعلمة</label>
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">سعر المعلمة</label>
                                             <div className="relative">
-                                                <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all pl-10" />
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 font-black text-gray-400 text-[10px]">{localCurrency}</span>
+                                                <input type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10 tracking-widest font-mono" />
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 font-black text-slate-400 text-[10px]">{localCurrency}</span>
                                             </div>
                                         </div>
                                         <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70">رمز العملة</label>
-                                            <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-emerald-500 p-3.5 font-black outline-none transition-all text-center" />
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 tracking-widest">رمز العملة</label>
+                                            <input value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all text-center" />
                                         </div>
                                         <div className="col-span-1">
-                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 text-red-500 group">تنبيه الرصيد <AlertCircle size={10} className="inline"/></label>
-                                            <input type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="w-full bg-red-50 dark:bg-red-900/10 border-2 border-red-200 dark:border-red-900/30 focus:border-red-500 p-3.5 font-black outline-none transition-all text-center text-red-600" />
+                                            <label className="block text-[11px] font-black mb-2 uppercase opacity-70 text-rose-600 group tracking-widest">تنبيه الرصيد <AlertCircle size={10} className="inline"/></label>
+                                            <input type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="w-full bg-rose-50 dark:bg-rose-900/10 border-4 border-rose-300 dark:border-rose-900 focus:border-rose-600 p-4 font-black outline-none transition-all text-center text-rose-600 tracking-widest font-mono" />
                                         </div>
                                     </div>
-                                    <p className="text-[9px] font-bold text-gray-400 italic bg-gray-50 dark:bg-gray-900 p-2 border-r-2 border-emerald-500">
+                                    <p className="text-[10px] font-bold text-slate-500 italic bg-amber-50 dark:bg-amber-900/10 p-3 border-r-4 border-amber-500 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                         * هذه القيم يتم تطبيقها تلقائياً عند تسجيل طالب أو معلم جديد لتوفير الوقت.
                                     </p>
                                 </div>
@@ -339,7 +335,7 @@ const Settings = () => {
 
                             <button 
                                 onClick={handleSaveGeneral} 
-                                className="group relative w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                                className="group relative w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4 mt-6"
                             >
                                 {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
                                     <>
@@ -353,46 +349,45 @@ const Settings = () => {
                 )}
 
                 {activeTab === 'appearance' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* System Identity & Logo Preview */}
-                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] space-y-6">
-                            <div className="flex items-center gap-3 border-b-2 border-gray-950 pb-3">
-                                <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                                    <Building2 size={20} />
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
+                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
+                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                    <Building2 size={24} className="text-indigo-600" />
                                 </div>
                                 <div>
-                                    <h2 className="text-base font-black uppercase tracking-tighter">معاينة هوية المنصة</h2>
-                                    <p className="text-[8px] font-bold text-gray-400 uppercase tracking-widest mt-0.5 italic">Identity & Branding Preview</p>
+                                    <h2 className="text-xl font-black uppercase tracking-tighter">معاينة هوية المنصة</h2>
+                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1 italic">Identity & Branding Preview</p>
                                 </div>
                             </div>
 
-                            <div className="space-y-4">
-                                <div className="p-4 bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center text-center group">
-                                    <div className="w-20 h-20 bg-white dark:bg-slate-950 rounded-xl border-2 border-gray-950 shadow-lg mb-3 flex items-center justify-center p-3 relative overflow-hidden">
+                            <div className="space-y-6">
+                                <div className="p-6 bg-slate-50 dark:bg-slate-800 border-4 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center text-center group">
+                                    <div className="w-24 h-24 bg-white dark:bg-slate-950 border-4 border-slate-900 dark:border-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)] mb-4 flex items-center justify-center p-3 relative overflow-hidden transition-transform group-hover:scale-105">
                                         {academyLogo ? (
                                             <img src={academyLogo} alt="Logo" className="max-w-full max-h-full object-contain relative z-10" />
                                         ) : (
-                                            <Monitor size={32} className="text-gray-200" />
+                                            <Monitor size={36} className="text-slate-300 dark:text-slate-700" />
                                         )}
-                                        <div className="absolute inset-0 bg-gradient-to-tr from-gray-50 to-transparent opacity-50"></div>
                                     </div>
-                                    <h3 className="font-black text-sm text-gray-900 dark:text-white uppercase tracking-tighter">{academyName}</h3>
-                                    <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 mt-1 italic opacity-80">{academyTagline}</p>
+                                    <h3 className="font-black text-lg text-slate-900 dark:text-white uppercase tracking-tighter">{academyName}</h3>
+                                    <p className="text-[11px] font-bold text-slate-500 mt-2 italic opacity-80">{academyTagline}</p>
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-3">
-                                    <div className="p-3 bg-gray-50 dark:bg-gray-900 border-2 border-gray-950 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-8 h-8 bg-white dark:bg-slate-800 border-2 border-gray-950 flex items-center justify-center">
-                                                <Bell size={14} className="text-amber-500" />
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="p-4 bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 flex items-center justify-between shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center">
+                                                <Bell size={18} className="text-amber-500" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-black uppercase">الإشعارات المكتبية</p>
-                                                <p className="text-[8px] font-bold opacity-50 italic">Desktop Push Notifications</p>
+                                                <p className="text-xs font-black uppercase tracking-widest">الإشعارات المكتبية</p>
+                                                <p className="text-[9px] font-bold text-slate-500 italic mt-1 pb-1">Desktop Push Notifications</p>
                                             </div>
                                         </div>
-                                        <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={cn("w-12 h-6 rounded-full relative transition-all duration-300 border-2 border-gray-950", notificationsEnabled ? "bg-primary-600" : "bg-gray-300 dark:bg-gray-800")}>
-                                            <div className={cn("absolute top-0.5 w-4 h-4 bg-white rounded-full transition-all shadow-md", notificationsEnabled ? "translate-x-6" : "translate-x-0.5")} />
+                                        <button onClick={() => setNotificationsEnabled(!notificationsEnabled)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", notificationsEnabled ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-700")}>
+                                            <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all", notificationsEnabled ? "translate-x-7" : "translate-x-1")} />
                                         </button>
                                     </div>
                                 </div>
@@ -400,39 +395,39 @@ const Settings = () => {
                         </section>
 
                         {/* Visual Theme & Color Palette */}
-                        <section className="bg-white dark:bg-gray-950 p-5 border-4 border-gray-950 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] space-y-6">
-                            <div className="flex items-center gap-3 border-b-2 border-gray-950 pb-3">
-                                <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-2 border-gray-950 shadow-[2px_2px_0px_0px_black]">
-                                    <Palette size={20} />
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-6">
+                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
+                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                    <Palette size={24} className="text-indigo-600" />
                                 </div>
                                 <div>
-                                    <h2 className="text-base font-black uppercase tracking-tighter">قالب الألوان والسمات</h2>
-                                    <p className="text-[8px] font-bold text-gray-400 uppercase tracking-widest mt-0.5 italic">System Skin & Theme Palette</p>
+                                    <h2 className="text-xl font-black uppercase tracking-tighter">قالب الألوان والسمات</h2>
+                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1 italic">System Skin & Theme Palette</p>
                                 </div>
                             </div>
 
                             <div className="space-y-6">
                                 <div>
-                                    <p className="text-[9px] font-black mb-4 uppercase tracking-[0.2em] opacity-60 flex items-center gap-2 italic">
-                                        <Sparkles size={10} className="text-primary-500" /> اختر اللون المميز لنظامك
+                                    <p className="text-[11px] font-black mb-6 uppercase tracking-widest text-slate-500 flex items-center gap-2 italic">
+                                        <Sparkles size={14} className="text-amber-500" /> اختر اللون المميز لنظامك
                                     </p>
-                                    <div className="grid grid-cols-7 gap-3">
+                                    <div className="grid grid-cols-7 gap-4">
                                         {THEME_COLORS.map(c => (
                                             <button 
                                                 key={c.id} 
                                                 onClick={() => setThemeColor(c.id)} 
                                                 className={cn(
-                                                    "group relative h-9 w-9 rounded-full transition-all duration-300 p-0.5 border-2 mx-auto", 
+                                                    "group relative h-10 w-10 md:h-12 md:w-12 rounded-none transition-all duration-300 p-1 border-4 mx-auto", 
                                                     themeColor === c.id 
-                                                        ? "border-black dark:border-white scale-110 shadow-md" 
+                                                        ? "border-slate-900 dark:border-white scale-110 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]" 
                                                         : "border-transparent hover:scale-110"
                                                 )}
                                             >
-                                                <div className={cn("w-full h-full rounded-full transform transition-transform group-hover:rotate-12", c.class)} title={c.label} />
+                                                <div className={cn("w-full h-full transform transition-transform group-hover:rotate-6", c.class)} title={c.label} />
                                                 {themeColor === c.id && (
                                                     <div className="absolute inset-0 flex items-center justify-center">
-                                                        <div className="w-4 h-4 bg-black/20 dark:bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                                                            <CheckCircle2 size={10} className="text-white dark:text-white" strokeWidth={4} />
+                                                        <div className="w-5 h-5 bg-black/30 dark:bg-white/30 flex items-center justify-center backdrop-blur-sm shadow-inner">
+                                                            <CheckCircle2 size={12} className="text-white dark:text-white" strokeWidth={4} />
                                                         </div>
                                                     </div>
                                                 )}
@@ -444,23 +439,23 @@ const Settings = () => {
                         </section>
 
                         {/* Full Width Security & Backup Section */}
-                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-gray-950 p-6 relative overflow-hidden group shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                                 <div className="flex items-center gap-4">
-                                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center border-2 border-gray-950 shadow-[3px_3px_0px_0px_black]">
-                                         <Shield size={24} strokeWidth={3} />
+                        <section className="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-900 border-4 border-slate-900 p-8 relative overflow-hidden group shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
+                             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                                 <div className="flex items-center gap-5">
+                                     <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                         <Shield size={28} strokeWidth={3} className="text-blue-600" />
                                      </div>
                                      <div>
-                                         <h3 className="text-sm font-black uppercase tracking-widest text-slate-800 dark:text-white italic">إدارة الأمان والنسخ الاحتياطي</h3>
-                                         <p className="text-[9px] font-bold opacity-60">تأمين قاعدة البيانات والملفات بشكل دوري (System Restore Point)</p>
+                                         <h3 className="text-base font-black uppercase tracking-widest text-slate-800 dark:text-white italic">إدارة الأمان والنسخ الاحتياطي</h3>
+                                         <p className="text-[11px] font-bold text-slate-500 mt-1">تأمين قاعدة البيانات والملفات بشكل دوري (System Restore Point)</p>
                                      </div>
                                  </div>
-                                 <div className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
-                                    <button className="px-6 py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[9px] tracking-widest shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
-                                        <Download size={16} className="text-blue-600" /> تحميل نسخة احتياطية
+                                 <div className="flex flex-col sm:flex-row w-full md:w-auto gap-4">
+                                    <button className="px-8 py-4 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 font-black uppercase text-[11px] tracking-widest shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                        <Download size={18} className="text-blue-600" /> تحميل نسخة احتياطية
                                     </button>
-                                    <button className="px-6 py-3 bg-white dark:bg-slate-800 border-2 border-gray-950 font-black uppercase text-[9px] tracking-widest shadow-[4px_4px_0px_0px_rgba(16,185,129,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-3">
-                                        <Upload size={16} className="text-emerald-600" /> استيراد بيانات سابقة
+                                    <button className="px-8 py-4 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 font-black uppercase text-[11px] tracking-widest shadow-[4px_4px_0px_0px_rgba(16,185,129,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-3">
+                                        <Upload size={18} className="text-emerald-600" /> استيراد بيانات سابقة
                                     </button>
                                  </div>
                              </div>
@@ -471,17 +466,17 @@ const Settings = () => {
                 {activeTab === 'chatbot' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* Bot Configuration */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
-                                <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <MessageSquare size={28} className="text-blue-500" />
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
+                                <h2 className="font-black text-xl flex items-center gap-3 uppercase tracking-tighter">
+                                    <MessageSquare size={24} className="text-indigo-600" />
                                     تخصيص المساعد الذكي
                                 </h2>
                                 <button 
                                     onClick={() => setChatbotEnabled(!chatbotEnabled)} 
                                     className={cn(
-                                        "px-4 py-2 border-2 border-gray-950 font-black text-[10px] uppercase transition-all flex items-center gap-2",
-                                        chatbotEnabled ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-400"
+                                        "px-4 py-2 border-4 border-slate-900 font-black text-[10px] uppercase transition-all flex items-center gap-2 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+                                        chatbotEnabled ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-400"
                                     )}
                                 >
                                     {chatbotEnabled ? <CheckCircle2 size={14}/> : <Lock size={14}/>}
@@ -490,35 +485,35 @@ const Settings = () => {
                             </div>
 
                             <div className="space-y-6">
-                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-2 border-blue-200 dark:border-blue-900/30 flex items-center justify-between group">
+                                <div className="p-4 bg-indigo-50 dark:bg-indigo-900/10 border-4 border-slate-900 dark:border-slate-800 flex items-center justify-between group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                     <div>
-                                        <p className="font-black text-sm text-blue-900 dark:text-blue-100 italic">حوار الزوار التلقائي</p>
-                                        <p className="text-[10px] font-bold text-blue-600/60 uppercase">Enable Automated Concierge</p>
+                                        <p className="font-black text-sm text-indigo-900 dark:text-indigo-100 italic">حوار الزوار التلقائي</p>
+                                        <p className="text-[10px] font-bold text-indigo-600/60 uppercase tracking-widest mt-1">Enable Automated Concierge</p>
                                     </div>
-                                    <button onClick={() => setChatbotEnabled(!chatbotEnabled)} className={cn("w-14 h-7 rounded-full relative transition-all duration-300 border-2 border-gray-950", chatbotEnabled ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-800")}>
-                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full transition-all shadow-md", chatbotEnabled ? "translate-x-7" : "translate-x-0.5")} />
+                                    <button onClick={() => setChatbotEnabled(!chatbotEnabled)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", chatbotEnabled ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-700")}>
+                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", chatbotEnabled ? "translate-x-7" : "translate-x-1")} />
                                     </button>
                                 </div>
 
                                 <div className="space-y-5">
                                     <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-blue-600">اسم المساعد (Bot Name)</label>
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 tracking-widest">اسم المساعد (Bot Name)</label>
                                         <div className="relative">
                                             <input 
                                                 value={localChatbotName} 
                                                 onChange={e => setLocalChatbotName(e.target.value)} 
-                                                className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-blue-500 p-3.5 font-black outline-none transition-all pl-10"
+                                                className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all pl-10"
                                             />
-                                            <Sparkles size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none group-focus-within:text-blue-400 transition-colors" />
+                                            <Sparkles size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:text-indigo-500 transition-colors" />
                                         </div>
                                     </div>
 
                                     <div className="group">
-                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-blue-600">رسالة الترحيب الافتتاحية</label>
+                                        <label className="flex items-center gap-2 text-[11px] font-black mb-2 uppercase opacity-70 group-focus-within:text-indigo-600 tracking-widest">رسالة الترحيب الافتتاحية</label>
                                         <textarea 
                                             value={localChatbotWelcomeMsg} 
                                             onChange={e => setLocalChatbotWelcomeMsg(e.target.value)} 
-                                            className="w-full bg-gray-50 dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 focus:border-blue-500 p-3.5 font-black outline-none transition-all h-28 resize-none text-base leading-relaxed"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 focus:border-indigo-600 p-4 font-black outline-none transition-all h-28 resize-none text-base leading-relaxed"
                                             placeholder="اكتب رسالة الترحيب هنا..."
                                         />
                                     </div>
@@ -538,7 +533,7 @@ const Settings = () => {
                                         setIsSaving(false);
                                     }
                                 }} 
-                                className="group relative w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-[0.2em] transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4"
+                                className="group relative w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-4 mt-6"
                             >
                                 {isSaving ? <RefreshCw className="animate-spin" size={24} /> : (
                                     <>
@@ -550,39 +545,39 @@ const Settings = () => {
                         </section>
 
                         {/* Live Bot Preview */}
-                        <section className="bg-slate-900 p-8 border-4 border-gray-950 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] relative overflow-hidden flex flex-col justify-center min-vh-[400px]">
+                        <section className="bg-slate-900 p-8 border-4 border-slate-900 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] relative overflow-hidden flex flex-col justify-center min-vh-[400px]">
                             <div className="absolute top-0 right-0 p-4">
-                                <span className="text-[10px] font-black text-blue-500 border border-blue-500/30 px-3 py-1 uppercase tracking-widest">Live Simulator</span>
+                                <span className="text-[10px] font-black text-indigo-400 border border-indigo-500/30 px-3 py-1 uppercase tracking-widest">Live Simulator</span>
                             </div>
                             
                             <div className="relative z-10 w-full max-w-sm mx-auto space-y-6">
                                 {/* Simulated Message */}
                                 <div className="flex flex-col gap-2 md:animate-in md:slide-in-from-left-4 md:duration-1000">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white border-2 border-white shadow-lg">
-                                            <MessageSquare size={14} />
+                                        <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center text-white border-2 border-white shadow-[2px_2px_0px_0px_black]">
+                                            <MessageSquare size={18} />
                                         </div>
-                                        <span className="text-[10px] font-black text-white/40 uppercase">{localChatbotName}</span>
+                                        <span className="text-[11px] font-black text-white/50 uppercase tracking-widest">{localChatbotName}</span>
                                     </div>
-                                    <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl rounded-tr-none border border-white/10 text-white text-sm font-bold leading-relaxed shadow-2xl">
+                                    <div className="bg-white/10 backdrop-blur-md p-5 border-2 border-white/20 text-white text-sm font-bold leading-relaxed shadow-lg">
                                         {localChatbotWelcomeMsg}
                                     </div>
-                                    <span className="text-[8px] font-black text-white/20 uppercase text-left">Just Now</span>
+                                    <span className="text-[9px] font-black text-white/30 uppercase text-left tracking-widest mt-1">Just Now</span>
                                 </div>
 
                                 {/* Simulated Interaction Button */}
                                 <div className="flex justify-end gap-2 md:animate-in md:slide-in-from-right-4 md:duration-1000 md:delay-300">
-                                    <div className="bg-blue-600 p-3 rounded-2xl rounded-tl-none text-white text-[10px] font-black shadow-xl">
+                                    <div className="bg-indigo-600 px-5 py-3 border-2 border-white text-white text-[11px] font-black shadow-[4px_4px_0px_0px_black] cursor-pointer hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
                                         كيف يمكنني البدء؟
                                     </div>
                                 </div>
 
                                 {/* Simulated Floating Bubble */}
                                 <div className="absolute -bottom-10 right-0 transform translate-y-20 flex flex-col items-center gap-3">
-                                    <div className="bg-white py-2 px-4 rounded-full border-2 border-gray-950 shadow-xl">
-                                        <p className="text-[10px] font-black text-slate-900">أنا متواجد للمساعدة!</p>
+                                    <div className="bg-white py-2 px-4 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black]">
+                                        <p className="text-[11px] font-black text-slate-900 uppercase">أنا متواجد للمساعدة!</p>
                                     </div>
-                                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white border-4 border-gray-950 shadow-2xl ring-4 ring-blue-500/20 animate-bounce">
+                                    <div className="w-16 h-16 bg-indigo-600 flex items-center justify-center text-white border-4 border-slate-900 shadow-[6px_6px_0px_0px_black] animate-bounce cursor-pointer">
                                         <MessageSquare size={28} />
                                     </div>
                                 </div>
@@ -599,38 +594,40 @@ const Settings = () => {
                 {activeTab === 'users' && (
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* Users List */}
+                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
+                        {/* Users List */}
                         <div className="xl:col-span-2 space-y-6">
-                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
                                 <h2 className="font-black text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Users size={32} className="text-primary-600" />
+                                    <Users size={32} className="text-indigo-600" />
                                     الحسابات والمسؤولين
                                 </h2>
-                                <span className="text-[10px] font-black text-primary-600 bg-primary-50 px-3 py-1 border-2 border-primary-500 uppercase italic">Admin Registry</span>
+                                <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-3 py-1 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] uppercase italic">Admin Registry</span>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {users.map(u => (
-                                    <div key={u.id} className="bg-white dark:bg-gray-950 border-4 border-gray-950 p-6 shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all group relative overflow-hidden">
+                                    <div key={u.id} className="bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white p-6 shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all group relative overflow-hidden">
                                         <div className="flex justify-between items-start mb-6">
-                                            <div className="w-12 h-12 bg-gray-950 text-white flex items-center justify-center font-black text-xl border-4 border-primary-500">
+                                            <div className="w-14 h-14 bg-indigo-600 text-white flex items-center justify-center font-black text-2xl border-4 border-slate-900 shadow-[4px_4px_0px_0px_black]">
                                                 {u.username[0].toUpperCase()}
                                             </div>
                                             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button onClick={() => { setEditingUserId(u.id); setNewUser({username: u.username, password: '', permissions: u.permissions || []}); }} className="p-2 bg-blue-50 text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all"><Edit size={16}/></button>
-                                                {u.id !== user?.id && <button onClick={() => setShowDeleteModal(u)} className="p-2 bg-rose-50 text-rose-600 border-2 border-rose-600 hover:bg-rose-600 hover:text-white transition-all"><Trash2 size={16}/></button>}
+                                                <button onClick={() => { setEditingUserId(u.id); setNewUser({username: u.username, password: '', permissions: u.permissions || []}); }} className="p-3 bg-white text-indigo-600 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-slate-900 hover:text-white transition-all"><Edit size={18}/></button>
+                                                {u.id !== user?.id && <button onClick={() => setShowDeleteModal(u)} className="p-3 bg-rose-50 text-rose-600 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-rose-600 hover:text-white transition-all"><Trash2 size={18}/></button>}
                                             </div>
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="font-black text-xl tracking-tight uppercase truncate">{u.name || u.username}</p>
-                                            <p className="text-[10px] font-black text-gray-400 flex items-center gap-1 uppercase">
-                                                <Shield size={10} /> {u.permissions?.includes('*') ? 'Full System Admin' : `${u.permissions?.length || 0} Permissions`}
+                                            <p className="font-black text-xl tracking-tight uppercase truncate dark:text-white">{u.name || u.username}</p>
+                                            <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest mt-2">
+                                                <Shield size={12} className="text-indigo-600" /> {u.permissions?.includes('*') ? 'Full System Admin' : `${u.permissions?.length || 0} Permissions`}
                                             </p>
                                         </div>
-                                        <div className="mt-4 flex flex-wrap gap-1.5 pt-4 border-t-2 border-dashed border-gray-100 dark:border-gray-800">
+                                        <div className="mt-5 flex flex-wrap gap-2 pt-5 border-t-4 border-dashed border-slate-200 dark:border-slate-800">
                                             {u.permissions?.slice(0, 3).map(p => (
-                                                <span key={p} className="text-[8px] font-black bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 border border-gray-200 dark:border-gray-700 uppercase italic">{p}</span>
+                                                <span key={p} className="text-[9px] font-black bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2 py-1 border-2 border-slate-900 dark:border-slate-700 uppercase italic whitespace-nowrap">{p}</span>
                                             ))}
-                                            {(u.permissions?.length || 0) > 3 && <span className="text-[8px] font-black opacity-40">+{(u.permissions?.length || 0) - 3}</span>}
+                                            {(u.permissions?.length || 0) > 3 && <span className="text-[9px] font-black bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 px-2 py-1 border-2 border-slate-900 dark:border-slate-700">+{(u.permissions?.length || 0) - 3}</span>}
                                         </div>
                                     </div>
                                 ))}
@@ -638,82 +635,86 @@ const Settings = () => {
                         </div>
 
                         {/* Add/Edit Section */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] h-fit lg:sticky top-4">
-                            <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4 mb-8">
-                                <div className="w-10 h-10 bg-primary-50 dark:bg-primary-900/20 text-primary-600 flex items-center justify-center border-4 border-gray-950">
-                                    <UserPlus size={20} />
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] h-fit lg:sticky top-4">
+                            <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4 mb-8">
+                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                    <UserPlus size={24} className="text-indigo-600" />
                                 </div>
                                 <h2 className="text-xl font-black uppercase tracking-tighter">{editingUserId ? 'تعديل المسؤول' : 'إضافة حساب جديد'}</h2>
                             </div>
 
                             <div className="space-y-6">
-                                <div className="grid grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-5">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase opacity-50">اسم الدخول</label>
-                                        <input value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-black outline-none focus:border-primary-600 transition-all text-sm" placeholder="ADMIN_USERNAME" />
+                                        <label className="text-[11px] font-black uppercase opacity-70 tracking-widest">اسم الدخول</label>
+                                        <input value={newUser.username} onChange={e => setNewUser({...newUser, username: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600 transition-all text-sm" placeholder="ADMIN_USERNAME" />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase opacity-50">الرقم السري</label>
-                                        <input type="password" value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-black outline-none focus:border-primary-600 transition-all text-sm" placeholder="********" />
+                                        <label className="text-[11px] font-black uppercase opacity-70 tracking-widest">الرقم السري</label>
+                                        <input type="password" value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600 transition-all text-sm font-mono" placeholder="********" />
                                     </div>
                                 </div>
 
-                                <div className="space-y-4 pt-4 border-t-2 border-gray-950">
-                                    <p className="text-[10px] font-black uppercase opacity-60 flex items-center gap-2 italic">قوالب صلاحيات سريعة</p>
-                                    <div className="flex flex-wrap gap-2">
+                                <div className="space-y-5 pt-5 border-t-4 border-dashed border-slate-200 dark:border-slate-800">
+                                    <p className="text-[11px] font-black uppercase text-indigo-600 opacity-90 flex items-center gap-2 tracking-widest">
+                                        <Shield size={14} /> قوالب صلاحيات سريعة
+                                    </p>
+                                    <div className="flex flex-wrap gap-3">
                                         {[
                                             { label: 'مدير نظام', perms: ['*'] },
                                             { label: 'محاسب', perms: ['view_finance', 'manage_finance'] },
                                             { label: 'مشرف تربوي', perms: ['view_students', 'manage_students', 'view_teachers'] },
                                         ].map(role => (
-                                            <button key={role.label} onClick={() => setNewUser({...newUser, permissions: role.perms})} className="px-2 py-1 bg-white dark:bg-gray-800 text-[9px] font-black border-2 border-gray-950 hover:bg-primary-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none">{role.label}</button>
+                                            <button key={role.label} onClick={() => setNewUser({...newUser, permissions: role.perms})} className="px-3 py-2 bg-white dark:bg-slate-800 text-[10px] font-black border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] hover:bg-slate-900 hover:text-white transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none whitespace-nowrap">{role.label}</button>
                                         ))}
                                     </div>
                                     
-                                    <p className="text-[10px] font-black uppercase opacity-60 italic mt-6">تخصيص الصلاحيات يدوياً</p>
-                                    <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto p-2 border-2 border-gray-100 dark:border-gray-800">
+                                    <p className="text-[11px] font-black uppercase opacity-60 tracking-widest mt-8">تخصيص الصلاحيات يدوياً</p>
+                                    <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto p-3 border-4 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
                                         {AVAILABLE_PERMISSIONS.map(p => (
                                             <button key={p.id} onClick={() => {
                                                 const perms = newUser.permissions.includes(p.id) ? newUser.permissions.filter(x => x !== p.id) : [...newUser.permissions, p.id];
                                                 setNewUser({...newUser, permissions: perms});
-                                            }} className={cn("p-2 text-[8px] font-black border-2 transition-all text-right uppercase", newUser.permissions.includes(p.id) ? "bg-primary-600 text-white border-gray-950" : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400")}>
+                                            }} className={cn("p-3 text-[9px] font-black border-4 transition-all text-right uppercase shadow-[2px_2px_0px_0px_black] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none", newUser.permissions.includes(p.id) ? "bg-indigo-600 text-white border-slate-900" : "bg-white dark:bg-slate-800 border-slate-900 dark:border-slate-700 text-slate-600 dark:text-slate-300")}>
                                                 {p.label}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-3 pt-4">
-                                    <button onClick={handleUserAction} className="w-full py-5 bg-primary-600 text-white font-black uppercase tracking-[0.2em] text-xs shadow-[4px_4px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] hover:bg-black transition-all active:translate-x-1 active:translate-y-1 active:shadow-none">
-                                        {editingUserId ? 'Update Administrator' : 'Create System Account'}
+                                <div className="flex flex-col gap-4 pt-6 mt-4">
+                                    <button onClick={handleUserAction} className="w-full py-5 bg-indigo-600 text-white font-black uppercase tracking-[0.2em] text-xs border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-700 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none flex items-center justify-center gap-2">
+                                        {editingUserId ? <><RefreshCw size={18} /> Update Administrator</> : <><UserPlus size={18} /> Create System Account</>}
                                     </button>
-                                    {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="w-full py-3 bg-gray-100 dark:bg-gray-800 font-bold uppercase text-[10px] italic border-2 border-gray-950 text-gray-600">Cancel Edit</button>}
+                                    {editingUserId && <button onClick={() => { setEditingUserId(null); setNewUser({username:'', password:'', permissions:[]}); }} className="w-full py-4 bg-slate-100 dark:bg-slate-800 font-black uppercase text-[11px] tracking-widest border-4 border-slate-900 text-slate-600 dark:text-slate-300 shadow-[4px_4px_0px_0px_black] hover:bg-slate-200 dark:hover:bg-slate-700 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">Cancel Edit</button>}
                                 </div>
                             </div>
                         </section>
+                    </div>
+                )}
                     </div>
                 )}
 
                 {activeTab === 'advanced' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* WhatsApp Automation Core */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(34,197,94,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
-                                    <Monitor size={28} className="text-green-600" />
+                                    <Monitor size={28} className="text-indigo-600" />
                                     أتمتة الواتساب والرسائل
                                 </h2>
-                                <span className="hidden md:block text-[10px] font-black text-green-600 bg-green-50 dark:bg-green-900/20 px-3 py-1 border-2 border-green-500 uppercase italic">Automation Engine</span>
+                                <span className="hidden md:block text-[10px] font-black text-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 border-4 border-slate-900 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] uppercase italic tracking-widest">Automation Engine</span>
                             </div>
 
                             <div className="space-y-6">
-                                <div className="p-5 bg-green-50 dark:bg-green-900/10 border-4 border-gray-950 flex items-center justify-between group">
+                                <div className="p-5 bg-indigo-50 dark:bg-indigo-900/10 border-4 border-slate-900 flex items-center justify-between group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                     <div>
-                                        <p className="font-black text-sm text-green-900 dark:text-green-100 italic">إرسال الفواتير تلقائياً</p>
-                                        <p className="text-[10px] font-bold text-green-600/70 uppercase">Automatic Notifications</p>
+                                        <p className="font-black text-sm text-indigo-900 dark:text-indigo-100 italic">إرسال الفواتير تلقائياً</p>
+                                        <p className="text-[10px] font-bold text-indigo-600/70 uppercase lg:tracking-widest mt-1">Automatic Notifications</p>
                                     </div>
-                                    <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-14 h-7 rounded-full relative transition-all duration-300 border-2 border-gray-950", whatsappAutoNotify ? "bg-green-500" : "bg-gray-300 dark:bg-gray-800")}>
-                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full transition-all shadow-md", whatsappAutoNotify ? "translate-x-7" : "translate-x-0.5")} />
+                                    <button onClick={() => setWhatsappAutoNotify(!whatsappAutoNotify)} className={cn("w-14 h-8 relative transition-all duration-300 border-4 border-slate-900", whatsappAutoNotify ? "bg-indigo-600" : "bg-slate-300 dark:bg-slate-800")}>
+                                        <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", whatsappAutoNotify ? "translate-x-7" : "translate-x-1")} />
                                     </button>
                                 </div>
                                 
@@ -724,7 +725,7 @@ const Settings = () => {
                                     <textarea 
                                         value={localWhatsappTemplate} 
                                         onChange={e => setLocalWhatsappTemplate(e.target.value)}
-                                        className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-bold outline-none focus:border-green-500 transition-all min-h-[120px] text-sm leading-relaxed"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-5 font-bold outline-none focus:border-indigo-600 transition-all min-h-[120px] text-sm leading-relaxed"
                                         placeholder="اكتب رسالتك هنا..."
                                     />
                                     <div className="flex flex-wrap gap-2">
@@ -732,7 +733,7 @@ const Settings = () => {
                                             <button 
                                                 key={tag}
                                                 onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
-                                                className="px-3 py-1.5 bg-white dark:bg-gray-800 border-2 border-gray-950 text-[10px] font-black hover:bg-green-600 hover:text-white transition-all shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
+                                                className="px-3 py-2 bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 text-[10px] font-black hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1 hover:translate-x-0.5 hover:translate-y-0.5"
                                             >
                                                 + {tag}
                                             </button>
@@ -742,7 +743,7 @@ const Settings = () => {
                                 
                                 <button 
                                     onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))} 
-                                    className="w-full py-4 bg-green-600 hover:bg-green-700 text-white font-black uppercase tracking-widest transition-all shadow-[4px_4px_0px_0px_black] md:shadow-[6px_6px_0px_0px_black] active:translate-x-1 active:translate-y-1 active:shadow-none"
+                                    className="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase tracking-[0.2em] transition-all border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none mt-4"
                                 >
                                     حفظ وتفعيل القالب
                                 </button>
@@ -750,33 +751,33 @@ const Settings = () => {
                         </section>
 
                         {/* Archives & Semester Manager */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(59,130,246,0.1)] space-y-10">
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(79,70,229,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-10">
                             <div className="space-y-6">
-                                <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4">
-                                    <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
-                                        <Calendar size={24} />
+                                <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
+                                    <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                        <Calendar size={28} />
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-black uppercase tracking-tighter">إدارة الفصول والأرشيف</h2>
-                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 italic">Academic Ledger</p>
+                                        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Academic Ledger</p>
                                     </div>
                                 </div>
-                                <div className="space-y-4">
-                                    <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-3 font-black outline-none focus:border-blue-600" placeholder="الفصل الحالي" />
-                                    <textarea value={localSemesters} onChange={e => setLocalSemesters(e.target.value)} className="w-full bg-gray-50 dark:bg-gray-900 border-4 border-gray-950 p-4 font-bold outline-none h-24 resize-none italic" placeholder="الأرشيف التاريخي" />
-                                    <button onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))} className="w-full py-3 bg-blue-600 text-white font-black uppercase text-xs shadow-[4px_4px_0px_0px_black]">مزامنة الفصول الدراسية</button>
+                                <div className="space-y-5">
+                                    <input value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-black outline-none focus:border-indigo-600" placeholder="الفصل الحالي" />
+                                    <textarea value={localSemesters} onChange={e => setLocalSemesters(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-800 border-4 border-slate-900 dark:border-slate-700 p-4 font-bold outline-none h-28 resize-none italic" placeholder="الأرشيف التاريخي" />
+                                    <button onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))} className="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase text-xs border-4 border-slate-900 dark:border-white shadow-[6px_6px_0px_0px_indigo] dark:shadow-[6px_6px_0px_0px_rgba(79,70,229,1)] active:translate-x-1 active:translate-y-1 active:shadow-none hover:bg-black transition-all">مزامنة الفصول الدراسية</button>
                                 </div>
                             </div>
 
                             {/* Danger Zone */}
-                            <div className="pt-8 border-t-8 border-gray-950/5 text-center">
+                            <div className="pt-8 border-t-8 border-slate-900/10 dark:border-white/5 text-center">
                                 <button onClick={() => setSecureAction({
                                     type: 'reset',
                                     title: 'تصفير النظام بالكامل',
                                     description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب المعلمين الإيرادات والمصروفات بالكامل لبدء دورة جديدة تماماً للمنصة. هذا الإجراء نهائي ولا يمكن التراجع عنه بأي شكل.',
                                     confirmWord: 'إعادة ضبط المنصة',
                                     actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
-                                })} className="w-full py-4 bg-red-50 text-red-600 border-4 border-red-600 border-dashed font-black hover:bg-red-600 hover:text-white transition-all text-xs rounded-xl">
+                                })} className="w-full py-5 bg-rose-50 dark:bg-rose-900/10 text-rose-600 border-4 border-rose-600 border-dashed font-black hover:bg-rose-600 hover:text-white transition-all text-xs shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:translate-x-1 active:translate-y-1 active:shadow-none">
                                     إعادة ضبط المصنع (Factory Reset)
                                 </button>
                             </div>
@@ -787,63 +788,63 @@ const Settings = () => {
                 {activeTab === 'policies' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
                         {/* System Safeguards & Record Protection */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(225,29,72,0.1)] space-y-8">
-                            <div className="flex items-center justify-between border-b-4 border-gray-950 pb-4">
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_rgba(225,29,72,1)] dark:shadow-[8px_8px_0px_0px_rgba(225,29,72,0.5)] space-y-8">
+                            <div className="flex items-center justify-between border-b-4 border-slate-900 dark:border-slate-800 pb-4">
                                 <h2 className="font-black text-xl md:text-2xl flex items-center gap-3 uppercase tracking-tighter">
                                     <Lock size={28} className="text-rose-600" />
                                     حماية السجلات والقيود
                                 </h2>
-                                <span className="hidden md:block text-[10px] font-black text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-3 py-1 border-2 border-rose-500 uppercase italic">System Safeguards</span>
+                                <span className="hidden md:block text-[10px] font-black text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-3 py-1 border-4 border-rose-500 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] uppercase italic tracking-widest">System Safeguards</span>
                             </div>
 
                             <div className="space-y-6">
-                                <div className="p-6 bg-rose-50 dark:bg-rose-900/10 border-4 border-gray-950 relative overflow-hidden group">
+                                <div className="p-6 bg-rose-50 dark:bg-rose-900/10 border-4 border-slate-900 dark:border-rose-900 relative overflow-hidden group shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                     <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
                                         <div className="flex-1 text-center sm:text-right">
                                             <p className="font-black text-lg text-rose-900 dark:text-rose-100 flex items-center justify-center sm:justify-start gap-2">
                                                 <AlertCircle size={20} /> قفل التعديل بأثر رجعي
                                             </p>
-                                            <p className="text-xs font-bold text-rose-600/80 mt-2 leading-relaxed italic">
+                                            <p className="text-[11px] font-bold text-rose-600/80 mt-2 leading-relaxed italic">
                                                 تفعيل هذا الخيار يمنع الموظفين والمعلمين من إضافة أو تعديل الحصص في تواريخ قديمة أو مستقبلية، مما يضمن دقة السجلات المالية ومنع التلاعب.
                                             </p>
                                         </div>
-                                        <button onClick={() => setBackdateLockEnabled(!backdateLockEnabled).then(() => showNotify('تـم تحديث خيار الحماية'))} className={cn("w-16 h-8 rounded-full relative transition-all duration-300 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black]", backdateLockEnabled ? "bg-rose-600" : "bg-gray-300 dark:bg-gray-700")}>
-                                            <div className={cn("absolute top-1 w-5 h-5 bg-white rounded-full transition-all shadow-md", backdateLockEnabled ? "translate-x-9" : "translate-x-1")} />
+                                        <button onClick={() => setBackdateLockEnabled(!backdateLockEnabled).then(() => showNotify('تـم تحديث خيار الحماية'))} className={cn("w-16 h-8 relative transition-all duration-300 border-4 border-slate-900", backdateLockEnabled ? "bg-rose-600" : "bg-slate-300 dark:bg-slate-700")}>
+                                            <div className={cn("absolute top-0.5 w-5 h-5 bg-white border-2 border-slate-900 transition-all shadow-md", backdateLockEnabled ? "translate-x-9" : "translate-x-1")} />
                                         </button>
                                     </div>
                                 </div>
 
-                                <div className="space-y-6 pt-6 border-t-4 border-gray-950">
-                                    <div className="flex items-center gap-3 border-b-2 border-gray-950 pb-3 font-black text-indigo-600 tracking-tighter italic">
+                                <div className="space-y-6 pt-6 border-t-4 border-slate-900 dark:border-slate-800">
+                                    <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-3 font-black text-indigo-600 tracking-widest italic">
                                         <Wallet size={20} /> سياسة حساب العمولات
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <button 
                                             onClick={() => setTeacherCommissionType('fixed').then(() => showNotify('تم تغيير الحساب إلى: مبلغ ثابت'))}
                                             className={cn(
-                                                "relative p-5 border-4 transition-all group overflow-hidden text-right leading-none", 
+                                                "relative p-6 border-4 transition-all group overflow-hidden text-right leading-none", 
                                                 teacherCommissionType === 'fixed' 
-                                                    ? "border-gray-950 bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black]" 
-                                                    : "border-gray-200 dark:border-gray-800 grayscale hover:grayscale-0 hover:border-gray-950"
+                                                    ? "border-slate-900 dark:border-white bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]" 
+                                                    : "border-slate-300 dark:border-slate-700 hover:border-slate-900 dark:hover:border-white bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white"
                                             )}
                                         >
-                                            <p className="font-black text-xs uppercase mb-1">مبلغ ثابت</p>
-                                            <p className="text-[8px] font-bold opacity-60">Fixed Amount</p>
-                                            {teacherCommissionType === 'fixed' && <CheckCircle2 size={16} className="absolute left-2 top-2 text-white/40" />}
+                                            <p className="font-black text-sm uppercase mb-2">مبلغ ثابت</p>
+                                            <p className="text-[10px] font-bold opacity-60">Fixed Amount</p>
+                                            {teacherCommissionType === 'fixed' && <CheckCircle2 size={20} className="absolute left-3 top-3 text-white" />}
                                         </button>
 
                                         <button 
                                             onClick={() => setTeacherCommissionType('percentage').then(() => showNotify('تم تغيير الحساب إلى: نسبة مئوية'))}
                                             className={cn(
-                                                "relative p-5 border-4 transition-all group overflow-hidden text-right leading-none", 
+                                                "relative p-6 border-4 transition-all group overflow-hidden text-right leading-none", 
                                                 teacherCommissionType === 'percentage' 
-                                                    ? "border-gray-950 bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black]" 
-                                                    : "border-gray-200 dark:border-gray-800 grayscale hover:grayscale-0 hover:border-gray-950"
+                                                    ? "border-slate-900 dark:border-white bg-indigo-600 text-white shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)]" 
+                                                    : "border-slate-300 dark:border-slate-700 hover:border-slate-900 dark:hover:border-white bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white"
                                             )}
                                         >
-                                            <p className="font-black text-xs uppercase mb-1">نسبة مئوية</p>
-                                            <p className="text-[8px] font-bold opacity-60">Percentage %</p>
-                                            {teacherCommissionType === 'percentage' && <CheckCircle2 size={16} className="absolute left-2 top-2 text-white/40" />}
+                                            <p className="font-black text-sm uppercase mb-2">نسبة مئوية</p>
+                                            <p className="text-[10px] font-bold opacity-60">Percentage %</p>
+                                            {teacherCommissionType === 'percentage' && <CheckCircle2 size={20} className="absolute left-3 top-3 text-white" />}
                                         </button>
                                     </div>
                                 </div>
@@ -851,36 +852,36 @@ const Settings = () => {
                         </section>
 
                         {/* Attendance Policy & Monthly Archive */}
-                        <section className="bg-white dark:bg-gray-950 p-6 md:p-8 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_black] space-y-10">
+                        <section className="bg-white dark:bg-slate-900 p-6 md:p-8 border-4 border-slate-900 dark:border-white shadow-[8px_8px_0px_0px_black] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] space-y-10">
                             <div className="space-y-6">
-                                <div className="flex items-center gap-3 border-b-4 border-gray-950 pb-4">
-                                    <div className="w-12 h-12 bg-sky-50 dark:bg-sky-900/20 text-sky-600 flex items-center justify-center border-4 border-gray-950 shadow-[4px_4px_0px_0px_black]">
-                                        <Snowflake size={24} />
+                                <div className="flex items-center gap-3 border-b-4 border-slate-900 dark:border-slate-800 pb-4">
+                                    <div className="w-14 h-14 bg-sky-50 dark:bg-sky-900/20 text-sky-600 flex items-center justify-center border-4 border-slate-900 dark:border-slate-700 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
+                                        <Snowflake size={28} />
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-black uppercase tracking-tighter">سياسة الحضور والغياب</h2>
-                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 italic">Auto-Freeze Mechanism</p>
+                                        <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1 italic">Auto-Freeze Mechanism</p>
                                     </div>
                                 </div>
 
-                                <div className="bg-slate-50 dark:bg-slate-900 border-4 border-gray-950 p-6">
+                                <div className="bg-slate-50 dark:bg-slate-900 border-4 border-slate-900 p-6 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                     <div className="flex flex-col md:flex-row items-center gap-6">
                                         <div className="flex-1 text-center md:text-right">
-                                            <p className="text-xs font-black uppercase mb-1">حد الغياب المسموح</p>
-                                            <p className="text-[9px] font-bold opacity-50 italic leading-relaxed">إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، سيتم تجميد اشتراكه تلقائياً لحماية رصيده.</p>
+                                            <p className="text-sm font-black uppercase mb-2">حد الغياب المسموح</p>
+                                            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 italic leading-relaxed">إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، سيتم تجميد اشتراكه تلقائياً لحماية رصيده.</p>
                                         </div>
-                                        <div className="flex items-center gap-3 bg-white dark:bg-gray-800 border-2 border-gray-950 p-2 shadow-[4px_4px_0px_0px_black]">
+                                        <div className="flex items-center gap-3 bg-white dark:bg-slate-800 border-4 border-slate-900 p-3 shadow-[4px_4px_0px_0px_black] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                                             <input 
                                                 type="number" 
                                                 value={autoFreezeThreshold} 
                                                 onChange={(e) => setAutoFreezeThreshold(Number(e.target.value))} 
-                                                className="w-16 bg-transparent font-black text-2xl text-center outline-none" 
+                                                className="w-16 bg-transparent font-black text-3xl text-center outline-none" 
                                                 min="1" 
                                                 max="15" 
                                             />
                                             <button 
                                                 onClick={() => setAutoFreezeThreshold(autoFreezeThreshold).then(() => showNotify('تم حفظ السياسة'))} 
-                                                className="bg-sky-600 text-white px-4 py-2 font-black uppercase text-[9px] hover:bg-black transition-all"
+                                                className="bg-indigo-600 text-white px-5 py-3 font-black uppercase text-[10px] hover:bg-slate-900 transition-all border-2 border-slate-900 shadow-[2px_2px_0px_0px_black] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                                             >تفعيل</button>
                                         </div>
                                     </div>
@@ -888,17 +889,17 @@ const Settings = () => {
                             </div>
 
                             {/* Month Archive Warning Card */}
-                            <div className="pt-8 border-t-8 border-rose-500/10 bg-rose-50/20 dark:bg-rose-950/20 p-6 -mx-6 md:-mx-8 border-b-4 border-gray-950">
+                            <div className="pt-8 border-t-8 border-slate-900/10 dark:border-white/5 bg-rose-50/50 dark:bg-rose-950/20 p-6 md:p-8 border-4 border-rose-600 dark:border-rose-900 mt-8 shadow-[8px_8px_0px_0px_rgba(225,29,72,1)] dark:shadow-[8px_8px_0px_0px_rgba(225,29,72,0.3)] group hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-14 h-14 bg-rose-600 text-white flex items-center justify-center border-4 border-gray-950 shadow-[6px_6px_0px_0px_rgba(225,29,72,0.2)] animate-pulse">
-                                        <Archive size={28} />
+                                    <div className="w-16 h-16 bg-rose-600 text-white flex items-center justify-center border-4 border-slate-900 shadow-[6px_6px_0px_0px_rgba(225,29,72,0.2)] dark:shadow-[4px_4px_0px_0px_black] group-hover:animate-pulse">
+                                        <Archive size={32} />
                                     </div>
                                     <div>
-                                        <h3 className="font-black text-lg text-rose-600 uppercase tracking-tighter leading-none">إقفال الشهر المالي والأكاديمي</h3>
-                                        <p className="text-[9px] font-black text-rose-500/60 uppercase tracking-widest mt-1 italic">DANGER ZONE: FULL MONTHLY ARCHIVE</p>
+                                        <h3 className="font-black text-xl text-rose-700 dark:text-rose-400 uppercase tracking-tighter leading-none mb-2">إقفال الشهر المالي والأكاديمي</h3>
+                                        <p className="text-[10px] font-black text-rose-600/60 uppercase tracking-widest mt-1 italic">DANGER ZONE: FULL MONTHLY ARCHIVE</p>
                                     </div>
                                 </div>
-                                <p className="text-xs font-bold text-gray-900 dark:text-gray-100 mb-6 bg-white dark:bg-gray-900 p-4 border-2 border-rose-500/30 italic leading-relaxed">
+                                <p className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-6 bg-white dark:bg-slate-900 p-5 border-4 border-rose-600/30 italic leading-relaxed">
                                     هذه العملية ستقوم بأرشفة كافة الحصص الحالية وتصفير الإحصائيات الشهرية للبدء في فترة جديدة تماماً. لا تلجأ لهذا الخيار إلا بنهاية الشهر المالي الفعلي للأكاديمية.
                                 </p>
                                 <button onClick={() => setSecureAction({
@@ -910,7 +911,7 @@ const Settings = () => {
                                         showNotify('تم تجميد وأرشفة بيانات الشهر المالي بنجاح! يتم الآن التحضير...');
                                         setTimeout(() => window.location.reload(), 2000);
                                     }).catch(() => alert('حدث خطأ أثناء إقفال الشهر!'))
-                                })} className="w-full py-5 bg-black text-white dark:bg-white dark:text-black font-black uppercase tracking-[0.2em] text-xs shadow-[8px_8px_0px_0px_rgba(225,29,72,0.8)] hover:bg-rose-600 hover:text-white transition-all flex items-center justify-center gap-4 active:translate-x-1 active:translate-y-1 active:shadow-none">
+                                })} className="w-full py-5 bg-rose-600 hover:bg-slate-900 hover:text-white text-white font-black uppercase tracking-[0.2em] text-sm shadow-[6px_6px_0px_0px_black] dark:shadow-[6px_6px_0px_0px_rgba(225,29,72,0.5)] border-4 border-slate-900 transition-all flex items-center justify-center gap-4 active:translate-x-1 active:translate-y-1 active:shadow-none">
                                     <Lock size={20} />
                                     إقفال الفترة الحالية
                                 </button>
@@ -921,53 +922,53 @@ const Settings = () => {
 
                 {activeTab === 'audit' && (
                     <div className="md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
-                        <section className="bg-white dark:bg-gray-950 border-4 border-gray-950 shadow-lg md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-                            <div className="flex items-center justify-between p-6 bg-gray-950 text-white border-b-4 border-gray-950">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-primary-600 flex items-center justify-center border-2 border-white shadow-[2px_2px_0px_0px_white]">
-                                        <Activity size={24} />
+                        <section className="bg-white dark:bg-slate-900 border-4 border-slate-900 dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,0.1)] overflow-hidden">
+                            <div className="flex items-center justify-between p-6 md:p-8 bg-slate-900 text-white border-b-4 border-slate-900 dark:border-white shadow-[inset_0px_-4px_0px_0px_rgba(79,70,229,1)]">
+                                <div className="flex items-center gap-5">
+                                    <div className="w-14 h-14 bg-indigo-600 flex items-center justify-center border-4 border-white shadow-[4px_4px_0px_0px_white]">
+                                        <Activity size={28} />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-black uppercase tracking-tighter italic">Digital Audit Control</h2>
-                                        <p className="text-[10px] font-black text-primary-400 uppercase tracking-widest italic leading-none">Global Activity Audit Log</p>
+                                        <h2 className="text-2xl font-black uppercase tracking-tighter italic mb-1">Digital Audit Control</h2>
+                                        <p className="text-[11px] font-black text-indigo-400 uppercase tracking-widest italic leading-none">Global Activity Audit Log</p>
                                     </div>
                                 </div>
                                 <button 
                                     onClick={fetchLogs} 
-                                    className="p-3 bg-white/10 hover:bg-primary-600 text-white border-2 border-white/20 transition-all flex items-center gap-2 font-black text-[10px] uppercase shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] active:shadow-none active:translate-x-1 active:translate-y-1"
+                                    className="p-4 bg-white/10 hover:bg-white text-white hover:text-slate-900 border-4 border-white/20 hover:border-white transition-all flex items-center gap-3 font-black text-[11px] uppercase shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1"
                                 >
-                                    <RefreshCw size={18} />
+                                    <RefreshCw size={20} />
                                     Refresh Buffer
                                 </button>
                             </div>
 
                             <div className="overflow-x-auto">
                                 <table className="w-full text-right border-collapse">
-                                    <thead className="bg-gray-50 dark:bg-gray-900 border-b-4 border-gray-950">
-                                        <tr className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] italic">
-                                            <th className="p-5 border-l-2 border-gray-100 dark:border-gray-800">توقيت العملية (Log Time)</th>
-                                            <th className="p-5 border-l-2 border-gray-100 dark:border-gray-800">المسؤول المنفذ (Identity)</th>
-                                            <th className="p-5">طبيعة الإجراء البرمجي (Action)</th>
+                                    <thead className="bg-slate-50 dark:bg-slate-800 border-b-4 border-slate-900 dark:border-slate-700">
+                                        <tr className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] italic">
+                                            <th className="p-6 border-l-4 border-slate-200 dark:border-slate-700">توقيت العملية (Log Time)</th>
+                                            <th className="p-6 border-l-4 border-slate-200 dark:border-slate-700">المسؤول المنفذ (Identity)</th>
+                                            <th className="p-6">طبيعة الإجراء البرمجي (Action)</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y-2 divide-gray-100 dark:divide-gray-800">
+                                    <tbody className="divide-y-4 divide-slate-100 dark:divide-slate-800">
                                         {auditLogs.length > 0 ? auditLogs.map((log, idx) => (
-                                            <tr key={idx} className="group hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-colors">
-                                                <td className="p-5 font-mono text-[11px] font-black text-gray-400 dark:text-gray-500 border-l-2 border-gray-100 dark:border-gray-800" dir="ltr">
+                                            <tr key={idx} className="group hover:bg-indigo-50 dark:hover:bg-indigo-900/10 transition-colors">
+                                                <td className="p-6 font-mono text-xs font-black text-slate-500 dark:text-slate-400 border-l-4 border-slate-100 dark:border-slate-800" dir="ltr">
                                                     {new Date(log.timestamp).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}
                                                 </td>
-                                                <td className="p-5 font-black text-sm uppercase italic">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[10px] border-2 border-gray-950 group-hover:bg-primary-600 group-hover:text-white transition-all shadow-sm">
+                                                <td className="p-6 font-black text-sm uppercase italic">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-10 h-10 bg-white dark:bg-slate-800 flex items-center justify-center text-xs border-4 border-slate-900 dark:border-slate-700 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-[2px_2px_0px_0px_black]">
                                                             {log.username?.[0]?.toUpperCase() || 'A'}
                                                         </div>
-                                                        <span className="tracking-tighter">{log.username}</span>
+                                                        <span className="tracking-tighter dark:text-white">{log.username}</span>
                                                     </div>
                                                 </td>
-                                                <td className="p-5">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-2 h-2 rounded-full bg-primary-600 animate-pulse"></div>
-                                                        <span className="font-bold text-xs uppercase tracking-tight text-slate-700 dark:text-slate-300">
+                                                <td className="p-6">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-3 h-3 bg-indigo-600 animate-pulse border-2 border-slate-900"></div>
+                                                        <span className="font-bold text-sm uppercase tracking-tight text-slate-700 dark:text-slate-300">
                                                             {log.action}
                                                         </span>
                                                     </div>
@@ -975,7 +976,7 @@ const Settings = () => {
                                             </tr>
                                         )) : (
                                             <tr>
-                                                <td colSpan={3} className="p-20 text-center font-black text-gray-300 uppercase italic tracking-widest">
+                                                <td colSpan={3} className="p-24 text-center font-black text-slate-400 dark:text-slate-600 uppercase italic tracking-widest text-lg">
                                                     No activity recorded in the current buffer.
                                                 </td>
                                             </tr>
@@ -984,8 +985,8 @@ const Settings = () => {
                                 </table>
                             </div>
                             
-                            <div className="p-4 bg-gray-50 dark:bg-gray-900 border-t-4 border-gray-950 flex justify-between items-center text-[9px] font-black text-gray-500 uppercase italic tracking-[0.2em]">
-                                <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></div> Monitor Status: Active</span>
+                            <div className="p-6 bg-slate-50 dark:bg-slate-800 border-t-4 border-slate-900 dark:border-slate-700 flex justify-between items-center text-[11px] font-black text-slate-500 uppercase italic tracking-[0.2em] shadow-[inset_0px_4px_0px_0px_rgba(0,0,0,0.05)]">
+                                <span className="flex items-center gap-3"><div className="w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 animate-ping"></div> Monitor Status: Active</span>
                                 <span>End of Record Cache</span>
                             </div>
                         </section>
