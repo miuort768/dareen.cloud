@@ -10,6 +10,7 @@ import { GuestChatManager } from '../features/chat/components/GuestChatManager';
 import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
+import { API_BASE_URL } from '../config/api';
 import { settingsService } from '../features/settings/services/settingsService';
 
 const AVAILABLE_PERMISSIONS = [
@@ -262,7 +263,8 @@ const Settings = () => {
         setIsSaving(true);
         try {
             const token = localStorage.getItem('auth_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api.dareen.cloud'}/system/backup/export`, {
+            const url = API_BASE_URL.startsWith('http') ? `${API_BASE_URL}/system/backup/export` : `${window.location.origin}${API_BASE_URL}/system/backup/export`;
+            const response = await fetch(url, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             });
             if (!response.ok) throw new Error('فشل تحميل النسخة الاحتياطية');
@@ -293,7 +295,8 @@ const Settings = () => {
         setIsSaving(true);
         try {
             const token = localStorage.getItem('auth_token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api.dareen.cloud'}/system/backup/import`, {
+            const url = API_BASE_URL.startsWith('http') ? `${API_BASE_URL}/system/backup/import` : `${window.location.origin}${API_BASE_URL}/system/backup/import`;
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {},
                 body: formData
