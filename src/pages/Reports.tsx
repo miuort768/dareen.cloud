@@ -1,4 +1,4 @@
-import { Award, CheckCircle2, DollarSign, Target, LayoutPanelTop, RefreshCw } from 'lucide-react';
+import { Award, CheckCircle2, DollarSign, Target } from 'lucide-react';
 import { Skeleton } from '../shared/components/Skeleton';
 import { useReports } from '../features/reports/hooks/useReports';
 import { ReportsHeader } from '../features/reports/components/ReportsHeader';

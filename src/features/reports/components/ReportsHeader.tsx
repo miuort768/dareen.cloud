@@ -1,4 +1,4 @@
-import { TrendingUp, Download, Activity, Sparkles } from 'lucide-react';
+import { TrendingUp, Download, Activity } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface ReportsHeaderProps {
