@@ -8,39 +8,52 @@ interface TeacherStatsProps {
     averagePrice: number;
 }
 
-export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, averagePrice }: TeacherStatsProps) => {
-    const stats = [
-        { label: 'إجمالي المعلمات', value: totalTeachers, icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50/50', border: 'border-indigo-100', trend: 'نمو مستمر' },
-        { label: 'عدد الطلاب', value: totalStudents, icon: UserPlus, color: 'text-emerald-500', bg: 'bg-emerald-50/50', border: 'border-emerald-100', trend: 'نشط الآن' },
-        { label: 'التخصصات', value: uniqueSubjects, icon: BookOpen, color: 'text-purple-500', bg: 'bg-purple-50/50', border: 'border-purple-100', trend: 'تنوع أكاديمي' },
-        { label: 'متوسط السعر', value: `${averagePrice} ج.م`, icon: DollarSign, color: 'text-amber-500', bg: 'bg-amber-50/50', border: 'border-amber-100', trend: 'لكل حصة' },
-    ];
+const StatCard = ({ label, value, icon: Icon, color, bg, trend }: any) => (
+    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
+        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
+            <Icon size={16} className={color} />
+        </div>
+        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{label}</p>
+        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value}</p>
+        <p className="text-[8px] font-bold text-slate-300 mt-1 uppercase tracking-widest">{trend}</p>
+    </div>
+);
 
+export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, averagePrice }: TeacherStatsProps) => {
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4" dir="rtl">
-            {stats.map((stat, i) => (
-                <div key={i} className={cn(
-                    "relative overflow-hidden bg-white dark:bg-slate-900 border-r-4 p-4 shadow-sm transition-all hover:shadow-md",
-                    stat.border.replace('border-', 'border-r-')
-                )}>
-                    {/* Background Accent */}
-                    <div className={cn("absolute -right-4 -top-4 w-12 h-12 rounded-full blur-2xl opacity-20", stat.color.replace('text-', 'bg-'))}></div>
-                    
-                    <div className="relative z-10 flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                            <div className={cn("w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-800")}>
-                                <stat.icon size={16} className={stat.color} />
-                            </div>
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{stat.trend}</span>
-                        </div>
-                        
-                        <div className="mt-1">
-                            <h4 className="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">{stat.label}</h4>
-                            <p className="text-xl font-black text-slate-800 dark:text-white tabular-nums">{stat.value}</p>
-                        </div>
-                    </div>
-                </div>
-            ))}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6" dir="rtl">
+            <StatCard 
+                label="إجمالي المعلمات" 
+                value={totalTeachers} 
+                icon={Users} 
+                color="text-[#5c59f2]" 
+                bg="bg-indigo-50 dark:bg-indigo-900/20"
+                trend="الكوادر النشطة"
+            />
+            <StatCard 
+                label="عدد الطلاب" 
+                value={totalStudents} 
+                icon={UserPlus} 
+                color="text-emerald-500" 
+                bg="bg-emerald-50 dark:bg-emerald-900/20"
+                trend="منتسب حالي"
+            />
+            <StatCard 
+                label="التخصصات" 
+                value={uniqueSubjects} 
+                icon={BookOpen} 
+                color="text-purple-500" 
+                bg="bg-purple-50 dark:bg-purple-900/20"
+                trend="تنوع أكاديمي"
+            />
+            <StatCard 
+                label="متوسط السعر" 
+                value={`${averagePrice} ج.م`} 
+                icon={DollarSign} 
+                color="text-amber-500" 
+                bg="bg-amber-50 dark:bg-amber-900/20"
+                trend="لكل حصة"
+            />
         </div>
     );
 };

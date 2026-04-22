@@ -4,20 +4,22 @@ import { useApp } from '../context/AppContext';
 import { useTeachers } from '../features/teachers/hooks/useTeachers';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
+import { cn } from '../lib/utils';
 
 // Shared Components
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { SendNotificationModal } from '../shared/components/SendNotificationModal';
+import { PageLoader } from '../components/ui/PageLoader';
 
 // Feature Components
-import { GraduationCap, Sparkles } from 'lucide-react';
+import { GraduationCap, Plus, X } from 'lucide-react';
 import { TeacherStats } from '../features/teachers/components/TeacherStats';
 import { TeacherToolbar } from '../features/teachers/components/TeacherToolbar';
 import { TeacherForm } from '../features/teachers/components/TeacherForm';
 import { TeacherTable } from '../features/teachers/components/TeacherTable';
 import { TeacherDetails } from '../features/teachers/components/TeacherDetails';
-import { PageLoader } from '../components/ui/PageLoader';
+
 // Types
 import type { Teacher, Session, Student, Enrollment } from '../types';
 
@@ -259,60 +261,40 @@ export const Teachers = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="space-y-6 pb-32 min-h-full" dir="rtl">
-            {/* Premium Personalized Header - Matching Dashboard Identity */}
-            <div className="relative group mb-6">
-                {/* Background Glow */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5c59f2] to-emerald-500 rounded-none blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
-                
-                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
-                    {/* Decorative Background Circles */}
-                    <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-50 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
-                    <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-50 dark:bg-emerald-900/10 rounded-full blur-3xl"></div>
-
-                    <div className="relative z-10 px-4 py-4 md:px-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                        {/* Right Section: Identity */}
-                        <div className="flex items-center gap-4 md:gap-5 w-full md:w-auto">
-                            <div className="relative shrink-0">
-                                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-[#5c59f2] to-[#7c79ff] flex items-center justify-center text-white shadow-lg rotate-2 group-hover:rotate-0 transition-transform">
-                                    <GraduationCap size={24} className="md:size-32" />
-                                </div>
-                                <div className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-indigo-500 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center">
-                                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                                </div>
-                            </div>
-
-                            <div className="text-right">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-indigo-50 dark:bg-indigo-900/40 text-[#5c59f2] text-[9px] md:text-[10px] font-black px-2 py-0.5 uppercase tracking-widest leading-none">الأقسام الأكاديمية</span>
-                                    <Sparkles className="text-amber-400 md:size-[14px]" size={12} />
-                                </div>
-                                <h1 className="text-lg md:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tighter uppercase italic">إدارة الكوادر التعليمية</h1>
-                                <p className="hidden sm:block text-slate-400 font-bold mt-2 text-xs opacity-70">تنظيم وهيكلة قاعدة بيانات المعلمات والطلاب والمواد</p>
-                            </div>
-                        </div>
-
-                        {/* Left Section: Contextual Info */}
-                        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-                            <div className="hidden md:flex flex-col items-end px-4 border-r-2 border-slate-100 dark:border-slate-800">
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">إجمالي الطاقم</span>
-                                <span className="text-xl font-black text-[#5c59f2] tabular-nums">{teachers.length} معلمة</span>
-                            </div>
-                            <div className="bg-slate-900 dark:bg-slate-800 text-white px-5 py-3 flex items-center gap-3 shadow-xl">
-                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-[9px] font-black text-slate-400 uppercase leading-none mb-1 opacity-60">حالة النظام</p>
-                                    <p className="text-xs font-bold leading-none">مزامنة نشطة</p>
-                                </div>
-                            </div>
+        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+            {/* Header Section */}
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 text-[#5c59f2] rounded-xl shadow-sm">
+                        <GraduationCap size={18} />
+                    </div>
+                    <div>
+                        <h1 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-tight">إدارة الكوادر التعليمية</h1>
+                        <div className="flex items-center gap-2">
+                             <p className="text-[10px] text-slate-400 italic font-bold">الأقسام الأكاديمية • {teachers.length} معلمة</p>
+                             <span className="w-1 h-1 bg-slate-200 rounded-full"></span>
+                             <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">مزامنة نشطة</span>
                         </div>
                     </div>
                 </div>
+
+                <div className="flex items-center gap-2 no-print">
+                    <button
+                        onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
+                        className={cn(
+                            "h-9 px-4 flex items-center gap-2 text-[11px] font-bold rounded-xl transition-all shadow-sm active:scale-95",
+                            showAddForm 
+                            ? "bg-rose-50 text-rose-600 hover:bg-rose-100" 
+                            : "bg-[#5c59f2] text-white hover:bg-indigo-700 shadow-indigo-500/10"
+                        )}
+                    >
+                        {showAddForm ? <X size={14} /> : <Plus size={14} />}
+                        <span>{showAddForm ? 'إلغاء العملية' : 'إضافة معلمة جديدة'}</span>
+                    </button>
+                </div>
             </div>
 
-            <div className="p-4 md:p-0 space-y-6">
+            <div className="py-6 space-y-6">
                 <TeacherStats
                     totalTeachers={teachers.length}
                     totalStudents={totalStudentsCount}
@@ -342,7 +324,7 @@ export const Teachers = () => {
                 />
 
                 {showAddForm && (
-                    <div className="animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="px-4 md:px-6">
                         <TeacherForm
                             onSubmit={handleAddTeacher}
                             initialData={editId ? teachers.find(t => t.id === editId) : null}
@@ -351,37 +333,45 @@ export const Teachers = () => {
                     </div>
                 )}
 
-                <div className={`grid gap-6 ${showDetails ? 'grid-cols-1 lg:grid-cols-12' : 'grid-cols-1'}`}>
-                    <div className={showDetails ? 'lg:col-span-8' : ''}>
-                        <TeacherTable
-                            teachers={filteredTeachers}
-                            onEdit={handleEditTeacher}
-                            onDelete={setDeletingTeacherId}
-                            onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
-                            onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-                            selectedId={selectedTeacher?.id}
-                            studentCounts={studentCounts}
-                        />
-                    </div>
-
-                    {showDetails && selectedTeacher && (
-                        <div className="lg:col-span-4 animate-in slide-in-from-left-4 duration-500">
-                            <TeacherDetails
-                                teacher={selectedTeacher}
-                                onClose={() => setShowDetails(false)}
-                                students={students}
-                                sessions={sessions}
-                                onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
-                                onDeleteSession={async (id) => {
-                                    await api.delete(`/sessions/${id}`);
-                                    queryClient.invalidateQueries({ queryKey: ['sessions'] });
-                                }}
-                                onSendNotification={(t) => setNotifyingTeacher(t)}
-                                isTeacherView={isTeacher}
+                <div className="px-4 md:px-6">
+                    <div className={cn(
+                        "grid gap-6 transition-all duration-700",
+                        showDetails ? "lg:grid-cols-12" : "grid-cols-1"
+                    )}>
+                        <div className={cn(
+                            "transition-all duration-700",
+                            showDetails ? "lg:col-span-8" : "w-full"
+                        )}>
+                            <TeacherTable
+                                teachers={filteredTeachers}
+                                onEdit={handleEditTeacher}
+                                onDelete={setDeletingTeacherId}
+                                onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
+                                onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
+                                selectedId={selectedTeacher?.id}
+                                studentCounts={studentCounts}
                             />
                         </div>
-                    )}
+
+                        {showDetails && selectedTeacher && (
+                            <div className="lg:col-span-4 animate-in slide-in-from-left-4 duration-500">
+                                <TeacherDetails
+                                    teacher={selectedTeacher}
+                                    onClose={() => setShowDetails(false)}
+                                    students={students}
+                                    sessions={sessions}
+                                    onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                    onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
+                                    onDeleteSession={async (id) => {
+                                        await api.delete(`/sessions/${id}`);
+                                        queryClient.invalidateQueries({ queryKey: ['sessions'] });
+                                    }}
+                                    onSendNotification={(t) => setNotifyingTeacher(t)}
+                                    isTeacherView={isTeacher}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
