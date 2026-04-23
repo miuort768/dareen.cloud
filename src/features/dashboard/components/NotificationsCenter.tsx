@@ -278,5 +278,4 @@ export const NotificationsCenter = ({
             </div>
         </div>
     );
-    );
 };
