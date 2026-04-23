@@ -3,7 +3,7 @@ import {
     Users, 
     Search, 
     Filter, 
-    MoreHorizontal, 
+    Trash, 
     CheckCircle2, 
     Clock, 
     Star, 
@@ -99,6 +99,15 @@ export const Leads: React.FC = () => {
     // Update Status Mutation
     const updateMutation = useMutation({
         mutationFn: ({ id, updates }: { id: string, updates: Partial<Lead> }) => crmService.update(id, updates),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['leads'] });
+            queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
+        }
+    });
+
+    // Delete Mutation
+    const deleteMutation = useMutation({
+        mutationFn: crmService.delete,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
@@ -289,8 +298,16 @@ export const Leads: React.FC = () => {
                                                 <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-400 hover:text-white transition-all">
                                                     <MessageSquare size={14} />
                                                 </button>
-                                                <button className="w-8 h-8 bg-slate-50 text-slate-400 flex items-center justify-center rounded-lg hover:bg-slate-200 transition-all">
-                                                    <MoreHorizontal size={14} />
+                                                <button 
+                                                    onClick={() => {
+                                                        if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) {
+                                                            deleteMutation.mutate(lead.id);
+                                                        }
+                                                    }} 
+                                                    className="w-8 h-8 bg-rose-50 dark:bg-rose-900/20 text-rose-500 flex items-center justify-center rounded-none hover:bg-rose-600 hover:text-white transition-all shadow-sm"
+                                                    title="حذف العميل"
+                                                >
+                                                    <Trash size={14} />
                                                 </button>
                                             </div>
                                         </td>
