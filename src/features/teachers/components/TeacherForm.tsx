@@ -71,7 +71,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                         {initialData ? <Edit size={20} /> : <Plus size={20} />}
                     </div>
                     <div>
-                        <h3 className="text-lg font-black text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
+                        <h3 className="text-sm md:text-lg font-black text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
                         <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-0.5">
                             {initialData ? 'تحديث السجل الأكاديمي' : 'فتح سجل كادر جديد'}
                         </p>
