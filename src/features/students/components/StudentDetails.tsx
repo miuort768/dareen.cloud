@@ -236,12 +236,16 @@ export const StudentDetails = ({
                         })}
 
                         {/* Add Enrollment */}
-                        <div className="bg-slate-50 dark:bg-slate-800/30 p-6 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-8 h-8 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center shadow-sm">
-                                    <Plus size={16} className="text-slate-400" />
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-none border-2 border-dashed border-indigo-200 dark:border-indigo-900/30 relative overflow-hidden group hover:border-indigo-400 transition-colors">
+                            <div className="absolute top-0 right-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shadow-sm">
+                                    <Plus size={18} strokeWidth={2.5} />
                                 </div>
-                                <h4 className="font-bold text-sm text-slate-800 dark:text-white uppercase tracking-tight">إدراج برنامج جديد</h4>
+                                <div>
+                                    <h4 className="font-black text-sm text-slate-800 dark:text-white uppercase tracking-tighter">إدراج برنامج جديد</h4>
+                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">تسجيل الطالب في مسار أكاديمي</p>
+                                </div>
                             </div>
                             <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
                         </div>
