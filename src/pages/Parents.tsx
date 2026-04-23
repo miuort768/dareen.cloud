@@ -104,7 +104,7 @@ export const Parents = () => {
                             />
                         </div>
                     ) : (
-                        <div className="max-w-4xl mx-auto animate-in slide-in-from-left-8 duration-500">
+                        <div className="w-full animate-in slide-in-from-left-8 duration-500">
                             {state.selectedParent && state.selectedParentData && (
                                 <ParentDetails
                                     parent={state.selectedParent}

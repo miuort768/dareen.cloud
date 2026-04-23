@@ -85,118 +85,120 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                 </div>
             </div>
 
-            <div className="p-6 space-y-8">
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-3">
+            <div className="p-6 md:p-10 space-y-12">
+                {/* Stats Grid - 4 cards on 1 row for desktop */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     <StatCard label="الأبناء" value={details.children.length} icon={Users} gradient="bg-gradient-to-br from-blue-600 to-indigo-700" />
                     <StatCard label="الاشتراكات" value={details.totalEnrollments} icon={GraduationCap} gradient="bg-gradient-to-br from-purple-600 to-pink-700" />
                     <StatCard label="الحصص" value={`${details.completedSessions}/${details.totalSessions}`} icon={Calendar} gradient="bg-gradient-to-br from-emerald-600 to-teal-700" />
                     <StatCard label="الإنجاز" value={`${details.completionRate}%`} icon={TrendingUp} gradient="bg-gradient-to-br from-amber-500 to-orange-700" />
                 </div>
 
-                {/* Children List */}
-                <div className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
-                        <div className="flex items-center gap-2">
-                             <div className="w-1.5 h-4 bg-indigo-600 rounded-none" />
-                             <h4 className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-[0.2em]">الأبناء المسجلين</h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    {/* Children List */}
+                    <div className="space-y-6">
+                        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-6 bg-indigo-600 rounded-none" />
+                                <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-[0.2em]">الأبناء المسجلين</h4>
+                            </div>
+                            <span className="text-[10px] font-black bg-slate-900 text-white px-3 py-1 rounded-none">
+                                {details.children.length}
+                            </span>
                         </div>
-                        <span className="text-[9px] font-black bg-slate-900 text-white px-2 py-0.5 rounded-none">
-                            {details.children.length}
-                        </span>
-                    </div>
 
-                    <div className="space-y-3">
-                        {details.children.length > 0 ? details.children.map(child => (
-                            <div key={child.id} className="p-4 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-none group hover:bg-white dark:hover:bg-slate-800 transition-all border-l-4 border-l-indigo-600 shadow-sm">
-                                <div className="flex justify-between items-center mb-3">
-                                    <div>
-                                        <p className="font-black text-xs text-slate-800 dark:text-white uppercase tracking-tight">{child.name}</p>
-                                        <p className="text-[9px] font-black text-indigo-500 uppercase tracking-widest mt-0.5">{child.grade}</p>
-                                    </div>
-                                    <div className="w-7 h-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[10px] font-black text-slate-300">
-                                        {child.name.charAt(0)}
-                                    </div>
-                                </div>
-                                {child.enrollments && child.enrollments.length > 0 && (
-                                    <div className="space-y-2 pt-3 border-t border-slate-100 dark:border-slate-700/50">
-                                        {child.enrollments.map((en, idx) => (
-                                            <div key={idx} className="flex items-center justify-between text-[10px] font-bold">
-                                                <div className="flex items-center gap-2">
-                                                    <BookOpen size={10} className="text-slate-400" />
-                                                    <span className="text-slate-600 dark:text-slate-400">{en.subject}</span>
-                                                </div>
-                                                <div className="flex items-center gap-1.5">
-                                                    <div className="w-24 h-1.5 bg-slate-100 dark:bg-slate-900 rounded-none overflow-hidden">
-                                                        <div 
-                                                            className="h-full bg-indigo-600" 
-                                                            style={{ width: `${(en.sessionsUsed / en.sessionsTotal) * 100}%` }} 
-                                                        />
-                                                    </div>
-                                                    <span className="font-black font-mono text-[9px] min-w-[30px] text-right">
-                                                        {en.sessionsUsed}/{en.sessionsTotal}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )) : (
-                            <div className="text-center py-12 border border-dashed border-slate-200 dark:border-slate-800 rounded-none">
-                                <Users size={32} className="mx-auto text-slate-100 dark:text-slate-800 mb-2" />
-                                <p className="text-slate-300 dark:text-slate-700 text-[10px] font-black uppercase tracking-widest">لا يوجد أبناء مرتبـطين</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Schedule Section */}
-                <div className="space-y-4">
-                    <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                        <div className="w-1.5 h-4 bg-amber-500 rounded-none" />
-                        <h4 className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-[0.2em]">الجدول العائلي الموحد</h4>
-                    </div>
-
-                    <div className="space-y-2 max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
-                        {details.familySchedule.length > 0 ? (() => {
-                            const grouped = details.familySchedule.reduce((acc, current) => {
-                                const key = `${current.studentName}-${current.subject}`;
-                                if (!acc[key]) {
-                                    acc[key] = { student: current.studentName, subject: current.subject, times: [] };
-                                }
-                                acc[key].times.push(current);
-                                return acc;
-                            }, {} as Record<string, { student: string, subject: string, times: FamilyScheduleItem[] }>);
-
-                            return Object.values(grouped).map((group, idx) => (
-                                <div key={idx} className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm hover:border-indigo-200 transition-colors">
-                                    <div className="flex items-center justify-between mb-3">
+                        <div className="space-y-4">
+                            {details.children.length > 0 ? details.children.map(child => (
+                                <div key={child.id} className="p-5 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 rounded-none group hover:bg-white dark:hover:bg-slate-800 transition-all border-l-4 border-l-indigo-600 shadow-sm">
+                                    <div className="flex justify-between items-center mb-4">
                                         <div>
-                                            <p className="font-black text-[11px] text-slate-800 dark:text-white uppercase tracking-tight leading-none">{group.subject}</p>
-                                            <p className="text-[9px] font-black text-amber-600 uppercase tracking-widest mt-1">{group.student}</p>
+                                            <p className="font-black text-sm text-slate-800 dark:text-white uppercase tracking-tight">{child.name}</p>
+                                            <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest mt-0.5">{child.grade}</p>
                                         </div>
-                                        <div className="w-6 h-6 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
-                                            <Clock size={11} className="text-slate-400" />
+                                        <div className="w-9 h-9 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-xs font-black text-slate-300">
+                                            {child.name.charAt(0)}
                                         </div>
                                     </div>
-                                    <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-50 dark:border-slate-800">
-                                        {group.times.map((t, i) => (
-                                            <div key={i} className="flex items-center gap-2 px-2 py-1 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-[9px] font-black rounded-none">
-                                                <span className="text-slate-400 uppercase">{t.day}</span>
-                                                <span className="w-1 h-1 bg-indigo-600 rounded-full" />
-                                                <span className="text-indigo-600 font-mono">{t.hour} {t.period === 'am' ? 'صباحاً' : 'مساءً'}</span>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    {child.enrollments && child.enrollments.length > 0 && (
+                                        <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                                            {child.enrollments.map((en, idx) => (
+                                                <div key={idx} className="flex items-center justify-between text-[11px] font-bold">
+                                                    <div className="flex items-center gap-2">
+                                                        <BookOpen size={12} className="text-slate-400" />
+                                                        <span className="text-slate-600 dark:text-slate-400">{en.subject}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-32 h-2 bg-slate-100 dark:bg-slate-900 rounded-none overflow-hidden">
+                                                            <div 
+                                                                className="h-full bg-indigo-600" 
+                                                                style={{ width: `${(en.sessionsUsed / en.sessionsTotal) * 100}%` }} 
+                                                            />
+                                                        </div>
+                                                        <span className="font-black font-mono text-[10px] min-w-[35px] text-right">
+                                                            {en.sessionsUsed}/{en.sessionsTotal}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
-                            ));
-                        })() : (
-                            <div className="text-center py-12 opacity-20">
-                                <Calendar size={32} className="mx-auto text-slate-400 mb-2" />
-                                <p className="text-[10px] font-black uppercase tracking-widest">خالٍ من الجلسات</p>
-                            </div>
-                        )}
+                            )) : (
+                                <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-none">
+                                    <Users size={40} className="mx-auto text-slate-100 dark:text-slate-800 mb-3" />
+                                    <p className="text-slate-300 dark:text-slate-700 text-xs font-black uppercase tracking-widest">لا يوجد أبناء مرتبـطين</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Schedule Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                            <div className="w-1.5 h-6 bg-amber-500 rounded-none" />
+                            <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-[0.2em]">الجدول العائلي الموحد</h4>
+                        </div>
+
+                        <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                            {details.familySchedule.length > 0 ? (() => {
+                                const grouped = details.familySchedule.reduce((acc, current) => {
+                                    const key = `${current.studentName}-${current.subject}`;
+                                    if (!acc[key]) {
+                                        acc[key] = { student: current.studentName, subject: current.subject, times: [] };
+                                    }
+                                    acc[key].times.push(current);
+                                    return acc;
+                                }, {} as Record<string, { student: string, subject: string, times: FamilyScheduleItem[] }>);
+
+                                return Object.values(grouped).map((group, idx) => (
+                                    <div key={idx} className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm hover:border-indigo-200 transition-colors">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div>
+                                                <p className="font-black text-xs text-slate-800 dark:text-white uppercase tracking-tight leading-none">{group.subject}</p>
+                                                <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mt-1.5">{group.student}</p>
+                                            </div>
+                                            <div className="w-8 h-8 bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+                                                <Clock size={14} className="text-slate-400" />
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-50 dark:border-slate-800">
+                                            {group.times.map((t, i) => (
+                                                <div key={i} className="flex items-center gap-3 px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-[10px] font-black rounded-none">
+                                                    <span className="text-slate-400 uppercase">{t.day}</span>
+                                                    <span className="w-1 h-1 bg-indigo-600 rounded-full" />
+                                                    <span className="text-indigo-600 font-mono">{t.hour} {t.period === 'am' ? 'صباحاً' : 'مساءً'}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ));
+                            })() : (
+                                <div className="text-center py-20 opacity-20">
+                                    <Calendar size={48} className="mx-auto text-slate-400 mb-3" />
+                                    <p className="text-xs font-black uppercase tracking-widest">خالٍ من الجلسات</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
