@@ -55,7 +55,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled, type = 'butto
 
 
 
-const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
+const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, value: string | number, icon: any, subValue?: string, bg: string }) => (
     <div className={cn("p-4 rounded-none shadow-sm flex flex-col items-center text-center text-white relative overflow-hidden", bg)}>
         <div className="absolute -right-4 -top-4 opacity-10">
             <Icon size={64} />
@@ -162,28 +162,24 @@ export const Leads: React.FC = () => {
                     title="إجمالي المهتمين" 
                     value={stats?.total || 0} 
                     icon={Users} 
-                    color="text-white" 
                     bg="bg-slate-800"
                 />
                 <StatItem 
                     title="عملاء جدد" 
                     value={stats?.new || 0} 
                     icon={Clock} 
-                    color="text-white" 
                     bg="bg-blue-600"
                 />
                 <StatItem 
                     title="تم التحويل" 
                     value={stats?.converted || 0} 
                     icon={CheckCircle2} 
-                    color="text-white" 
                     bg="bg-emerald-600"
                 />
                 <StatItem 
                     title="معدل التحويل" 
                     value={`${stats?.conversionRate.toFixed(1)}%`} 
                     icon={TrendingUp} 
-                    color="text-white" 
                     bg="bg-indigo-600"
                     subValue="نسبة النجاح"
                 />
