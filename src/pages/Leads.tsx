@@ -183,7 +183,7 @@ export const Leads: React.FC = () => {
                 />
                 <StatItem 
                     title="معدل التحويل" 
-                    value={`${stats?.conversionRate.toFixed(1)}%`} 
+                    value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} 
                     icon={TrendingUp} 
                     bg="bg-indigo-600"
                     subValue="نسبة النجاح"
