@@ -76,39 +76,33 @@ export const Reports = () => {
 
             {/* ── Report Type Selection ── */}
             <div className="px-4 md:px-6 no-print">
-                <SectionCard className="p-2 md:p-2">
-                    <div className="flex flex-wrap md:flex-nowrap gap-2">
-                        {[
-                            { id: 'academic', label: 'الأكاديمي', icon: Award, color: 'text-purple-500', bg: 'bg-purple-50' },
-                            { id: 'attendance', label: 'الحضور والغياب', icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-                            { id: 'financial', label: 'المالي العام', icon: DollarSign, color: 'text-amber-500', bg: 'bg-amber-50' },
-                            { id: 'enrollment', label: 'التسجيلات', icon: Target, color: 'text-rose-500', bg: 'bg-rose-50' },
-                        ].map((tab) => {
-                            const Icon = tab.icon;
-                            const isActive = state.activeReport === tab.id;
-                            return (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                    className={cn(
-                                        "flex-1 min-w-[100px] flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all border",
-                                        isActive
-                                            ? "bg-[#5c59f2] border-[#5c59f2] text-white shadow-md shadow-indigo-200 dark:shadow-none"
-                                            : "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700"
-                                    )}
-                                >
-                                    <div className={cn(
-                                        "w-7 h-7 flex items-center justify-center rounded-lg shrink-0",
-                                        isActive ? "bg-white/20" : tab.bg + " dark:bg-slate-700"
-                                    )}>
-                                        <Icon size={14} className={isActive ? "text-white" : tab.color} />
-                                    </div>
-                                    <span className="text-[11px] font-bold whitespace-nowrap">{tab.label}</span>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </SectionCard>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {[
+                        { id: 'academic', label: 'الأكاديمي', icon: Award, activeGrad: 'from-purple-600 to-purple-800' },
+                        { id: 'attendance', label: 'الحضور والغياب', icon: CheckCircle2, activeGrad: 'from-emerald-600 to-emerald-800' },
+                        { id: 'financial', label: 'المالي العام', icon: DollarSign, activeGrad: 'from-amber-500 to-orange-700' },
+                        { id: 'enrollment', label: 'التسجيلات', icon: Target, activeGrad: 'from-rose-600 to-rose-800' },
+                    ].map((tab) => {
+                        const Icon = tab.icon;
+                        const isActive = state.activeReport === tab.id;
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => actions.setActiveReport(tab.id as ReportType)}
+                                className={cn(
+                                    "flex items-center gap-2.5 px-4 py-3 rounded-none transition-all border text-right",
+                                    isActive
+                                        ? `bg-gradient-to-l ${tab.activeGrad} border-transparent text-white shadow-lg`
+                                        : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
+                                )}
+                            >
+                                <Icon size={15} className={isActive ? "text-white" : "text-slate-400"} />
+                                <span className="text-[11px] font-black uppercase tracking-wide whitespace-nowrap">{tab.label}</span>
+                                {isActive && <div className="mr-auto w-1.5 h-1.5 bg-white/50 rounded-full animate-pulse" />}
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
 
             {/* ── Reports Content ── */}
