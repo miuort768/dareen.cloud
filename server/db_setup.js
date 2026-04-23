@@ -313,6 +313,17 @@ async function setupDatabase() {
             startedAt TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS leads (
+            id TEXT PRIMARY KEY,
+            studentName TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            subject TEXT,
+            status TEXT DEFAULT 'new',
+            priority TEXT DEFAULT 'medium',
+            notes TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         -- Tables created above
     `);
 

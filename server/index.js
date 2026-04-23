@@ -29,6 +29,7 @@ const { announcementsRouter } = require('./routes/announcements');
 const forumRouter = require('./routes/forum');
 const appointmentsRouter = require('./routes/appointments');
 const { pushRouter, sendPushToUser } = require('./routes/push');
+const leadsRouter = require('./routes/leads');
 
 
 
@@ -176,6 +177,7 @@ async function startServer() {
         apiRouter.use('/forum', forumRouter);
         apiRouter.use('/appointments', appointmentsRouter);
         apiRouter.use('/push', pushRouter);
+        apiRouter.use('/leads', leadsRouter);
 
 
         // Compatibility middleware for invoices inside API
