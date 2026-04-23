@@ -8,17 +8,17 @@ const phoneSchema = z.string().min(10, "Phone number too short").optional().or(z
 const createStudentSchema = z.object({
     id: z.string().optional(),
     name: z.string().min(2, "Name is required (min 2 chars)").trim(),
-    grade: z.string().optional().or(z.literal('')),
-    groupName: z.string().optional().or(z.literal('')),
-    parentPhone: z.string().optional().or(z.literal('')),
-    studentPhone: z.string().optional().or(z.literal('')),
-    curriculum: z.string().optional().or(z.literal('')),
-    notes: z.string().optional().or(z.literal('')),
-    sessionPrice: z.number().or(z.string().transform(val => Number(val))).optional(),
-    balance: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
-    username: z.string().optional().or(z.literal('')),
-    password: z.string().optional().or(z.literal('')),
-    enrollments: z.array(z.any()).optional()
+    grade: z.string().nullable().optional().or(z.literal('')),
+    groupName: z.string().nullable().optional().or(z.literal('')),
+    parentPhone: z.string().nullable().optional().or(z.literal('')),
+    studentPhone: z.string().nullable().optional().or(z.literal('')),
+    curriculum: z.string().nullable().optional().or(z.literal('')),
+    notes: z.string().nullable().optional().or(z.literal('')),
+    sessionPrice: z.number().or(z.string().transform(val => Number(val))).nullable().optional(),
+    balance: z.number().or(z.string().transform(val => Number(val))).nullable().optional().default(0),
+    username: z.string().nullable().optional().or(z.literal('')),
+    password: z.string().nullable().optional().or(z.literal('')),
+    enrollments: z.array(z.any()).nullable().optional()
 });
 
 const updateStudentSchema = createStudentSchema.partial().extend({
