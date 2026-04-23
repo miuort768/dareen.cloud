@@ -14,7 +14,10 @@ import {
     PhoneCall,
     UserPlus,
     Tag,
-    Plus
+    Plus,
+    EyeOff,
+    Eye,
+    AlertTriangle
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -69,11 +72,50 @@ const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, v
     </div>
 );
 
+// Custom Confirm Dialog
+const ConfirmLostModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 rounded-none shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
+            {/* Header */}
+            <div className="bg-rose-600 px-5 py-4 flex items-center gap-3">
+                <div className="w-9 h-9 bg-white/10 flex items-center justify-center rounded-none">
+                    <AlertTriangle size={20} className="text-white" />
+                </div>
+                <h3 className="text-sm font-black text-white uppercase tracking-widest">تأكيد الرفض</h3>
+            </div>
+            {/* Body */}
+            <div className="p-6">
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">هل رفض هذا العميل؟</p>
+                <p className="text-xs text-slate-400 font-medium leading-relaxed">
+                    سيتم إخفاء العميل من القائمة الرئيسية <span className="text-rose-500 font-bold">وسيُحسب ضمن نسبة الفشل</span> في إحصائيات التحويل.
+                </p>
+            </div>
+            {/* Actions */}
+            <div className="flex border-t border-slate-100 dark:border-slate-800">
+                <button
+                    onClick={onCancel}
+                    className="flex-1 py-3 text-xs font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all uppercase tracking-widest"
+                >
+                    إلغاء
+                </button>
+                <button
+                    onClick={onConfirm}
+                    className="flex-1 py-3 text-xs font-black text-white bg-rose-600 hover:bg-rose-700 transition-all uppercase tracking-widest"
+                >
+                    نعم، رفض
+                </button>
+            </div>
+        </div>
+    </div>
+);
+
 export const Leads: React.FC = () => {
     const queryClient = useQueryClient();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<LeadStatus | 'all'>('all');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [showLost, setShowLost] = useState(false);
+    const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
     const formRef = React.useRef<HTMLFormElement>(null);
 
     // Fetch leads
@@ -120,11 +162,18 @@ export const Leads: React.FC = () => {
     });
 
     const filteredLeads = leads.filter(l => {
+        if (showLost) return l.status === 'lost';
         const matchesSearch = l.studentName.toLowerCase().includes(searchTerm.toLowerCase()) || 
                              l.phone.includes(searchTerm);
         const matchesStatus = filterStatus === 'all' || l.status === filterStatus;
-        return matchesSearch && matchesStatus;
+        return matchesSearch && matchesStatus && l.status !== 'lost';
     });
+
+    const handleMarkLost = (id: string) => setConfirmLeadId(id);
+    const handleConfirmLost = () => {
+        if (confirmLeadId) markLostMutation.mutate(confirmLeadId);
+        setConfirmLeadId(null);
+    };
 
     const statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }> = {
         new: { label: 'جديد', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
@@ -154,6 +203,19 @@ export const Leads: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 no-print w-full md:w-auto mt-2 md:mt-0">
+                    <button
+                        onClick={() => setShowLost(!showLost)}
+                        className={cn(
+                            "h-10 px-4 rounded-none flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all border",
+                            showLost
+                                ? "bg-white text-rose-600 border-white"
+                                : "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                        )}
+                    >
+                        {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
+                        <span className="hidden sm:inline">{showLost ? 'الكل' : 'المرفوضون'}</span>
+                        {!showLost && <span className="bg-rose-500 text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center">{leads.filter(l => l.status === 'lost').length}</span>}
+                    </button>
                     <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50 w-full md:w-auto">
                         <Plus size={16} />
                         إضافة عميل محتمل
@@ -238,7 +300,7 @@ export const Leads: React.FC = () => {
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                             {filteredLeads.map((lead) => (
-                                <tr key={lead.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                <tr key={lead.id} onDoubleClick={() => handleMarkLost(lead.id)} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer" title="اضغط مرتين للإخفاء">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm">
@@ -309,7 +371,7 @@ export const Leads: React.FC = () => {
                                                 <MessageSquare size={14} />
                                             </button>
                                             <button 
-                                                onClick={() => { if (window.confirm('هل رفض العميل؟ سيُحسب ضمن نسبة الفشل.')) { markLostMutation.mutate(lead.id); } }} 
+                                                onClick={() => handleMarkLost(lead.id)} 
                                                 className={cn(
                                                     "w-8 h-8 flex items-center justify-center rounded-lg transition-all",
                                                     lead.status === 'lost'
@@ -344,7 +406,9 @@ export const Leads: React.FC = () => {
                     ) : filteredLeads.map((lead) => (
                         <div
                             key={lead.id}
-                            className="bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden border-r-4 border-r-teal-600"
+                            onDoubleClick={() => handleMarkLost(lead.id)}
+                            className="bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden border-r-4 border-r-teal-600 cursor-pointer"
+                            title="اضغط مرتين للإخفاء"
                         >
                             {/* Top Row */}
                             <div className="flex justify-between items-start mb-4">
@@ -423,7 +487,7 @@ export const Leads: React.FC = () => {
                                     <MessageSquare size={14} />
                                 </button>
                                 <button 
-                                    onClick={() => { if (window.confirm('هل رفض العميل؟ سيُحسب ضمن نسبة الفشل.')) { markLostMutation.mutate(lead.id); } }}
+                                    onClick={() => handleMarkLost(lead.id)}
                                     className={cn(
                                         "w-9 h-9 flex items-center justify-center rounded-xl hover:bg-rose-600 hover:text-white transition-all",
                                         lead.status === 'lost'
@@ -492,6 +556,14 @@ export const Leads: React.FC = () => {
                         </form>
                     </div>
                 </div>
+            )}
+
+            {/* Confirm Lost Modal */}
+            {confirmLeadId && (
+                <ConfirmLostModal
+                    onConfirm={handleConfirmLost}
+                    onCancel={() => setConfirmLeadId(null)}
+                />
             )}
         </div>
     );
