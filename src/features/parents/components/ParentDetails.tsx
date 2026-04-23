@@ -159,7 +159,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                             <h4 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-[0.2em]">الجدول العائلي الموحد</h4>
                         </div>
 
-                        <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                        <div className="space-y-3 pr-2">
                             {details.familySchedule.length > 0 ? (() => {
                                 const grouped = details.familySchedule.reduce((acc, current) => {
                                     const key = `${current.studentName}-${current.subject}`;
