@@ -133,11 +133,11 @@ export const TeacherDetails = ({
                 {/* Enrollment Section */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-0">
-                        <div className="bg-slate-900 text-white px-3 py-1.5 rounded-none">
-                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em]">الطلاب المسجلون</h4>
+                        <div className="bg-slate-950 text-white px-3 h-8 flex items-center rounded-none border border-slate-950">
+                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white">الطلاب المسجلون</h4>
                         </div>
-                        <div className="bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-sm border-y border-l border-slate-200 dark:border-slate-700">
-                            <span className="text-[10px] font-black text-slate-600 dark:border-slate-700">{enrolledStudents.length}</span>
+                        <div className="bg-white dark:bg-slate-800 px-3 h-8 flex items-center rounded-none border border-slate-200 dark:border-slate-700">
+                            <span className="text-[10px] font-black text-slate-900 dark:text-white">{enrolledStudents.length}</span>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -199,56 +199,50 @@ export const TeacherDetails = ({
             {showActivityModal && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl">
                     <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setShowActivityModal(false)}></div>
-                    <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl w-full max-w-4xl h-full max-h-[80vh] flex flex-col rounded-none overflow-hidden animate-in zoom-in-95">
-                        <div className="p-6 bg-slate-950 text-white flex items-center justify-between border-b border-white/5">
+                    <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl w-full max-w-4xl h-full max-h-[85vh] flex flex-col rounded-none overflow-hidden animate-in zoom-in-95">
+                        <div className="p-4 bg-slate-950 text-white flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-[var(--primary-color,#5c59f2)] flex items-center justify-center rounded-none shadow-xl">
-                                    <Clock size={24} />
+                                <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] flex items-center justify-center rounded-none shadow-xl">
+                                    <Clock size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-black uppercase tracking-tighter italic">سجل نشاطات المعلمة</h3>
-                                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{teacher.name} • تفاصيل الجلسات والعمليات</p>
+                                    <h3 className="text-lg font-black uppercase tracking-tighter italic text-white">سجل نشاطات المعلمة</h3>
+                                    <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">{teacher.name}</p>
                                 </div>
                             </div>
-                            <button onClick={() => setShowActivityModal(false)} className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-rose-500 transition-all">
-                                <X size={20} />
+                            <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/5 hover:bg-rose-500 transition-all">
+                                <X size={18} />
                             </button>
                         </div>
                         
-                        <div className="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900/50">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="flex-1 overflow-y-auto p-4 bg-slate-50 dark:bg-slate-950/50">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                                 {teacherSessions.map(session => (
-                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
                                         <div className={cn(
                                             "absolute top-0 right-0 w-1 h-full",
                                             session.status === 'completed' ? "bg-emerald-500" : "bg-rose-500"
                                         )} />
                                         
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all">
-                                                    <Calendar size={16} />
+                                        <div className="flex justify-between items-start mb-3">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-7 h-7 bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-950 group-hover:text-white transition-all">
+                                                    <Calendar size={12} />
                                                 </div>
-                                                <div>
-                                                    <p className="text-[11px] font-black text-slate-800 dark:text-white uppercase tracking-tight">{session.studentName}</p>
-                                                    <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{session.date}</p>
+                                                <div className="min-w-0">
+                                                    <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-tight truncate">{session.studentName}</p>
+                                                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{session.date}</p>
                                                 </div>
                                             </div>
-                                            <span className={cn(
-                                                "text-[8px] font-black uppercase tracking-widest px-2 py-0.5",
-                                                session.status === 'completed' ? "text-emerald-500 bg-emerald-50" : "text-rose-500 bg-rose-50"
-                                            )}>
-                                                {session.status === 'completed' ? 'تم الإنجاز' : 'ملغاة'}
-                                            </span>
                                         </div>
                                         
-                                        <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
-                                            <div className="flex items-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                                                <Clock size={10} /> {session.time}
+                                        <div className="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-800">
+                                            <div className="flex items-center gap-1.5 text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                                                <Clock size={8} /> {session.time}
                                             </div>
                                             {!isTeacherView && (
-                                                <button onClick={() => onDeleteSession(session.id)} className="w-7 h-7 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-colors">
-                                                    <Trash2 size={12} />
+                                                <button onClick={() => onDeleteSession(session.id)} className="w-6 h-6 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-colors">
+                                                    <Trash2 size={10} />
                                                 </button>
                                             )}
                                         </div>
@@ -257,8 +251,8 @@ export const TeacherDetails = ({
                             </div>
                             {teacherSessions.length === 0 && (
                                 <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
-                                    <Clock size={64} className="mb-4" />
-                                    <p className="font-black uppercase tracking-[0.3em]">لا توجد نشاطات مسجلة</p>
+                                    <Clock size={48} className="mb-4" />
+                                    <p className="text-xs font-black uppercase tracking-[0.3em]">لا توجد نشاطات مسجلة</p>
                                 </div>
                             )}
                         </div>
