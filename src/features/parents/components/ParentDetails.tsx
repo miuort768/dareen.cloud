@@ -36,7 +36,7 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
     onClose
 }) => {
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit sticky top-6 rounded-none overflow-hidden shadow-2xl animate-in slide-in-from-left-4 duration-500">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col rounded-none overflow-hidden shadow-2xl animate-in slide-in-from-left-4 duration-500">
             
             {/* Header Section */}
             <div className="relative p-6 bg-slate-950 border-b border-white/5">

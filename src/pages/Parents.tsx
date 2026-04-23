@@ -59,54 +59,42 @@ export const Parents = () => {
                     </div>
                 )}
 
-                {/* ── Toolbar ── */}
+                {/* ── Main Content Area ── */}
                 <div className="px-4 md:px-8">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 overflow-hidden">
-                        {/* Search */}
-                        <div className="flex-1 relative group">
-                            <div className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center bg-slate-950 text-white z-10">
-                                <Search size={16} />
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="البحث في سجلات أولياء الأمور (الاسم، الجوال، البريد)..."
-                                value={state.searchTerm}
-                                onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                className="w-full pl-6 pr-16 py-4 bg-transparent outline-none text-xs font-black uppercase tracking-tight placeholder:text-slate-400 dark:text-white"
-                            />
-                        </div>
-                        
-                        {/* Quick Info */}
-                        <div className="hidden lg:flex items-center gap-6 px-8 border-r border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none shadow-lg shadow-indigo-600/20">
-                                    <Users size={14} className="text-white" />
+                    {!state.showDetails ? (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            {/* Toolbar - Only visible when not in details mode */}
+                            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm flex flex-col md:flex-row items-stretch md:items-center gap-4 overflow-hidden">
+                                <div className="flex-1 relative group">
+                                    <div className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center bg-slate-950 text-white z-10">
+                                        <Search size={16} />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="البحث في سجلات أولياء الأمور (الاسم، الجوال، البريد)..."
+                                        value={state.searchTerm}
+                                        onChange={(e) => actions.setSearchTerm(e.target.value)}
+                                        className="w-full pl-6 pr-16 py-4 bg-transparent outline-none text-xs font-black uppercase tracking-tight placeholder:text-slate-400 dark:text-white"
+                                    />
                                 </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest leading-none">إجمالي السجلات</p>
-                                    <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase">{state.filteredParents.length} من {state.totalParents}</p>
+                                <div className="hidden lg:flex items-center gap-6 px-8 border-r border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none shadow-lg shadow-indigo-600/20">
+                                            <Users size={14} className="text-white" />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest leading-none">إجمالي السجلات</p>
+                                            <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase">{state.filteredParents.length} من {state.totalParents}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                {/* ── Content Grid ── */}
-                <div className="px-4 md:px-8">
-                    <div className={cn(
-                        "grid gap-6 transition-all duration-500",
-                        state.showDetails ? "grid-cols-1 lg:grid-cols-3" : "grid-cols-1"
-                    )}>
-                        {/* Table / Cards Area */}
-                        <div className={cn(
-                            "animate-in fade-in slide-in-from-bottom-4 duration-700",
-                            state.showDetails ? "lg:col-span-2" : "col-span-1"
-                        )}>
                             <ParentsTable
                                 parents={state.filteredParents}
                                 students={state.students}
                                 selectedParentId={state.selectedParent?.id || null}
-                                showDetails={state.showDetails}
+                                showDetails={false}
                                 onSelectParent={(parent) => {
                                     actions.setSelectedParent(parent);
                                     actions.setShowDetails(true);
@@ -115,18 +103,17 @@ export const Parents = () => {
                                 onDelete={actions.handleDeleteParent}
                             />
                         </div>
-
-                        {/* Details Sidebar */}
-                        {state.showDetails && state.selectedParent && state.selectedParentData && (
-                            <div className="lg:col-span-1">
+                    ) : (
+                        <div className="max-w-4xl mx-auto animate-in slide-in-from-left-8 duration-500">
+                            {state.selectedParent && state.selectedParentData && (
                                 <ParentDetails
                                     parent={state.selectedParent}
                                     details={state.selectedParentData}
                                     onClose={() => actions.setShowDetails(false)}
                                 />
-                            </div>
-                        )}
-                    </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 
