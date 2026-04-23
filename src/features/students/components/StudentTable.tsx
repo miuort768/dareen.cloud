@@ -16,17 +16,17 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete,
     return (
         <div className="w-full">
             {/* Desktop View */}
-            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+            <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-right border-collapse">
-                        <thead className="bg-slate-50 dark:bg-slate-800">
+                        <thead className="bg-[var(--primary-color,#5c59f2)]">
                             <tr>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest">توصيف الطالب</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">المستوى</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">الاشتراكات</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">الحصص</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">مؤشر التقدم</th>
-                                <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase tracking-widest text-center">إجراءات</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest">توصيف الطالب</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">المستوى</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">الاشتراكات</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">الحصص</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">مؤشر التقدم</th>
+                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">إجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
