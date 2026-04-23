@@ -145,16 +145,7 @@ export const NotificationsCenter = ({
         return notifications;
     }, [tasks, lowBalanceStudents, adminPhone]);
 
-    const [smartFilter, setSmartFilter] = useState<'all' | 'balance' | 'attendance' | 'invoices'>('all');
-
-    const filteredSmartAlerts = useMemo(() => {
-        if (smartFilter === 'all') return smartAlerts;
-        if (smartFilter === 'balance') return smartAlerts.filter(a => a.id.startsWith('low-'));
-        if (smartFilter === 'attendance') return smartAlerts.filter(a => a.id.startsWith('absent-'));
-        if (smartFilter === 'invoices') return smartAlerts.filter(a => a.id === 'overdue-invoices');
-        return smartAlerts;
-    }, [smartAlerts, smartFilter]);
-
+    const filteredSmartAlerts = smartAlerts;
     const filteredRoomAlerts = roomAlerts;
 
     return (
