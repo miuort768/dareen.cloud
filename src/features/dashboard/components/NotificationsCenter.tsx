@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, TrendingUp, LayoutGrid } from 'lucide-react';
+import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
