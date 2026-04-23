@@ -38,6 +38,7 @@ export const NotificationsCenter = ({
     const { adminPhone } = useApp();
     const navigate = useNavigate();
     const [, setDismissedIds] = useState<string[]>([]);
+    const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart');
 
     useEffect(() => {
         const fetchDismissed = async () => {
@@ -163,30 +164,41 @@ export const NotificationsCenter = ({
                         <Zap size={20} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">غرفة التنبيهات</h3>
+                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">مركز العمليات الذكي</h3>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">ذكاء الأعمال والبيانات</p>
                     </div>
                 </div>
 
                 <div className="flex bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-2xl">
-                    <div className="px-4 py-2 bg-white dark:bg-slate-700 text-indigo-500 rounded-xl font-bold text-[10px] shadow-sm flex items-center gap-2">
+                    <button 
+                        onClick={() => setActiveTab('smart')}
+                        className={cn(
+                            "px-6 py-2 rounded-xl font-bold text-[10px] transition-all flex items-center gap-2",
+                            activeTab === 'smart' ? "bg-white dark:bg-slate-700 text-indigo-500 shadow-sm" : "text-slate-400 hover:text-slate-600"
+                        )}
+                    >
+                        <Zap size={14} />
+                        إخطارات ذكية
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('room')}
+                        className={cn(
+                            "px-6 py-2 rounded-xl font-bold text-[10px] transition-all flex items-center gap-2",
+                            activeTab === 'room' ? "bg-white dark:bg-slate-700 text-indigo-500 shadow-sm" : "text-slate-400 hover:text-slate-600"
+                        )}
+                    >
                         <Bell size={14} />
                         غرفة التنبيهات
-                    </div>
-                    <div className="px-4 py-2 text-slate-400 rounded-xl font-bold text-[10px] flex items-center gap-2">
-                        <TrendingUp size={14} />
-                        معدل الالتزام
-                    </div>
-                    <div className="px-4 py-2 text-slate-400 rounded-xl font-bold text-[10px] flex items-center gap-2">
-                        <LayoutGrid size={14} />
-                        توزيع المواد
-                    </div>
+                    </button>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 {/* ── 1. إخطارات ذكية (Left/Large Card) ── */}
-                <div className="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden">
+                <div className={cn(
+                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden transition-all",
+                    activeTab !== 'smart' && "hidden lg:block opacity-40"
+                )}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-xl flex items-center justify-center">
@@ -234,9 +246,8 @@ export const NotificationsCenter = ({
                                 )}
                             </div>
                         ))}
-
                         {filteredSmartAlerts.length === 0 && (
-                             <div className="text-center py-20 opacity-30 italic text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            <div className="text-center py-20 opacity-30 italic text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                 لا توجد تنبيهات ذكية
                             </div>
                         )}
@@ -244,7 +255,10 @@ export const NotificationsCenter = ({
                 </div>
 
                 {/* ── 2. غرفة التنبيهات (Right Card) ── */}
-                <div className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden">
+                <div className={cn(
+                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden transition-all",
+                    activeTab !== 'room' && "hidden lg:block opacity-40"
+                )}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
