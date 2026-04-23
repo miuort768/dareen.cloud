@@ -323,7 +323,6 @@ export const Leads: React.FC = () => {
                         )}
                     </div>
                 </div>
-            </div>
 
             {/* Add Lead Modal */}
             {isAddModalOpen && (
