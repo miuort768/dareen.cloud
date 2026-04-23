@@ -1,4 +1,4 @@
-import { Search, AlertCircle, Users, LayoutGrid, Info } from 'lucide-react';
+import { Search, AlertCircle, Users } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
