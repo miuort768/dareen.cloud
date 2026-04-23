@@ -1,4 +1,5 @@
-import { BarChart3, BookOpen, Search, Activity, Users } from 'lucide-react';
+import { BarChart3, BookOpen, Search, Activity, Users, ChevronRight, ChevronLeft } from 'lucide-react';
+import React, { useState } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell, LabelList
@@ -37,7 +38,6 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: any; label: string; s
     </div>
 );
 
-// Custom tooltip for bar chart
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         return (
@@ -50,6 +50,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return null;
 };
 
+const PAGE_SIZE = 10;
+
 export const AcademicReport = ({
     gradeBarData,
     subjectPieData,
@@ -59,7 +61,15 @@ export const AcademicReport = ({
     setSearchTerm
 }: AcademicReportProps) => {
 
+    const [page, setPage] = useState(1);
+
     const maxSubjectVal = Math.max(...subjectPieData.map(s => s.value), 1);
+
+    React.useEffect(() => setPage(1), [searchTerm]);
+
+    const sortedStudents = [...filteredStudentProgress].sort((a, b) => b.progress - a.progress);
+    const totalPages = Math.max(1, Math.ceil(sortedStudents.length / PAGE_SIZE));
+    const pageStudents = sortedStudents.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     return (
         <div className="space-y-4">
@@ -73,32 +83,14 @@ export const AcademicReport = ({
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={gradeBarData} margin={{ top: 16, right: 8, left: -20, bottom: 0 }} barCategoryGap="30%">
                                 <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-                                <XAxis
-                                    dataKey="grade"
-                                    tick={{ fill: '#94A3B8', fontSize: 9, fontWeight: 700 }}
-                                    axisLine={false}
-                                    tickLine={false}
-                                    dy={8}
-                                />
-                                <YAxis
-                                    tick={{ fill: '#94A3B8', fontSize: 9, fontWeight: 700 }}
-                                    axisLine={false}
-                                    tickLine={false}
-                                    allowDecimals={false}
-                                />
+                                <XAxis dataKey="grade" tick={{ fill: '#94A3B8', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} dy={8} />
+                                <YAxis tick={{ fill: '#94A3B8', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} allowDecimals={false} />
                                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(99,102,241,0.05)' }} />
                                 <Bar dataKey="count" radius={[0, 0, 0, 0]} maxBarSize={36}>
                                     {gradeBarData.map((_, index) => (
-                                        <Cell
-                                            key={index}
-                                            fill={CHART_COLORS[index % CHART_COLORS.length]}
-                                        />
+                                        <Cell key={index} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                                     ))}
-                                    <LabelList
-                                        dataKey="count"
-                                        position="top"
-                                        style={{ fill: '#64748b', fontSize: 9, fontWeight: 800 }}
-                                    />
+                                    <LabelList dataKey="count" position="top" style={{ fill: '#64748b', fontSize: 9, fontWeight: 800 }} />
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
@@ -108,7 +100,7 @@ export const AcademicReport = ({
                     )}
                 </SectionCard>
 
-                {/* Subject Distribution - Horizontal Bar Visual */}
+                {/* Subject Distribution - Horizontal Bars */}
                 <SectionCard>
                     <SectionHeader icon={BookOpen} label="توزيع الاشتراكات حسب المادة" sub={`إجمالي ${totalEnrollments} اشتراك`} />
                     <div className="p-4 space-y-2.5 max-h-64 overflow-y-auto">
@@ -118,7 +110,7 @@ export const AcademicReport = ({
                                 const pct = Math.round((entry.value / totalEnrollments) * 100);
                                 const color = CHART_COLORS[index % CHART_COLORS.length];
                                 return (
-                                    <div key={index} className="group">
+                                    <div key={index}>
                                         <div className="flex items-center justify-between mb-1">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-2 h-2 rounded-none shrink-0" style={{ backgroundColor: color }} />
@@ -129,14 +121,10 @@ export const AcademicReport = ({
                                                 <span className="text-[9px] font-black px-1.5 py-0.5 rounded-none text-white" style={{ backgroundColor: color }}>{pct}%</span>
                                             </div>
                                         </div>
-                                        {/* Progress bar */}
                                         <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden">
                                             <div
                                                 className="h-full rounded-none transition-all duration-700"
-                                                style={{
-                                                    width: `${(entry.value / maxSubjectVal) * 100}%`,
-                                                    backgroundColor: color
-                                                }}
+                                                style={{ width: `${(entry.value / maxSubjectVal) * 100}%`, backgroundColor: color }}
                                             />
                                         </div>
                                     </div>
@@ -158,7 +146,9 @@ export const AcademicReport = ({
                         </div>
                         <div>
                             <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">تقرير تقدم الطلاب</p>
-                            <p className="text-[9px] text-slate-400 font-bold mt-0.5">{filteredStudentProgress.length} طالب • مرتبون حسب نسبة التقدم</p>
+                            <p className="text-[9px] text-slate-400 font-bold mt-0.5">
+                                {sortedStudents.length} طالب • صفحة {page} من {totalPages}
+                            </p>
                         </div>
                     </div>
                     <div className="relative w-full md:max-w-xs">
@@ -188,47 +178,43 @@ export const AcademicReport = ({
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                            {filteredStudentProgress.length > 0 ? filteredStudentProgress
-                                .sort((a, b) => b.progress - a.progress)
-                                .map((student, idx) => {
-                                    const prog = student.progress;
-                                    const progColor = prog >= 80 ? 'bg-emerald-500' : prog >= 50 ? 'bg-amber-500' : 'bg-rose-500';
-                                    const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
-                                    return (
-                                        <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                                            <td className="px-5 py-3">
-                                                <span className="text-[10px] font-black text-slate-300 font-mono">{String(idx + 1).padStart(2, '0')}</span>
-                                            </td>
-                                            <td className="px-5 py-3">
-                                                <div className="flex items-center gap-2.5">
-                                                    <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center text-[10px] font-black shrink-0">
-                                                        {student.name.charAt(0)}
-                                                    </div>
-                                                    <span className="text-xs font-bold text-slate-800 dark:text-white">{student.name}</span>
+                            {pageStudents.length > 0 ? pageStudents.map((student, idx) => {
+                                const prog = student.progress;
+                                const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
+                                const progColor = prog >= 80 ? 'bg-emerald-500' : prog >= 50 ? 'bg-amber-500' : 'bg-rose-500';
+                                const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
+                                return (
+                                    <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                        <td className="px-5 py-3">
+                                            <span className="text-[10px] font-black text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
+                                        </td>
+                                        <td className="px-5 py-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center text-[10px] font-black shrink-0">
+                                                    {student.name.charAt(0)}
                                                 </div>
-                                            </td>
-                                            <td className="px-5 py-3 text-center">
-                                                <span className="inline-flex px-2 py-0.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-[9px] font-black rounded-none border border-indigo-100 dark:border-indigo-800 uppercase">
-                                                    {student.grade}
-                                                </span>
-                                            </td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalEnrollments}</td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalSessions}</td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-emerald-600">{student.usedSessions}</td>
-                                            <td className="px-5 py-3">
-                                                <div className="flex items-center gap-2.5">
-                                                    <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
-                                                        <div
-                                                            className={cn("h-full rounded-none transition-all duration-700", progColor)}
-                                                            style={{ width: `${prog}%` }}
-                                                        />
-                                                    </div>
-                                                    <span className={cn("text-[10px] font-black w-9 text-left", textColor)}>{prog}%</span>
+                                                <span className="text-xs font-bold text-slate-800 dark:text-white">{student.name}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-3 text-center">
+                                            <span className="inline-flex px-2 py-0.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-[9px] font-black rounded-none border border-indigo-100 dark:border-indigo-800 uppercase">
+                                                {student.grade}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalEnrollments}</td>
+                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalSessions}</td>
+                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-emerald-600">{student.usedSessions}</td>
+                                        <td className="px-5 py-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
+                                                    <div className={cn("h-full rounded-none transition-all duration-700", progColor)} style={{ width: `${prog}%` }} />
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                }) : (
+                                                <span className={cn("text-[10px] font-black w-9 text-left", textColor)}>{prog}%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                );
+                            }) : (
                                 <tr>
                                     <td colSpan={7} className="px-6 py-16 text-center">
                                         <Users size={36} className="mx-auto mb-2 text-slate-200 dark:text-slate-700" />
@@ -242,39 +228,79 @@ export const AcademicReport = ({
 
                 {/* Mobile Cards */}
                 <div className="md:hidden divide-y divide-slate-50 dark:divide-slate-800">
-                    {filteredStudentProgress.length > 0 ? filteredStudentProgress
-                        .sort((a, b) => b.progress - a.progress)
-                        .map((student) => {
-                            const prog = student.progress;
-                            const progColor = prog >= 80 ? 'bg-emerald-500' : prog >= 50 ? 'bg-amber-500' : 'bg-rose-500';
-                            const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
-                            return (
-                                <div key={student.id} className="p-4 flex items-center gap-3">
-                                    <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-black text-sm rounded-none shrink-0">
-                                        {student.name.charAt(0)}
+                    {pageStudents.length > 0 ? pageStudents.map((student, idx) => {
+                        const prog = student.progress;
+                        const globalIdx = (page - 1) * PAGE_SIZE + idx + 1;
+                        const progColor = prog >= 80 ? 'bg-emerald-500' : prog >= 50 ? 'bg-amber-500' : 'bg-rose-500';
+                        const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
+                        return (
+                            <div key={student.id} className="p-4 flex items-center gap-3">
+                                <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-black text-sm rounded-none shrink-0 relative">
+                                    {student.name.charAt(0)}
+                                    <span className="absolute -top-1 -right-1 text-[8px] font-black bg-indigo-600 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center justify-between mb-1">
+                                        <p className="text-xs font-bold text-slate-800 dark:text-white truncate">{student.name}</p>
+                                        <span className={cn("text-[10px] font-black ml-2 shrink-0", textColor)}>{prog}%</span>
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <p className="text-xs font-bold text-slate-800 dark:text-white truncate">{student.name}</p>
-                                            <span className={cn("text-[10px] font-black ml-2 shrink-0", textColor)}>{prog}%</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 mb-1.5">
-                                            <span className="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-none">{student.grade}</span>
-                                            <span className="text-[9px] text-slate-400 font-bold">{student.usedSessions}/{student.totalSessions} حصة</span>
-                                        </div>
-                                        <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
-                                            <div className={cn("h-full rounded-none", progColor)} style={{ width: `${prog}%` }} />
-                                        </div>
+                                    <div className="flex items-center gap-2 mb-1.5">
+                                        <span className="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-none">{student.grade}</span>
+                                        <span className="text-[9px] text-slate-400 font-bold">{student.usedSessions}/{student.totalSessions} حصة</span>
+                                    </div>
+                                    <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
+                                        <div className={cn("h-full rounded-none", progColor)} style={{ width: `${prog}%` }} />
                                     </div>
                                 </div>
-                            );
-                        }) : (
+                            </div>
+                        );
+                    }) : (
                         <div className="py-12 text-center">
                             <Users size={32} className="mx-auto mb-2 text-slate-200" />
                             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج</p>
                         </div>
                     )}
                 </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
+                        <p className="text-[10px] font-bold text-slate-400">
+                            {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, sortedStudents.length)} من {sortedStudents.length}
+                        </p>
+                        <div className="flex items-center gap-1">
+                            <button
+                                onClick={() => setPage(p => Math.max(1, p - 1))}
+                                disabled={page === 1}
+                                className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            >
+                                <ChevronRight size={14} />
+                            </button>
+                            {[...Array(Math.min(totalPages, 7))].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setPage(i + 1)}
+                                    className={cn(
+                                        "w-8 h-8 text-[11px] font-black rounded-none border transition-all",
+                                        page === i + 1
+                                            ? "bg-indigo-600 text-white border-indigo-600"
+                                            : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400"
+                                    )}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                            {totalPages > 7 && <span className="text-slate-400 text-xs font-bold px-1">...</span>}
+                            <button
+                                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                disabled={page === totalPages}
+                                className="w-8 h-8 flex items-center justify-center rounded-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                            >
+                                <ChevronLeft size={14} />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </SectionCard>
         </div>
     );
