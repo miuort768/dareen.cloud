@@ -245,8 +245,7 @@ export const StudentDetails = ({
                         })}
 
                         {/* Add Enrollment */}
-                        <div className="bg-white dark:bg-slate-900 p-4 rounded-none border-2 border-dashed border-indigo-200 dark:border-indigo-900/30 relative overflow-hidden group hover:border-indigo-400 transition-colors">
-                            <div className="absolute top-0 right-0 w-1 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
+                        <div className="bg-white dark:bg-slate-900 p-4 rounded-none border-2 border-dashed border-indigo-200 dark:border-indigo-900/30 relative">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-8 h-8 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shadow-sm">
                                     <Plus size={14} strokeWidth={2.5} />

@@ -338,8 +338,8 @@ export const Students = () => {
                 </div>
 
                 {showDetails && selectedStudent && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 md:p-8">
-                        <div className="w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col bg-white dark:bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-200 rounded-none border border-slate-200 dark:border-white/10">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 pt-16 md:p-8 md:pt-16">
+                        <div className="w-full max-w-6xl max-h-[85vh] h-full overflow-hidden flex flex-col bg-white dark:bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-200 rounded-xl border border-slate-200 dark:border-white/10">
                             <StudentDetails
                                 student={selectedStudent}
                                 onClose={() => setShowDetails(false)}
