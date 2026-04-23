@@ -139,7 +139,7 @@ export const ParentsTable: React.FC<ParentsTableProps> = ({
 
             {/* ── Mobile View ── */}
             <div className="md:hidden space-y-3">
-                {parents.map((parent, idx) => {
+                {parents.map((parent) => {
                     const children = students.filter(s => s.parentPhone === parent.phone);
                     const isSelected = selectedParentId === parent.id;
 
