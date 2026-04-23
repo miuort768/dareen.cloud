@@ -1,6 +1,6 @@
 import React from 'react';
-import { User, Phone, Mail, Save } from 'lucide-react';
-
+import { User, Phone, Mail, Save, ShieldCheck, Key } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
 interface ParentFormProps {
     isEdit: boolean;
@@ -9,6 +9,24 @@ interface ParentFormProps {
     onSubmit: (e: React.FormEvent) => void;
 }
 
+const InputField = ({ label, icon: Icon, ...props }: any) => (
+    <div className="space-y-1.5">
+        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">{label}</label>
+        <div className="relative group">
+            <div className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-l border-slate-200 dark:border-slate-700 text-slate-400 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all">
+                <Icon size={14} />
+            </div>
+            <input
+                {...props}
+                className={cn(
+                    "w-full pl-4 pr-12 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none text-xs font-bold transition-all focus:border-indigo-600 rounded-none dark:text-white",
+                    props.className
+                )}
+            />
+        </div>
+    </div>
+);
+
 export const ParentForm: React.FC<ParentFormProps> = ({
     isEdit,
     formData,
@@ -16,101 +34,94 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     onSubmit
 }) => {
     return (
-        <div className="px-4 md:px-6">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
-                        <User size={16} className="text-[#5c59f2]" />
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm relative overflow-hidden">
+            {/* Header Accent */}
+            <div className="h-1 w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600" />
+            
+            <div className="p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-none">
+                        <ShieldCheck size={18} />
                     </div>
-                    <h3 className="font-bold text-sm text-slate-800 dark:text-white uppercase tracking-tight">
-                        {isEdit ? 'تعديل بيانات الحساب' : 'تسجيل ولي أمر جديد'}
-                    </h3>
+                    <div>
+                        <h3 className="font-black text-sm text-slate-800 dark:text-white uppercase tracking-widest">
+                            {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
+                        </h3>
+                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">تأكد من صحة البيانات لضمان وصول الإشعارات</p>
+                    </div>
                 </div>
 
-                <form onSubmit={onSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم ولي الأمر الكامل</label>
-                            <div className="relative group">
-                                <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500" size={14} />
-                                <input
-                                    required
-                                    type="text"
-                                    value={formData.name}
-                                    onChange={e => onChange({ ...formData, name: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:outline-none focus:border-primary-500 rounded-xl text-xs font-bold"
-                                    placeholder="مثال: أحمد محمد علي"
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">رقم الجوال الفعال</label>
-                            <div className="relative group">
-                                <Phone className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500" size={14} />
-                                <input
-                                    required
-                                    type="tel"
-                                    value={formData.phone}
-                                    onChange={e => onChange({ ...formData, phone: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:outline-none focus:border-primary-500 rounded-xl text-left text-xs font-bold font-mono"
-                                    dir="ltr"
-                                    placeholder="05XXXXXXXX"
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">البريد الإلكتروني (اختياري)</label>
-                            <div className="relative group">
-                                <Mail className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500" size={14} />
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={e => onChange({ ...formData, email: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:outline-none focus:border-primary-500 rounded-xl text-left text-xs font-bold"
-                                    dir="ltr"
-                                    placeholder="example@mail.com"
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم المستخدم (للدخول)</label>
-                            <div className="relative group">
-                                <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500" size={14} />
-                                <input
-                                    required
-                                    type="text"
-                                    value={formData.username || ''}
-                                    onChange={e => onChange({ ...formData, username: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:outline-none focus:border-primary-500 rounded-xl text-left text-xs font-bold font-mono"
-                                    dir="ltr"
-                                    placeholder="رقم الهاتف أو اسم مستخدم"
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">كلمة المرور</label>
-                            <div className="relative group">
-                                <Save className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-primary-500" size={14} />
-                                <input
-                                    required={!isEdit}
-                                    type="password"
-                                    value={formData.password || ''}
-                                    onChange={e => onChange({ ...formData, password: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 focus:outline-none focus:border-primary-500 rounded-xl text-left text-xs font-bold font-mono"
-                                    dir="ltr"
-                                    placeholder={isEdit ? "اتركها فارغة إذا لا تريد التغيير" : "******"}
-                                />
-                            </div>
-                        </div>
+                <form onSubmit={onSubmit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
+                        {/* Name */}
+                        <InputField
+                            label="الاسم الكامل"
+                            icon={User}
+                            required
+                            type="text"
+                            value={formData.name}
+                            onChange={(e: any) => onChange({ ...formData, name: e.target.value })}
+                            placeholder="مثال: أحمد محمد علي"
+                        />
+
+                        {/* Phone */}
+                        <InputField
+                            label="رقم الجوال"
+                            icon={Phone}
+                            required
+                            type="tel"
+                            dir="ltr"
+                            className="font-mono"
+                            value={formData.phone}
+                            onChange={(e: any) => onChange({ ...formData, phone: e.target.value })}
+                            placeholder="05XXXXXXXX"
+                        />
+
+                        {/* Email */}
+                        <InputField
+                            label="البريد الإلكتروني"
+                            icon={Mail}
+                            type="email"
+                            dir="ltr"
+                            value={formData.email}
+                            onChange={(e: any) => onChange({ ...formData, email: e.target.value })}
+                            placeholder="example@mail.com"
+                        />
+
+                        {/* Username */}
+                        <InputField
+                            label="اسم المستخدم"
+                            icon={User}
+                            required
+                            type="text"
+                            dir="ltr"
+                            className="font-mono"
+                            value={formData.username || ''}
+                            onChange={(e: any) => onChange({ ...formData, username: e.target.value })}
+                            placeholder="Account handle"
+                        />
+
+                        {/* Password */}
+                        <InputField
+                            label="كلمة المرور"
+                            icon={Key}
+                            required={!isEdit}
+                            type="password"
+                            dir="ltr"
+                            className="font-mono"
+                            value={formData.password || ''}
+                            onChange={(e: any) => onChange({ ...formData, password: e.target.value })}
+                            placeholder={isEdit ? "••••••••" : "Create password"}
+                        />
                     </div>
 
-                    <div className="pt-4 border-t border-slate-50 dark:border-slate-800 flex justify-end">
+                    <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end">
                         <button
                             type="submit"
-                            className="bg-[#5c59f2] text-white px-8 py-2 font-bold text-[11px] uppercase tracking-widest hover:bg-indigo-700 rounded-xl flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                            className="group flex items-center gap-3 bg-slate-950 hover:bg-indigo-600 text-white px-10 py-4 font-black text-[10px] uppercase tracking-[0.2em] transition-all rounded-none shadow-xl active:scale-95"
                         >
-                            <Save size={14} />
-                            {isEdit ? 'تحديث البيانات' : 'إتمام الحفظ'}
+                            <Save size={14} className="group-hover:rotate-12 transition-transform" />
+                            {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}
                         </button>
                     </div>
                 </form>
