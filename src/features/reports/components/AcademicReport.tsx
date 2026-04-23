@@ -102,16 +102,16 @@ export const AcademicReport = ({
                                 </ResponsiveContainer>
                             ) : <div className="h-full flex items-center justify-center text-slate-300 text-xs font-bold">لا توجد بيانات</div>}
                         </div>
-                        <div className="w-full md:w-1/2 grid grid-cols-1 gap-2 overflow-y-auto max-h-64 pr-1 scrollbar-thin">
+                        <div className="w-full md:w-1/2 grid grid-cols-2 gap-1.5 overflow-y-auto max-h-64 pr-1 scrollbar-thin content-start">
                             {subjectPieData.map((entry, index) => (
-                                <div key={index} className="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl border-r-2" style={{ borderColor: CHART_COLORS[index % CHART_COLORS.length] }}>
-                                    <div>
-                                        <p className="text-[9px] text-slate-400 font-bold">{entry.name}</p>
-                                        <p className="text-xs font-black text-slate-800 dark:text-white">{entry.value}</p>
+                                <div key={index} className="flex flex-col justify-between p-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-sm border-r-2" style={{ borderColor: CHART_COLORS[index % CHART_COLORS.length] }}>
+                                    <div className="flex items-center justify-between mb-1">
+                                        <p className="text-[8px] text-slate-400 font-bold truncate max-w-[70%]">{entry.name}</p>
+                                        <span className="text-[8px] font-bold text-slate-400 bg-white dark:bg-slate-700 px-1 py-0.5 rounded border border-slate-100 dark:border-slate-600 leading-none">
+                                            {Math.round((entry.value / totalEnrollments) * 100)}%
+                                        </span>
                                     </div>
-                                    <span className="text-[10px] font-bold text-slate-400 bg-white dark:bg-slate-700 px-1.5 py-0.5 rounded-lg border border-slate-100 dark:border-slate-600">
-                                        {Math.round((entry.value / totalEnrollments) * 100)}%
-                                    </span>
+                                    <p className="text-[10px] font-black text-slate-800 dark:text-white font-mono">{entry.value}</p>
                                 </div>
                             ))}
                         </div>
