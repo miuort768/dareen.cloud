@@ -64,7 +64,7 @@ const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, v
             <Icon size={16} className="text-white" />
         </div>
         <p className="relative z-10 text-[10px] font-black uppercase tracking-widest text-white/80">{title}</p>
-        <p className="relative z-10 text-xl font-black mt-1 font-mono">{value}</p>
+        <p className="relative z-10 text-lg md:text-xl font-black mt-1 font-mono">{value}</p>
         {subValue && <p className="relative z-10 text-[9px] mt-1 font-bold text-white/60">{subValue}</p>}
     </div>
 );
@@ -137,7 +137,7 @@ export const Leads: React.FC = () => {
     return (
         <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
             {/* Header */}
-            <div className="bg-teal-800 px-4 md:px-8 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-teal-900/50">
+            <div className="bg-teal-800 px-4 md:px-8 py-5 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border-b border-teal-900/50">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
                         <Users size={24} />
@@ -148,8 +148,8 @@ export const Leads: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 no-print">
-                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50">
+                <div className="flex items-center gap-2 no-print w-full md:w-auto mt-2 md:mt-0">
+                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50 w-full md:w-auto">
                         <Plus size={16} />
                         إضافة عميل محتمل
                     </PrimaryBtn>
@@ -198,18 +198,20 @@ export const Leads: React.FC = () => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <div className="flex items-center gap-2 w-full md:w-auto">
-                        <Filter size={14} className="text-emerald-600" />
-                        <select 
-                            className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
-                            value={filterStatus}
-                            onChange={(e) => setFilterStatus(e.target.value as any)}
-                        >
-                            <option value="all">كل الحالات</option>
-                            {Object.entries(statusConfig).map(([key, value]) => (
-                                <option key={key} value={key}>{value.label}</option>
-                            ))}
-                        </select>
+                    <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
+                        <div className="flex items-center gap-2 w-full md:w-auto">
+                            <Filter size={14} className="text-emerald-600 hidden md:block" />
+                            <select 
+                                className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
+                                value={filterStatus}
+                                onChange={(e) => setFilterStatus(e.target.value as any)}
+                            >
+                                <option value="all">كل الحالات</option>
+                                {Object.entries(statusConfig).map(([key, value]) => (
+                                    <option key={key} value={key}>{value.label}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </SectionCard>
             </div>
@@ -217,7 +219,7 @@ export const Leads: React.FC = () => {
             {/* Leads Table */}
             <div className="px-4 md:px-6">
                 <div className="overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                    <table className="w-full text-right border-collapse">
+                    <table className="w-full text-right border-collapse min-w-[900px]">
                         <thead className="bg-rose-600">
                             <tr>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">العميل</th>
