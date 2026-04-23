@@ -70,20 +70,20 @@ export const ModernAnnouncements: React.FC = () => {
     };
 
     return (
-        <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden mb-6" dir="rtl">
+        <div className="relative bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none shadow-sm overflow-hidden mb-6" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
                     className={cn(
-                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-4 gap-3 cursor-pointer transition-all hover:bg-opacity-80",
+                        "w-full md:w-36 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b-2 md:border-b-0 md:border-l-2 border-slate-950",
                         type.bg
                     )}
                 >
-                    <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm">
-                        <type.icon size={20} className={type.color} />
+                    <div className="w-12 h-12 bg-white dark:bg-slate-950 rounded-none border-2 border-slate-950 flex items-center justify-center shadow-md">
+                        <type.icon size={24} className={type.color} />
                     </div>
-                    <span className={cn("text-[9px] font-black uppercase tracking-widest leading-none text-center", type.color)}>
+                    <span className={cn("text-[10px] font-black uppercase tracking-[0.2em] leading-none text-center", type.color)}>
                         {type.label}
                     </span>
                 </div>
@@ -91,11 +91,11 @@ export const ModernAnnouncements: React.FC = () => {
                 {/* Content */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
-                    className="flex-1 p-6 md:p-8 relative cursor-pointer group"
+                    className="flex-1 p-6 md:p-10 relative cursor-pointer group"
                 >
-                    <div className="absolute top-4 left-6 flex items-center gap-2 px-2 py-1 bg-slate-50 dark:bg-slate-800 rounded-full">
+                    <div className="absolute top-4 left-6 flex items-center gap-2 px-3 py-1 bg-slate-950 text-white rounded-none">
                         <Sparkles size={10} className="text-amber-400" />
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">إعلان {currentIndex + 1} / {announcements.length}</span>
+                        <span className="text-[9px] font-black uppercase tracking-[0.2em]">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
                     <AnimatePresence mode="wait">
@@ -107,10 +107,10 @@ export const ModernAnnouncements: React.FC = () => {
                             transition={{ duration: 0.5 }}
                             className="pr-2"
                         >
-                            <h4 className="text-slate-800 dark:text-white font-bold text-lg mb-2 leading-tight">
+                            <h4 className="text-slate-950 dark:text-white font-black text-xl mb-3 leading-tight uppercase tracking-tighter">
                                 {current.title}
                             </h4>
-                            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2 md:line-clamp-none">
+                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-bold italic line-clamp-2 md:line-clamp-none">
                                 {current.content}
                             </p>
                         </motion.div>
@@ -118,18 +118,18 @@ export const ModernAnnouncements: React.FC = () => {
 
                     {/* Navigation */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-4 left-6 flex gap-2" onClick={e => e.stopPropagation()}>
-                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-[#5c59f2] rounded-xl transition-all shadow-sm"><ChevronRight size={16} /></button>
-                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-[#5c59f2] rounded-xl transition-all shadow-sm"><ChevronLeft size={16} /></button>
+                        <div className="absolute bottom-4 left-6 flex gap-1" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-10 h-10 flex items-center justify-center bg-slate-950 text-white hover:bg-indigo-600 rounded-none transition-all"><ChevronRight size={18} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-10 h-10 flex items-center justify-center bg-slate-950 text-white hover:bg-indigo-600 rounded-none transition-all"><ChevronLeft size={18} /></button>
                         </div>
                     )}
                 </div>
             </div>
 
             {/* Progress Bar */}
-            <div className="absolute bottom-0 right-0 h-1 bg-[#5c59f2] opacity-20 w-full" />
+            <div className="absolute bottom-0 right-0 h-1.5 bg-slate-950 opacity-10 w-full" />
             <motion.div 
-                className="absolute bottom-0 right-0 h-1 bg-[#5c59f2]"
+                className="absolute bottom-0 right-0 h-1.5 bg-indigo-600"
                 initial={{ width: "0%" }}
                 animate={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
                 transition={{ duration: 0.5 }}
@@ -138,40 +138,40 @@ export const ModernAnnouncements: React.FC = () => {
             {/* Acknowledgment Modal */}
             <AnimatePresence>
                 {showAcknowledge && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-900/40">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/60">
                         <motion.div 
-                            initial={{ scale: 0.9, opacity: 0 }}
+                            initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-8 max-w-md w-full shadow-2xl"
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white dark:bg-slate-900 border-4 border-slate-950 dark:border-slate-800 rounded-none p-10 max-w-lg w-full shadow-[20px_20px_0px_0px_rgba(0,0,0,0.2)]"
                         >
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center", type.bg)}>
-                                    <type.icon size={28} className={type.color} />
+                            <div className="flex items-center gap-6 mb-8">
+                                <div className={cn("w-16 h-16 rounded-none border-4 border-slate-950 flex items-center justify-center", type.bg)}>
+                                    <type.icon size={32} className={type.color} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">تأكيد القراءة</h3>
-                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">إشعار إداري هام</p>
+                                    <h3 className="text-xl font-black text-slate-950 dark:text-white leading-tight uppercase tracking-tighter">تأكيد القراءة</h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">IMPORTANT NOTICE</p>
                                 </div>
                             </div>
 
-                            <p className="text-sm font-bold text-slate-600 dark:text-slate-400 mb-8 leading-relaxed italic border-r-4 border-indigo-500 pr-4">
+                            <p className="text-base font-bold text-slate-700 dark:text-slate-300 mb-10 leading-relaxed italic border-r-8 border-indigo-600 pr-6 py-2">
                                 "{current.content}"
                             </p>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <button 
                                     onClick={handleDismiss}
-                                    className="h-12 bg-[#5c59f2] text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-100"
+                                    className="h-14 bg-indigo-600 text-white font-black rounded-none flex items-center justify-center gap-2 hover:bg-slate-950 transition-all active:scale-95 shadow-xl"
                                 >
-                                    <Check size={18} />
+                                    <Check size={20} />
                                     موافق، قرأت
                                 </button>
                                 <button 
                                     onClick={() => setShowAcknowledge(false)}
-                                    className="h-12 bg-slate-50 dark:bg-slate-800 text-slate-400 font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-100 transition-all active:scale-95"
+                                    className="h-14 bg-slate-100 dark:bg-slate-800 text-slate-500 font-black rounded-none flex items-center justify-center gap-2 hover:bg-slate-200 transition-all active:scale-95"
                                 >
-                                    <X size={18} />
+                                    <X size={20} />
                                     إغلاق
                                 </button>
                             </div>
