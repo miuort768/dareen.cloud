@@ -78,15 +78,12 @@ export const TeacherDetails = ({
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-[var(--primary-color,#5c59f2)] text-white rounded-none flex items-center justify-center font-black text-2xl shadow-xl shrink-0 rotate-3">
-                        <div className="-rotate-3">{teacher.name.charAt(0)}</div>
+                    <div className="w-12 h-12 bg-[var(--primary-color,#5c59f2)] text-white rounded-xl flex items-center justify-center font-black text-xl shadow-lg shrink-0">
+                        {teacher.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                             <h3 className="font-black text-lg text-white truncate uppercase tracking-tighter italic">{teacher.name}</h3>
-                            <button onClick={() => setShowCard(true)} className="text-slate-500 hover:text-indigo-400 transition-colors">
-                                <Shield size={14} />
-                            </button>
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-[9px] font-black text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-none uppercase tracking-widest">{teacher.subject}</span>
