@@ -1,4 +1,4 @@
-import { TrendingUp, Download, Activity, BarChart3 } from 'lucide-react';
+import { Download, Activity, BarChart3 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface ReportsHeaderProps {

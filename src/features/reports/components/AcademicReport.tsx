@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, Search, Activity, TrendingUp, Users } from 'lucide-react';
+import { BarChart3, BookOpen, Search, Activity, Users } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, Cell, LabelList
