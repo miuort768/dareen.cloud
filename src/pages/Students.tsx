@@ -4,7 +4,6 @@ import { useTeachers } from '../features/teachers/hooks/useTeachers';
 import { useApp } from '../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
-import { cn } from '../lib/utils';
 import { AlertCircle } from 'lucide-react';
 
 // Shared Components
