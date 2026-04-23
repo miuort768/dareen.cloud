@@ -8,29 +8,7 @@ import { FinancialReport } from '../features/reports/components/FinancialReport'
 import { cn } from '../lib/utils';
 import type { ReportType } from '../features/reports/types';
 
-// ── Stat card for overview ────────────────────────────────────────────────────
-const OverviewCard = ({ label, value, sub, icon: Icon, gradient }: any) => (
-    <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between text-white shadow-sm", gradient)}>
-        <div className="absolute -left-3 -bottom-3 opacity-10"><Icon size={72} /></div>
-        <div className="w-9 h-9 bg-white/15 rounded-none flex items-center justify-center mb-3">
-            <Icon size={18} className="text-white" />
-        </div>
-        <div>
-            <p className="text-2xl font-black font-mono leading-none">{value}</p>
-            <p className="text-[10px] font-black uppercase tracking-widest text-white/70 mt-1">{label}</p>
-            {sub && <p className="text-[9px] text-white/50 font-bold mt-0.5">{sub}</p>}
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20" />
-    </div>
-);
 
-// ── Overview quick-stat bar ────────────────────────────────────────────────────
-const MiniStat = ({ label, value, color }: any) => (
-    <div className="flex flex-col items-center text-center py-4 px-2">
-        <p className={cn("text-xl font-black font-mono", color)}>{value}</p>
-        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">{label}</p>
-    </div>
-);
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export const Reports = () => {
