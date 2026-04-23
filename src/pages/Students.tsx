@@ -325,21 +325,21 @@ export const Students = () => {
                     </div>
                 )}
 
-                <div className="px-4 md:px-6">
-                    <StudentTable
-                        students={students}
-                        selectedId={selectedStudent?.id}
-                        onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
-                        onEdit={handleEditStudent}
-                        onDelete={setDeletingId}
-                        showDetails={showDetails}
-                        isTeacherView={isTeacher}
-                    />
-                </div>
-
-                {showDetails && selectedStudent && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 pt-16 md:p-8 md:pt-16">
-                        <div className="w-full max-w-6xl max-h-[85vh] h-full overflow-hidden flex flex-col bg-white dark:bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-200 rounded-xl border border-slate-200 dark:border-white/10">
+                {!showDetails ? (
+                    <div className="px-4 md:px-6 animate-in fade-in duration-300">
+                        <StudentTable
+                            students={students}
+                            selectedId={selectedStudent?.id}
+                            onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
+                            onEdit={handleEditStudent}
+                            onDelete={setDeletingId}
+                            showDetails={showDetails}
+                            isTeacherView={isTeacher}
+                        />
+                    </div>
+                ) : (
+                    <div className="px-4 md:px-6 animate-in slide-in-from-right-8 duration-500">
+                        {selectedStudent && (
                             <StudentDetails
                                 student={selectedStudent}
                                 onClose={() => setShowDetails(false)}
@@ -355,7 +355,7 @@ export const Students = () => {
                                 onFreezeEnrollment={handleFreezeEnrollment}
                                 onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
                             />
-                        </div>
+                        )}
                     </div>
                 )}
             </div>

@@ -42,7 +42,7 @@ export const StudentDetails = ({
     const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
 
     return (
-        <div className="flex flex-col h-full bg-transparent overflow-hidden">
+        <div className="flex flex-col bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden mb-12">
             {/* Header Section */}
             <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800" dir="rtl">
                 <button
