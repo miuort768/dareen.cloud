@@ -74,6 +74,7 @@ export const Leads: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<LeadStatus | 'all'>('all');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const formRef = React.useRef<HTMLFormElement>(null);
 
     // Fetch leads
     const { data: leads = [], isLoading } = useQuery({
@@ -93,6 +94,10 @@ export const Leads: React.FC = () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
             setIsAddModalOpen(false);
+            formRef.current?.reset();
+        },
+        onError: (err: any) => {
+            alert('حدث خطأ أثناء الإضافة: ' + (err?.response?.data?.error || err.message));
         }
     });
 
@@ -105,9 +110,9 @@ export const Leads: React.FC = () => {
         }
     });
 
-    // Delete Mutation
-    const deleteMutation = useMutation({
-        mutationFn: crmService.delete,
+    // Mark as Lost Mutation (replaces hard delete — counts towards conversion rate)
+    const markLostMutation = useMutation({
+        mutationFn: (id: string) => crmService.update(id, { status: 'lost' }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
@@ -304,8 +309,14 @@ export const Leads: React.FC = () => {
                                                 <MessageSquare size={14} />
                                             </button>
                                             <button 
-                                                onClick={() => { if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) { deleteMutation.mutate(lead.id); } }} 
-                                                className="w-8 h-8 bg-rose-50 text-rose-500 flex items-center justify-center rounded-lg hover:bg-rose-600 hover:text-white transition-all"
+                                                onClick={() => { if (window.confirm('هل رفض العميل؟ سيُحسب ضمن نسبة الفشل.')) { markLostMutation.mutate(lead.id); } }} 
+                                                className={cn(
+                                                    "w-8 h-8 flex items-center justify-center rounded-lg transition-all",
+                                                    lead.status === 'lost'
+                                                        ? "bg-rose-500 text-white"
+                                                        : "bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white"
+                                                )}
+                                                title="رفض / ملغي"
                                             >
                                                 <Trash size={14} />
                                             </button>
@@ -412,8 +423,13 @@ export const Leads: React.FC = () => {
                                     <MessageSquare size={14} />
                                 </button>
                                 <button 
-                                    onClick={() => { if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) { deleteMutation.mutate(lead.id); } }}
-                                    className="w-9 h-9 flex items-center justify-center bg-rose-50 text-rose-500 rounded-xl hover:bg-rose-600 hover:text-white transition-all"
+                                    onClick={() => { if (window.confirm('هل رفض العميل؟ سيُحسب ضمن نسبة الفشل.')) { markLostMutation.mutate(lead.id); } }}
+                                    className={cn(
+                                        "w-9 h-9 flex items-center justify-center rounded-xl hover:bg-rose-600 hover:text-white transition-all",
+                                        lead.status === 'lost'
+                                            ? "bg-rose-500 text-white"
+                                            : "bg-rose-50 text-rose-500"
+                                    )}
                                 >
                                     <Trash size={14} />
                                 </button>
@@ -436,7 +452,7 @@ export const Leads: React.FC = () => {
                             </div>
                             <button onClick={() => setIsAddModalOpen(false)} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg"><X size={18} /></button>
                         </div>
-                        <form className="p-6 space-y-4" onSubmit={(e) => {
+                        <form ref={formRef} className="p-6 space-y-4" onSubmit={(e) => {
                             e.preventDefault();
                             const formData = new FormData(e.currentTarget);
                             addMutation.mutate({
@@ -470,8 +486,8 @@ export const Leads: React.FC = () => {
                                     <option value="high">عالية جداً 🔥</option>
                                 </select>
                             </div>
-                            <PrimaryBtn type="submit" className="w-full py-3 mt-4 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10">
-                                حفظ العميل وبدء المتابعة
+                            <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-3 mt-4 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10 disabled:opacity-60 disabled:cursor-not-allowed">
+                                {addMutation.isPending ? '⏳ جاري الحفظ...' : 'حفظ العميل وبدء المتابعة'}
                             </PrimaryBtn>
                         </form>
                     </div>
