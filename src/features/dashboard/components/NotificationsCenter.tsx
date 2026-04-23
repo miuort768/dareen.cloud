@@ -158,57 +158,59 @@ export const NotificationsCenter = ({
     const filteredRoomAlerts = roomAlerts;
 
     return (
-        <div className="w-full space-y-6" dir="rtl">
+        <div className="w-full space-y-6 font-sans" dir="rtl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                {/* Smart Notifications */}
-                <div className="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden">
-                    <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-2xl flex items-center justify-center">
-                                <Zap size={20} />
+                
+                {/* ── 1. إخطارات ذكية (Left Pane) ── */}
+                <div className="lg:col-span-7 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none overflow-hidden shadow-sm">
+                    {/* Header with Tabs */}
+                    <div className="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-b-2 border-slate-950">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-indigo-600 text-white flex items-center justify-center rounded-none shadow-lg">
+                                <Bell size={18} />
                             </div>
-                            <div>
-                                <h2 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">إخطارات ذكية</h2>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">ذكاء النظام الاصطناعي</p>
+                            <h2 className="text-sm font-black text-slate-950 dark:text-white uppercase tracking-tighter">إخطارات ذكية</h2>
+                            <div className="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                                <Zap size={16} className="text-slate-400" />
                             </div>
                         </div>
 
-                        <div className="flex bg-slate-50 dark:bg-slate-800/50 p-1 rounded-xl">
-                            {['all', 'balance', 'attendance', 'invoices'].map(f => (
-                                <button
-                                    key={f}
-                                    onClick={() => setSmartFilter(f as any)}
-                                    className={cn(
-                                        "px-3 py-1 text-[10px] font-bold rounded-lg transition-all capitalize",
-                                        smartFilter === f ? "bg-white dark:bg-slate-700 text-rose-500 shadow-sm" : "text-slate-400"
-                                    )}
-                                >
-                                    {f === 'all' ? 'الكل' : f === 'balance' ? 'رصيد' : f === 'attendance' ? 'غياب' : 'فواتير'}
-                                </button>
-                            ))}
+                        <div className="flex items-center gap-2">
+                             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-none text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                                {filteredSmartAlerts.length} حرجة
+                             </div>
                         </div>
                     </div>
 
-                    <div className="space-y-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+                    {/* Content List */}
+                    <div className="p-6 space-y-3 max-h-[500px] overflow-y-auto custom-scrollbar bg-white dark:bg-slate-900">
                         {filteredSmartAlerts.map(alert => (
                             <div key={alert.id} className={cn(
-                                "p-4 rounded-2xl border flex items-center justify-between group transition-all hover:translate-x-[-4px]",
-                                alert.type === 'success' ? "bg-emerald-50/50 border-emerald-100 dark:bg-emerald-900/10 dark:border-emerald-900/20" : "bg-rose-50/50 border-rose-100 dark:bg-rose-900/10 dark:border-rose-900/20"
+                                "relative p-5 rounded-none border flex items-center justify-between transition-all hover:bg-slate-50 dark:hover:bg-slate-800",
+                                alert.type === 'success' 
+                                    ? "bg-emerald-50/30 border-emerald-100 dark:border-emerald-900/20" 
+                                    : "bg-rose-50/50 border-rose-100 dark:border-rose-900/20"
                             )}>
-                                <div className="flex items-center gap-4">
+                                {/* Right warning icon */}
+                                <div className="flex items-center gap-6">
                                     <div className={cn(
-                                        "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm",
+                                        "w-10 h-10 flex items-center justify-center text-white rounded-none shadow-md",
                                         alert.type === 'success' ? "bg-emerald-500" : "bg-rose-500"
                                     )}>
-                                        {alert.type === 'success' ? <CheckCircle2 size={20} /> : <AlertTriangle size={20} />}
+                                        {alert.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
                                     </div>
-                                    <div>
-                                        <h3 className={cn("font-bold text-sm", alert.type === 'success' ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400")}>{alert.title}</h3>
-                                        <p className={cn("text-[11px] font-bold opacity-70", alert.type === 'success' ? "text-emerald-600" : "text-rose-600")}>{alert.desc}</p>
+                                    <div className="text-right">
+                                        <h3 className={cn("font-black text-sm uppercase tracking-tighter mb-1", alert.type === 'success' ? "text-emerald-700 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400")}>{alert.title}</h3>
+                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{alert.desc}</p>
                                     </div>
                                 </div>
+
+                                {/* Left action button */}
                                 {alert.action && (
-                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-400 hover:text-indigo-500 rounded-lg shadow-sm transition-all">
+                                    <button 
+                                        onClick={alert.action} 
+                                        className="w-10 h-10 flex items-center justify-center bg-rose-500 text-white rounded-none shadow-lg hover:bg-rose-600 transition-colors"
+                                    >
                                         <ArrowLeft size={16} />
                                     </button>
                                 )}
@@ -217,59 +219,64 @@ export const NotificationsCenter = ({
                     </div>
                 </div>
 
-                {/* Alerts Room */}
-                <div className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden">
-                    <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-2xl flex items-center justify-center">
-                                <Bell size={20} />
-                            </div>
-                            <div>
-                                <h2 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">غرفة العمليات</h2>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">تنبيهات حرجة</p>
+                {/* ── 2. غرفة التنبيهات (Right Pane) ── */}
+                <div className="lg:col-span-5 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none overflow-hidden shadow-sm">
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-b-2 border-slate-950">
+                        <div className="flex items-center gap-3">
+                            <h2 className="text-sm font-black text-slate-950 dark:text-white uppercase tracking-tighter">غرفة التنبيهات</h2>
+                            <div className="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                                <Zap size={16} className="text-indigo-600" />
                             </div>
                         </div>
-                        <div className="bg-slate-50 dark:bg-slate-800 px-3 py-1 rounded-xl">
-                            <span className="text-[10px] font-bold text-indigo-500">{filteredRoomAlerts.length} تنبيه</span>
+                        <div className="bg-slate-950 text-white px-3 py-1.5 rounded-none text-[10px] font-black uppercase tracking-widest">
+                            {filteredRoomAlerts.length} عاجل
                         </div>
                     </div>
 
-                    <div className="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar">
+                    {/* Content List */}
+                    <div className="p-6 space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar">
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map(alert => (
-                            <div key={alert.id} className="flex items-center justify-between group">
-                                <div className="flex items-center gap-4 min-w-0">
-                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:text-indigo-500 group-hover:bg-indigo-50 rounded-xl flex items-center justify-center transition-all">
-                                        <alert.icon size={18} />
-                                    </div>
-                                    <div className="min-w-0">
-                                        <h4 className="text-xs font-bold text-slate-800 dark:text-white truncate">{alert.title}</h4>
-                                        <p className="text-[10px] font-bold text-slate-400 truncate mt-0.5">{alert.description}</p>
-                                    </div>
-                                </div>
+                            <div key={alert.id} className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 last:border-0">
+                                {/* Left Action (WhatsApp) */}
                                 {alert.actionLabel === 'واتساب' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white rounded-xl text-[10px] font-bold transition-all"
+                                        className="h-10 px-6 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800 rounded-none text-[11px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all"
                                     >
                                         {alert.actionLabel}
                                     </button>
                                 ) : (
                                     <Link 
                                         to={alert.link || '#'} 
-                                        className="h-8 px-4 bg-slate-50 text-slate-600 hover:bg-slate-900 hover:text-white rounded-xl text-[10px] font-bold transition-all"
+                                        className="h-10 px-6 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-none text-[11px] font-black uppercase tracking-widest hover:bg-slate-950 hover:text-white transition-all"
                                     >
                                         {alert.actionLabel}
                                     </Link>
                                 )}
+
+                                {/* Name & Details in Middle/Right */}
+                                <div className="flex items-center gap-4 text-right min-w-0">
+                                    <div className="min-w-0">
+                                        <h4 className="text-xs font-black text-slate-950 dark:text-white truncate uppercase tracking-tighter">{alert.title}</h4>
+                                        <p className="text-[10px] font-black text-slate-400 truncate mt-1 uppercase tracking-widest">{alert.description}</p>
+                                    </div>
+                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-none flex items-center justify-center border border-slate-100 dark:border-slate-800 group-hover:text-indigo-600 transition-colors">
+                                        <Phone size={16} className="text-rose-500" />
+                                    </div>
+                                </div>
                             </div>
                         )) : (
-                            <div className="text-center py-20 opacity-30 italic text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                                لا توجد تنبيهات حرجة
+                            <div className="text-center py-24 opacity-20 flex flex-col items-center">
+                                <Zap size={48} className="text-slate-300 mb-4" />
+                                <p className="text-[10px] font-black uppercase tracking-[0.2em]">العمليات في حالة استقرار</p>
                             </div>
                         )}
                     </div>
                 </div>
+
             </div>
         </div>
+    );
     );
 };
