@@ -83,7 +83,7 @@ export const TeacherDetails = ({
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-black text-lg text-white truncate uppercase tracking-tighter italic">{teacher.name}</h3>
+                            <h3 className="font-black text-lg text-white truncate uppercase tracking-tighter">{teacher.name}</h3>
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="text-[9px] font-black text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-none uppercase tracking-widest">{teacher.subject}</span>
@@ -203,7 +203,7 @@ export const TeacherDetails = ({
                                     <Clock size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-black uppercase tracking-tighter italic text-white">سجل نشاطات المعلمة</h3>
+                                    <h3 className="text-lg font-black uppercase tracking-tighter text-white">سجل نشاطات المعلمة</h3>
                                     <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">{teacher.name}</p>
                                 </div>
                             </div>
