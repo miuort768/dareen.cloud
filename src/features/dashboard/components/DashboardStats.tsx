@@ -9,12 +9,12 @@ interface DashboardStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, value: string | number, icon: LucideIcon, color: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-3xl shadow-sm flex flex-col items-center text-center group hover:shadow-md transition-all duration-300">
-        <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110", bg)}>
-            <Icon size={18} className={color} />
+    <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-5 rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] flex flex-col items-center text-center group hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] transition-all duration-300">
+        <div className={cn("w-12 h-12 rounded-none border-2 border-slate-950 flex items-center justify-center mb-4 transition-transform group-hover:scale-110", bg)}>
+            <Icon size={20} className={color} />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{title}</p>
-        <p className="text-lg font-black text-slate-800 dark:text-white tabular-nums">{value}</p>
+        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">{title}</p>
+        <p className="text-xl font-black text-slate-950 dark:text-white tabular-nums tracking-tighter">{value}</p>
     </div>
 );
 

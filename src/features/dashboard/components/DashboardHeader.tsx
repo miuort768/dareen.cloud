@@ -50,48 +50,52 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-6" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-none mb-6 flex flex-col md:flex-row items-center justify-between gap-6" dir="rtl">
             {/* Identity & Welcome */}
             <div className="flex items-center gap-4 w-full md:w-auto">
                 <div className="relative group">
-                    <div className="w-16 h-16 bg-slate-900 dark:bg-black text-white rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg transition-transform group-hover:scale-105 duration-300">
+                    <div className="w-16 h-16 bg-slate-950 dark:bg-slate-800 text-white rounded-none flex items-center justify-center font-black text-2xl shadow-xl transition-transform group-hover:scale-105 duration-300 border-2 border-slate-950">
                         <GraduationCap size={28} />
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-lg border-2 border-white dark:border-slate-900 shadow-sm" />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-none border-2 border-slate-950 shadow-sm" />
                 </div>
                 
                 <div className="text-right">
                     <div className="flex items-center gap-2 mb-1">
-                        <span className="bg-indigo-50 dark:bg-indigo-900/30 text-[#5c59f2] text-[9px] font-black px-2 py-0.5 rounded-lg uppercase tracking-widest leading-none">
-                            {isTeacher ? 'معلمة معتمدة' : 'إدارة الأكاديمية'}
+                        <span className="bg-indigo-600 text-white text-[9px] font-black px-2 py-0.5 rounded-none uppercase tracking-[0.2em] leading-none">
+                            {isTeacher ? 'Certified Educator' : 'System Operations'}
                         </span>
                         <Sparkles className="text-amber-400" size={14} />
                     </div>
-                    <h1 className="text-xl font-bold text-slate-800 dark:text-white leading-none">
+                    <h1 className="text-xl font-black text-slate-950 dark:text-white leading-none uppercase tracking-tighter">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'لوحة القيادة والتحكم'}
                     </h1>
-                    <p className="text-xs font-bold text-slate-400 mt-2 flex items-center gap-2 italic">
-                        <Calendar size={12} className="text-[#5c59f2]" />
-                        {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
-                    </p>
+                    <div className="flex items-center gap-3 mt-3">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none">
+                            <Calendar size={12} className="text-indigo-600" />
+                            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                                {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* Widgets & Support */}
             <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
                 {/* Time Widget */}
-                <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 px-4 py-2 rounded-2xl">
-                    <Clock size={16} className="text-[#5c59f2]" />
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-200 tabular-nums">
+                <div className="flex items-center gap-3 bg-slate-950 text-white border-2 border-slate-950 px-5 py-2.5 rounded-none shadow-[2px_2px_0px_0px_rgba(79,70,229,0.4)]">
+                    <Clock size={16} className="text-indigo-400" />
+                    <span className="text-xs font-black font-mono tabular-nums tracking-widest">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
 
                 {/* Active Session */}
                 {isTeacher && activeSessions.length > 0 && (
-                    <div className="flex items-center gap-3 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50 px-4 py-2 rounded-2xl animate-pulse">
-                        <PlayCircle size={16} className="text-emerald-500" />
-                        <span className="text-xs font-bold text-emerald-700 dark:text-emerald-300 tabular-nums">
+                    <div className="flex items-center gap-3 bg-emerald-500 text-white border-2 border-slate-950 px-5 py-2.5 rounded-none animate-pulse">
+                        <PlayCircle size={16} className="text-white" />
+                        <span className="text-xs font-black font-mono tabular-nums">
                             {formatElapsed(activeSessions[0].startedAt)}
                         </span>
                     </div>
@@ -100,9 +104,9 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 {/* Support Button */}
                 <button
                     onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
-                    className="h-10 px-5 bg-slate-900 dark:bg-slate-800 text-white rounded-2xl font-bold text-xs flex items-center gap-2 shadow-sm hover:bg-black transition-all active:scale-95"
+                    className="h-11 px-6 bg-white dark:bg-slate-800 text-slate-950 dark:text-white border-2 border-slate-950 rounded-none font-black text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:scale-95"
                 >
-                    <Headphones size={14} />
+                    <Headphones size={14} className="text-indigo-600" />
                     <span>الدعم الفني</span>
                 </button>
             </div>
