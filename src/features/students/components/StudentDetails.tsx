@@ -53,12 +53,12 @@ export const StudentDetails = ({
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-bold text-2xl shadow-lg shrink-0">
+                    <div className="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-md shrink-0">
                         {student.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-bold text-lg text-slate-800 dark:text-white truncate">{student.name}</h3>
+                            <h3 className="font-bold text-base text-slate-800 dark:text-white truncate">{student.name}</h3>
                             <RankBadge rank={rank} size="sm" />
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
@@ -73,7 +73,7 @@ export const StudentDetails = ({
                 </div>
             </div>
 
-            <div className="p-6 space-y-8 overflow-y-auto flex-1" dir="rtl">
+            <div className="p-4 space-y-5 overflow-y-auto flex-1 custom-scrollbar" dir="rtl">
                 {/* Points & Rank Panel */}
                 <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
                     <div className="flex items-center justify-between mb-4">
@@ -142,21 +142,21 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm relative",
+                                    "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl shadow-sm relative",
                                     en.isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-rose-100" : ""
                                 )}>
-                                    <div className="flex justify-between items-start mb-4">
+                                    <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-bold text-sm text-slate-800 dark:text-white">{en.subject}</h5>
+                                                <h5 className="font-bold text-xs text-slate-800 dark:text-white">{en.subject}</h5>
                                                 {isLow && <span className="text-[8px] font-bold text-rose-500 bg-rose-50 px-1 rounded animate-pulse">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <div className="w-5 h-5 bg-slate-100 rounded-lg flex items-center justify-center">
-                                                    <User size={10} className="text-slate-400" />
+                                                <div className="w-4 h-4 bg-slate-100 rounded flex items-center justify-center">
+                                                    <User size={8} className="text-slate-400" />
                                                 </div>
-                                                <span className="text-[10px] font-bold text-slate-500">{en.teacher}</span>
+                                                <span className="text-[9px] font-bold text-slate-500">{en.teacher}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
@@ -165,9 +165,9 @@ export const StudentDetails = ({
                                                     {en.isFrozen ? <Play size={14} /> : <Snowflake size={14} />}
                                                 </button>
                                             )}
-                                            <button onClick={() => onSendReminder(en)} className="w-7 h-7 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all" title="تذكير"><MessageCircle size={14} /></button>
-                                            <button onClick={() => onRenewEnrollment(i)} className="w-7 h-7 flex items-center justify-center text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all" title="تجديد"><RefreshCw size={14} /></button>
-                                            <button onClick={() => onDeleteEnrollment(i)} className="w-7 h-7 flex items-center justify-center text-rose-500 hover:bg-rose-50 rounded-lg transition-all" title="حذف"><Trash size={14} /></button>
+                                            <button onClick={() => onSendReminder(en)} className="w-6 h-6 flex items-center justify-center text-emerald-500 hover:bg-emerald-50 rounded-lg transition-all" title="تذكير"><MessageCircle size={12} /></button>
+                                            <button onClick={() => onRenewEnrollment(i)} className="w-6 h-6 flex items-center justify-center text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all" title="تجديد"><RefreshCw size={12} /></button>
+                                            <button onClick={() => onDeleteEnrollment(i)} className="w-6 h-6 flex items-center justify-center text-rose-500 hover:bg-rose-50 rounded-lg transition-all" title="حذف"><Trash size={12} /></button>
                                         </div>
                                     </div>
 
@@ -177,7 +177,7 @@ export const StudentDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "w-5 h-5 border flex items-center justify-center rounded-md text-[8px] font-bold font-mono transition-all",
+                                                        "w-4 h-4 border flex items-center justify-center rounded-sm text-[7px] font-bold font-mono transition-all",
                                                         idx < actualUsed 
                                                             ? "bg-emerald-500 border-emerald-500 text-white" 
                                                             : idx === actualUsed 
@@ -207,25 +207,37 @@ export const StudentDetails = ({
                                                 </div>
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                                    className="w-7 h-7 bg-slate-900 text-white rounded-lg flex items-center justify-center hover:bg-indigo-600 active:scale-90 transition-all shadow-sm"
+                                                    className="w-6 h-6 bg-slate-900 text-white rounded text-[10px] font-black flex items-center justify-center hover:bg-indigo-600 active:scale-90 transition-all shadow-sm"
                                                 >
-                                                    <Plus size={14} />
+                                                    <Plus size={12} strokeWidth={3} />
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
 
                                     {addingSessionsIndex === i && (
-                                        <div className="grid grid-cols-4 gap-2 mt-4 p-3 bg-slate-900 rounded-xl animate-in slide-in-from-top-2 duration-200">
-                                            {[1, 4, 8, 12].map(num => (
+                                        <div className="flex gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
+                                            {[1, 2, 4, 8].map(num => (
                                                 <button
                                                     key={num}
                                                     onClick={() => { onAddSessions(i, num); setAddingSessionsIndex(null); }}
-                                                    className="py-2 bg-white/10 hover:bg-indigo-500 text-white font-bold text-xs font-mono rounded-lg transition-all"
+                                                    className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-bold text-[10px] font-mono rounded transition-all"
                                                 >
-                                                    +{num}
+                                                    +{num} حصة
                                                 </button>
                                             ))}
+                                            <button
+                                                onClick={() => {
+                                                    const val = prompt('أدخل عدد الحصص المراد إضافتها:');
+                                                    if (val && !isNaN(Number(val)) && Number(val) > 0) {
+                                                        onAddSessions(i, Number(val));
+                                                        setAddingSessionsIndex(null);
+                                                    }
+                                                }}
+                                                className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-bold text-[10px] font-mono rounded transition-all"
+                                            >
+                                                مخصص
+                                            </button>
                                         </div>
                                     )}
                                 </div>
@@ -233,15 +245,14 @@ export const StudentDetails = ({
                         })}
 
                         {/* Add Enrollment */}
-                        <div className="bg-white dark:bg-slate-900 p-6 rounded-none border-2 border-dashed border-indigo-200 dark:border-indigo-900/30 relative overflow-hidden group hover:border-indigo-400 transition-colors">
-                            <div className="absolute top-0 right-0 w-1.5 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shadow-sm">
-                                    <Plus size={18} strokeWidth={2.5} />
+                        <div className="bg-white dark:bg-slate-900 p-4 rounded-none border-2 border-dashed border-indigo-200 dark:border-indigo-900/30 relative overflow-hidden group hover:border-indigo-400 transition-colors">
+                            <div className="absolute top-0 right-0 w-1 h-full bg-indigo-500 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top"></div>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-8 h-8 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-none flex items-center justify-center shadow-sm">
+                                    <Plus size={14} strokeWidth={2.5} />
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-sm text-slate-800 dark:text-white uppercase tracking-tighter">إدراج برنامج جديد</h4>
-                                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">تسجيل الطالب في مسار أكاديمي</p>
+                                    <h4 className="font-black text-xs text-slate-800 dark:text-white uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
                                 </div>
                             </div>
                             <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
