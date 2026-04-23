@@ -3,7 +3,7 @@ import type { Lead, LeadStats } from '../types';
 
 export const crmService = {
     getAll: async (): Promise<Lead[]> => {
-        const res = await api.get('/leads');
+        const res = await api.get('/leads') as any;
         return res.data.map((l: any) => ({
             ...l,
             createdAt: l.created_at ?? l.createdAt,
@@ -11,12 +11,12 @@ export const crmService = {
     },
 
     add: async (lead: Omit<Lead, 'id' | 'createdAt'>): Promise<Lead> => {
-        const res = await api.post('/leads', lead);
+        const res = await api.post('/leads', lead) as any;
         return { ...res.data, createdAt: res.data.created_at ?? res.data.createdAt };
     },
 
     update: async (id: string, updates: Partial<Lead>): Promise<Lead> => {
-        const res = await api.put(`/leads/${id}`, updates);
+        const res = await api.put(`/leads/${id}`, updates) as any;
         return { ...res.data, createdAt: res.data.created_at ?? res.data.createdAt };
     },
 
@@ -25,7 +25,7 @@ export const crmService = {
     },
 
     getStats: async (): Promise<LeadStats> => {
-        const res = await api.get('/leads/stats');
+        const res = await api.get('/leads/stats') as any;
         return res.data;
     },
 };
