@@ -327,46 +327,38 @@ export const Students = () => {
                 )}
 
                 <div className="px-4 md:px-6">
-                    <div className={cn(
-                        "grid gap-6 transition-all duration-700",
-                        showDetails ? "lg:grid-cols-12" : "grid-cols-1"
-                    )}>
-                        <div className={cn(
-                            "transition-all duration-700",
-                            showDetails ? "lg:col-span-7" : "w-full"
-                        )}>
-                            <StudentTable
-                                students={students}
-                                selectedId={selectedStudent?.id}
-                                onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
-                                onEdit={handleEditStudent}
-                                onDelete={setDeletingId}
-                                showDetails={showDetails}
-                                isTeacherView={isTeacher}
+                    <StudentTable
+                        students={students}
+                        selectedId={selectedStudent?.id}
+                        onSelect={(s) => { setSelectedStudent(s); setShowDetails(true); }}
+                        onEdit={handleEditStudent}
+                        onDelete={setDeletingId}
+                        showDetails={showDetails}
+                        isTeacherView={isTeacher}
+                    />
+                </div>
+
+                {showDetails && selectedStudent && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 md:p-8">
+                        <div className="w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col bg-white dark:bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-200 rounded-none border border-slate-200 dark:border-white/10">
+                            <StudentDetails
+                                student={selectedStudent}
+                                onClose={() => setShowDetails(false)}
+                                teachers={teachers}
+                                onAddEnrollment={handleAddEnrollment}
+                                onDeleteEnrollment={(i) => {
+                                    const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
+                                    updateStudent(updated);
+                                    setSelectedStudent(updated);
+                                }}
+                                onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
+                                onAddSessions={handleAddSessionsToEnrollment}
+                                onFreezeEnrollment={handleFreezeEnrollment}
+                                onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
                             />
                         </div>
-
-                        {showDetails && selectedStudent && (
-                            <div className="lg:col-span-5 animate-in slide-in-from-left-4 duration-500">
-                                <StudentDetails
-                                    student={selectedStudent}
-                                    onClose={() => setShowDetails(false)}
-                                    teachers={teachers}
-                                    onAddEnrollment={handleAddEnrollment}
-                                    onDeleteEnrollment={(i) => {
-                                        const updated = { ...selectedStudent, enrollments: selectedStudent.enrollments.filter((_, idx) => idx !== i) };
-                                        updateStudent(updated);
-                                        setSelectedStudent(updated);
-                                    }}
-                                    onRenewEnrollment={(i) => handleAddSessionsToEnrollment(i, selectedStudent.enrollments[i].sessionsTotal)}
-                                    onAddSessions={handleAddSessionsToEnrollment}
-                                    onFreezeEnrollment={handleFreezeEnrollment}
-                                    onSendReminder={(en) => sendWhatsAppReminder(selectedStudent, en, adminPhone)}
-                                />
-                            </div>
-                        )}
                     </div>
-                </div>
+                )}
             </div>
 
             {/* Confirm Modals */}

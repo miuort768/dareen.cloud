@@ -42,10 +42,7 @@ export const StudentDetails = ({
     const { next, pointsNeeded } = getNextRank(points, STUDENT_RANKS);
 
     return (
-        <div className={cn(
-            "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit rounded-2xl overflow-hidden shadow-xl animate-in slide-in-from-left-4 duration-300",
-            "fixed inset-0 z-[100] m-4 lg:m-0 lg:static lg:h-fit"
-        )}>
+        <div className="flex flex-col h-full bg-transparent overflow-hidden">
             {/* Header Section */}
             <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800" dir="rtl">
                 <button
@@ -76,7 +73,7 @@ export const StudentDetails = ({
                 </div>
             </div>
 
-            <div className="p-6 space-y-8 overflow-y-auto max-h-[calc(100vh-200px)] lg:max-h-none" dir="rtl">
+            <div className="p-6 space-y-8 overflow-y-auto flex-1" dir="rtl">
                 {/* Points & Rank Panel */}
                 <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
                     <div className="flex items-center justify-between mb-4">
