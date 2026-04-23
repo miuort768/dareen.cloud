@@ -11,14 +11,31 @@ interface FinanceStatsProps {
     monthProfit: number;
 }
 
-const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
-            <Icon size={16} className={color} />
+const StatCard = ({ title, value, icon: Icon, gradient, sub, badge }: {
+    title: string; value: string; icon: any; gradient: string; sub?: string; badge?: { label: string; color: string };
+}) => (
+    <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between shadow-sm text-white", gradient)}>
+        {/* BG icon */}
+        <div className="absolute -left-3 -bottom-3 opacity-10"><Icon size={72} /></div>
+        {/* Top */}
+        <div className="flex items-start justify-between mb-4">
+            <div className="w-9 h-9 bg-white/15 rounded-none flex items-center justify-center">
+                <Icon size={18} className="text-white" />
+            </div>
+            {badge && (
+                <span className={cn("text-[9px] font-black px-2 py-0.5 rounded-none uppercase tracking-widest", badge.color)}>
+                    {badge.label}
+                </span>
+            )}
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>
-        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value} <span className="text-[10px] font-bold text-slate-400">ج.م</span></p>
-        {subValue && <p className="text-[9px] text-slate-400 mt-0.5 font-bold">{subValue}</p>}
+        {/* Value */}
+        <div>
+            <p className="text-2xl font-black font-mono leading-none">{value}</p>
+            <p className="text-[9px] font-black uppercase tracking-widest text-white/60 mt-1">ج.م</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-white/75 mt-2">{title}</p>
+            {sub && <p className="text-[9px] text-white/50 font-bold mt-0.5">{sub}</p>}
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20" />
     </div>
 );
 
@@ -29,40 +46,45 @@ export const FinanceStats = ({
     monthExpenses,
     totalFixedExpenses,
     netProfit,
+    monthProfit,
 }: FinanceStatsProps) => {
+    const isProfit = netProfit >= 0;
+
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 mb-6" dir="rtl">
-            <StatItem 
-                title="إيرادات الوارد" 
-                value={totalIncome.toLocaleString()} 
-                icon={TrendingUp} 
-                color="text-emerald-500" 
-                bg="bg-emerald-50 dark:bg-emerald-900/20"
-                subValue={`+${monthIncome.toLocaleString()} هذا الشهر`}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6" dir="rtl">
+            <StatCard
+                title="إجمالي الإيرادات"
+                value={totalIncome.toLocaleString()}
+                icon={TrendingUp}
+                gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
+                sub={`+${monthIncome.toLocaleString()} هذا الشهر`}
+                badge={{ label: 'وارد', color: 'bg-white/20 text-white' }}
             />
-            <StatItem 
-                title="مستحقات المعلمات" 
-                value={totalExpenses.toLocaleString()} 
-                icon={TrendingDown} 
-                color="text-rose-500" 
-                bg="bg-rose-50 dark:bg-rose-900/20"
-                subValue={`-${monthExpenses.toLocaleString()} هذا الشهر`}
+            <StatCard
+                title="مستحقات المعلمات"
+                value={totalExpenses.toLocaleString()}
+                icon={TrendingDown}
+                gradient="bg-gradient-to-br from-rose-500 to-rose-700"
+                sub={`-${monthExpenses.toLocaleString()} هذا الشهر`}
+                badge={{ label: 'صادر', color: 'bg-white/20 text-white' }}
             />
-            <StatItem 
-                title="المصروفات التشغيلية" 
-                value={totalFixedExpenses.toLocaleString()} 
-                icon={Wallet} 
-                color="text-[#5c59f2]" 
-                bg="bg-[#eef2ff] dark:bg-indigo-900/30"
-                subValue="إدارة المرافق"
+            <StatCard
+                title="المصروفات التشغيلية"
+                value={totalFixedExpenses.toLocaleString()}
+                icon={Wallet}
+                gradient="bg-gradient-to-br from-indigo-600 to-violet-800"
+                sub="مصروفات ثابتة"
+                badge={{ label: 'ثابت', color: 'bg-white/20 text-white' }}
             />
-            <StatItem 
-                title="صافي الربح المتراكم" 
-                value={netProfit.toLocaleString()} 
-                icon={DollarSign} 
-                color="text-amber-500" 
-                bg="bg-amber-50 dark:bg-amber-900/20"
-                subValue="الأداء المالي الإجمالي"
+            <StatCard
+                title="صافي الربح"
+                value={netProfit.toLocaleString()}
+                icon={DollarSign}
+                gradient={isProfit
+                    ? "bg-gradient-to-br from-amber-500 to-orange-700"
+                    : "bg-gradient-to-br from-slate-600 to-slate-800"}
+                sub={`${monthProfit >= 0 ? '+' : ''}${monthProfit.toLocaleString()} هذا الشهر`}
+                badge={{ label: isProfit ? 'ربح' : 'خسارة', color: isProfit ? 'bg-white/20 text-white' : 'bg-rose-500/40 text-white' }}
             />
         </div>
     );
