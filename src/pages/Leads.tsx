@@ -56,13 +56,16 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled, type = 'butto
 
 
 const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
-            <Icon size={16} className={color} />
+    <div className={cn("p-4 rounded-none shadow-sm flex flex-col items-center text-center text-white relative overflow-hidden", bg)}>
+        <div className="absolute -right-4 -top-4 opacity-10">
+            <Icon size={64} />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>
-        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value}</p>
-        {subValue && <p className="text-[9px] text-slate-400 mt-0.5 font-bold">{subValue}</p>}
+        <div className="relative z-10 w-8 h-8 rounded-none flex items-center justify-center mb-2 bg-white/10 backdrop-blur-sm">
+            <Icon size={16} className="text-white" />
+        </div>
+        <p className="relative z-10 text-[10px] font-black uppercase tracking-widest text-white/80">{title}</p>
+        <p className="relative z-10 text-xl font-black mt-1 font-mono">{value}</p>
+        {subValue && <p className="relative z-10 text-[9px] mt-1 font-bold text-white/60">{subValue}</p>}
     </div>
 );
 
@@ -125,54 +128,54 @@ export const Leads: React.FC = () => {
     return (
         <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
             {/* Header */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 rounded-xl shadow-sm">
-                        <Users size={18} />
+            <div className="bg-teal-800 px-4 md:px-8 py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-teal-900/50">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
+                        <Users size={24} />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">إدارة العملاء والمهتمين</h1>
-                        <p className="text-[10px] text-slate-400 italic">تتبع مسار تحويل الطلاب والمشتركين الجدد</p>
+                        <h1 className="text-xl font-black text-white uppercase tracking-tighter">إدارة العملاء والمهتمين</h1>
+                        <p className="text-[10px] text-teal-200/70 font-bold uppercase tracking-widest mt-1">تتبع مسار تحويل الطلاب والمشتركين الجدد</p>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-2 no-print">
-                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4">
-                        <Plus size={14} />
+                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50">
+                        <Plus size={16} />
                         إضافة عميل محتمل
                     </PrimaryBtn>
                 </div>
             </div>
 
             {/* Quick Stats Bar */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 py-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 py-6">
                 <StatItem 
                     title="إجمالي المهتمين" 
                     value={stats?.total || 0} 
                     icon={Users} 
-                    color="text-slate-600" 
-                    bg="bg-slate-100 dark:bg-slate-800"
+                    color="text-white" 
+                    bg="bg-slate-800"
                 />
                 <StatItem 
                     title="عملاء جدد" 
                     value={stats?.new || 0} 
                     icon={Clock} 
-                    color="text-blue-500" 
-                    bg="bg-blue-50 dark:bg-blue-900/20"
+                    color="text-white" 
+                    bg="bg-blue-600"
                 />
                 <StatItem 
                     title="تم التحويل" 
                     value={stats?.converted || 0} 
                     icon={CheckCircle2} 
-                    color="text-emerald-500" 
-                    bg="bg-emerald-50 dark:bg-emerald-900/20"
+                    color="text-white" 
+                    bg="bg-emerald-600"
                 />
                 <StatItem 
                     title="معدل التحويل" 
                     value={`${stats?.conversionRate.toFixed(1)}%`} 
                     icon={TrendingUp} 
-                    color="text-[#5c59f2]" 
-                    bg="bg-indigo-50 dark:bg-indigo-900/20"
+                    color="text-white" 
+                    bg="bg-indigo-600"
                     subValue="نسبة النجاح"
                 />
             </div>
@@ -208,18 +211,18 @@ export const Leads: React.FC = () => {
 
             {/* Leads Table */}
             <div className="px-4 md:px-6">
-                <SectionCard>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-right border-collapse">
-                            <thead className="bg-slate-50 dark:bg-slate-800">
-                                <tr>
-                                    <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase">العميل</th>
-                                    <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase">التواصل</th>
-                                    <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase">الحالة</th>
-                                    <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase text-center">الأولوية</th>
-                                    <th className="px-6 py-3 font-bold text-[10px] text-slate-500 uppercase text-center">إجراءات</th>
-                                </tr>
-                            </thead>
+                <div className="overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                    <table className="w-full text-right border-collapse">
+                        <thead className="bg-rose-600">
+                            <tr>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">العميل</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">التواصل</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">المادة</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">الحالة</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">الأولوية</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">إجراءات</th>
+                            </tr>
+                        </thead>
                             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                                 {filteredLeads.map((lead) => (
                                     <tr key={lead.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
@@ -238,13 +241,15 @@ export const Leads: React.FC = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex flex-col gap-1">
-                                                <span className="font-mono font-bold text-[10px] text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                                                <span className="font-mono font-bold text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
                                                     <Phone size={12} className="text-emerald-500" /> {lead.phone}
                                                 </span>
-                                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800 text-[9px] font-bold text-slate-400 rounded-md w-fit">
-                                                    <Tag size={10} /> {lead.subject}
-                                                </span>
                                             </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700 shadow-sm">
+                                                <Tag size={12} className="text-indigo-500" /> {lead.subject}
+                                            </span>
                                         </td>
                                         <td className="px-6 py-4">
                                             <select 
@@ -295,12 +300,12 @@ export const Leads: React.FC = () => {
                         </table>
                         {filteredLeads.length === 0 && (
                             <div className="py-20 text-center">
-                                <Users size={48} className="mx-auto mb-3 text-slate-100 dark:text-slate-800" />
+                                <Users size={48} className="mx-auto mb-3 text-slate-200 dark:text-slate-800" />
                                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج بحث</p>
                             </div>
                         )}
                     </div>
-                </SectionCard>
+                </div>
             </div>
 
             {/* Add Lead Modal */}
