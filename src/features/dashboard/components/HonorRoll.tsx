@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Star, Trophy, Crown, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Award, Star, Trophy, Crown, Sparkles } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface Student {
