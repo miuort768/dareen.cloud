@@ -216,10 +216,11 @@ export const Leads: React.FC = () => {
                 </SectionCard>
             </div>
 
-            {/* Leads Table */}
+            {/* Leads Table/Cards */}
             <div className="px-4 md:px-6">
-                <div className="overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                    <table className="w-full text-right border-collapse min-w-[900px]">
+                {/* Desktop Table */}
+                <div className="hidden lg:block overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                    <table className="w-full text-right border-collapse">
                         <thead className="bg-rose-600">
                             <tr>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">العميل</th>
@@ -230,97 +231,173 @@ export const Leads: React.FC = () => {
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">إجراءات</th>
                             </tr>
                         </thead>
-                            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                                {filteredLeads.map((lead) => (
-                                    <tr key={lead.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm">
-                                                    {lead.studentName.charAt(0)}
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{lead.studentName}</h4>
-                                                    <p className="text-[9px] text-slate-400 font-medium mt-0.5">
-                                                        مضاف: {new Date(lead.createdAt).toLocaleDateString('ar-EG')}
-                                                    </p>
-                                                </div>
+                        <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                            {filteredLeads.map((lead) => (
+                                <tr key={lead.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm">
+                                                {lead.studentName.charAt(0)}
                                             </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex flex-col gap-1">
-                                                <span className="font-mono font-bold text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-                                                    <Phone size={12} className="text-emerald-500" /> {lead.phone}
-                                                </span>
+                                            <div>
+                                                <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{lead.studentName}</h4>
+                                                <p className="text-[9px] text-slate-400 font-medium mt-0.5">
+                                                    مضاف: {new Date(lead.createdAt).toLocaleDateString('ar-EG')}
+                                                </p>
                                             </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700 shadow-sm">
-                                                <Tag size={12} className="text-indigo-500" /> {lead.subject}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <select 
-                                                className={cn(
-                                                    "px-3 py-1 text-[10px] font-bold rounded-lg border-none outline-none cursor-pointer",
-                                                    statusConfig[lead.status].bg,
-                                                    statusConfig[lead.status].color
-                                                )}
-                                                value={lead.status}
-                                                onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as any } })}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="font-mono font-bold text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                                            <Phone size={12} className="text-emerald-500" /> {lead.phone}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
+                                            <Tag size={12} className="text-indigo-500" /> {lead.subject}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <select 
+                                            className={cn(
+                                                "px-3 py-1 text-[10px] font-bold rounded-lg border-none outline-none cursor-pointer",
+                                                statusConfig[lead.status].bg,
+                                                statusConfig[lead.status].color
+                                            )}
+                                            value={lead.status}
+                                            onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as any } })}
+                                        >
+                                            {Object.entries(statusConfig).map(([key, value]) => (
+                                                <option key={key} value={key}>{value.label}</option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        <div className="flex justify-center gap-0.5">
+                                            {[...Array(3)].map((_, i) => (
+                                                <Star key={i} size={12} className={cn(
+                                                    (lead.priority === 'high' || (lead.priority === 'medium' && i < 2) || (lead.priority === 'low' && i < 1))
+                                                        ? "text-amber-400 fill-amber-400"
+                                                        : "text-slate-200 dark:text-slate-700"
+                                                )} />
+                                            ))}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center justify-center gap-2">
+                                            <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-600 hover:text-white transition-all">
+                                                <PhoneCall size={14} />
+                                            </button>
+                                            <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-400 hover:text-white transition-all">
+                                                <MessageSquare size={14} />
+                                            </button>
+                                            <button 
+                                                onClick={() => { if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) { deleteMutation.mutate(lead.id); } }} 
+                                                className="w-8 h-8 bg-rose-50 text-rose-500 flex items-center justify-center rounded-lg hover:bg-rose-600 hover:text-white transition-all"
                                             >
-                                                {Object.entries(statusConfig).map(([key, value]) => (
-                                                    <option key={key} value={key}>{value.label}</option>
-                                                ))}
-                                            </select>
-                                        </td>
-                                        <td className="px-6 py-4 text-center">
-                                            <div className="flex justify-center gap-0.5">
-                                                {[...Array(3)].map((_, i) => (
-                                                    <Star 
-                                                        key={i} 
-                                                        size={12} 
-                                                        className={cn(
-                                                            (lead.priority === 'high' || (lead.priority === 'medium' && i < 2) || (lead.priority === 'low' && i < 1)) 
-                                                                ? "text-amber-400 fill-amber-400" 
-                                                                : "text-slate-200 dark:text-slate-700"
-                                                        )}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center justify-center gap-2">
-                                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-600 hover:text-white transition-all">
-                                                    <PhoneCall size={14} />
-                                                </button>
-                                                <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-400 hover:text-white transition-all">
-                                                    <MessageSquare size={14} />
-                                                </button>
-                                                <button 
-                                                    onClick={() => {
-                                                        if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) {
-                                                            deleteMutation.mutate(lead.id);
-                                                        }
-                                                    }} 
-                                                    className="w-8 h-8 bg-rose-50 dark:bg-rose-900/20 text-rose-500 flex items-center justify-center rounded-none hover:bg-rose-600 hover:text-white transition-all shadow-sm"
-                                                    title="حذف العميل"
-                                                >
-                                                    <Trash size={14} />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        {filteredLeads.length === 0 && (
-                            <div className="py-20 text-center">
-                                <Users size={48} className="mx-auto mb-3 text-slate-200 dark:text-slate-800" />
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج بحث</p>
-                            </div>
-                        )}
-                    </div>
+                                                <Trash size={14} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {filteredLeads.length === 0 && (
+                        <div className="py-20 text-center">
+                            <Users size={48} className="mx-auto mb-3 text-slate-200 dark:text-slate-800" />
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج بحث</p>
+                        </div>
+                    )}
                 </div>
+
+                {/* Mobile Cards */}
+                <div className="lg:hidden space-y-4">
+                    {filteredLeads.length === 0 ? (
+                        <div className="py-20 text-center">
+                            <Users size={48} className="mx-auto mb-3 text-slate-200 dark:text-slate-800" />
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج بحث</p>
+                        </div>
+                    ) : filteredLeads.map((lead) => (
+                        <div
+                            key={lead.id}
+                            className="bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden border-r-4 border-r-teal-600"
+                        >
+                            {/* Top Row */}
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-bold text-sm rounded-none">
+                                        {lead.studentName.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName}</h4>
+                                        <span className={cn("text-[9px] font-bold px-1.5 py-0.5 rounded uppercase", statusConfig[lead.status].bg, statusConfig[lead.status].color)}>
+                                            {statusConfig[lead.status].label}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="text-left flex flex-col items-end gap-1">
+                                    <div className="flex gap-0.5">
+                                        {[...Array(3)].map((_, i) => (
+                                            <Star key={i} size={12} className={cn(
+                                                (lead.priority === 'high' || (lead.priority === 'medium' && i < 2) || (lead.priority === 'low' && i < 1))
+                                                    ? "text-amber-400 fill-amber-400"
+                                                    : "text-slate-200"
+                                            )} />
+                                        ))}
+                                    </div>
+                                    <span className="text-[8px] text-slate-400 font-bold">{new Date(lead.createdAt).toLocaleDateString('ar-EG')}</span>
+                                </div>
+                            </div>
+
+                            {/* Info Grid */}
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl flex items-center gap-2">
+                                    <Phone size={12} className="text-emerald-500 shrink-0" />
+                                    <span className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate font-mono">{lead.phone}</span>
+                                </div>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl flex items-center gap-2">
+                                    <Tag size={12} className="text-indigo-400 shrink-0" />
+                                    <span className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate">{lead.subject}</span>
+                                </div>
+                            </div>
+
+                            {/* Status selector */}
+                            <div className="mb-3">
+                                <select
+                                    className={cn(
+                                        "w-full px-3 py-2 text-xs font-bold rounded-lg border-none outline-none cursor-pointer",
+                                        statusConfig[lead.status].bg,
+                                        statusConfig[lead.status].color
+                                    )}
+                                    value={lead.status}
+                                    onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as any } })}
+                                >
+                                    {Object.entries(statusConfig).map(([key, value]) => (
+                                        <option key={key} value={key}>{value.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex items-center gap-2 pt-1">
+                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex-1 h-9 bg-emerald-600 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-1.5">
+                                    <PhoneCall size={14} /> اتصال
+                                </button>
+                                <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="w-9 h-9 flex items-center justify-center bg-slate-900 dark:bg-slate-800 text-white rounded-xl">
+                                    <MessageSquare size={14} />
+                                </button>
+                                <button 
+                                    onClick={() => { if (window.confirm('هل أنت متأكد من حذف هذا العميل؟')) { deleteMutation.mutate(lead.id); } }}
+                                    className="w-9 h-9 flex items-center justify-center bg-rose-50 text-rose-500 rounded-xl hover:bg-rose-600 hover:text-white transition-all"
+                                >
+                                    <Trash size={14} />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             {/* Add Lead Modal */}
             {isAddModalOpen && (
