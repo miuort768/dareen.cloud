@@ -1,4 +1,3 @@
-import React from 'react';
 import { DollarSign, Search, Filter, Calendar, CalendarCheck, Download, Plus, TrendingUp } from 'lucide-react';
 import { TransactionsLog } from '../features/finance/components/TransactionsLog';
 import { FinanceCharts } from '../features/finance/components/FinanceCharts';
