@@ -285,6 +285,18 @@ export const Leads: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center justify-center gap-2">
+                                            <button 
+                                                onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
+                                                className={cn(
+                                                    "w-8 h-8 flex items-center justify-center rounded-lg transition-all",
+                                                    lead.status === 'converted'
+                                                        ? "bg-emerald-500 text-white"
+                                                        : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+                                                )}
+                                                title="تم التحويل / مشترك"
+                                            >
+                                                <CheckCircle2 size={14} />
+                                            </button>
                                             <button onClick={() => window.open(`tel:${lead.phone}`)} className="w-8 h-8 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-lg hover:bg-emerald-600 hover:text-white transition-all">
                                                 <PhoneCall size={14} />
                                             </button>
@@ -381,6 +393,18 @@ export const Leads: React.FC = () => {
 
                             {/* Action Buttons */}
                             <div className="flex items-center gap-2 pt-1">
+                                <button 
+                                    onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })}
+                                    className={cn(
+                                        "w-9 h-9 flex items-center justify-center rounded-xl transition-all shrink-0",
+                                        lead.status === 'converted'
+                                            ? "bg-emerald-500 text-white"
+                                            : "bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white"
+                                    )}
+                                    title="تم التحويل / مشترك"
+                                >
+                                    <CheckCircle2 size={16} />
+                                </button>
                                 <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex-1 h-9 bg-emerald-600 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-1.5">
                                     <PhoneCall size={14} /> اتصال
                                 </button>
