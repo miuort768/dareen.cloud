@@ -11,6 +11,8 @@ interface AcademicReportProps {
     gradeBarData: any[];
     subjectPieData: any[];
     totalEnrollments: number;
+    totalStudents: number;
+    uniqueSubjects: number;
     filteredStudentProgress: any[];
     studentProgressTotal: number;
     searchTerm: string;
@@ -56,6 +58,8 @@ export const AcademicReport = ({
     gradeBarData,
     subjectPieData,
     totalEnrollments,
+    totalStudents,
+    uniqueSubjects,
     filteredStudentProgress,
     searchTerm,
     setSearchTerm
@@ -134,6 +138,24 @@ export const AcademicReport = ({
                         )}
                     </div>
                 </SectionCard>
+            </div>
+
+            {/* ── ملخص إحصائيات التسجيلات ── */}
+            <div className="grid grid-cols-3 gap-3">
+                {[
+                    { label: 'إجمالي الطلاب', value: totalStudents, icon: Users, grad: 'from-blue-600 to-blue-800' },
+                    { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, grad: 'from-emerald-600 to-emerald-800' },
+                    { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, grad: 'from-purple-600 to-purple-800' },
+                ].map((item, i) => (
+                    <div key={i} className={cn("relative overflow-hidden rounded-none p-4 bg-gradient-to-br text-white shadow-sm", item.grad)}>
+                        <div className="absolute -left-2 -bottom-2 opacity-10"><item.icon size={56} /></div>
+                        <div className="w-7 h-7 bg-white/15 rounded-none flex items-center justify-center mb-2">
+                            <item.icon size={14} className="text-white" />
+                        </div>
+                        <p className="text-xl font-black font-mono">{item.value}</p>
+                        <p className="text-[9px] font-black uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
+                    </div>
+                ))}
             </div>
 
             {/* Student Progress Table */}

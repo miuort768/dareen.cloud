@@ -9,7 +9,7 @@ export const useReports = () => {
         invoices: []
     });
     const [loading, setLoading] = useState(true);
-    const [activeReport, setActiveReport] = useState<ReportType>('academic');
+    const [activeReport, setActiveReport] = useState<ReportType>('overview');
     const [searchTerm, setSearchTerm] = useState('');
 
     const fetchData = async () => {
