@@ -9,12 +9,12 @@ interface StudentStatsProps {
 }
 
 const StatItem = ({ label, value, icon: Icon, color, symbol, bg }: { label: string, value: string | number, icon: any, color: string, symbol: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
-            <Icon size={16} className={color} />
+    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-xl shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow">
+        <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center mb-1.5", bg)}>
+            <Icon size={12} className={color} />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{label}</p>
-        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value} <span className="text-[10px] font-bold text-slate-400">{symbol}</span></p>
+        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{label}</p>
+        <p className="text-xs font-black text-slate-800 dark:text-white mt-0.5">{value} <span className="text-[8px] font-bold text-slate-400">{symbol}</span></p>
     </div>
 );
 
