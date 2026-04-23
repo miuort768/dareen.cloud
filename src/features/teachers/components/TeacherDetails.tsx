@@ -129,12 +129,14 @@ export const TeacherDetails = ({
 
                 {/* Enrollment Section */}
                 <div className="space-y-4">
-                    <div className="flex items-center gap-0">
-                        <div className="bg-slate-950 text-white px-3 h-8 flex items-center rounded-none border border-slate-950">
-                            <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-white">الطلاب المسجلون</h4>
+                    <div className="flex items-stretch h-9 shadow-sm w-fit group cursor-default">
+                        <div className="bg-slate-900 text-white px-4 flex items-center justify-center rounded-none relative overflow-hidden transition-all group-hover:bg-slate-800">
+                            {/* Decorative Accent */}
+                            <div className="absolute top-0 right-0 w-1 h-full bg-[var(--primary-color,#5c59f2)]"></div>
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
                         </div>
-                        <div className="bg-white dark:bg-slate-800 px-3 h-8 flex items-center rounded-none border border-slate-200 dark:border-slate-700">
-                            <span className="text-[10px] font-black text-slate-900 dark:text-white">{enrolledStudents.length}</span>
+                        <div className="bg-white dark:bg-slate-800 px-4 flex items-center justify-center border-y border-l border-slate-200 dark:border-slate-700 rounded-none min-w-[44px] transition-colors group-hover:border-slate-300 dark:group-hover:border-slate-600">
+                            <span className="text-xs font-black text-[var(--primary-color,#5c59f2)]">{enrolledStudents.length}</span>
                         </div>
                     </div>
                     <div className="space-y-2">
