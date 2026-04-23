@@ -1,7 +1,7 @@
 import { BarChart3, PieChart, Search, Activity } from 'lucide-react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-    ResponsiveContainer, PieChart as RePieChart, Pie, Cell
+    ResponsiveContainer
 } from 'recharts';
 import { CHART_COLORS } from '../types';
 import { cn } from '../../../lib/utils';
