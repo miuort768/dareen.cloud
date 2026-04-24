@@ -4,6 +4,7 @@ import { Menu, X, Sparkles, ChevronDown, LogOut, Moon, Sun, GraduationCap } from
 import { useApp } from '../../context/AppContext';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
+import { cn } from '../../lib/utils';
 
 export const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,7 +54,10 @@ export const PublicNavbar = () => {
                             </div>
                             <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
                         </div>
-                        <div className="flex flex-col items-center pt-0.5 text-center">
+                        <div className={cn(
+                            "flex-col items-center pt-0.5 text-center",
+                            isAuthenticated ? "hidden md:flex" : "flex"
+                        )}>
                             <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
                                 معهد دارين
                             </h1>

@@ -14,7 +14,7 @@ export const MouseGlow: React.FC = () => {
     }, []);
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[9999]">
+        <div className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block">
             {/* Outer Ring */}
             <motion.div 
                 className="fixed top-0 left-0 w-6 h-6 rounded-full border-2 border-rose-500/50 shadow-[0_0_10px_rgba(244,63,94,0.2)]"
