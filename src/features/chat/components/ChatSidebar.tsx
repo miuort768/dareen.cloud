@@ -77,19 +77,22 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     {(currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
                         <>
                             <button 
+                                type="button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onDeleteAll();
+                                }}
+                                className="p-2.5 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-all text-rose-500 flex items-center justify-center cursor-pointer relative z-50 active:scale-95"
+                                title="حذف جميع المحادثات"
+                            >
+                                <Trash2 size={24} strokeWidth={2.5} className="pointer-events-none" />
+                            </button>
+                            <button 
                                 onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
                                 className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
                                 title="دردشة جديدة"
                             >
                                 <MessageSquarePlus size={22} />
-                            </button>
-                            <button 
-                                type="button"
-                                onClick={onDeleteAll}
-                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500 flex items-center justify-center cursor-pointer"
-                                title="حذف جميع المحادثات"
-                            >
-                                <Trash2 size={22} strokeWidth={2.5} />
                             </button>
                         </>
                     )}
