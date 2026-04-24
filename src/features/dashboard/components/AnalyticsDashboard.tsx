@@ -50,15 +50,15 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
 
     return (
-        <div className="space-y-6" dir="rtl">
+        <div className="w-full space-y-3" dir="rtl">
             {/* Header / Tabs */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-[32px] shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-center gap-4 px-2">
                     <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-2xl flex items-center justify-center">
                         <TrendingUp size={20} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">التحليل التفصيلي</h3>
+                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">مركز تحليل البيانات</h3>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">ذكاء الأعمال والبيانات</p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         active={activeTab === 'commitment'} 
                         onClick={() => setActiveTab('commitment')} 
                         icon={ShieldCheck} 
-                        label="معدل الالتزام" 
+                        label="الالتزام" 
                     />
                     <TabButton 
                         active={activeTab === 'database'} 
@@ -81,13 +81,13 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Evolution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-xl flex items-center justify-center">
                                 <TrendingUp size={18} />
                             </div>
-                            <h4 className="font-bold text-slate-800 dark:text-white">تطور معدل الحضور</h4>
+                            <h4 className="font-bold text-slate-800 dark:text-white">التحليل التحصيلي</h4>
                         </div>
                         <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-xl">
                             <span className="text-[10px] font-bold text-emerald-600">{overallRate}% كلي</span>
@@ -103,20 +103,21 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                         <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="6 6" vertical={false} stroke="#f1f5f9" />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis dataKey="month" tick={{ fontSize: 9, fontWeight: 'bold', fill: '#94a3b8' }} axisLine={false} tickLine={false} dy={10} />
                                 <YAxis tick={{ fontSize: 9, fontWeight: 'bold', fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
                                 <Tooltip 
-                                    contentStyle={{ borderRadius: '16px', border: '1px solid #f1f5f9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '11px', fontWeight: 'bold' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '11px', fontWeight: 'bold', backgroundColor: '#0f172a', color: '#fff' }}
+                                    itemStyle={{ color: '#10b981' }}
                                 />
-                                <Area type="monotone" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }} />
+                                <Area type="step" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={4} dot={{ r: 5, fill: '#10b981', strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 7, strokeWidth: 0 }} />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
                 {/* Distribution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
