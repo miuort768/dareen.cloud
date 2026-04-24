@@ -239,59 +239,67 @@ export const ParentStudents = () => {
             {viewingStudent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 md:animate-in md:fade-in md:duration-300">
                     <div
-                        className="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
+                        className="absolute inset-0 bg-slate-950/40 backdrop-blur-md"
                         onClick={() => setViewingStudent(null)}
                     />
-                    <div className="relative w-full max-w-2xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 flex flex-col max-h-[90vh]">
-                        {/* Modal Header */}
-                        <div className="p-6 bg-gray-900 text-white flex items-center justify-between shrink-0">
-                            <div className="flex items-center gap-4">
-                                <div className="p-2 bg-white/10">
-                                    <Calendar size={20} className="text-primary-400" />
+                    <div className="relative w-full max-w-2xl bg-[#f8faff] dark:bg-slate-950 shadow-2xl rounded-[32px] overflow-hidden border border-white dark:border-slate-800 flex flex-col max-h-[90vh] md:animate-in md:slide-in-from-bottom-8">
+                        {/* Modal Header - Dashboard Style */}
+                        <div className="p-6 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
+                            <div className="relative z-10 flex items-center gap-4">
+                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
+                                    <Calendar size={24} className="text-white" />
                                 </div>
                                 <div className="text-right">
-                                    <h2 className="text-lg font-black leading-none">{viewingStudent.name}</h2>
-                                    <p className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-widest">
-                                        {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'اختر المادة لعرض التواريخ'}
+                                    <h2 className="text-lg font-black leading-tight tracking-tight">{viewingStudent.name}</h2>
+                                    <p className="text-[10px] text-indigo-100 font-bold mt-0.5 uppercase tracking-widest opacity-80">
+                                        {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل مواعيد الحصص'}
                                     </p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setViewingStudent(null)}
-                                className="p-2 hover:bg-white/10 transition-colors"
+                                className="relative z-10 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
                             >
-                                <X size={20} />
+                                <X size={16} />
                             </button>
                         </div>
 
                         {/* Modal Content */}
-                        <div className="flex-1 overflow-y-auto no-scrollbar p-6">
+                        <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-6">
                             {!viewingSubject ? (
-                                /* Step 1: Subject Selection */
+                                /* Step 1: Subject Selection - Dashboard Style Cards */
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {(viewingStudent.enrollments || []).map((en: any, idx: number) => (
                                         <button
                                             key={idx}
                                             onClick={() => setViewingSubject(en)}
-                                            className="p-5 border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 hover:border-primary-500 hover:bg-white dark:hover:bg-gray-800 transition-all text-right group flex items-center justify-between"
+                                            className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-md transition-all text-right group flex items-center justify-between"
                                         >
-                                            <div>
-                                                <h4 className="font-black text-gray-900 dark:text-white mb-1">{en.subject}</h4>
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{en.teacher}</p>
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                                    <BookOpen size={18} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-black text-slate-900 dark:text-white text-sm mb-0.5">{en.subject}</h4>
+                                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-tight">المعلمة: {en.teacher}</p>
+                                                </div>
                                             </div>
-                                            <ChevronLeft size={18} className="text-gray-300 group-hover:text-primary-500 transform group-hover:-translate-x-1 transition-all" />
+                                            <ChevronLeft size={18} className="text-slate-300 group-hover:text-indigo-600 transform group-hover:-translate-x-1 transition-all" />
                                         </button>
                                     ))}
                                     {(viewingStudent.enrollments || []).length === 0 && (
-                                        <div className="col-span-full py-12 text-center text-gray-400 font-bold italic">لا توجد مواد مسجلة لعرض مواعيدها</div>
+                                        <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 rounded-[32px] border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
+                                            <p className="text-slate-400 font-bold text-xs">لا توجد مواد مسجلة حالياً</p>
+                                        </div>
                                     )}
                                 </div>
                             ) : (
-                                /* Step 2: Date Timeline */
+                                /* Step 2: Date Timeline - Refined Dashboard Look */
                                 <div className="space-y-6">
                                     <button
                                         onClick={() => setViewingSubject(null)}
-                                        className="flex items-center gap-2 text-[10px] font-black text-primary-600 uppercase tracking-widest hover:underline mb-4"
+                                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-full text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-all shadow-sm"
                                     >
                                         <ChevronRight size={14} />
                                         العودة لقائمة المواد
@@ -299,41 +307,59 @@ export const ParentStudents = () => {
 
                                     {isSessionsLoading ? (
                                         <div className="space-y-4">
-                                            {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 animate-pulse" />)}
+                                            {[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-white dark:bg-slate-900 border border-slate-50 dark:border-slate-800 rounded-3xl animate-pulse" />)}
                                         </div>
                                     ) : (
-                                        <div className="relative border-r-2 border-primary-500/20 pr-6 mr-3 space-y-8">
+                                        <div className="relative border-r-2 border-indigo-500/10 pr-6 mr-3 space-y-6">
                                             {childSessions
                                                 .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .map((session, sIdx) => (
                                                     <div key={sIdx} className="relative">
                                                         <div className={cn(
-                                                            "absolute -right-[33px] top-1.5 w-4 h-4 rounded-none bg-white dark:bg-gray-900 border-4",
-                                                            session.status === 'completed' ? "border-emerald-500" : "border-rose-500"
+                                                            "absolute -right-[33px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-950 border-4",
+                                                            session.status === 'completed' ? "border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" : "border-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]"
                                                         )}></div>
-                                                        <div className="bg-gray-50 dark:bg-gray-800/40 p-4 border border-gray-100 dark:border-gray-800 group hover:border-primary-500 transition-all">
+                                                        <div className="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
                                                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                                                                <div>
-                                                                    <p className="text-sm font-black text-gray-900 dark:text-white">
-                                                                        {format(new Date(session.date), 'eeee, d MMMM yyyy', { locale: ar })}
-                                                                    </p>
+                                                                <div className="flex items-center gap-3">
+                                                                    <div className={cn(
+                                                                        "w-8 h-8 rounded-xl flex items-center justify-center",
+                                                                        session.status === 'completed' ? "bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500" : "bg-rose-50 dark:bg-rose-900/10 text-rose-500"
+                                                                    )}>
+                                                                        <Calendar size={14} />
+                                                                    </div>
+                                                                    <div>
+                                                                        <p className="text-sm font-black text-slate-900 dark:text-white">
+                                                                            {format(new Date(session.date), 'eeee, d MMMM yyyy', { locale: ar })}
+                                                                        </p>
+                                                                        <p className="text-[10px] font-bold text-slate-400">{session.time} م</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className={cn(
+                                                                    "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest self-start md:self-center",
+                                                                    session.status === 'completed' ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
+                                                                )}>
+                                                                    {session.status === 'completed' ? 'حضر' : 'غائب'}
                                                                 </div>
                                                             </div>
                                                             {session.notes && (
-                                                                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-                                                                    <p className="text-[10px] text-gray-500 font-bold italic bg-white dark:bg-gray-900 p-2 border-r-2 border-primary-400">
-                                                                        ملاحظة المعلم: {session.notes}
-                                                                    </p>
+                                                                <div className="mt-3 pt-3 border-t border-slate-50 dark:border-slate-800">
+                                                                    <div className="flex gap-2">
+                                                                        <div className="w-1 bg-indigo-500 rounded-full shrink-0" />
+                                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold italic leading-relaxed">
+                                                                            {session.notes}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             )}
                                                         </div>
                                                     </div>
                                                 ))}
                                             {childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled')).length === 0 && (
-                                                <div className="py-20 text-center">
-                                                    <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
-                                                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
+                                                <div className="py-20 text-center bg-white dark:bg-slate-900 rounded-[32px] border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
+                                                    <AlertCircle size={32} className="mx-auto text-slate-200 dark:text-slate-700 mb-4" />
+                                                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
                                                 </div>
                                             )}
                                         </div>
@@ -343,12 +369,12 @@ export const ParentStudents = () => {
                         </div>
 
                         {/* Modal Footer */}
-                        <div className="p-6 border-t border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 flex justify-end shrink-0">
+                        <div className="p-6 border-t border-slate-50 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-end shrink-0">
                             <button
                                 onClick={() => setViewingStudent(null)}
-                                className="px-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-[10px] font-black uppercase tracking-widest transition-all"
+                                className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-slate-200 dark:shadow-none"
                             >
-                                إغلاق
+                                إغلاق النافذة
                             </button>
                         </div>
                     </div>
