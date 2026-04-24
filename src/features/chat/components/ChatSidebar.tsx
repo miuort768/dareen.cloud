@@ -19,7 +19,7 @@ interface ChatSidebarProps {
     currentUser: User | null;
     setShowNewChatModal: (val: boolean) => void;
     setIsEditingGroup: (val: boolean) => void;
-    logout: () => void;
+    onDeleteAll: () => void;
     typingUsers: any[];
 }
 

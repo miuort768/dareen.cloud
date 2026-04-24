@@ -10,7 +10,7 @@ import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
-    const { currentUser, logout } = useApp();
+    const { currentUser } = useApp();
     const {
         conversations,
         availableUsers,
