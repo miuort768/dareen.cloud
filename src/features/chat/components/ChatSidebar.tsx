@@ -84,11 +84,16 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 <MessageSquarePlus size={22} />
                             </button>
                             <button 
-                                onClick={onDeleteAll}
-                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500"
+                                type="button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    onDeleteAll();
+                                }}
+                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500 flex items-center justify-center"
                                 title="حذف جميع المحادثات"
                             >
-                                <Trash2 size={22} />
+                                <Trash2 size={22} strokeWidth={2.5} />
                             </button>
                         </>
                     )}

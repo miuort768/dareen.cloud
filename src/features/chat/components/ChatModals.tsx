@@ -254,9 +254,13 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {showDeleteConfirm && (
                 <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                     <div className="bg-white dark:bg-[#233138] w-full max-w-sm shadow-2xl rounded-lg p-6">
-                        <h3 className="text-xl font-bold text-rose-500 mb-4 text-right">هل تريد الحذف؟</h3>
-                        <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm text-right">
-                            هذا الإجراء سيقوم بحذف العنصر بشكل نهائي من قاعدة البيانات.
+                        <h3 className="text-xl font-bold text-rose-500 mb-4 text-right">
+                            {deleteType === 'all_conversations' ? 'حذف كافة المحادثات؟' : 'هل تريد الحذف؟'}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm text-right leading-relaxed">
+                            {deleteType === 'all_conversations' 
+                                ? 'سيتم مسح جميع سجلات الدردشة الخاصة بك نهائياً. لا يمكن التراجع عن هذا الإجراء.' 
+                                : `هل أنت متأكد من حذف ${itemToDelete && 'displayName' in itemToDelete ? (itemToDelete as any).displayName : 'هذا العنصر'}؟`}
                         </p>
                         <div className="flex gap-3">
                              <button
