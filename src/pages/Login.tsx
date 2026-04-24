@@ -77,7 +77,7 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-full bg-[rgb(var(--bg-surface))] flex font-sans overflow-hidden relative transition-colors duration-500">
+        <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
             <SEO
                 title="تسجيل الدخول"
                 description="تسجيل الدخول إلى بوابة معهد دارين - طموح لا يعرف الحدود."
@@ -93,7 +93,7 @@ export const Login = () => {
             </div>
 
             {/* Main Unified Container - Centennial Layout */}
-            <div className="w-full h-full flex flex-col md:flex-row justify-center items-center max-w-7xl mx-auto relative z-10 px-4 pt-24 md:pt-32">
+            <div className="w-full min-h-full flex flex-col md:flex-row justify-center items-center max-w-7xl mx-auto relative z-10 px-4 pt-24 pb-12 md:pt-32">
 
                 {/* Visual Section - Sharp, Static, No Divider - Right Side in RTL */}
                 <div className="hidden md:flex md:w-1/2 bg-transparent relative flex-col justify-center items-center">
