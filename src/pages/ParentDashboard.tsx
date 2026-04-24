@@ -65,6 +65,11 @@ export const ParentDashboard = () => {
                 if (!res.ok) return;
                 const data: any[] = await res.json();
                 setActiveTimers(data);
+
+                // Update children data to get new homework/notes automatically
+                const students = await api.get<any[]>('/parents/my-children');
+                setChildren(students);
+
                 if (data.length > 0 && !timerTickRef.current) {
                     timerTickRef.current = setInterval(() => setTimerTick(t => t + 1), 1000);
                 } else if (data.length === 0 && timerTickRef.current) {
@@ -200,6 +205,37 @@ export const ParentDashboard = () => {
                 <NavButton label="ملفات الأبناء" icon={Users} onClick={() => navigate('/parent-students')} />
                 <NavButton label="المنتدى" icon={LayoutDashboard} onClick={() => navigate('/forum')} />
             </div>
+
+            {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
+            {children.some(child => child.enrollments?.some((en: any) => en.nextSessionNotes)) && (
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-2 mb-4">
+                        <MessageSquare className="text-indigo-500" size={20} />
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات الحالية</h3>
+                    </div>
+                    <div className="space-y-5">
+                        {children.filter(child => child.enrollments?.some((en: any) => en.nextSessionNotes)).map((child) => (
+                            <div key={child.id} className="space-y-2">
+                                <div className="flex items-center gap-2 px-1">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                    <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">الطالب: {child.name}</span>
+                                </div>
+                                <div className="space-y-3">
+                                    {child.enrollments.filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
+                                        <div key={idx} className="bg-indigo-50/30 dark:bg-indigo-900/10 p-4 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">{en.subject}</span>
+                                                <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
+                                            </div>
+                                            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* ═══════════════ ACADEMIC PROGRESS ═══════════════ */}
             <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-200 dark:shadow-none relative overflow-hidden group">
