@@ -132,10 +132,13 @@ export const Chat: React.FC = () => {
     const { data: messages = [] } = useMessages(selectedConv?.id);
 
     return (
-        <div className={cn(
-            "flex overflow-hidden bg-white dark:bg-slate-900",
-            "w-full h-[calc(100dvh-70px)] lg:h-screen relative z-10"
-        )}>
+        <div 
+            dir="rtl"
+            className={cn(
+                "flex overflow-hidden bg-white dark:bg-slate-900",
+                "w-full h-[calc(100dvh-70px)] lg:h-screen relative z-10"
+            )}
+        >
 
             <div className="flex w-full h-full max-w-full mx-auto relative z-10">
                 <ChatSidebar

@@ -269,6 +269,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     <textarea
                         rows={1}
                         value={newMessage}
+                        onInput={(e) => {
+                            const target = e.target as HTMLTextAreaElement;
+                            target.style.height = 'auto';
+                            target.style.height = `${Math.min(target.scrollHeight, 150)}px`;
+                        }}
                         onChange={(e) => {
                             const val = e.target.value;
                             setNewMessage(val);
@@ -291,10 +296,13 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault();
                                 handleSendMessage(e as any);
+                                // Reset height
+                                const target = e.target as HTMLTextAreaElement;
+                                target.style.height = 'auto';
                             }
                         }}
                         placeholder="اكتب رسالة"
-                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10"
+                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
                     />
                 </div>
 
