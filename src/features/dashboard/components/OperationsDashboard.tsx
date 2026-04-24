@@ -4,7 +4,6 @@ import {
     CreditCard, 
     ChevronLeft, 
     Clock, 
-    AlertCircle, 
     Phone,
     UserX,
     Briefcase
