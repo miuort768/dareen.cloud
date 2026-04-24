@@ -93,7 +93,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }, [messages]);
 
     return (
-        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
+        <div className="flex-1 bg-[#efeae2] dark:bg-[#0b141a] relative h-full w-full overflow-hidden">
             {/* WhatsApp Doodle Background Pattern */}
             <div 
                 className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
@@ -104,18 +104,18 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 }} 
             />
 
-            {/* Header - WhatsApp Style */}
-            <header className="sticky top-0 h-[60px] shrink-0 bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-[50] shadow-sm">
-                <div className="flex items-center gap-3">
+            {/* Header - Fixed at top */}
+            <header className="absolute top-0 left-0 right-0 h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-50 shadow-sm">
+                <div className="flex items-center gap-3 overflow-hidden">
                     <button
                         onClick={() => setSelectedConv(null)}
-                        className="lg:hidden p-1 text-[#54656f] dark:text-[#aebac1]"
+                        className="lg:hidden p-1 text-[#54656f] dark:text-[#aebac1] shrink-0"
                     >
                         <ChevronRight size={24} />
                     </button>
 
                     <div 
-                        className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
+                        className={cn("w-10 h-10 rounded-full overflow-hidden shrink-0", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
                         onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
                     >
                         <img 
@@ -125,9 +125,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         />
                     </div>
 
-                    <div className="flex flex-col text-right">
+                    <div className="flex flex-col text-right truncate">
                         <h2 className={cn(
-                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate max-w-[150px] md:max-w-[300px]",
+                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate",
                             selectedConv.isGroup ? "text-sm" : "text-base"
                         )}>
                             {selectedConv.displayName}
@@ -143,8 +143,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 {currentUser?.role === 'admin' && (
-                    <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
-                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
+                    <div className="flex items-center gap-4 text-[#54656f] dark:text-[#aebac1] shrink-0">
+                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors hidden md:block">
                             <Search size={20} />
                         </button>
                         <div className="relative" ref={menuRef}>
@@ -189,11 +189,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </header>
 
-            {/* Messages - WhatsApp Bubbles */}
+            {/* Messages - Scrollable area with fixed height offset */}
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar relative z-10 max-w-full overflow-x-hidden"
+                className="absolute top-[60px] bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
@@ -263,8 +263,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Input Bar - Standardized Style */}
-            <footer className="bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-10 flex items-center gap-3">
+            {/* Input Bar - Fixed at bottom */}
+            <footer className="absolute bottom-0 left-0 right-0 h-[72px] bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-20 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
@@ -316,7 +316,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </button>
                 </div>
             </footer>
-
         </div>
     );
 };
