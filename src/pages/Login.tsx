@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
-    Lock, User, Crown, Eye, EyeOff, ArrowRight, Headphones,
+    Lock, User, Eye, EyeOff, ArrowRight, Headphones,
     Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap
 } from 'lucide-react';
 import { useApp, useSettings } from '../context/AppContext';
@@ -168,40 +168,9 @@ export const Login = () => {
                 <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-8 lg:p-12 bg-transparent">
                     <div className="w-full max-w-md relative z-10">
                         <div className="text-center mb-10">
-                            {/* Interactive Logo Container */}
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-black rounded-3xl flex items-center justify-center text-white mx-auto mb-8 relative shadow-xl shadow-black/10 overflow-visible">
-
-                                {/* The Crown */}
-                                <Crown className="absolute -top-7 -left-3 text-gold drop-shadow-lg transform -rotate-12 z-30" size={50} strokeWidth={2.5} fill="#D4AF37" />
-
-                                {/* The Glasses Container */}
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 z-20 w-40 mt-1">
-
-                                    {/* Left Lens */}
-                                    <div className="relative w-14 h-14 bg-white rounded-2xl border-[5px] border-red-600 overflow-hidden shadow-inner flex shrink-0">
-                                        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50">
-                                            <div className={`w-4 h-4 bg-black rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white rounded-full opacity-90"></div>
-                                            </div>
-                                        </div>
-                                        {/* Eyelid */}
-                                        <div className={`absolute top-0 left-0 w-full bg-black transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
-                                    </div>
-
-                                    {/* Bridge */}
-                                    <div className="w-4 h-1.5 bg-black rounded-full shrink-0 -mt-2"></div>
-
-                                    {/* Right Lens */}
-                                    <div className="relative w-14 h-14 bg-white rounded-2xl border-[5px] border-green-600 overflow-hidden shadow-inner flex shrink-0">
-                                        <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50">
-                                            <div className={`w-4 h-4 bg-black rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white rounded-full opacity-90"></div>
-                                            </div>
-                                        </div>
-                                        {/* Eyelid */}
-                                        <div className={`absolute top-0 left-0 w-full bg-black transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
-                                    </div>
-                                </div>
+                            {/* Logo Container */}
+                            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-white dark:bg-slate-900 rounded-3xl flex items-center justify-center mx-auto mb-8 relative shadow-xl shadow-black/10 overflow-hidden border border-slate-100 dark:border-white/10">
+                                <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
                             </div>
 
                             <h1 className="text-2xl sm:text-3xl font-black text-[rgb(var(--text-main))] mb-2 font-heading tracking-tight">أهلاً بك في دارين</h1>
@@ -298,3 +267,5 @@ export const Login = () => {
         </div>
     );
 };
+
+export default Login;

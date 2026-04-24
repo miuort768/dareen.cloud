@@ -24,7 +24,7 @@ export const PageLoader = () => {
 
                     <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl p-2 border border-slate-200 dark:border-white/10 overflow-hidden">
                         <img
-                            src="/logo.png"
+                            src="/dareen_logo_new.jpg"
                             alt="Darin Logo"
                             className="w-full h-full object-contain scale-[1.35]"
                         />

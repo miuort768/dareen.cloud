@@ -242,7 +242,7 @@ export const Home = () => {
                             <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
                             <div className="absolute top-0 right-0 w-8 h-8 bg-red-50 dark:bg-red-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute bottom-2 left-10 opacity-[0.08] dark:opacity-[0.15] rotate-12 transition-transform group-hover/card:-translate-y-2">
-                                <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
+                                <img src="/dareen_logo_new.jpg" alt="Logo" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
                             </div>
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
                                 <BookOpen size={64} className="text-black dark:text-white" />
@@ -639,7 +639,7 @@ export const Home = () => {
                                 a: "نعم، نقدم حصة تجريبية مجانية لتقييم مستوى الطالب والتعرف على طريقة التدريس قبل الاشتراك الفعلي."
                             }
                         ].map((item, idx) => {
-                            const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/logo.png" className="w-20 h-20 object-contain opacity-20" />];
+                            const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" className="w-20 h-20 object-contain opacity-20" />];
                             return (
                                 <div key={idx} className="relative bg-white border border-gray-100 rounded-xl overflow-hidden group hover:border-red-100 transition-all duration-500 hover:shadow-md hover:shadow-red-500/5">
                                     <div className="absolute -bottom-4 -left-4 text-gray-400 opacity-[0.03] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">

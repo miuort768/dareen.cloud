@@ -73,7 +73,7 @@ export const Header = () => {
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
                     <div className="w-10 h-10 flex items-center justify-center shadow-lg rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transform lg:-rotate-3 overflow-hidden">
-                        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+                        <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
 
