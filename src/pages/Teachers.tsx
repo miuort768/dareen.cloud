@@ -272,7 +272,10 @@ export const Teachers = () => {
                         <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
-                        <h1 className="text-sm md:text-xl font-black text-white uppercase tracking-tighter">إدارة الكوادر التعليمية</h1>
+                        <div className="flex flex-col">
+                            <h1 className="text-lg md:text-2xl font-black text-white tracking-tighter">أهلاً بعودتك</h1>
+                            <p className="text-xs md:text-sm font-light text-slate-300">شريك النجاح</p>
+                        </div>
                         <div className="hidden md:flex items-center gap-3 mt-1.5">
                              <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</p>
                              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.5)]"></span>
