@@ -192,21 +192,20 @@ export const PrivacyPolicy = () => {
                     </div>
 
                     {/* Support Button Section */}
-                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-gray-50 to-white border border-gray-100 mb-8 relative overflow-hidden group rounded-2xl">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold/5 rounded-full -ml-16 -mb-16 blur-3xl"></div>
+                    <div className="flex flex-col items-center justify-center py-6 px-6 bg-gradient-to-br from-rose-600 to-rose-500 border border-rose-500 mb-8 relative overflow-hidden group rounded-2xl shadow-xl shadow-rose-500/20">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-gray-900 mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-gray-500 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <h2 className="text-2xl font-black text-white mb-2">هل لديك استفسارات فنية؟</h2>
+                            <p className="text-rose-100 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
                                 href={`https://wa.me/2${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-gray-900 text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-blue-600 transition-all group relative overflow-hidden"
+                                className="inline-flex items-center justify-center gap-4 bg-white text-rose-600 px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-rose-50 transition-all group relative overflow-hidden shadow-lg"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
                             </a>
