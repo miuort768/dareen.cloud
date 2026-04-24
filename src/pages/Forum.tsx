@@ -31,6 +31,58 @@ interface Post {
     comments?: Comment[];
 }
 
+interface CommentNode {
+    comment: Comment;
+    replies: CommentNode[];
+}
+
+const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
+    if (!comments) return [];
+    
+    const nodes: CommentNode[] = [];
+    const handledIds = new Set<string>();
+
+    // First pass: find main comments
+    comments.forEach(c => {
+        if (!c.content.trim().startsWith('@')) {
+            nodes.push({ comment: c, replies: [] });
+            handledIds.add(c.id);
+        }
+    });
+
+    // Second pass: place replies under correct parent
+    comments.forEach(c => {
+        if (!handledIds.has(c.id)) {
+            let foundParent = false;
+            for (const node of nodes) {
+                if (c.content.trim().startsWith(`@${node.comment.authorName}`)) {
+                    node.replies.push({ comment: c, replies: [] });
+                    handledIds.add(c.id);
+                    foundParent = true;
+                    break;
+                }
+            }
+            if (!foundParent) {
+                 for (const node of nodes) {
+                     const isReplyToReply = node.replies.some(r => c.content.trim().startsWith(`@${r.comment.authorName}`));
+                     if (isReplyToReply) {
+                         node.replies.push({ comment: c, replies: [] });
+                         handledIds.add(c.id);
+                         foundParent = true;
+                         break;
+                     }
+                 }
+            }
+            if (!foundParent) {
+                nodes.push({ comment: c, replies: [] });
+                handledIds.add(c.id);
+            }
+        }
+    });
+
+    return nodes;
+};
+
 export const Forum = () => {
     const { currentUser, showNotification } = useApp();
     const isAdmin = currentUser?.role === 'admin';
@@ -318,38 +370,81 @@ export const Forum = () => {
                                     {viewingComments[post.id] && (
                                         <div className="bg-slate-50 dark:bg-slate-800/50 p-3 md:p-4 space-y-4">
                                             <div className="space-y-3">
-                                                {post.comments?.map((comment: Comment) => (
-                                                    <div key={comment.id} className="flex gap-2">
-                                                        <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
-                                                            <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            <div className="bg-slate-200/50 dark:bg-slate-700/50 p-2.5 inline-block">
-                                                                <h5 className="text-[10px] font-black text-slate-900 dark:text-white mb-0.5">{comment.authorName}</h5>
-                                                                <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-normal">{comment.content}</p>
+                                                {buildThreadedComments(post.comments || []).map((node) => (
+                                                    <div key={node.comment.id} className="space-y-2">
+                                                        {/* Main Comment */}
+                                                        <div className="flex gap-2">
+                                                            <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5 rounded-full">
+                                                                <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                             </div>
-                                                            <div className="flex gap-3 mt-1 text-[9px] text-slate-500 font-bold px-1">
-                                                                <button 
-                                                                    onClick={() => showNotification('ميزة الإعجاب بالتعليقات ستتوفر قريباً!', 'info')}
-                                                                    className="hover:underline"
-                                                                >أعجبني</button>
-                                                                <button 
-                                                                    onClick={() => {
-                                                                        const currentText = commentTexts[post.id] || '';
-                                                                        const newText = currentText.startsWith(`@${comment.authorName} `) 
-                                                                            ? currentText 
-                                                                            : `@${comment.authorName} ` + currentText;
-                                                                        setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: newText }));
-                                                                        setTimeout(() => document.getElementById(`comment-input-${post.id}`)?.focus(), 100);
-                                                                    }}
-                                                                    className="hover:underline"
-                                                                >رد</button>
-                                                                <span>{formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: arEG })}</span>
-                                                                {(isAdmin || currentUser?.id === comment.authorId) && (
-                                                                    <button onClick={() => handleDeleteComment(post.id, comment.id)} className="text-rose-500 hover:underline">حذف</button>
-                                                                )}
+                                                            <div className="flex-1">
+                                                                <div className="bg-slate-200/50 dark:bg-slate-700/50 px-3 py-2 rounded-xl rounded-tr-none inline-block">
+                                                                    <h5 className="text-[10px] font-black text-slate-900 dark:text-white mb-0.5">{node.comment.authorName}</h5>
+                                                                    <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-normal">{node.comment.content}</p>
+                                                                </div>
+                                                                <div className="flex gap-3 mt-1 text-[9px] text-slate-500 font-bold px-1">
+                                                                    <button 
+                                                                        onClick={() => showNotification('ميزة الإعجاب بالتعليقات ستتوفر قريباً!', 'info')}
+                                                                        className="hover:underline"
+                                                                    >أعجبني</button>
+                                                                    <button 
+                                                                        onClick={() => {
+                                                                            const currentText = commentTexts[post.id] || '';
+                                                                            const newText = currentText.startsWith(`@${node.comment.authorName} `) 
+                                                                                ? currentText 
+                                                                                : `@${node.comment.authorName} ` + currentText;
+                                                                            setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: newText }));
+                                                                            setTimeout(() => document.getElementById(`comment-input-${post.id}`)?.focus(), 100);
+                                                                        }}
+                                                                        className="hover:underline"
+                                                                    >رد</button>
+                                                                    <span>{formatDistanceToNow(new Date(node.comment.created_at), { addSuffix: true, locale: arEG })}</span>
+                                                                    {(isAdmin || currentUser?.id === node.comment.authorId) && (
+                                                                        <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-rose-500 hover:underline">حذف</button>
+                                                                    )}
+                                                                </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Replies */}
+                                                        {node.replies.length > 0 && (
+                                                            <div className="space-y-2 pr-8 md:pr-10 border-r-2 border-slate-200 dark:border-slate-800 mr-4">
+                                                                {node.replies.map((replyNode) => (
+                                                                    <div key={replyNode.comment.id} className="flex gap-2">
+                                                                        <div className="w-6 h-6 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5 rounded-full mt-1">
+                                                                            <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
+                                                                        </div>
+                                                                        <div className="flex-1">
+                                                                            <div className="bg-slate-100/80 dark:bg-slate-800/80 px-3 py-1.5 rounded-xl rounded-tr-none inline-block">
+                                                                                <h5 className="text-[10px] font-black text-slate-900 dark:text-white mb-0.5">{replyNode.comment.authorName}</h5>
+                                                                                <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-normal">{replyNode.comment.content}</p>
+                                                                            </div>
+                                                                            <div className="flex gap-3 mt-1 text-[9px] text-slate-500 font-bold px-1">
+                                                                                <button 
+                                                                                    onClick={() => showNotification('ميزة الإعجاب بالتعليقات ستتوفر قريباً!', 'info')}
+                                                                                    className="hover:underline"
+                                                                                >أعجبني</button>
+                                                                                <button 
+                                                                                    onClick={() => {
+                                                                                        const currentText = commentTexts[post.id] || '';
+                                                                                        const newText = currentText.startsWith(`@${replyNode.comment.authorName} `) 
+                                                                                            ? currentText 
+                                                                                            : `@${replyNode.comment.authorName} ` + currentText;
+                                                                                        setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: newText }));
+                                                                                        setTimeout(() => document.getElementById(`comment-input-${post.id}`)?.focus(), 100);
+                                                                                    }}
+                                                                                    className="hover:underline"
+                                                                                >رد</button>
+                                                                                <span>{formatDistanceToNow(new Date(replyNode.comment.created_at), { addSuffix: true, locale: arEG })}</span>
+                                                                                {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
+                                                                                    <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="text-rose-500 hover:underline">حذف</button>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 ))}
                                             </div>
