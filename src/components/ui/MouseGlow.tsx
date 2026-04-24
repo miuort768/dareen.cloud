@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
 export const MouseGlow: React.FC = () => {
