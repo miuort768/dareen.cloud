@@ -355,20 +355,27 @@ export const Forum = () => {
                                             </div>
 
                                             {/* FB Add Comment Input */}
-                                            <div className="flex gap-2 items-center">
-                                                <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5">
+                                            <div className="flex gap-2 items-center mt-2">
+                                                <div className="w-8 h-8 bg-white flex items-center justify-center shadow-sm shrink-0 overflow-hidden border border-slate-100 p-0.5 rounded-full">
                                                     <img src="/forum-post.png" alt="Forum Icon" className="w-full h-full object-contain" />
                                                 </div>
-                                                <div className="flex-1 relative">
+                                                <div className="flex-1 relative flex items-center">
                                                     <input 
                                                         id={`comment-input-${post.id}`}
                                                         type="text"
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="اكتب تعليقاً..."
-                                                        className="w-full bg-slate-200/50 dark:bg-slate-700/50 border-none px-4 py-2 text-xs font-medium focus:ring-0"
+                                                        className="w-full bg-slate-200/50 dark:bg-slate-700/50 border-none pl-12 pr-4 py-2.5 text-xs font-medium focus:ring-0 rounded-full text-right"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
+                                                    <button
+                                                        onClick={() => handleAddComment(post.id)}
+                                                        disabled={!(commentTexts[post.id] || '').trim()}
+                                                        className="absolute left-1.5 top-1/2 -translate-y-1/2 p-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-full transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
+                                                    >
+                                                        <Send size={14} className="rotate-180" />
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
