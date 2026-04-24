@@ -146,7 +146,7 @@ export const Chat: React.FC = () => {
             dir="rtl"
             className={cn(
                 "flex overflow-hidden bg-white dark:bg-slate-900",
-                "w-full h-[calc(100dvh-70px)] lg:h-screen relative z-10 max-w-[100vw] overflow-x-hidden"
+                "w-full h-screen lg:h-screen pb-[70px] lg:pb-0 relative z-10 max-w-[100vw] overflow-x-hidden"
             )}
         >
 
