@@ -106,7 +106,7 @@ export const Sidebar = () => {
 
         // Explicitly allow Dashboard for Teachers
         if (item.id === 'dashboard' && currentUser.role === 'teacher') return true;
-        
+
         // Explicitly allow Forum for Teachers
         if (item.id === 'forum' && currentUser.role === 'teacher') return true;
 
@@ -130,7 +130,9 @@ export const Sidebar = () => {
                         collapsed ? "justify-center px-0" : "justify-between px-6"
                     )}>
                         <div className={cn("flex items-center gap-3 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                            <GraduationCap size={collapsed ? 32 : 28} className="text-gold shrink-0 border-2 border-current p-1" />
+                            <div className={cn("shrink-0", collapsed ? "w-10 h-10" : "w-8 h-8")}>
+                                <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+                            </div>
                             <span className={cn(
                                 "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
@@ -162,7 +164,9 @@ export const Sidebar = () => {
                     collapsed ? "flex justify-center px-0" : "hidden xl:flex justify-between px-6"
                 )}>
                     <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <GraduationCap size={collapsed ? 24 : 20} className="text-gold shrink-0 border-2 border-current p-1" />
+                        <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-6 h-6")}>
+                            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+                        </div>
                         <span className={cn(
                             "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
@@ -261,8 +265,8 @@ export const Sidebar = () => {
                         to={item.href}
                         className={({ isActive }) => cn(
                             "flex items-center justify-center transition-all duration-500 rounded-full",
-                            isActive 
-                                ? "bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2" 
+                            isActive
+                                ? "bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 px-4 py-2"
                                 : "text-gray-400 dark:text-gray-500 p-2"
                         )}
                     >
@@ -274,10 +278,10 @@ export const Sidebar = () => {
                                 )}>
                                     {item.name}
                                 </span>
-                                
+
                                 <div className="relative">
                                     <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
-                                    
+
                                     {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
                                         <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
@@ -317,7 +321,7 @@ export const Sidebar = () => {
 
                     <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100 dark:border-gray-800">
                         <div className="flex items-center gap-3">
-                            <GraduationCap size={24} className="text-gold" />
+                            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                             <div>
                                 <h2 className="text-base font-black text-gray-900 dark:text-white leading-tight">{academyName}</h2>
                                 <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">قائمة الوصول السريع</p>

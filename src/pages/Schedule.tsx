@@ -226,15 +226,17 @@ export const Schedule = () => {
     );
 
     return (
-        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-[150px] pt-2 overflow-x-hidden" dir="rtl">
-            <div className="space-y-4 pb-[120px] md:pb-6 md:animate-in md:fade-in md:duration-500">
+        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-32 pt-2 overflow-x-hidden" dir="rtl">
+            <div className="space-y-4 md:pb-6 md:animate-in md:fade-in md:duration-500">
 
                 {/* ── Gradient Header ── */}
                 <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                     <div className="relative flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                            <Calendar size={18} className="text-white/80 shrink-0" />
+                        <div className="w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-none">
+                            <img src="/logo.png" alt="Logo" className="w-7 h-7 object-contain" />
+                        </div>
                             <div>
                                 <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">
                                     {isTeacher ? `جدول أ. ${currentUser?.name.split(' ')[0]}` : 'الجدول الأسبوعي'}

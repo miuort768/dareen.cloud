@@ -53,8 +53,8 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none p-6 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-6" dir="rtl">
             {/* Identity & Welcome */}
             <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="w-16 h-16 bg-slate-900 dark:bg-black text-white rounded-none flex items-center justify-center font-bold text-2xl shadow-sm">
-                    <GraduationCap size={28} />
+                <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-none flex items-center justify-center font-bold text-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
                 </div>
                 
                 <div className="text-right">

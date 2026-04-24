@@ -36,8 +36,8 @@ export const Finance = () => {
                 <div className="absolute bottom-0 left-10 w-48 h-48 bg-emerald-500/10 rotate-12 translate-y-[40%] blur-3xl pointer-events-none" />
 
                 <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-white/10 rounded-none">
-                        <DollarSign size={22} className="text-amber-300" />
+                    <div className="w-12 h-12 flex items-center justify-center bg-white/5 border border-white/10 rounded-none">
+                        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                     <div>
                         <h1 className="text-base md:text-xl font-black text-white uppercase tracking-tighter">الإدارة المالية والحسابات</h1>

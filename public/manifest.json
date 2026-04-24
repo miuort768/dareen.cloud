@@ -21,9 +21,9 @@
   "id": "darin.academy.pwa",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/logo.png",
+      "sizes": "64x64",
+      "type": "image/png",
       "purpose": "any"
     },
     {

@@ -14,8 +14,8 @@ export const StudentHeader = ({ count, showAddForm, onToggleAddForm }: StudentHe
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
 
             <div className="relative z-10 flex items-center gap-4">
-                <div className="w-11 h-11 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-none shadow-lg">
-                    <GraduationCap size={22} strokeWidth={2} />
+                <div className="w-11 h-11 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 rounded-none shadow-lg">
+                    <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                 </div>
                 <div>
                     <h1 className="text-sm md:text-xl font-black text-white uppercase tracking-tighter">سجل الطلاب والمنتسبين</h1>

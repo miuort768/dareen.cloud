@@ -9,24 +9,24 @@ export const PageLoader = () => {
 
             <div className="relative flex flex-col items-center gap-8">
                 {/* Logo Container with Modern Framing */}
-                <motion.div 
+                <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ 
+                    transition={{
                         duration: 0.8,
-                        ease: [0.16, 1, 0.3, 1] 
+                        ease: [0.16, 1, 0.3, 1]
                     }}
                     className="relative"
                 >
                     {/* Pulsing Rings */}
                     <div className="absolute inset-0 rounded-full bg-primary-500/20 dark:bg-primary-500/30 animate-ping opacity-20" />
                     <div className="absolute inset-[-10px] rounded-full border border-primary-500/10 dark:border-primary-500/20 animate-[spin_10s_linear_infinite]" />
-                    
+
                     <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-2xl p-2 border border-slate-200 dark:border-white/10 overflow-hidden">
-                        <img 
-                            src="/logo.png" 
-                            alt="Darin Logo" 
-                            className="w-full h-full object-contain scale-[1.35]" 
+                        <img
+                            src="/logo.png"
+                            alt="Darin Logo"
+                            className="w-full h-full object-contain scale-[1.35]"
                         />
                     </div>
                 </motion.div>
@@ -48,19 +48,19 @@ export const PageLoader = () => {
 
                     {/* Modern Loading Bar */}
                     <div className="w-48 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden relative mx-auto">
-                        <motion.div 
+                        <motion.div
                             initial={{ x: '-100%' }}
                             animate={{ x: '100%' }}
-                            transition={{ 
-                                repeat: Infinity, 
-                                duration: 1.5, 
-                                ease: "easeInOut" 
+                            transition={{
+                                repeat: Infinity,
+                                duration: 1.5,
+                                ease: "easeInOut"
                             }}
                             className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-600 to-transparent w-full"
                         />
                     </div>
 
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}

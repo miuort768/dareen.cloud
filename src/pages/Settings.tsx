@@ -450,7 +450,7 @@ const Settings = () => {
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
-                        <SettingsIcon size={18} className="text-[#5c59f2]" />
+                        <img src="/logo.png" alt="Logo" className="w-6 h-6 object-contain" />
                     </div>
                     <div>
                         <h1 className="text-sm font-bold text-slate-800 dark:text-white">إعدادات النظام</h1>
