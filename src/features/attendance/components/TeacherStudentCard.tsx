@@ -61,6 +61,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         if (timerRunning) {
             clearInterval(timerInterval);
             setTimerRunning(false);
+            localStorage.removeItem(`active_timer_${student.id}`);
             try {
                 const token = localStorage.getItem('token');
                 await fetch('/api/active-sessions', {
@@ -76,6 +77,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             }, 1000);
             setTimerInterval(interval);
             setTimerRunning(true);
+            localStorage.setItem(`active_timer_${student.id}`, JSON.stringify({
+                startedAt: start,
+                subject: en.subject
+            }));
             try {
                 const token = localStorage.getItem('token');
                 await fetch('/api/active-sessions', {

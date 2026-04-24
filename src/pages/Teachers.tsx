@@ -113,7 +113,7 @@ export const Teachers = () => {
         }
     };
 
-    const handleConfirmLog = async (status: 'completed' | 'cancelled') => {
+    const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
         if (!secureModalData || !selectedTeacher || !logDate) return;
         const { student, enrollment } = secureModalData;
 
@@ -134,7 +134,10 @@ export const Teachers = () => {
                 date: logDate,
                 time: currentTime,
                 status,
-                teacherPrice: selectedTeacher.price
+                teacherPrice: selectedTeacher.price,
+                topics: topics || '',
+                homework: homework || '',
+                needsCompensation: needsCompensation || false
             });
             showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
             queryClient.invalidateQueries({ queryKey: ['students'] });

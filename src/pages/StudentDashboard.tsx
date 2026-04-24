@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
-    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -20,6 +20,40 @@ export const StudentDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
+
+    const [activeTimer, setActiveTimer] = useState<{ seconds: number; subject: string } | null>(null);
+
+    useEffect(() => {
+        if (!studentData?.id) return;
+        const interval = setInterval(() => {
+            const val = localStorage.getItem(`active_timer_${studentData.id}`);
+            if (val) {
+                try {
+                    const parsed = JSON.parse(val);
+                    setActiveTimer({
+                        seconds: Math.floor((Date.now() - parsed.startedAt) / 1000),
+                        subject: parsed.subject
+                    });
+                } catch {
+                    setActiveTimer(null);
+                }
+            } else {
+                setActiveTimer(null);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [studentData?.id]);
+
+    const formatTime = (totalSecs: number) => {
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const latestCompletedSession = useMemo(() => {
+        const completed = sessions.filter(s => s.status === 'completed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        return completed[0];
+    }, [sessions]);
 
     useEffect(() => {
         const fetchStudentData = async () => {
@@ -99,6 +133,24 @@ export const StudentDashboard = () => {
                 <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">جاهز لمواصلة رحلتك التعليمية اليوم؟</p>
             </div>
 
+            {/* ═══════════════ ACTIVE TIMER ═══════════════ */}
+            {activeTimer && (
+                <div className="bg-rose-500 text-white p-4 rounded-3xl shadow-lg shadow-rose-500/20 flex items-center justify-between animate-in slide-in-from-top duration-500">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
+                            <Clock size={20} />
+                        </div>
+                        <div>
+                            <h3 className="font-black text-sm">الحصة مبدوءة الآن!</h3>
+                            <p className="text-[10px] font-bold opacity-90">{activeTimer.subject}</p>
+                        </div>
+                    </div>
+                    <div className="text-2xl font-black font-mono tracking-widest">
+                        {formatTime(activeTimer.seconds)}
+                    </div>
+                </div>
+            )}
+
             {/* ═══════════════ NEXT CLASS CARD ═══════════════ */}
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -143,6 +195,30 @@ export const StudentDashboard = () => {
                     )}
                 </div>
             </motion.div>
+
+            {/* ═══════════════ LATEST SESSION LOGS ═══════════════ */}
+            {latestCompletedSession && (latestCompletedSession.topics || latestCompletedSession.homework) && (
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-2 mb-4">
+                        <BookOpen className="text-emerald-500" size={20} />
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white">ملخص آخر حصة ({latestCompletedSession.subject})</h3>
+                    </div>
+                    <div className="space-y-3">
+                        {latestCompletedSession.topics && (
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">ما تم إنجازه</span>
+                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed">{latestCompletedSession.topics}</p>
+                            </div>
+                        )}
+                        {latestCompletedSession.homework && (
+                            <div className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-2xl border border-amber-100 dark:border-amber-800/20">
+                                <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest block mb-1">الواجب المطلوب</span>
+                                <p className="text-xs font-bold text-amber-700 dark:text-amber-400 leading-relaxed">{latestCompletedSession.homework}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* ═══════════════ STATS ROW ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
