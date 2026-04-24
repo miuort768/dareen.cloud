@@ -63,13 +63,14 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
         setGroupName('');
     };
 
-    if (!showNewChatModal) return null;
+
 
     return (
         <>
             {/* New Chat / Group Flow Modal */}
-            <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                <div className="bg-white dark:bg-[#111b21] w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
+            {showNewChatModal && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="bg-white dark:bg-[#111b21] w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
                     
                     {/* Header - WhatsApp Style */}
                     <div className="bg-[#00a884] text-white p-4 flex items-center gap-4 shrink-0 transition-all">
@@ -247,6 +248,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                     )}
                 </div>
             </div>
+            )}
 
 
 
