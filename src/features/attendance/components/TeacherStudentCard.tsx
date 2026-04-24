@@ -63,7 +63,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             setTimerRunning(false);
             localStorage.removeItem(`active_timer_${student.id}`);
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 await fetch('/api/active-sessions', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -82,7 +82,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 subject: en.subject
             }));
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('auth_token');
                 await fetch('/api/active-sessions', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
