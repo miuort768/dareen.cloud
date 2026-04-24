@@ -279,8 +279,13 @@ export const StudentDashboard = () => {
                         <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-1">المستوى الحالي</span>
                         <h3 className="text-xl font-black text-slate-900 dark:text-white">{rank.name}</h3>
                     </div>
-                    <div className="px-3 py-1 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[10px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
-                        المستوى {Math.floor(points / 100) + 1}
+                    <div className="text-left">
+                        <div className="px-3 py-1 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[10px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
+                            المستوى {Math.floor(points / 100) + 1}
+                        </div>
+                        <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-1 text-center">
+                            تبقي {(Math.floor(points / 100) + 1) * 100 - points} نقطة للمستوى التالي
+                        </p>
                     </div>
                 </div>
                 <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
@@ -290,10 +295,29 @@ export const StudentDashboard = () => {
                         className="h-full bg-[#8b5cf6]"
                     />
                 </div>
-                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center">
-                    تبقي {(Math.floor(points / 100) + 1) * 100 - points} نقطة للمستوى التالي
-                </p>
+                </div>
             </div>
+
+            {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
+            {(studentData?.enrollments || []).some((en: any) => en.notes) && (
+                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-2 mb-4">
+                        <MessageSquare className="text-indigo-500" size={20} />
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات الحالية</h3>
+                    </div>
+                    <div className="space-y-3">
+                        {(studentData.enrollments || []).filter((en: any) => en.notes).map((en: any, idx: number) => (
+                            <div key={idx} className="bg-indigo-50/30 dark:bg-indigo-900/10 p-4 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">{en.subject}</span>
+                                    <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
+                                </div>
+                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.notes}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
             <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
