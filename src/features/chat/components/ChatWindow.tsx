@@ -193,7 +193,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="absolute top-[60px] bottom-[142px] lg:bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
+                className="absolute top-[60px] bottom-[140px] lg:bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
@@ -264,7 +264,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </AnimatePresence>
 
             {/* Input Bar - Fixed at bottom */}
-            <footer className="absolute bottom-[70px] lg:bottom-0 left-0 right-0 h-[72px] bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-20 flex items-center gap-3">
+            <footer className="absolute bottom-[68px] lg:bottom-0 left-0 right-0 h-[72px] bg-white/95 dark:bg-[#202c33] backdrop-blur-xl px-3 py-3 z-20 flex items-center gap-3 border-t border-gray-100 dark:border-white/5">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
