@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
+import { cn } from '../lib/utils';
 
 export const StudentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
@@ -26,7 +27,7 @@ export const StudentDashboard = () => {
     const activeStartRef = useRef<number | null>(null);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    // Poll backend every 5s for live session status
+    // Poll backend every 5s for live session status & fresh data
     useEffect(() => {
         if (!currentUser?.id) return;
         const poll = async () => {
@@ -37,6 +38,10 @@ export const StudentDashboard = () => {
                 });
                 if (!res.ok) return;
                 const data = await res.json();
+                
+                // Update full student data during poll to get new homework/notes automatically
+                setStudentData(data);
+
                 if (data.isLive && data.activeSession) {
                     const startedAt = new Date(data.activeSession.startedAt).getTime();
                     activeStartRef.current = startedAt;
@@ -59,8 +64,6 @@ export const StudentDashboard = () => {
                     activeStartRef.current = null;
                     setActiveTimer(null);
                 }
-                // Update full student data during poll to get new homework/notes automatically
-                setStudentData(data);
             } catch { /* silent */ }
         };
         poll();
@@ -78,7 +81,7 @@ export const StudentDashboard = () => {
     };
 
     const latestCompletedSession = useMemo(() => {
-        const completed = sessions.filter(s => s.status === 'completed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        const completed = [...sessions].filter(s => s.status === 'completed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         return completed[0];
     }, [sessions]);
 
@@ -195,19 +198,15 @@ export const StudentDashboard = () => {
                     {todaySchedule.length > 0 ? (
                         <div className="flex flex-col items-center gap-4">
                             <div className="flex items-center gap-3">
-                                {/* Decorative Circles */}
                                 <div className="flex gap-1.5 grayscale opacity-60">
                                     <div className="w-2 h-2 rounded-full border border-white" />
                                     <div className="w-2 h-2 rounded-full border border-white" />
                                 </div>
-
-                                {/* Neon Subject Group */}
                                 <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center justify-center">
                                     <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-md">
                                         {todaySchedule[0].slots[0].subject}
                                     </h2>
                                 </div>
-
                                 <div className="flex gap-1.5 grayscale opacity-60">
                                     <div className="w-2 h-2 rounded-full border border-white" />
                                     <div className="w-2 h-2 rounded-full border border-white" />
@@ -338,7 +337,6 @@ export const StudentDashboard = () => {
             <div>
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم</h3>
-                    <button className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider">عرض الكل</button>
                 </div>
                 <div className="space-y-3">
                     {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot: any, i: number) => (
@@ -413,14 +411,11 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
             <div className="bg-[#5c4fb1] dark:bg-rose-600 p-6 rounded-xl shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
-                
                 <div className="text-center md:text-right relative z-10 w-full md:w-auto">
                     <h4 className="text-lg font-black mb-1">هل تحتاج لمساعدة؟</h4>
                     <p className="text-xs font-bold opacity-80 leading-normal">فريق الدعم متاح دائماً لخدمتك</p>
                 </div>
-
                 <a 
                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                     target="_blank" rel="noopener noreferrer"
@@ -508,7 +503,6 @@ export const StudentDashboard = () => {
                 )}
             </AnimatePresence>
 
-
         </div>
     );
 };
@@ -528,6 +522,7 @@ const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: n
         </div>
     </div>
 );
+
 const allBadges = [
     { id: 'diligent', name: 'المجتهد الصغير', icon: Star, color: 'from-amber-400 to-orange-500' },
     { id: 'attendance', name: 'بطل الحضور', icon: CalendarDays, color: 'from-blue-400 to-indigo-600' },
