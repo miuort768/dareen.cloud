@@ -22,7 +22,8 @@ export const Chat: React.FC = () => {
         refetchConversations,
         typingUsers,
         setTyping,
-        markAsRead
+        markAsRead,
+        deleteAllConversations
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
@@ -111,13 +112,22 @@ export const Chat: React.FC = () => {
         }
     };
 
+    const handleDeleteAllClick = () => {
+        setDeleteType('all_conversations');
+        setItemToDelete({ displayName: 'جميع المحادثات' });
+        setShowDeleteConfirm(true);
+    };
+
     const handleDeleteAction = async () => {
         if (!itemToDelete) return;
         setIsDeleting(true);
         try {
-            if (deleteType === 'conversation' && 'id' in itemToDelete) {
+            if (deleteType === 'conversation' && itemToDelete && 'id' in itemToDelete) {
                 await deleteConversation((itemToDelete as Conversation).id);
                 if (selectedConv?.id === itemToDelete.id) setSelectedConv(null);
+            } else if (deleteType === 'all_conversations') {
+                await deleteAllConversations();
+                setSelectedConv(null);
             }
             setShowDeleteConfirm(false);
             setItemToDelete(null);
@@ -148,7 +158,7 @@ export const Chat: React.FC = () => {
                     currentUser={currentUser}
                     setShowNewChatModal={setShowNewChatModal}
                     setIsEditingGroup={setIsEditingGroup}
-                    logout={logout}
+                    onDeleteAll={handleDeleteAllClick}
                     typingUsers={typingUsers}
                 />
 

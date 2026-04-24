@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { 
-    Search, LogOut, 
+    Search, 
     ShieldCheck, MessageSquarePlus,
-    Sun, Moon, Bell
+    Sun, Moon, Bell, Trash2
 } from 'lucide-react';
 import { useDarkMode } from '../../../hooks/useDarkMode';
 
@@ -30,7 +30,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     currentUser,
     setShowNewChatModal,
     setIsEditingGroup,
-    logout,
+    onDeleteAll,
     typingUsers
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -84,11 +84,11 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                 <MessageSquarePlus size={22} />
                             </button>
                             <button 
-                                onClick={logout}
-                                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors text-rose-500"
-                                title="خروج"
+                                onClick={onDeleteAll}
+                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500"
+                                title="حذف جميع المحادثات"
                             >
-                                <LogOut size={22} />
+                                <Trash2 size={22} />
                             </button>
                         </>
                     )}
