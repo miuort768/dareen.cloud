@@ -94,7 +94,7 @@ export const StudentDashboard = () => {
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="mb-6 pr-2 lg:pr-0">
                 <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-1">
-                    مرحباً، {studentData?.name?.split(' ')[0]} {studentData?.name?.split(' ')[1] || ''}
+                    مرحباً، <span className="text-indigo-600 dark:text-white">{studentData?.name?.split(' ')[0]} {studentData?.name?.split(' ')[1] || ''}</span>
                 </h1>
                 <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">جاهز لمواصلة رحلتك التعليمية اليوم؟</p>
             </div>
@@ -103,7 +103,7 @@ export const StudentDashboard = () => {
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] p-6 rounded-none shadow-lg shadow-purple-500/20 text-white"
+                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] dark:from-rose-600 dark:to-rose-500 p-6 rounded-none shadow-lg shadow-purple-500/20 dark:shadow-rose-500/20 text-white"
             >
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
                 <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
@@ -208,7 +208,7 @@ export const StudentDashboard = () => {
             {/* ═══════════════ DAILY TASKS ═══════════════ */}
             <div>
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم (السبت)</h3>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم</h3>
                     <button className="text-[10px] font-black text-[#5c67f6] uppercase tracking-wider">عرض الكل</button>
                 </div>
                 <div className="space-y-3">
@@ -282,7 +282,7 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-[#433b82] p-6 rounded-[32px] shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="bg-[#5c4fb1] dark:bg-rose-600 p-6 rounded-[32px] shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
 
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
                 
@@ -294,9 +294,9 @@ export const StudentDashboard = () => {
                 <a 
                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-[#5c4fb1] px-6 py-3 rounded-[20px] font-black text-sm flex items-center gap-3 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
+                    className="bg-white text-[#5c4fb1] dark:text-rose-600 px-6 py-3 rounded-[20px] font-black text-sm flex items-center gap-3 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
                 >
-                    <div className="w-8 h-8 bg-[#5c4fb1] text-white rounded-[10px] flex items-center justify-center">
+                    <div className="w-8 h-8 bg-[#5c4fb1] dark:bg-rose-600 text-white rounded-[10px] flex items-center justify-center">
                         <MessageSquare size={16} fill="currentColor" />
                     </div>
                     واتساب
