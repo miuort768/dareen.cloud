@@ -17,7 +17,7 @@ export const MouseGlow: React.FC = () => {
 
     return (
         <>
-            <motion.div 
+            <motion.div
                 className="pointer-events-none fixed top-0 left-0 z-[100] w-8 h-8 rounded-full border-2 border-indigo-500/50 mix-blend-difference"
                 style={{
                     x: mouseX,
@@ -26,7 +26,7 @@ export const MouseGlow: React.FC = () => {
                     translateY: '-50%',
                 }}
             />
-            <motion.div 
+            <motion.div
                 className="pointer-events-none fixed top-0 left-0 z-[100] w-2 h-2 rounded-full bg-indigo-500 mix-blend-difference"
                 style={{
                     x: mouseX,

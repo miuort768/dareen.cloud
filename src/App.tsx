@@ -41,6 +41,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 import { Classroom } from './pages/Classroom';
+import { MouseGlow } from './components/ui/MouseGlow';
 
 
 
@@ -112,6 +113,7 @@ function App() {
 
   return (
     <>
+      <MouseGlow />
 
 
       {/* Maintenance Indicator for Admins */}

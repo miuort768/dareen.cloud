@@ -17,7 +17,6 @@ import { TeacherSessionTimeline } from '../features/dashboard/components/Teacher
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
-import { MouseGlow } from '../components/ui/MouseGlow';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -48,7 +47,6 @@ export const Dashboard = () => {
 
     return (
         <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 pt-4 overflow-x-hidden relative" dir="rtl">
-            <MouseGlow />
             <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
                 {/* 1. Header & Quick Actions */}
                 <DashboardHeader
