@@ -79,7 +79,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
                 {/* Evolution Section */}
                 <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
@@ -94,23 +94,54 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         </div>
                     </div>
 
-                    <div className="h-[250px] w-full" dir="ltr">
+                    <div className="h-[400px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={attendanceData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                            <AreaChart data={attendanceData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.15}/>
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                                        <stop offset="50%" stopColor="#10b981" stopOpacity={0.1}/>
                                         <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                                <XAxis dataKey="month" tick={{ fontSize: 9, fontWeight: 'bold', fill: '#94a3b8' }} axisLine={false} tickLine={false} dy={10} />
-                                <YAxis tick={{ fontSize: 9, fontWeight: 'bold', fill: '#94a3b8' }} domain={[0, 100]} axisLine={false} tickLine={false} />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" opacity={0.5} />
+                                <XAxis 
+                                    dataKey="month" 
+                                    tick={{ fontSize: 10, fontWeight: '800', fill: '#64748b' }} 
+                                    axisLine={false} 
+                                    tickLine={false} 
+                                    dy={15} 
+                                />
+                                <YAxis 
+                                    tick={{ fontSize: 10, fontWeight: '800', fill: '#64748b' }} 
+                                    domain={[0, 100]} 
+                                    axisLine={false} 
+                                    tickLine={false} 
+                                    tickFormatter={(val) => `${val}%`}
+                                />
                                 <Tooltip 
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '11px', fontWeight: 'bold', backgroundColor: '#0f172a', color: '#fff' }}
+                                    cursor={{ stroke: '#10b981', strokeWidth: 2, strokeDasharray: '5 5' }}
+                                    contentStyle={{ 
+                                        borderRadius: '16px', 
+                                        border: 'none', 
+                                        boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)', 
+                                        fontSize: '12px', 
+                                        fontWeight: 'bold', 
+                                        backgroundColor: '#0f172a', 
+                                        color: '#fff',
+                                        padding: '12px 16px'
+                                    }}
                                     itemStyle={{ color: '#10b981' }}
                                 />
-                                <Area type="step" dataKey="rate" stroke="#10b981" fill="url(#colorRate)" strokeWidth={4} dot={{ r: 5, fill: '#10b981', strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 7, strokeWidth: 0 }} />
+                                <Area 
+                                    type="monotone" 
+                                    dataKey="rate" 
+                                    stroke="#10b981" 
+                                    fill="url(#colorRate)" 
+                                    strokeWidth={4} 
+                                    dot={{ r: 6, fill: '#10b981', strokeWidth: 3, stroke: '#fff' }} 
+                                    activeDot={{ r: 8, strokeWidth: 4, stroke: '#fff', shadow: '0 0 10px rgba(16, 185, 129, 0.5)' }} 
+                                />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
@@ -130,14 +161,30 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         </div>
                     </div>
 
-                    <div className="h-[250px] w-full" dir="ltr">
+                    <div className="h-[350px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 30 }}>
-                                <CartesianGrid strokeDasharray="6 6" stroke="#f1f5f9" horizontal={false} />
+                            <BarChart data={subjectStats} layout="vertical" margin={{ left: 20, right: 40, top: 10, bottom: 10 }}>
+                                <CartesianGrid strokeDasharray="6 6" stroke="#f1f5f9" horizontal={false} opacity={0.4} />
                                 <XAxis type="number" hide />
-                                <YAxis type="category" dataKey="subject" tick={{ fontSize: 9, fontWeight: 'bold', fill: '#94a3b8' }} width={80} axisLine={false} tickLine={false} />
-                                <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '16px', border: '1px solid #f1f5f9', fontSize: '11px', fontWeight: 'bold' }} />
-                                <Bar dataKey="sessions" fill="#5c59f2" radius={[0, 4, 4, 0]} barSize={14} />
+                                <YAxis 
+                                    type="category" 
+                                    dataKey="subject" 
+                                    tick={{ fontSize: 11, fontWeight: '800', fill: '#64748b' }} 
+                                    width={100} 
+                                    axisLine={false} 
+                                    tickLine={false} 
+                                />
+                                <Tooltip 
+                                    cursor={{ fill: '#f8fafc', opacity: 0.5 }} 
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold' }} 
+                                />
+                                <Bar 
+                                    dataKey="sessions" 
+                                    fill="#5c59f2" 
+                                    radius={[0, 12, 12, 0]} 
+                                    barSize={24}
+                                    label={{ position: 'right', fill: '#5c59f2', fontSize: 10, fontWeight: 'bold', offset: 10 }}
+                                />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
