@@ -109,9 +109,9 @@ export const Courses = () => {
 
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/50 backdrop-blur-sm border border-red-50 rounded-full mb-6 animate-fade-in group hover:border-red-100 shadow-sm transition-all">
-                            <Sparkles size={14} className="text-red-500" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">استكشف مستقبل التعلم</span>
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/50 dark:bg-rose-500/10 backdrop-blur-sm border border-red-50 dark:border-rose-500/20 rounded-full mb-6 animate-fade-in group hover:border-red-100 dark:hover:border-rose-500/50 shadow-sm transition-all">
+                            <Sparkles size={14} className="text-red-500 dark:text-rose-400" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-rose-300">استكشف مستقبل التعلم</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight">
                             <span className="block mb-2 md:mb-3">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
@@ -172,6 +172,8 @@ export const Courses = () => {
                                     <img
                                         src={course.image}
                                         alt={course.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-contain object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
                                     />
                                     
@@ -227,7 +229,7 @@ export const Courses = () => {
                                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center justify-center gap-2 group/btn bg-black text-white w-full py-4 hover:bg-red-600 transition-all duration-500 overflow-hidden relative"
+                                            className="flex items-center justify-center gap-2 group/btn bg-black dark:bg-rose-600 text-white w-full py-4 hover:bg-red-600 dark:hover:bg-rose-700 transition-all duration-500 overflow-hidden relative"
                                         >
                                             <span className="relative z-10 text-[11px] font-black uppercase tracking-widest">احجز عن طريق الواتساب</span>
                                             <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/btn:left-[100%] transition-all duration-1000"></div>
