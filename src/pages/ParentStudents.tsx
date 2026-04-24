@@ -304,7 +304,7 @@ export const ParentStudents = () => {
                                     ) : (
                                         <div className="relative border-r-2 border-primary-500/20 pr-6 mr-3 space-y-8">
                                             {childSessions
-                                                .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent'))
+                                                .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .map((session, sIdx) => (
                                                     <div key={sIdx} className="relative">
@@ -330,7 +330,7 @@ export const ParentStudents = () => {
                                                         </div>
                                                     </div>
                                                 ))}
-                                            {childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent')).length === 0 && (
+                                            {childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled')).length === 0 && (
                                                 <div className="py-20 text-center">
                                                     <AlertCircle size={32} className="mx-auto text-gray-200 mb-4" />
                                                     <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
@@ -396,7 +396,7 @@ export const ParentStudents = () => {
                                         const subjectSessions = childSessions.filter(s => s.subject === en.subject);
                                         const attended = subjectSessions.filter(s => s.status === 'completed').length;
                                         const totalRecorded = subjectSessions.length;
-                                        const absent = subjectSessions.filter(s => s.status === 'absent').length;
+                                        const absent = subjectSessions.filter(s => s.status === 'absent' || s.status === 'cancelled').length;
                                         const percentage = totalRecorded > 0 ? Math.round((attended / totalRecorded) * 100) : 0;
 
                                         return (
