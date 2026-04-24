@@ -140,7 +140,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     fill="url(#colorRate)" 
                                     strokeWidth={4} 
                                     dot={{ r: 6, fill: '#10b981', strokeWidth: 3, stroke: '#fff' }} 
-                                    activeDot={{ r: 8, strokeWidth: 4, stroke: '#fff', shadow: '0 0 10px rgba(16, 185, 129, 0.5)' }} 
+                                    activeDot={{ r: 8, strokeWidth: 4, stroke: '#fff' }} 
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
