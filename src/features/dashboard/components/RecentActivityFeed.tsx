@@ -78,11 +78,6 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                             <div className="flex-1 min-w-0 pt-1">
                                 <div className="flex justify-between items-center mb-1">
                                     <h4 className="font-bold text-sm text-slate-800 dark:text-white truncate group-hover:text-indigo-600 transition-colors">{act.title}</h4>
-                                    <span className="text-[10px] font-bold text-slate-400 tabular-nums">
-                                        {new Date(act.time).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })}
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-3">
                                     <span className={cn(
                                         "text-[10px] font-bold px-3 py-0.5 rounded-full",
                                         act.color === 'emerald' ? 'bg-emerald-100/50 text-emerald-700' :
@@ -91,9 +86,6 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                                         'bg-amber-100/50 text-amber-700'
                                     )}>
                                         {act.status}
-                                    </span>
-                                    <span className="text-[10px] font-medium text-slate-300 uppercase tracking-widest opacity-60">
-                                        {act.type === 'session' ? 'Session' : 'Task'}
                                     </span>
                                 </div>
                             </div>
@@ -111,7 +103,7 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
 
             <div className="mt-8 pt-4 border-t border-slate-50 dark:border-slate-800">
                 <p className="text-[10px] font-bold text-center text-slate-400 uppercase tracking-widest opacity-60">
-                    Live Sync • {new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'short' }).format(new Date())}
+                    مزامنة مباشرة
                 </p>
             </div>
         </div>
