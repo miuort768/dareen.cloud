@@ -17,7 +17,7 @@ export const MouseGlow: React.FC = () => {
         <div className="fixed inset-0 pointer-events-none z-[9999]">
             {/* Outer Ring */}
             <motion.div 
-                className="fixed top-0 left-0 w-6 h-6 rounded-full border-2 border-indigo-600/50 shadow-[0_0_10px_rgba(92,89,242,0.2)]"
+                className="fixed top-0 left-0 w-6 h-6 rounded-full border-2 border-rose-500/50 shadow-[0_0_10px_rgba(244,63,94,0.2)]"
                 animate={{
                     x: mousePos.x - 12,
                     y: mousePos.y - 12,
@@ -31,7 +31,7 @@ export const MouseGlow: React.FC = () => {
             />
             {/* Inner Dot */}
             <motion.div 
-                className="fixed top-0 left-0 w-3 h-3 rounded-full bg-indigo-600 shadow-lg shadow-indigo-500/40"
+                className="fixed top-0 left-0 w-3 h-3 rounded-full bg-rose-500 shadow-lg shadow-rose-500/40"
                 animate={{
                     x: mousePos.x - 6,
                     y: mousePos.y - 6,

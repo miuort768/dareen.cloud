@@ -100,12 +100,9 @@ export const PublicNavbar = () => {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-3 text-gray-700 dark:text-slate-200 hover:text-primary transition-colors px-2 md:px-4 py-2"
+                                    className="flex items-center gap-2 text-gray-700 dark:text-slate-200 hover:text-red-500 transition-colors px-2 md:px-4 py-2"
                                 >
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-green-600 to-green-600-hover text-white flex items-center justify-center font-bold shadow-md">
-                                        {currentUser?.name.charAt(0)}
-                                    </div>
-                                    <span className="font-bold hidden sm:block">{currentUser?.name}</span>
+                                    <span className="font-bold">{currentUser?.name}</span>
                                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
                                 <div className={`absolute left-0 mt-4 w-56 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
