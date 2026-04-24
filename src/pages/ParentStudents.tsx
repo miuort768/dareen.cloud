@@ -198,18 +198,18 @@ export const ParentStudents = () => {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="p-4 md:p-6 pt-0 mt-auto flex flex-col gap-2">
+                        <div className="p-4 md:p-6 pt-0 mt-auto space-y-2">
                             <div className="grid grid-cols-2 gap-2">
                                 <button
                                     onClick={() => handleViewDates(student)}
-                                    className="py-2.5 bg-gray-900 text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-black transition-all flex items-center justify-center gap-1.5 md:gap-2"
+                                    className="py-2.5 bg-slate-900 dark:bg-slate-800 text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-xl hover:bg-black transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm"
                                 >
                                     <Calendar size={13} className="md:size-[14px]" />
                                     حصص الطالب
                                 </button>
                                 <button
                                     onClick={() => handleViewAttendance(student)}
-                                    className="py-2.5 bg-white border-2 border-gray-950 text-gray-900 text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-gray-50 transition-all flex items-center justify-center gap-1.5 md:gap-2"
+                                    className="py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5 md:gap-2 shadow-sm"
                                 >
                                     <TrendingUp size={13} className="md:size-[14px]" />
                                     نسبة الحضور
@@ -217,12 +217,47 @@ export const ParentStudents = () => {
                             </div>
                             <button
                                 onClick={() => handleViewAchievements(student)}
-                                className="py-2.5 bg-primary-600 text-white text-[9px] md:text-[10px] font-black uppercase tracking-wider md:tracking-widest hover:bg-primary-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20"
+                                className={cn(
+                                    "w-full py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/10",
+                                    viewingAchievements?.id === student.id 
+                                        ? "bg-slate-100 dark:bg-slate-800 text-indigo-600 border border-indigo-200 dark:border-indigo-900"
+                                        : "bg-indigo-600 text-white hover:bg-indigo-700"
+                                )}
                             >
                                 <Trophy size={14} />
-                                عرض حصاد الإنجازات والأوسمة
+                                {viewingAchievements?.id === student.id ? 'إغلاق سجل الإنجازات' : 'عرض حصاد الإنجازات والأوسمة'}
                             </button>
                         </div>
+
+                        {/* Inline Achievement Harvest Section */}
+                        <AnimatePresence>
+                            {viewingAchievements?.id === student.id && (
+                                <motion.div 
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-hidden bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800"
+                                >
+                                    <div className="p-4 md:p-6 space-y-4">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <Trophy size={16} className="text-amber-500" />
+                                            <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">حصاد إنجازات الطالب</h4>
+                                        </div>
+                                        <GamificationCard 
+                                            totalPoints={student.totalPoints}
+                                            badges={student.badges}
+                                            pointLogs={pointLogs}
+                                        />
+                                        <button 
+                                            onClick={() => setViewingAchievements(null)}
+                                            className="w-full py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[8px] font-black text-slate-400 uppercase tracking-widest rounded-lg hover:text-rose-500 transition-colors mt-2"
+                                        >
+                                            إغلاق السجل
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 ))}
 
@@ -477,37 +512,6 @@ export const ParentStudents = () => {
                 </div>
             )}
 
-            {/* Achievement Harvest Modal */}
-            {viewingAchievements && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-md md:animate-in md:fade-in md:duration-300" dir="rtl">
-                    <div className="bg-[#f8faff] dark:bg-slate-950 w-full max-w-2xl relative shadow-2xl rounded-[32px] border border-white dark:border-slate-800 overflow-hidden md:animate-in md:slide-in-from-bottom-8">
-                        <button 
-                            onClick={() => setViewingAchievements(null)}
-                            className="absolute top-4 left-4 w-8 h-8 bg-white dark:bg-slate-900 text-slate-400 hover:text-rose-500 rounded-full flex items-center justify-center transition-all z-10 shadow-sm border border-slate-100 dark:border-slate-800"
-                        >
-                            <X size={16} />
-                        </button>
-                        
-                        <div className="p-5 md:p-8 max-h-[85vh] overflow-y-auto no-scrollbar">
-                            <div className="mb-6 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-center text-indigo-600 rounded-2xl">
-                                    <Trophy size={24} />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg md:text-xl font-black text-slate-900 dark:text-white tracking-tight">سجل إنجازات {viewingAchievements.name}</h3>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">الأوسمة، النقاط، والنشاط الأكاديمي</p>
-                                </div>
-                            </div>
-
-                            <GamificationCard 
-                                totalPoints={viewingAchievements.totalPoints}
-                                badges={viewingAchievements.badges}
-                                pointLogs={pointLogs}
-                            />
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
