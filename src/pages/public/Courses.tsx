@@ -215,11 +215,10 @@ export const Courses = () => {
                                                     <span className="text-[8px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">طالب مسجل</span>
                                                 </div>
                                             </div>
-                                            <div className="bg-green-50 dark:bg-green-950/30 px-2.5 py-1 rounded-lg border border-green-100/50 dark:border-green-500/20">
-                                                <span className="text-[9px] font-black text-green-700 dark:text-green-400">
-                                                    {course.category === 'quran' ? '8 حصص - 400 ج' :
-                                                        course.category === 'foundation' ? '8 حصص - 800 ج' :
-                                                            '8 حصص - 1200 ج'}
+                                            <div className="bg-gradient-to-r from-red-600 to-rose-500 px-3 py-1 rounded-full shadow-lg shadow-rose-500/20 flex items-center gap-1.5 animate-pulse-slow">
+                                                <Sparkles size={10} className="text-white fill-white" />
+                                                <span className="text-[10px] font-black text-white">
+                                                    مجاناً بالكامل
                                                 </span>
                                             </div>
                                         </div>
