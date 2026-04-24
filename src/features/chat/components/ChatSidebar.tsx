@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { 
     Search, 
     ShieldCheck, MessageSquarePlus,
-    Sun, Moon, Bell, Trash2
+    Sun, Moon, Trash2
 } from 'lucide-react';
+import { NotificationDropdown } from '../../../components/ui/NotificationDropdown';
 import { useDarkMode } from '../../../hooks/useDarkMode';
 
 import { format } from 'date-fns';
@@ -67,9 +68,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         >
                             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                         </button>
-                        <button className="p-1.5 text-[#54656f] dark:text-[#aebac1] hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors">
-                            <Bell size={18} />
-                        </button>
+                        <div className="text-[#54656f] dark:text-[#aebac1]">
+                            <NotificationDropdown />
+                        </div>
                     </div>
                 </div>
 
