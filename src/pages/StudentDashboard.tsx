@@ -376,13 +376,83 @@ export const StudentDashboard = () => {
                     <span className="text-sm font-black text-slate-800 dark:text-indigo-300">المحادثات</span>
                 </button>
                 <button 
-                    onClick={() => setShowBadges(true)}
+                    onClick={() => setShowBadges(!showBadges)}
                     className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
                 >
                     <Award className="text-[#8b5cf6]" size={18} />
                     <span className="text-sm font-black text-slate-800 dark:text-indigo-300">الأوسمة</span>
                 </button>
             </div>
+
+            {/* ═══════════════ INLINE BADGES SECTION ═══════════════ */}
+            <AnimatePresence>
+                {showBadges && (
+                    <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="relative w-full bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 mt-2">
+                            <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-6 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl" />
+                                <button 
+                                    onClick={() => setShowBadges(false)}
+                                    className="absolute top-4 left-4 text-white/60 hover:text-white"
+                                >
+                                    <X size={20} />
+                                </button>
+                                <div className="relative z-10 flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 shadow-lg">
+                                        <Trophy size={24} className="text-yellow-300" />
+                                    </div>
+                                    <div className="text-right">
+                                        <h2 className="text-lg font-black italic">أوسمة التميز</h2>
+                                        <p className="text-[9px] font-bold text-indigo-100 opacity-80 uppercase tracking-widest">إنجازاتك المسجلة</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="p-6">
+                                <div className="grid grid-cols-3 gap-4">
+                                    {allBadges.map((badge, idx) => {
+                                        const isEarned = (studentData?.badges || '').includes(badge.id);
+                                        return (
+                                            <div key={idx} className="flex flex-col items-center gap-2">
+                                                <div className={cn(
+                                                    "w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 relative group",
+                                                    isEarned 
+                                                        ? `bg-gradient-to-br ${badge.color} shadow-md scale-105` 
+                                                        : "bg-slate-50 dark:bg-slate-800/50 grayscale opacity-40"
+                                                )}>
+                                                    <badge.icon size={24} className={isEarned ? "text-white" : "text-slate-400"} />
+                                                    {isEarned && (
+                                                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
+                                                            <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <span className={cn(
+                                                    "text-[9px] font-black text-center leading-tight",
+                                                    isEarned ? "text-slate-900 dark:text-white" : "text-slate-400"
+                                                )}>
+                                                    {badge.name}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                
+                                <div className="mt-6 pt-4 border-t border-slate-50 dark:border-slate-800">
+                                    <p className="text-[8px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center leading-relaxed truncate">
+                                        استمر في حضور حصصك والحصول على النقاط لفتح المزيد من الأوسمة الرائعة!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
             <div>
@@ -433,80 +503,7 @@ export const StudentDashboard = () => {
                 </a>
             </div>
 
-            {/* ═══════════════ BADGES MODAL ═══════════════ */}
-            <AnimatePresence>
-                {showBadges && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                        <motion.div 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setShowBadges(false)}
-                            className="absolute inset-0 bg-slate-950/60 backdrop-blur-md"
-                        />
-                        <motion.div 
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[40px] overflow-hidden shadow-2xl border border-white/20"
-                        >
-                            <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 text-white relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
-                                <button 
-                                    onClick={() => setShowBadges(false)}
-                                    className="absolute top-6 left-6 text-white/60 hover:text-white"
-                                >
-                                    <X size={24} />
-                                </button>
-                                <div className="relative z-10 flex flex-col items-center text-center">
-                                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 border border-white/20 shadow-xl">
-                                        <Trophy size={32} className="text-yellow-300 drop-shadow-lg" />
-                                    </div>
-                                    <h2 className="text-2xl font-black mb-1 italic">أوسمة التميز</h2>
-                                    <p className="text-xs font-bold text-indigo-100 opacity-80 uppercase tracking-widest">إنجازاتك المسجلة في دارين</p>
-                                </div>
-                            </div>
-                            
-                            <div className="p-8">
-                                <div className="grid grid-cols-3 gap-4">
-                                    {allBadges.map((badge, idx) => {
-                                        const isEarned = (studentData?.badges || '').includes(badge.id);
-                                        return (
-                                            <div key={idx} className="flex flex-col items-center gap-2">
-                                                <div className={cn(
-                                                    "w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 relative group",
-                                                    isEarned 
-                                                        ? `bg-gradient-to-br ${badge.color} shadow-lg scale-110` 
-                                                        : "bg-slate-50 dark:bg-slate-800/50 grayscale opacity-40"
-                                                )}>
-                                                    <badge.icon size={28} className={isEarned ? "text-white" : "text-slate-400"} />
-                                                    {isEarned && (
-                                                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
-                                                            <div className="w-2 h-2 bg-white rounded-full" />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <span className={cn(
-                                                    "text-[10px] font-black text-center leading-tight",
-                                                    isEarned ? "text-slate-900 dark:text-white" : "text-slate-400"
-                                                )}>
-                                                    {badge.name}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                                
-                                <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center leading-relaxed">
-                                        استمر في حضور حصصك والحصول على النقاط لفتح المزيد من الأوسمة الرائعة!
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-                )}
-            </AnimatePresence>
+
 
         </div>
     );
