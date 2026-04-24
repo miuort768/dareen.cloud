@@ -273,7 +273,6 @@ export const ParentDashboard = () => {
             <div className="space-y-3">
                 <div className="flex items-center justify-between px-1">
                     <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">مهام اليوم ({todayArabic})</h3>
-                    <button onClick={() => navigate('/parent-attendance')} className="text-[8px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest hover:underline">عرض الكل</button>
                 </div>
 
                 <div className="space-y-3">
