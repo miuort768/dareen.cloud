@@ -1,23 +1,40 @@
 import React, { useEffect, useState } from 'react';
+import { motion, useSpring } from 'framer-motion';
 
 export const MouseGlow: React.FC = () => {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
+    const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
 
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, [mouseX, mouseY]);
 
     return (
-        <div 
-            className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-            style={{
-                background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(92, 89, 242, 0.05), transparent 80%)`
-            }}
-        />
+        <>
+            <motion.div 
+                className="pointer-events-none fixed top-0 left-0 z-[100] w-8 h-8 rounded-full border-2 border-indigo-500/50 mix-blend-difference"
+                style={{
+                    x: mouseX,
+                    y: mouseY,
+                    translateX: '-50%',
+                    translateY: '-50%',
+                }}
+            />
+            <motion.div 
+                className="pointer-events-none fixed top-0 left-0 z-[100] w-2 h-2 rounded-full bg-indigo-500 mix-blend-difference"
+                style={{
+                    x: mouseX,
+                    y: mouseY,
+                    translateX: '-50%',
+                    translateY: '-50%',
+                }}
+            />
+        </>
     );
 };
