@@ -9,12 +9,12 @@ interface DashboardStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, value: string | number, icon: LucideIcon, color: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm flex flex-col items-center text-center group hover:shadow-md transition-all duration-300">
-        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center mb-3 transition-transform group-hover:scale-110", bg)}>
-            <Icon size={18} className={color} />
+    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 md:p-6 rounded-[2rem] shadow-sm flex flex-col items-center text-center group hover:shadow-md transition-all duration-300">
+        <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110 shadow-sm", bg)}>
+            <Icon size={20} className={color} />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{title}</p>
-        <p className="text-lg font-black text-slate-800 dark:text-white tabular-nums">{value}</p>
+        <p className="text-[9px] md:text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">{title}</p>
+        <p className="text-base md:text-2xl font-black text-slate-800 dark:text-white tabular-nums tracking-tight">{value}</p>
     </div>
 );
 

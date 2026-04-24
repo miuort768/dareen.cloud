@@ -50,20 +50,20 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     const overallRate = sessions.length > 0 ? Math.round(((totalCompleted) / (totalCompleted + totalCancelled || 1)) * 100) : 0;
 
     return (
-        <div className="w-full space-y-3" dir="rtl">
+        <div className="w-full space-y-4" dir="rtl">
             {/* Header / Tabs */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
-                <div className="flex items-center gap-4 px-2">
-                    <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-2xl flex items-center justify-center">
-                        <TrendingUp size={20} />
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 md:p-8 rounded-[2.5rem] shadow-sm">
+                <div className="flex items-center gap-5 px-2">
+                    <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[1.25rem] flex items-center justify-center shadow-inner">
+                        <TrendingUp size={24} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white leading-tight">مركز تحليل البيانات</h3>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">ذكاء الأعمال والبيانات</p>
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-white leading-tight">مركز تحليل البيانات</h3>
+                        <p className="text-xs font-medium text-slate-400 mt-1 uppercase tracking-widest">Business Intelligence</p>
                     </div>
                 </div>
 
-                <div className="flex bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-2xl">
+                <div className="flex bg-slate-50 dark:bg-slate-800/80 p-2 rounded-[1.5rem] shadow-inner">
                     <TabButton 
                         active={activeTab === 'commitment'} 
                         onClick={() => setActiveTab('commitment')} 
@@ -79,41 +79,40 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Evolution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-xl flex items-center justify-center">
-                                <TrendingUp size={18} />
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-6 md:p-10 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-2xl flex items-center justify-center">
+                                <TrendingUp size={20} />
                             </div>
-                            <h4 className="font-bold text-slate-800 dark:text-white">التحليل التحصيلي</h4>
+                            <h4 className="font-bold text-slate-800 dark:text-white text-lg">التحليل التحصيلي</h4>
                         </div>
-                        <div className="bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-xl">
-                            <span className="text-[10px] font-bold text-emerald-600">{overallRate}% كلي</span>
+                        <div className="bg-emerald-50 dark:bg-emerald-900/30 px-4 py-1.5 rounded-full border border-emerald-100 dark:border-emerald-800/50">
+                            <span className="text-xs font-bold text-emerald-600 tabular-nums">{overallRate}% كلي</span>
                         </div>
                     </div>
 
-                    <div className="h-[280px] w-full" dir="ltr">
+                    <div className="h-[300px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={attendanceData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                                        <stop offset="50%" stopColor="#10b981" stopOpacity={0.1}/>
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
                                         <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" opacity={0.5} />
                                 <XAxis 
                                     dataKey="month" 
-                                    tick={{ fontSize: 10, fontWeight: '800', fill: '#64748b' }} 
+                                    tick={{ fontSize: 11, fontWeight: '700', fill: '#94a3b8' }} 
                                     axisLine={false} 
                                     tickLine={false} 
                                     dy={15} 
                                 />
                                 <YAxis 
-                                    tick={{ fontSize: 10, fontWeight: '800', fill: '#64748b' }} 
+                                    tick={{ fontSize: 11, fontWeight: '700', fill: '#94a3b8' }} 
                                     domain={[0, 100]} 
                                     axisLine={false} 
                                     tickLine={false} 
@@ -122,16 +121,15 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <Tooltip 
                                     cursor={{ stroke: '#10b981', strokeWidth: 2, strokeDasharray: '5 5' }}
                                     contentStyle={{ 
-                                        borderRadius: '16px', 
+                                        borderRadius: '24px', 
                                         border: 'none', 
-                                        boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.25)', 
+                                        boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.15)', 
                                         fontSize: '12px', 
                                         fontWeight: 'bold', 
-                                        backgroundColor: '#0f172a', 
-                                        color: '#fff',
-                                        padding: '12px 16px'
+                                        backgroundColor: '#fff', 
+                                        color: '#1e293b',
+                                        padding: '16px 20px'
                                     }}
-                                    itemStyle={{ color: '#10b981' }}
                                 />
                                 <Area 
                                     type="monotone" 
@@ -139,7 +137,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     stroke="#10b981" 
                                     fill="url(#colorRate)" 
                                     strokeWidth={4} 
-                                    dot={{ r: 6, fill: '#10b981', strokeWidth: 3, stroke: '#fff' }} 
+                                    dot={{ r: 6, fill: '#fff', strokeWidth: 3, stroke: '#10b981' }} 
                                     activeDot={{ r: 8, strokeWidth: 4, stroke: '#fff' }} 
                                 />
                             </AreaChart>
@@ -148,20 +146,20 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
 
                 {/* Distribution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
-                                <BarChart3 size={18} />
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-6 md:p-10 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-2xl flex items-center justify-center">
+                                <BarChart3 size={20} />
                             </div>
-                            <h4 className="font-bold text-slate-800 dark:text-white">المواد</h4>
+                            <h4 className="font-bold text-slate-800 dark:text-white text-lg">توزيع المواد</h4>
                         </div>
-                        <div className="bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 rounded-xl">
-                            <span className="text-[10px] font-bold text-[#5c59f2]">{students.length} طالب</span>
+                        <div className="bg-indigo-50 dark:bg-indigo-900/30 px-4 py-1.5 rounded-full border border-indigo-100 dark:border-indigo-800/50">
+                            <span className="text-xs font-bold text-[#5c59f2] tabular-nums">{students.length} طالب</span>
                         </div>
                     </div>
 
-                    <div className="h-[250px] w-full" dir="ltr">
+                    <div className="h-[280px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={subjectStats} layout="vertical" margin={{ left: 20, right: 40, top: 10, bottom: 10 }}>
                                 <CartesianGrid strokeDasharray="6 6" stroke="#f1f5f9" horizontal={false} opacity={0.4} />
@@ -169,21 +167,21 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <YAxis 
                                     type="category" 
                                     dataKey="subject" 
-                                    tick={{ fontSize: 11, fontWeight: '800', fill: '#64748b' }} 
+                                    tick={{ fontSize: 11, fontWeight: '700', fill: '#64748b' }} 
                                     width={100} 
                                     axisLine={false} 
                                     tickLine={false} 
                                 />
                                 <Tooltip 
                                     cursor={{ fill: '#f8fafc', opacity: 0.5 }} 
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold' }} 
+                                    contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold' }} 
                                 />
                                 <Bar 
                                     dataKey="sessions" 
                                     fill="#5c59f2" 
-                                    radius={[0, 12, 12, 0]} 
-                                    barSize={24}
-                                    label={{ position: 'right', fill: '#5c59f2', fontSize: 10, fontWeight: 'bold', offset: 10 }}
+                                    radius={[0, 10, 10, 0]} 
+                                    barSize={28}
+                                    label={{ position: 'right', fill: '#5c59f2', fontSize: 11, fontWeight: 'bold', offset: 10 }}
                                 />
                             </BarChart>
                         </ResponsiveContainer>
@@ -198,11 +196,11 @@ const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, on
     <button 
         onClick={onClick}
         className={cn(
-            "flex-1 px-4 py-2 rounded-xl font-bold text-[10px] transition-all flex items-center justify-center gap-2",
-            active ? "bg-white dark:bg-slate-700 text-indigo-500 shadow-sm" : "text-slate-400 hover:text-slate-600"
+            "flex-1 px-6 py-2.5 rounded-[1.25rem] font-bold text-xs md:text-sm transition-all flex items-center justify-center gap-3",
+            active ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-md" : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
         )}
     >
-        <Icon size={14} />
+        <Icon size={16} />
         {label}
     </button>
 );
