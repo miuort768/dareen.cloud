@@ -5,7 +5,7 @@ import {
     Sun, Moon, Bell
 } from 'lucide-react';
 import { useDarkMode } from '../../../hooks/useDarkMode';
-import { useChatContext } from '../../../context/ChatContext';
+
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../../lib/utils';
@@ -34,7 +34,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     typingUsers
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const { isConnected } = useChatContext();
+
     const [theme, setTheme] = useDarkMode();
 
     const filteredConversations = conversations.filter(c =>
