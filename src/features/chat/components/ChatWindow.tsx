@@ -193,7 +193,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="absolute top-[60px] bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
+                className="absolute top-[60px] bottom-[142px] lg:bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
@@ -256,7 +256,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={() => scrollToBottom("smooth")}
-                        className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
+                        className="absolute bottom-40 lg:bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
@@ -264,7 +264,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </AnimatePresence>
 
             {/* Input Bar - Fixed at bottom */}
-            <footer className="absolute bottom-0 left-0 right-0 h-[72px] bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-20 flex items-center gap-3">
+            <footer className="absolute bottom-[70px] lg:bottom-0 left-0 right-0 h-[72px] bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-20 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
