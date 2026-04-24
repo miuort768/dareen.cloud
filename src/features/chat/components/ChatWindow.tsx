@@ -93,10 +93,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }, [messages]);
 
     return (
-        <div className="flex-1 bg-[#efeae2] dark:bg-[#0b141a] relative h-full w-full overflow-hidden">
+        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] relative h-full w-full overflow-hidden">
             {/* WhatsApp Doodle Background Pattern */}
             <div 
-                className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
+                className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1] pointer-events-none" 
                 style={{ 
                     backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
                     backgroundRepeat: 'repeat',
@@ -104,8 +104,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 }} 
             />
 
-            {/* Header - Fixed at top */}
-            <header className="absolute top-0 left-0 right-0 h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-50 shadow-sm">
+            {/* Header - WhatsApp Style */}
+            <header className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-50 shadow-sm shrink-0">
                 <div className="flex items-center gap-3 overflow-hidden">
                     <button
                         onClick={() => setSelectedConv(null)}
@@ -189,11 +189,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </header>
 
-            {/* Messages - Scrollable area with fixed height offset */}
+            {/* Messages - Scrollable area */}
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="absolute top-[60px] bottom-[140px] lg:bottom-[72px] left-0 right-0 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar z-10"
+                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar relative z-10"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
@@ -263,8 +263,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Input Bar - Fixed at bottom */}
-            <footer className="absolute bottom-[68px] lg:bottom-0 left-0 right-0 h-[72px] bg-white/95 dark:bg-[#202c33] backdrop-blur-xl px-3 py-3 z-20 flex items-center gap-3 border-t border-gray-100 dark:border-white/5">
+            {/* Input Bar - WhatsApp Style */}
+            <footer className="bg-white/95 dark:bg-[#202c33] backdrop-blur-xl px-3 py-3 z-20 flex items-center gap-3 border-t border-gray-100 dark:border-white/5 shrink-0">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
@@ -316,6 +316,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     </button>
                 </div>
             </footer>
+
+            {/* Mobile Bottom Nav Spacer */}
+            <div className="lg:hidden h-[70px] bg-white/95 dark:bg-gray-950/95 shrink-0" />
         </div>
     );
 };
+

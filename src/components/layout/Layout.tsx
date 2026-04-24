@@ -36,7 +36,7 @@ export const Layout = () => {
                 <main className={cn(
                     "flex-1 relative max-w-full w-full",
                     (isChatOnly || location.pathname.includes('/chat')) 
-                        ? "p-0 h-screen overflow-hidden" 
+                        ? "p-0 h-[100dvh] overflow-hidden" 
                         : "overflow-x-hidden custom-scrollbar px-2 md:px-5 lg:px-8 pt-2 md:pt-4 pb-20 lg:pb-8 rounded-none md:rounded-t-[32px] lg:rounded-[40px] sm:bg-transparent bg-gray-50/50 dark:bg-slate-950/50 md:shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-10"
                 )}>
                     {/* Page Content with Local Suspense to keep Sidebar visible during navigation */}
