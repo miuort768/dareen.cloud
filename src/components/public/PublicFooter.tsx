@@ -136,6 +136,7 @@ export const PublicFooter = () => {
                             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                             <span className="text-[10px] font-bold text-gray-400 tracking-wide">تصميم وتطوير</span>
                             <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-green-400">مستر احمد عبدالله</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                         </div>
                     </div>
 
