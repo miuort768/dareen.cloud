@@ -218,7 +218,7 @@ export const Courses = () => {
                                             <div className="bg-gradient-to-r from-red-600 to-rose-500 px-3 py-1 rounded-full shadow-lg shadow-rose-500/20 flex items-center gap-1.5 animate-pulse-slow">
                                                 <Sparkles size={10} className="text-white fill-white" />
                                                 <span className="text-[10px] font-black text-white">
-                                                    مجاناً بالكامل
+                                                    مجاناً
                                                 </span>
                                             </div>
                                         </div>
