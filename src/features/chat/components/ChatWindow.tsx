@@ -62,12 +62,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         return () => clearTimeout(timer);
     }, [messages]);
 
-    // Mark as read when conversation is active or new messages arrive
+    // Mark as read when conversation is active or new messages arrive (only for incoming messages)
     useEffect(() => {
-        if (selectedConv?.id) {
-            markAsRead(selectedConv.id);
+        if (selectedConv?.id && messages.length > 0) {
+            const lastMsg = messages[messages.length - 1];
+            if (lastMsg.senderId !== currentUser?.id) {
+                markAsRead(selectedConv.id);
+            }
         }
-    }, [selectedConv.id, messages.length, markAsRead]);
+    }, [selectedConv.id, messages.length, markAsRead, currentUser?.id]);
 
     const handleScroll = () => {
         if (!scrollContainerRef.current) return;
@@ -130,10 +133,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             {selectedConv.displayName}
                         </h2>
                         {typingInThisConv.length > 0 ? (
-                            <span className="text-[12px] text-[#00a884] font-normal">جاري الكتابة...</span>
+                            <span className="text-[12px] text-[#00a884] font-normal animate-pulse">جاري الكتابة...</span>
                         ) : (
-                            <span className="text-[12px] text-[#00a884] font-normal">
-                                {selectedConv.isGroup ? "نشط الآن" : "متصل الآن"}
+                            <span className="text-[12px] text-slate-400 dark:text-slate-500 font-normal">
+                                {selectedConv.isGroup ? "مجموعة" : "محادثة مباشرة"}
                             </span>
                         )}
                     </div>
@@ -267,8 +270,22 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         rows={1}
                         value={newMessage}
                         onChange={(e) => {
-                            setNewMessage(e.target.value);
-                            if (currentUser) setTyping(selectedConv.id, e.target.value.length > 0, currentUser.name);
+                            const val = e.target.value;
+                            setNewMessage(val);
+                            
+                            // Throttled typing indicator
+                            if (currentUser && selectedConv.id) {
+                                // Only emit if it's been more than 2s or if it's the first character
+                                const now = Date.now();
+                                const lastSent = (window as any)._lastTypingEmit || 0;
+                                if (now - lastSent > 2000 || (val.length > 0 && lastSent === 0)) {
+                                    setTyping(selectedConv.id, val.length > 0, currentUser.name);
+                                    (window as any)._lastTypingEmit = val.length > 0 ? now : 0;
+                                } else if (val.length === 0) {
+                                    setTyping(selectedConv.id, false, currentUser.name);
+                                    (window as any)._lastTypingEmit = 0;
+                                }
+                            }
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {

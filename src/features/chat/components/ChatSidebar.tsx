@@ -133,9 +133,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                             className="w-full h-full object-cover"
                                         />
                                     </div>
-                                    {isConnected && !isSelected && (
-                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-[#111b21] rounded-full shadow-sm"></div>
-                                    )}
                                 </div>
 
                                 <div className="flex-1 min-w-0 border-b border-gray-100 dark:border-gray-800 pb-3 mt-1 text-right">
