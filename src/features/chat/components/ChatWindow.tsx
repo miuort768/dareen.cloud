@@ -93,10 +93,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     }, [messages]);
 
     return (
-        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] relative h-full w-full overflow-hidden">
+        <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
             {/* WhatsApp Doodle Background Pattern */}
             <div 
-                className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1] pointer-events-none" 
+                className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]" 
                 style={{ 
                     backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
                     backgroundRepeat: 'repeat',
@@ -105,17 +105,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             />
 
             {/* Header - WhatsApp Style */}
-            <header className="h-[60px] bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-50 shadow-sm shrink-0">
-                <div className="flex items-center gap-3 overflow-hidden">
+            <header className="sticky top-0 h-[60px] shrink-0 bg-[#f0f2f5] dark:bg-[#202c33] flex items-center justify-between px-4 z-[50] shadow-sm">
+                <div className="flex items-center gap-3">
                     <button
                         onClick={() => setSelectedConv(null)}
-                        className="lg:hidden p-1 text-[#54656f] dark:text-[#aebac1] shrink-0"
+                        className="lg:hidden p-1 text-[#54656f] dark:text-[#aebac1]"
                     >
                         <ChevronRight size={24} />
                     </button>
 
                     <div 
-                        className={cn("w-10 h-10 rounded-full overflow-hidden shrink-0", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
+                        className={cn("w-10 h-10 rounded-full overflow-hidden", selectedConv.isGroup && currentUser?.role === 'admin' ? "cursor-pointer" : "")}
                         onClick={() => selectedConv.isGroup && currentUser?.role === 'admin' && openGroupSettings()}
                     >
                         <img 
@@ -125,9 +125,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         />
                     </div>
 
-                    <div className="flex flex-col text-right truncate">
+                    <div className="flex flex-col text-right">
                         <h2 className={cn(
-                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate",
+                            "font-medium text-[#111b21] dark:text-[#e9edef] leading-tight truncate max-w-[150px] md:max-w-[300px]",
                             selectedConv.isGroup ? "text-sm" : "text-base"
                         )}>
                             {selectedConv.displayName}
@@ -143,8 +143,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
 
                 {currentUser?.role === 'admin' && (
-                    <div className="flex items-center gap-4 text-[#54656f] dark:text-[#aebac1] shrink-0">
-                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors hidden md:block">
+                    <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
+                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
                             <Search size={20} />
                         </button>
                         <div className="relative" ref={menuRef}>
@@ -189,11 +189,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </header>
 
-            {/* Messages - Scrollable area */}
+            {/* Messages - WhatsApp Bubbles */}
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-6 flex flex-col space-y-2 custom-scrollbar relative z-10"
+                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-20 flex flex-col space-y-2 custom-scrollbar relative z-10 max-w-full overflow-x-hidden"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
@@ -256,15 +256,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={() => scrollToBottom("smooth")}
-                        className="absolute bottom-40 lg:bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
+                        className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
                 )}
             </AnimatePresence>
 
-            {/* Input Bar - WhatsApp Style */}
-            <footer className="bg-white/95 dark:bg-[#202c33] backdrop-blur-xl px-3 py-3 z-20 flex items-center gap-3 border-t border-gray-100 dark:border-white/5 shrink-0">
+            {/* Input Bar - Standardized Style */}
+            <footer className="bg-[#f0f2f5] dark:bg-[#202c33] px-3 py-3 z-10 flex items-center gap-3">
                 <div className="flex-1 relative flex items-center">
                     <textarea
                         rows={1}
@@ -317,9 +317,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </div>
             </footer>
 
-            {/* Mobile Bottom Nav Spacer */}
-            <div className="lg:hidden h-[70px] bg-white/95 dark:bg-gray-950/95 shrink-0" />
         </div>
     );
 };
-

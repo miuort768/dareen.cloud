@@ -40,7 +40,7 @@ export const Sidebar = () => {
         setSidebarCollapsed: setCollapsed
     } = useApp();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { totalUnreadCount } = useChatContext();
+    const { totalUnreadCount, activeConversationId } = useChatContext();
     const navigate = useNavigate();
 
     // Persist collapsed state
@@ -256,7 +256,10 @@ export const Sidebar = () => {
             </div>
 
             {/* Mobile Bottom Navigation - Redesigned to match image */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)] overflow-hidden max-w-full">
+            <div className={cn(
+                "lg:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl border-t border-gray-100 dark:border-white/5 flex items-center justify-around px-2 z-[100] shadow-[0_-5px_15px_rgba(0,0,0,0.05)] overflow-hidden max-w-full transition-transform duration-300",
+                activeConversationId ? "translate-y-[100%]" : "translate-y-0"
+            )}>
                 {[
                     ...filteredNavigation.slice(0, 4)
                 ].map((item) => (
