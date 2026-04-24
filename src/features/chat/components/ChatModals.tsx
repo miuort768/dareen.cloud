@@ -38,7 +38,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     showNewChatModal, setShowNewChatModal, isEditingGroup, groupName, setGroupName,
     searchUser, setSearchUser, availableUsers, selectedUsers, setSelectedUsers,
     isCreatingGroup, setIsCreatingGroup, handleCreateConversation, handleCreateDirectChat,
-    showDeleteConfirm, setShowDeleteConfirm, setItemToDelete,
+    showDeleteConfirm, setShowDeleteConfirm, setItemToDelete, deleteType, itemToDelete,
     isDeleting, handleDeleteAction
 }) => {
     
