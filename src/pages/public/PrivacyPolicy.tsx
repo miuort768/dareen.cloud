@@ -204,7 +204,7 @@ export const PrivacyPolicy = () => {
                                 href={`https://wa.me/2${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-4 bg-white text-rose-600 px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-rose-50 transition-all group relative overflow-hidden shadow-lg"
+                                className="inline-flex items-center justify-center gap-4 bg-[#f46464] text-white px-6 py-3 w-full sm:w-auto rounded-xl font-bold hover:bg-[#e35555] transition-all group relative overflow-hidden shadow-lg border border-white/20"
                             >
                                 <Headphones className="w-5 h-5 relative z-10" />
                                 <span className="text-base md:text-lg relative z-10">تواصل مع الدعم الفني</span>
