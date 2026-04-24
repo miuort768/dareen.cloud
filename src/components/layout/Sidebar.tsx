@@ -207,7 +207,7 @@ export const Sidebar = () => {
                                     "absolute top-1 right-2 w-5 h-5 flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full md:animate-bounce-slow",
                                     collapsed && "top-1 right-1"
                                 )}>
-                                    {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                 </span>
                             )}
                             {collapsed && (
@@ -287,8 +287,8 @@ export const Sidebar = () => {
 
                                     {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
-                                            {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
+                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-[10px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
+                                            {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                         </span>
                                     )}
                                 </div>

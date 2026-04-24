@@ -47,7 +47,17 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     React.useEffect(() => {
         activeConvRef.current = activeConversationId;
-    }, [activeConversationId]);
+        
+        // Optimistically clear unread count for the active conversation
+        if (activeConversationId && currentUser?.id) {
+            queryClient.setQueryData(['conversations', String(currentUser.id)], (old: any) => {
+                if (!Array.isArray(old)) return old;
+                return old.map((conv: any) => 
+                    conv.id === activeConversationId ? { ...conv, unreadCount: 0 } : conv
+                );
+            });
+        }
+    }, [activeConversationId, currentUser?.id, queryClient]);
 
     const setTyping = useCallback((conversationId: string, isTyping: boolean, userName: string) => {
         if (!isAuthenticated) return;
