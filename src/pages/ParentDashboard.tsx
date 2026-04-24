@@ -53,9 +53,8 @@ export const ParentDashboard = () => {
 
     // ── Active timer for parent (polls every 5s) ──
     const [activeTimers, setActiveTimers] = useState<any[]>([]);
-    const timerSecsRef = useRef<Record<string, number>>({});
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const [timerTick, setTimerTick] = useState(0);
+    const [_timerTick, setTimerTick] = useState(0);
 
     useEffect(() => {
         const poll = async () => {
