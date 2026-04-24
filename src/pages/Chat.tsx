@@ -186,15 +186,23 @@ export const Chat: React.FC = () => {
                     />
                 ) : (
                     <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#222e35] relative border-l border-gray-200 dark:border-gray-800">
-                        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
-                        <div className="z-10 text-center">
-                            <div className="w-24 h-24 bg-gray-200 dark:bg-[#2a3942] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                <img src="/logo.png" alt="Dareen" className="w-16 h-16 grayscale opacity-40" />
+                        <div className="z-10 text-center px-6">
+                            <div className="max-w-[460px] mx-auto mb-10">
+                                <img 
+                                    src="https://static.whatsapp.net/rsrc.php/v3/y6/r/wa669ae5z2y.png" 
+                                    alt="Welcome" 
+                                    className="w-full h-auto opacity-80 dark:opacity-60 dark:invert-[0.1]" 
+                                />
                             </div>
-                            <h2 className="text-3xl font-light text-[#41525d] dark:text-[#e9edef] mb-2 tracking-tight">واتساب دارين للكمبيوتر</h2>
-                            <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-sm mx-auto leading-relaxed">
-                                أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة.
+                            <h2 className="text-3xl font-light text-[#41525d] dark:text-[#e9edef] mb-4 tracking-tight">واتساب دارين للكمبيوتر</h2>
+                            <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-md mx-auto leading-relaxed">
+                                أرسل واستقبل الرسائل دون الحاجة لإبقاء هاتفك متصلاً بالإنترنت.<br/>
+                                استخدم واتساب دارين على ما يصل إلى 4 أجهزة مرتبطة وهاتف واحد في نفس الوقت.
                             </p>
+                        </div>
+                        <div className="absolute bottom-10 text-[#8696a0] text-[12px] flex items-center gap-1.5 opacity-60">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 6c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6zm0 10c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"/></svg>
+                            <span>مشفر تماماً بين الطرفين</span>
                         </div>
                     </div>
                 )}
