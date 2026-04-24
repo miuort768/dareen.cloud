@@ -17,13 +17,13 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
     const topStudents = [...students]
         .filter(s => (s.totalPoints || 0) > 0)
         .sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0))
-        .slice(0, 5);
+        .slice(0, 6);
 
     if (topStudents.length === 0) return null;
 
     return (
-        <div className="w-full mt-6" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-5 shadow-sm overflow-hidden relative">
+        <div className="w-full mt-6 hidden md:block" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 shadow-sm overflow-hidden relative">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
@@ -44,7 +44,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                 </div>
 
                 {/* Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
                     {topStudents.map((student, index) => {
                         const isFirst = index === 0;
                         const isSecond = index === 1;
@@ -54,7 +54,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                             <div 
                                 key={student.id} 
                                 className={cn(
-                                    "relative p-4 rounded-3xl border transition-all hover:-translate-y-1 flex flex-col items-center text-center group",
+                                    "relative p-3 rounded-2xl border transition-all hover:-translate-y-1 flex flex-col items-center text-center group",
                                     isFirst ? "bg-amber-50/30 border-amber-100 dark:bg-amber-900/10 dark:border-amber-900/20" : 
                                     isSecond ? "bg-slate-50 border-slate-100 dark:bg-slate-800/30 dark:border-slate-700" :
                                     isThird ? "bg-orange-50/20 border-orange-100 dark:bg-orange-900/10" :
@@ -73,8 +73,8 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                      <Star size={14} fill="currentColor" />}
                                 </div>
 
-                                <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-full border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-center mb-2 relative overflow-hidden">
-                                     <span className="text-lg font-bold text-slate-200">{student.name.charAt(0)}</span>
+                                <div className="w-10 h-10 bg-white dark:bg-slate-800 rounded-full border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-center mb-2 relative overflow-hidden">
+                                     <span className="text-base font-bold text-slate-200">{student.name.charAt(0)}</span>
                                 </div>
 
                                 <div className="space-y-1.5 w-full">

@@ -14,7 +14,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
     const { adminPhone } = useApp();
     return (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-3 bg-white border border-rose-200 dark:bg-rose-950/20 dark:border-rose-900/30 overflow-hidden shadow-xl relative group">
+            <div className="lg:col-span-3 bg-white border border-rose-100 dark:bg-rose-950/20 dark:border-rose-900/30 overflow-hidden shadow-sm relative group rounded-2xl">
                 <div className="absolute top-0 right-0 w-1.5 h-full bg-rose-600 group-hover:w-2 transition-all"></div>
                 <div className="p-5 border-b border-rose-100 dark:border-rose-900/20 flex items-center justify-between bg-gradient-to-l from-rose-50/80 to-transparent dark:from-rose-900/10">
                     <div className="flex items-center gap-4">
@@ -125,7 +125,7 @@ export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalA
                 </div>
             </div>
 
-            <div className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-xl relative overflow-hidden flex flex-col justify-between">
+            <div className="bg-white border border-slate-100 p-6 dark:bg-slate-900 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col justify-between rounded-2xl">
                 <div className="absolute top-0 right-0 w-1 h-full bg-emerald-500"></div>
                 <div>
                     <div className="flex items-center gap-2 mb-6 text-emerald-600">

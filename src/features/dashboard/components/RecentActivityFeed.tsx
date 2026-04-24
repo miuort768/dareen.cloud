@@ -36,7 +36,7 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
     ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm flex flex-col h-full" dir="rtl">
             {/* Header Section */}
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">

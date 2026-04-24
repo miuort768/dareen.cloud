@@ -74,7 +74,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         active={activeTab === 'database'} 
                         onClick={() => setActiveTab('database')} 
                         icon={LayoutGrid} 
-                        label="توزيع المواد" 
+                        label="المواد" 
                     />
                 </div>
             </div>
@@ -123,7 +123,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
                                 <BarChart3 size={18} />
                             </div>
-                            <h4 className="font-bold text-slate-800 dark:text-white">توزيع الحصص حسب المادة</h4>
+                            <h4 className="font-bold text-slate-800 dark:text-white">المواد</h4>
                         </div>
                         <div className="bg-indigo-50 dark:bg-indigo-900/20 px-3 py-1 rounded-xl">
                             <span className="text-[10px] font-bold text-[#5c59f2]">{students.length} طالب</span>
