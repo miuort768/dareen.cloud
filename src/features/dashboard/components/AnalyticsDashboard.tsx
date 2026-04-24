@@ -79,9 +79,9 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Evolution Section */}
-                <div className={cn("lg:col-span-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-xl flex items-center justify-center">
@@ -148,7 +148,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
 
                 {/* Distribution Section */}
-                <div className={cn("lg:col-span-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
