@@ -156,8 +156,6 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     </Link>
                 </div>
             </div>
-
-            </div>
         </div>
     );
 };
