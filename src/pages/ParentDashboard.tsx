@@ -25,6 +25,7 @@ export const ParentDashboard = () => {
     const navigate = useNavigate();
     const [children, setChildren] = useState<any[]>([]);
     const [sessions, setSessions] = useState<any[]>([]);
+    const [allPointLogs, setAllPointLogs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
@@ -37,8 +38,21 @@ export const ParentDashboard = () => {
                 setChildren(students);
                 
                 const sessionsPromises = students.map(s => api.get<any[]>(`/parents/child-sessions/${s.id}`));
-                const allSessionsResults = await Promise.all(sessionsPromises);
+                const logsPromises = students.map(s => api.get<any[]>(`/student-portal/me/points-log?studentId=${s.id}`));
+                
+                const [allSessionsResults, allLogsResults] = await Promise.all([
+                    Promise.all(sessionsPromises),
+                    Promise.all(logsPromises)
+                ]);
+                
                 setSessions(allSessionsResults.flat());
+                
+                // Add student name to each log for parent view
+                const flattenedLogs = allLogsResults.map((logs, idx) => 
+                    logs.map((l: any) => ({ ...l, studentName: students[idx].name }))
+                ).flat();
+                
+                setAllPointLogs(flattenedLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()));
 
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
@@ -298,6 +312,39 @@ export const ParentDashboard = () => {
                         <div className="py-8 flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-3xl border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
                             <CalendarDays className="text-slate-200 dark:text-slate-700 mb-1" size={32} />
                             <p className="text-slate-400 dark:text-slate-600 font-bold text-[10px] tracking-tight text-center">لا توجد مهام اليوم</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2 px-1">
+                    <Star className="text-amber-500" size={20} />
+                    <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white italic">آخر النشاطات والأوسمة</h3>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {allPointLogs.slice(0, 6).map((log, i) => (
+                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-start gap-4 group hover:shadow-md transition-all">
+                            <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/10 text-amber-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                                <Star size={18} fill="currentColor" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <p className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1 truncate">{log.studentName}</p>
+                                <h4 className="text-[11px] font-bold text-slate-800 dark:text-slate-200 leading-normal">
+                                    تلقى {log.amount} نقطة: {log.action}
+                                </h4>
+                                <p className="text-[8px] font-bold text-slate-400 dark:text-slate-500 mt-1.5 flex items-center gap-1">
+                                    <Clock size={10} />
+                                    {format(new Date(log.timestamp), 'eeee, d MMMM HH:mm', { locale: ar })}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                    {allPointLogs.length === 0 && (
+                        <div className="col-span-full py-8 text-center bg-white dark:bg-slate-900 rounded-3xl border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
+                            <p className="text-slate-400 dark:text-slate-600 font-bold text-[10px]">لا توجد نشاطات حديثة للأبناء</p>
                         </div>
                     )}
                 </div>
