@@ -21,8 +21,11 @@ router.get('/me', authMiddleware, async (req, res) => {
             schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
         }));
 
-        const activeSessions = req.app.get('activeSessions');
-        const activeSession = activeSessions?.get(String(studentId));
+        // Read from DB table so it works across different devices/users
+        const activeSession = await req.db.get(
+            'SELECT * FROM active_sessions WHERE studentId = ? ORDER BY startedAt DESC LIMIT 1',
+            [studentId]
+        );
 
         res.json({
             ...student,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
     Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock
@@ -22,27 +22,50 @@ export const StudentDashboard = () => {
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
     const [activeTimer, setActiveTimer] = useState<{ seconds: number; subject: string } | null>(null);
+    const activeStartRef = useRef<number | null>(null);
+    const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+    // Poll backend every 5s for live session status
     useEffect(() => {
-        if (!studentData?.id) return;
-        const interval = setInterval(() => {
-            const val = localStorage.getItem(`active_timer_${studentData.id}`);
-            if (val) {
-                try {
-                    const parsed = JSON.parse(val);
-                    setActiveTimer({
-                        seconds: Math.floor((Date.now() - parsed.startedAt) / 1000),
-                        subject: parsed.subject
-                    });
-                } catch {
+        if (!currentUser?.id) return;
+        const poll = async () => {
+            try {
+                const token = localStorage.getItem('auth_token');
+                const res = await fetch('/api/student-portal/me', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.isLive && data.activeSession) {
+                    const startedAt = new Date(data.activeSession.startedAt).getTime();
+                    activeStartRef.current = startedAt;
+                    if (!timerTickRef.current) {
+                        timerTickRef.current = setInterval(() => {
+                            if (activeStartRef.current) {
+                                setActiveTimer({
+                                    seconds: Math.floor((Date.now() - activeStartRef.current) / 1000),
+                                    subject: data.activeSession.subject
+                                });
+                            }
+                        }, 1000);
+                    }
+                } else {
+                    if (timerTickRef.current) {
+                        clearInterval(timerTickRef.current);
+                        timerTickRef.current = null;
+                    }
+                    activeStartRef.current = null;
                     setActiveTimer(null);
                 }
-            } else {
-                setActiveTimer(null);
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [studentData?.id]);
+            } catch { /* silent */ }
+        };
+        poll();
+        const interval = setInterval(poll, 5000);
+        return () => {
+            clearInterval(interval);
+            if (timerTickRef.current) clearInterval(timerTickRef.current);
+        };
+    }, [currentUser?.id]);
 
     const formatTime = (totalSecs: number) => {
         const mins = Math.floor(totalSecs / 60);
