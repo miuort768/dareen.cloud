@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { 
     Send, MoreVertical, ChevronRight, 
     CheckCheck, ArrowDown, Search
@@ -77,6 +77,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     };
 
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
+
+    // Safer and more efficient message sorting
+    const sortedMessages = useMemo(() => {
+        return [...messages].sort((a, b) => {
+            const timeA = new Date(a.timestamp).getTime();
+            const timeB = new Date(b.timestamp).getTime();
+            if (isNaN(timeA)) return 1;
+            if (isNaN(timeB)) return -1;
+            return timeA - timeB;
+        });
+    }, [messages]);
 
     return (
         <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
@@ -181,7 +192,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 onScroll={handleScroll}
                 className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 flex flex-col space-y-2 custom-scrollbar relative z-10"
             >
-                {[...messages].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()).map((msg, idx) => {
+                {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
                     const isGroup = selectedConv.isGroup;
                     
@@ -211,7 +222,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 
                                 <div className="flex items-center justify-end gap-1 mt-1">
                                     <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
-                                        {format(new Date(msg.timestamp), 'h:mm a', { locale: ar })}
+                                        {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
+                                            ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
+                                            : '--:--'}
                                     </span>
                                     {isMe && (
                                         <div className="flex">

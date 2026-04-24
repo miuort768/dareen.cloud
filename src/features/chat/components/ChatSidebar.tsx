@@ -154,7 +154,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                                 "text-[12px] font-normal tracking-tight",
                                                 (conv.unreadCount ?? 0) > 0 ? "text-[#00a884]" : "text-[#667781] dark:text-[#8696a0]"
                                             )}>
-                                                {format(new Date(conv.lastMessageTime), 'h:mm a', { locale: ar })}
+                                                {conv.lastMessageTime && !isNaN(new Date(conv.lastMessageTime).getTime())
+                                                    ? format(new Date(conv.lastMessageTime), 'h:mm a', { locale: ar })
+                                                    : ''}
                                             </span>
                                         )}
                                     </div>

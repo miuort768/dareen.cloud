@@ -5,6 +5,28 @@ import { socketService } from '../lib/socket';
 import { useChatContext } from '../context/ChatContext';
 import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types';
 
+// Standalone hook for messages to follow React Rules of Hooks
+export const useMessages = (conversationId?: string) => {
+    useEffect(() => {
+        if (conversationId) {
+            socketService.joinConversation(conversationId);
+        }
+        return () => {
+            if (conversationId) socketService.leaveConversation(conversationId);
+        };
+    }, [conversationId]);
+
+    return useQuery<ChatMessage[]>({
+        queryKey: ['messages', conversationId],
+        queryFn: async () => {
+            if (!conversationId) return [];
+            return api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`);
+        },
+        enabled: !!conversationId,
+        staleTime: 300000,
+    });
+};
+
 export const useChat = (userId?: string) => {
     const queryClient = useQueryClient();
     const { typingUsers, setTyping, totalUnreadCount } = useChatContext();
@@ -19,29 +41,6 @@ export const useChat = (userId?: string) => {
         enabled: !!userId,
         staleTime: 60000,
     });
-
-
-    // Fetch messages helper hook
-    const useMessages = (conversationId?: string) => {
-        useEffect(() => {
-            if (conversationId) {
-                socketService.joinConversation(conversationId);
-            }
-            return () => {
-                if (conversationId) socketService.leaveConversation(conversationId);
-            };
-        }, [conversationId]);
-
-        return useQuery<ChatMessage[]>({
-            queryKey: ['messages', conversationId],
-            queryFn: async () => {
-                if (!conversationId) return [];
-                return api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`);
-            },
-            enabled: !!conversationId,
-            staleTime: 300000,
-        });
-    };
 
     // Fetch available users
     const { data: availableUsers = [] } = useQuery<ChatUser[]>({
@@ -168,7 +167,6 @@ export const useChat = (userId?: string) => {
         isLoadingConversations,
         availableUsers,
         profiles,
-        useMessages,
         sendMessage: sendMessageMutation.mutate,
         isSending: sendMessageMutation.isPending,
         createDirectChat: createDirectChatMutation.mutateAsync,

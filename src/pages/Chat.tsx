@@ -5,16 +5,13 @@ import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
 import { useApp } from '../context/AppContext';
 import { useChatContext } from '../context/ChatContext';
-import { useChat } from '../hooks/useChat';
+import { useChat, useMessages } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
     const { currentUser, logout } = useApp();
-    const {
-        conversations,
         availableUsers,
-        useMessages,
         sendMessage,
         isSending,
         createDirectChat,
