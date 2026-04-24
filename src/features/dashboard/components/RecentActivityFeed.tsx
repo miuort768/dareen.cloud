@@ -101,11 +101,6 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                 )}
             </div>
 
-            <div className="mt-8 pt-4 border-t border-slate-50 dark:border-slate-800">
-                <p className="text-[10px] font-bold text-center text-slate-400 uppercase tracking-widest opacity-60">
-                    مزامنة مباشرة
-                </p>
-            </div>
         </div>
     );
 };
