@@ -7,7 +7,7 @@ import { NotificationsCenter } from '../features/dashboard/components/Notificati
 import { DashboardCharts } from '../features/dashboard/components/DashboardCharts';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
-import { RenewalAlertsList } from '../features/dashboard/components/RenewalAlertsList';
+import { OperationsDashboard } from '../features/dashboard/components/OperationsDashboard';
 import { AnalyticsDashboard } from '../features/dashboard/components/AnalyticsDashboard';
 import { HonorRoll } from '../features/dashboard/components/HonorRoll';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
@@ -123,20 +123,17 @@ export const Dashboard = () => {
                         {/* Hall of Fame */}
                         <HonorRoll students={rawStudents} />
 
-                        {/* Secondary Operations Row */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                            <div className="lg:col-span-7">
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            </div>
-                            <div className="lg:col-span-5">
-                                <RenewalAlertsList stats={stats} lowBalanceStudents={lowBalanceStudents} />
-                            </div>
-                        </div>
+                        {/* Integrated Operations Center (Subscriptions & Tasks) */}
+                        <OperationsDashboard 
+                            tasks={tasks} 
+                            lowBalanceStudents={lowBalanceStudents} 
+                            stats={stats} 
+                        />
 
-                        {/* Bottom Row Tasks */}
+                        {/* Secondary Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                             <div className="lg:col-span-12">
-                                <TasksAndRequests tasks={tasks} />
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
                             </div>
                         </div>
                     </div>
