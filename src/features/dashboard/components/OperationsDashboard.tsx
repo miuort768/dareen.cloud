@@ -30,11 +30,11 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 {/* 1. Subscriptions & Renewals Section */}
                 <div className="bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-l-2 border-slate-950 dark:border-slate-800 flex flex-col">
                     {/* Header */}
-                    <div className="p-5 bg-slate-950 text-white flex items-center justify-between">
+                    <div className="p-5 bg-slate-900 dark:bg-slate-950 text-white flex items-center justify-between border-b border-white/10">
                         <div className="flex items-center gap-3">
                             <CreditCard size={20} className="text-indigo-400" />
                             <div>
-                                <h3 className="text-sm font-black uppercase tracking-tighter">تجديد الاشتراكات</h3>
+                                <h3 className="text-sm font-black uppercase tracking-tighter text-white">تجديد الاشتراكات</h3>
                                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5">Subscription Management</p>
                             </div>
                         </div>
@@ -98,13 +98,13 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                 {/* 2. Tasks & Requests Section */}
                 <div className="bg-white dark:bg-slate-900 flex flex-col">
                     {/* Header */}
-                    <div className="p-5 bg-slate-950 text-white flex items-center justify-between border-b-2 border-white/5">
+                    <div className="p-5 bg-slate-900 dark:bg-slate-950 text-white flex items-center justify-between border-b-2 border-white/5">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-amber-500 text-slate-950 flex items-center justify-center">
                                 <Briefcase size={22} />
                             </div>
                             <div>
-                                <h3 className="text-sm font-black uppercase tracking-tighter">المهام والطلبات</h3>
+                                <h3 className="text-sm font-black uppercase tracking-tighter text-white">المهام والطلبات</h3>
                                 <p className="text-[10px] font-black text-amber-500/80 uppercase tracking-[0.2em] mt-0.5 text-right">Workflow</p>
                             </div>
                         </div>

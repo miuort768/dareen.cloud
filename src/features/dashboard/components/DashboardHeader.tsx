@@ -64,7 +64,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                         </span>
                         <Sparkles className="text-amber-400" size={14} />
                     </div>
-                    <h1 className="text-xl font-bold text-slate-800 dark:text-white leading-none">
+                    <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-none">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'لوحة القيادة والتحكم'}
                     </h1>
                     <p className="text-xs font-bold text-slate-400 mt-2 flex items-center gap-2 italic">
