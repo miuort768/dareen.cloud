@@ -113,6 +113,7 @@ export const Chat: React.FC = () => {
     };
 
     const handleDeleteAllClick = () => {
+        console.log('Delete all clicked');
         setDeleteType('all_conversations');
         setItemToDelete({ displayName: 'جميع المحادثات' });
         setShowDeleteConfirm(true);

@@ -74,7 +74,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2 text-[#54656f] dark:text-[#aebac1]">
-                    {currentUser?.role === 'admin' && (
+                    {(currentUser?.role === 'admin' || currentUser?.role === 'teacher') && (
                         <>
                             <button 
                                 onClick={() => { setIsEditingGroup(false); setShowNewChatModal(true); }}
@@ -85,12 +85,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             </button>
                             <button 
                                 type="button"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    onDeleteAll();
-                                }}
-                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500 flex items-center justify-center"
+                                onClick={onDeleteAll}
+                                className="p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-full transition-colors text-rose-500 flex items-center justify-center cursor-pointer"
                                 title="حذف جميع المحادثات"
                             >
                                 <Trash2 size={22} strokeWidth={2.5} />
