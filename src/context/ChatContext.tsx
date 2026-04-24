@@ -136,11 +136,12 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
                 const updated = conversations.map((conv: any) => {
                     if (conv.id === message.conversationId) {
+                        const isFromOthers = String(message.senderId) !== currentUserId;
                         return {
                             ...conv,
                             lastMessage: message.content,
                             lastMessageTime: message.timestamp,
-                            unreadCount: isCurrentlyActive ? 0 : (conv.unreadCount || 0) + 1
+                            unreadCount: isCurrentlyActive ? 0 : (isFromOthers ? (conv.unreadCount || 0) + 1 : conv.unreadCount)
                         };
                     }
                     return conv;

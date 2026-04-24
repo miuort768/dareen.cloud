@@ -62,15 +62,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         return () => clearTimeout(timer);
     }, [messages]);
 
-    // Mark as read when conversation is active or new messages arrive (only for incoming messages)
+    // Mark as read when conversation is active or new messages arrive
     useEffect(() => {
-        if (selectedConv?.id && messages.length > 0) {
+        if (selectedConv?.id && (selectedConv as any).unreadCount > 0) {
+            markAsRead(selectedConv.id);
+        } else if (selectedConv?.id && messages.length > 0) {
             const lastMsg = messages[messages.length - 1];
             if (lastMsg.senderId !== currentUser?.id) {
                 markAsRead(selectedConv.id);
             }
         }
-    }, [selectedConv.id, messages.length, markAsRead, currentUser?.id]);
+    }, [selectedConv, messages.length, markAsRead, currentUser?.id]);
 
     const handleScroll = () => {
         if (!scrollContainerRef.current) return;

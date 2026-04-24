@@ -288,7 +288,7 @@ export const Sidebar = () => {
                                     {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
                                         <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
-                                            {totalUnreadCount > 9 ? '+' : totalUnreadCount}
+                                            {totalUnreadCount > 9 ? '+9' : totalUnreadCount}
                                         </span>
                                     )}
                                 </div>
