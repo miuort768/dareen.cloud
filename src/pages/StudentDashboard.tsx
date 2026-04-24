@@ -58,6 +58,8 @@ export const StudentDashboard = () => {
                     activeStartRef.current = null;
                     setActiveTimer(null);
                 }
+                // Update full student data during poll to get new homework/notes automatically
+                setStudentData(data);
             } catch { /* silent */ }
         };
         poll();
