@@ -21,7 +21,7 @@ export const StudentDashboard = () => {
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
-    const [activeTimer, setActiveTimer] = useState<{ seconds: number; subject: string } | null>(null);
+    const [activeTimer, setActiveTimer] = useState<{ seconds: number; subject: string; teacherName: string } | null>(null);
     const activeStartRef = useRef<number | null>(null);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -44,7 +44,8 @@ export const StudentDashboard = () => {
                             if (activeStartRef.current) {
                                 setActiveTimer({
                                     seconds: Math.floor((Date.now() - activeStartRef.current) / 1000),
-                                    subject: data.activeSession.subject
+                                    subject: data.activeSession.subject,
+                                    teacherName: data.activeSession.teacherName || ''
                                 });
                             }
                         }, 1000);
@@ -165,7 +166,10 @@ export const StudentDashboard = () => {
                         </div>
                         <div>
                             <h3 className="font-black text-sm">الحصة مبدوءة الآن!</h3>
-                            <p className="text-[10px] font-bold opacity-90">{activeTimer.subject}</p>
+                            <p className="text-[10px] font-bold opacity-90">
+                                {activeTimer.subject}
+                                {activeTimer.teacherName && <span className="opacity-70"> · {activeTimer.teacherName}</span>}
+                            </p>
                         </div>
                     </div>
                     <div className="text-2xl font-black font-mono tracking-widest">
