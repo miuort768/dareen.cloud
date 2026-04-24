@@ -79,10 +79,10 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {/* Evolution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
-                    <div className="flex items-center justify-between mb-8">
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm", activeTab !== 'commitment' && "hidden lg:block")}>
+                    <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-xl flex items-center justify-center">
                                 <TrendingUp size={18} />
@@ -94,7 +94,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         </div>
                     </div>
 
-                    <div className="h-[400px] w-full" dir="ltr">
+                    <div className="h-[280px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={attendanceData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
                                 <defs>
@@ -148,8 +148,8 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
 
                 {/* Distribution Section */}
-                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
-                    <div className="flex items-center justify-between mb-8">
+                <div className={cn("bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 shadow-sm", activeTab !== 'database' && "hidden lg:block")}>
+                    <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/20 text-[#5c59f2] rounded-xl flex items-center justify-center">
                                 <BarChart3 size={18} />
@@ -161,7 +161,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                         </div>
                     </div>
 
-                    <div className="h-[350px] w-full" dir="ltr">
+                    <div className="h-[250px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={subjectStats} layout="vertical" margin={{ left: 20, right: 40, top: 10, bottom: 10 }}>
                                 <CartesianGrid strokeDasharray="6 6" stroke="#f1f5f9" horizontal={false} opacity={0.4} />
