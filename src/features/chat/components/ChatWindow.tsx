@@ -193,7 +193,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             <div 
                 ref={scrollContainerRef}
                 onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-4 lg:px-20 pt-6 pb-10 flex flex-col space-y-2 custom-scrollbar relative z-10"
+                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-20 flex flex-col space-y-2 custom-scrollbar relative z-10 max-w-full overflow-x-hidden"
             >
                 {sortedMessages.map((msg, idx) => {
                     const isMe = msg.senderId === currentUser?.id;
