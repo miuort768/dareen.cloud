@@ -185,20 +185,30 @@ export const Chat: React.FC = () => {
                         markAsRead={markAsRead}
                     />
                 ) : (
-                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#222e35] relative border-l border-gray-200 dark:border-gray-800">
-                        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
+                    <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#020617] relative border-l border-gray-200 dark:border-white/5">
+                        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
+                        
+                        {/* Sharp Design Element */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#5c59f2]/5 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+
                         <div className="z-10 text-center">
-                            <div className="w-32 h-32 bg-indigo-600 dark:bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-indigo-500/20">
-                                <span className="text-6xl font-black text-white italic">D</span>
+                            <div className="w-20 h-20 bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-2xl rounded-none">
+                                <img src="/logo.png" alt="Dareen" className="w-12 h-12 object-contain" />
                             </div>
-                            <h2 className="text-3xl font-bold text-[#41525d] dark:text-[#e9edef] mb-3 tracking-tight">واتساب دارين للكمبيوتر</h2>
-                            <p className="text-sm text-[#667781] dark:text-[#8696a0] max-w-sm mx-auto leading-relaxed">
+                            <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
+                            <div className="flex items-center justify-center gap-3 mb-6">
+                                <span className="h-[1px] w-8 bg-indigo-500/30"></span>
+                                <p className="text-[10px] text-indigo-500 font-black uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
+                                <span className="h-[1px] w-8 bg-indigo-500/30"></span>
+                            </div>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed font-medium">
                                 أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة.
                             </p>
                         </div>
-                        <div className="absolute bottom-10 text-[#8696a0] text-[12px] flex items-center gap-1.5 opacity-40 font-medium">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 6c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6zm0 10c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"/></svg>
-                            <span>مشفر تماماً بين الطرفين</span>
+                        
+                        <div className="absolute bottom-10 flex items-center gap-2 text-slate-400 dark:text-slate-600">
+                             <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                             <span className="text-[10px] font-black uppercase tracking-widest">النظام متصل وآمن</span>
                         </div>
                     </div>
                 )}
