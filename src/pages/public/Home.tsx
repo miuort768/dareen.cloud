@@ -152,7 +152,7 @@ export const Home = () => {
                                     <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-green-600 fill-green-600" />
                                     </div>
-                                    <span>كيف نعمل؟</span>
+                                    <span>دليل الاستخدام؟</span>
                                 </button>
                             </div>
                             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center gap-6">
