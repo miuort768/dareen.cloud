@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -11,7 +11,8 @@ import {
     LogOut,
     MessageSquare,
     Activity as ActivityIcon,
-    LayoutDashboard
+    LayoutDashboard,
+    Clock
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -49,6 +50,45 @@ export const ParentDashboard = () => {
 
         fetchAllData();
     }, []);
+
+    // ── Active timer for parent (polls every 5s) ──
+    const [activeTimers, setActiveTimers] = useState<any[]>([]);
+    const timerSecsRef = useRef<Record<string, number>>({});
+    const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const [timerTick, setTimerTick] = useState(0);
+
+    useEffect(() => {
+        const poll = async () => {
+            try {
+                const token = localStorage.getItem('auth_token');
+                const res = await fetch('/api/active-sessions/my', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!res.ok) return;
+                const data: any[] = await res.json();
+                setActiveTimers(data);
+                if (data.length > 0 && !timerTickRef.current) {
+                    timerTickRef.current = setInterval(() => setTimerTick(t => t + 1), 1000);
+                } else if (data.length === 0 && timerTickRef.current) {
+                    clearInterval(timerTickRef.current);
+                    timerTickRef.current = null;
+                }
+            } catch { /* silent */ }
+        };
+        poll();
+        const interval = setInterval(poll, 5000);
+        return () => {
+            clearInterval(interval);
+            if (timerTickRef.current) clearInterval(timerTickRef.current);
+        };
+    }, []);
+
+    const formatTime = (startedAt: string) => {
+        const secs = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
+        const m = Math.floor(secs / 60).toString().padStart(2, '0');
+        const s = (secs % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    };
 
     const stats = useMemo(() => {
         const completed = sessions.filter(s => s.status === 'completed').length;
@@ -142,6 +182,33 @@ export const ParentDashboard = () => {
                     </div>
                 </div>
             </div>
+
+            {/* ═══════════════ ACTIVE SESSION TIMERS ═══════════════ */}
+            {activeTimers.length > 0 && (
+                <div className="space-y-3">
+                    {activeTimers.map((session: any) => {
+                        const child = children.find(c => c.id === session.studentId);
+                        return (
+                            <div key={session.id} className="bg-rose-500 text-white p-4 flex items-center justify-between shadow-lg border-4 border-rose-700 animate-in slide-in-from-top duration-500">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-white/20 flex items-center justify-center border-2 border-white/40 animate-pulse">
+                                        <Clock size={20} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-black text-sm uppercase tracking-tight">حصة جارية الآن!</h3>
+                                        <p className="text-[11px] font-bold opacity-90">
+                                            {child?.name || session.studentId} — {session.subject}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="text-3xl font-black font-mono tracking-widest">
+                                    {formatTime(session.startedAt)}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <div className="lg:col-span-2 space-y-10">
