@@ -156,9 +156,9 @@ export const NotificationsCenter = ({
     const filteredRoomAlerts = roomAlerts;
 
     return (
-        <div className="w-full space-y-6" dir="rtl">
+        <div className="w-full space-y-3" dir="rtl">
             {/* Header / Tabs Style (Mimicking Analytics) */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-[32px] shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
                 <div className="flex items-center gap-4 px-2">
                     <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500 rounded-2xl flex items-center justify-center">
                         <Zap size={20} />
@@ -196,7 +196,7 @@ export const NotificationsCenter = ({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 {/* ── 1. إخطارات ذكية (Left/Large Card) ── */}
                 <div className={cn(
-                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden transition-all",
+                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm overflow-hidden transition-all",
                     activeTab !== 'smart' && "hidden lg:block opacity-40"
                 )}>
                     <div className="flex items-center justify-between mb-8">
@@ -256,7 +256,7 @@ export const NotificationsCenter = ({
 
                 {/* ── 2. غرفة التنبيهات (Right Card) ── */}
                 <div className={cn(
-                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm overflow-hidden transition-all",
+                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm overflow-hidden transition-all",
                     activeTab !== 'room' && "hidden lg:block opacity-40"
                 )}>
                     <div className="flex items-center justify-between mb-8">

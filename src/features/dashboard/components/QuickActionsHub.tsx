@@ -21,7 +21,7 @@ export const QuickActionsHub = () => {
             description: 'رسوم دراسية'
         },
         { 
-            title: 'تعديل الجدول', 
+            title: 'الجدول الاسبوعي', 
             icon: Calendar, 
             href: '/schedule', 
             color: 'text-amber-500',
