@@ -55,12 +55,33 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
     const [timerRunning, setTimerRunning] = useState(false);
     const [timerSeconds, setTimerSeconds] = useState(0);
-    const [timerInterval, setTimerInterval] = useState<any>(null);
+    const timerIntervalRef = useRef<any>(null);
+
+    React.useEffect(() => {
+        const saved = localStorage.getItem(`active_timer_${student.id}`);
+        if (saved) {
+            try {
+                const { startedAt, subject } = JSON.parse(saved);
+                if (subject === en.subject) {
+                    const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+                    setTimerSeconds(elapsed);
+                    setTimerRunning(true);
+                    timerIntervalRef.current = setInterval(() => {
+                        setTimerSeconds(Math.floor((Date.now() - startedAt) / 1000));
+                    }, 1000);
+                }
+            } catch (e) { console.error('Failed to restore timer', e); }
+        }
+        return () => {
+            if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+        };
+    }, [student.id, en.subject]);
 
     const toggleTimer = async () => {
         if (timerRunning) {
-            clearInterval(timerInterval);
+            if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
             setTimerRunning(false);
+            setTimerSeconds(0);
             localStorage.removeItem(`active_timer_${student.id}`);
             try {
                 const token = localStorage.getItem('auth_token');
@@ -71,11 +92,11 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 });
             } catch (e) { /* silent */ }
         } else {
-            const start = Date.now() - timerSeconds * 1000;
-            const interval = setInterval(() => {
+            const start = Date.now();
+            setTimerSeconds(0);
+            timerIntervalRef.current = setInterval(() => {
                 setTimerSeconds(Math.floor((Date.now() - start) / 1000));
             }, 1000);
-            setTimerInterval(interval);
             setTimerRunning(true);
             localStorage.setItem(`active_timer_${student.id}`, JSON.stringify({
                 startedAt: start,
