@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, ChevronDown, LogOut, Moon, Sun } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown, LogOut, Moon, Sun, GraduationCap } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
@@ -48,7 +48,10 @@ export const PublicNavbar = () => {
                     <Link to="/" className="flex items-center gap-3 pr-2 group">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-red-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                                <img src="/dareen_logo_new.jpg" alt="Logo" className="relative z-10 w-full h-full object-contain" />
+                             <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
+                                <GraduationCap size={24} className="relative z-10" />
+                            </div>
                             <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
                         </div>
                         <div className={cn(
