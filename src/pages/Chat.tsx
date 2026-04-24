@@ -11,6 +11,8 @@ import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
     const { currentUser, logout } = useApp();
+    const {
+        conversations,
         availableUsers,
         sendMessage,
         isSending,
