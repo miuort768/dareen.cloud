@@ -13,7 +13,7 @@ import { SendNotificationModal } from '../shared/components/SendNotificationModa
 import { PageLoader } from '../components/ui/PageLoader';
 
 // Feature Components
-import { GraduationCap, Plus, X } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { TeacherStats } from '../features/teachers/components/TeacherStats';
 import { TeacherToolbar } from '../features/teachers/components/TeacherToolbar';
 import { TeacherForm } from '../features/teachers/components/TeacherForm';

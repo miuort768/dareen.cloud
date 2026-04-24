@@ -12,7 +12,6 @@ export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useApp();
@@ -211,8 +210,6 @@ export const Login = () => {
                                         type={showPassword ? 'text' : 'password'}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        onFocus={() => setIsPasswordFocused(true)}
-                                        onBlur={() => setIsPasswordFocused(false)}
                                         className="w-full bg-gray-50 border border-gray-100 rounded-xl py-4 pr-12 pl-12 focus:outline-none focus:border-green-400 focus:ring-4 focus:ring-green-500/10 transition-all font-bold placeholder:text-gray-300 text-right"
                                         placeholder="أدخل كلمة المرور..."
                                         required
