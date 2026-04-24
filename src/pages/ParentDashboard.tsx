@@ -325,7 +325,7 @@ export const ParentDashboard = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {allPointLogs.slice(0, 6).map((log, i) => (
+                    {allPointLogs.slice(0, 4).map((log, i) => (
                         <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-start gap-4 group hover:shadow-md transition-all">
                             <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/10 text-amber-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition-all">
                                 <Star size={18} fill="currentColor" />
