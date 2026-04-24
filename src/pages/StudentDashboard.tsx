@@ -298,20 +298,20 @@ export const StudentDashboard = () => {
             </div>
 
             {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
-            {(studentData?.enrollments || []).some((en: any) => en.notes) && (
+            {(studentData?.enrollments || []).some((en: any) => en.nextSessionNotes) && (
                 <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-2 mb-4">
                         <MessageSquare className="text-indigo-500" size={20} />
                         <h3 className="text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات الحالية</h3>
                     </div>
                     <div className="space-y-3">
-                        {(studentData.enrollments || []).filter((en: any) => en.notes).map((en: any, idx: number) => (
+                        {(studentData.enrollments || []).filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
                             <div key={idx} className="bg-indigo-50/30 dark:bg-indigo-900/10 p-4 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20">
                                 <div className="flex justify-between items-center mb-2">
                                     <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">{en.subject}</span>
                                     <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
                                 </div>
-                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.notes}</p>
+                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
                             </div>
                         ))}
                     </div>
