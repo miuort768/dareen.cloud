@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
-import { arEG } from 'date-fns/locale';
+import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
 
 interface Comment {
@@ -302,7 +302,7 @@ export const Forum = () => {
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-[8px] text-slate-500 font-light mt-0.5">
-                                                    <span>{formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: arEG })}</span>
+                                                    <span>{formatDistanceToNow(new Date(post.created_at) > new Date() ? new Date() : new Date(post.created_at), { addSuffix: true, locale: ar })}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -398,7 +398,7 @@ export const Forum = () => {
                                                                         }}
                                                                         className="hover:underline"
                                                                     >رد</button>
-                                                                    <span>{formatDistanceToNow(new Date(node.comment.created_at), { addSuffix: true, locale: arEG })}</span>
+                                                                    <span>{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                     {(isAdmin || currentUser?.id === node.comment.authorId) && (
                                                                         <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-rose-500 hover:underline">حذف</button>
                                                                     )}
@@ -435,7 +435,7 @@ export const Forum = () => {
                                                                                     }}
                                                                                     className="hover:underline"
                                                                                 >رد</button>
-                                                                                <span>{formatDistanceToNow(new Date(replyNode.comment.created_at), { addSuffix: true, locale: arEG })}</span>
+                                                                                <span>{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                                 {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
                                                                                     <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="text-rose-500 hover:underline">حذف</button>
                                                                                 )}
@@ -457,6 +457,7 @@ export const Forum = () => {
                                                 <div className="flex-1 relative flex items-center">
                                                     <input 
                                                         id={`comment-input-${post.id}`}
+                                                        dir="rtl"
                                                         type="text"
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev: Record<string, string>) => ({ ...prev, [post.id]: e.target.value }))}
@@ -469,7 +470,7 @@ export const Forum = () => {
                                                         disabled={!(commentTexts[post.id] || '').trim()}
                                                         className="absolute left-1.5 top-1/2 -translate-y-1/2 p-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-full transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm"
                                                     >
-                                                        <Send size={14} className="rotate-180" />
+                                                        <Send size={14} className="-rotate-45" />
                                                     </button>
                                                 </div>
                                             </div>
