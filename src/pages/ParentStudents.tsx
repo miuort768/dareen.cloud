@@ -237,117 +237,110 @@ export const ParentStudents = () => {
 
             {/* Session Dates Modal - Modern Drill Down View */}
             {viewingStudent && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 md:animate-in md:fade-in md:duration-300">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 md:animate-in md:fade-in md:duration-300">
                     <div
                         className="absolute inset-0 bg-slate-950/40 backdrop-blur-md"
                         onClick={() => setViewingStudent(null)}
                     />
-                    <div className="relative w-full max-w-2xl bg-[#f8faff] dark:bg-slate-950 shadow-2xl rounded-[32px] overflow-hidden border border-white dark:border-slate-800 flex flex-col max-h-[90vh] md:animate-in md:slide-in-from-bottom-8">
-                        {/* Modal Header - Dashboard Style */}
-                        <div className="p-6 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
-                            <div className="relative z-10 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
-                                    <Calendar size={24} className="text-white" />
+                    <div className="relative w-full max-w-lg bg-[#f8faff] dark:bg-slate-950 shadow-2xl rounded-3xl overflow-hidden border border-white dark:border-slate-800 flex flex-col max-h-[80vh] md:animate-in md:slide-in-from-bottom-8">
+                        {/* Modal Header - Compact Dashboard Style */}
+                        <div className="p-4 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl" />
+                            <div className="relative z-10 flex items-center gap-3">
+                                <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
+                                    <Calendar size={20} className="text-white" />
                                 </div>
                                 <div className="text-right">
-                                    <h2 className="text-lg font-black leading-tight tracking-tight">{viewingStudent.name}</h2>
-                                    <p className="text-[10px] text-indigo-100 font-bold mt-0.5 uppercase tracking-widest opacity-80">
+                                    <h2 className="text-base font-black leading-tight tracking-tight">{viewingStudent.name}</h2>
+                                    <p className="text-[9px] text-indigo-100 font-bold mt-0.5 uppercase tracking-widest opacity-80">
                                         {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل مواعيد الحصص'}
                                     </p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setViewingStudent(null)}
-                                className="relative z-10 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+                                className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
                             >
-                                <X size={16} />
+                                <X size={14} />
                             </button>
                         </div>
 
-                        {/* Modal Content */}
-                        <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-6">
+                        {/* Modal Content - Smaller Elements */}
+                        <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
                             {!viewingSubject ? (
-                                /* Step 1: Subject Selection - Dashboard Style Cards */
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 gap-3">
                                     {(viewingStudent.enrollments || []).map((en: any, idx: number) => (
                                         <button
                                             key={idx}
                                             onClick={() => setViewingSubject(en)}
-                                            className="p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-md transition-all text-right group flex items-center justify-between"
+                                            className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-md transition-all text-right group flex items-center justify-between"
                                         >
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                                                    <BookOpen size={18} />
+                                                <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 rounded-xl flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                                    <BookOpen size={16} />
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-black text-slate-900 dark:text-white text-sm mb-0.5">{en.subject}</h4>
-                                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-tight">المعلمة: {en.teacher}</p>
+                                                    <h4 className="font-black text-slate-900 dark:text-white text-xs mb-0.5">{en.subject}</h4>
+                                                    <p className="text-[8px] text-slate-400 font-bold uppercase tracking-tight">المعلمة: {en.teacher}</p>
                                                 </div>
                                             </div>
-                                            <ChevronLeft size={18} className="text-slate-300 group-hover:text-indigo-600 transform group-hover:-translate-x-1 transition-all" />
+                                            <ChevronLeft size={16} className="text-slate-300 group-hover:text-indigo-600 transform group-hover:-translate-x-1 transition-all" />
                                         </button>
                                     ))}
-                                    {(viewingStudent.enrollments || []).length === 0 && (
-                                        <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 rounded-[32px] border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
-                                            <p className="text-slate-400 font-bold text-xs">لا توجد مواد مسجلة حالياً</p>
-                                        </div>
-                                    )}
                                 </div>
                             ) : (
-                                /* Step 2: Date Timeline - Refined Dashboard Look */
-                                <div className="space-y-6">
+                                <div className="space-y-4">
                                     <button
                                         onClick={() => setViewingSubject(null)}
-                                        className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-full text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-all shadow-sm"
+                                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-full text-[8px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-all shadow-sm"
                                     >
-                                        <ChevronRight size={14} />
-                                        العودة لقائمة المواد
+                                        <ChevronRight size={12} />
+                                        العودة للمواد
                                     </button>
 
                                     {isSessionsLoading ? (
-                                        <div className="space-y-4">
-                                            {[...Array(3)].map((_, i) => <div key={i} className="h-20 bg-white dark:bg-slate-900 border border-slate-50 dark:border-slate-800 rounded-3xl animate-pulse" />)}
+                                        <div className="space-y-3">
+                                            {[...Array(3)].map((_, i) => <div key={i} className="h-16 bg-white dark:bg-slate-900 border border-slate-50 dark:border-slate-800 rounded-2xl animate-pulse" />)}
                                         </div>
                                     ) : (
-                                        <div className="relative border-r-2 border-indigo-500/10 pr-6 mr-3 space-y-6">
+                                        <div className="relative border-r-2 border-indigo-500/10 pr-5 mr-2 space-y-4">
                                             {childSessions
                                                 .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .map((session, sIdx) => (
                                                     <div key={sIdx} className="relative">
                                                         <div className={cn(
-                                                            "absolute -right-[33px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-slate-950 border-4",
-                                                            session.status === 'completed' ? "border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" : "border-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]"
+                                                            "absolute -right-[27px] top-1 w-3 h-3 rounded-full bg-white dark:bg-slate-950 border-[3px]",
+                                                            session.status === 'completed' ? "border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.2)]" : "border-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.2)]"
                                                         )}></div>
-                                                        <div className="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
-                                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                                                                <div className="flex items-center gap-3">
+                                                        <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
+                                                            <div className="flex items-center justify-between gap-2">
+                                                                <div className="flex items-center gap-2">
                                                                     <div className={cn(
-                                                                        "w-8 h-8 rounded-xl flex items-center justify-center",
+                                                                        "w-7 h-7 rounded-lg flex items-center justify-center",
                                                                         session.status === 'completed' ? "bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500" : "bg-rose-50 dark:bg-rose-900/10 text-rose-500"
                                                                     )}>
-                                                                        <Calendar size={14} />
+                                                                        <Calendar size={12} />
                                                                     </div>
                                                                     <div>
-                                                                        <p className="text-sm font-black text-slate-900 dark:text-white">
-                                                                            {format(new Date(session.date), 'eeee, d MMMM yyyy', { locale: ar })}
+                                                                        <p className="text-xs font-black text-slate-900 dark:text-white">
+                                                                            {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
                                                                         </p>
-                                                                        <p className="text-[10px] font-bold text-slate-400">{session.time} م</p>
+                                                                        <p className="text-[9px] font-bold text-slate-400">{session.time} م</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className={cn(
-                                                                    "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest self-start md:self-center",
+                                                                    "px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest",
                                                                     session.status === 'completed' ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
                                                                 )}>
                                                                     {session.status === 'completed' ? 'حضر' : 'غائب'}
                                                                 </div>
                                                             </div>
                                                             {session.notes && (
-                                                                <div className="mt-3 pt-3 border-t border-slate-50 dark:border-slate-800">
-                                                                    <div className="flex gap-2">
-                                                                        <div className="w-1 bg-indigo-500 rounded-full shrink-0" />
-                                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold italic leading-relaxed">
+                                                                <div className="mt-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                                                                    <div className="flex gap-1.5">
+                                                                        <div className="w-0.5 bg-indigo-500 rounded-full shrink-0" />
+                                                                        <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold italic leading-relaxed">
                                                                             {session.notes}
                                                                         </p>
                                                                     </div>
@@ -356,25 +349,19 @@ export const ParentStudents = () => {
                                                         </div>
                                                     </div>
                                                 ))}
-                                            {childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled')).length === 0 && (
-                                                <div className="py-20 text-center bg-white dark:bg-slate-900 rounded-[32px] border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
-                                                    <AlertCircle size={32} className="mx-auto text-slate-200 dark:text-slate-700 mb-4" />
-                                                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">لا توجد حصص مسجلة لهذه المادة بعد</p>
-                                                </div>
-                                            )}
                                         </div>
                                     )}
                                 </div>
                             )}
                         </div>
 
-                        {/* Modal Footer */}
-                        <div className="p-6 border-t border-slate-50 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-end shrink-0">
+                        {/* Modal Footer - Compact */}
+                        <div className="p-4 border-t border-slate-50 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-end shrink-0">
                             <button
                                 onClick={() => setViewingStudent(null)}
-                                className="px-8 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-slate-200 dark:shadow-none"
+                                className="px-6 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-md"
                             >
-                                إغلاق النافذة
+                                إغلاق
                             </button>
                         </div>
                     </div>
