@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useChat } from '../../../hooks/useChat';
+import { useChat, useMessages } from '../../../hooks/useChat';
 import { MessageSquare, User, Clock, Send, ChevronLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
@@ -10,7 +10,7 @@ interface GuestChatManagerProps {
 }
 
 export const GuestChatManager = ({ adminId }: GuestChatManagerProps) => {
-    const { conversations, useMessages, sendMessage, isSending } = useChat(adminId);
+    const { conversations, sendMessage, isSending } = useChat(adminId);
     const [selectedConvId, setSelectedConvId] = useState<string | null>(null);
     const [replyText, setReplyText] = useState('');
 
@@ -118,7 +118,7 @@ export const GuestChatManager = ({ adminId }: GuestChatManagerProps) => {
                         </div>
 
                         <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/30 dark:bg-slate-900/30">
-                            {messages.map((msg, idx) => {
+                            {messages.map((msg: any, idx: number) => {
                                 const isMe = msg.senderId === adminId;
                                 return (
                                     <div key={msg.id || idx} className={cn(
@@ -134,7 +134,9 @@ export const GuestChatManager = ({ adminId }: GuestChatManagerProps) => {
                                             {msg.content}
                                         </div>
                                         <span className="text-[8px] mt-2 opacity-40 font-bold uppercase tracking-wider px-1">
-                                            {format(new Date(msg.timestamp), 'HH:mm', { locale: ar })}
+                                            {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime())
+                                                ? format(new Date(msg.timestamp), 'HH:mm', { locale: ar })
+                                                : '--:--'}
                                         </span>
                                     </div>
                                 );
