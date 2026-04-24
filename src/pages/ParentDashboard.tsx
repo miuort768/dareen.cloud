@@ -6,11 +6,9 @@ import {
     CalendarDays,
     Star,
     Award,
-    Trophy,
     User,
     LogOut,
     MessageSquare,
-    ChevronLeft,
     BookOpen,
     LayoutDashboard,
     Clock
