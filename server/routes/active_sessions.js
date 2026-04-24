@@ -5,13 +5,11 @@ router.get('/my', async (req, res) => {
     try {
         let activeSessions = [];
         if (req.user.role === 'parent') {
-            const parent = await req.db.get('SELECT * FROM parents WHERE id = ?', req.user.id);
-            if (parent && parent.children) {
-                const children = JSON.parse(parent.children);
-                if (children.length > 0) {
-                    const placeholders = children.map(() => '?').join(',');
-                    activeSessions = await req.db.all(`SELECT * FROM active_sessions WHERE studentId IN (${placeholders})`, children);
-                }
+            const children = await req.db.all('SELECT id FROM students WHERE parentId = ?', req.user.id);
+            if (children.length > 0) {
+                const childIds = children.map(c => c.id);
+                const placeholders = childIds.map(() => '?').join(',');
+                activeSessions = await req.db.all(`SELECT * FROM active_sessions WHERE studentId IN (${placeholders})`, childIds);
             }
         } else if (req.user.role === 'student') {
             activeSessions = await req.db.all(`SELECT * FROM active_sessions WHERE studentId = ?`, req.user.id);
