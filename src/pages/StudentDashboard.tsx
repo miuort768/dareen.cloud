@@ -295,7 +295,6 @@ export const StudentDashboard = () => {
                         className="h-full bg-[#8b5cf6]"
                     />
                 </div>
-                </div>
             </div>
 
             {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
