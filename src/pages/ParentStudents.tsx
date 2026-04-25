@@ -75,6 +75,11 @@ export const ParentStudents = () => {
     };
 
     const handleViewAchievements = async (student: any) => {
+        if (viewingAchievements?.id === student.id) {
+            setViewingAchievements(null);
+            return;
+        }
+        
         setViewingAchievements(student);
         try {
             const logs = await api.get<any[]>(`/student-portal/me/points-log?studentId=${student.id}`);
