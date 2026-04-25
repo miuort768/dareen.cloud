@@ -32,6 +32,7 @@ export const ParentStudents = () => {
     const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<any | null>(null);
     const [viewingAchievements, setViewingAchievements] = useState<any | null>(null);
     const [viewingSubject, setViewingSubject] = useState<any | null>(null);
+    const [sessionsPage, setSessionsPage] = useState(1);
     const [childSessions, setChildSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
@@ -66,6 +67,7 @@ export const ParentStudents = () => {
     const handleViewDates = (student: any) => {
         setViewingStudent(student);
         setViewingSubject(null);
+        setSessionsPage(1);
         fetchChildSessions(student.id);
     };
 
@@ -331,13 +333,47 @@ export const ParentStudents = () => {
                                 </div>
                             ) : (
                                 <div className="space-y-4">
-                                    <button
-                                        onClick={() => setViewingSubject(null)}
-                                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-full text-[8px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-all shadow-sm"
-                                    >
-                                        <ChevronRight size={12} />
-                                        العودة للمواد
-                                    </button>
+                                    <div className="flex items-center justify-between gap-2">
+                                        <button
+                                            onClick={() => {
+                                                setViewingSubject(null);
+                                                setSessionsPage(1);
+                                            }}
+                                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-full text-[8px] font-black text-indigo-600 uppercase tracking-widest hover:bg-indigo-50 dark:hover:bg-indigo-950/20 transition-all shadow-sm"
+                                        >
+                                            <ChevronRight size={12} />
+                                            العودة للمواد
+                                        </button>
+
+                                        {/* Pagination Controls */}
+                                        {(() => {
+                                            const filtered = childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'));
+                                            const totalPages = Math.ceil(filtered.length / 7);
+                                            if (totalPages <= 1) return null;
+                                            
+                                            return (
+                                                <div className="flex items-center gap-2">
+                                                    <button 
+                                                        disabled={sessionsPage === 1}
+                                                        onClick={() => setSessionsPage(p => Math.max(1, p - 1))}
+                                                        className="w-6 h-6 flex items-center justify-center rounded-lg border border-slate-100 dark:border-slate-800 disabled:opacity-30 text-slate-400"
+                                                    >
+                                                        <ChevronRight size={14} />
+                                                    </button>
+                                                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
+                                                        {sessionsPage} / {totalPages}
+                                                    </span>
+                                                    <button 
+                                                        disabled={sessionsPage === totalPages}
+                                                        onClick={() => setSessionsPage(p => Math.min(totalPages, p + 1))}
+                                                        className="w-6 h-6 flex items-center justify-center rounded-lg border border-slate-100 dark:border-slate-800 disabled:opacity-30 text-slate-400"
+                                                    >
+                                                        <ChevronLeft size={14} />
+                                                    </button>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
 
                                     {isSessionsLoading ? (
                                         <div className="space-y-3">
@@ -345,44 +381,49 @@ export const ParentStudents = () => {
                                         </div>
                                     ) : (
                                         <div className="relative border-r-2 border-indigo-500/10 pr-5 mr-2 space-y-4">
-                                            {childSessions
-                                                .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
-                                                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                                                .map((session, sIdx) => (
-                                                    <div key={sIdx} className="relative">
-                                                        <div className={cn(
-                                                            "absolute -right-[27px] top-1 w-3 h-3 rounded-full bg-white dark:bg-slate-950 border-[3px]",
-                                                            session.status === 'completed' ? "border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.2)]" : "border-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.2)]"
-                                                        )}></div>
-                                                        <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
-                                                            <div className="flex items-center justify-between gap-2">
-                                                                <div className="flex items-center gap-2">
-                                                                    <div>
-                                                                        <p className="text-xs font-black text-slate-900 dark:text-white">
-                                                                            {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
-                                                                        </p>
+                                            {(() => {
+                                                const filtered = childSessions
+                                                    .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
+                                                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                                                
+                                                return filtered
+                                                    .slice((sessionsPage - 1) * 7, sessionsPage * 7)
+                                                    .map((session, sIdx) => (
+                                                        <div key={sIdx} className="relative">
+                                                            <div className={cn(
+                                                                "absolute -right-[27px] top-1 w-3 h-3 rounded-full bg-white dark:bg-slate-950 border-[3px]",
+                                                                session.status === 'completed' ? "border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.2)]" : "border-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.2)]"
+                                                            )}></div>
+                                                            <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
+                                                                <div className="flex items-center justify-between gap-2">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div>
+                                                                            <p className="text-xs font-black text-slate-900 dark:text-white">
+                                                                                {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className={cn(
+                                                                        "px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest",
+                                                                        session.status === 'completed' ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
+                                                                    )}>
+                                                                        {session.status === 'completed' ? 'حضر' : 'غائب'}
                                                                     </div>
                                                                 </div>
-                                                                <div className={cn(
-                                                                    "px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest",
-                                                                    session.status === 'completed' ? "bg-emerald-500 text-white" : "bg-rose-500 text-white"
-                                                                )}>
-                                                                    {session.status === 'completed' ? 'حضر' : 'غائب'}
-                                                                </div>
+                                                                {session.notes && (
+                                                                    <div className="mt-2 pt-2 border-t border-slate-50 dark:border-slate-800">
+                                                                        <div className="flex gap-1.5">
+                                                                            <div className="w-0.5 bg-indigo-500 rounded-full shrink-0" />
+                                                                            <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold italic leading-relaxed">
+                                                                                {session.notes}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
                                                             </div>
-                                                            {session.notes && (
-                                                                <div className="mt-2 pt-2 border-t border-slate-50 dark:border-slate-800">
-                                                                    <div className="flex gap-1.5">
-                                                                        <div className="w-0.5 bg-indigo-500 rounded-full shrink-0" />
-                                                                        <p className="text-[9px] text-slate-500 dark:text-slate-400 font-bold italic leading-relaxed">
-                                                                            {session.notes}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            )}
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    ));
+                                            })()}
                                         </div>
                                     )}
                                 </div>
