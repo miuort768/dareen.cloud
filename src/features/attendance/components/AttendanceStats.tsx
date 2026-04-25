@@ -1,7 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, TrendingUp, CheckCircle2, XCircle, Activity } from 'lucide-react';
 import type { AttendanceStats as IStats, TeacherStats as ITeacherStats } from '../types';
-import { cn } from '../../../lib/utils';
 
 interface AttendanceStatsProps {
     stats: IStats;
