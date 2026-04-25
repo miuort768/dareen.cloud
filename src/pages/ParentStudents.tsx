@@ -352,17 +352,10 @@ export const ParentStudents = () => {
                                                         <div className="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-indigo-400 dark:hover:border-indigo-600 transition-all shadow-sm">
                                                             <div className="flex items-center justify-between gap-2">
                                                                 <div className="flex items-center gap-2">
-                                                                    <div className={cn(
-                                                                        "w-7 h-7 rounded-lg flex items-center justify-center",
-                                                                        session.status === 'completed' ? "bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500" : "bg-rose-50 dark:bg-rose-900/10 text-rose-500"
-                                                                    )}>
-                                                                        <Calendar size={12} />
-                                                                    </div>
                                                                     <div>
                                                                         <p className="text-xs font-black text-slate-900 dark:text-white">
                                                                             {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
                                                                         </p>
-                                                                        <p className="text-[9px] font-bold text-slate-400">{session.time} م</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className={cn(
