@@ -65,14 +65,14 @@ export const Header = () => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between transition-all duration-500 z-[9999]",
+            "h-[60px] lg:h-[75px] bg-white/95 dark:bg-rose-600/95 backdrop-blur-2xl border-b border-slate-200 dark:border-rose-500/50 flex items-center justify-between transition-all duration-500 z-[9999]",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl shadow-md lg:shadow-[0_20px_50px_rgba(0,0,0,0.1)] px-4 md:px-8 max-w-full"
         )}>
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 flex items-center justify-center shadow-lg rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transform lg:-rotate-3 overflow-hidden">
+                    <div className="w-10 h-10 flex items-center justify-center shadow-lg rounded-none border border-slate-200 dark:border-white/20 bg-white dark:bg-white transform lg:-rotate-3 overflow-hidden">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
@@ -85,7 +85,7 @@ export const Header = () => {
                         )}>
                             {title}
                         </h1>
-                        <p className="text-[7px] md:text-[10px] font-normal text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-tight mt-0.5 mb-1">
+                        <p className="text-[7px] md:text-[10px] font-normal text-slate-400 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
                             دارين للتعليم والتدريب
                         </p>
                     </div>
@@ -97,7 +97,7 @@ export const Header = () => {
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-11 h-11 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-colors shrink-0"
+                    className="w-11 h-11 flex items-center justify-center text-slate-500 dark:text-white hover:bg-slate-50 dark:hover:bg-white/10 rounded-none transition-colors shrink-0"
                 >
                     {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
@@ -107,8 +107,8 @@ export const Header = () => {
                     <NotificationDropdown />
                 </div>
 
-                <div className="flex items-center pr-3 border-r border-slate-200 dark:border-slate-800 shrink-0">
-                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 rounded-xl shrink-0 border border-slate-200 dark:border-slate-700">
+                <div className="flex items-center pr-3 border-r border-slate-200 dark:border-white/20 shrink-0">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-white/20 flex items-center justify-center text-slate-600 dark:text-white rounded-xl shrink-0 border border-slate-200 dark:border-white/20">
                         <User size={20} />
                     </div>
                 </div>

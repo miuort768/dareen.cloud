@@ -143,11 +143,11 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-11 h-11 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 transition-none dark:hover:bg-gray-800 dark:text-gray-400"
+                className="relative w-11 h-11 flex items-center justify-center rounded-none hover:bg-gray-50 text-gray-500 dark:text-white transition-none dark:hover:bg-white/10"
             >
-                <Bell size={24} className={unreadCount > 0 ? "text-indigo-600" : ""} />
+                <Bell size={24} className={cn(unreadCount > 0 ? "text-indigo-600 dark:text-white" : "")} />
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-gray-900">
+                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-rose-600">
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
