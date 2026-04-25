@@ -191,25 +191,24 @@ export const Sidebar = () => {
                             )}
                             title={collapsed ? item.name : ''}
                         >
-                            <item.icon
-                                size={collapsed ? 18 : 16}
-                                className="shrink-0"
-                                strokeWidth={2}
-                            />
+                            <div className="relative shrink-0">
+                                <item.icon
+                                    size={collapsed ? 20 : 18}
+                                    className="shrink-0"
+                                    strokeWidth={collapsed ? 2.5 : 2}
+                                />
+                                {item.id === 'chat' && totalUnreadCount > 0 && (
+                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[9px] font-black rounded-full animate-pulse shadow-sm border border-white dark:border-slate-950">
+                                        {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
+                                    </span>
+                                )}
+                            </div>
                             <span className={cn(
-                                "whitespace-nowrap transition-all duration-300",
+                                "whitespace-nowrap transition-all duration-300 font-bold",
                                 collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                             )}>
                                 {item.name}
                             </span>
-                            {item.id === 'chat' && totalUnreadCount > 0 && (
-                                <span className={cn(
-                                    "absolute top-1 right-2 w-5 h-5 flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full md:animate-bounce-slow",
-                                    collapsed && "top-1 right-1"
-                                )}>
-                                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                                </span>
-                            )}
                             {collapsed && (
                                 <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-gray-900 text-white text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 dark:bg-gray-800 dark:text-gray-200">
                                     {item.name}
@@ -355,10 +354,15 @@ export const Sidebar = () => {
                                     {({ isActive }) => (
                                         <>
                                             <div className={cn(
-                                                "w-7 h-7 rounded-lg flex items-center justify-center transition-all",
+                                                "w-7 h-7 rounded-lg flex items-center justify-center transition-all relative",
                                                 isActive ? "bg-white text-primary-600 shadow-sm dark:bg-gray-800" : "bg-white/50 text-gray-400 dark:bg-gray-800/50"
                                             )}>
                                                 <item.icon size={14} />
+                                                {item.id === 'chat' && totalUnreadCount > 0 && (
+                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full shadow-sm border border-white dark:border-gray-950">
+                                                        {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
+                                                    </span>
+                                                )}
                                             </div>
                                             <span className="text-[11px] font-bold tracking-tight truncate">{item.name}</span>
                                         </>
