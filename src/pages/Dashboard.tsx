@@ -13,6 +13,7 @@ import { HonorRoll } from '../features/dashboard/components/HonorRoll';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
 import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHub';
 import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
+import { TopAttendanceStudents } from '../features/dashboard/components/TopAttendanceStudents';
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
@@ -86,7 +87,7 @@ export const Dashboard = () => {
                         </div>
 
                         <div className="lg:col-span-4 space-y-6">
-                            <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            <TopAttendanceStudents sessions={rawSessions} />
                         </div>
                     </div>
                 ) : (
