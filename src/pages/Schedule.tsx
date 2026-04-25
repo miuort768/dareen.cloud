@@ -295,7 +295,7 @@ export const Schedule = () => {
                     <select
                         value={filterDay}
                         onChange={e => setFilterDay(e.target.value)}
-                        className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-2 font-black text-[9px] md:text-[10px] outline-none cursor-pointer text-slate-800 dark:text-white min-w-[80px]"
+                        className="hidden md:block bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-2 font-black text-[9px] md:text-[10px] outline-none cursor-pointer text-slate-800 dark:text-white min-w-[80px]"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(d => <option key={d} value={d}>{d}</option>)}
