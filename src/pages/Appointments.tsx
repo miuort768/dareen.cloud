@@ -136,6 +136,9 @@ export const Appointments = () => {
     const uniqueTeachers = Array.from(new Set(allAppointments.map(a => a.teacherName)));
 
     const filteredAppointments = allAppointments.filter(appointment => {
+        const isCompleted = completedSessionIds.includes(appointment.id);
+        if (isCompleted) return false;
+
         const matchesSearch =
             appointment.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             appointment.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -305,53 +308,42 @@ export const Appointments = () => {
 
                             <div className="p-3 flex-1 flex flex-col justify-start min-h-[140px]">
                                 {appointments.length > 0 ? (() => {
-                                    const remainingSessions = appointments.filter(a => !completedSessionIds.includes(a.id));
-                                    if (remainingSessions.length > 0) {
-                                        const nextSession = remainingSessions[0];
-                                        return (
-                                            <div
-                                                key={nextSession.id}
-                                                onClick={() => { setSelectedAppointment(nextSession); setShowDetails(true); }}
-                                                className="flex flex-col gap-2 cursor-pointer group"
+                                    const nextSession = appointments[0];
+                                    return (
+                                        <div
+                                            key={nextSession.id}
+                                            onClick={() => { setSelectedAppointment(nextSession); setShowDetails(true); }}
+                                            className="flex flex-col gap-2 cursor-pointer group"
+                                        >
+                                            {/* Time row */}
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-1.5">
+                                                    <Clock size={12} className="text-indigo-500" />
+                                                    <span className="font-black text-indigo-600 text-sm tabular-nums">{nextSession.time}</span>
+                                                </div>
+                                                <span className="bg-indigo-50 text-indigo-600 text-[8px] font-black px-1.5 py-0.5">التالي</span>
+                                            </div>
+
+                                            {/* Student */}
+                                            <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-2 group-hover:border-indigo-200 transition-colors">
+                                                <div className="flex items-center gap-1.5 mb-1">
+                                                    <User size={11} className="text-slate-400 shrink-0" />
+                                                    <span className="text-xs font-black text-slate-800 dark:text-white truncate">{nextSession.studentName}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5">
+                                                    <ShieldCheck size={10} className="text-emerald-500 shrink-0" />
+                                                    <span className="text-[9px] font-bold text-slate-400 truncate">{nextSession.teacherName}</span>
+                                                </div>
+                                            </div>
+
+                                            <button
+                                                onClick={(e) => handleCompleteSession(nextSession.id, e)}
+                                                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 font-black text-xs transition-all flex items-center justify-center gap-1.5"
                                             >
-                                                {/* Time row */}
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-center gap-1.5">
-                                                        <Clock size={12} className="text-indigo-500" />
-                                                        <span className="font-black text-indigo-600 text-sm tabular-nums">{nextSession.time}</span>
-                                                    </div>
-                                                    <span className="bg-indigo-50 text-indigo-600 text-[8px] font-black px-1.5 py-0.5">التالي</span>
-                                                </div>
-
-                                                {/* Student */}
-                                                <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-2 group-hover:border-indigo-200 transition-colors">
-                                                    <div className="flex items-center gap-1.5 mb-1">
-                                                        <User size={11} className="text-slate-400 shrink-0" />
-                                                        <span className="text-xs font-black text-slate-800 dark:text-white truncate">{nextSession.studentName}</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-1.5">
-                                                        <ShieldCheck size={10} className="text-emerald-500 shrink-0" />
-                                                        <span className="text-[9px] font-bold text-slate-400 truncate">{nextSession.teacherName}</span>
-                                                    </div>
-                                                </div>
-
-                                                <button
-                                                    onClick={(e) => handleCompleteSession(nextSession.id, e)}
-                                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 font-black text-xs transition-all flex items-center justify-center gap-1.5"
-                                                >
-                                                    <CheckCircle2 size={14} /> تأكيد الإنجاز
-                                                </button>
-                                            </div>
-                                        );
-                                    } else {
-                                        return (
-                                            <div className="flex-1 flex flex-col items-center justify-center py-6 text-center bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900">
-                                                <CheckCircle2 size={22} className="text-emerald-500 mb-2" />
-                                                <p className="text-xs font-black text-emerald-700 dark:text-emerald-400">مكتمل</p>
-                                                <p className="text-[8px] text-emerald-500 font-bold uppercase mt-0.5">جميع الجلسات منجزة</p>
-                                            </div>
-                                        );
-                                    }
+                                                <CheckCircle2 size={14} /> تأكيد الإنجاز
+                                            </button>
+                                        </div>
+                                    );
                                 })() : (
                                     <div className="flex-1 flex flex-col items-center justify-center py-6 opacity-30">
                                         <Calendar size={24} className="mb-2" />
