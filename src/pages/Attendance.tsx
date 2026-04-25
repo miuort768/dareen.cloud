@@ -28,13 +28,13 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
 );
 
 const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+    <div className="flex items-center gap-3">
         <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
             <Icon size={16} className="text-[#5c59f2]" />
         </div>
         <div>
-            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
-            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
+            <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">{label}</p>
+            {sub && <p className="text-[10px] text-slate-400 mt-1">{sub}</p>}
         </div>
     </div>
 );
@@ -273,10 +273,10 @@ export const Attendance = () => {
             <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden">
-                            <div className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
+                        <SectionCard className="p-0 overflow-hidden rounded-none">
+                            <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
                                 <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" />
-                                <div className="relative w-full md:w-80">
+                                <div className="relative w-full md:w-[400px]">
                                     <Search size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                     <input
                                         type="text"
