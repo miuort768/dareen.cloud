@@ -296,22 +296,22 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         </h5>
                     </div>
 
-                    <div className="flex gap-1.5">
+                    <div className="grid grid-cols-3 gap-1.5">
                         <input 
                             type="date" 
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="w-[95px] px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
+                            className="w-full px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-2 font-bold text-[9px] rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700"
+                            className="w-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700"
                         >
                             السجل
                         </button>
                         <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="bg-emerald-600 text-white px-4 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all shadow-sm"
+                            className="w-full bg-emerald-600 text-white px-2 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all shadow-sm"
                         >
                             تسجيل
                         </button>
