@@ -22,7 +22,7 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
 
         return Object.values(studentStats)
             .sort((a, b) => b.count - a.count)
-            .slice(0, 6);
+            .slice(0, 5);
     }, [sessions]);
 
     return (

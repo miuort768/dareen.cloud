@@ -309,7 +309,7 @@ export const useDashboardData = (currentUser: User | null) => {
             monthlyData: chartData,
             lowBalanceStudents: lowBalance,
             tasks: (tasksQuery.data as DashboardTask[] || []).filter(t =>
-                ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
+                ['pending', 'قيد الانتظار', 'جديدة', 'new', 'in-progress', 'جاري التنفيذ', 'جاري'].includes(t.status?.toLowerCase())
             ),
             topStudents: isTeacher ? filteredStudents.sort((a, b) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
             focusStudents: focusStudentsList
