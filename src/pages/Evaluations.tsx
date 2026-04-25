@@ -304,21 +304,21 @@ export const Evaluations = () => {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-start md:items-center justify-center p-4 z-50 md:animate-in md:fade-in overflow-y-auto">
-                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full md:max-w-7xl md:mt-24 mb-10 flex flex-col border border-slate-100 dark:border-slate-800">
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 md:animate-in md:fade-in">
+                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
                         {/* Modal Header */}
-                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-rose-500 dark:to-rose-600 text-white">
-                            <h3 className="text-base font-black flex items-center gap-2">
-                                <Award size={18} />
+                        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-rose-500 dark:to-rose-600 text-white">
+                            <h3 className="text-sm font-black flex items-center gap-2">
+                                <Award size={16} />
                                 {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'إضافة تقييم جديد'}
                             </h3>
-                            <button onClick={() => { setIsModalOpen(false); resetForm(); }} className="w-8 h-8 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
-                                <X size={16} />
+                            <button onClick={() => { setIsModalOpen(false); resetForm(); }} className="w-7 h-7 bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
+                                <X size={14} />
                             </button>
                         </div>
                         
-                        <div className="p-3 md:p-6 overflow-y-auto space-y-4 md:space-y-6">
-                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4 md:space-y-6">
+                        <div className="p-4 overflow-y-auto space-y-4">
+                            <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4">
                                 {!formData.studentId && (
                                     <div>
                                         <label className="block text-[9px] md:text-xs font-black text-slate-500 mb-1.5 uppercase tracking-widest">اختر الطالب</label>
@@ -348,7 +348,7 @@ export const Evaluations = () => {
                                                     key={opt.value}
                                                     onClick={() => setFormData({ ...formData, rating: opt.value })}
                                                     className={cn(
-                                                        "p-2 md:p-3 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1 md:gap-2",
+                                                        "p-2 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1",
                                                         isSelected
                                                             ? cn(opt.bg, opt.border, opt.color, "shadow-md scale-105")
                                                             : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-400 hover:border-slate-300"
@@ -371,7 +371,7 @@ export const Evaluations = () => {
                                                     key={p}
                                                     type="button"
                                                     onClick={() => setFormData({...formData, points: p})}
-                                                    className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 px-2 py-0.5 font-black text-[9px] transition-colors"
+                                                    className="bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-200 px-2 py-0.5 font-bold text-[9px] transition-colors"
                                                 >+{p}</button>
                                             ))}
                                         </div>
@@ -386,7 +386,7 @@ export const Evaluations = () => {
                                             onChange={(e) => setFormData({ ...formData, points: Number(e.target.value) })}
                                             placeholder="0"
                                             min="0"
-                                            className="flex-1 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-2.5 font-black text-lg text-amber-600 text-center outline-none focus:ring-2 focus:ring-amber-400/30"
+                                            className="flex-1 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-3 py-2 font-black text-base text-amber-600 text-center outline-none focus:ring-2 focus:ring-amber-400/30"
                                         />
                                     </div>
                                 </div>
@@ -396,8 +396,8 @@ export const Evaluations = () => {
                                     <textarea
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                                        rows={3}
-                                        className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none placeholder:text-slate-300 transition-all"
+                                        rows={2}
+                                        className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 px-3 py-2 text-sm font-bold outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none placeholder:text-slate-300 transition-all"
                                         placeholder="مثال: أداء ممتاز اليوم..."
                                     />
                                 </div>
