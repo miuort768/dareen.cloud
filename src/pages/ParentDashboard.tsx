@@ -160,21 +160,21 @@ export const ParentDashboard = () => {
         <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-4 md:px-8 pt-6 pb-32 space-y-6 animate-in fade-in duration-700" dir="rtl">
             
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="flex justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800">
+            <div className="flex justify-between items-center bg-emerald-500 dark:bg-rose-500 p-4 rounded-3xl shadow-lg border-b-4 border-emerald-600 dark:border-rose-600 transition-colors duration-500">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 dark:shadow-none">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white border border-white/20 shadow-sm">
                         <User size={24} />
                     </div>
                     <div>
-                        <h1 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">
-                            مرحباً، أ/ {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
+                        <h1 className="text-lg md:text-xl font-black text-white leading-tight">
+                            مرحباً... {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                         </h1>
-                        <p className="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                        <p className="text-[10px] md:text-xs font-bold text-white/80">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                     </div>
                 </div>
                 <button 
                     onClick={logout}
-                    className="w-10 h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-xl flex items-center justify-center hover:bg-rose-500 hover:text-white transition-all"
+                    className="w-10 h-10 bg-white/10 text-white rounded-xl flex items-center justify-center hover:bg-white/20 transition-all border border-white/10"
                 >
                     <LogOut size={20} />
                 </button>
