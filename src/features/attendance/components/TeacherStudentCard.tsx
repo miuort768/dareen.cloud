@@ -292,23 +292,26 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 <div className="pt-4 border-t border-slate-50 dark:border-slate-800 space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
                         <h5 className="text-[9px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
-                            <Activity size={12} className="text-emerald-500" /> التحضير
+                            <Activity size={12} className="text-emerald-500" /> التحضير والمتابعة
                         </h5>
-                        <button onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)} className="text-[9px] font-bold text-[#5c59f2] hover:underline">
-                            السجل التاريخي
-                        </button>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5">
                         <input 
                             type="date" 
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="flex-1 px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
+                            className="w-[95px] px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
                         />
                         <button 
+                            onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
+                            className="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-2 font-bold text-[9px] rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700"
+                        >
+                            السجل
+                        </button>
+                        <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="bg-emerald-600 text-white px-4 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all"
+                            className="bg-emerald-600 text-white px-4 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all shadow-sm"
                         >
                             تسجيل
                         </button>
