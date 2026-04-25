@@ -153,7 +153,7 @@ export const Evaluations = () => {
                         {currentUser?.role !== 'parent' && (
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="flex items-center gap-1.5 bg-white text-indigo-700 font-black text-[10px] md:text-xs px-3 md:px-4 py-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all shrink-0 self-stretch"
+                                className="flex items-center gap-1.5 bg-white text-indigo-700 dark:bg-rose-500 dark:text-white font-black text-[10px] md:text-xs px-3 md:px-4 py-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all shrink-0 self-stretch"
                             >
                                 <Plus size={14} strokeWidth={3} />
                                 <span className="hidden sm:inline whitespace-nowrap">تقييم جديد</span>
@@ -265,7 +265,7 @@ export const Evaluations = () => {
                                     <div className="px-4 pb-4 grid grid-cols-2 gap-2">
                                         <button
                                             onClick={() => { setFormData({ ...formData, studentId: student.id }); setIsModalOpen(true); }}
-                                            className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20"
+                                            className="bg-indigo-600 dark:bg-rose-500 hover:bg-indigo-700 dark:hover:bg-rose-600 text-white py-2 text-[10px] font-black transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-500/20"
                                         >
                                             <Plus size={12} strokeWidth={3} /> أضف تقييم
                                         </button>
@@ -303,12 +303,11 @@ export const Evaluations = () => {
                 </div>
             </div>
 
-            {/* ─── Add Evaluation Modal ─── */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 md:animate-in md:fade-in">
-                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full max-w-xl flex flex-col max-h-[90vh] overflow-hidden border border-slate-100 dark:border-slate-800">
+                <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-start md:items-center justify-center p-4 z-50 md:animate-in md:fade-in overflow-y-auto">
+                    <div className="bg-white dark:bg-slate-900 shadow-2xl w-full md:max-w-7xl md:mt-24 mb-10 flex flex-col border border-slate-100 dark:border-slate-800">
                         {/* Modal Header */}
-                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white">
+                        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-rose-500 dark:to-rose-600 text-white">
                             <h3 className="text-base font-black flex items-center gap-2">
                                 <Award size={18} />
                                 {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name}` : 'إضافة تقييم جديد'}
@@ -409,7 +408,7 @@ export const Evaluations = () => {
                             <button type="button" onClick={() => { setIsModalOpen(false); resetForm(); }} className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-black hover:bg-slate-200 transition-all">
                                 إلغاء
                             </button>
-                            <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                            <button type="submit" form="evaluation-form" className="px-6 py-2.5 bg-indigo-600 dark:bg-rose-500 hover:bg-indigo-700 dark:hover:bg-rose-600 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
                                 <CheckCircle2 size={14} /> إرسال التقييم
                             </button>
                         </div>
