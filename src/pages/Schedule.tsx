@@ -503,8 +503,8 @@ export const Schedule = () => {
 
                 {/* ── Details Modal ── */}
                 {showDetails && selectedEvent && (
-                    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
                             {/* Header */}
                             <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between">
                                 <h3 className="text-sm font-black">تفاصيل الحصة</h3>
@@ -564,8 +564,8 @@ export const Schedule = () => {
 
                 {/* ── Add Modal ── */}
                 {showAddModal && (
-                    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowAddModal(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowAddModal(false)}>
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
                             <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between">
                                 <h3 className="text-sm font-black">حجز موعد جديد</h3>
                                 <button onClick={() => setShowAddModal(false)} className="text-white/70 hover:text-white">
@@ -607,8 +607,8 @@ export const Schedule = () => {
 
                 {/* ── Shared Sessions Modal ── */}
                 {showSharedModal && (
-                    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-md shadow-xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
+                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-md shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
                             <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 text-white px-5 py-4 flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <Users size={18} />
