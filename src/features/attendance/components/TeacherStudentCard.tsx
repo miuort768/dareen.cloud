@@ -305,7 +305,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="w-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700"
+                            className="w-full bg-rose-600 text-white px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-rose-700 transition-all shadow-sm"
                         >
                             السجل
                         </button>
