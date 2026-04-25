@@ -15,7 +15,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-[32px] h-full flex flex-col overflow-hidden animate-in fade-in duration-700">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm rounded-xl h-full flex flex-col overflow-hidden animate-in fade-in duration-700">
             <div className="p-5 md:p-8 flex flex-col h-full">
                 {/* Header Row */}
                 <div className="flex items-center justify-between mb-6 md:mb-8">

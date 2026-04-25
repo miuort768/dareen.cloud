@@ -26,7 +26,7 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
     }, [sessions]);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-[32px] shadow-xl shadow-slate-200/50 dark:shadow-none flex flex-col h-full overflow-hidden animate-in fade-in duration-700" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-xl shadow-sm flex flex-col h-full overflow-hidden animate-in fade-in duration-700" dir="rtl">
             {/* Header Section */}
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
