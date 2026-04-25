@@ -135,7 +135,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-md">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-md">
             {/* Header Accent */}
             <div className={cn(
                 "h-1.5 w-full bg-slate-100 dark:bg-slate-800 transition-all",
