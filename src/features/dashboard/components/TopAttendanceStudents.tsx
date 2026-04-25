@@ -9,9 +9,14 @@ interface TopAttendanceStudentsProps {
 export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) => {
     const topPresentStudents = useMemo(() => {
         const studentStats: Record<string, { name: string; count: number }> = {};
+        const now = new Date();
+        const currentMonth = now.toISOString().slice(0, 7); // YYYY-MM
         
         sessions.forEach(s => {
-            if (['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase())) {
+            const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase());
+            const isThisMonth = s.date?.startsWith(currentMonth);
+
+            if (isCompleted && isThisMonth) {
                 const id = s.studentId || s.studentName;
                 if (!studentStats[id]) {
                     studentStats[id] = { name: s.studentName, count: 0 };
@@ -25,6 +30,14 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
             .slice(0, 5);
     }, [sessions]);
 
+    const totalMonthSessions = useMemo(() => {
+        const currentMonth = new Date().toISOString().slice(0, 7);
+        return sessions.filter(s => 
+            ['completed', 'مكتملة', 'تمت'].includes(s.status?.toLowerCase()) && 
+            s.date?.startsWith(currentMonth)
+        ).length;
+    }, [sessions]);
+
     return (
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-xl shadow-sm flex flex-col h-full overflow-hidden animate-in fade-in duration-700" dir="rtl">
             {/* Header Section */}
@@ -35,7 +48,10 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
                     </div>
                     <div>
                         <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">الأكثر حضوراً</h3>
-                        <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 mt-1 uppercase tracking-widest italic">Hall of Commitment</p>
+                        <p className="text-[10px] font-black text-amber-500 mt-1 uppercase tracking-widest italic flex items-center gap-1.5">
+                            <span className="w-1 h-1 bg-amber-500 rounded-full animate-pulse" />
+                            إحصائيات الشهر الجاري
+                        </p>
                     </div>
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400">
@@ -91,8 +107,8 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
             <div className="mt-6 pt-6 border-t border-slate-50 dark:border-slate-800">
                 <div className="bg-indigo-600 rounded-2xl p-4 text-white flex items-center justify-between">
                     <div>
-                        <h4 className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">إجمالي الحصص</h4>
-                        <p className="text-lg font-black leading-none">{sessions.filter(s => s.status === 'completed').length}</p>
+                        <h4 className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">حصص الشهر الجاري</h4>
+                        <p className="text-lg font-black leading-none">{totalMonthSessions}</p>
                     </div>
                     <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                         <TrendingUp size={20} />
