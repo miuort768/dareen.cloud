@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ListTodo, ChevronLeft, Clock, AlertCircle } from 'lucide-react';
+import { ListTodo, ChevronLeft, Clock } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardTask as Task } from '../types';
 
