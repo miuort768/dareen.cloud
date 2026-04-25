@@ -388,7 +388,6 @@ export const ParentStudents = () => {
                                 </div>
                             )}
                         </div>
-                        </div>
                     </div>
                 </div>
             )}
