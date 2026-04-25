@@ -258,7 +258,7 @@ export const ParentStudents = () => {
                                         />
                                         <button 
                                             onClick={() => setViewingAchievements(null)}
-                                            className="w-full py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[8px] font-black text-slate-400 uppercase tracking-widest rounded-lg hover:text-rose-500 transition-colors mt-2"
+                                            className="w-full py-2 bg-rose-500 hover:bg-rose-600 text-white text-[8px] font-black uppercase tracking-widest rounded-lg shadow-lg shadow-rose-500/20 transition-all mt-2 active:scale-95"
                                         >
                                             إغلاق السجل
                                         </button>
