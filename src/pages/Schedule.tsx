@@ -230,13 +230,13 @@ export const Schedule = () => {
             <div className="space-y-4 md:pb-6 md:animate-in md:fade-in md:duration-500">
 
                 {/* ── Gradient Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30 print:hidden">
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                     <div className="relative flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-none">
-                            <img src="/logo.png" alt="Logo" className="w-7 h-7 object-contain" />
-                        </div>
+                            <div className="w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-none">
+                                <img src="/logo.png" alt="Logo" className="w-7 h-7 object-contain" />
+                            </div>
                             <div>
                                 <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">
                                     {isTeacher ? `جدول أ. ${currentUser?.name.split(' ')[0]}` : 'الجدول الأسبوعي'}
@@ -246,15 +246,21 @@ export const Schedule = () => {
                         </div>
                         <button
                             onClick={() => window.print()}
-                            className="hidden md:flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider transition-all border border-white/20"
+                            className="hidden md:flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider transition-all border border-white/20 print:hidden"
                         >
-                            <Printer size={14} /> طباعة
+                            <Printer size={14} /> طباعة الجدول
                         </button>
                     </div>
                 </div>
 
+                {/* Print-only Header */}
+                <div className="hidden print:block text-center mb-8 border-b-2 border-slate-950 pb-4" dir="rtl">
+                    <h1 className="text-3xl font-black text-slate-950">الجدول الدراسي الأسبوعي</h1>
+                    <p className="text-sm font-bold text-slate-600 mt-2">أكاديمية دارين — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                </div>
+
                 {/* ── Stats Row ── */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-0 md:px-0">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-0 md:px-0 print:hidden">
                     {[
                         { label: 'إجمالي الحصص', val: allEvents.length, icon: LayoutGrid, color: 'text-indigo-600 bg-indigo-50' },
                         { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'text-emerald-600 bg-emerald-50' },
@@ -275,7 +281,7 @@ export const Schedule = () => {
                 </div>
 
                 {/* ── Filter Bar ── */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2 md:p-3 flex items-center gap-2 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2 md:p-3 flex items-center gap-2 shadow-sm print:hidden">
                     <div className="flex-1 relative">
                         <Search className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400" size={13} />
                         <input
@@ -289,7 +295,7 @@ export const Schedule = () => {
                     <select
                         value={filterDay}
                         onChange={e => setFilterDay(e.target.value)}
-                        className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-2 font-black text-[10px] md:text-xs outline-none cursor-pointer text-slate-800 dark:text-white min-w-[90px]"
+                        className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-2 font-black text-[9px] md:text-[10px] outline-none cursor-pointer text-slate-800 dark:text-white min-w-[80px]"
                     >
                         <option value="all">كل الأيام</option>
                         {DAYS_OF_WEEK.map(d => <option key={d} value={d}>{d}</option>)}
@@ -309,17 +315,17 @@ export const Schedule = () => {
                 <div className="hidden md:block overflow-x-auto border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <table className="w-full border-collapse table-fixed min-w-[900px]">
                         <thead>
-                            <tr className="bg-slate-900 dark:bg-slate-950 text-white">
-                                <th className="p-2.5 border-l border-slate-700 text-[9px] font-black uppercase tracking-widest w-16 text-center">الوقت</th>
+                            <tr className="bg-slate-900 dark:bg-slate-950 print:bg-slate-100 text-white print:text-black">
+                                <th className="p-2.5 border-l border-slate-700 print:border-slate-300 text-[9px] font-black uppercase tracking-widest w-16 text-center">الوقت</th>
                                 {DAYS_OF_WEEK.map(day => {
                                     const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
                                     return (
                                         <th key={day} className={cn(
-                                            "p-2.5 border-l border-slate-700 text-[10px] font-black",
-                                            isToday && "text-indigo-300"
+                                            "p-2.5 border-l border-slate-700 print:border-slate-300 text-[10px] font-black",
+                                            isToday && "text-indigo-300 print:text-indigo-600"
                                         )}>
                                             {day}
-                                            {isToday && <span className="inline-block w-1.5 h-1.5 bg-indigo-400 rounded-full mr-1 animate-pulse" />}
+                                            {isToday && <span className="inline-block w-1.5 h-1.5 bg-indigo-400 rounded-full mr-1 animate-pulse print:hidden" />}
                                         </th>
                                     );
                                 })}
