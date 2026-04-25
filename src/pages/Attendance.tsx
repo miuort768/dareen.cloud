@@ -201,7 +201,29 @@ export const Attendance = () => {
                 <div className="px-4 md:px-6 mb-2">
                     <PrimaryBtn
                         onClick={async () => {
-                            if (!window.confirm(`هل أنت متأكد من تحضير جميع الطلاب (${matchedEnrollments.length}) كحضور؟`)) return;
+                            const selectedDayName = new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' });
+                            
+                            // Filter only those who have a session today AND haven't been marked yet
+                            const todayStudents = (matchedEnrollments || []).filter(({ student, enrollment }) => {
+                                // 1. Must have this day in their schedule
+                                const isScheduledToday = enrollment.schedule?.some(slot => slot.day === selectedDayName);
+                                
+                                // 2. Must not have a session already logged for this date and subject
+                                const alreadyLogged = allSessions.some(s => 
+                                    s.studentId === student.id && 
+                                    s.subject === enrollment.subject && 
+                                    s.date === logDate
+                                );
+
+                                return isScheduledToday && !alreadyLogged;
+                            });
+
+                            if (todayStudents.length === 0) {
+                                showNotification('لا يوجد طلاب غير محضرين لهذا اليوم', 'info');
+                                return;
+                            }
+
+                            if (!window.confirm(`هل أنت متأكد من تحضير (${todayStudents.length}) طلاب كحضور لليوم؟`)) return;
                             
                             const now = new Date();
                             const currentTime = now.toLocaleTimeString('ar-EG', {
@@ -212,7 +234,7 @@ export const Attendance = () => {
                             });
 
                             let successCount = 0;
-                            for (const { student, enrollment } of (matchedEnrollments || [])) {
+                            for (const { student, enrollment } of todayStudents) {
                                 const success = await logAttendance({
                                     studentId: student.id,
                                     studentName: student.name,
@@ -222,7 +244,7 @@ export const Attendance = () => {
                                     date: logDate,
                                     time: currentTime,
                                     status: 'completed',
-                                    day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
+                                    day: selectedDayName,
                                     price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
                                 });
                                 if (success) successCount++;
@@ -231,7 +253,7 @@ export const Attendance = () => {
                         }}
                         className="w-full bg-emerald-600 hover:bg-emerald-700 py-3.5"
                     >
-                        تحضير جماعي وسريع لكافة القوائم <Users size={16} />
+                        تحضير جماعي وسريع لطلاب اليوم <Users size={16} />
                     </PrimaryBtn>
                 </div>
             )}
