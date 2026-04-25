@@ -20,6 +20,7 @@ import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { api } from '../lib/api';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PageLoader } from '../components/ui/PageLoader';
 export const ParentStudents = () => {
     const [students, setStudents] = useState<any[]>([]);
