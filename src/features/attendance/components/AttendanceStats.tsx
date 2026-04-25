@@ -9,14 +9,16 @@ interface AttendanceStatsProps {
     isTeacher: boolean;
 }
 
-const StatItem = ({ title, value, icon: Icon, color, subValue, subLabel, bg }: { title: string, value: number, icon: any, color: string, subValue?: string | number, subLabel?: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm flex flex-col items-center text-center">
-        <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
-            <Icon size={16} className={color} />
+const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value: number, icon: any, subLabel?: string }) => (
+    <div className="bg-blue-600 dark:bg-rose-600 p-4 rounded-none flex flex-col items-center text-center transition-colors duration-500">
+        <div className="w-10 h-10 rounded-none flex items-center justify-center mb-2 bg-white/20 border border-white/20">
+            <Icon size={18} className="text-white" />
         </div>
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{title}</p>
-        <p className="text-sm font-black text-slate-800 dark:text-white mt-0.5">{value} {subLabel && <span className="text-[10px] font-bold text-slate-400">{subLabel}</span>}</p>
-        {subValue && <p className="text-[9px] text-slate-400 mt-0.5">{subValue}</p>}
+        <p className="text-[9px] font-black text-white/70 uppercase tracking-widest">{title}</p>
+        <p className="text-xl font-black text-white mt-1 leading-none">
+            {value} 
+            {subLabel && <span className="text-[10px] font-bold text-white/60 mr-1">{subLabel}</span>}
+        </p>
     </div>
 );
 
@@ -28,32 +30,22 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
                     title="الحصص المتوقعة" 
                     value={teacherStats.expected} 
                     icon={Calendar} 
-                    color="text-[#5c59f2]" 
-                    bg="bg-[#eef2ff] dark:bg-indigo-900/30"
-                    subValue="اليوم"
                 />
                 <StatItem 
                     title="الحصص المنعقدة" 
                     value={teacherStats.used} 
                     icon={CheckCircle2} 
-                    color="text-emerald-500" 
-                    bg="bg-emerald-50 dark:bg-emerald-900/20"
-                    subValue={`${teacherStats.rate}% تم التوثيق`}
                 />
                 <StatItem 
                     title="نسبة الإنجاز" 
                     value={teacherStats.rate} 
                     icon={TrendingUp} 
-                    color="text-amber-500" 
-                    bg="bg-amber-50 dark:bg-amber-900/20"
                     subLabel="%"
                 />
                 <StatItem 
                     title="الحصص المتبقية" 
                     value={teacherStats.remaining} 
                     icon={Clock} 
-                    color="text-rose-500" 
-                    bg="bg-rose-50 dark:bg-rose-900/20"
                     subLabel="حصة"
                 />
             </div>
@@ -66,33 +58,21 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
                 title="مجدولة (اليوم)" 
                 value={stats.todayScheduled} 
                 icon={Calendar} 
-                color="text-[#5c59f2]" 
-                bg="bg-[#eef2ff] dark:bg-indigo-900/30"
-                subValue={`إجمالي: ${stats.todayTotal}`}
             />
             <StatItem 
                 title="حضور (اليوم)" 
                 value={stats.todayCompleted} 
                 icon={CheckCircle2} 
-                color="text-emerald-500" 
-                bg="bg-emerald-50 dark:bg-emerald-900/20"
-                subValue={stats.todayTotal > 0 ? Math.round((stats.todayCompleted / stats.todayTotal) * 100) + '%' : '0%'}
             />
             <StatItem 
                 title="غياب (اليوم)" 
                 value={stats.todayCancelled} 
                 icon={XCircle} 
-                color="text-rose-500" 
-                bg="bg-rose-50 dark:bg-rose-900/20"
-                subValue={stats.todayTotal > 0 ? Math.round((stats.todayCancelled / stats.todayTotal) * 100) + '%' : '0%'}
             />
             <StatItem 
                 title="إجمالي المنفذة" 
                 value={stats.totalCompleted} 
                 icon={Activity} 
-                color="text-blue-500" 
-                bg="bg-blue-50 dark:bg-blue-900/20"
-                subValue="أرشيف الحصص"
             />
         </div>
     );
