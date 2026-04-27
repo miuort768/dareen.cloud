@@ -182,7 +182,15 @@ export const MonthlyClosing: React.FC = () => {
     } = useApp();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
-    const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
+    const [startDate, setStartDate] = useState(() => {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
+    });
+    const [endDate, setEndDate] = useState(() => {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
+    });
+
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
     const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
 
@@ -229,7 +237,7 @@ export const MonthlyClosing: React.FC = () => {
 
     const isLoading = sessionsLoading || teachersLoading || studentsLoading || invoicesLoading;
 
-    const filteredSessions = sessions?.filter(s => s.date.startsWith(selectedMonth)) || [];
+    const filteredSessions = sessions?.filter(s => s.date >= startDate && s.date <= endDate) || [];
 
     // --- 1. Teacher Payroll Logic ---
     const payrollData = teachers?.map(teacher => {
@@ -313,7 +321,7 @@ export const MonthlyClosing: React.FC = () => {
     // --- 5. Summary Stats ---
     const totalProjectedIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
     const totalActualCollections = (studentInvoices || [])
-        .filter((inv: any) => inv.date.startsWith(selectedMonth) && inv.status === 'paid')
+        .filter((inv: any) => inv.date >= startDate && inv.date <= endDate && inv.status === 'paid')
         .reduce((acc: number, curr: any) => acc + curr.amount, 0);
     const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + curr.totalAmount, 0);
     const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
@@ -350,13 +358,22 @@ export const MonthlyClosing: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
-                        <Filter size={14} className="text-slate-400" />
-                        <input 
-                            type="month" 
-                            className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
-                            value={selectedMonth}
-                            onChange={(e) => setSelectedMonth(e.target.value)}
-                        />
+                        <Calendar size={14} className="text-slate-400" />
+                        <div className="flex items-center gap-1">
+                            <input 
+                                type="date" 
+                                className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                            <span className="text-[10px] text-slate-400">إلى</span>
+                            <input 
+                                type="date" 
+                                className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </div>
                     </div>
                     
                     <button onClick={handleRefresh} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all">
@@ -440,7 +457,7 @@ export const MonthlyClosing: React.FC = () => {
                 {activeTab === 'payroll' && (
                     <SectionCard>
                         <div className="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
-                            <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`دورة شهر ${selectedMonth}`} />
+                            <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} />
                             <SecondaryBtn className="h-8 text-[10px]">
                                 <Download size={14} /> تصدير PDF
                             </SecondaryBtn>
@@ -513,7 +530,7 @@ export const MonthlyClosing: React.FC = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                                    {(studentInvoices || []).filter((inv: any) => inv.date.startsWith(selectedMonth)).map((item: any) => (
+                                    {(studentInvoices || []).filter((inv: any) => inv.date >= startDate && inv.date <= endDate).map((item: any) => (
                                         <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                             <td className="px-4 py-4">
                                                 <span className="block font-bold text-xs text-slate-800 dark:text-white mb-0.5">{item.studentName}</span>
@@ -794,7 +811,7 @@ export const MonthlyClosing: React.FC = () => {
             {selectedTeacherForSlip && (
                 <SalarySlipModal 
                     teacher={selectedTeacherForSlip} 
-                    month={selectedMonth} 
+                    month={`${startDate} / ${endDate}`} 
                     onClose={() => setSelectedTeacherForSlip(null)} 
                 />
             )}

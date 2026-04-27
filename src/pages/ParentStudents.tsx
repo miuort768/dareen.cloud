@@ -36,6 +36,12 @@ export const ParentStudents = () => {
     const [childSessions, setChildSessions] = useState<any[]>([]);
     const [pointLogs, setPointLogs] = useState<any[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
+    const [sessionsStartDate, setSessionsStartDate] = useState(() => {
+        const d = new Date();
+        d.setDate(d.getDate() - 30);
+        return d.toISOString().split('T')[0];
+    });
+    const [sessionsEndDate, setSessionsEndDate] = useState(new Date().toISOString().split('T')[0]);
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -300,6 +306,24 @@ export const ParentStudents = () => {
                                     </p>
                                 </div>
                             </div>
+                            
+                            <div className="relative z-10 flex items-center gap-2 mr-4">
+                                <div className="flex items-center gap-1 bg-white/10 px-2 py-1 rounded-lg border border-white/10">
+                                    <input 
+                                        type="date" 
+                                        className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none cursor-pointer [color-scheme:dark]" 
+                                        value={sessionsStartDate}
+                                        onChange={(e) => setSessionsStartDate(e.target.value)}
+                                    />
+                                    <span className="text-[10px] text-white/60">→</span>
+                                    <input 
+                                        type="date" 
+                                        className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none cursor-pointer [color-scheme:dark]" 
+                                        value={sessionsEndDate}
+                                        onChange={(e) => setSessionsEndDate(e.target.value)}
+                                    />
+                                </div>
+                            </div>
                             <button
                                 onClick={() => setViewingStudent(null)}
                                 className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
@@ -347,7 +371,11 @@ export const ParentStudents = () => {
 
                                         {/* Pagination Controls */}
                                         {(() => {
-                                            const filtered = childSessions.filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'));
+                                            const filtered = childSessions.filter(s => 
+                                                s.subject === viewingSubject.subject && 
+                                                (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled') &&
+                                                s.date >= sessionsStartDate && s.date <= sessionsEndDate
+                                            );
                                             const totalPages = Math.ceil(filtered.length / 7);
                                             if (totalPages <= 1) return null;
                                             
@@ -383,7 +411,11 @@ export const ParentStudents = () => {
                                         <div className="relative border-r-2 border-indigo-500/10 pr-5 mr-2 space-y-4">
                                             {(() => {
                                                 const filtered = childSessions
-                                                    .filter(s => s.subject === viewingSubject.subject && (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'))
+                                                    .filter(s => 
+                                                        s.subject === viewingSubject.subject && 
+                                                        (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled') &&
+                                                        s.date >= sessionsStartDate && s.date <= sessionsEndDate
+                                                    )
                                                     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                                                 
                                                 return filtered
