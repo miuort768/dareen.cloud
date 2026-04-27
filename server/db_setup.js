@@ -461,6 +461,13 @@ async function setupDatabase() {
     }
 
     console.log('Tables created and verified.');
+    
+    // --- كود فحص الطوارئ ---
+    const tCount = await db.get('SELECT count(*) as count FROM teachers');
+    const sCount = await db.get('SELECT count(*) as count FROM students');
+    const pCount = await db.get('SELECT count(*) as count FROM parents');
+    console.log(`📊 [فحص البيانات] عدد المعلمات: ${tCount.count}, عدد الطلاب: ${sCount.count}, عدد أولياء الأمور: ${pCount.count}`);
+    // -----------------------
 
 
     // 2. Migrate Data from db.json
