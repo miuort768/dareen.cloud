@@ -28,4 +28,4 @@ services:
 volumes:
   app_data:
     external: true
-    name: dareen-app_app_data
+    name: dareencloud_app_data
