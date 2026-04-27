@@ -237,7 +237,7 @@ export const useFinance = () => {
         }
 
         const months = uniqueMonths.slice(0, 6).reverse();
-        const monthlyData = months.map(month => {
+        const monthlyData = months.map((month: string) => {
             const [y, m] = month.split('-').map(Number);
             const isMonth = (dateStr: string) => {
                 const d = new Date(dateStr);
@@ -246,10 +246,10 @@ export const useFinance = () => {
 
             const inc = allTransactions
                 .filter(t => t.type === 'income' && t.status === 'completed' && isMonth(t.date))
-                .reduce((sum, t) => sum + t.amount, 0);
+                .reduce((sum: number, t: any) => sum + t.amount, 0);
             const exp = allTransactions
                 .filter(t => t.type === 'expense' && t.status === 'completed' && isMonth(t.date))
-                .reduce((sum, t) => sum + t.amount, 0);
+                .reduce((sum: number, t: any) => sum + t.amount, 0);
             return {
                 month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 income: inc,
@@ -259,12 +259,12 @@ export const useFinance = () => {
 
         const expenseByCategory = allTransactions
             .filter(t => t.type === 'expense' && t.status === 'completed')
-            .reduce((acc, t) => {
+            .reduce((acc: Record<string, number>, t: any) => {
                 acc[t.category] = (acc[t.category] || 0) + t.amount;
                 return acc;
             }, {} as Record<string, number>);
 
-        const pieData = Object.entries(expenseByCategory).map(([name, value], index) => ({
+        const pieData = Object.entries(expenseByCategory).map(([name, value], index: number) => ({
             name,
             value,
             fill: CHART_COLORS[index % CHART_COLORS.length]

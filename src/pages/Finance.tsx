@@ -159,7 +159,7 @@ export const Finance = () => {
                                         className="w-full pr-9 pl-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-indigo-500 appearance-none cursor-pointer transition-all"
                                     >
                                         <option value="all">السجل الكامل</option>
-                                        {state.uniqueMonths.map(month => (
+                                        {state.uniqueMonths.map((month: string) => (
                                             <option key={month} value={month}>
                                                 {new Date(month + '-01').toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' })}
                                             </option>
