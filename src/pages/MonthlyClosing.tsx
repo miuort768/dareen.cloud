@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-    Calendar, Filter, Download, RefreshCw, Printer, 
+    Calendar, Download, RefreshCw, Printer, 
     ArrowDownRight,
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, X, Phone, MessageCircle, CheckCircle2,
     Activity as ActivityIcon, Wallet
