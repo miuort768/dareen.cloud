@@ -12,7 +12,7 @@ services:
       - "3001:3001"
       - "3005:3005"
     volumes:
-      - app_data:/app/data
+      - ./database.sqlite:/app/data/database.sqlite
     environment:
       - PORT=3001
       - NODE_ENV=production
@@ -25,7 +25,4 @@ services:
         max-size: "10m"
         max-file: "3"
 
-volumes:
-  app_data:
-    external: true
-    name: darin-app_app_data
+# تم استخدام الملف المباشر لضمان عدم ضياع البيانات
