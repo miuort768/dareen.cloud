@@ -2,11 +2,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const rateLimit = require('express-rate-limit');
+const { authMiddleware, checkRole } = require('../middleware/auth');
+const logger = require('../utils/logger');
 
 const router = express.Router();
-const logger = require('../utils/logger');
 
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -242,4 +243,3 @@ router.post('/logout-all', authMiddleware, async (req, res) => {
 });
 
 module.exports = { authRouter: router };
-

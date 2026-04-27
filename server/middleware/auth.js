@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 /**
  * Middleware to verify JWT token
  */
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
