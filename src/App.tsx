@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 
@@ -6,41 +6,42 @@ import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
 
-import { Login } from './pages/Login';
-import { Home } from './pages/public/Home';
-import { Dashboard } from './pages/Dashboard';
-import Settings from './pages/Settings';
-import { ParentDashboard } from './pages/ParentDashboard';
-import { StudentDashboard } from './pages/StudentDashboard';
-import { ParentStudents } from './pages/ParentStudents';
-import { ParentAnnouncements } from './pages/ParentAnnouncements';
-import { Evaluations } from './pages/Evaluations';
-import { Finance } from './pages/Finance';
-import { Reports } from './pages/Reports';
-import { StudentInvoices } from './pages/StudentInvoices';
-import { TeacherInvoices } from './pages/TeacherInvoices';
-import { Attendance } from './pages/Attendance';
-import { Schedule } from './pages/Schedule';
-import { Teachers } from './pages/Teachers';
-import { Parents } from './pages/Parents';
-import { Students } from './pages/Students';
-import { Tasks } from './pages/Tasks';
-import { Chat } from './pages/Chat';
-import { Announcements } from './pages/Announcements';
-import { Forum } from './pages/Forum';
-import { MonthlyClosing } from './pages/MonthlyClosing';
-import { Leads } from './pages/Leads';
-import { Agenda } from './pages/Agenda';
-import { Appointments } from './pages/Appointments';
-import { About } from './pages/public/About';
-import { Contact } from './pages/public/Contact';
-import { Courses } from './pages/public/Courses';
-import { PrivacyPolicy } from './pages/public/PrivacyPolicy';
-import { RefundPolicy } from './pages/public/RefundPolicy';
+// Lazy load pages for high performance
+const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
+const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
+const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
+const Settings = lazy(() => import('./pages/Settings'));
+const ParentDashboard = lazy(() => import('./pages/ParentDashboard').then(m => ({ default: m.ParentDashboard })));
+const StudentDashboard = lazy(() => import('./pages/StudentDashboard').then(m => ({ default: m.StudentDashboard })));
+const ParentStudents = lazy(() => import('./pages/ParentStudents').then(m => ({ default: m.ParentStudents })));
+const ParentAnnouncements = lazy(() => import('./pages/ParentAnnouncements').then(m => ({ default: m.ParentAnnouncements })));
+const Evaluations = lazy(() => import('./pages/Evaluations').then(m => ({ default: m.Evaluations })));
+const Finance = lazy(() => import('./pages/Finance').then(m => ({ default: m.Finance })));
+const Reports = lazy(() => import('./pages/Reports').then(m => ({ default: m.Reports })));
+const StudentInvoices = lazy(() => import('./pages/StudentInvoices').then(m => ({ default: m.StudentInvoices })));
+const TeacherInvoices = lazy(() => import('./pages/TeacherInvoices').then(m => ({ default: m.TeacherInvoices })));
+const Attendance = lazy(() => import('./pages/Attendance').then(m => ({ default: m.Attendance })));
+const Schedule = lazy(() => import('./pages/Schedule').then(m => ({ default: m.Schedule })));
+const Teachers = lazy(() => import('./pages/Teachers').then(m => ({ default: m.Teachers })));
+const Parents = lazy(() => import('./pages/Parents').then(m => ({ default: m.Parents })));
+const Students = lazy(() => import('./pages/Students').then(m => ({ default: m.Students })));
+const Tasks = lazy(() => import('./pages/Tasks').then(m => ({ default: m.Tasks })));
+const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
+const Announcements = lazy(() => import('./pages/Announcements').then(m => ({ default: m.Announcements })));
+const Forum = lazy(() => import('./pages/Forum').then(m => ({ default: m.Forum })));
+const MonthlyClosing = lazy(() => import('./pages/MonthlyClosing').then(m => ({ default: m.MonthlyClosing })));
+const Leads = lazy(() => import('./pages/Leads').then(m => ({ default: m.Leads })));
+const Agenda = lazy(() => import('./pages/Agenda').then(m => ({ default: m.Agenda })));
+const Appointments = lazy(() => import('./pages/Appointments').then(m => ({ default: m.Appointments })));
+const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
+const Contact = lazy(() => import('./pages/public/Contact').then(m => ({ default: m.Contact })));
+const Courses = lazy(() => import('./pages/public/Courses').then(m => ({ default: m.Courses })));
+const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
+const RefundPolicy = lazy(() => import('./pages/public/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
-import { Classroom } from './pages/Classroom';
+const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 import { MouseGlow } from './components/ui/MouseGlow';
 
 
@@ -136,69 +137,71 @@ function App() {
       {['/', '/courses', '/about', '/contact'].includes(location.pathname) && (
         <FloatingActions />
       )}
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/login-q8" element={<Login />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/refund-policy" element={<RefundPolicy />} />
-        <Route path="/terms-of-service" element={<RefundPolicy />} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/login-q8" element={<Login />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/terms-of-service" element={<RefundPolicy />} />
 
-        {/* Protected App Routes */}
-        {/* Protected App Routes */}
-        <Route
-          element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="dashboard" element={<DashboardRedirect />} />
-          <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
+          {/* Protected App Routes */}
+          {/* Protected App Routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<DashboardRedirect />} />
+            <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
 
-          {/* Parent Routes */}
-          <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
-          <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
-          <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
+            {/* Parent Routes */}
+            <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
+            <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
+            <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
 
-          {/* Student Routes */}
-          <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
+            {/* Student Routes */}
+            <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
 
-          {/* Admin/Teacher Routes */}
-          <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
-          <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
-          <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
-          <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
-          <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
-          <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
-          <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
-          <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
-          <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
-          <Route path="monthly-closing" element={<ProtectedRoute permission="finance"><MonthlyClosing /></ProtectedRoute>} />
-          <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
-          <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
-          <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
-          <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
-          <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
-          <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
-          <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
+            {/* Admin/Teacher Routes */}
+            <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
+            <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
+            <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
+            <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
+            <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
+            <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
+            <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
+            <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
+            <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
+            <Route path="monthly-closing" element={<ProtectedRoute permission="finance"><MonthlyClosing /></ProtectedRoute>} />
+            <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
+            <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
+            <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
+            <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
+            <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
+            <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
+            <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
 
-          {/* New Announcements Admin Route */}
-          <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
-          
-          {/* Forum Route for all authenticated users */}
-          <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
-        </Route>
+            {/* New Announcements Admin Route */}
+            <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
 
-        <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
+            {/* Forum Route for all authenticated users */}
+            <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
 
     </>
   );

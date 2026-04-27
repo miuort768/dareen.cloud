@@ -11,6 +11,7 @@ export const useFinance = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState<'all' | 'income' | 'expense'>('all');
     const [filterMonth, setFilterMonth] = useState<string>('all');
+    const [serverStats, setServerStats] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [showAddModal, setShowAddModal] = useState(false);
 
@@ -22,6 +23,7 @@ export const useFinance = () => {
             setInvoices(data.invoices);
             setManualTransactions(data.transactions);
             setFixedExpenses(data.fixedExpenses);
+            setServerStats(data.stats);
         } catch (error) {
             console.error("Error fetching finance data", error);
         } finally {
@@ -108,26 +110,26 @@ export const useFinance = () => {
     };
 
     const stats = useMemo(() => {
+        if (serverStats && filterMonth === 'all') {
+            return serverStats;
+        }
+
         const completedSessions = sessions.filter(s => s.status === 'completed');
         const monthSessions = completedSessions.filter(s => isSameMonth(s.date));
 
         // Income: Sessions Revenue + Manual Income
         const automatedIncome = completedSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0);
-        const manualIncome = manualTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const manualIncome = manualTransactions.filter(t => t.type === 'income' && t.status === 'completed').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const totalIncome = automatedIncome + manualIncome;
 
         const monthIncome = monthSessions.reduce((sum, s) => sum + (Number(s.price) || 0), 0) +
-            manualTransactions.filter(t => t.type === 'income' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+            manualTransactions.filter(t => t.type === 'income' && t.status === 'completed' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
 
-        // Expenses: 
-        // We use PAID Invoices + Manual Expenses + Fixed Expenses.
-        // We do NOT add automatedLaborCost here because it's already accounted for when we pay the invoice.
-        // If we added both, we would double-count the cost of teaching.
         const manualExpenses = invoices.filter(inv => 
             ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
         ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
         
-        const extraManualExpenses = manualTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const extraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && t.status === 'completed').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
         const totalFixedExpenses = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
 
         const totalExpenses = manualExpenses + extraManualExpenses + totalFixedExpenses;
@@ -137,9 +139,8 @@ export const useFinance = () => {
             isSameMonth(inv.date)
         ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
         
-        const monthExtraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const monthExtraManualExpenses = manualTransactions.filter(t => t.type === 'expense' && t.status === 'completed' && isSameMonth(t.date)).reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
 
-        // Important: Accrued Cost (for records/transparency, but not subtracted from cash net profit twice)
         const automatedLaborCost = completedSessions.reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0);
         const monthExpensesValue = monthManualExpenses + monthExtraManualExpenses + totalFixedExpenses;
 
@@ -153,12 +154,12 @@ export const useFinance = () => {
             totalExpenses,
             monthExpenses: monthExpensesValue,
             totalFixedExpenses,
-            automatedLaborCost, // Still available for reference
+            automatedLaborCost,
             netProfit,
             monthProfit,
             profitMargin
         };
-    }, [sessions, invoices, manualTransactions, fixedExpenses]);
+    }, [sessions, invoices, manualTransactions, fixedExpenses, serverStats, filterMonth]);
 
     const allTransactions = useMemo(() => {
         const combined: Transaction[] = [
@@ -228,6 +229,13 @@ export const useFinance = () => {
     }, [allTransactions]);
 
     const chartData = useMemo(() => {
+        if (serverStats && filterMonth === 'all') {
+            return {
+                monthlyData: serverStats.monthlyData,
+                pieData: serverStats.pieData
+            };
+        }
+
         const months = uniqueMonths.slice(0, 6).reverse();
         const monthlyData = months.map(month => {
             const [y, m] = month.split('-').map(Number);
@@ -263,7 +271,7 @@ export const useFinance = () => {
         }));
 
         return { monthlyData, pieData };
-    }, [allTransactions, uniqueMonths]);
+    }, [allTransactions, uniqueMonths, serverStats, filterMonth]);
 
     return {
         state: {

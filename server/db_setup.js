@@ -426,6 +426,23 @@ async function setupDatabase() {
         }
     }
 
+    // ─── ADDING FUNCTIONAL INDEXES FOR CASE-INSENSITIVE PERFORMANCE ───
+    const functionalIndices = [
+        'CREATE INDEX IF NOT EXISTS idx_students_name_lower ON students(LOWER(name))',
+        'CREATE INDEX IF NOT EXISTS idx_teachers_name_lower ON teachers(LOWER(name))',
+        'CREATE INDEX IF NOT EXISTS idx_sessions_student_lower ON sessions(LOWER(studentName))',
+        'CREATE INDEX IF NOT EXISTS idx_sessions_teacher_lower ON sessions(LOWER(teacherName))',
+        'CREATE INDEX IF NOT EXISTS idx_parents_name_lower ON parents(LOWER(name))'
+    ];
+
+    for (const idx of functionalIndices) {
+        try {
+            await db.exec(idx);
+        } catch (e) {
+            console.warn(`Functional index warning [${idx}]:`, e.message);
+        }
+    }
+
 
     console.log('Tables created and verified.');
 

@@ -3,13 +3,14 @@ import type { Session, TeacherInvoice, Transaction, FixedExpense, Student, Teach
 
 export const financeService = {
     async getFinanceData() {
-        const [sessions, invoices, students, teachers, transactions, fixedExpenses] = await Promise.all([
+        const [sessions, invoices, students, teachers, transactions, fixedExpenses, stats] = await Promise.all([
             api.get<Session[]>('/sessions'),
             api.get<TeacherInvoice[]>('/invoices'),
             api.get<Student[]>('/students'),
             api.get<Teacher[]>('/teachers'),
             api.get<Transaction[]>('/finance/transactions'),
-            api.get<FixedExpense[]>('/finance/fixed-expenses')
+            api.get<FixedExpense[]>('/finance/fixed-expenses'),
+            api.get<any>('/finance/stats')
         ]);
 
         // Process sessions to include effective price
@@ -36,6 +37,7 @@ export const financeService = {
             sessions: processedSessions,
             invoices,
             transactions,
+            stats,
             fixedExpenses: fixedExpenses.length > 0 ? fixedExpenses : [
                 { id: 1, name: 'إيجار المركز', amount: 0 },
                 { id: 2, name: 'كهرباء وإنترنت', amount: 0 },
@@ -44,6 +46,10 @@ export const financeService = {
                 { id: 5, name: 'أخرى', amount: 0 }
             ]
         };
+    },
+
+    async getFinanceStats() {
+        return api.get<any>('/finance/stats');
     },
 
     async updateFixedExpense(id: number, amount: number) {
