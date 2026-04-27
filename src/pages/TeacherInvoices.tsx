@@ -3,7 +3,7 @@ import {
     Search, DollarSign, Users, AlertCircle, CreditCard, Percent,
     Plus, Edit, Trash2, Check, X, GraduationCap,
     CheckCircle2, Printer, UserPlus, RefreshCw,
-    Sparkles
+    Sparkles, Calendar
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -135,6 +135,11 @@ export const TeacherInvoices = () => {
     const [teachers, setTeachers] = useState<Teacher[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
+    const [startDate, setStartDate] = useState(() => {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
+    });
+    const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
     const { currentUser, showNotification } = useApp();
 
     const isTeacher = currentUser?.role === 'teacher';
@@ -196,13 +201,14 @@ export const TeacherInvoices = () => {
         return list.filter(invoice => {
             const matchesSearch = invoice.teacher.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesStatus = filterStatus === 'all' || invoice.status === filterStatus;
-            return matchesSearch && matchesStatus;
+            const matchesDate = !invoice.date || (invoice.date >= startDate && invoice.date <= endDate);
+            return matchesSearch && matchesStatus && matchesDate;
         });
-    }, [invoices, searchTerm, filterStatus, isTeacher, teacherName, currentUser]);
+    }, [invoices, searchTerm, filterStatus, startDate, endDate, isTeacher, teacherName, currentUser]);
 
     // Stats
     const stats = useMemo(() => {
-        const result = invoices.reduce((acc, invoice) => {
+        const result = filteredInvoices.reduce((acc, invoice) => {
             acc.totalAmount += invoice.amount;
             acc.personalExpenses += invoice.personalExpenses || 0;
 
@@ -225,11 +231,11 @@ export const TeacherInvoices = () => {
             : 0;
 
         return {
-            totalTeachers: invoices.length,
+            totalTeachers: filteredInvoices.length,
             ...result,
             unpaidPercentage
         };
-    }, [invoices]);
+    }, [filteredInvoices]);
 
     // Handlers
     const handleEdit = useCallback((invoice: TeacherInvoice) => {
@@ -467,6 +473,25 @@ export const TeacherInvoices = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
+                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <Calendar size={14} className="text-slate-400" />
+                                <div className="flex items-center gap-1">
+                                    <input 
+                                        type="date" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                    />
+                                    <span className="text-[10px] text-slate-400">→</span>
+                                    <input 
+                                        type="date" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
                             <InputField
                                 type="select"
                                 value={filterStatus}
