@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
 import './index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
@@ -28,9 +28,9 @@ const queryClient = new QueryClient({
 // Custom persister using IndexedDB (much better than localStorage)
 const persister = createSyncStoragePersister({
   storage: {
-    getItem: (key) => get(key),
-    setItem: (key, value) => set(key, value),
-    removeItem: (key) => del(key),
+    getItem: (key: string) => get(key),
+    setItem: (key: string, value: any) => set(key, value),
+    removeItem: (key: string) => del(key),
   },
 })
 
