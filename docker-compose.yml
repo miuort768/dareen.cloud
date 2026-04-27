@@ -27,3 +27,5 @@ services:
 
 volumes:
   app_data:
+    external: true
+    name: darin-app_app_data
