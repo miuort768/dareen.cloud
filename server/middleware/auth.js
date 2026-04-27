@@ -13,6 +13,21 @@ const authMiddleware = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // --- Security Enhancement: Token Version Check ---
+        // This ensures that "Logout from all devices" works instantly.
+        if (decoded.token_version !== undefined && req.db) {
+            let table = 'users';
+            if (decoded.role === 'teacher') table = 'teachers';
+            if (decoded.role === 'parent') table = 'parents';
+            if (decoded.role === 'student') table = 'students';
+
+            const current = await req.db.get(`SELECT token_version FROM ${table} WHERE id = ?`, [decoded.id]);
+            if (current && current.token_version !== decoded.token_version) {
+                return res.status(401).json({ error: 'Session revoked. Please login again.' });
+            }
+        }
+
         req.user = decoded;
         next();
     } catch (error) {

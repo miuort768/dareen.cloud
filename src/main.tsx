@@ -10,21 +10,37 @@ import { ChatProvider } from './context/ChatContext.tsx'
 
 import { HelmetProvider } from 'react-helmet-async'
 
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { get, set, del } from 'idb-keyval'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 30, // 30 minutes
+      gcTime: 1000 * 60 * 60 * 24, // 24 hours for offline cache
       retry: 1,
       refetchOnWindowFocus: false,
     },
   },
 })
 
+// Custom persister using IndexedDB (much better than localStorage)
+const persister = createSyncStoragePersister({
+  storage: {
+    getItem: (key) => get(key),
+    setItem: (key, value) => set(key, value),
+    removeItem: (key) => del(key),
+  },
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister, maxAge: 1000 * 60 * 60 * 24 }}
+      >
         <HelmetProvider>
           <Router>
             <AppProvider>
@@ -34,7 +50,7 @@ createRoot(document.getElementById('root')!).render(
             </AppProvider>
           </Router>
         </HelmetProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

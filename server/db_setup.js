@@ -444,6 +444,22 @@ async function setupDatabase() {
     }
 
 
+    // ─── ADDING TOKEN VERSIONING FOR SESSION REVOCATION ───
+    const versionColumns = [
+        'ALTER TABLE users ADD COLUMN token_version INTEGER DEFAULT 1',
+        'ALTER TABLE teachers ADD COLUMN token_version INTEGER DEFAULT 1',
+        'ALTER TABLE parents ADD COLUMN token_version INTEGER DEFAULT 1',
+        'ALTER TABLE students ADD COLUMN token_version INTEGER DEFAULT 1'
+    ];
+
+    for (const col of versionColumns) {
+        try {
+            await db.exec(col);
+        } catch (e) {
+            // Already exists is fine
+        }
+    }
+
     console.log('Tables created and verified.');
 
 

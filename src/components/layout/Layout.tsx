@@ -5,6 +5,7 @@ import { Header } from './Header';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
 import { PageLoader } from '../ui/PageLoader';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 
 
@@ -45,10 +46,11 @@ export const Layout = () => {
                         !isChatOnly && "md:slide-in-from-bottom-4"
                     )}>
                         {/* We use specific loaders inside pages, but this handles lazy chunk loading */}
-                        <React.Suspense fallback={<PageLoader />}>
-
-                            <Outlet />
-                        </React.Suspense>
+                        <ErrorBoundary>
+                            <React.Suspense fallback={<PageLoader />}>
+                                <Outlet />
+                            </React.Suspense>
+                        </ErrorBoundary>
                     </div>
                 </main>
             </div>
