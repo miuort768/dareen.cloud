@@ -12,6 +12,8 @@ git pull origin main
 # 2. بناء وتشغيل الحاويات باستخدام Docker Compose (V2)
 echo "🏗️ إيقاف وبناء وتشغيل الحاويات..."
 docker compose down
+# حل مشكلة تعارض الأسماء (Conflict)
+docker rm -f darin-app || true
 docker compose up -d --build
 
 # 3. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
