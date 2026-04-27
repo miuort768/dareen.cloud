@@ -10,8 +10,7 @@ import { ChatProvider } from './context/ChatContext.tsx'
 
 import { HelmetProvider } from 'react-helmet-async'
 
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { PersistQueryClientProvider, type Persister } from '@tanstack/react-query-persist-client'
 import { get, set, del } from 'idb-keyval'
 
 const queryClient = new QueryClient({
@@ -25,14 +24,18 @@ const queryClient = new QueryClient({
   },
 })
 
-// Custom persister using IndexedDB (much better than localStorage)
-const persister = createSyncStoragePersister({
-  storage: {
-    getItem: (key: string) => get(key),
-    setItem: (key: string, value: any) => set(key, value),
-    removeItem: (key: string) => del(key),
+// Custom async persister using IndexedDB
+const persister: Persister = {
+  persistClient: async (client) => {
+    await set('react-query-cache', client)
   },
-})
+  restoreClient: async () => {
+    return await get('react-query-cache')
+  },
+  removeClient: async () => {
+    await del('react-query-cache')
+  },
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
