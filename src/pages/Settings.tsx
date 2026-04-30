@@ -220,6 +220,7 @@ const Settings = () => {
         chatbotWelcomeMsg, setChatbotWelcomeMsg,
         chatbotName, setChatbotName,
         telegramHandle, setTelegramHandle,
+        heroBanners, setHeroBanners,
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
@@ -239,6 +240,16 @@ const Settings = () => {
     const [localChatbotName, setLocalChatbotName] = useState(chatbotName);
     const [localChatbotWelcomeMsg, setLocalChatbotWelcomeMsg] = useState(chatbotWelcomeMsg);
     const [localTelegramHandle, setLocalTelegramHandle] = useState(telegramHandle);
+    
+    // Parse the heroBanners string into an array, or fallback to defaults
+    const [localHeroBanners, setLocalHeroBanners] = useState<string[]>(() => {
+        try {
+            return JSON.parse(heroBanners);
+        } catch {
+            return ["", "", "", "", "", ""];
+        }
+    });
+
     const [localPrice, setLocalPrice] = useState(defaultSessionPrice);
     const [localTeacherPrice, setLocalTeacherPrice] = useState(defaultTeacherPrice);
     const [localCurrency, setLocalCurrency] = useState(currencySymbol);
@@ -376,6 +387,14 @@ const Settings = () => {
         setLocalChatbotName(chatbotName);
         setLocalChatbotWelcomeMsg(chatbotWelcomeMsg);
     }, [chatbotName, chatbotWelcomeMsg]);
+
+    useEffect(() => {
+        try {
+            setLocalHeroBanners(JSON.parse(heroBanners));
+        } catch {
+            // keep existing if parse fails
+        }
+    }, [heroBanners]);
 
     const fetchLogs = async () => {
         try {
@@ -630,6 +649,45 @@ const Settings = () => {
                                     </button>
                                 ))}
                             </div>
+                        </SectionCard>
+
+                        <SectionCard className="lg:col-span-2">
+                            <SectionTitle icon={Sparkles} label="إعدادات بطاقات الرئيسية" sub="Home Page Banners" />
+                            <p className="text-[10px] text-slate-400 mb-4">
+                                قم بتعديل الجمل الست التي تظهر في أسفل القسم الرئيسي بالصفحة العامة (الهيرو).
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                                {localHeroBanners.map((banner, idx) => (
+                                    <div key={idx} className="space-y-1">
+                                        <FieldLabel>البطاقة {idx + 1}</FieldLabel>
+                                        <InputField 
+                                            value={banner}
+                                            onChange={(e) => {
+                                                const newBanners = [...localHeroBanners];
+                                                newBanners[idx] = e.target.value;
+                                                setLocalHeroBanners(newBanners);
+                                            }}
+                                            placeholder={`جملة البطاقة ${idx + 1}`}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                            <PrimaryBtn
+                                loading={isSaving}
+                                onClick={async () => {
+                                    setIsSaving(true);
+                                    try {
+                                        await setHeroBanners(JSON.stringify(localHeroBanners));
+                                        showNotify('تم حفظ البطاقات بنجاح');
+                                    } catch(e) {
+                                        alert('خطأ في الحفظ');
+                                    } finally {
+                                        setIsSaving(false);
+                                    }
+                                }}
+                            >
+                                <CheckCircle2 size={14} /> حفظ البطاقات
+                            </PrimaryBtn>
                         </SectionCard>
 
                         <SectionCard className="lg:col-span-2">

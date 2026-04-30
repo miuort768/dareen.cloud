@@ -133,11 +133,11 @@ async function startServer() {
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {
-                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     [
                         'maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 
                         'notifications_enabled', 'auto_backup',
-                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name'
+                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name', 'hero_banners'
                     ]);
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);

@@ -26,6 +26,7 @@ interface SettingsContextType {
     chatbotWelcomeMsg: string;
     chatbotName: string;
     telegramHandle: string;
+    heroBanners: string;
     isSettingsLoading: boolean;
     setAcademyName: (name: string) => Promise<void>;
     setAcademyLogo: (logo: string) => Promise<void>;
@@ -51,6 +52,7 @@ interface SettingsContextType {
     setChatbotWelcomeMsg: (msg: string) => Promise<void>;
     setChatbotName: (name: string) => Promise<void>;
     setTelegramHandle: (handle: string) => Promise<void>;
+    setHeroBanners: (val: string) => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -80,6 +82,14 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [chatbotWelcomeMsg, setChatbotWelcomeMsgState] = useState('مرحباً بك في معهد دارين! كيف يمكننا مساعدتك اليوم؟');
     const [chatbotName, setChatbotNameState] = useState('دارين بوت');
     const [telegramHandle, setTelegramHandleState] = useState('dareen_app');
+    const [heroBanners, setHeroBannersState] = useState(JSON.stringify([
+        "انضم إلى أفضل منصة تعليمية",
+        "تأسيس قوي لجميع المراحل",
+        "نخبة من المعلمين المتخصصين",
+        "متابعة دورية وتقييم مستمر",
+        "برامج خاصة لتحفيظ القرآن",
+        "حصص تفاعلية وممتعة"
+    ]));
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 
     useEffect(() => {
@@ -111,6 +121,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.chatbot_welcome_msg) setChatbotWelcomeMsgState(settings.chatbot_welcome_msg);
                     if (settings.chatbot_name) setChatbotNameState(settings.chatbot_name);
                     if (settings.telegram_handle) setTelegramHandleState(settings.telegram_handle);
+                    if (settings.hero_banners) setHeroBannersState(settings.hero_banners);
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);
@@ -252,6 +263,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         await updateSetting('telegram_handle', handle);
     };
 
+    const setHeroBanners = async (val: string) => {
+        setHeroBannersState(val);
+        await updateSetting('hero_banners', val);
+    };
+
     useEffect(() => {
         const root = document.documentElement;
         const colors: Record<string, string> = {
@@ -276,14 +292,14 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             autoBackup, maintenanceMode, whatsappAutoNotify, defaultSessionPrice, defaultTeacherPrice, currencySymbol,
             semesterName, semesters, whatsappTemplate, balanceWarningThreshold,
             backdateLockEnabled, teacherCommissionType, autoFreezeThreshold,
-            chatbotEnabled, chatbotWelcomeMsg, chatbotName, telegramHandle,
+            chatbotEnabled, chatbotWelcomeMsg, chatbotName, telegramHandle, heroBanners,
             isSettingsLoading,
             setAcademyName, setAcademyLogo, setAcademyTagline, setAcademyAddress, setAdminPhone, setThemeColor, 
             setNotificationsEnabled, setAutoBackup, setMaintenanceMode, setWhatsappAutoNotify, 
             setDefaultSessionPrice, setDefaultTeacherPrice, setCurrencySymbol,
             setSemesterName, setSemesters, setWhatsappTemplate, setBalanceWarningThreshold,
             setBackdateLockEnabled, setTeacherCommissionType, setAutoFreezeThreshold,
-            setChatbotEnabled, setChatbotWelcomeMsg, setChatbotName, setTelegramHandle
+            setChatbotEnabled, setChatbotWelcomeMsg, setChatbotName, setTelegramHandle, setHeroBanners
         }}>
             {children}
         </SettingsContext.Provider>
