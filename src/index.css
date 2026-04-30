@@ -776,3 +776,15 @@
     animation: shine 3s infinite linear;
   }
 }
+
+/* RTL Marquee Animation */
+@keyframes marquee-rtl {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+.animate-marquee-rtl {
+  animation: marquee-rtl 25s linear infinite;
+}
+.animate-marquee-rtl:hover {
+  animation-play-state: paused;
+}
