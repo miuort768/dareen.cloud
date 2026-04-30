@@ -205,24 +205,25 @@ export const Home = () => {
                         </div>
                     </div>
                     
-                    {/* Dynamic Hero Banners */}
-                    <div className="max-w-7xl mx-auto mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 z-20 relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-gray-200 dark:divide-slate-800">
-                        {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                            <div key={idx} className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors flex flex-row justify-between items-center gap-3 group">
-                                <p className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white leading-tight flex-1">
-                                    {text}
-                                </p>
-                                <a 
-                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="shrink-0 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-bold text-[10px] rounded-md hover:bg-red-500 hover:text-white transition-colors border border-red-100 dark:border-red-900/30 whitespace-nowrap"
-                                >
-                                    سجل الآن
-                                </a>
-                            </div>
-                        ) : null)}
-                    </div>
+                </div>
+                
+                {/* Dynamic Hero Banners (Full Width) */}
+                <div className="w-full mt-12 md:mt-16 bg-yellow-400 dark:bg-yellow-500 border-y border-yellow-500 dark:border-yellow-600 z-20 relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-yellow-500/30 dark:divide-yellow-600/50">
+                    {bannersArray.slice(0, 4).map((text, idx) => text ? (
+                        <div key={idx} className="px-4 md:px-8 py-3.5 hover:bg-yellow-300 dark:hover:bg-yellow-400 transition-colors flex flex-row justify-between items-center gap-3 group">
+                            <p className="text-xs sm:text-sm font-black text-slate-900 leading-tight flex-1">
+                                {text}
+                            </p>
+                            <a 
+                                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0 px-4 py-2 bg-slate-900 text-yellow-400 font-bold text-[10px] sm:text-xs rounded-none hover:bg-black transition-colors shadow-sm whitespace-nowrap"
+                            >
+                                سجل الآن
+                            </a>
+                        </div>
+                    ) : null)}
                 </div>
             </section>
 
