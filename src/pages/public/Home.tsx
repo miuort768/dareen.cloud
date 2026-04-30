@@ -14,7 +14,7 @@ export const Home = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [typewriterText, setTypewriterText] = useState("");
     
-    let bannersArray = ["", "", "", "", "", ""];
+    let bannersArray = ["", "", "", ""];
     try {
         if (heroBanners) {
             bannersArray = JSON.parse(heroBanners);
@@ -206,9 +206,9 @@ export const Home = () => {
                     </div>
                     
                     {/* Dynamic Hero Banners */}
-                    <div className="max-w-7xl mx-auto mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 z-20 relative">
-                        {bannersArray.map((text, idx) => text ? (
-                            <div key={idx} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-200 dark:border-slate-800 rounded-lg px-4 py-2.5 shadow-sm hover:shadow-md transition-all flex flex-row justify-between items-center gap-3 group hover:border-red-200 dark:hover:border-red-900/50">
+                    <div className="max-w-7xl mx-auto mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 z-20 relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-gray-200 dark:divide-slate-800">
+                        {bannersArray.slice(0, 4).map((text, idx) => text ? (
+                            <div key={idx} className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors flex flex-row justify-between items-center gap-3 group">
                                 <p className="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white leading-tight flex-1">
                                     {text}
                                 </p>

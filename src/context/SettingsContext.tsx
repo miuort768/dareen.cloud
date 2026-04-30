@@ -86,9 +86,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         "انضم إلى أفضل منصة تعليمية",
         "تأسيس قوي لجميع المراحل",
         "نخبة من المعلمين المتخصصين",
-        "متابعة دورية وتقييم مستمر",
-        "برامج خاصة لتحفيظ القرآن",
-        "حصص تفاعلية وممتعة"
+        "متابعة دورية وتقييم مستمر"
     ]));
     const [isSettingsLoading, setIsSettingsLoading] = useState(true);
 

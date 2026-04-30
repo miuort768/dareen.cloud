@@ -246,7 +246,7 @@ const Settings = () => {
         try {
             return JSON.parse(heroBanners);
         } catch {
-            return ["", "", "", "", "", ""];
+            return ["", "", "", ""];
         }
     });
 
@@ -654,7 +654,7 @@ const Settings = () => {
                         <SectionCard className="lg:col-span-2">
                             <SectionTitle icon={Sparkles} label="إعدادات بطاقات الرئيسية" sub="Home Page Banners" />
                             <p className="text-[10px] text-slate-400 mb-4">
-                                قم بتعديل الجمل الست التي تظهر في أسفل القسم الرئيسي بالصفحة العامة (الهيرو).
+                                قم بتعديل الجمل الأربع التي تظهر في أسفل القسم الرئيسي بالصفحة العامة (الهيرو).
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                                 {localHeroBanners.map((banner, idx) => (
