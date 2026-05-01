@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
-    MessageSquare, Users, Crown, Monitor, Loader2, AlertCircle, Play, Volume2
+    MessageSquare, Users, Crown, Monitor, Loader2, AlertCircle, Volume2
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
