@@ -153,10 +153,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 })
             });
             const data = await response.json();
-            if (!response.ok) {
-                alert(`خطأ من الخادم (${response.status}): ${data.error || JSON.stringify(data)}`);
-                return;
-            }
+            if (!response.ok) return;
             navigate(`/classroom/${data.id}`);
         } catch (err: any) {
             alert(`خطأ في الشبكة: ${err.message}`);
