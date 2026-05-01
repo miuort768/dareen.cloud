@@ -21,23 +21,31 @@ router.get('/active', async (req, res) => {
             query = 'SELECT * FROM live_sessions WHERE teacherId = ? AND status = "active"';
             params = [id];
         } else if (role === 'student') {
-            // Student sees sessions targeted to them from their enrolled teachers
+            // Student sees:
+            // 1. Sessions explicitly targeted to them (always visible)
+            // 2. General broadcasts (no targetStudentId) from their enrolled teachers
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
-                AND (targetStudentId IS NULL OR targetStudentId = ?)
-                AND teacherId IN (SELECT teacherId FROM enrollments WHERE studentId = ?)
+                AND (
+                    targetStudentId = ?
+                    OR (targetStudentId IS NULL AND teacherId IN (SELECT teacherId FROM enrollments WHERE studentId = ?))
+                )
             `;
             params = [id, id];
         } else if (role === 'parent') {
-            // Parent sees sessions targeted to their children from enrolled teachers
+            // Parent sees:
+            // 1. Sessions explicitly targeted to their children
+            // 2. General broadcasts from teachers their children are enrolled with
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
-                AND (targetStudentId IS NULL OR targetStudentId IN (SELECT id FROM students WHERE parentId = ?))
-                AND teacherId IN (
-                    SELECT teacherId FROM enrollments 
-                    WHERE studentId IN (SELECT id FROM students WHERE parentId = ?)
+                AND (
+                    targetStudentId IN (SELECT id FROM students WHERE parentId = ?)
+                    OR (targetStudentId IS NULL AND teacherId IN (
+                        SELECT teacherId FROM enrollments 
+                        WHERE studentId IN (SELECT id FROM students WHERE parentId = ?)
+                    ))
                 )
             `;
             params = [id, id];
