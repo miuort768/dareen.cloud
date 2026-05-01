@@ -84,8 +84,9 @@ export const Courses = () => {
     return (
         <div className="min-h-full bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
-                title="الدورات والبرامج"
-                description="استكشف مجموعة واسعة من الدورات التعليمية المبتكرة في معهد دارين. كورس التأسيس الشامل، المناهج الخليجية، تحفيظ القرآن، ودورات اللغات."
+                title="دورات وبرامج معهد دارين | تأسيس، تحفيظ قرآن، مناهج الخليج"
+                description="استكشف الدورات التعليمية المبتكرة في معهد دارين: كورس التأسيس الشامل، المناهج الخليجية، تحفيظ القرآن، ودورات اللغات بأفضل الأسعار وأمهر المعلمين."
+                keywords="دورات معهد دارين, كورس تأسيس, تحفيظ قرآن أونلاين, منهج كويتي, منهج سعودي, دروس خصوصية, قدرات وتحصيلي, منصة تعليمية"
             />
             <PublicNavbar />
 
@@ -113,9 +114,10 @@ export const Courses = () => {
                             <Sparkles size={14} className="text-red-500 dark:text-rose-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-rose-300">استكشف مستقبل التعلم</span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight">
-                            <span className="block mb-2 md:mb-3">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
-                            <span className="text-xl md:text-3xl text-gray-400 dark:text-slate-400 font-bold block">
+                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight relative">
+                            <span className="sr-only">أفضل الدورات التعليمية والدروس الخصوصية في الكويت ودول الخليج - تحفيظ قرآن وتأسيس شامل</span>
+                            <span className="block mb-2 md:mb-3" aria-hidden="true">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
+                            <span className="text-xl md:text-3xl text-gray-400 dark:text-slate-400 font-bold block" aria-hidden="true">
                                 استثمر في <span className="text-red-600 underline decoration-green-500/30 decoration-8 underline-offset-8">مستقبل طفلك</span> اليوم
                             </span>
                         </h1>

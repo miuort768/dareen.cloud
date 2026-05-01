@@ -48,8 +48,9 @@ export const Contact = () => {
     return (
         <div className="min-h-full bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
             <SEO
-                title="اتصل بنا"
-                description="تواصل مع معهد دارين لتعليم والتدريب. نحن هنا للرد على استفساراتكم ومساعدتكم في اختيار المسار التعليمي الأنسب لأبنائكم."
+                title="تواصل مع معهد دارين | أفضل منصة دروس خصوصية في الكويت"
+                description="تواصل مع أكاديمية دارين للتعليم عن بعد. احجز دروس خصوصية، مراجعات نهائية، أو حصص تحفيظ قرآن. دعم فني متميز لتلبية احتياجاتك التعليمية."
+                keywords="تواصل مع معهد دارين, ارقام مدرسين خصوصي الكويت, التسجيل في معهد دارين, منصة دارين التعليمية, الدعم الفني, حصص تجريبية"
             />
             <PublicNavbar />
 
@@ -65,8 +66,9 @@ export const Contact = () => {
                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 dark:text-white mb-6">
-                            تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span>
+                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 dark:text-white mb-6 relative">
+                            <span className="sr-only">تواصل مع منصة معهد دارين لحجز الدروس الخصوصية أونلاين وتحفيظ القرآن في الكويت والخليج</span>
+                            <span aria-hidden="true">تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
                         </h1>
                         <p className="text-gray-500 dark:text-slate-400 text-sm md:text-xl font-medium leading-relaxed px-4">
                             يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.

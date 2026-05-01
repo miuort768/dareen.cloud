@@ -8,8 +8,9 @@ export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO
-                title="عن المعهد"
-                description="تعرف على معهد دارين وتاريخنا في التميز التعليمي. نهدف لبناء القدرات وتنمية المهارات عبر برامج تعليمية مبتكرة تجمع بين الأصالة والمعاصرة."
+                title="عن معهد دارين | أفضل أكاديمية للتعليم عن بعد في الكويت والخليج"
+                description="تعرف على معهد دارين، المؤسسة الرائدة في التعليم عن بعد في الكويت والسعودية. نقدم دروساً خصوصية ومراجعات نهائية وبرامج تحفيظ قرآن بمعايير عالمية."
+                keywords="عن معهد دارين, أكاديمية دارين للتعليم, التعليم عن بعد الكويت, دروس خصوصية أونلاين, معهد تعليمي الخليج, تأسيس ابتدائي, تحفيظ قرآن"
             />
             <PublicNavbar />
 
@@ -26,9 +27,10 @@ export const About = () => {
                         <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">معهد دارين | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight">
-                        نحن لا نُدرّس فقط،<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-700 via-red-600 to-red-900 py-1 inline-block">نحن نبني مستقبلاً</span>
+                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight relative">
+                        <span className="sr-only">عن معهد دارين للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
+                        <span aria-hidden="true">نحن لا نُدرّس فقط،<br /></span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-700 via-red-600 to-red-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
