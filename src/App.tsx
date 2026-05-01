@@ -167,26 +167,20 @@ function App() {
           >
             <Route path="dashboard" element={<DashboardRedirect />} />
             <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
-
-            {/* Parent Routes */}
             <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
+            <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
             <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
             <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
-
-            {/* Student Routes */}
-            <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
-
-            {/* Admin/Teacher Routes */}
-            <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
-            <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
-            <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
             <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
+            <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
+            <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
+            <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
+            <Route path="monthly-closing" element={<ProtectedRoute permission="monthly_closing"><MonthlyClosing /></ProtectedRoute>} />
             <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
             <Route path="schedule" element={<ProtectedRoute permission="schedule"><Schedule /></ProtectedRoute>} />
             <Route path="agenda" element={<ProtectedRoute permission="schedule"><Agenda /></ProtectedRoute>} />
             <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
             <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
-            <Route path="monthly-closing" element={<ProtectedRoute permission="finance"><MonthlyClosing /></ProtectedRoute>} />
             <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
             <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
             <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
@@ -209,7 +203,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
-    </div>
+    </>
   );
 }
 
