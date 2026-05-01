@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
-    MessageSquare, Users, Monitor, Loader2, AlertCircle, Volume2
+    MessageSquare, Users, Loader2, Volume2
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
@@ -26,9 +26,7 @@ export const Classroom = () => {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
     const [isCameraOff, setIsCameraOff] = useState(false);
-    const [isScreenSharing, setIsScreenSharing] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [viewerCount, setViewerCount] = useState(0);
     const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'waiting'>('connecting');
     const [needsInteraction, setNeedsInteraction] = useState(false);
@@ -78,25 +76,21 @@ export const Classroom = () => {
 
                 if (isTeacher) {
                     socket.on('student_joined', (data) => {
-                        console.log("Teacher: Student joined", data.studentId);
                         if (!peersRef.current.has(data.studentId)) {
                             createPeer(data.studentId, stream!);
                         }
                     });
 
                     socket.on('student_request', (data) => {
-                        console.log("Teacher: Received student signal", data.studentId);
                         peersRef.current.get(data.studentId)?.signal(data.signal);
                     });
 
-                    // Periodically announce presence to catch any late students
                     interval = setInterval(() => {
                         socket.emit('teacher_ready', { conversationId: roomName, teacherId: currentUser?.id });
                     }, 5000);
 
                 } else {
                     socket.on('teacher_signal', (data) => {
-                        console.log("Student: Received teacher signal");
                         if (!peersRef.current.has('teacher')) {
                             addPeer(data.signal, stream!);
                         } else {
@@ -104,15 +98,13 @@ export const Classroom = () => {
                         }
                     });
 
-                    // Student periodically asks to join until connected
                     interval = setInterval(() => {
                         if (connectionStatus !== 'connected') {
                             socket.emit('student_joined', { conversationId: roomName, studentId: currentUser?.id });
                         }
                     }, 3000);
                 }
-            } catch (err: any) {
-                setError(`خطأ: ${err.message}`);
+            } catch {
                 setLoading(false);
             }
         };
@@ -148,7 +140,7 @@ export const Classroom = () => {
             stream?.getTracks().forEach(t => t.stop());
             peersRef.current.forEach(p => p.destroy());
         };
-    }, [id, isTeacher, currentUser?.id]);
+    }, [id, isTeacher, currentUser?.id, socket, roomName, connectionStatus]);
 
     const handleLeave = () => { navigate(-1); };
 
@@ -167,7 +159,7 @@ export const Classroom = () => {
 
             <div className="flex-1 relative bg-black flex items-center justify-center">
                 {isTeacher ? (
-                    <video ref={localVideoRef} autoPlay muted playsInline className={cn("w-full h-full object-contain", !isScreenSharing && "-scale-x-100")} />
+                    <video ref={localVideoRef} autoPlay muted playsInline className="w-full h-full object-contain -scale-x-100" />
                 ) : (
                     <>
                         <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
