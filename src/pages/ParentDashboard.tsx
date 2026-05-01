@@ -20,6 +20,7 @@ import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
+import { LiveClasses } from '../components/dashboard/LiveClasses';
 
 export const ParentDashboard = () => {
     const { currentUser, adminPhone, logout } = useApp();
@@ -207,6 +208,11 @@ export const ParentDashboard = () => {
                     })}
                 </div>
             )}
+
+            {/* ═══════════════ LIVE CLASSES ═══════════════ */}
+            <div className="mb-6">
+                <LiveClasses />
+            </div>
 
             {/* ═══════════════ QUICK STATS ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">

@@ -18,6 +18,7 @@ import { TeacherSessionTimeline } from '../features/dashboard/components/Teacher
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
+import { LiveClasses } from '../components/dashboard/LiveClasses';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -70,6 +71,7 @@ export const Dashboard = () => {
                 {isTeacher ? (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in slide-in-from-bottom-4 duration-500">
                         <div className="lg:col-span-8 space-y-6">
+                            <LiveClasses />
                             <ModernAnnouncements />
                             
                             {(stats.todayTimeline || []).length > 0 && (
@@ -94,6 +96,9 @@ export const Dashboard = () => {
                     <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
                         {/* Urgent / Announcements Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-12">
+                                <LiveClasses />
+                            </div>
                             <div className="lg:col-span-12">
                                 <ModernAnnouncements />
                             </div>

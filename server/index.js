@@ -31,6 +31,7 @@ const appointmentsRouter = require('./routes/appointments');
 const { pushRouter, sendPushToUser } = require('./routes/push');
 const leadsRouter = require('./routes/leads');
 const blogRouter = require('./routes/blog');
+const liveRouter = require('./routes/live');
 
 
 
@@ -181,6 +182,7 @@ async function startServer() {
 
         apiRouter.use('/auth', authRouter);
         apiRouter.use('/blog', blogRouter);
+        apiRouter.use('/live', liveRouter);
 
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {

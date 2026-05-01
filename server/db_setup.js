@@ -96,6 +96,16 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS live_sessions (
+            id TEXT PRIMARY KEY,
+            teacherId TEXT NOT NULL,
+            teacherName TEXT NOT NULL,
+            title TEXT,
+            subject TEXT,
+            status TEXT DEFAULT 'active',
+            started_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         CREATE TABLE IF NOT EXISTS sessions (
             id TEXT PRIMARY KEY,
             studentId TEXT NOT NULL,
