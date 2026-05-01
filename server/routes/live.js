@@ -59,7 +59,8 @@ router.post('/start', checkRole(['admin', 'teacher']), async (req, res) => {
         const { title, subject, targetStudentId } = req.body;
         const id = genId();
         const teacherId = req.user.id;
-        const teacherName = req.user.name;
+        // JWT payload uses 'teacherName' for teachers, 'username' as fallback
+        const teacherName = req.user.teacherName || req.user.name || req.user.username || 'معلمة';
 
         // End any previous active sessions for this teacher
         await req.db.run(
