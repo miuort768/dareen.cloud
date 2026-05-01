@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
-    MessageSquare, Settings, Users, Share, 
-    Crown, Monitor, Loader2, AlertCircle, PlayCircle
+    MessageSquare, Users, Crown, Monitor, Loader2, AlertCircle
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
@@ -12,7 +11,7 @@ import Peer from 'peerjs';
 
 export const Classroom = () => {
     const { id } = useParams(); // Session ID
-    const { currentUser, showNotification } = useApp();
+    const { currentUser } = useApp();
     const navigate = useNavigate();
     
     const [stream, setStream] = useState<MediaStream | null>(null);
@@ -274,7 +273,6 @@ export const Classroom = () => {
                         <div className="absolute bottom-6 right-6 w-64 aspect-video border-4 border-gray-950 shadow-2xl bg-gray-900 z-50">
                              <div className="absolute top-2 left-2 bg-red-600 text-[8px] px-2 py-0.5 font-black uppercase">عرض المعلمة</div>
                              <video 
-                                srcObject={stream} // Fixed: pass directly if possible or use ref
                                 autoPlay 
                                 muted 
                                 playsInline 
