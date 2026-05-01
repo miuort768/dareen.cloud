@@ -673,6 +673,23 @@ async function setupDatabase() {
     try { await db.run('ALTER TABLE teacher_invoices ADD COLUMN teacherId TEXT'); } catch(e) {}
     try { await db.run('ALTER TABLE sessions ADD COLUMN teacherPrice INTEGER DEFAULT 0'); } catch(e) {}
 
+    // Migration: live_sessions table
+    try { await db.run(`
+        CREATE TABLE IF NOT EXISTS live_sessions (
+            id TEXT PRIMARY KEY,
+            teacherId TEXT NOT NULL,
+            teacherName TEXT NOT NULL,
+            title TEXT,
+            subject TEXT,
+            status TEXT DEFAULT 'active',
+            targetStudentId TEXT,
+            started_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    `); } catch(e) {}
+    try { await db.run('ALTER TABLE live_sessions ADD COLUMN targetStudentId TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE live_sessions ADD COLUMN subject TEXT'); } catch(e) {}
+    try { await db.run('ALTER TABLE live_sessions ADD COLUMN title TEXT'); } catch(e) {}
+
     // Auto-populate ALL user credentials (Students, Teachers, Parents) in one safe block
     console.log('Verifying all user credentials...');
     try {
