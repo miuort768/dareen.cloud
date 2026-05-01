@@ -13,6 +13,7 @@ import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ran
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PageLoader } from '../components/ui/PageLoader';
+import { LiveClasses } from '../components/dashboard/LiveClasses';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -184,6 +185,9 @@ export const StudentDashboard = () => {
                     </div>
                 </div>
             )}
+
+            {/* ═══════════════ LIVE CLASSES ═══════════════ */}
+            <LiveClasses />
 
             {/* ═══════════════ NEXT CLASS CARD ═══════════════ */}
             <motion.div 
