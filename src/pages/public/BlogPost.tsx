@@ -95,7 +95,19 @@ export const BlogPost = () => {
                 <article className="container mx-auto px-4 max-w-3xl">
                     <div 
                         className="prose prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
-                        dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
+                        dangerouslySetInnerHTML={{ 
+                            __html: post.content
+                                .split('\n')
+                                .map((line: string) => {
+                                    const trimmed = line.trim();
+                                    const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+                                    if (imgRegex.test(trimmed)) {
+                                        return `<img src="${trimmed}" alt="Article Image" class="w-full h-auto rounded-none shadow-lg my-8" />`;
+                                    }
+                                    return line;
+                                })
+                                .join('<br/>') 
+                        }}
                     />
                     
                     {/* Share & CTA */}

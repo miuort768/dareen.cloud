@@ -256,6 +256,18 @@ export const AdminBlog = () => {
                                         placeholder="https://..."
                                     />
                                 </div>
+                                {currentPost.coverImage && (
+                                    <div className="mt-2 h-32 w-full border border-slate-100 dark:border-slate-800 overflow-hidden">
+                                        <img 
+                                            src={currentPost.coverImage} 
+                                            alt="Preview" 
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';
+                                            }}
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             <div className="space-y-2">
