@@ -69,6 +69,56 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Automated SEO Sitemap Generator
+app.get('/sitemap.xml', (req, res) => {
+    try {
+        const baseUrl = 'https://dareen-edu.com';
+        const date = new Date().toISOString().split('T')[0];
+        
+        // Dynamic public routes
+        const routes = [
+            { url: '/', priority: '1.0', changefreq: 'daily' },
+            { url: '/courses', priority: '0.9', changefreq: 'weekly' },
+            { url: '/about', priority: '0.8', changefreq: 'monthly' },
+            { url: '/contact', priority: '0.8', changefreq: 'monthly' },
+            { url: '/login', priority: '0.5', changefreq: 'monthly' }
+        ];
+
+        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+        
+        routes.forEach(route => {
+            xml += '  <url>\n';
+            xml += `    <loc>${baseUrl}${route.url}</loc>\n`;
+            xml += `    <lastmod>${date}</lastmod>\n`;
+            xml += `    <changefreq>${route.changefreq}</changefreq>\n`;
+            xml += `    <priority>${route.priority}</priority>\n`;
+            xml += '  </url>\n';
+        });
+        
+        xml += '</urlset>';
+
+        res.header('Content-Type', 'application/xml');
+        res.send(xml);
+    } catch (err) {
+        console.error('Sitemap generation error:', err);
+        res.status(500).end();
+    }
+});
+
+// Automated SEO Robots.txt
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send(`User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /login
+
+Sitemap: https://dareen-edu.com/sitemap.xml
+`);
+});
+
 // Production-Grade Security Headers with Helmet
 app.use(helmet({
     contentSecurityPolicy: {
