@@ -103,6 +103,7 @@ async function setupDatabase() {
             title TEXT,
             subject TEXT,
             status TEXT DEFAULT 'active',
+            targetStudentId TEXT,
             started_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 

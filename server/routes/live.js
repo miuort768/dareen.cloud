@@ -11,31 +11,29 @@ router.get('/active', authMiddleware, async (req, res) => {
         let params = [];
 
         if (permissions?.includes('*')) {
-            // Admin sees all active sessions
             query = 'SELECT * FROM live_sessions WHERE status = "active" ORDER BY started_at DESC';
         } else if (role === 'teacher') {
-            // Teacher sees only their own active session
             query = 'SELECT * FROM live_sessions WHERE teacherId = ? AND status = "active"';
             params = [id];
         } else if (role === 'student') {
-            // Student sees sessions from teachers they are enrolled with
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
+                AND (targetStudentId IS NULL OR targetStudentId = ?)
                 AND teacherId IN (SELECT teacherId FROM enrollments WHERE studentId = ?)
             `;
-            params = [id];
+            params = [id, id];
         } else if (role === 'parent') {
-            // Parent sees sessions from teachers their children are enrolled with
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
+                AND (targetStudentId IS NULL OR targetStudentId IN (SELECT id FROM students WHERE parentId = ?))
                 AND teacherId IN (
                     SELECT teacherId FROM enrollments 
                     WHERE studentId IN (SELECT id FROM students WHERE parentId = ?)
                 )
             `;
-            params = [id];
+            params = [id, id];
         } else {
             return res.json([]);
         }
@@ -50,7 +48,7 @@ router.get('/active', authMiddleware, async (req, res) => {
 // Start a live session (Teacher only)
 router.post('/start', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
     try {
-        const { title, subject } = req.body;
+        const { title, subject, targetStudentId } = req.body;
         const id = uuidv4();
         const teacherId = req.user.id;
         const teacherName = req.user.name;
@@ -59,9 +57,9 @@ router.post('/start', authMiddleware, checkRole(['admin', 'teacher']), async (re
         await req.db.run('UPDATE live_sessions SET status = "ended" WHERE teacherId = ? AND status = "active"', [teacherId]);
 
         await req.db.run(
-            `INSERT INTO live_sessions (id, teacherId, teacherName, title, subject)
-             VALUES (?, ?, ?, ?, ?)`,
-            [id, teacherId, teacherName, title, subject]
+            `INSERT INTO live_sessions (id, teacherId, teacherName, title, subject, targetStudentId)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [id, teacherId, teacherName, title, subject, targetStudentId]
         );
 
         res.status(201).json({ id, teacherId, teacherName });

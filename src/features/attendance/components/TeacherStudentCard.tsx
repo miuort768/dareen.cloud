@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, MessageSquare } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../../../lib/api';
 
 interface TeacherStudentCardProps {
     student: Student;
@@ -132,6 +134,21 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         onUpdateSchedule(student, student.enrollments.indexOf(en), newSch);
         setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' });
         setEditSlotIndex(null);
+    };
+
+    const navigate = useNavigate();
+
+    const startLiveStream = async () => {
+        try {
+            const res = await api.post<any>('/live/start', {
+                title: `حصة مباشرة: ${student.name}`,
+                subject: en.subject,
+                targetStudentId: student.id
+            });
+            navigate(`/classroom/${res.id}`);
+        } catch (err) {
+            alert('فشل بدء البث المباشر');
+        }
     };
 
     return (
@@ -287,6 +304,16 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         className="w-full bg-transparent border-none focus:ring-0 text-[10px] font-medium text-slate-700 dark:text-slate-300 placeholder:text-amber-300 resize-none min-h-[60px] p-0"
                     />
                 </div>
+
+                {/* Live Stream Quick Start */}
+                <button 
+                    onClick={startLiveStream}
+                    className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-600/20 transition-all active:scale-95 group"
+                >
+                    <Radio size={14} className="animate-pulse" />
+                    <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
+                    <Play size={10} className="fill-current opacity-50 group-hover:translate-x-[-2px] transition-transform" />
+                </button>
 
                 {/* Attendance Footer */}
                 <div className="pt-4 border-t border-slate-50 dark:border-slate-800 space-y-3 mt-auto">
