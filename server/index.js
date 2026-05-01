@@ -182,7 +182,6 @@ async function startServer() {
 
         apiRouter.use('/auth', authRouter);
         apiRouter.use('/blog', blogRouter);
-        apiRouter.use('/live', liveRouter);
 
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {
@@ -211,6 +210,7 @@ async function startServer() {
         apiRouter.use(sanitizeInput);
         apiRouter.use(activityAuditor);
 
+        apiRouter.use('/live', liveRouter);
         apiRouter.use('/students', studentRouter);
         apiRouter.use('/teachers', teacherRouter);
         apiRouter.use('/parents', parentRouter);

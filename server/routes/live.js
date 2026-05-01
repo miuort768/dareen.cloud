@@ -1,21 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
-const { authMiddleware, checkRole } = require('../middleware/auth');
+const crypto = require('crypto');
+const { checkRole } = require('../middleware/auth');
 
-// Get active live sessions (Filtered for privacy)
-router.get('/active', authMiddleware, async (req, res) => {
+// Simple ID generator (no uuid dependency needed)
+const genId = () => crypto.randomBytes(16).toString('hex');
+
+// GET /api/live/active — Filtered by role
+router.get('/active', async (req, res) => {
     try {
         const { id, role, permissions } = req.user;
         let query = '';
         let params = [];
 
         if (permissions?.includes('*')) {
+            // Admin sees all active sessions
             query = 'SELECT * FROM live_sessions WHERE status = "active" ORDER BY started_at DESC';
         } else if (role === 'teacher') {
+            // Teacher sees only their own sessions
             query = 'SELECT * FROM live_sessions WHERE teacherId = ? AND status = "active"';
             params = [id];
         } else if (role === 'student') {
+            // Student sees sessions targeted to them from their enrolled teachers
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
@@ -24,6 +30,7 @@ router.get('/active', authMiddleware, async (req, res) => {
             `;
             params = [id, id];
         } else if (role === 'parent') {
+            // Parent sees sessions targeted to their children from enrolled teachers
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
@@ -41,37 +48,45 @@ router.get('/active', authMiddleware, async (req, res) => {
         const sessions = await req.db.all(query, params);
         res.json(sessions);
     } catch (err) {
+        console.error('[LIVE] /active error:', err.message);
         res.status(500).json({ error: err.message });
     }
 });
 
-// Start a live session (Teacher only)
-router.post('/start', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
+// POST /api/live/start — Teacher or Admin starts a session
+router.post('/start', checkRole(['admin', 'teacher']), async (req, res) => {
     try {
         const { title, subject, targetStudentId } = req.body;
-        const id = uuidv4();
+        const id = genId();
         const teacherId = req.user.id;
         const teacherName = req.user.name;
 
         // End any previous active sessions for this teacher
-        await req.db.run('UPDATE live_sessions SET status = "ended" WHERE teacherId = ? AND status = "active"', [teacherId]);
+        await req.db.run(
+            'UPDATE live_sessions SET status = "ended" WHERE teacherId = ? AND status = "active"',
+            [teacherId]
+        );
 
         await req.db.run(
             `INSERT INTO live_sessions (id, teacherId, teacherName, title, subject, targetStudentId)
              VALUES (?, ?, ?, ?, ?, ?)`,
-            [id, teacherId, teacherName, title, subject, targetStudentId]
+            [id, teacherId, teacherName, title || `بث مباشر`, subject || '', targetStudentId || null]
         );
 
         res.status(201).json({ id, teacherId, teacherName });
     } catch (err) {
+        console.error('[LIVE] /start error:', err.message);
         res.status(500).json({ error: err.message });
     }
 });
 
-// End a live session (Teacher only)
-router.post('/end/:id', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
+// POST /api/live/end/:id — End a session
+router.post('/end/:id', checkRole(['admin', 'teacher']), async (req, res) => {
     try {
-        await req.db.run('UPDATE live_sessions SET status = "ended" WHERE id = ?', [req.params.id]);
+        await req.db.run(
+            'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
+            [req.params.id, req.user.id]
+        );
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
