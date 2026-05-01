@@ -5,7 +5,7 @@ import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import { api } from '../../lib/api';
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -15,8 +15,8 @@ export const BlogPost = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://api.dareen-edu.com/api'}/blog/${slug}`);
-                setPost(response.data);
+                const data = await api.get<any>(`/blog/${slug}`);
+                setPost(data);
             } catch (err) {
                 console.error('Failed to fetch blog post:', err);
                 const staticPost = staticPosts.find(p => p.slug === slug);

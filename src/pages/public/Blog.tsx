@@ -5,7 +5,7 @@ import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Calendar, User, ArrowLeft, BookOpen, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import { api } from '../../lib/api';
 
 export const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -14,8 +14,8 @@ export const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://api.dareen-edu.com/api'}/blog`);
-                setPosts(response.data.length > 0 ? response.data : staticPosts);
+                const data = await api.get<any[]>('/blog');
+                setPosts(data.length > 0 ? data : staticPosts);
             } catch (err) {
                 console.error('Failed to fetch blog posts:', err);
                 setPosts(staticPosts);

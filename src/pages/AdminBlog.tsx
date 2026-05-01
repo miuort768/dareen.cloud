@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useApp } from '../context/AppContext';
-import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X } from 'lucide-react';
-import { cn } from '../lib/utils';
-import { toast } from 'react-hot-toast';
+import { useApp } from '../context/useApp';
+import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen } from 'lucide-react';
+import { api } from '../lib/api';
 
 interface BlogPost {
     id: string;
@@ -18,7 +17,7 @@ interface BlogPost {
 }
 
 export const AdminBlog = () => {
-    const { api } = useApp();
+    const { showNotification } = useApp();
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -33,10 +32,10 @@ export const AdminBlog = () => {
     const fetchPosts = async () => {
         try {
             setLoading(true);
-            const response = await api.get('/blog');
-            setPosts(response.data);
+            const data = await api.get<BlogPost[]>('/blog');
+            setPosts(data);
         } catch (err) {
-            toast.error('فشل في جلب المقالات');
+            showNotification('فشل في جلب المقالات', 'error');
         } finally {
             setLoading(false);
         }
@@ -65,17 +64,17 @@ export const AdminBlog = () => {
         if (!window.confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
         try {
             await api.delete(`/blog/${id}`);
-            toast.success('تم حذف المقال بنجاح');
+            showNotification('تم حذف المقال بنجاح', 'success');
             setPosts(posts.filter(p => p.id !== id));
         } catch (err) {
-            toast.error('فشل حذف المقال');
+            showNotification('فشل حذف المقال', 'error');
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!currentPost?.title || !currentPost?.slug) {
-            toast.error('يرجى ملء الحقول الأساسية');
+            showNotification('يرجى ملء الحقول الأساسية', 'warning');
             return;
         }
 
@@ -83,15 +82,15 @@ export const AdminBlog = () => {
             setSubmitting(true);
             if (currentPost.id) {
                 await api.put(`/blog/${currentPost.id}`, currentPost);
-                toast.success('تم تحديث المقال بنجاح');
+                showNotification('تم تحديث المقال بنجاح', 'success');
             } else {
                 await api.post('/blog', currentPost);
-                toast.success('تم إضافة المقال بنجاح');
+                showNotification('تم إضافة المقال بنجاح', 'success');
             }
             setIsModalOpen(false);
             fetchPosts();
         } catch (err: any) {
-            toast.error(err.response?.data?.error || 'فشل حفظ المقال');
+            showNotification(err.message || 'فشل حفظ المقال', 'error');
         } finally {
             setSubmitting(false);
         }
