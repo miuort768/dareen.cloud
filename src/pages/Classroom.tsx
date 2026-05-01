@@ -96,7 +96,7 @@ export const Classroom = () => {
 
                 peer.on('open', (myId) => {
                     console.log('[Peer] Connected with ID:', myId);
-                    setConnectionStatus('waiting');
+                    setConnectionStatus(isTeacher ? 'connected' : 'waiting');
                     if (!isTeacher) {
                         callTeacherWithRetry(peer!, stream!);
                     }
