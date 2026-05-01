@@ -313,6 +313,21 @@ async function startServer() {
             pingInterval: 25000
         });
 
+        // ── Private PeerJS Signaling Server ──────────────────────────────────
+        try {
+            const { ExpressPeerServer } = require('peer');
+            const peerServer = ExpressPeerServer(server, {
+                path: '/',
+                allow_discovery: false,
+                proxied: true
+            });
+            app.use('/api/peerjs', peerServer);
+            console.log('✅ Private PeerJS signaling server running at /api/peerjs');
+        } catch (e) {
+            console.warn('⚠️  PeerJS package not found, using public server as fallback:', e.message);
+        }
+        // ─────────────────────────────────────────────────────────────────────
+
         const activeSessions = new Map(); // studentId -> sessionData
 
         // Make io accessible to routers

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
@@ -6,15 +6,29 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
-import { api } from '../lib/api';
 import Peer from 'peerjs';
 
+// Private PeerJS server config — signaling runs on our own VPS
+const PEER_CONFIG = {
+    host: window.location.hostname, // same domain as the app
+    port: window.location.port ? Number(window.location.port) : (window.location.protocol === 'https:' ? 443 : 80),
+    path: '/api/peerjs',
+    secure: window.location.protocol === 'https:',
+    config: {
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+        ]
+    },
+    debug: 0
+};
+
 export const Classroom = () => {
-    const { id } = useParams(); // Session ID
+    const { id } = useParams();
     const { currentUser } = useApp();
     const navigate = useNavigate();
-    
-    const [stream, setStream] = useState<MediaStream | null>(null);
+
+    const [localStream, setLocalStream] = useState<MediaStream | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
     const [isCameraOff, setIsCameraOff] = useState(true);
@@ -22,306 +36,379 @@ export const Classroom = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [viewerCount, setViewerCount] = useState(0);
-    
-    const myVideoRef = useRef<HTMLVideoElement>(null);
+    const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'waiting'>('connecting');
+
+    const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peerRef = useRef<Peer | null>(null);
-    const callsRef = useRef<any[]>([]); // For Teacher: Track all student calls
-    const singleCallRef = useRef<any>(null); // For Student: Track single teacher call
+    const callsRef = useRef<Map<string, any>>(new Map()); // peerId -> call
+    const screenTrackRef = useRef<MediaStreamTrack | null>(null);
+
+    const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+
+    // Attach stream to video element safely
+    const attachStream = (videoEl: HTMLVideoElement | null, stream: MediaStream | null) => {
+        if (!videoEl || !stream) return;
+        if (videoEl.srcObject !== stream) {
+            videoEl.srcObject = stream;
+        }
+        videoEl.play().catch(() => {
+            // Retry on user interaction
+            const retry = () => { videoEl.play().catch(() => {}); document.removeEventListener('click', retry); };
+            document.addEventListener('click', retry);
+        });
+    };
 
     useEffect(() => {
-        let currentPeer: Peer | null = null;
-        let currentStream: MediaStream | null = null;
+        attachStream(remoteVideoRef.current, remoteStream);
+    }, [remoteStream]);
 
-        const initMedia = async () => {
+    useEffect(() => {
+        attachStream(localVideoRef.current, localStream);
+    }, [localStream]);
+
+    useEffect(() => {
+        let peer: Peer | null = null;
+        let stream: MediaStream | null = null;
+
+        const init = async () => {
             try {
-                const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
-                
-                // If student/parent, we don't necessarily need their camera/mic unless they want to interact
-                // For a broadcast system, we can start with empty stream for viewers to save bandwidth/privacy
-                let initialStream: MediaStream;
-                
                 if (isTeacher) {
-                    initialStream = await navigator.mediaDevices.getUserMedia({
+                    // Teacher: get camera + mic
+                    stream = await navigator.mediaDevices.getUserMedia({
                         video: true,
-                        audio: { echoCancellation: true, noiseSuppression: true }
+                        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
                     });
-                    // Initially disable video if isCameraOff is true
-                    initialStream.getVideoTracks().forEach(t => t.enabled = !isCameraOff);
+                    // Disable video by default (screen share is primary)
+                    stream.getVideoTracks().forEach(t => t.enabled = false);
                 } else {
-                    // Students join with audio only or nothing for now to simplify
-                    initialStream = await navigator.mediaDevices.getUserMedia({
-                        video: false,
-                        audio: true
-                    });
+                    // Student/Parent: audio only for joining
+                    stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
                 }
-                
-                currentStream = initialStream;
-                setStream(initialStream);
+
+                setLocalStream(stream);
                 setLoading(false);
 
-                // Peer ID Setup
-                // Teacher: Fixed ID based on session
-                // Student: Unique ID
-                const peerId = isTeacher ? `teacher-stream-${id}` : `viewer-${currentUser?.id || Math.random().toString(36).substr(2, 9)}`;
-                currentPeer = new Peer(peerId);
-                peerRef.current = currentPeer;
+                const peerId = isTeacher
+                    ? `dareen-teacher-${id}`
+                    : `dareen-viewer-${currentUser?.id || Math.random().toString(36).slice(2, 9)}-${Date.now()}`;
 
-                currentPeer.on('open', (id) => {
-                    console.log('Peer ID Open:', id);
+                peer = new Peer(peerId, PEER_CONFIG);
+
+                peerRef.current = peer;
+
+                peer.on('open', (myId) => {
+                    console.log('[Peer] Connected with ID:', myId);
+                    setConnectionStatus('waiting');
+                });
+
+                peer.on('error', (err) => {
+                    console.error('[Peer] Error:', err.type, err.message);
+                    if (err.type === 'unavailable-id') {
+                        // ID taken - teacher already exists, just join
+                        if (!isTeacher) {
+                            setTimeout(() => callTeacher(peer!, stream!), 2000);
+                        }
+                    } else if (err.type === 'peer-unavailable') {
+                        setConnectionStatus('waiting');
+                    } else {
+                        setError(`خطأ في الاتصال: ${err.type}`);
+                    }
                 });
 
                 if (isTeacher) {
-                    // TEACHER LOGIC: Accept calls from multiple students
-                    currentPeer.on('call', (call) => {
-                        console.log('Receiving call from student...');
-                        call.answer(currentStream!); // Send teacher's stream (camera or screen)
-                        callsRef.current.push(call);
-                        setViewerCount(prev => prev + 1);
-                        
-                        call.on('close', () => {
-                            callsRef.current = callsRef.current.filter(c => c !== call);
-                            setViewerCount(prev => Math.max(0, prev - 1));
+                    // Teacher waits for incoming calls from students
+                    peer.on('call', (incomingCall) => {
+                        console.log('[Teacher] Incoming call from:', incomingCall.peer);
+                        incomingCall.answer(stream!);
+                        callsRef.current.set(incomingCall.peer, incomingCall);
+                        setViewerCount(callsRef.current.size);
+                        setConnectionStatus('connected');
+
+                        incomingCall.on('close', () => {
+                            callsRef.current.delete(incomingCall.peer);
+                            setViewerCount(callsRef.current.size);
+                        });
+                        incomingCall.on('error', (e) => {
+                            console.error('[Teacher] Call error:', e);
+                            callsRef.current.delete(incomingCall.peer);
                         });
                     });
                 } else {
-                    // STUDENT/PARENT LOGIC: Call the teacher
-                    // Delay slightly to ensure teacher peer is ready
-                    setTimeout(() => {
-                        const call = currentPeer?.call(`teacher-stream-${id}`, initialStream);
-                        if (call) {
-                            singleCallRef.current = call;
-                            call.on('stream', (teacherStream) => {
-                                console.log("📡 Teacher stream received");
-                                handleRemoteStream(teacherStream);
-                            });
-                            call.on('error', (err) => {
-                                console.error('Call error:', err);
-                                setError("فشل الاتصال بالمعلمة. قد يكون البث قد انتهى.");
-                            });
-                        }
-                    }, 2000);
+                    // Student calls the teacher after peer is open
+                    peer.on('open', () => {
+                        setTimeout(() => callTeacher(peer!, stream!), 1500);
+                    });
                 }
             } catch (err: any) {
-                console.error("Media Error:", err);
-                setError("يرجى السماح بالوصول للميكروفون والكاميرا للمشاركة في البث.");
+                console.error('[Init] Error:', err);
+                if (err.name === 'NotAllowedError') {
+                    setError('يرجى السماح بالوصول للكاميرا والميكروفون في إعدادات المتصفح، ثم أعد تحميل الصفحة.');
+                } else {
+                    setError(`خطأ: ${err.message}`);
+                }
                 setLoading(false);
             }
         };
 
-        const handleRemoteStream = (userRemoteStream: MediaStream) => {
-            setRemoteStream(userRemoteStream);
-            if (remoteVideoRef.current) {
-                remoteVideoRef.current.srcObject = userRemoteStream;
-                remoteVideoRef.current.play().catch(e => console.error("Play error:", e));
+        const callTeacher = (peer: Peer, myStream: MediaStream) => {
+            console.log('[Student] Calling teacher:', `dareen-teacher-${id}`);
+            const call = peer.call(`dareen-teacher-${id}`, myStream);
+            if (!call) {
+                setError('لم يتم العثور على بث المعلمة. قد تكون الحصة لم تبدأ بعد.');
+                return;
             }
+            call.on('stream', (teacherStream) => {
+                console.log('[Student] Received teacher stream:', teacherStream.getTracks());
+                setRemoteStream(teacherStream);
+                setConnectionStatus('connected');
+            });
+            call.on('error', (e) => {
+                console.error('[Student] Call error:', e);
+                setConnectionStatus('waiting');
+            });
+            call.on('close', () => {
+                console.log('[Student] Call closed');
+                setRemoteStream(null);
+                setConnectionStatus('waiting');
+            });
         };
 
-        initMedia();
+        init();
 
         return () => {
-            currentStream?.getTracks().forEach(track => track.stop());
-            currentPeer?.destroy();
-            if (currentUser?.role === 'teacher') {
-                api.post(`/live/end/${id}`).catch(() => {});
-            }
+            stream?.getTracks().forEach(t => t.stop());
+            peer?.destroy();
+            peerRef.current = null;
         };
-    }, [id, currentUser]);
+    }, [id, isTeacher]);
 
     const startScreenShare = async () => {
-        if (currentUser?.role !== 'teacher' && currentUser?.role !== 'admin') return;
-        
         try {
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ 
+                video: { frameRate: 30 },
+                audio: true 
+            });
+            const screenVideoTrack = screenStream.getVideoTracks()[0];
+            const screenAudioTrack = screenStream.getAudioTracks()[0];
+            screenTrackRef.current = screenVideoTrack;
             setIsScreenSharing(true);
-            
-            const screenTrack = screenStream.getVideoTracks()[0];
-            
-            // Replace track for all active student calls
-            callsRef.current.forEach(call => {
-                const videoSender = call.peerConnection.getSenders().find((s: any) => s.track?.kind === 'video');
-                if (videoSender) {
-                    videoSender.replaceTrack(screenTrack);
+
+            // Replace video track in all active calls
+            callsRef.current.forEach((call) => {
+                const senders = call.peerConnection?.getSenders() || [];
+                const videoSender = senders.find((s: RTCRtpSender) => s.track?.kind === 'video');
+                if (videoSender) videoSender.replaceTrack(screenVideoTrack);
+                else call.peerConnection?.addTrack(screenVideoTrack, screenStream);
+
+                if (screenAudioTrack) {
+                    const audioSender = senders.find((s: RTCRtpSender) => s.track?.kind === 'audio');
+                    if (audioSender) audioSender.replaceTrack(screenAudioTrack);
                 }
             });
 
-            // Local preview
-            if (myVideoRef.current) {
-                myVideoRef.current.srcObject = screenStream;
-            }
+            // Show screen in local preview
+            const previewStream = new MediaStream([screenVideoTrack]);
+            if (screenAudioTrack) previewStream.addTrack(screenAudioTrack);
+            setLocalStream(previewStream);
 
-            screenTrack.onended = () => {
-                stopScreenShare();
-            };
-        } catch (err) {
-            console.error("Screen share error:", err);
+            screenVideoTrack.onended = () => stopScreenShare();
+        } catch (err: any) {
+            if (err.name !== 'NotAllowedError') {
+                console.error('[ScreenShare] Error:', err);
+            }
             setIsScreenSharing(false);
         }
     };
 
-    const stopScreenShare = () => {
+    const stopScreenShare = useCallback(() => {
+        screenTrackRef.current?.stop();
+        screenTrackRef.current = null;
         setIsScreenSharing(false);
-        if (stream) {
-            const videoTrack = stream.getVideoTracks()[0];
-            callsRef.current.forEach(call => {
-                const videoSender = call.peerConnection.getSenders().find((s: any) => s.track?.kind === 'video');
-                if (videoSender) videoSender.replaceTrack(videoTrack);
-            });
-            if (myVideoRef.current) myVideoRef.current.srcObject = stream;
+
+        // Revert to camera if on
+        if (localStream) {
+            const camTrack = localStream.getVideoTracks()[0];
+            if (camTrack) {
+                callsRef.current.forEach((call) => {
+                    const videoSender = call.peerConnection?.getSenders()
+                        .find((s: RTCRtpSender) => s.track?.kind === 'video');
+                    if (videoSender) videoSender.replaceTrack(camTrack);
+                });
+            }
+            if (localVideoRef.current) localVideoRef.current.srcObject = localStream;
         }
-    };
+    }, [localStream]);
 
     const toggleMute = () => {
-        if (stream) {
-            stream.getAudioTracks()[0].enabled = isMuted;
-            setIsMuted(!isMuted);
+        if (localStream) {
+            const audioTrack = localStream.getAudioTracks()[0];
+            if (audioTrack) {
+                audioTrack.enabled = isMuted;
+                setIsMuted(!isMuted);
+            }
         }
     };
 
     const toggleCamera = () => {
-        if (stream && stream.getVideoTracks().length > 0) {
-            const newState = !isCameraOff;
-            stream.getVideoTracks()[0].enabled = !newState;
-            setIsCameraOff(newState);
+        if (localStream) {
+            const videoTrack = localStream.getVideoTracks()[0];
+            if (videoTrack) {
+                videoTrack.enabled = isCameraOff;
+                setIsCameraOff(!isCameraOff);
+            }
         }
+    };
+
+    const handleLeave = () => {
+        if (isTeacher) {
+            const token = localStorage.getItem('auth_token');
+            fetch(`/api/live/end/${id}`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` }
+            }).catch(() => {});
+        }
+        navigate(-1);
     };
 
     if (error) return (
         <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
-            <div className="w-16 h-16 bg-red-600/20 text-red-600 rounded-full flex items-center justify-center mb-6">
-                <AlertCircle size={32} />
-            </div>
-            <h1 className="text-2xl font-black text-white mb-4">خطأ في الاتصال</h1>
-            <p className="text-gray-400 mb-8 max-w-md">{error}</p>
-            <button onClick={() => navigate(-1)} className="bg-white text-black px-10 py-3 font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all">العودة للخلف</button>
+            <AlertCircle size={48} className="text-red-500 mb-6" />
+            <h1 className="text-xl font-black text-white mb-4">خطأ في الاتصال</h1>
+            <p className="text-gray-400 mb-8 max-w-md text-sm leading-relaxed">{error}</p>
+            <button onClick={() => navigate(-1)} className="bg-white text-black px-10 py-3 font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all">
+                العودة
+            </button>
         </div>
     );
 
     if (loading) return (
         <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center" dir="rtl">
             <Loader2 className="w-12 h-12 text-red-600 animate-spin mb-6" />
-            <p className="text-white/40 font-black uppercase tracking-[0.3em]">جاري الاتصال بالبث المباشر...</p>
+            <p className="text-white/40 font-black uppercase tracking-[0.3em]">جاري الاتصال...</p>
         </div>
     );
 
-    const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
-
     return (
         <div className="fixed inset-0 bg-gray-950 text-white flex flex-col overflow-hidden" dir="rtl">
-            {/* Top Navigation */}
-            <div className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-black/40 backdrop-blur-xl z-50">
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 px-3 py-1 bg-red-600 text-white rounded-none">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">LIVE STREAM</span>
+            {/* Header */}
+            <div className="h-14 border-b border-white/10 flex items-center justify-between px-4 bg-black/40 backdrop-blur-xl z-50 shrink-0">
+                <div className="flex items-center gap-3">
+                    <div className={cn(
+                        "flex items-center gap-2 px-3 py-1 text-white text-[10px] font-black uppercase tracking-widest",
+                        connectionStatus === 'connected' ? "bg-red-600" : "bg-yellow-600"
+                    )}>
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                        {connectionStatus === 'connected' ? 'LIVE' : 'بانتظار الاتصال...'}
                     </div>
-                    <h2 className="text-sm font-black hidden md:block">البث المباشر لأكاديمية دارين</h2>
-                </div>
-                
-                <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2 text-xs text-white/40">
-                        <Users size={16} />
-                        <span className="font-bold">{viewerCount} مشاهد</span>
-                    </div>
-                    <button onClick={() => navigate(-1)} className="p-2 bg-red-600 hover:bg-red-700 transition-all">
-                        <PhoneOff size={20} />
-                    </button>
-                </div>
-            </div>
-
-            {/* Main Streaming Area */}
-            <div className="flex-1 relative flex flex-col lg:flex-row">
-                <div className="flex-1 bg-black relative flex items-center justify-center overflow-hidden">
-                    {isTeacher ? (
-                        <div className="w-full h-full relative">
-                            <video 
-                                ref={myVideoRef} 
-                                autoPlay 
-                                muted 
-                                playsInline 
-                                className={cn("w-full h-full object-contain", !isScreenSharing && "-scale-x-100")}
-                            />
-                            {isCameraOff && !isScreenSharing && (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
-                                    <div className="w-32 h-32 bg-white/5 rounded-full flex items-center justify-center border-4 border-white/10 mb-6">
-                                        <Crown size={64} className="text-white/10" />
-                                    </div>
-                                    <p className="text-white/40 font-black uppercase tracking-widest">الكاميرا متوقفة</p>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="w-full h-full relative">
-                            {remoteStream ? (
-                                <video 
-                                    ref={remoteVideoRef} 
-                                    autoPlay 
-                                    playsInline 
-                                    className="w-full h-full object-contain shadow-2xl"
-                                />
-                            ) : (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
-                                    <Loader2 className="w-12 h-12 text-red-600 animate-spin mb-6" />
-                                    <p className="text-white/40 font-black uppercase tracking-widest">بانتظار بث المعلمة...</p>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {/* Local Small Preview for Teacher */}
-                    {isTeacher && isScreenSharing && (
-                        <div className="absolute bottom-6 right-6 w-64 aspect-video border-4 border-gray-950 shadow-2xl bg-gray-900 z-50">
-                             <div className="absolute top-2 left-2 bg-red-600 text-[8px] px-2 py-0.5 font-black uppercase">عرض المعلمة</div>
-                             <video 
-                                autoPlay 
-                                muted 
-                                playsInline 
-                                className="w-full h-full object-cover"
-                                ref={(el) => { if (el) el.srcObject = stream; }}
-                            />
+                    {isTeacher && (
+                        <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                            <Users size={14} />
+                            <span>{viewerCount} مشاهد</span>
                         </div>
                     )}
                 </div>
+                <button onClick={handleLeave} className="p-2 bg-red-600 hover:bg-red-700 transition-all rounded">
+                    <PhoneOff size={18} />
+                </button>
             </div>
 
-            {/* Controls Bar */}
-            <div className="h-28 bg-black/60 backdrop-blur-2xl border-t border-white/10 flex items-center justify-center gap-6 px-6">
+            {/* Main video area */}
+            <div className="flex-1 relative bg-black overflow-hidden">
+                {isTeacher ? (
+                    // Teacher sees their own stream (camera or screen share)
+                    <>
+                        <video
+                            ref={localVideoRef}
+                            autoPlay muted playsInline
+                            className={cn(
+                                "w-full h-full object-contain",
+                                !isScreenSharing && !isCameraOff && "-scale-x-100"
+                            )}
+                        />
+                        {(isCameraOff && !isScreenSharing) && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
+                                <Crown size={80} className="text-white/10 mb-4" />
+                                <p className="text-white/30 font-black uppercase tracking-widest text-sm">
+                                    {isScreenSharing ? 'مشاركة الشاشة جارية' : 'الكاميرا متوقفة — شارك شاشتك للبدء'}
+                                </p>
+                            </div>
+                        )}
+                    </>
+                ) : (
+                    // Student sees teacher's stream
+                    <>
+                        <video
+                            ref={remoteVideoRef}
+                            autoPlay playsInline
+                            className="w-full h-full object-contain"
+                        />
+                        {connectionStatus !== 'connected' && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
+                                <Loader2 size={48} className="text-red-600 animate-spin mb-6" />
+                                <p className="text-white/40 font-black uppercase tracking-widest">بانتظار بث المعلمة...</p>
+                                <p className="text-white/20 text-xs mt-2">سيبدأ البث تلقائياً عند بدء المعلمة</p>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+
+            {/* Controls */}
+            <div className="h-24 bg-black/80 backdrop-blur-2xl border-t border-white/10 flex items-center justify-center gap-5 px-6 shrink-0">
+                {/* Screen Share - Teacher only */}
                 {isTeacher && (
-                    <button 
+                    <button
                         onClick={isScreenSharing ? stopScreenShare : startScreenShare}
                         className={cn(
-                            "w-16 h-16 rounded-full flex items-center justify-center transition-all border-4",
-                            isScreenSharing ? "bg-red-600 border-black" : "bg-white text-black border-black hover:scale-110"
+                            "w-14 h-14 rounded-full flex items-center justify-center transition-all border-4 shadow-xl",
+                            isScreenSharing
+                                ? "bg-green-600 border-black text-white animate-pulse"
+                                : "bg-white text-black border-black hover:scale-110"
                         )}
+                        title={isScreenSharing ? "إيقاف مشاركة الشاشة" : "مشاركة الشاشة"}
                     >
-                        {isScreenSharing ? <VideoOff size={28} /> : <Monitor size={28} />}
+                        <Monitor size={24} />
                     </button>
                 )}
 
-                <button 
+                {/* Mute */}
+                <button
                     onClick={toggleMute}
                     className={cn(
-                        "w-16 h-16 rounded-full flex items-center justify-center transition-all border-4",
+                        "w-14 h-14 rounded-full flex items-center justify-center transition-all border-4 shadow-xl",
                         isMuted ? "bg-red-600 border-black" : "bg-white text-black border-black hover:scale-110"
                     )}
+                    title={isMuted ? "تشغيل الميكروفون" : "كتم الميكروفون"}
                 >
-                    {isMuted ? <MicOff size={28} /> : <Mic size={28} />}
+                    {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
                 </button>
 
+                {/* End Call */}
+                <button
+                    onClick={handleLeave}
+                    className="w-16 h-16 bg-red-600 border-4 border-black text-white rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-2xl"
+                >
+                    <PhoneOff size={28} />
+                </button>
+
+                {/* Camera - Teacher only */}
                 {isTeacher && (
-                    <button 
+                    <button
                         onClick={toggleCamera}
                         className={cn(
-                            "w-16 h-16 rounded-full flex items-center justify-center transition-all border-4",
+                            "w-14 h-14 rounded-full flex items-center justify-center transition-all border-4 shadow-xl",
                             isCameraOff ? "bg-red-600 border-black" : "bg-white text-black border-black hover:scale-110"
                         )}
+                        title={isCameraOff ? "تشغيل الكاميرا" : "إيقاف الكاميرا"}
                     >
-                        {isCameraOff ? <Video size={28} /> : <VideoOff size={28} />}
+                        {isCameraOff ? <VideoOff size={24} /> : <Video size={24} />}
                     </button>
                 )}
 
-                <button className="w-16 h-16 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-white/20 transition-all border-2 border-white/20">
-                    <MessageSquare size={28} />
+                {/* Chat placeholder */}
+                <button className="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-white/20 transition-all border-2 border-white/20">
+                    <MessageSquare size={24} />
                 </button>
             </div>
         </div>
