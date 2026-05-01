@@ -8,6 +8,7 @@ interface SEOProps {
     image?: string;
     url?: string;
     preloadImages?: string[];
+    breadcrumbs?: { name: string; item: string }[];
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -16,7 +17,8 @@ export const SEO: React.FC<SEOProps> = ({
     keywords,
     image = '/og-image.jpg',
     url = 'https://dareen-edu.com/',
-    preloadImages = []
+    preloadImages = [],
+    breadcrumbs
 }) => {
     const siteTitle = "معهد دارين | أكاديمية دارين لتعليم والتدريب";
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
@@ -106,6 +108,22 @@ export const SEO: React.FC<SEOProps> = ({
                     }
                 ])}
             </script>
+
+            {/* Dynamic Breadcrumbs Schema */}
+            {breadcrumbs && breadcrumbs.length > 0 && (
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": breadcrumbs.map((crumb, index) => ({
+                            "@type": "ListItem",
+                            "position": index + 1,
+                            "name": crumb.name,
+                            "item": crumb.item.startsWith('http') ? crumb.item : `https://dareen-edu.com${crumb.item}`
+                        }))
+                    })}
+                </script>
+            )}
 
             {/* Canonical URL */}
             <link rel="canonical" href={url} />

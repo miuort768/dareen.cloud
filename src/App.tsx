@@ -36,6 +36,8 @@ const Appointments = lazy(() => import('./pages/Appointments').then(m => ({ defa
 const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
 const Contact = lazy(() => import('./pages/public/Contact').then(m => ({ default: m.Contact })));
 const Courses = lazy(() => import('./pages/public/Courses').then(m => ({ default: m.Courses })));
+const Blog = lazy(() => import('./pages/public/Blog').then(m => ({ default: m.Blog })));
+const BlogPost = lazy(() => import('./pages/public/BlogPost').then(m => ({ default: m.BlogPost })));
 const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const RefundPolicy = lazy(() => import('./pages/public/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
 import ScrollToTop from './components/ScrollToTop';
@@ -134,9 +136,9 @@ function App() {
       {/* Public Facing Actions - Only show on specific public pages */}
 
 
-      {['/', '/courses', '/about', '/contact'].includes(location.pathname) && (
+      {['/', '/courses', '/about', '/contact', '/blog'].includes(location.pathname) || location.pathname.startsWith('/blog/') ? (
         <FloatingActions />
-      )}
+      ) : null}
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Public Routes */}
@@ -145,6 +147,8 @@ function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-q8" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
