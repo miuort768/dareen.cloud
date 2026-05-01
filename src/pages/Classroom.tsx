@@ -6,22 +6,16 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
-import Peer from 'peerjs';
+import { socketService } from '../lib/socket';
+import Peer from 'simple-peer';
 
-const PEER_CONFIG = {
-    host: window.location.hostname,
-    port: window.location.port ? Number(window.location.port) : (window.location.protocol === 'https:' ? 443 : 80),
-    path: '/api/peerjs',
-    secure: window.location.protocol === 'https:',
-    config: {
-        iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            { urls: 'stun:stun2.l.google.com:19302' },
-            { urls: 'stun:stun3.l.google.com:19302' },
-            { urls: 'stun:stun4.l.google.com:19302' },
-        ]
-    }
+// STUN servers for internet connectivity
+const ICE_CONFIG = {
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+    ]
 };
 
 export const Classroom = () => {
@@ -42,31 +36,22 @@ export const Classroom = () => {
 
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
-    const peerRef = useRef<Peer | null>(null);
-    const callsRef = useRef<Map<string, any>>(new Map());
-    const retryTimeoutRef = useRef<any>(null);
+    const peersRef = useRef<Map<string, Peer.Instance>>(new Map()); // studentId -> peer
+    const socket = socketService.getSocket();
 
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+    const roomName = `live_session_${id}`;
 
-    // Helper to ensure audio is playing
-    const forcePlay = (videoEl: HTMLVideoElement | null) => {
-        if (!videoEl) return;
-        videoEl.play().catch(() => setNeedsInteraction(true));
+    const attachStream = (videoEl: HTMLVideoElement | null, stream: MediaStream | null) => {
+        if (!videoEl || !stream) return;
+        videoEl.srcObject = stream;
+        videoEl.onloadedmetadata = () => {
+            videoEl.play().catch(() => setNeedsInteraction(true));
+        };
     };
 
-    useEffect(() => {
-        if (remoteVideoRef.current && remoteStream) {
-            remoteVideoRef.current.srcObject = remoteStream;
-            forcePlay(remoteVideoRef.current);
-        }
-    }, [remoteStream]);
-
-    useEffect(() => {
-        if (localVideoRef.current && localStream) {
-            localVideoRef.current.srcObject = localStream;
-            localVideoRef.current.play().catch(() => {});
-        }
-    }, [localStream]);
+    useEffect(() => { attachStream(remoteVideoRef.current, remoteStream); }, [remoteStream]);
+    useEffect(() => { attachStream(localVideoRef.current, localStream); }, [localStream]);
 
     const handleStartMedia = () => {
         setNeedsInteraction(false);
@@ -76,58 +61,57 @@ export const Classroom = () => {
         }
     };
 
+    // Initialize Local Media
     useEffect(() => {
-        let peer: Peer | null = null;
-        let stream: MediaStream | null = null;
-
-        const init = async () => {
+        const initMedia = async () => {
             try {
-                // 1. Get User Media with specific constraints for better quality
                 const constraints = isTeacher 
                     ? { video: { width: 1280, height: 720 }, audio: { echoCancellation: true } }
                     : { audio: true, video: false };
                 
+                let stream;
                 try {
                     stream = await navigator.mediaDevices.getUserMedia(constraints);
                 } catch (e) {
-                    console.warn("Failed to get full media, trying audio only", e);
+                    console.warn("Failed to get full media, falling back to audio only", e);
                     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 }
-
                 setLocalStream(stream);
                 setLoading(false);
+                setConnectionStatus('waiting');
 
-                // 2. Initialize Peer
-                const peerId = isTeacher ? `dareen-teacher-${id}` : `dareen-viewer-${currentUser?.id || Math.random().toString(36).slice(2, 9)}`;
-                peer = new Peer(peerId, PEER_CONFIG);
-                peerRef.current = peer;
-
-                peer.on('open', () => {
-                    setConnectionStatus(isTeacher ? 'connected' : 'waiting');
-                    if (!isTeacher) callTeacher(peer!, stream!);
-                });
-
-                peer.on('error', (err) => {
-                    console.error("Peer Error:", err.type);
-                    if (err.type === 'peer-unavailable') setConnectionStatus('waiting');
-                });
+                // Signaling setup
+                socket.emit('join_conversation', roomName);
 
                 if (isTeacher) {
-                    peer.on('call', (call) => {
-                        console.log("Teacher receiving call from", call.peer);
-                        call.answer(stream!);
-                        callsRef.current.set(call.peer, call);
-                        setViewerCount(callsRef.current.size);
-                        
-                        call.on('stream', (studentStream) => {
-                            // Teacher hears student
-                            setRemoteStream(studentStream);
-                        });
+                    socket.emit('teacher_ready', { 
+                        conversationId: roomName, 
+                        teacherId: currentUser.id, 
+                        teacherName: currentUser.name || currentUser.username 
+                    });
 
-                        call.on('close', () => {
-                            callsRef.current.delete(call.peer);
-                            setViewerCount(callsRef.current.size);
-                        });
+                    socket.on('student_joined', (data) => {
+                        console.log("Student joined, creating peer for:", data.studentId);
+                        createPeer(data.studentId, stream);
+                    });
+
+                    socket.on('student_request', (data) => {
+                        console.log("Received signal from student:", data.studentId);
+                        peersRef.current.get(data.studentId)?.signal(data.signal);
+                    });
+                } else {
+                    socket.emit('student_joined', { 
+                        conversationId: roomName, 
+                        studentId: currentUser.id 
+                    });
+
+                    socket.on('teacher_signal', (data) => {
+                        console.log("Received signal from teacher");
+                        if (!peersRef.current.has('teacher')) {
+                            addPeer(data.signal, stream);
+                        } else {
+                            peersRef.current.get('teacher')?.signal(data.signal);
+                        }
                     });
                 }
             } catch (err: any) {
@@ -136,54 +120,91 @@ export const Classroom = () => {
             }
         };
 
-        const callTeacher = (p: Peer, s: MediaStream) => {
-            if (!p || p.destroyed) return;
-            console.log("Student calling teacher...");
-            const call = p.call(`dareen-teacher-${id}`, s);
-            
-            if (call) {
-                call.on('stream', (ts) => {
-                    console.log("Student received teacher stream");
-                    setRemoteStream(ts);
-                    setConnectionStatus('connected');
+        const createPeer = (studentId: string, stream: MediaStream) => {
+            const peer = new Peer({
+                initiator: true,
+                trickle: false,
+                config: ICE_CONFIG,
+                stream: stream
+            });
+
+            peer.on('signal', (signal) => {
+                socket.emit('teacher_signal', { 
+                    conversationId: roomName, 
+                    studentId, 
+                    signal 
                 });
-                call.on('close', () => {
-                    setConnectionStatus('waiting');
-                    retryTimeoutRef.current = setTimeout(() => callTeacher(p, s), 3000);
-                });
-                call.on('error', () => {
-                    retryTimeoutRef.current = setTimeout(() => callTeacher(p, s), 3000);
-                });
-            } else {
-                retryTimeoutRef.current = setTimeout(() => callTeacher(p, s), 3000);
-            }
+            });
+
+            peer.on('stream', (st) => {
+                // Teacher hears student
+                setRemoteStream(st);
+                setConnectionStatus('connected');
+            });
+
+            peer.on('error', (err) => console.error("Peer Error:", err));
+            peer.on('close', () => {
+                peersRef.current.delete(studentId);
+                setViewerCount(peersRef.current.size);
+            });
+
+            peersRef.current.set(studentId, peer);
+            setViewerCount(peersRef.current.size);
+            return peer;
         };
 
-        init();
+        const addPeer = (incomingSignal: any, stream: MediaStream) => {
+            const peer = new Peer({
+                initiator: false,
+                trickle: false,
+                config: ICE_CONFIG,
+                stream: stream
+            });
+
+            peer.on('signal', (signal) => {
+                socket.emit('student_request', { 
+                    conversationId: roomName, 
+                    studentId: currentUser.id, 
+                    signal 
+                });
+            });
+
+            peer.on('stream', (st) => {
+                console.log("Student received teacher stream");
+                setRemoteStream(st);
+                setConnectionStatus('connected');
+            });
+
+            peer.on('error', (err) => console.error("Peer Error:", err));
+            peer.signal(incomingSignal);
+            peersRef.current.set('teacher', peer);
+        };
+
+        initMedia();
 
         return () => {
-            if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
-            stream?.getTracks().forEach(t => t.stop());
-            peer?.destroy();
+            socket.off('student_joined');
+            socket.off('student_request');
+            socket.off('teacher_signal');
+            socket.emit('leave_conversation', roomName);
+            peersRef.current.forEach(p => p.destroy());
+            peersRef.current.clear();
         };
-    }, [id, isTeacher]);
+    }, [id, isTeacher, currentUser.id, socket, roomName]);
 
     const startScreenShare = async () => {
         try {
             const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
             const screenTrack = screenStream.getVideoTracks()[0];
-            
             setIsScreenSharing(true);
             
-            // Crucial: Keep the audio track from the original mic stream!
             const micTrack = localStream?.getAudioTracks()[0];
-            const newLocalStream = new MediaStream([screenTrack]);
-            if (micTrack) newLocalStream.addTrack(micTrack);
-            setLocalStream(newLocalStream);
+            const newStream = new MediaStream([screenTrack]);
+            if (micTrack) newStream.addTrack(micTrack);
+            setLocalStream(newStream);
 
-            // Replace track for all peers
-            callsRef.current.forEach(call => {
-                const videoSender = call.peerConnection?.getSenders().find((s: any) => s.track?.kind === 'video');
+            peersRef.current.forEach(peer => {
+                const videoSender = (peer as any)._pc.getSenders().find((s: any) => s.track?.kind === 'video');
                 if (videoSender) videoSender.replaceTrack(screenTrack);
             });
 
@@ -196,23 +217,20 @@ export const Classroom = () => {
 
     const stopScreenShare = useCallback(async () => {
         setIsScreenSharing(false);
-        // Reset to camera
         try {
             const camStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            setLocalStream(camStream);
             const camTrack = camStream.getVideoTracks()[0];
             const micTrack = camStream.getAudioTracks()[0];
             
-            setLocalStream(camStream);
-            
-            callsRef.current.forEach(call => {
-                const videoSender = call.peerConnection?.getSenders().find((s: any) => s.track?.kind === 'video');
-                const audioSender = call.peerConnection?.getSenders().find((s: any) => s.track?.kind === 'audio');
-                if (videoSender) videoSender.replaceTrack(camTrack);
-                if (audioSender) audioSender.replaceTrack(micTrack);
+            peersRef.current.forEach(peer => {
+                const senders = (peer as any)._pc.getSenders();
+                const vSender = senders.find((s: any) => s.track?.kind === 'video');
+                const aSender = senders.find((s: any) => s.track?.kind === 'audio');
+                if (vSender) vSender.replaceTrack(camTrack);
+                if (aSender) vSender.replaceTrack(micTrack);
             });
-        } catch (e) {
-            console.error("Failed to restore camera", e);
-        }
+        } catch (e) { console.error(e); }
     }, []);
 
     const toggleMute = () => {
@@ -268,7 +286,7 @@ export const Classroom = () => {
                         {needsInteraction && (
                             <div className="absolute inset-0 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center z-50">
                                 <button onClick={handleStartMedia} className="flex flex-col items-center gap-4 group">
-                                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-active:scale-90 transition-transform">
+                                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
                                         <Volume2 size={32} className="text-white animate-pulse" />
                                     </div>
                                     <p className="font-black text-sm uppercase tracking-widest">انقر لتشغيل الصوت والبث</p>
