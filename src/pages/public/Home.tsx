@@ -106,9 +106,9 @@ export const Home = () => {
     return (
         <div className="min-h-full bg-[rgb(var(--bg-surface))] font-sans text-[rgb(var(--text-main))] relative overflow-x-hidden transition-colors duration-500">
             <SEO
-                title="معهد دارين للتعليم والتدريب | أفضل منصة تعليم عن بعد"
-                description="معهد دارين للتعليم والتدريب يوفر أفضل دروس خصوصية أونلاين، مراجعات نهائية، تحفيظ قرآن، وتأسيس أكاديمي مع نخبة من المعلمين للمناهج في الكويت، السعودية، والخليج."
-                keywords="تعليم عن بعد الكويت, معهد دارين, أكاديمية دارين, دروس خصوصية أونلاين, تحفيظ قرآن عن بعد, مدرس خصوصي الكويت, مراجعات نهائية, تأسيس ابتدائي"
+                title="معهد دارين للتعليم والتدريب | المنصة رقم 1 في الكويت والسعودية وقطر والامارات وعمان"
+                description="معهد دارين للتعليم والتدريب يوفر أفضل دروس خصوصية أونلاين، مراجعات نهائية، تحفيظ قرآن، وتأسيس أكاديمي مع نخبة من المعلمين للمناهج في الكويت، السعودية، قطر، الامارات، وسلطنة عمان."
+                keywords="أفضل منصة تعليمية, تعليم عن بعد الكويت, مدرس خصوصي قطر, دروس خصوصية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, معهد دارين, تحفيظ قرآن عن بعد"
                 preloadImages={['/hero-child.png']}
             />
             <PublicNavbar />
@@ -139,7 +139,7 @@ export const Home = () => {
                                 <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
-                                <span className="sr-only">معهد دارين للتعليم والتدريب عن بعد في الكويت - أفضل دروس خصوصية أونلاين وتحفيظ قرآن</span>
+                                <span className="sr-only">معهد دارين للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-slate-900 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
