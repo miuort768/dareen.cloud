@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
-    MessageSquare, Users, Crown, Monitor, Loader2, AlertCircle
+    MessageSquare, Users, Crown, Monitor, Loader2, AlertCircle, Play, Volume2
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
@@ -20,7 +20,7 @@ const PEER_CONFIG = {
             { urls: 'stun:stun1.l.google.com:19302' },
         ]
     },
-    debug: 1 // Increased debug level for troubleshooting
+    debug: 1
 };
 
 export const Classroom = () => {
@@ -37,6 +37,7 @@ export const Classroom = () => {
     const [error, setError] = useState<string | null>(null);
     const [viewerCount, setViewerCount] = useState(0);
     const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'waiting'>('connecting');
+    const [needsInteraction, setNeedsInteraction] = useState(false);
 
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -53,13 +54,8 @@ export const Classroom = () => {
         videoEl.srcObject = stream;
         videoEl.onloadedmetadata = () => {
             videoEl.play().catch(e => {
-                console.error("[Video] Auto-play failed, waiting for user click:", e);
-                // Create a global interaction listener to resume all videos
-                const resume = () => {
-                    videoEl.play().catch(() => {});
-                    document.removeEventListener('click', resume);
-                };
-                document.addEventListener('click', resume);
+                console.error("[Video] Auto-play blocked by browser:", e);
+                setNeedsInteraction(true);
             });
         };
     };
@@ -67,32 +63,39 @@ export const Classroom = () => {
     useEffect(() => { attachStream(remoteVideoRef.current, remoteStream); }, [remoteStream]);
     useEffect(() => { attachStream(localVideoRef.current, localStream); }, [localStream]);
 
+    const handleStartMedia = () => {
+        setNeedsInteraction(false);
+        if (remoteVideoRef.current) {
+            remoteVideoRef.current.muted = false;
+            remoteVideoRef.current.play().catch(console.error);
+        }
+        if (localVideoRef.current) {
+            localVideoRef.current.play().catch(console.error);
+        }
+    };
+
     useEffect(() => {
         let peer: Peer | null = null;
         let stream: MediaStream | null = null;
 
         const init = async () => {
             try {
-                // Get media immediately to skip splash screen
                 if (isTeacher) {
                     stream = await navigator.mediaDevices.getUserMedia({
                         video: true,
                         audio: { echoCancellation: true, noiseSuppression: true }
                     });
-                    // Start with camera ON to avoid black screen confusion
                     setIsCameraOff(false);
                 } else {
-                    // Students only need mic for bidirectional, but we can start with just receiving
                     try {
                         stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
                     } catch {
-                        // Fallback if no mic
                         stream = new MediaStream();
                     }
                 }
 
                 setLocalStream(stream);
-                setLoading(false); // Hide loader immediately after media check
+                setLoading(false);
 
                 const peerId = isTeacher
                     ? `dareen-teacher-${id}`
@@ -110,23 +113,15 @@ export const Classroom = () => {
                 });
 
                 peer.on('error', (err) => {
-                    console.error('[Peer] Error:', err.type, err.message);
-                    if (err.type === 'peer-unavailable') {
-                        setConnectionStatus('waiting');
-                    } else if (err.type === 'unavailable-id') {
-                        // Teacher ID taken? Maybe refresh
-                        if (isTeacher) setError('معرف الغرفة مستخدم بالفعل. يرجى إغلاق أي نوافذ أخرى للبث.');
-                    }
+                    if (err.type === 'peer-unavailable') setConnectionStatus('waiting');
                 });
 
                 if (isTeacher) {
                     peer.on('call', (incomingCall) => {
-                        console.log('[Teacher] Incoming call from:', incomingCall.peer);
                         incomingCall.answer(stream!);
                         callsRef.current.set(incomingCall.peer, incomingCall);
                         setViewerCount(callsRef.current.size);
                         setConnectionStatus('connected');
-
                         incomingCall.on('close', () => {
                             callsRef.current.delete(incomingCall.peer);
                             setViewerCount(callsRef.current.size);
@@ -134,7 +129,6 @@ export const Classroom = () => {
                     });
                 }
             } catch (err: any) {
-                console.error('[Init] Error:', err);
                 setError(err.name === 'NotAllowedError' ? 'يرجى السماح بالوصول للكاميرا/الميكروفون.' : err.message);
                 setLoading(false);
             }
@@ -142,29 +136,20 @@ export const Classroom = () => {
 
         const callTeacherWithRetry = (p: Peer, s: MediaStream) => {
             if (!p || p.destroyed) return;
-            
-            console.log('[Student] Attempting to connect to teacher...');
             const call = p.call(`dareen-teacher-${id}`, s);
-            
             if (!call) {
-                // If call object creation failed, retry
                 retryTimeoutRef.current = setTimeout(() => callTeacherWithRetry(p, s), 3000);
                 return;
             }
-
             call.on('stream', (teacherStream) => {
-                console.log('[Student] Received stream');
                 setRemoteStream(teacherStream);
                 setConnectionStatus('connected');
                 if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
             });
-
-            call.on('error', (e) => {
-                console.error('[Student] Call error, retrying...', e);
+            call.on('error', () => {
                 setConnectionStatus('waiting');
                 retryTimeoutRef.current = setTimeout(() => callTeacherWithRetry(p, s), 3000);
             });
-
             call.on('close', () => {
                 setRemoteStream(null);
                 setConnectionStatus('waiting');
@@ -178,7 +163,6 @@ export const Classroom = () => {
             if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
             stream?.getTracks().forEach(t => t.stop());
             peer?.destroy();
-            peerRef.current = null;
         };
     }, [id, isTeacher]);
 
@@ -188,14 +172,11 @@ export const Classroom = () => {
             const screenVideoTrack = screenStream.getVideoTracks()[0];
             screenTrackRef.current = screenVideoTrack;
             setIsScreenSharing(true);
-
             callsRef.current.forEach((call) => {
                 const videoSender = call.peerConnection?.getSenders().find((s: any) => s.track?.kind === 'video');
                 if (videoSender) videoSender.replaceTrack(screenVideoTrack);
             });
-
-            const previewStream = new MediaStream([screenVideoTrack]);
-            setLocalStream(previewStream);
+            setLocalStream(new MediaStream([screenVideoTrack]));
             screenVideoTrack.onended = () => stopScreenShare();
         } catch (err) { setIsScreenSharing(false); }
     };
@@ -271,18 +252,30 @@ export const Classroom = () => {
                         {(isCameraOff && !isScreenSharing) && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950">
                                 <Crown size={80} className="text-white/10 mb-4" />
-                                <p className="text-white/30 font-black uppercase tracking-widest text-xs">الكاميرا متوقفة — شارك شاشتك للبدء</p>
+                                <p className="text-white/30 font-black uppercase tracking-widest text-xs">الكاميرا متوقفة</p>
                             </div>
                         )}
                     </>
                 ) : (
                     <>
-                        <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
+                        <video ref={remoteVideoRef} autoPlay playsInline muted className="w-full h-full object-contain" />
                         {connectionStatus !== 'connected' && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-950 text-center px-4">
                                 <Loader2 size={48} className="text-red-600 animate-spin mb-6" />
-                                <p className="text-white/40 font-black uppercase tracking-widest text-sm">جاري محاولة الاتصال بالمعلمة...</p>
-                                <p className="text-white/20 text-xs mt-3">سيظهر البث تلقائياً فور بدء المعلمة</p>
+                                <p className="text-white/40 font-black uppercase tracking-widest text-sm">جاري الاتصال بالمعلمة...</p>
+                            </div>
+                        )}
+                        {needsInteraction && connectionStatus === 'connected' && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm z-30">
+                                <button 
+                                    onClick={handleStartMedia}
+                                    className="group flex flex-col items-center gap-4 transition-transform active:scale-95"
+                                >
+                                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl shadow-red-600/40 group-hover:bg-red-500 transition-colors">
+                                        <Volume2 size={32} className="text-white animate-pulse" />
+                                    </div>
+                                    <p className="text-white font-black uppercase tracking-widest text-sm">انقر لتشغيل الصوت والصورة</p>
+                                </button>
                             </div>
                         )}
                     </>
