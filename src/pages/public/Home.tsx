@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle, Globe } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
@@ -227,6 +227,141 @@ export const Home = () => {
                             </a>
                         </div>
                     ) : null)}
+                </div>
+            </section>
+
+            {/* Spectacular Gulf Countries Interactive Hub */}
+            <section className="py-16 md:py-24 bg-white dark:bg-slate-950 relative overflow-hidden border-b border-gray-100 dark:border-slate-900">
+                {/* Background artistic grid */}
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-[0.02] pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-green-600/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+                
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="text-center mb-12 md:mb-16">
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-none shadow-xl shadow-gray-900/10 dark:shadow-white/10 mb-6 group hover:-translate-y-1 transition-transform">
+                            <Globe className="w-4 h-4 text-green-400 dark:text-green-600 group-hover:rotate-180 transition-transform duration-700" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">منارة التعليم في الخليج</span>
+                        </div>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white mb-6 leading-tight">
+                            اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-green-600 py-1 inline-block">وجهتك التعليمية</span>
+                        </h2>
+                        <p className="text-gray-500 dark:text-slate-400 font-medium max-w-2xl mx-auto text-sm md:text-lg leading-relaxed">
+                            نقدم مسارات تعليمية مبتكرة ومخصصة تتوافق تماماً مع المناهج الرسمية لدول الخليج العربي بلمسة إبداعية لا مثيل لها.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-wrap justify-center gap-6 lg:gap-8 max-w-[1400px] mx-auto">
+                        {/* Kuwait */}
+                        <Link to="/courses" className="group relative w-full sm:w-[280px] h-[400px] bg-slate-50 dark:bg-slate-900 overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 dark:border-slate-800/50">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1534008897995-27a23e859048?auto=format&fit=crop&q=80&w=800" alt="الكويت" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-green-500 via-white to-red-500 z-20"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-3xl font-black text-white font-heading">الكويت</h3>
+                                    <span className="text-4xl filter drop-shadow-md group-hover:scale-110 transition-transform">🇰🇼</span>
+                                </div>
+                                <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-100">
+                                    <p className="text-gray-300 text-sm font-medium mb-6 leading-relaxed">
+                                        تأسيس قوي ومراجعات نهائية مكثفة لجميع المراحل في المنهج الكويتي.
+                                    </p>
+                                    <div className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 border border-white/10 transition-colors">
+                                        <span>استكشف المناهج</span>
+                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* Saudi */}
+                        <Link to="/courses" className="group relative w-full sm:w-[280px] h-[400px] bg-slate-50 dark:bg-slate-900 overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 dark:border-slate-800/50">
+                            <div className="absolute inset-0 bg-gradient-to-t from-green-950/95 via-black/40 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?auto=format&fit=crop&q=80&w=800" alt="السعودية" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-green-600 z-20"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-3xl font-black text-white font-heading">السعودية</h3>
+                                    <span className="text-4xl filter drop-shadow-md group-hover:scale-110 transition-transform">🇸🇦</span>
+                                </div>
+                                <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-100">
+                                    <p className="text-green-100 text-sm font-medium mb-6 leading-relaxed">
+                                        أفضل المدرسين الخصوصيين لشرح المنهج السعودي واختبارات القدرات والتحصيلي.
+                                    </p>
+                                    <div className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 border border-white/10 transition-colors">
+                                        <span>استكشف المناهج</span>
+                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* Qatar */}
+                        <Link to="/courses" className="group relative w-full sm:w-[280px] h-[400px] bg-slate-50 dark:bg-slate-900 overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 dark:border-slate-800/50">
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#8A1538]/95 via-black/40 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1618365922370-1f3bb329b35b?auto=format&fit=crop&q=80&w=800" alt="قطر" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-[#8A1538] z-20"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-3xl font-black text-white font-heading">قطر</h3>
+                                    <span className="text-4xl filter drop-shadow-md group-hover:scale-110 transition-transform">🇶🇦</span>
+                                </div>
+                                <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-100">
+                                    <p className="text-pink-100 text-sm font-medium mb-6 leading-relaxed">
+                                        متابعة يومية دقيقة للمناهج القطرية بأعلى معايير الجودة والتميز.
+                                    </p>
+                                    <div className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 border border-white/10 transition-colors">
+                                        <span>استكشف المناهج</span>
+                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* UAE */}
+                        <Link to="/courses" className="group relative w-full sm:w-[280px] h-[400px] bg-slate-50 dark:bg-slate-900 overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 dark:border-slate-800/50">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&q=80&w=800" alt="الامارات" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-600 via-green-600 to-white z-20"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-3xl font-black text-white font-heading">الإمارات</h3>
+                                    <span className="text-4xl filter drop-shadow-md group-hover:scale-110 transition-transform">🇦🇪</span>
+                                </div>
+                                <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-100">
+                                    <p className="text-gray-300 text-sm font-medium mb-6 leading-relaxed">
+                                        مواكبة نواتج التعلم المتطورة في المناهج الإماراتية الحديثة خطوة بخطوة.
+                                    </p>
+                                    <div className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 border border-white/10 transition-colors">
+                                        <span>استكشف المناهج</span>
+                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+
+                        {/* Oman */}
+                        <Link to="/courses" className="group relative w-full sm:w-[280px] h-[400px] bg-slate-50 dark:bg-slate-900 overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 dark:border-slate-800/50">
+                            <div className="absolute inset-0 bg-gradient-to-t from-red-950/95 via-black/40 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1620302834162-8e31003f5da1?auto=format&fit=crop&q=80&w=800" alt="سلطنة عمان" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80" />
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-red-600 z-20"></div>
+                            <div className="absolute bottom-0 left-0 w-full p-8 z-20 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-3xl font-black text-white font-heading">عُمان</h3>
+                                    <span className="text-4xl filter drop-shadow-md group-hover:scale-110 transition-transform">🇴🇲</span>
+                                </div>
+                                <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 delay-100">
+                                    <p className="text-red-100 text-sm font-medium mb-6 leading-relaxed">
+                                        شرح مبسط ووافٍ للمناهج العمانية يركز على الفهم العميق وتثبيت المعلومة.
+                                    </p>
+                                    <div className="inline-flex items-center gap-3 text-white text-xs font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 backdrop-blur-md px-4 py-2 border border-white/10 transition-colors">
+                                        <span>استكشف المناهج</span>
+                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
