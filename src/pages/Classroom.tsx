@@ -83,7 +83,7 @@ export const Classroom = () => {
                 // Signaling setup
                 socket.emit('join_conversation', roomName);
 
-                if (isTeacher) {
+                if (isTeacher && currentUser) {
                     socket.emit('teacher_ready', { 
                         conversationId: roomName, 
                         teacherId: currentUser.id, 
@@ -99,7 +99,7 @@ export const Classroom = () => {
                         console.log("Received signal from student:", data.studentId);
                         peersRef.current.get(data.studentId)?.signal(data.signal);
                     });
-                } else {
+                } else if (currentUser) {
                     socket.emit('student_joined', { 
                         conversationId: roomName, 
                         studentId: currentUser.id 
@@ -164,7 +164,7 @@ export const Classroom = () => {
             peer.on('signal', (signal) => {
                 socket.emit('student_request', { 
                     conversationId: roomName, 
-                    studentId: currentUser.id, 
+                    studentId: currentUser?.id, 
                     signal 
                 });
             });
@@ -190,7 +190,7 @@ export const Classroom = () => {
             peersRef.current.forEach(p => p.destroy());
             peersRef.current.clear();
         };
-    }, [id, isTeacher, currentUser.id, socket, roomName]);
+    }, [id, isTeacher, currentUser?.id, socket, roomName]);
 
     const startScreenShare = async () => {
         try {
