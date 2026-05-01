@@ -3,7 +3,6 @@ import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, MessageS
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../../lib/api';
 
 interface TeacherStudentCardProps {
     student: Student;
