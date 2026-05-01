@@ -140,14 +140,27 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
     const startLiveStream = async () => {
         try {
-            const res = await api.post<any>('/live/start', {
-                title: `حصة مباشرة: ${student.name}`,
-                subject: en.subject,
-                targetStudentId: student.id
+            const token = localStorage.getItem('auth_token');
+            const response = await fetch('/api/live/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    title: `حصة مباشرة: ${student.name}`,
+                    subject: en.subject,
+                    targetStudentId: student.id
+                })
             });
-            navigate(`/classroom/${res.id}`);
-        } catch (err) {
-            alert('فشل بدء البث المباشر');
+            const data = await response.json();
+            if (!response.ok) {
+                alert(`خطأ من الخادم (${response.status}): ${data.error || JSON.stringify(data)}`);
+                return;
+            }
+            navigate(`/classroom/${data.id}`);
+        } catch (err: any) {
+            alert(`خطأ في الشبكة: ${err.message}`);
         }
     };
 
