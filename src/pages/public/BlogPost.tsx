@@ -1,13 +1,40 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
-import { blogPosts } from '../../data/blogPosts';
-import { Calendar, User, ArrowRight, Share2 } from 'lucide-react';
+import { blogPosts as staticPosts } from '../../data/blogPosts';
+import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
+import axios from 'axios';
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
-    const post = blogPosts.find(p => p.slug === slug);
+    const [post, setPost] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://api.dareen-edu.com/api'}/blog/${slug}`);
+                setPost(response.data);
+            } catch (err) {
+                console.error('Failed to fetch blog post:', err);
+                const staticPost = staticPosts.find(p => p.slug === slug);
+                setPost(staticPost || null);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPost();
+    }, [slug]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
+            </div>
+        );
+    }
 
     if (!post) {
         return (

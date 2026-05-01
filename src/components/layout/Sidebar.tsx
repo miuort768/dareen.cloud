@@ -76,6 +76,7 @@ export const Sidebar = () => {
         { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
         { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
+        { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
     ];
 

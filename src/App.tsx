@@ -40,6 +40,7 @@ const Blog = lazy(() => import('./pages/public/Blog').then(m => ({ default: m.Bl
 const BlogPost = lazy(() => import('./pages/public/BlogPost').then(m => ({ default: m.BlogPost })));
 const PrivacyPolicy = lazy(() => import('./pages/public/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })));
 const RefundPolicy = lazy(() => import('./pages/public/RefundPolicy').then(m => ({ default: m.RefundPolicy })));
+const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m.AdminBlog })));
 import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
@@ -197,8 +198,10 @@ function App() {
             {/* New Announcements Admin Route */}
             <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
 
-            {/* Forum Route for all authenticated users */}
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
+            
+            {/* Admin Blog Management */}
+            <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />
           </Route>
 
           <Route path="/classroom/:id" element={<ProtectedRoute><Classroom /></ProtectedRoute>} />
@@ -206,8 +209,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
-
-    </>
+    </div>
   );
 }
 

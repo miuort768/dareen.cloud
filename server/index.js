@@ -30,6 +30,7 @@ const forumRouter = require('./routes/forum');
 const appointmentsRouter = require('./routes/appointments');
 const { pushRouter, sendPushToUser } = require('./routes/push');
 const leadsRouter = require('./routes/leads');
+const blogRouter = require('./routes/blog');
 
 
 
@@ -179,6 +180,7 @@ async function startServer() {
         const { authMiddleware, checkRole } = require('./middleware/auth');
 
         apiRouter.use('/auth', authRouter);
+        apiRouter.use('/blog', blogRouter);
 
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {

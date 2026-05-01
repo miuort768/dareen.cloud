@@ -1,11 +1,31 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
-import { blogPosts } from '../../data/blogPosts';
-import { Calendar, User, ArrowLeft, BookOpen } from 'lucide-react';
+import { blogPosts as staticPosts } from '../../data/blogPosts';
+import { Calendar, User, ArrowLeft, BookOpen, Loader2 } from 'lucide-react';
+import axios from 'axios';
 
 export const Blog = () => {
+    const [posts, setPosts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://api.dareen-edu.com/api'}/blog`);
+                setPosts(response.data.length > 0 ? response.data : staticPosts);
+            } catch (err) {
+                console.error('Failed to fetch blog posts:', err);
+                setPosts(staticPosts);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPosts();
+    }, []);
+
     return (
         <div className="min-h-full bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
@@ -35,35 +55,41 @@ export const Blog = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                        {blogPosts.map(post => (
-                            <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col h-full overflow-hidden">
-                                <div className="relative h-56 overflow-hidden">
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
-                                    <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                    <div className="absolute top-4 right-4 z-20">
-                                        <span className="bg-red-600 text-white text-xs font-black px-3 py-1 uppercase tracking-wider shadow-md">{post.category}</span>
+                    {loading ? (
+                        <div className="flex items-center justify-center py-20">
+                            <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                            {posts.map(post => (
+                                <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col h-full overflow-hidden">
+                                    <div className="relative h-56 overflow-hidden">
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+                                        <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute top-4 right-4 z-20">
+                                            <span className="bg-red-600 text-white text-xs font-black px-3 py-1 uppercase tracking-wider shadow-md">{post.category}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium mb-4">
-                                        <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date}</span></div>
-                                        <div className="flex items-center gap-1.5"><User size={14} /> <span>{post.author}</span></div>
+                                    <div className="p-6 flex flex-col flex-grow">
+                                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium mb-4">
+                                            <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date?.split('T')[0]}</span></div>
+                                            <div className="flex items-center gap-1.5"><User size={14} /> <span>{post.author}</span></div>
+                                        </div>
+                                        <h2 className="text-xl font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-red-600 transition-colors leading-snug">
+                                            {post.title}
+                                        </h2>
+                                        <p className="text-gray-500 dark:text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                                            {post.excerpt}
+                                        </p>
+                                        <div className="inline-flex items-center gap-2 text-green-600 dark:text-green-500 font-black text-xs uppercase tracking-widest mt-auto">
+                                            <span>اقرأ المقال كامل</span>
+                                            <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                        </div>
                                     </div>
-                                    <h2 className="text-xl font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-red-600 transition-colors leading-snug">
-                                        {post.title}
-                                    </h2>
-                                    <p className="text-gray-500 dark:text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                                        {post.excerpt}
-                                    </p>
-                                    <div className="inline-flex items-center gap-2 text-green-600 dark:text-green-500 font-black text-xs uppercase tracking-widest mt-auto">
-                                        <span>اقرأ المقال كامل</span>
-                                        <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </main>
 

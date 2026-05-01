@@ -82,6 +82,20 @@ async function setupDatabase() {
             password TEXT
         );
 
+        CREATE TABLE IF NOT EXISTS blog_posts (
+            id TEXT PRIMARY KEY,
+            slug TEXT UNIQUE NOT NULL,
+            title TEXT NOT NULL,
+            excerpt TEXT,
+            content TEXT,
+            coverImage TEXT,
+            category TEXT,
+            keywords TEXT,
+            author TEXT,
+            date TEXT DEFAULT CURRENT_TIMESTAMP,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+
         CREATE TABLE IF NOT EXISTS sessions (
             id TEXT PRIMARY KEY,
             studentId TEXT NOT NULL,
