@@ -31,7 +31,7 @@ export const Classroom = () => {
     const [localStream, setLocalStream] = useState<MediaStream | null>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
-    const [isCameraOff, setIsCameraOff] = useState(true);
+    const [isCameraOff, setIsCameraOff] = useState(false);
     const [isScreenSharing, setIsScreenSharing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -49,13 +49,19 @@ export const Classroom = () => {
 
     const attachStream = (videoEl: HTMLVideoElement | null, stream: MediaStream | null) => {
         if (!videoEl || !stream) return;
-        if (videoEl.srcObject !== stream) {
-            videoEl.srcObject = stream;
-        }
-        videoEl.play().catch(() => {
-            const retry = () => { videoEl.play().catch(() => {}); document.removeEventListener('click', retry); };
-            document.addEventListener('click', retry);
-        });
+        
+        videoEl.srcObject = stream;
+        videoEl.onloadedmetadata = () => {
+            videoEl.play().catch(e => {
+                console.error("[Video] Auto-play failed, waiting for user click:", e);
+                // Create a global interaction listener to resume all videos
+                const resume = () => {
+                    videoEl.play().catch(() => {});
+                    document.removeEventListener('click', resume);
+                };
+                document.addEventListener('click', resume);
+            });
+        };
     };
 
     useEffect(() => { attachStream(remoteVideoRef.current, remoteStream); }, [remoteStream]);
@@ -73,7 +79,8 @@ export const Classroom = () => {
                         video: true,
                         audio: { echoCancellation: true, noiseSuppression: true }
                     });
-                    stream.getVideoTracks().forEach(t => t.enabled = false);
+                    // Start with camera ON to avoid black screen confusion
+                    setIsCameraOff(false);
                 } else {
                     // Students only need mic for bidirectional, but we can start with just receiving
                     try {
