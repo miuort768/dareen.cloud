@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
 import { PageLoader } from '../ui/PageLoader';
 import { ErrorBoundary } from '../ErrorBoundary';
+import { BottomNav } from './BottomNav';
 
 
 
@@ -55,6 +56,8 @@ export const Layout = () => {
                 </main>
             </div>
 
+            {/* Bottom Navigation for Mobile */}
+            {!isChatOnly && <BottomNav />}
         </div>
     );
 };
