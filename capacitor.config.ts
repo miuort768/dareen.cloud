@@ -3,7 +3,16 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.dareen.cloud',
   appName: 'دارين السابعة',
-  webDir: 'dist'
+  webDir: 'dist',
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 500,
+      launchAutoHide: true,
+      backgroundColor: "#ffffff",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: false,
+    }
+  }
 
 };
 
