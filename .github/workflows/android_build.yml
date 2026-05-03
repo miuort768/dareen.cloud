@@ -29,20 +29,22 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --ignore-scripts
 
       - name: Build Web App
         run: npm run build
 
       - name: Capacitor Sync
-        run: npx cap sync android
+        run: |
+          npx cap sync android
+          npx cap copy android
 
       - name: Build Android Debug APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
-
+          ./gradlew assembleDebug --stacktrace
+          
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
