@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
+import { triggerHaptic } from '../../lib/haptics';
 
 export const BottomNav = () => {
   const navigate = useNavigate();
@@ -16,10 +17,7 @@ export const BottomNav = () => {
   const { currentUser } = useApp();
 
   const handleNav = (path: string) => {
-    // Basic Haptic Feedback simulation or native call if available
-    if (window.navigator && (window.navigator as any).vibrate) {
-        window.navigator.vibrate(10);
-    }
+    triggerHaptic('light');
     navigate(path);
   };
 
