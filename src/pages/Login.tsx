@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
     Lock, User, Eye, EyeOff, ArrowRight, Headphones,
-    Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown, Fingerprint
+    Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useApp, useSettings } from '../context/AppContext';
@@ -269,19 +269,6 @@ export const Login = () => {
                             >
                                 <span>دخول للحساب</span>
                                 <ArrowRight size={18} className="group-hover:translate-x-[-4px] transition-transform" />
-                            </button>
-
-                            {/* Mobile Biometric Login Button */}
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    triggerHaptic('heavy');
-                                    setError('يرجى تفعيل الدخول بالبصمة من الإعدادات أولاً');
-                                }}
-                                className="mobile-only w-full bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 py-3 rounded-none border border-emerald-100 dark:border-emerald-800/50 font-bold flex items-center justify-center gap-3 transition-all active:scale-95"
-                            >
-                                <Fingerprint size={22} />
-                                <span>دخول سريع (بصمة/وجه)</span>
                             </button>
                         </form>
 

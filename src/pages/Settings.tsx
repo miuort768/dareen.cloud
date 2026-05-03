@@ -3,7 +3,7 @@ import {
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus,
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload,
     RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare,
-    Sparkles, Phone, Fingerprint, Zap
+    Sparkles, Phone, Zap
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useApp } from '../context/useApp';
@@ -270,7 +270,6 @@ const Settings = () => {
     const [notificationMessage, setNotificationMessage] = useState('');
     
     // Mobile Specific Settings
-    const [biometricEnabled, setBiometricEnabled] = useState(() => localStorage.getItem('biometric_enabled') === 'true');
     const [hapticEnabled, setHapticEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false'); // Default true
 
     const handleExportBackup = async () => {
@@ -614,20 +613,6 @@ const Settings = () => {
                             <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
                             <div className="space-y-4">
                                 <ToggleRow
-                                    icon={Fingerprint}
-                                    label="الدخول بالبصمة / الوجه"
-                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
-                                    checked={biometricEnabled}
-                                    onChange={() => {
-                                        const newVal = !biometricEnabled;
-                                        setBiometricEnabled(newVal);
-                                        localStorage.setItem('biometric_enabled', String(newVal));
-                                        triggerHaptic('medium');
-                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
-                                    }}
-                                />
-                                
-                                <ToggleRow
                                     icon={Zap}
                                     label="الاهتزاز التفاعلي (Haptics)"
                                     sub="ردود فعل لمسية عند الضغط على الأزرار"
@@ -644,7 +629,7 @@ const Settings = () => {
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
                                     <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
-                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                        تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                                     </p>
                                 </div>
                             </div>
@@ -802,20 +787,6 @@ const Settings = () => {
                             <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
                             <div className="space-y-4">
                                 <ToggleRow
-                                    icon={Fingerprint}
-                                    label="الدخول بالبصمة / الوجه"
-                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
-                                    checked={biometricEnabled}
-                                    onChange={() => {
-                                        const newVal = !biometricEnabled;
-                                        setBiometricEnabled(newVal);
-                                        localStorage.setItem('biometric_enabled', String(newVal));
-                                        triggerHaptic('medium');
-                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
-                                    }}
-                                />
-                                
-                                <ToggleRow
                                     icon={Zap}
                                     label="الاهتزاز التفاعلي (Haptics)"
                                     sub="ردود فعل لمسية عند الضغط على الأزرار"
@@ -832,7 +803,7 @@ const Settings = () => {
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
                                     <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
-                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                        تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                                     </p>
                                 </div>
                             </div>
@@ -1092,20 +1063,6 @@ const Settings = () => {
                             <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
                             <div className="space-y-4">
                                 <ToggleRow
-                                    icon={Fingerprint}
-                                    label="الدخول بالبصمة / الوجه"
-                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
-                                    checked={biometricEnabled}
-                                    onChange={() => {
-                                        const newVal = !biometricEnabled;
-                                        setBiometricEnabled(newVal);
-                                        localStorage.setItem('biometric_enabled', String(newVal));
-                                        triggerHaptic('medium');
-                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
-                                    }}
-                                />
-                                
-                                <ToggleRow
                                     icon={Zap}
                                     label="الاهتزاز التفاعلي (Haptics)"
                                     sub="ردود فعل لمسية عند الضغط على الأزرار"
@@ -1122,7 +1079,7 @@ const Settings = () => {
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
                                     <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
-                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                        تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                                     </p>
                                 </div>
                             </div>
@@ -1259,20 +1216,6 @@ const Settings = () => {
                             <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
                             <div className="space-y-4">
                                 <ToggleRow
-                                    icon={Fingerprint}
-                                    label="الدخول بالبصمة / الوجه"
-                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
-                                    checked={biometricEnabled}
-                                    onChange={() => {
-                                        const newVal = !biometricEnabled;
-                                        setBiometricEnabled(newVal);
-                                        localStorage.setItem('biometric_enabled', String(newVal));
-                                        triggerHaptic('medium');
-                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
-                                    }}
-                                />
-                                
-                                <ToggleRow
                                     icon={Zap}
                                     label="الاهتزاز التفاعلي (Haptics)"
                                     sub="ردود فعل لمسية عند الضغط على الأزرار"
@@ -1289,7 +1232,7 @@ const Settings = () => {
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
                                     <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
-                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                        تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                                     </p>
                                 </div>
                             </div>
@@ -1399,20 +1342,6 @@ const Settings = () => {
                             <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
                             <div className="space-y-4">
                                 <ToggleRow
-                                    icon={Fingerprint}
-                                    label="الدخول بالبصمة / الوجه"
-                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
-                                    checked={biometricEnabled}
-                                    onChange={() => {
-                                        const newVal = !biometricEnabled;
-                                        setBiometricEnabled(newVal);
-                                        localStorage.setItem('biometric_enabled', String(newVal));
-                                        triggerHaptic('medium');
-                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
-                                    }}
-                                />
-                                
-                                <ToggleRow
                                     icon={Zap}
                                     label="الاهتزاز التفاعلي (Haptics)"
                                     sub="ردود فعل لمسية عند الضغط على الأزرار"
@@ -1429,7 +1358,7 @@ const Settings = () => {
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
                                     <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
-                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                        تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                                     </p>
                                 </div>
                             </div>
