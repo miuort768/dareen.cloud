@@ -3,8 +3,9 @@ import {
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus,
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload,
     RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare,
-    Sparkles, Phone
+    Sparkles, Phone, Fingerprint, Zap
 } from 'lucide-react';
+import { triggerHaptic } from '../lib/haptics';
 import { useApp } from '../context/useApp';
 import { GuestChatManager } from '../features/chat/components/GuestChatManager';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -267,6 +268,10 @@ const Settings = () => {
     const [secureInput, setSecureInput] = useState('');
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    
+    // Mobile Specific Settings
+    const [biometricEnabled, setBiometricEnabled] = useState(() => localStorage.getItem('biometric_enabled') === 'true');
+    const [hapticEnabled, setHapticEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false'); // Default true
 
     const handleExportBackup = async () => {
         setIsSaving(true);
@@ -447,6 +452,7 @@ const Settings = () => {
         { id: 'appearance', label: 'الهوية', icon: Palette },
         { id: 'users', label: 'المستخدمون', icon: Users },
         { id: 'chatbot', label: 'الذكاء الاصطناعي', icon: MessageSquare },
+        { id: 'mobile', label: 'الموبايل', icon: Smartphone },
         { id: 'policies', label: 'السياسات', icon: Lock },
         { id: 'advanced', label: 'الأرشيف', icon: Shield },
         { id: 'audit', label: 'السجلات', icon: Activity },
@@ -601,6 +607,62 @@ const Settings = () => {
                     </div>
                 )}
 
+                {/* ── MOBILE SETTINGS ── */}
+                {activeTab === 'mobile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard className="rounded-none">
+                            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+                            <div className="space-y-4">
+                                <ToggleRow
+                                    icon={Fingerprint}
+                                    label="الدخول بالبصمة / الوجه"
+                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
+                                    checked={biometricEnabled}
+                                    onChange={() => {
+                                        const newVal = !biometricEnabled;
+                                        setBiometricEnabled(newVal);
+                                        localStorage.setItem('biometric_enabled', String(newVal));
+                                        triggerHaptic('medium');
+                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
+                                    }}
+                                />
+                                
+                                <ToggleRow
+                                    icon={Zap}
+                                    label="الاهتزاز التفاعلي (Haptics)"
+                                    sub="ردود فعل لمسية عند الضغط على الأزرار"
+                                    checked={hapticEnabled}
+                                    onChange={() => {
+                                        const newVal = !hapticEnabled;
+                                        setHapticEnabled(newVal);
+                                        localStorage.setItem('haptic_enabled', String(newVal));
+                                        if (newVal) triggerHaptic('light');
+                                        showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
+                                    }}
+                                />
+
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
+                                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                                    <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
+                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="rounded-none border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <Smartphone size={32} className="text-slate-400" />
+                            </div>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+                            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+                            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                                التحقق من وجود تحديثات
+                            </button>
+                        </SectionCard>
+                    </div>
+                )}
+
                 {/* ── APPEARANCE ── */}
                 {activeTab === 'appearance' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -729,6 +791,62 @@ const Settings = () => {
                                     </button>
                                 </div>
                             </div>
+                        </SectionCard>
+                    </div>
+                )}
+
+                {/* ── MOBILE SETTINGS ── */}
+                {activeTab === 'mobile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard className="rounded-none">
+                            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+                            <div className="space-y-4">
+                                <ToggleRow
+                                    icon={Fingerprint}
+                                    label="الدخول بالبصمة / الوجه"
+                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
+                                    checked={biometricEnabled}
+                                    onChange={() => {
+                                        const newVal = !biometricEnabled;
+                                        setBiometricEnabled(newVal);
+                                        localStorage.setItem('biometric_enabled', String(newVal));
+                                        triggerHaptic('medium');
+                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
+                                    }}
+                                />
+                                
+                                <ToggleRow
+                                    icon={Zap}
+                                    label="الاهتزاز التفاعلي (Haptics)"
+                                    sub="ردود فعل لمسية عند الضغط على الأزرار"
+                                    checked={hapticEnabled}
+                                    onChange={() => {
+                                        const newVal = !hapticEnabled;
+                                        setHapticEnabled(newVal);
+                                        localStorage.setItem('haptic_enabled', String(newVal));
+                                        if (newVal) triggerHaptic('light');
+                                        showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
+                                    }}
+                                />
+
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
+                                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                                    <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
+                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="rounded-none border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <Smartphone size={32} className="text-slate-400" />
+                            </div>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+                            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+                            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                                التحقق من وجود تحديثات
+                            </button>
                         </SectionCard>
                     </div>
                 )}
@@ -967,6 +1085,62 @@ const Settings = () => {
                     </div>
                 )}
 
+                {/* ── MOBILE SETTINGS ── */}
+                {activeTab === 'mobile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard className="rounded-none">
+                            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+                            <div className="space-y-4">
+                                <ToggleRow
+                                    icon={Fingerprint}
+                                    label="الدخول بالبصمة / الوجه"
+                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
+                                    checked={biometricEnabled}
+                                    onChange={() => {
+                                        const newVal = !biometricEnabled;
+                                        setBiometricEnabled(newVal);
+                                        localStorage.setItem('biometric_enabled', String(newVal));
+                                        triggerHaptic('medium');
+                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
+                                    }}
+                                />
+                                
+                                <ToggleRow
+                                    icon={Zap}
+                                    label="الاهتزاز التفاعلي (Haptics)"
+                                    sub="ردود فعل لمسية عند الضغط على الأزرار"
+                                    checked={hapticEnabled}
+                                    onChange={() => {
+                                        const newVal = !hapticEnabled;
+                                        setHapticEnabled(newVal);
+                                        localStorage.setItem('haptic_enabled', String(newVal));
+                                        if (newVal) triggerHaptic('light');
+                                        showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
+                                    }}
+                                />
+
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
+                                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                                    <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
+                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="rounded-none border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <Smartphone size={32} className="text-slate-400" />
+                            </div>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+                            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+                            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                                التحقق من وجود تحديثات
+                            </button>
+                        </SectionCard>
+                    </div>
+                )}
+
                 {/* ── POLICIES ── */}
                 {activeTab === 'policies' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -1078,6 +1252,62 @@ const Settings = () => {
                     </div>
                 )}
 
+                {/* ── MOBILE SETTINGS ── */}
+                {activeTab === 'mobile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard className="rounded-none">
+                            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+                            <div className="space-y-4">
+                                <ToggleRow
+                                    icon={Fingerprint}
+                                    label="الدخول بالبصمة / الوجه"
+                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
+                                    checked={biometricEnabled}
+                                    onChange={() => {
+                                        const newVal = !biometricEnabled;
+                                        setBiometricEnabled(newVal);
+                                        localStorage.setItem('biometric_enabled', String(newVal));
+                                        triggerHaptic('medium');
+                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
+                                    }}
+                                />
+                                
+                                <ToggleRow
+                                    icon={Zap}
+                                    label="الاهتزاز التفاعلي (Haptics)"
+                                    sub="ردود فعل لمسية عند الضغط على الأزرار"
+                                    checked={hapticEnabled}
+                                    onChange={() => {
+                                        const newVal = !hapticEnabled;
+                                        setHapticEnabled(newVal);
+                                        localStorage.setItem('haptic_enabled', String(newVal));
+                                        if (newVal) triggerHaptic('light');
+                                        showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
+                                    }}
+                                />
+
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
+                                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                                    <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
+                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="rounded-none border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <Smartphone size={32} className="text-slate-400" />
+                            </div>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+                            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+                            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                                التحقق من وجود تحديثات
+                            </button>
+                        </SectionCard>
+                    </div>
+                )}
+
                 {/* ── ADVANCED ── */}
                 {activeTab === 'advanced' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -1158,6 +1388,62 @@ const Settings = () => {
                                     <Trash2 size={13} /> إعادة ضبط المصنع (Factory Reset)
                                 </DangerBtn>
                             </div>
+                        </SectionCard>
+                    </div>
+                )}
+
+                {/* ── MOBILE SETTINGS ── */}
+                {activeTab === 'mobile' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <SectionCard className="rounded-none">
+                            <SectionTitle icon={Smartphone} label="تخصيص تجربة الموبايل" sub="Mobile App Experience" />
+                            <div className="space-y-4">
+                                <ToggleRow
+                                    icon={Fingerprint}
+                                    label="الدخول بالبصمة / الوجه"
+                                    sub="تسجيل دخول سريع وآمن دون كلمة مرور"
+                                    checked={biometricEnabled}
+                                    onChange={() => {
+                                        const newVal = !biometricEnabled;
+                                        setBiometricEnabled(newVal);
+                                        localStorage.setItem('biometric_enabled', String(newVal));
+                                        triggerHaptic('medium');
+                                        showNotify(newVal ? 'تم تفعيل الدخول بالبصمة' : 'تم إيقاف الدخول بالبصمة');
+                                    }}
+                                />
+                                
+                                <ToggleRow
+                                    icon={Zap}
+                                    label="الاهتزاز التفاعلي (Haptics)"
+                                    sub="ردود فعل لمسية عند الضغط على الأزرار"
+                                    checked={hapticEnabled}
+                                    onChange={() => {
+                                        const newVal = !hapticEnabled;
+                                        setHapticEnabled(newVal);
+                                        localStorage.setItem('haptic_enabled', String(newVal));
+                                        if (newVal) triggerHaptic('light');
+                                        showNotify(newVal ? 'تم تفعيل الاهتزاز' : 'تم إيقاف الاهتزاز');
+                                    }}
+                                />
+
+                                <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
+                                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                                    <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
+                                        تفعيل البصمة والاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يسرع وصولك لبياناتك ويزيد من سهولة الاستخدام اليومي.
+                                    </p>
+                                </div>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard className="rounded-none border-dashed border-2 border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <Smartphone size={32} className="text-slate-400" />
+                            </div>
+                            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+                            <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
+                            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                                التحقق من وجود تحديثات
+                            </button>
                         </SectionCard>
                     </div>
                 )}
