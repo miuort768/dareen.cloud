@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 import { SplashScreen } from './components/ui/SplashScreen';
