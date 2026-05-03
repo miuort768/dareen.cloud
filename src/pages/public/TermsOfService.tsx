@@ -10,7 +10,7 @@ export const TermsOfService = () => {
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="الشروط والأحكام"
-                description="اتفاقية شروط وأحكام استخدام منصة معهد دارين - تعرف على حقوقك والتزاماتك عند استخدام خدماتنا التعليمية."
+                description="اتفاقية شروط وأحكام استخدام منصة دارين السابعة - تعرف على حقوقك والتزاماتك عند استخدام خدماتنا التعليمية."
             />
             <PublicNavbar />
 
@@ -48,7 +48,7 @@ export const TermsOfService = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black text-gray-900 mb-2">قبول الشروط</h2>
                                 <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                                    بالوصول إلى منصة معهد دارين للتعليم والتدريب واستخدامها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا توافق على أي من هذه الشروط، يُمنع عليك استخدام هذه المنصة أو الوصول إليها.
+                                    بالوصول إلى منصة دارين السابعة للتعليم والتدريب واستخدامها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا توافق على أي من هذه الشروط، يُمنع عليك استخدام هذه المنصة أو الوصول إليها.
                                 </p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ export const TermsOfService = () => {
                             <div>
                                 <h2 className="text-2xl font-black text-gray-900 mb-3">الخدمات المقدمة</h2>
                                 <div className="space-y-2 text-gray-600">
-                                    <p>يوفر معهد دارين خدمات تعليمية عبر الإنترنت تشمل:</p>
+                                    <p>يوفر دارين السابعة خدمات تعليمية عبر الإنترنت تشمل:</p>
                                     <ul className="list-disc list-inside space-y-1 mr-4">
                                         <li>دروس خصوصية مباشرة عبر الإنترنت</li>
                                         <li>دورات تعليمية في مختلف المواد والمناهج</li>
@@ -181,7 +181,7 @@ export const TermsOfService = () => {
                         <div className="bg-gray-50 border border-gray-100 p-8 rounded-none">
                             <h2 className="text-2xl font-black text-gray-900 mb-4">الملكية الفكرية</h2>
                             <div className="space-y-2 text-gray-600">
-                                <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لمعهد دارين أو مرخصة لنا.</p>
+                                <p>جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.</p>
                                 <p className="font-bold mt-4">يُحظر عليك:</p>
                                 <ul className="list-disc list-inside space-y-1 mr-4">
                                     <li>نسخ أو توزيع أو تعديل أي محتوى دون إذن كتابي</li>

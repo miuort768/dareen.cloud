@@ -84,9 +84,9 @@ export const Courses = () => {
     return (
         <div className="min-h-full bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
-                title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | معهد دارين"
+                title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | دارين السابعة"
                 description="استكشف أفضل الدورات التعليمية والدروس الخصوصية الأونلاين في الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان). تأسيس شامل، مناهج خليجية، وتحفيظ قرآن."
-                keywords="دورات الكويت, دروس خصوصية قطر, معلمين السعودية, منصة الامارات التعليمية, منهج سلطنة عمان, قدرات وتحصيلي السعودية, معهد دارين, تحفيظ قرآن الخليج"
+                keywords="دورات الكويت, دروس خصوصية قطر, معلمين السعودية, منصة الامارات التعليمية, منهج سلطنة عمان, قدرات وتحصيلي السعودية, دارين السابعة, تحفيظ قرآن الخليج"
                 url="https://dareen-edu.com/courses"
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
@@ -121,7 +121,7 @@ export const Courses = () => {
                         </div>
                         <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight relative">
                             <span className="sr-only">أفضل الدورات التعليمية والدروس الخصوصية في الكويت ودول الخليج - تحفيظ قرآن وتأسيس شامل</span>
-                            <span className="block mb-2 md:mb-3" aria-hidden="true">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
+                            <span className="block mb-2 md:mb-3" aria-hidden="true">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">دارين السابعة</span></span>
                             <span className="text-xl md:text-3xl text-gray-400 dark:text-slate-400 font-bold block" aria-hidden="true">
                                 استثمر في <span className="text-red-600 underline decoration-green-500/30 decoration-8 underline-offset-8">مستقبل طفلك</span> اليوم
                             </span>

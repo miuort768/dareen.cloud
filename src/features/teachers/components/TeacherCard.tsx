@@ -87,7 +87,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                     <div className="mt-8 pt-6 border-t-2 border-dashed border-slate-100 dark:border-slate-800 flex items-center justify-between relative z-10">
                         <div className="space-y-0.5 text-right" dir="rtl">
                             <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest opacity-80 leading-none">القسم الأكاديمي</p>
-                            <p className="text-[7px] text-slate-400 font-bold max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل أكاديمية دارين</p>
+                            <p className="text-[7px] text-slate-400 font-bold max-w-[100px] leading-tight mt-1 opacity-50">هذه البطاقة تثبت الصفة الوظيفية لحاملها داخل دارين السابعة</p>
                         </div>
                         <div className="p-1.5 bg-white border border-slate-100">
                             <QRCodeSVG 

@@ -16,7 +16,7 @@ export const FloatingActions = () => {
             icon: <MessageCircle className="w-5 h-5" />,
             label: 'واتساب',
             color: 'bg-[#25D366]',
-            href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات معهد دارين')}`,
+            href: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`,
             isExternal: true
         },
         {

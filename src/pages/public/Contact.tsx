@@ -48,9 +48,9 @@ export const Contact = () => {
     return (
         <div className="min-h-full bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
             <SEO
-                title="تواصل مع معهد دارين | مدرسين خصوصي في السعودية، الكويت، قطر، الامارات، وعمان"
-                description="تواصل مع أكاديمية دارين واحجز أفضل المدرسين الخصوصيين أونلاين في دول الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان) لجميع المراحل الدراسية."
-                keywords="ارقام مدرسين السعودية, مدرس خصوصي قطر, منصة تعليم الكويت, تواصل مع معهد دارين, مدرسين اونلاين الامارات, دروس تقوية عمان"
+                title="تواصل مع دارين السابعة | مدرسين خصوصي في السعودية، الكويت، قطر، الامارات، وعمان"
+                description="تواصل مع دارين السابعة واحجز أفضل المدرسين الخصوصيين أونلاين في دول الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان) لجميع المراحل الدراسية."
+                keywords="ارقام مدرسين السعودية, مدرس خصوصي قطر, منصة تعليم الكويت, تواصل مع دارين السابعة, مدرسين اونلاين الامارات, دروس تقوية عمان"
                 url="https://dareen-edu.com/contact"
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
@@ -72,8 +72,8 @@ export const Contact = () => {
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
                         </div>
                         <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 dark:text-white mb-6 relative">
-                            <span className="sr-only">تواصل مع منصة معهد دارين لحجز الدروس الخصوصية أونلاين وتحفيظ القرآن في الكويت والخليج</span>
-                            <span aria-hidden="true">تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">معهد دارين</span></span>
+                            <span className="sr-only">تواصل مع منصة دارين السابعة لحجز الدروس الخصوصية أونلاين وتحفيظ القرآن في الكويت والخليج</span>
+                            <span aria-hidden="true">تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">دارين السابعة</span></span>
                         </h1>
                         <p className="text-gray-500 dark:text-slate-400 text-sm md:text-xl font-medium leading-relaxed px-4">
                             يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.

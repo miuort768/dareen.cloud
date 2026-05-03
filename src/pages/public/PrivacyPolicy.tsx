@@ -10,7 +10,7 @@ export const PrivacyPolicy = () => {
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO
                 title="سياسة الخصوصية"
-                description="سياسة الخصوصية الخاصة بمعهد دارين - تعرف على كيفية حماية بياناتك الشخصية وضمان خصوصيتك عند استخدام منصتنا التعليمية."
+                description="سياسة الخصوصية الخاصة بدارين السابعة - تعرف على كيفية حماية بياناتك الشخصية وضمان خصوصيتك عند استخدام منصتنا التعليمية."
             />
             <PublicNavbar />
 
@@ -30,7 +30,7 @@ export const PrivacyPolicy = () => {
                     </h1>
 
                     <p className="text-sm md:text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
-                        نلتزم في معهد دارين بحماية خصوصيتك وأمان معلوماتك الشخصية
+                        نلتزم في دارين السابعة بحماية خصوصيتك وأمان معلوماتك الشخصية
                     </p>
                 </div>
             </section>
@@ -48,7 +48,7 @@ export const PrivacyPolicy = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-2">مقدمة</h2>
                                 <p className="text-sm md:text-base text-gray-600 dark:text-slate-400 leading-relaxed">
-                                    تصف سياسة الخصوصية هذه كيفية جمع معهد دارين للتعليم والتدريب ("نحن" أو "المعهد") واستخدامنا وحمايتنا ومشاركتنا للمعلومات الشخصية التي نجمعها من خلال منصتنا التعليمية. باستخدامك لخدماتنا، فإنك توافق على الممارسات الموضحة في هذه السياسة.
+                                    تصف سياسة الخصوصية هذه كيفية جمع دارين السابعة للتعليم والتدريب ("نحن" أو "المعهد") واستخدامنا وحمايتنا ومشاركتنا للمعلومات الشخصية التي نجمعها من خلال منصتنا التعليمية. باستخدامك لخدماتنا، فإنك توافق على الممارسات الموضحة في هذه السياسة.
                                 </p>
                             </div>
                         </div>

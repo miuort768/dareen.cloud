@@ -24,7 +24,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        const fullText = "منصة معهد دارين";
+        const fullText = "منصة دارين السابعة";
         let i = 0;
         let isDeleting = false;
         let typingSpeed = 150;
@@ -82,7 +82,7 @@ export const Home = () => {
         {
             name: "أم دلال",
             role: "ولية أمر",
-            content: "أحسن قرار خذيته إني سجلت عيالي بمعهد دارين. المدرسين قمة في الأخلاق والتعامل، ويوصلون المعلومة بسلاسة.",
+            content: "أحسن قرار خذيته إني سجلت عيالي بدارين السابعة. المدرسين قمة في الأخلاق والتعامل، ويوصلون المعلومة بسلاسة.",
             avatar: "/images/avatars/mom2.png"
         },
         {
@@ -106,9 +106,9 @@ export const Home = () => {
     return (
         <div className="min-h-full bg-[rgb(var(--bg-surface))] font-sans text-[rgb(var(--text-main))] relative overflow-x-hidden transition-colors duration-500">
             <SEO
-                title="معهد دارين للتعليم والتدريب | المنصة رقم 1 في الكويت والسعودية وقطر والامارات وعمان"
-                description="معهد دارين للتعليم والتدريب يوفر أفضل دروس خصوصية أونلاين، مراجعات نهائية، تحفيظ قرآن، وتأسيس أكاديمي مع نخبة من المعلمين للمناهج في الكويت، السعودية، قطر، الامارات، وسلطنة عمان."
-                keywords="أفضل منصة تعليمية, تعليم عن بعد الكويت, مدرس خصوصي قطر, دروس خصوصية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, معهد دارين, تحفيظ قرآن عن بعد"
+                title="دارين السابعة للتعليم والتدريب | المنصة رقم 1 في الكويت والسعودية وقطر والامارات وعمان"
+                description="دارين السابعة للتعليم والتدريب يوفر أفضل دروس خصوصية أونلاين، مراجعات نهائية، تحفيظ قرآن، وتأسيس أكاديمي مع نخبة من المعلمين للمناهج في الكويت، السعودية، قطر، الامارات، وسلطنة عمان."
+                keywords="أفضل منصة تعليمية, تعليم عن بعد الكويت, مدرس خصوصي قطر, دروس خصوصية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, دارين السابعة, تحفيظ قرآن عن بعد"
                 preloadImages={['/hero-child.png']}
             />
             <PublicNavbar />
@@ -139,7 +139,7 @@ export const Home = () => {
                                 <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
-                                <span className="sr-only">معهد دارين للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
+                                <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-slate-900 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
@@ -355,7 +355,7 @@ export const Home = () => {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-5">
                                 <a
-                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في معهد دارين')}`}
+                                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-10 py-4 bg-green-600 text-white font-bold text-lg shadow-xl hover:bg-green-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"

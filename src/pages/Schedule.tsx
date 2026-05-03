@@ -256,7 +256,7 @@ export const Schedule = () => {
                 {/* Print-only Header */}
                 <div className="hidden print:block text-center mb-8 border-b-2 border-slate-950 pb-4" dir="rtl">
                     <h1 className="text-3xl font-black text-slate-950">الجدول الدراسي الأسبوعي</h1>
-                    <p className="text-sm font-bold text-slate-600 mt-2">أكاديمية دارين — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                    <p className="text-sm font-bold text-slate-600 mt-2">دارين السابعة — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                 </div>
 
                 {/* ── Stats Row ── */}

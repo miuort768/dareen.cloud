@@ -60,7 +60,7 @@ export const PublicNavbar = () => {
                             isAuthenticated ? "hidden md:flex" : "flex"
                         )}>
                             <h1 className="site-title text-[15px] md:text-xl font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
-                                معهد دارين
+                                دارين السابعة
                             </h1>
                             <span className="text-[10px] md:text-[12px] text-red-500/90 dark:text-red-400 font-bold mt-1.5 bg-red-50/80 dark:bg-red-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
                                 أفضل مدرسة افتراضية

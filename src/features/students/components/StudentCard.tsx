@@ -86,7 +86,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                     {/* Footer / QR Code */}
                     <div className="mt-10 pt-6 border-t-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-between relative z-10">
                         <div className="space-y-1 text-right" dir="rtl">
-                            <p className="text-[9px] font-black text-gray-400 uppercase">نظام إدارة أكاديمية دارين</p>
+                            <p className="text-[9px] font-black text-gray-400 uppercase">نظام إدارة دارين السابعة</p>
                             <p className="text-[8px] text-gray-500 font-bold">يُرجى إبراز هذه البطاقة عند طلبها داخل المعهد</p>
                         </div>
                         <div className="p-2 bg-white border-2 border-gray-900">

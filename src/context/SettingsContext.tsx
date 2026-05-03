@@ -58,7 +58,7 @@ interface SettingsContextType {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-    const [academyName, setAcademyNameState] = useState('دارين لتعليم و التدريب');
+    const [academyName, setAcademyNameState] = useState('دارين السابعة');
     const [academyLogo, setAcademyLogoState] = useState('');
     const [academyTagline, setAcademyTaglineState] = useState('مستقبل أفضل لأبنائنا');
     const [academyAddress, setAcademyAddressState] = useState('');
@@ -79,7 +79,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     const [teacherCommissionType, setTeacherCommissionTypeState] = useState<'percentage' | 'fixed'>('fixed');
     const [autoFreezeThreshold, setAutoFreezeThresholdState] = useState(3);
     const [chatbotEnabled, setChatbotEnabledState] = useState(false);
-    const [chatbotWelcomeMsg, setChatbotWelcomeMsgState] = useState('مرحباً بك في معهد دارين! كيف يمكننا مساعدتك اليوم؟');
+    const [chatbotWelcomeMsg, setChatbotWelcomeMsgState] = useState('مرحباً بك في دارين السابعة! كيف يمكننا مساعدتك اليوم؟');
     const [chatbotName, setChatbotNameState] = useState('دارين بوت');
     const [telegramHandle, setTelegramHandleState] = useState('dareen_app');
     const [heroBanners, setHeroBannersState] = useState(JSON.stringify([

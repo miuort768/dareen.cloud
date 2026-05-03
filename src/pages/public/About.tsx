@@ -8,9 +8,9 @@ export const About = () => {
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative overflow-x-hidden">
             <SEO
-                title="عن معهد دارين | المنصة التعليمية الأفضل في السعودية والكويت وقطر والامارات وعمان"
-                description="تعرف على معهد دارين، المؤسسة الرائدة للتعليم عن بعد في دول الخليج (السعودية، الكويت، قطر، الامارات، عمان). نقدم أفضل المدرسين الخصوصيين ومراجعات المناهج الخليجية."
-                keywords="معهد دارين, اكاديمية دارين الخليج, دروس خصوصية اونلاين الكويت, معلمين قطر, مدرس قدرات السعودية, منصة الامارات, معهد تعليمي عمان"
+                title="عن دارين السابعة | المنصة التعليمية الأفضل في السعودية والكويت وقطر والامارات وعمان"
+                description="تعرف على دارين السابعة، المؤسسة الرائدة للتعليم عن بعد في دول الخليج (السعودية، الكويت، قطر، الامارات، عمان). نقدم أفضل المدرسين الخصوصيين ومراجعات المناهج الخليجية."
+                keywords="دارين السابعة, اكاديمية دارين الخليج, دروس خصوصية اونلاين الكويت, معلمين قطر, مدرس قدرات السعودية, منصة الامارات, معهد تعليمي عمان"
                 url="https://dareen-edu.com/about"
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
@@ -29,17 +29,17 @@ export const About = () => {
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-8 animate-fade-in group hover:border-red-500 transition-all duration-500">
                         <Sparkles size={16} className="text-red-600 group-hover:rotate-12 transition-transform" />
-                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">معهد دارين | ريادة تعليمية</span>
+                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">دارين السابعة | ريادة تعليمية</span>
                     </div>
 
                     <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight relative">
-                        <span className="sr-only">عن معهد دارين للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
+                        <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                         <span aria-hidden="true">نحن لا نُدرّس فقط،<br /></span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-700 via-red-600 to-red-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
                     </h1>
 
                     <p className="text-sm md:text-xl text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
-                        في معهد دارين، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي لنخلق بيئة تعليمية لا تعرف الحدود.
+                        في دارين السابعة، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي لنخلق بيئة تعليمية لا تعرف الحدود.
                     </p>
 
                     <div className="flex flex-wrap justify-center gap-8 md:gap-16">
@@ -112,7 +112,7 @@ export const About = () => {
                                 <span className="text-red-600">نهضة في الفكر</span>
                             </h2>
                             <p className="text-gray-600 dark:text-slate-400 text-base md:text-lg leading-relaxed font-medium mb-10 max-w-xl">
-                                بدأ معهد دارين كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
+                                بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                             </p>
 
                             <div className="space-y-4">
@@ -248,7 +248,7 @@ export const About = () => {
                                         </h2>
 
                                         <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto lg:mx-0 mb-10 font-medium leading-relaxed opacity-80">
-                                            انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع معهد دارين. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
+                                            انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                         </p>
 
                                         <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">

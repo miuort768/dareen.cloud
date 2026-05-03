@@ -80,7 +80,7 @@ export const Login = () => {
         <div className="min-h-screen bg-[rgb(var(--bg-surface))] flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
             <SEO
                 title="تسجيل الدخول"
-                description="تسجيل الدخول إلى بوابة معهد دارين - طموح لا يعرف الحدود."
+                description="تسجيل الدخول إلى بوابة دارين السابعة - طموح لا يعرف الحدود."
             />
 
             {/* Static Background Layer */}
@@ -113,7 +113,7 @@ export const Login = () => {
 
                             <div className="flex items-center gap-3 mb-6">
                                 <Sparkles className="text-gold" size={28} />
-                                <span className="text-[18px] font-black uppercase text-slate-800 tracking-[0.2em]">منصة معهد دارين</span>
+                                <span className="text-[18px] font-black uppercase text-slate-800 tracking-[0.2em]">منصة دارين السابعة</span>
                             </div>
                             
                             <h2 className="text-4xl lg:text-5xl font-black text-[rgb(var(--text-main))] mb-8 leading-tight border-r-8 border-emerald-600 pr-8 min-h-[6rem]">

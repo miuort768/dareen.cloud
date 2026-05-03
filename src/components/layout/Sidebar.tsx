@@ -138,7 +138,7 @@ export const Sidebar = () => {
                                 "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                             )}>
-                                أكاديمية دارين
+                                دارين السابعة
                             </span>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ export const Sidebar = () => {
                             "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                         )}>
-                            نظام أكاديمية دارين
+                            نظام دارين السابعة
                         </span>
                     </div>
                 </div>

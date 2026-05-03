@@ -27,7 +27,7 @@ export const PublicFooter = () => {
                                 <span className="text-2xl font-black">د</span>
                             </div>
                             <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 font-heading">
-                                معهد دارين
+                                دارين السابعة
                             </span>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-red-600/30 pr-4">
@@ -112,7 +112,7 @@ export const PublicFooter = () => {
                                 تواصل معنا
                             </a>
                             <a
-                                href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين لتعليم و التدريب')}`}
+                                href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين السابعة')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block w-full text-center bg-gradient-to-r from-gold to-gold-hover text-white font-bold py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
@@ -127,7 +127,7 @@ export const PublicFooter = () => {
                 <div className="border-t border-white/10 pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-6">
                     <div className="text-center md:text-right">
                         <p className="text-gray-500 text-sm">
-                            &copy; {new Date().getFullYear()} <span className="text-white font-medium">معهد دارين</span>. جميع الحقوق محفوظة.
+                            &copy; {new Date().getFullYear()} <span className="text-white font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
                         </p>
                     </div>
 
