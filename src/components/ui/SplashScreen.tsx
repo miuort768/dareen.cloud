@@ -11,7 +11,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
     const timer = setTimeout(() => {
       setIsFadingOut(true);
       setTimeout(onComplete, 500); 
-    }, 2000); 
+    }, 4000); 
 
     return () => {
       clearTimeout(fadeTimer);
@@ -24,7 +24,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
       className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-white dark:bg-slate-950 transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} ${isFadingOut ? 'opacity-0' : ''}`}
     >
       <div className="relative z-10 flex flex-col items-center">
-        <div className="relative w-32 h-32 md:w-40 md:h-40 mb-8 transform transition-transform duration-1000 ease-out scale-110">
+        <div className="relative w-40 h-40 md:w-56 md:h-56 mb-8 transform transition-transform duration-1000 ease-out scale-110">
           <div className="absolute inset-0 bg-red-500/20 rounded-full blur-2xl animate-pulse"></div>
           <img 
             src="/logo.png" 
