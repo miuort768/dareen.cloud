@@ -92,7 +92,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
     const requestReschedule = async (studentId: string, studentName: string, subject: string, data: { date: string, time: string, reason: string }) => {
         try {
             await api.post('/tasks', {
-                id: crypto.randomUUID(),
+                id: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
                 title: `طلب تأجيل: ${studentName}`,
                 description: `الحصة: ${subject}\nالموعد المقترح: ${data.date} - ${data.time}\nالسبب: ${data.reason}`,
                 status: 'pending',

@@ -1,7 +1,6 @@
 import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
-import { SplashScreen } from './components/ui/SplashScreen';
 
 import { Layout } from './components/layout/Layout';
 import { useApp } from './context/AppContext';
@@ -93,7 +92,6 @@ const DashboardRedirect = () => {
 
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
-  const [showSplash, setShowSplash] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -104,10 +102,6 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [location.pathname]);
-
-  if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />;
-  }
 
   if (isLoading || isSettingsLoading) {
     return <PageLoader />;

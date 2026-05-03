@@ -27,7 +27,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const showNotification = useCallback((message: string, type: 'success' | 'error' | 'warning' | 'info' = 'success') => {
-        const id = crypto.randomUUID();
+        const id = Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
         const newToast: ToastProps = { id, message, type, onClose: removeToast };
 
         setToasts(prev => [...prev, newToast]);
