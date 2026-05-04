@@ -56,33 +56,29 @@ export const Blog = () => {
                         </p>
                     </div>
 
-                    {/* Premium Sharp Categories Section */}
-                    <div className="grid grid-cols-5 gap-3 sm:gap-6 max-w-5xl mx-auto mb-20">
+                    {/* Modern Minimalist Categories Section */}
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-20 px-2">
                         {[
-                            { name: 'الكتب المدرسية', icon: '📚', color: 'from-indigo-600 to-blue-700', shadow: 'shadow-blue-500/20', path: '/courses?category=books' },
-                            { name: 'حل الكتب', icon: '📝', color: 'from-emerald-600 to-teal-700', shadow: 'shadow-emerald-500/20', path: '/courses?category=solutions' },
-                            { name: 'المذكرات', icon: '🗒️', color: 'from-violet-600 to-purple-700', shadow: 'shadow-purple-500/20', path: '/courses?category=notes' },
-                            { name: 'ملخصات', icon: '✨', color: 'from-rose-600 to-red-700', shadow: 'shadow-red-500/20', path: '/courses?category=summaries' },
-                            { name: 'المزيد', icon: '➕', color: 'from-slate-800 to-slate-950', shadow: 'shadow-slate-500/20', path: '/courses' },
+                            { name: 'الكتب المدرسية', color: 'bg-indigo-600 hover:bg-indigo-700', path: '/courses?category=books' },
+                            { name: 'حل الكتب المدرسية', color: 'bg-emerald-600 hover:bg-emerald-700', path: '/courses?category=solutions' },
+                            { name: 'المذكرات', color: 'bg-violet-600 hover:bg-violet-700', path: '/courses?category=notes' },
+                            { name: 'ملخصات', color: 'bg-rose-600 hover:bg-rose-700', path: '/courses?category=summaries' },
+                            { name: 'المزيد', color: 'bg-slate-900 hover:bg-black', path: '/courses' },
                         ].map((cat, i) => (
                             <Link 
                                 key={i}
                                 to={cat.path}
                                 onClick={() => window.scrollTo(0, 0)}
-                                className="group relative"
+                                className={cn(
+                                    "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group",
+                                    cat.color,
+                                    i === 4 ? "col-span-2 md:col-span-1" : ""
+                                )}
                             >
-                                <div className={cn(
-                                    "relative z-10 w-full aspect-square sm:h-28 rounded-none border-2 border-slate-900 dark:border-white/20 bg-gradient-to-br flex flex-col items-center justify-center gap-2 transition-all duration-300 group-hover:-translate-y-2 group-hover:-translate-x-1 group-active:translate-y-0 group-active:translate-x-0 overflow-hidden shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]",
-                                    cat.color
-                                )}>
-                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <span className="text-2xl sm:text-4xl filter drop-shadow-md transform group-hover:scale-125 transition-transform duration-500">{cat.icon}</span>
-                                    <span className="text-[8px] sm:text-xs font-black text-white text-center leading-tight px-1 uppercase tracking-tighter sm:tracking-normal">
-                                        {cat.name}
-                                    </span>
-                                </div>
-                                {/* Sharp Offset Background */}
-                                <div className="absolute inset-0 bg-slate-900 dark:bg-white/5 translate-x-1 translate-y-1 -z-0"></div>
+                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
+                                    {cat.name}
+                                </span>
                             </Link>
                         ))}
                     </div>
