@@ -89,8 +89,8 @@ export const Blog = () => {
                             <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-6 max-w-5xl mx-auto">
-                            {posts.map(post => (
+                        <div className="hidden md:flex flex-col gap-6 max-w-5xl mx-auto">
+                            {posts.slice(0, 2).map(post => (
                                 <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col md:flex-row h-full overflow-hidden">
                                     <div className="relative w-full md:w-[40%] aspect-video overflow-hidden shrink-0">
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
