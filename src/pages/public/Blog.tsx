@@ -89,29 +89,29 @@ export const Blog = () => {
                             <Loader2 className="w-10 h-10 text-red-600 animate-spin" />
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                        <div className="flex flex-col gap-6 max-w-5xl mx-auto">
                             {posts.map(post => (
-                                <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col h-full overflow-hidden">
-                                    <div className="relative aspect-square overflow-hidden">
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
-                                        <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                        <div className="absolute top-4 right-4 z-20">
-                                            <span className="bg-red-600 text-white text-[10px] font-black px-3 py-1 uppercase tracking-wider shadow-md">{post.category}</span>
+                                <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col md:flex-row h-full overflow-hidden">
+                                    <div className="relative w-full md:w-[40%] aspect-video overflow-hidden shrink-0">
+                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+                                        <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <div className="absolute top-3 right-3 z-20">
+                                            <span className="bg-red-600 text-white text-[9px] font-black px-2 py-1 uppercase tracking-wider shadow-sm">{post.category}</span>
                                         </div>
                                     </div>
-                                    <div className="p-6 flex flex-col flex-grow">
-                                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium mb-3">
+                                    <div className="p-5 md:p-8 flex flex-col flex-grow justify-center">
+                                        <div className="flex items-center gap-4 text-[10px] text-gray-500 dark:text-slate-400 font-medium mb-3">
                                             <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date?.split('T')[0]}</span></div>
                                             <div className="flex items-center gap-1.5"><User size={14} /> <span>{post.author}</span></div>
                                         </div>
-                                        <h2 className="text-xl font-black text-gray-900 dark:text-white mb-2 font-heading group-hover:text-red-600 transition-colors leading-snug">
+                                        <h2 className="text-xl md:text-2xl font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-red-600 transition-colors leading-snug">
                                             {post.title}
                                         </h2>
-                                        <p className="text-gray-500 dark:text-slate-400 text-sm mb-4 flex-grow leading-relaxed line-clamp-3">
+                                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base mb-4 line-clamp-2 leading-relaxed">
                                             {post.excerpt}
                                         </p>
-                                        <div className="inline-flex items-center gap-2 text-green-600 dark:text-green-500 font-black text-xs uppercase tracking-widest mt-auto">
-                                            <span>اقرأ المقال كامل</span>
+                                        <div className="inline-flex items-center gap-2 text-green-600 dark:text-green-500 font-black text-[10px] uppercase tracking-[0.2em]">
+                                            <span>عرض التفاصيل</span>
                                             <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
                                         </div>
                                     </div>
