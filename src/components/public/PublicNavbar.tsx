@@ -62,7 +62,7 @@ export const PublicNavbar = () => {
                             <h1 className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
                                 دارين السابعة
                             </h1>
-                            <span className="text-[9px] md:text-[11px] text-red-500/90 dark:text-red-400 font-bold mt-2.5 bg-red-50/80 dark:bg-red-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
+                            <span className="text-[9px] md:text-[11px] text-red-500/90 dark:text-red-400 font-bold mt-0.5 bg-red-50/80 dark:bg-red-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
