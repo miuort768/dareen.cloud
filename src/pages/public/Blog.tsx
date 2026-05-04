@@ -6,6 +6,7 @@ import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Calendar, User, ArrowLeft, BookOpen, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
+import { cn } from '../../lib/utils';
 
 export const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
