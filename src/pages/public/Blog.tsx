@@ -49,7 +49,7 @@ export const Blog = () => {
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">منصة المعرفة</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6">
-                            المدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">التعليمية</span>
+                            مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">دارين السابعة</span>
                         </h1>
                         <p className="text-gray-500 dark:text-slate-400 font-medium md:text-lg">
                             مقالات حصرية، نصائح ذهبية للمذاكرة، وكل ما يهم الطالب وولي الأمر في مسيرة التفوق الدراسي.
@@ -57,7 +57,7 @@ export const Blog = () => {
                     </div>
 
                     {/* Modern Minimalist Categories Section */}
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-20 px-2">
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-12 px-2">
                         {[
                             { name: 'الكتب المدرسية', color: 'bg-indigo-600 hover:bg-indigo-700', path: '/courses?category=books' },
                             { name: 'حل الكتب المدرسية', color: 'bg-emerald-600 hover:bg-emerald-700', path: '/courses?category=solutions' },
@@ -92,22 +92,22 @@ export const Blog = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                             {posts.map(post => (
                                 <Link key={post.id} to={`/blog/${post.slug}`} className="group bg-white dark:bg-slate-900 rounded-none shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-slate-800 flex flex-col h-full overflow-hidden">
-                                    <div className="relative h-56 overflow-hidden">
+                                    <div className="relative aspect-square overflow-hidden">
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
                                         <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                         <div className="absolute top-4 right-4 z-20">
-                                            <span className="bg-red-600 text-white text-xs font-black px-3 py-1 uppercase tracking-wider shadow-md">{post.category}</span>
+                                            <span className="bg-red-600 text-white text-[10px] font-black px-3 py-1 uppercase tracking-wider shadow-md">{post.category}</span>
                                         </div>
                                     </div>
                                     <div className="p-6 flex flex-col flex-grow">
-                                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium mb-4">
+                                        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-slate-400 font-medium mb-3">
                                             <div className="flex items-center gap-1.5"><Calendar size={14} /> <span>{post.date?.split('T')[0]}</span></div>
                                             <div className="flex items-center gap-1.5"><User size={14} /> <span>{post.author}</span></div>
                                         </div>
-                                        <h2 className="text-xl font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-red-600 transition-colors leading-snug">
+                                        <h2 className="text-xl font-black text-gray-900 dark:text-white mb-2 font-heading group-hover:text-red-600 transition-colors leading-snug">
                                             {post.title}
                                         </h2>
-                                        <p className="text-gray-500 dark:text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                                        <p className="text-gray-500 dark:text-slate-400 text-sm mb-4 flex-grow leading-relaxed line-clamp-3">
                                             {post.excerpt}
                                         </p>
                                         <div className="inline-flex items-center gap-2 text-green-600 dark:text-green-500 font-black text-xs uppercase tracking-widest mt-auto">
