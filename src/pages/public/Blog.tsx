@@ -56,33 +56,33 @@ export const Blog = () => {
                         </p>
                     </div>
 
-                    {/* Quick Categories Section */}
-                    <div className="grid grid-cols-5 gap-2 sm:gap-4 max-w-5xl mx-auto mb-16">
+                    {/* Premium Sharp Categories Section */}
+                    <div className="grid grid-cols-5 gap-3 sm:gap-6 max-w-5xl mx-auto mb-20">
                         {[
-                            { name: 'الكتب المدرسية', icon: '📚', color: 'from-blue-500 to-blue-600', path: '/courses?category=books' },
-                            { name: 'حل الكتب', icon: '📝', color: 'from-emerald-500 to-emerald-600', path: '/courses?category=solutions' },
-                            { name: 'المذكرات', icon: '🗒️', color: 'from-purple-500 to-purple-600', path: '/courses?category=notes' },
-                            { name: 'ملخصات', icon: '✨', color: 'from-amber-500 to-amber-600', path: '/courses?category=summaries' },
-                            { name: 'المزيد', icon: '➕', color: 'from-slate-700 to-slate-800', path: '/courses' },
+                            { name: 'الكتب المدرسية', icon: '📚', color: 'from-indigo-600 to-blue-700', shadow: 'shadow-blue-500/20', path: '/courses?category=books' },
+                            { name: 'حل الكتب', icon: '📝', color: 'from-emerald-600 to-teal-700', shadow: 'shadow-emerald-500/20', path: '/courses?category=solutions' },
+                            { name: 'المذكرات', icon: '🗒️', color: 'from-violet-600 to-purple-700', shadow: 'shadow-purple-500/20', path: '/courses?category=notes' },
+                            { name: 'ملخصات', icon: '✨', color: 'from-rose-600 to-red-700', shadow: 'shadow-red-500/20', path: '/courses?category=summaries' },
+                            { name: 'المزيد', icon: '➕', color: 'from-slate-800 to-slate-950', shadow: 'shadow-slate-500/20', path: '/courses' },
                         ].map((cat, i) => (
                             <Link 
                                 key={i}
                                 to={cat.path}
-                                onClick={() => {
-                                    window.scrollTo(0, 0);
-                                }}
-                                className="group flex flex-col items-center gap-2"
+                                onClick={() => window.scrollTo(0, 0)}
+                                className="group relative"
                             >
                                 <div className={cn(
-                                    "w-12 h-12 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br flex items-center justify-center text-xl sm:text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-2 group-hover:shadow-2xl relative overflow-hidden",
+                                    "relative z-10 w-full aspect-square sm:h-28 rounded-none border-2 border-slate-900 dark:border-white/20 bg-gradient-to-br flex flex-col items-center justify-center gap-2 transition-all duration-300 group-hover:-translate-y-2 group-hover:-translate-x-1 group-active:translate-y-0 group-active:translate-x-0 overflow-hidden shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]",
                                     cat.color
                                 )}>
-                                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <span className="relative z-10">{cat.icon}</span>
+                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <span className="text-2xl sm:text-4xl filter drop-shadow-md transform group-hover:scale-125 transition-transform duration-500">{cat.icon}</span>
+                                    <span className="text-[8px] sm:text-xs font-black text-white text-center leading-tight px-1 uppercase tracking-tighter sm:tracking-normal">
+                                        {cat.name}
+                                    </span>
                                 </div>
-                                <span className="text-[9px] sm:text-sm font-black text-slate-800 dark:text-white text-center leading-tight">
-                                    {cat.name}
-                                </span>
+                                {/* Sharp Offset Background */}
+                                <div className="absolute inset-0 bg-slate-900 dark:bg-white/5 translate-x-1 translate-y-1 -z-0"></div>
                             </Link>
                         ))}
                     </div>
