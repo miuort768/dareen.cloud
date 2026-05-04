@@ -43,7 +43,7 @@ export const Blog = () => {
 
             <main className="flex-grow pt-24 md:pt-32 pb-20 relative">
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
+                    <div className="text-center max-w-3xl mx-auto mb-8">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-green-400 rounded-full mb-6">
                             <BookOpen size={14} />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">منصة المعرفة</span>
