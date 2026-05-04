@@ -230,8 +230,6 @@ export const Home = () => {
                 </div>
             </section>
 
-            </section>
-
             {/* Why Choose Us */}
             <section className="pt-16 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
