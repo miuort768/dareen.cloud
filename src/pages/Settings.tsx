@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import {
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus,
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload,
-    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, MessageSquare,
+    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake,
     Sparkles, Phone, Zap
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useApp } from '../context/useApp';
-import { GuestChatManager } from '../features/chat/components/GuestChatManager';
 import { Skeleton } from '../components/ui/Skeleton';
 import { cn } from '../lib/utils';
 import { settingsService } from '../features/settings/services/settingsService';
