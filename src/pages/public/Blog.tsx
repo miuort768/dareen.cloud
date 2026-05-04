@@ -119,7 +119,7 @@ export const Blog = () => {
                                     </>
                                 )}
                                 
-                                {/* More button stays the same */}
+                                {/* More button */}
                                 <Link 
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
@@ -133,6 +133,20 @@ export const Blog = () => {
                                     </span>
                                 </Link>
 
+                                {/* Foundation Button - Full width on desktop, below More on mobile */}
+                                <Link 
+                                    to="/courses?category=foundation"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className={cn(
+                                        "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group bg-orange-600 hover:bg-orange-700 col-span-2 md:col-span-5"
+                                    )}
+                                >
+                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
+                                        تأسيس
+                                    </span>
+                                </Link>
+
                                 {view === 'curriculums' && (
                                     <button 
                                         onClick={() => setView('types')}
@@ -142,6 +156,7 @@ export const Blog = () => {
                                     </button>
                                 )}
                             </div>
+
                         );
                     })()}
 
