@@ -51,8 +51,8 @@ export const Blog = () => {
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6">
                             مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">دارين السابعة</span>
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 font-medium md:text-lg">
-                            مقالات حصرية، نصائح ذهبية للمذاكرة، وكل ما يهم الطالب وولي الأمر في مسيرة التفوق الدراسي.
+                        <p className="text-slate-600 dark:text-slate-300 font-bold text-sm md:text-xl leading-relaxed max-w-4xl mx-auto">
+                            اكتشف عالماً من المعرفة المتجددة مع مدونة دارين السابعة؛ دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء لرحلة تعليمية متميزة وفريدة من نوعها.
                         </p>
                     </div>
 
