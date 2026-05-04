@@ -230,41 +230,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Quick Categories Section */}
-            <section className="relative z-30 -mt-6 md:-mt-10 mb-10">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-5 gap-2 sm:gap-4 max-w-5xl mx-auto">
-                        {[
-                            { name: 'الكتب المدرسية', icon: '📚', color: 'from-blue-500 to-blue-600', path: '/courses?category=books' },
-                            { name: 'حل الكتب', icon: '📝', color: 'from-emerald-500 to-emerald-600', path: '/courses?category=solutions' },
-                            { name: 'المذكرات', icon: '🗒️', color: 'from-purple-500 to-purple-600', path: '/courses?category=notes' },
-                            { name: 'ملخصات', icon: '✨', color: 'from-amber-500 to-amber-600', path: '/courses?category=summaries' },
-                            { name: 'المزيد', icon: '➕', color: 'from-slate-700 to-slate-800', path: '/courses' },
-                        ].map((cat, i) => (
-                            <Link 
-                                key={i}
-                                to={cat.path}
-                                onClick={() => {
-                                    window.scrollTo(0, 0);
-                                }}
-                                className="group flex flex-col items-center gap-2"
-                            >
-                                <div className={cn(
-                                    "w-12 h-12 sm:w-20 sm:h-20 rounded-2xl sm:rounded-[2rem] bg-gradient-to-br flex items-center justify-center text-xl sm:text-3xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-2 group-hover:shadow-2xl relative overflow-hidden",
-                                    cat.color
-                                )}>
-                                    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <span className="relative z-10">{cat.icon}</span>
-                                </div>
-                                <span className="text-[9px] sm:text-sm font-black text-slate-800 dark:text-white text-center leading-tight">
-                                    {cat.name}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
             </section>
-
 
             {/* Why Choose Us */}
             <section className="pt-16 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
