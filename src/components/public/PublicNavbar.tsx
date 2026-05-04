@@ -86,14 +86,8 @@ export const PublicNavbar = () => {
 
                     {/* Right Side: Auth & Notifications */}
                     <div className="flex items-center gap-2 md:gap-4">
-                        {/* Dark Mode Toggle */}
-                        <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2.5 rounded-full bg-gray-50 dark:bg-slate-800 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all border border-gray-100 dark:border-slate-700 shadow-sm"
-                            title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                        >
-                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
+                        {/* Dark Mode Toggle Removed from here */}
+
 
                         {isAuthenticated && (
                             <div className="hidden md:flex border-l border-gray-100 dark:border-slate-800 pl-4 h-8 items-center">

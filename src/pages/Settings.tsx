@@ -61,7 +61,7 @@ const THEME_COLORS = [
     { id: 'coffee', label: 'قهوة', class: 'bg-stone-600' },
 ];
 
-type TabId = 'general' | 'appearance' | 'users' | 'chatbot' | 'policies' | 'advanced' | 'audit';
+type TabId = 'general' | 'appearance' | 'users' | 'policies' | 'advanced' | 'audit';
 
 // ── Reusable sub-components ───────────────────────────────────────────────────
 
@@ -217,9 +217,6 @@ const Settings = () => {
         backdateLockEnabled, setBackdateLockEnabled,
         teacherCommissionType, setTeacherCommissionType,
         autoFreezeThreshold, setAutoFreezeThreshold,
-        chatbotEnabled, setChatbotEnabled,
-        chatbotWelcomeMsg, setChatbotWelcomeMsg,
-        chatbotName, setChatbotName,
         telegramHandle, setTelegramHandle,
         heroBanners, setHeroBanners,
         user, users, addUser, editUser, deleteUser
@@ -238,8 +235,6 @@ const Settings = () => {
     const [localSemesterName, setLocalSemesterName] = useState(semesterName);
     const [localSemesters, setLocalSemesters] = useState(semesters);
     const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate);
-    const [localChatbotName, setLocalChatbotName] = useState(chatbotName);
-    const [localChatbotWelcomeMsg, setLocalChatbotWelcomeMsg] = useState(chatbotWelcomeMsg);
     const [localTelegramHandle, setLocalTelegramHandle] = useState(telegramHandle);
     
     // Parse the heroBanners string into an array, or fallback to defaults
@@ -387,10 +382,7 @@ const Settings = () => {
         telegramHandle, backdateLockEnabled, autoFreezeThreshold
     ]);
 
-    useEffect(() => {
-        setLocalChatbotName(chatbotName);
-        setLocalChatbotWelcomeMsg(chatbotWelcomeMsg);
-    }, [chatbotName, chatbotWelcomeMsg]);
+
 
     useEffect(() => {
         try {
@@ -450,7 +442,6 @@ const Settings = () => {
         { id: 'general', label: 'الإعدادات', icon: SettingsIcon },
         { id: 'appearance', label: 'الهوية', icon: Palette },
         { id: 'users', label: 'المستخدمون', icon: Users },
-        { id: 'chatbot', label: 'الذكاء الاصطناعي', icon: MessageSquare },
         { id: 'mobile', label: 'الموبايل', icon: Smartphone },
         { id: 'policies', label: 'السياسات', icon: Lock },
         { id: 'advanced', label: 'الأرشيف', icon: Shield },
@@ -822,95 +813,7 @@ const Settings = () => {
                     </div>
                 )}
 
-                {/* ── CHATBOT ── */}
-                {activeTab === 'chatbot' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <SectionCard>
-                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
-                                        <MessageSquare size={16} className="text-[#5c59f2]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-bold text-slate-800 dark:text-white">تخصيص المساعد الذكي</p>
-                                        <p className="text-[10px] text-slate-400">AI Concierge Config</p>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => setChatbotEnabled(!chatbotEnabled)}
-                                    className={cn(
-                                        'text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5',
-                                        chatbotEnabled
-                                            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border-emerald-200 dark:border-emerald-800'
-                                            : 'bg-slate-50 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
-                                    )}
-                                >
-                                    {chatbotEnabled ? <><CheckCircle2 size={12} /> نشط</> : <><Lock size={12} /> معطل</>}
-                                </button>
-                            </div>
-                            <div className="space-y-3">
-                                <ToggleRow
-                                    icon={MessageSquare}
-                                    label="حوار الزوار التلقائي"
-                                    sub="Automated Concierge"
-                                    checked={chatbotEnabled}
-                                    onChange={() => setChatbotEnabled(!chatbotEnabled)}
-                                />
-                                <div>
-                                    <FieldLabel>اسم المساعد</FieldLabel>
-                                    <InputField value={localChatbotName} onChange={e => setLocalChatbotName(e.target.value)} />
-                                </div>
-                                <div>
-                                    <FieldLabel>رسالة الترحيب</FieldLabel>
-                                    <TextAreaField value={localChatbotWelcomeMsg} onChange={e => setLocalChatbotWelcomeMsg(e.target.value)} rows={4} placeholder="اكتب رسالة الترحيب هنا..." />
-                                </div>
-                                <PrimaryBtn
-                                    loading={isSaving}
-                                    className="w-full"
-                                    onClick={async () => {
-                                        setIsSaving(true);
-                                        try {
-                                            await setChatbotName(localChatbotName);
-                                            await setChatbotWelcomeMsg(localChatbotWelcomeMsg);
-                                            showNotify('تم تحديث إعدادات الشات بوت');
-                                        } finally { setIsSaving(false); }
-                                    }}
-                                >
-                                    <Shield size={14} /> حفظ إعدادات المساعد
-                                </PrimaryBtn>
-                            </div>
-                        </SectionCard>
 
-                        <SectionCard className="bg-slate-900 dark:bg-slate-950 border-slate-800">
-                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-                                <p className="text-xs font-bold text-white/60 uppercase tracking-widest">محاكاة مباشرة</p>
-                                <span className="text-[9px] font-bold text-indigo-400 border border-indigo-500/30 px-2 py-0.5 rounded-md">Live Simulator</span>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div className="w-8 h-8 bg-[#5c59f2] rounded-xl flex items-center justify-center">
-                                        <MessageSquare size={14} className="text-white" />
-                                    </div>
-                                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{localChatbotName}</span>
-                                </div>
-                                <div className="bg-white/10 p-4 rounded-xl text-white text-xs font-medium leading-relaxed">
-                                    {localChatbotWelcomeMsg}
-                                </div>
-                                <div className="flex justify-end">
-                                    <div className="bg-[#5c59f2] px-4 py-2 rounded-xl text-white text-[11px] font-bold cursor-pointer">
-                                        كيف يمكنني البدء؟
-                                    </div>
-                                </div>
-                            </div>
-                        </SectionCard>
-
-                        {chatbotEnabled && user?.id && (
-                            <div className="lg:col-span-2">
-                                <GuestChatManager adminId={user.id} />
-                            </div>
-                        )}
-                    </div>
-                )}
 
                 {/* ── USERS ── */}
                 {activeTab === 'users' && (

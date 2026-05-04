@@ -1,13 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, MessageSquare } from 'lucide-react';
-import { useState } from 'react';
+import { MessageCircle, Send, Moon, Sun } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
-import { ChatbotWidget } from './ChatbotWidget';
+import { useDarkMode } from '../../hooks/useDarkMode';
 import { cn } from '../../lib/utils';
 
 export const FloatingActions = () => {
     const { adminPhone, telegramHandle } = useSettings();
-    const [showChat, setShowChat] = useState(false);
+    const [theme, setTheme] = useDarkMode();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
 
     const actions = [
@@ -28,11 +27,11 @@ export const FloatingActions = () => {
             isExternal: true
         },
         {
-            id: 'chat',
-            icon: <MessageSquare className="w-5 h-5" />,
-            label: 'مساعدة',
-            color: 'bg-emerald-600',
-            onClick: () => setShowChat(!showChat)
+            id: 'theme',
+            icon: theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />,
+            label: theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي',
+            color: 'bg-indigo-600',
+            onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
         }
     ];
 
@@ -53,7 +52,7 @@ export const FloatingActions = () => {
                             }}
                             className="relative group"
                         >
-                            {/* Hover Label (Darasly style) */}
+                            {/* Hover Label */}
                             <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 overflow-hidden pointer-events-none">
                                 <motion.div 
                                     className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-slate-800/50 shadow-xl opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300"
@@ -78,7 +77,6 @@ export const FloatingActions = () => {
                                         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
                                     }}
                                 >
-                                    {/* Glass Shine Effect */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
                                     <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>
                                 </a>
@@ -98,22 +96,11 @@ export const FloatingActions = () => {
                                     <div className="relative z-10 scale-[0.85] md:scale-100">{action.icon}</div>
                                 </button>
                             )}
-                            
-                            {/* Unread dot or indicator for chat */}
-                            {action.id === 'chat' && (
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 border-2 border-white dark:border-slate-950 rounded-full animate-pulse"></div>
-                            )}
                         </motion.div>
                     ))}
                 </AnimatePresence>
             </div>
-
-            {/* Integrate the existing Chatbot but trigger it from our button */}
-            {showChat && (
-                <div className="fixed inset-0 z-[10000] pointer-events-none">
-                    <ChatbotWidget forcedOpen={true} onClose={() => setShowChat(false)} />
-                </div>
-            )}
         </>
     );
 };
+
