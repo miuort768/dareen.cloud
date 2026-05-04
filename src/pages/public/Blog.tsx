@@ -56,32 +56,94 @@ export const Blog = () => {
                         </p>
                     </div>
 
-                    {/* Modern Minimalist Categories Section */}
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-12 px-2">
-                        {[
-                            { name: 'الكتب المدرسية', color: 'bg-indigo-600 hover:bg-indigo-700', path: '/courses?category=books' },
-                            { name: 'حل الكتب المدرسية', color: 'bg-emerald-600 hover:bg-emerald-700', path: '/courses?category=solutions' },
-                            { name: 'المذكرات', color: 'bg-violet-600 hover:bg-violet-700', path: '/courses?category=notes' },
-                            { name: 'ملخصات', color: 'bg-rose-600 hover:bg-rose-700', path: '/courses?category=summaries' },
-                            { name: 'المزيد', color: 'bg-slate-900 hover:bg-black', path: '/courses' },
-                        ].map((cat, i) => (
-                            <Link 
-                                key={i}
-                                to={cat.path}
-                                onClick={() => window.scrollTo(0, 0)}
-                                className={cn(
-                                    "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group",
-                                    cat.color,
-                                    i === 4 ? "col-span-2 md:col-span-1" : ""
+                    {/* Interactive Two-Tier Categories Section */}
+                    {(() => {
+                        const [view, setView] = useState<'types' | 'curriculums'>('types');
+                        const [selectedType, setSelectedType] = useState('');
+
+                        const types = [
+                            { id: 'books', name: 'الكتب المدرسية', color: 'bg-indigo-600 hover:bg-indigo-700' },
+                            { id: 'solutions', name: 'حل الكتب المدرسية', color: 'bg-emerald-600 hover:bg-emerald-700' },
+                            { id: 'notes', name: 'المذكرات', color: 'bg-violet-600 hover:bg-violet-700' },
+                            { id: 'summaries', name: 'ملخصات', color: 'bg-rose-600 hover:bg-rose-700' },
+                        ];
+
+                        const curriculums = [
+                            { id: 'kuwait', name: 'منهج كويتي', color: 'bg-blue-600 hover:bg-blue-700' },
+                            { id: 'qatar', name: 'منهج قطري', color: 'bg-red-800 hover:bg-red-900' },
+                            { id: 'uae', name: 'منهج إماراتي', color: 'bg-green-700 hover:bg-green-800' },
+                            { id: 'saudi', name: 'منهج سعودي', color: 'bg-emerald-800 hover:bg-emerald-900' },
+                        ];
+
+                        return (
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-12 px-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                {view === 'types' ? (
+                                    <>
+                                        {types.map((cat) => (
+                                            <button 
+                                                key={cat.id}
+                                                onClick={() => {
+                                                    setSelectedType(cat.id);
+                                                    setView('curriculums');
+                                                }}
+                                                className={cn(
+                                                    "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group",
+                                                    cat.color
+                                                )}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                                <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
+                                                    {cat.name}
+                                                </span>
+                                            </button>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                        {curriculums.map((curr) => (
+                                            <Link 
+                                                key={curr.id}
+                                                to={`/courses?category=${selectedType}&curriculum=${curr.id}`}
+                                                onClick={() => window.scrollTo(0, 0)}
+                                                className={cn(
+                                                    "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group animate-in zoom-in-95 duration-300",
+                                                    curr.color
+                                                )}
+                                            >
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                                <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
+                                                    {curr.name}
+                                                </span>
+                                            </Link>
+                                        ))}
+                                    </>
                                 )}
-                            >
-                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                                <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
-                                    {cat.name}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
+                                
+                                {/* More button stays the same */}
+                                <Link 
+                                    to="/courses"
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    className={cn(
+                                        "relative h-14 sm:h-16 flex items-center justify-center transition-all duration-300 border-b-4 border-black/20 overflow-hidden group bg-slate-900 hover:bg-black col-span-2 md:col-span-1"
+                                    )}
+                                >
+                                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
+                                        المزيد
+                                    </span>
+                                </Link>
+
+                                {view === 'curriculums' && (
+                                    <button 
+                                        onClick={() => setView('types')}
+                                        className="col-span-2 md:col-span-5 text-[10px] font-bold text-gray-400 hover:text-red-600 transition-colors mt-2 uppercase tracking-tighter"
+                                    >
+                                        ← العودة للتصنيفات
+                                    </button>
+                                )}
+                            </div>
+                        );
+                    })()}
 
 
                     {loading ? (
