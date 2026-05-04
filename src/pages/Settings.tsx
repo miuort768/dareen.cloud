@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
     Settings as SettingsIcon, Building2, AlertCircle, Users, UserPlus,
     Edit, Wallet, Trash2, Activity, Palette, Bell, Shield, Download, Upload,
-    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake,
+    RefreshCw, CheckCircle2, Monitor, Calendar, Archive, Lock, Snowflake, Smartphone,
     Sparkles, Phone, Zap
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
