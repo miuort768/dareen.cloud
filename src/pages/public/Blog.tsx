@@ -40,8 +40,7 @@ export const Blog = () => {
                 ]}
             />
             <PublicNavbar />
-
-            <main className="flex-grow pt-24 md:pt-32 pb-20 relative">
+            <main className="flex-grow pt-24 md:pt-32 pb-4 relative">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-8">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-green-400 rounded-full mb-6">
@@ -52,7 +51,7 @@ export const Blog = () => {
                             مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-green-600">دارين السابعة</span>
                         </h1>
                         <p className="text-slate-600 dark:text-slate-300 font-bold text-sm md:text-xl leading-relaxed max-w-4xl mx-auto">
-                            اكتشف عالماً من المعرفة المتجددة مع مدونة دارين السابعة؛ دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء لرحلة تعليمية متميزة وفريدة من نوعها.
+                            اكتشف عالماً من المعرفة المتجددة.......... مع مدونة دارين السابعة؛ دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء لرحلة تعليمية متميزة وفريدة من نوعها.
                         </p>
                     </div>
 
@@ -76,7 +75,7 @@ export const Blog = () => {
                         ];
 
                         return (
-                            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-12 px-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 max-w-5xl mx-auto mb-6 px-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {view === 'types' ? (
                                     <>
                                         {types.map((cat) => (
