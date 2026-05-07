@@ -239,8 +239,5 @@ export const Blog = () => {
 
             <PublicFooter />
         </div>
-
-            <PublicFooter />
-        </div>
     );
 };
