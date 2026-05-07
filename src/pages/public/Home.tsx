@@ -613,11 +613,11 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        {/* Desktop View - Bento Grid Style */}
-                        <div className="hidden lg:grid lg:grid-cols-3 gap-6">
+                        {/* Desktop View - Bento Grid Style with Dynamic Merging */}
+                        <div className="hidden lg:grid lg:grid-cols-3 gap-6 transition-all duration-1000">
                             {reviews.map((review, index) => {
-                                // Logic for Bento-style merging: More varied distribution
-                                const isLarge = index === 0 || index === 2 || index === 4;
+                                // Logic for Dynamic Bento-style merging: Moves every 5 seconds
+                                const isLarge = index === (currentIndex % reviews.length) || index === ((currentIndex + 3) % reviews.length);
                                 
                                 return (
                                     <div 
