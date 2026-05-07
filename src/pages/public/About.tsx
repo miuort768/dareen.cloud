@@ -20,50 +20,50 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-white dark:bg-slate-950">
+            <section className="relative pt-16 pb-12 md:pt-20 md:pb-16 overflow-hidden bg-white dark:bg-slate-950">
                 {/* Creative Background Elements - Premium Royal Theme */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-8 animate-fade-in group hover:border-indigo-500 transition-all duration-500">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-4 animate-fade-in group hover:border-indigo-500 transition-all duration-500">
                         <Sparkles size={16} className="text-indigo-600 group-hover:rotate-12 transition-transform" />
                         <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">دارين السابعة | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-gray-900 dark:text-white mb-6 font-heading tracking-tight leading-[1.6] md:leading-tight relative">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading tracking-tight leading-[1.6] md:leading-tight relative">
                         <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                         <span aria-hidden="true">نحن لا نُدرّس فقط،<br /></span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
                     </h1>
 
-                    <p className="text-sm md:text-xl text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-loose mb-12 px-4 font-medium">
+                    <p className="text-xs md:text-base text-gray-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed md:leading-relaxed mb-8 px-4 font-medium">
                         في دارين السابعة، نؤمن بأن كل طالب هو مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي لنخلق بيئة تعليمية لا تعرف الحدود.
                     </p>
 
-                    <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+                    <div className="flex flex-wrap justify-center gap-8 md:gap-12">
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
-                                <Award size={28} />
+                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Award size={24} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">10+</span>
+                            <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">10+</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">سنوات تميز</span>
                         </div>
 
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
-                                <Users size={28} />
+                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-none flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Users size={24} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">5k+</span>
+                            <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">5k+</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">طالب فخور</span>
                         </div>
 
                         <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-amber-50 dark:bg-amber-900/20 rounded-none flex items-center justify-center text-amber-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
-                                <Heart size={28} />
+                            <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 rounded-none flex items-center justify-center text-amber-600 mb-3 shadow-sm group-hover:scale-110 transition-transform">
+                                <Heart size={24} />
                             </div>
-                            <span className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white">100%</span>
+                            <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">100%</span>
                             <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">ثقة وتفاني</span>
                         </div>
                     </div>
@@ -104,14 +104,14 @@ export const About = () => {
 
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2 order-1 lg:order-2 text-right">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-none mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-none mb-4">
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em]">تعرف عليـــنا</span>
                             </div>
-                            <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-8 font-heading leading-[1.6] md:leading-[1.6]">
+                            <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-tight md:leading-tight">
                                 ريادة في التعليم،<br />
                                 <span className="text-indigo-600">نهضة في الفكر</span>
                             </h2>
-                            <p className="text-gray-600 dark:text-slate-400 text-base md:text-lg leading-relaxed font-medium mb-10 max-w-xl">
+                            <p className="text-gray-600 dark:text-slate-400 text-sm md:text-base leading-relaxed font-medium mb-8 max-w-xl">
                                 بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                             </p>
 
@@ -141,20 +141,20 @@ export const About = () => {
             </section>
 
             {/* Core Values Section - Enhanced */}
-            <section className="py-16 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
+            <section className="py-10 bg-[#fafafa] dark:bg-slate-900/50 relative overflow-hidden">
                 {/* Visual Separator */}
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-600/10 mb-6">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-600/10 mb-4">
                             <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">دستورنا التعليمي</span>
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 font-heading">
+                        <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 font-heading">
                             القيم التي <span className="text-indigo-600">تُحدد هويتنا</span>
                         </h2>
-                        <div className="h-1 w-20 bg-amber-500 mx-auto mb-8"></div>
-                        <p className="text-gray-500 dark:text-slate-400 max-w-none mx-auto text-sm md:text-base leading-relaxed font-medium">
+                        <div className="h-1 w-20 bg-amber-500 mx-auto mb-6"></div>
+                        <p className="text-gray-500 dark:text-slate-400 max-w-none mx-auto text-xs md:text-sm leading-relaxed font-medium">
                             الالتزام الراسخ بهذه القيم هو ما يصنع الفرق الحقيقي في رحلة نجاح طلابنا.
                         </p>
                     </div>
@@ -212,7 +212,7 @@ export const About = () => {
             </section>
 
             {/* Final Call to Action - Redesigned with Creative Touches */}
-            <section className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
+            <section className="py-12 bg-white dark:bg-slate-950 relative overflow-hidden">
                 {/* Dramatic Background Gradients */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                     <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-600/[0.03] rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2"></div>
@@ -226,7 +226,7 @@ export const About = () => {
                             {/* Animated Border/Glow effect */}
                             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-amber-500 to-indigo-600 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-sm"></div>
                             
-                            <div className="relative bg-[#0a0a0a] p-10 md:p-20 shadow-[0_40px_100px_-15px_rgba(0,0,0,0.6)] border border-white/5">
+                            <div className="relative bg-[#0a0a0a] p-8 md:p-12 shadow-[0_40px_100px_-15px_rgba(0,0,0,0.6)] border border-white/5">
                                 {/* Intricate Background Patterns */}
                                 <div className="absolute inset-0 opacity-10 pointer-events-none">
                                     <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(79,70,229,0.15),transparent_50%)]"></div>
@@ -234,20 +234,20 @@ export const About = () => {
                                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
                                 </div>
 
-                                <div className="relative z-20 flex flex-col lg:flex-row items-center gap-16">
+                                <div className="relative z-20 flex flex-col lg:flex-row items-center gap-12">
                                     {/* Content Side */}
                                     <div className="w-full lg:w-[60%] text-center lg:text-right">
-                                        <div className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-600/10 border border-indigo-500/20 mb-10 backdrop-blur-xl">
+                                        <div className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-600/10 border border-indigo-500/20 mb-8 backdrop-blur-xl">
                                             <Sparkles className="w-4 h-4 text-indigo-500 animate-pulse" />
                                             <span className="text-xs font-black uppercase tracking-[0.4em] text-indigo-50">انضم إلى عائلتنا</span>
                                         </div>
 
-                                        <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-6 font-heading text-white leading-[1.3] md:leading-[1.3]">
+                                        <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-4 font-heading text-white leading-tight md:leading-tight">
                                             هل أنت مستعد لتكون <br />
                                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-amber-200">جزءاً من حكايتنا؟</span>
                                         </h2>
 
-                                        <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto lg:mx-0 mb-10 font-medium leading-relaxed opacity-80">
+                                        <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 font-medium leading-relaxed opacity-80">
                                             انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                         </p>
 
