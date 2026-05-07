@@ -591,7 +591,7 @@ export const Home = () => {
                                     
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
                                         <div className="flex items-center justify-between mb-4">
-                                            <div className="bg-[#800020] text-white px-3 py-1 rounded-full text-[10px] font-black">
+                                            <div className="bg-[#064E3B] text-white px-3 py-1 rounded-full text-[10px] font-black">
                                                 {reviews[currentIndex].name}
                                             </div>
                                             <div className="flex gap-0.5 text-amber-500">
@@ -622,7 +622,7 @@ export const Home = () => {
                                         key={index} 
                                         className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
                                             ${isLarge 
-                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center min-h-[200px]' 
+                                                ? 'lg:col-span-2 bg-[#064E3B] border-[#064E3B] text-white p-8 justify-center min-h-[200px]' 
                                                 : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
@@ -632,7 +632,7 @@ export const Home = () => {
                                         
                                         <div className="flex items-center justify-between mb-4">
                                             <div className={`px-4 py-1.5 rounded-full text-[11px] font-black shadow-sm transition-transform group-hover:scale-105
-                                                ${isLarge ? 'bg-white text-[#800020]' : 'bg-[#800020] text-white'}`}>
+                                                ${isLarge ? 'bg-white text-[#064E3B]' : 'bg-[#064E3B] text-white'}`}>
                                                 {review.name}
                                             </div>
                                             <div className="flex gap-0.5 text-amber-500">
