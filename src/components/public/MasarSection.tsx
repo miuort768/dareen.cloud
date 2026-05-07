@@ -10,12 +10,12 @@ export const MasarSection = () => {
             <div className="container mx-auto px-4 relative z-10">
 
                 {/* The Single Big Rectangle - Redesigned for Premium Royal Theme */}
-                <div className="max-w-6xl mx-auto bg-gradient-to-br from-purple-700 via-purple-800 to-indigo-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative rounded-none">
+                <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#7a0b80] via-[#5e0862] to-[#3a053d] shadow-[0_30px_60px_-15px_rgba(122,11,128,0.4)] overflow-hidden border border-white/5 relative rounded-none">
 
                     {/* Background Patterns - Sharper and More Modern */}
                     <div className="absolute inset-0 opacity-20 pointer-events-none">
-                        <div className="absolute right-0 top-0 w-80 h-80 bg-indigo-600 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
-                        <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-600 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+                        <div className="absolute right-0 top-0 w-80 h-80 bg-[#7a0b80] rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+                        <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-400 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
                     </div>
 
@@ -24,12 +24,12 @@ export const MasarSection = () => {
                         <div className="w-full lg:w-[35%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-0 border-b lg:border-b-0 lg:border-l border-white/10 group">
                             <div className="relative w-full h-full flex items-center justify-center">
                                 {/* Decorative Glow behind the image */}
-                                <div className="absolute w-48 h-48 bg-indigo-600/20 blur-[60px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <div className="absolute w-48 h-48 bg-white/10 blur-[60px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-40 h-40 lg:w-56 lg:h-56 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-indigo-500/50 transition-all duration-700 group-hover:scale-105"
+                                    className="w-40 h-40 lg:w-56 lg:h-56 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-[#7a0b80]/50 transition-all duration-700 group-hover:scale-105"
                                 />
                             </div>
                         </div>
@@ -38,14 +38,14 @@ export const MasarSection = () => {
                         <div className="w-full lg:w-[65%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
 
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 border border-purple-500/30 rounded-full backdrop-blur-md">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
                                     <Bell className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                                    <span className="text-xs font-black text-purple-50 uppercase tracking-widest">بوابة الكتب والملخصات</span>
+                                    <span className="text-xs font-black text-white uppercase tracking-widest">بوابة الكتب والملخصات</span>
                                 </div>
                             </div>
 
                             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
-                                <span className="text-white">مركز</span> <span className="text-white bg-purple-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(147,51,234,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
+                                <span className="text-white">مركز</span> <span className="text-white bg-[#7a0b80] px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(122,11,128,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
                             </h2>
 
                             <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
