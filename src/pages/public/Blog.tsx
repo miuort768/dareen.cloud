@@ -76,10 +76,10 @@ export const Blog = () => {
                         const [selectedType, setSelectedType] = useState('');
 
                         const types = [
-                            { id: 'books', name: 'الكتب المدرسية', color: 'from-indigo-600 to-indigo-800' },
-                            { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800' },
-                            { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800' },
-                            { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800' },
+                            { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', link: '/courses?category=foundation' },
+                            { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800', link: '' },
+                            { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800', link: '' },
+                            { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800', link: '' },
                         ];
 
                         const curriculums = [
@@ -95,22 +95,39 @@ export const Blog = () => {
                                     {view === 'types' ? (
                                         <>
                                             {types.map((cat) => (
-                                                <button 
-                                                    key={cat.id}
-                                                    onClick={() => {
-                                                        setSelectedType(cat.id);
-                                                        setView('curriculums');
-                                                    }}
-                                                    className={cn(
-                                                        "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br",
-                                                        cat.color
-                                                    )}
-                                                >
-                                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
-                                                        {cat.name}
-                                                    </span>
-                                                </button>
+                                                cat.link ? (
+                                                    <Link
+                                                        key={cat.id}
+                                                        to={cat.link}
+                                                        onClick={() => window.scrollTo(0, 0)}
+                                                        className={cn(
+                                                            "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br",
+                                                            cat.color
+                                                        )}
+                                                    >
+                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
+                                                            {cat.name}
+                                                        </span>
+                                                    </Link>
+                                                ) : (
+                                                    <button 
+                                                        key={cat.id}
+                                                        onClick={() => {
+                                                            setSelectedType(cat.id);
+                                                            setView('curriculums');
+                                                        }}
+                                                        className={cn(
+                                                            "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br",
+                                                            cat.color
+                                                        )}
+                                                    >
+                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
+                                                            {cat.name}
+                                                        </span>
+                                                    </button>
+                                                )
                                             ))}
                                         </>
                                     ) : (
@@ -143,14 +160,6 @@ export const Blog = () => {
                                         </span>
                                     </Link>
 
-                                    <Link 
-                                        to="/courses?category=foundation"
-                                        className="relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:bg-amber-600 group bg-amber-500 col-span-2 md:col-span-5"
-                                    >
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
-                                            تأسيس شامل ومميز
-                                        </span>
-                                    </Link>
                                 </div>
                                 
                                 {view === 'curriculums' && (
