@@ -235,7 +235,7 @@ export const Home = () => {
             </section>
 
             {/* Why Choose Us */}
-            <section className="pt-16 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
+            <section className="pt-8 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-2 max-w-5xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-0 uppercase leading-[1.4] py-0">
@@ -247,7 +247,7 @@ export const Home = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-2 pb-14 md:pb-20">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-2 pb-8 md:pb-12">
                         <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-indigo-600 to-indigo-950 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                             <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
@@ -327,6 +327,10 @@ export const Home = () => {
 
             {/* Quran Memorization Section */}
             <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
+                {/* Dashed green lines at top and bottom */}
+                <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-emerald-500/30 z-20"></div>
+                <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-emerald-500/30 z-20"></div>
+
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
                         backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
