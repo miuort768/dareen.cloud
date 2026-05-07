@@ -191,16 +191,16 @@ export const InstallPWA = () => {
         <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
             isDesktop ? 'bottom-4 right-4' : 'bottom-4 left-2 right-2'
         }`}>
-            <div className={`bg-yellow-400 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3 p-3 ${
+            <div className={`bg-[#064E3B] border-2 border-white/20 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] flex items-center gap-3 p-3 ${
                 isDesktop ? 'max-w-[280px] ml-auto' : ''
             }`}>
-                <div className="w-9 h-9 bg-black text-yellow-400 flex items-center justify-center border-2 border-gray-950 shrink-0">
+                <div className="w-9 h-9 bg-white text-[#064E3B] flex items-center justify-center border-2 border-white/20 shrink-0">
                     {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
                 </div>
 
                 <div className="flex-1 min-w-0 text-right">
-                    <h2 className="text-[11px] font-black uppercase text-black leading-tight">ثبتي التطبيق</h2>
-                    <p className="font-bold text-[8px] text-black/70 truncate mt-0.5">
+                    <h2 className="text-[11px] font-black uppercase text-white leading-tight">ثبتي التطبيق</h2>
+                    <p className="font-bold text-[8px] text-white/70 truncate mt-0.5">
                         {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}
                     </p>
                 </div>
@@ -208,14 +208,14 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-2 py-1.5 bg-black text-yellow-400 font-black uppercase text-[9px] hover:bg-gray-900 transition-all flex items-center gap-1 active:translate-y-0.5 shadow-[1px_1px_0px_0px_gray]"
+                        className="px-2 py-1.5 bg-white text-[#064E3B] font-black uppercase text-[9px] hover:bg-gray-100 transition-all flex items-center gap-1 active:translate-y-0.5 shadow-[1px_1px_0px_0px_rgba(255,255,255,0.2)]"
                     >
                         {isIOS || isMacSafari ? <Share size={10} /> : <Download size={10} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
                     </button>
                     <button
                         onClick={handleDismiss}
-                        className="p-1.5 bg-black/10 text-black hover:bg-red-600 hover:text-white transition-colors"
+                        className="p-1.5 bg-white/10 text-white hover:bg-red-600 hover:text-white transition-colors"
                     >
                         <X size={10} />
                     </button>
