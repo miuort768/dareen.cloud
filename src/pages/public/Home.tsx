@@ -622,7 +622,7 @@ export const Home = () => {
                                         key={index} 
                                         className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
                                             ${isLarge 
-                                                ? 'lg:col-span-2 bg-[#064E3B] border-[#064E3B] text-white p-8 justify-center min-h-[200px]' 
+                                                ? 'lg:col-span-2 bg-[#064E3B] border-[#064E3B] text-white p-6' 
                                                 : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
@@ -640,7 +640,7 @@ export const Home = () => {
                                             </div>
                                         </div>
                                         
-                                        <div className="flex-grow">
+                                        <div>
                                             <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-sm text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
                                                 "{review.content}"
                                             </p>
