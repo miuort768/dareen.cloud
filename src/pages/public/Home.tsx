@@ -114,14 +114,14 @@ export const Home = () => {
             <PublicNavbar />
 
             {/* Blob Backgrounds */}
-            <div className="hero-blob bg-red-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
-            <div className="hero-blob bg-green-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <div className="hero-blob bg-indigo-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
+            <div className="hero-blob bg-purple-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
             {/* Hero Section */}
             <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
                         filter: 'blur(70px)'
                     }}>
                 </div>
@@ -134,14 +134,14 @@ export const Home = () => {
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
                         <div className="lg:w-[60%] text-center z-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 border border-red-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
-                                <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
-                                <span className="text-red-800 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
+                                <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                                <span className="text-indigo-900 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
-                                <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-slate-900 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
-                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 block -mt-1 py-1 aria-hidden">
+                                <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-r-4 border-indigo-600 dark:border-white ml-1 h-[0.9em] align-middle"></span></span>
+                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 block -mt-1 py-1 aria-hidden">
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
@@ -152,7 +152,7 @@ export const Home = () => {
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-black text-white font-bold text-base sm:text-lg shadow-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2 group"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-indigo-950 text-white font-bold text-base sm:text-lg shadow-lg hover:bg-black transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
@@ -161,8 +161,8 @@ export const Home = () => {
                                     onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group"
                                 >
-                                    <div className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center group-hover:scale-110 transition">
-                                        <Play className="w-4 h-4 text-green-600 fill-green-600" />
+                                    <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center group-hover:scale-110 transition">
+                                        <Play className="w-4 h-4 text-indigo-600 fill-indigo-600" />
                                     </div>
                                     <span>دليل الاستخدام؟</span>
                                 </button>
@@ -185,7 +185,7 @@ export const Home = () => {
                                 <div className="text-right">
                                     <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                                         4.9/5
-                                        <Star className="w-4 h-4 text-green-500 fill-green-500" />
+                                        <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                                     </div>
                                     <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">تقييم الطلاب وأولياء الأمور</p>
                                 </div>
@@ -193,7 +193,7 @@ export const Home = () => {
                         </div>
                         <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
                             <div className="relative w-full max-w-[500px] aspect-[4/5]">
-                                <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-green-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
                                     src="/hero-child.png"
                                     alt="Hero"
@@ -211,9 +211,9 @@ export const Home = () => {
                 </div>
                 
                 {/* Dynamic Hero Banners (Full Width) */}
-                <div className="hidden md:grid w-full mt-12 md:mt-16 bg-yellow-400 dark:bg-yellow-500 border-y border-yellow-500 dark:border-yellow-600 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-yellow-500/30 dark:divide-yellow-600/50">
+                <div className="hidden md:grid w-full mt-12 md:mt-16 bg-amber-400 dark:bg-amber-500 border-y border-amber-500 dark:border-amber-600 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-amber-500/30 dark:divide-amber-600/50">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-yellow-300 dark:hover:bg-yellow-400 transition-colors flex flex-row justify-between items-center gap-2 group">
+                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-amber-300 dark:hover:bg-amber-400 transition-colors flex flex-row justify-between items-center gap-2 group">
                             <p className="text-[10px] lg:text-[11px] font-black text-slate-900 leading-tight flex-1">
                                 {text}
                             </p>
@@ -221,7 +221,7 @@ export const Home = () => {
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="shrink-0 px-2.5 py-1 bg-slate-900 text-yellow-400 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-black transition-colors shadow-sm whitespace-nowrap"
+                                className="shrink-0 px-2.5 py-1 bg-slate-900 text-amber-400 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-black transition-colors shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن
                             </a>
@@ -235,29 +235,29 @@ export const Home = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-2 max-w-5xl mx-auto">
                         <h2 className="text-2xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-0 uppercase leading-[1.4] py-0">
-                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-600 py-1 inline-block">تختارنا؟</span>
+                            لماذا <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 py-1 inline-block">تختارنا؟</span>
                         </h2>
-                        <div className="h-1.5 w-24 bg-gradient-to-r from-red-500 to-transparent mx-auto rounded-full mb-4"></div>
+                        <div className="h-1.5 w-24 bg-gradient-to-r from-indigo-600 to-transparent mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-500 text-xs sm:text-sm md:text-base leading-relaxed font-medium">
                             نقدم تجربة تعليمية متكاملة تجمع بين أحدث التقنيات وأفضل الكوادر التعليمية لضمان مستقبل مشرق لأبنائكم.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-x-8 md:gap-y-4 max-w-6xl mx-auto pt-2 pb-14 md:pb-20">
-                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-red-500 to-red-900 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
+                        <div className="md:col-span-2 relative p-6 bg-gradient-to-br from-indigo-600 to-indigo-950 rounded-none shadow-2xl overflow-hidden flex items-center gap-4">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                             <div className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 group-hover:scale-110 transition-transform">
                                 <Lightbulb className="w-6 h-6 text-white" />
                             </div>
                             <div className="relative z-10">
                                 <h3 className="text-base font-bold text-white mb-1">طرق تعليم مبتكرة</h3>
-                                <p className="text-xs text-red-50 leading-relaxed">
+                                <p className="text-xs text-indigo-50 leading-relaxed">
                                     طرق تعليم تفاعلية حديثة تنمي مهارات الفهم والتفكير الإبداعي لدى طفلك.
                                 </p>
                             </div>
                         </div>
 
-                        <div className="p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-none shadow-xl text-white relative overflow-hidden flex items-center gap-4">
+                        <div className="p-6 bg-gradient-to-br from-purple-600 to-purple-800 rounded-none shadow-xl text-white relative overflow-hidden flex items-center gap-4">
                             <div className="absolute top-0 left-0 w-16 h-16 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
                             <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-none flex items-center justify-center shrink-0 border border-white/30 animate-bounce-slow">
                                 <Heart className="w-6 h-6 text-white fill-white" />
@@ -271,15 +271,15 @@ export const Home = () => {
                         </div>
 
                         <div className="relative p-7 bg-white dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm flex items-center gap-5 group/card overflow-hidden">
-                            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
-                            <div className="absolute top-0 right-0 w-8 h-8 bg-red-50 dark:bg-red-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover/card:w-full group-hover/card:h-full group-hover/card:opacity-10 opacity-40"></div>
+                            <div className="absolute top-0 right-0 w-8 h-8 bg-indigo-50 dark:bg-indigo-950/30 -rotate-45 translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute bottom-2 left-10 opacity-[0.08] dark:opacity-[0.15] rotate-12 transition-transform group-hover/card:-translate-y-2">
                                 <img src="/dareen_logo_new.jpg" alt="Logo" className="w-12 h-12 object-contain opacity-20 dark:opacity-30" />
                             </div>
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] dark:opacity-[0.1] transition-transform group-hover/card:scale-110">
                                 <BookOpen size={64} className="text-black dark:text-white" />
                             </div>
-                            <div className="relative z-10 w-14 h-14 bg-red-50 dark:bg-red-950/50 text-red-500 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
+                            <div className="relative z-10 w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 rounded-none flex items-center justify-center shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-transform">
                                 <CheckCircle className="w-7 h-7" />
                             </div>
                             <div className="relative z-10 text-right">
@@ -291,11 +291,11 @@ export const Home = () => {
                         </div>
 
                         <div className="md:col-span-2 p-6 md:p-8 bg-black rounded-none shadow-2xl text-white relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                             <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6">
                                 <div className="flex-1 text-center lg:text-right">
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/50 border border-white/10 rounded-full mb-2 mx-auto lg:mx-0">
-                                        <Award size={16} className="text-green-600" />
+                                        <Award size={16} className="text-amber-500" />
                                         <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
                                     </div>
                                     <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
@@ -304,13 +304,13 @@ export const Home = () => {
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
-                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-red-400/30">
-                                        <Users className="w-8 h-8 text-red-400 mx-auto mb-3" />
+                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-indigo-400/30">
+                                        <Users className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
                                         <div className="text-3xl font-black text-white">+70</div>
                                         <div className="text-xs text-gray-400 font-bold">معلم خبير</div>
                                     </div>
-                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-green-600/30">
-                                        <Star className="w-8 h-8 text-green-600 mx-auto mb-3" />
+                                    <div className="p-6 bg-white/5 border border-white/10 rounded-none text-center group-hover:bg-white/10 transition-all duration-300 hover:border-purple-600/30">
+                                        <Star className="w-8 h-8 text-purple-500 mx-auto mb-3" />
                                         <div className="text-3xl font-black text-white">+10</div>
                                         <div className="text-xs text-gray-400 font-bold">سنوات خبرة</div>
                                     </div>
@@ -325,7 +325,7 @@ export const Home = () => {
             <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle at 20% 30%, #EF4444 0%, transparent 45%), radial-gradient(circle at 80% 70%, #16A34A 0%, transparent 45%)',
+                        backgroundImage: 'radial-gradient(circle at 20% 30%, #6366F1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #8B5CF6 0%, transparent 45%)',
                         filter: 'blur(70px)'
                     }}>
                 </div>
@@ -338,14 +338,14 @@ export const Home = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center max-w-6xl mx-auto">
                         <div className="w-full lg:w-1/2 text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-100 rounded-full mb-6 mx-auto">
-                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                <span className="text-green-800 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span className="text-emerald-900 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
                             </div>
                             <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
-                                رحلتك مع <span className="text-green-600 relative inline-block">
+                                رحلتك مع <span className="text-emerald-600 relative inline-block">
                                     كتاب الله
-                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-green-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-200" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
                                     </svg>
                                 </span> تبدأ بخطوة
@@ -358,7 +358,7 @@ export const Home = () => {
                                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="px-10 py-4 bg-green-600 text-white font-bold text-lg shadow-xl hover:bg-green-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
+                                    className="px-10 py-4 bg-emerald-600 text-white font-bold text-lg shadow-xl hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group"
                                 >
                                     <span>ابدأ الحفظ الآن</span>
                                     <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
@@ -366,7 +366,7 @@ export const Home = () => {
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
-                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-green-200 hover:text-green-700 hover:bg-green-50 transition-all flex items-center justify-center"
+                                    className="px-10 py-4 bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 transition-all flex items-center justify-center"
                                 >
                                     تصفح المزيد
                                 </Link>
@@ -374,13 +374,13 @@ export const Home = () => {
                             <div className="items-center justify-center gap-4 inline-flex">
                                 <div className="flex -space-x-3 space-x-reverse">
                                     {[1, 2, 3].map(i => (
-                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-green-100 overflow-hidden shadow-sm">
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-emerald-100 overflow-hidden shadow-sm">
                                             <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Student" />
                                         </div>
                                     ))}
                                     <div className="w-10 h-10 rounded-full border-2 border-[#FDFCF8] bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm">+5k</div>
                                 </div>
-                                <div className="h-8 w-px bg-green-200/50 mx-2"></div>
+                                <div className="h-8 w-px bg-emerald-200/50 mx-2"></div>
                                 <div className="text-right">
                                     <div className="text-sm font-bold text-black">4.9/5 تقييم ممتاز</div>
                                     <div className="text-xs text-gray-500">من قبل آلاف الطلاب</div>
@@ -390,8 +390,8 @@ export const Home = () => {
                         <div className="w-full lg:w-1/2 flex justify-center py-6 lg:py-0">
                             <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
                                 <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-red-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 text-red-600 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-all transform group-hover:rotate-12">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-indigo-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-indigo-600 flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:rotate-12">
                                         <Clock className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-black text-black text-xs mb-1">أوقات مرنة</h3>
@@ -406,14 +406,14 @@ export const Home = () => {
                                     <p className="text-[10px] text-gray-500 leading-tight">تقارير إنجاز أسبوعية</p>
                                 </div>
                                 <div className="relative p-5 bg-white border border-gray-100 rounded-none shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center group overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-green-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
-                                    <div className="w-12 h-12 bg-gray-50 text-green-600 flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-all transform group-hover:scale-110">
+                                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-600 transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-10 opacity-30"></div>
+                                    <div className="w-12 h-12 bg-gray-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:scale-110">
                                         <Mic className="w-6 h-6" />
                                     </div>
                                     <h3 className="font-black text-black text-xs mb-1">معلمون مجازون</h3>
                                     <p className="text-[10px] text-gray-500 leading-tight">نخبة الحفاظ المبدعون</p>
                                 </div>
-                                <div className="relative p-5 bg-gradient-to-br from-red-600 to-red-900 border border-transparent rounded-none shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
+                                <div className="relative p-5 bg-gradient-to-br from-indigo-600 to-indigo-900 border border-transparent rounded-none shadow-lg text-white flex flex-col items-center text-center group transition-all overflow-hidden cursor-pointer hover:scale-105">
                                     <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white transition-all duration-500 group-hover:w-full group-hover:h-full group-hover:opacity-20 opacity-40"></div>
                                     <div className="w-12 h-12 bg-white/20 text-white flex items-center justify-center mb-4 backdrop-blur-sm group-hover:rotate-12 transition-transform">
                                         <Zap className="w-6 h-6" />
@@ -431,7 +431,7 @@ export const Home = () => {
             <section id="how-it-works" className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-red-500/[0.05] dark:bg-red-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
+                    <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-500/[0.05] dark:bg-indigo-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
                     <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-emerald-500/[0.03] dark:bg-emerald-500/[0.06] blur-[100px] rounded-full"></div>
                     {/* Pattern Overlay */}
                     <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
@@ -440,11 +440,11 @@ export const Home = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
-                            <Zap size={12} className="text-yellow-400" />
+                            <Zap size={12} className="text-amber-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
                         </div>
                         <h2 className="text-xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
-                            كيف تشترك في <span className="text-red-500">المعهد؟</span>
+                            كيف تشترك في <span className="text-indigo-600">المعهد؟</span>
                         </h2>
                     </div>
                     
@@ -496,7 +496,7 @@ export const Home = () => {
                                     title: 'اشترك الآن',
                                     desc: 'تواصل لحجز مقعدك',
                                     icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
-                                    color: 'from-red-600 to-red-500'
+                                    color: 'from-indigo-600 to-indigo-500'
                                 }
                             ].map((step) => (
                                 <div key={step.id} className="relative group flex flex-col items-center">
@@ -515,7 +515,7 @@ export const Home = () => {
 
                                     {/* Glass Content Card */}
                                     <div className="text-center px-1 md:px-4 w-full">
-                                        <h3 className="text-[9px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-red-600 transition-colors">
+                                        <h3 className="text-[9px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
                                             {step.title}
                                         </h3>
                                         <p className="hidden sm:block text-[8px] md:text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-bold">
@@ -536,7 +536,7 @@ export const Home = () => {
                                 rel="noopener noreferrer"
                                 className="group relative px-8 py-3.5 bg-slate-900 text-white font-black text-sm rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 <div className="relative flex items-center gap-2">
                                     <span>احجز حصتك المجانية الآن</span>
                                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -551,22 +551,22 @@ export const Home = () => {
             <section className="py-6 md:py-8 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-6 md:mb-8">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-100 rounded-full mb-3 mx-auto">
-                            <Quote size={12} className="text-red-500" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-red-600">ثقة متبادلة</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-100 rounded-full mb-3 mx-auto">
+                            <Quote size={12} className="text-indigo-600" />
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-700">ثقة متبادلة</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black text-black mb-4 font-heading leading-tight">
-                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">أولياء الأمور؟</span>
+                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1 w-16 bg-green-600 mx-auto rounded-full"></div>
+                        <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
                     </div>
                     <div className="max-w-7xl mx-auto">
                         <div className="lg:hidden">
                             <div className="relative group">
                                 <div className="p-5 bg-gray-50 border border-gray-100 rounded-none shadow-sm relative overflow-hidden flex flex-col min-h-[250px]">
-                                    <Quote size={30} className="text-red-500/5 absolute top-4 left-4" />
+                                    <Quote size={30} className="text-indigo-500/5 absolute top-4 left-4" />
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
-                                        <div className="flex gap-1 mb-4 text-green-600">
+                                        <div className="flex gap-1 mb-4 text-amber-500">
                                             {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                         </div>
                                         <div className="flex-grow overflow-y-auto pr-1 mb-4">
@@ -581,14 +581,14 @@ export const Home = () => {
                                                 </div>
                                                 <div>
                                                     <h4 className="font-black text-black text-base">{reviews[currentIndex].name}</h4>
-                                                    <p className="text-[10px] text-red-500 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
+                                                    <p className="text-[10px] text-indigo-600 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
                                                 </div>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-gray-100">
                                                     <ChevronRight className="rotate-180" size={18} />
                                                 </button>
-                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-red-500 hover:text-white transition-all active:scale-90 border border-gray-100">
+                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-gray-100">
                                                     <LucideChevronLeft className="rotate-180" size={18} />
                                                 </button>
                                             </div>
@@ -600,8 +600,8 @@ export const Home = () => {
                         <div className="hidden lg:grid lg:grid-cols-3 gap-3">
                             {reviews.map((review, index) => (
                                 <div key={index} className="group relative bg-gray-50 p-4 rounded-none border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
-                                    <Quote size={40} className="absolute -top-2 -left-2 text-red-500/5 group-hover:text-red-500/10 transition-colors" />
-                                    <div className="flex gap-1 mb-3 text-green-600">
+                                    <Quote size={40} className="absolute -top-2 -left-2 text-indigo-500/5 group-hover:text-indigo-500/10 transition-colors" />
+                                    <div className="flex gap-1 mb-3 text-amber-500">
                                         {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
                                     </div>
                                     <div className="mb-4">
@@ -615,7 +615,7 @@ export const Home = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-black text-black text-xs">{review.name}</h4>
-                                            <p className="text-[9px] text-red-500 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
+                                            <p className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -631,7 +631,7 @@ export const Home = () => {
             <section className="py-8 md:py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle at 15% 50%, #EF4444 0%, transparent 40%), radial-gradient(circle at 85% 50%, #16A34A 0%, transparent 40%)',
+                        backgroundImage: 'radial-gradient(circle at 15% 50%, #6366F1 0%, transparent 40%), radial-gradient(circle at 85% 50%, #8B5CF6 0%, transparent 40%)',
                         filter: 'blur(80px)'
                     }}>
                 </div>
@@ -644,13 +644,13 @@ export const Home = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 backdrop-blur-sm border border-gray-100 rounded-full mb-2 mx-auto shadow-sm">
-                            <HelpCircle size={12} className="text-green-600" />
+                            <HelpCircle size={12} className="text-indigo-600" />
                             <span className="text-[9px] font-black uppercase tracking-wider text-gray-400">لديك استفسار؟</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading">
-                            الأسئلة <span className="text-red-600">الشائعة</span>
+                            الأسئلة <span className="text-indigo-600">الشائعة</span>
                         </h2>
-                        <div className="h-1 w-16 bg-green-600 mx-auto rounded-full"></div>
+                        <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
                     </div>
                     <div className="max-w-2xl mx-auto space-y-3">
                         {[
@@ -673,22 +673,22 @@ export const Home = () => {
                         ].map((item, idx) => {
                             const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <img src="/dareen_logo_new.jpg" className="w-20 h-20 object-contain opacity-20" />];
                             return (
-                                <div key={idx} className="relative bg-white border border-gray-100 rounded-xl overflow-hidden group hover:border-red-100 transition-all duration-500 hover:shadow-md hover:shadow-red-500/5">
+                                <div key={idx} className="relative bg-white border border-gray-100 rounded-xl overflow-hidden group hover:border-indigo-100 transition-all duration-500 hover:shadow-md hover:shadow-indigo-500/5">
                                     <div className="absolute -bottom-4 -left-4 text-gray-400 opacity-[0.03] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                         {icons[idx % icons.length]}
                                     </div>
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
                                     <details className="group relative z-10">
                                         <summary className="flex items-center justify-between p-4 cursor-pointer list-none">
-                                            <h3 className="text-xs md:text-sm font-black text-black group-hover:text-red-500 transition-colors">
+                                            <h3 className="text-xs md:text-sm font-black text-black group-hover:text-indigo-600 transition-colors">
                                                 {item.q}
                                             </h3>
-                                            <span className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center transform group-open:rotate-180 group-open:bg-red-500 group-open:text-white transition-all duration-300">
+                                            <span className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center transform group-open:rotate-180 group-open:bg-indigo-600 group-open:text-white transition-all duration-300">
                                                 <ChevronDown size={14} className="text-gray-400 group-open:text-white" />
                                             </span>
                                         </summary>
                                         <div className="px-4 pb-4 pt-0">
-                                            <div className="h-px w-full bg-gradient-to-r from-red-500/10 via-gray-100 to-transparent mb-3"></div>
+                                            <div className="h-px w-full bg-gradient-to-r from-indigo-500/10 via-gray-100 to-transparent mb-3"></div>
                                             <p className="text-[10px] md:text-xs text-black leading-relaxed font-medium">
                                                 {item.a}
                                             </p>
