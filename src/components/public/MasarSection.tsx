@@ -21,21 +21,21 @@ export const MasarSection = () => {
 
                     <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
                         {/* Image Side - Modern and Sharp with a subtle glow */}
-                        <div className="w-full lg:w-[35%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-0 border-b lg:border-b-0 lg:border-l border-white/10 group">
+                        <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-l border-white/10 group">
                             <div className="relative w-full h-full flex items-center justify-center">
                                 {/* Decorative Glow behind the image */}
-                                <div className="absolute w-48 h-48 bg-white/10 blur-[60px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <div className="absolute w-64 h-64 bg-white/10 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-40 h-40 lg:w-56 lg:h-56 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-[#7a0b80]/50 transition-all duration-700 group-hover:scale-105"
+                                    className="w-44 h-44 lg:w-72 lg:h-72 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-[#7a0b80]/50 transition-all duration-700 group-hover:scale-105"
                                 />
                             </div>
                         </div>
 
                         {/* Text Content Side */}
-                        <div className="w-full lg:w-[65%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
+                        <div className="w-full lg:w-[60%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
 
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
