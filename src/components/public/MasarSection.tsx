@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, Bell, MessageCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Bell, MessageCircle, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -40,25 +40,25 @@ export const MasarSection = () => {
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 border border-purple-500/30 rounded-full backdrop-blur-md">
                                     <Bell className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                                    <span className="text-xs font-black text-purple-50 uppercase tracking-widest">بوابة التميز الرقمي</span>
+                                    <span className="text-xs font-black text-purple-50 uppercase tracking-widest">بوابة الكتب والملخصات</span>
                                 </div>
                             </div>
 
                             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
-                                <span className="text-white">منصة</span> <span className="text-white bg-purple-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(147,51,234,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للتعليم والتدريب</span>
+                                <span className="text-white">مركز</span> <span className="text-white bg-purple-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(147,51,234,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
                             </h2>
 
                             <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
-                                وجهتك المتكاملة للتعلم الذكي. نوفر لك بيئة تعليمية تفاعلية تجمع بين جودة المحتوى وأحدث تقنيات التعليم الرقمي لضمان تفوقك الدائم.
+                                حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Link
-                                    to="/courses"
+                                    to="/blog"
                                     className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-none font-black text-lg shadow-2xl shadow-indigo-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group"
                                 >
-                                    <BookOpen className="w-6 h-6 transition-transform group-hover:scale-110" />
-                                    <span>تصفح الدورات</span>
+                                    <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
+                                    <span>تحميل مذكرة</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                 </Link>
 
