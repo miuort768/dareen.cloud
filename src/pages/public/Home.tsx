@@ -555,7 +555,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section - Spacing Optimized */}
+            {/* Testimonials Section - Bento Grid Refinement for Premium Royal Aesthetic */}
             <section className="py-4 md:py-6 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 {/* Neon Indigo Dashed Lines - Section Boundaries */}
                 <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
@@ -581,7 +581,7 @@ export const Home = () => {
                         {/* Mobile View - Compact Slider */}
                         <div className="lg:hidden">
                             <div className="relative group">
-                                <div className="p-6 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[220px]">
+                                <div className="p-6 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[200px]">
                                     <Quote size={40} className="text-indigo-500/10 absolute -top-1 -left-1" />
                                     
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
@@ -616,37 +616,58 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        {/* Desktop View - Compact Premium Grid */}
+                        {/* Desktop View - Bento Grid Style */}
                         <div className="hidden lg:grid lg:grid-cols-3 gap-6">
-                            {reviews.map((review, index) => (
-                                <div key={index} className="group relative bg-white dark:bg-slate-900 p-5 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1 flex flex-col">
-                                    <Quote size={30} className="absolute -top-2 -left-2 text-indigo-500/5 group-hover:text-indigo-500/15 transition-all duration-500" />
-                                    
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="bg-[#800020] text-white px-4 py-1.5 rounded-full text-[11px] font-black shadow-sm group-hover:scale-105 transition-transform">
-                                            {review.name}
+                            {reviews.map((review, index) => {
+                                // Logic for Bento-style merging: Index 0 and 3 take 2 columns and use burgundy color
+                                const isLarge = index === 0 || index === 3;
+                                
+                                return (
+                                    <div 
+                                        key={index} 
+                                        className={`group relative p-5 border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
+                                            ${isLarge 
+                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white' 
+                                                : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600'
+                                            }`}
+                                    >
+                                        <Quote size={isLarge ? 60 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
+                                            ${isLarge ? 'text-white/10' : 'text-indigo-500/5 group-hover:text-indigo-500/15'}`} 
+                                        />
+                                        
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className={`px-4 py-1.5 rounded-full text-[11px] font-black shadow-sm transition-transform group-hover:scale-105
+                                                ${isLarge ? 'bg-white text-[#800020]' : 'bg-[#800020] text-white'}`}>
+                                                {review.name}
+                                            </div>
+                                            <div className="flex gap-0.5 text-amber-500">
+                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                                            </div>
                                         </div>
-                                        <div className="flex gap-0.5 text-amber-500">
-                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                                        
+                                        <div className="flex-grow mb-4">
+                                            <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-lg text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
+                                                "{review.content}"
+                                            </p>
                                         </div>
+                                        
+                                        <div className={`pt-4 border-t mt-auto flex justify-between items-center ${isLarge ? 'border-white/20' : 'border-gray-100 dark:border-slate-800'}`}>
+                                            <p className={`text-[9px] font-black uppercase tracking-[0.2em] ${isLarge ? 'text-white/70' : 'text-indigo-600'}`}>
+                                                {review.role}
+                                            </p>
+                                            <div className={`w-8 h-px ${isLarge ? 'bg-white/30' : 'bg-indigo-100 dark:bg-slate-800'}`}></div>
+                                        </div>
+
+                                        {/* Corner accent */}
+                                        {!isLarge && <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-transparent group-hover:border-indigo-600/20 transition-all duration-700"></div>}
                                     </div>
-                                    
-                                    <div className="flex-grow mb-4">
-                                        <p className="text-gray-600 dark:text-slate-400 text-[11px] leading-relaxed font-medium italic">
-                                            "{review.content}"
-                                        </p>
-                                    </div>
-                                    
-                                    <div className="pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto flex justify-between items-center">
-                                        <p className="text-[9px] text-indigo-600 font-black uppercase tracking-[0.2em]">{review.role}</p>
-                                        <div className="w-6 h-px bg-indigo-100 dark:bg-slate-800"></div>
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
             </section>
+
 
 
 
