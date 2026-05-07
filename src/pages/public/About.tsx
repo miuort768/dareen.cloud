@@ -320,28 +320,3 @@ export const About = () => {
         </div>
     );
 };
-                                                <div className="w-14 h-14 bg-green-600/20 text-green-500 mb-6 flex items-center justify-center group-hover/card:scale-110 group-hover/card:-rotate-12 transition-transform duration-500">
-                                                        <Target size={28} />
-                                                    </div>
-                                                    <span className="text-4xl font-black text-white mb-2 block tracking-tight">100%</span>
-                                                    <span className="text-[11px] text-green-500/80 font-black uppercase tracking-[0.2em]">نسبة نجاح</span>
-                                                </div>
-
-                                                {/* Artistic Glow */}
-                                                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-green-600/10 rounded-full blur-2xl group-hover/card:bg-green-600/20 transition-all"></div>
-                                            </div>
-                                        </div>
-                                        {/* Background Glow for Stats */}
-                                        <div className="absolute inset-0 bg-red-600/10 blur-[80px] -z-10"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <PublicFooter />
-        </div>
-    );
-};
