@@ -435,8 +435,8 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* How it Works Section - Reimagined Creative Design */}
-            <section id="how-it-works" className="py-10 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
+            {/* How it Works Section - Spacing Optimized */}
+            <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-500/[0.05] dark:bg-indigo-500/[0.08] blur-[100px] rounded-full animate-pulse"></div>
@@ -446,7 +446,7 @@ export const Home = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-4">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
                             <Zap size={12} className="text-amber-400" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
