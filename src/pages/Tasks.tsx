@@ -10,7 +10,10 @@ import {
     TrendingUp,
     Rocket,
     ClipboardList,
-    Activity
+    Activity,
+    Sparkles,
+    ShieldCheck,
+    ArrowUpRight
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -122,115 +125,98 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 pb-24 min-h-full md:animate-in md:fade-in md:duration-500" dir="rtl">
+        <div className="max-w-5xl mx-auto space-y-8 pb-32 min-h-full md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             
-            {/* Header Card (Purple with Green Neon Glow) */}
-            <div className="bg-[#5c4fb1] text-white p-6 rounded-lg mx-2 md:mx-0 shadow-lg md:shadow-[0_0_30px_rgba(74,222,128,0.35)] border border-green-400/20 text-center relative overflow-hidden">
-                <div className="absolute top-6 left-6 opacity-20">
-                    <Activity size={40} />
-                </div>
+            {/* ── Header Canvas (Premium Royal Purple) ── */}
+            <div className="relative overflow-hidden bg-slate-900 dark:bg-black rounded-none border-b-4 border-indigo-600 p-8 md:p-12 text-center group">
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
+
                 <div className="relative z-10 flex flex-col items-center">
-                    <h1 className="text-xl md:text-2xl font-black mb-1 drop-shadow-sm tracking-tight text-white">غرفة العمليات</h1>
-                    <p className="text-[10px] md:text-xs font-bold text-indigo-100/90 mb-6 drop-shadow-sm">إدارة وتحليل المهام المركزية</p>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-6">
+                        <Sparkles size={12} className="text-indigo-400" />
+                        <span className="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
+                    </div>
+                    
+                    <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-2xl">
+                        غرفة العمليات المركزية
+                    </h1>
+                    <p className="text-[11px] md:text-sm font-bold text-slate-400 uppercase tracking-widest mb-10 max-w-lg leading-relaxed">
+                        تحليل متقدم وإدارة ذكية لكافة مهام <span className="text-indigo-500">دارين السابعة</span>
+                    </p>
+
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="w-full max-w-[280px] md:max-w-xs bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md rounded-lg py-3.5 font-bold text-xs md:text-sm transition-all flex items-center justify-center gap-2 shadow-inner"
+                        className="group relative inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-4 font-black text-[11px] md:text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
                     >
-                        إطلاق مهمة جديدة <Rocket size={16} className="fill-white/20" />
+                        <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />
+                        تسجيل مهمة جديدة
+                        <div className="absolute inset-0 border border-white/20 translate-x-1 translate-y-1 -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     </button>
                 </div>
             </div>
 
-            {/* Analytics Grid */}
-            <div className="grid grid-cols-4 gap-2 md:gap-3 px-2 md:px-0">
-                {/* 1. Pending (Active) */}
-                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
-                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
-                        <span className="text-[8px] md:text-[11px] font-black text-blue-600 order-2 md:order-1 mt-1 md:mt-0">نشط</span>
-                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0 order-1 md:order-2">
-                            <Clock size={16} className="w-3 h-3 md:w-4 md:h-4" />
+            {/* ── Analytics Grid (Glassmorphism Style) ── */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+                {[
+                    { label: 'مهام معلقة', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', border: 'border-amber-500/20' },
+                    { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, color: 'text-indigo-500', bg: 'bg-indigo-500/5', border: 'border-indigo-500/20' },
+                    { label: 'معدل الإنجاز', value: `${stats.score}%`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/5', border: 'border-emerald-500/20' },
+                    { label: 'مهام مكتملة', value: stats.completed, icon: CheckCircle2, color: 'text-purple-500', bg: 'bg-purple-500/5', border: 'border-purple-500/20' }
+                ].map((stat, i) => (
+                    <div key={i} className={cn(
+                        "relative bg-white dark:bg-slate-900 border p-6 overflow-hidden transition-all hover:-translate-y-1",
+                        stat.border
+                    )}>
+                        <div className="absolute -right-4 -bottom-4 opacity-[0.03] rotate-12 group-hover:rotate-0 transition-all duration-500">
+                            <stat.icon size={100} />
+                        </div>
+                        <div className="relative z-10">
+                            <div className={cn("w-10 h-10 rounded-none flex items-center justify-center mb-4 border", stat.border, stat.bg)}>
+                                <stat.icon size={18} className={stat.color} />
+                            </div>
+                            <h3 className="text-3xl font-black text-slate-800 dark:text-white tracking-tighter mb-1">{stat.value}</h3>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
                         </div>
                     </div>
-                    <div className="text-center w-full">
-                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.pending}</h3>
-                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">مهام معلقة</p>
-                    </div>
-                </div>
-
-                {/* 2. In Progress */}
-                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
-                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
-                        <span className="text-[8px] md:text-[11px] font-black text-orange-600 order-2 md:order-1 mt-1 md:mt-0">جاري</span>
-                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0 order-1 md:order-2">
-                            <RefreshCcw size={16} className="w-3 h-3 md:w-4 md:h-4" />
-                        </div>
-                    </div>
-                    <div className="text-center w-full">
-                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.inProgress}</h3>
-                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">قيد التنفيذ</p>
-                    </div>
-                </div>
-
-                {/* 3. Indicator */}
-                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
-                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
-                        <span className="text-[8px] md:text-[11px] font-black text-yellow-600 order-2 md:order-1 mt-1 md:mt-0">المؤشر</span>
-                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-yellow-50 text-yellow-500 flex items-center justify-center shrink-0 order-1 md:order-2">
-                            <TrendingUp size={16} className="w-3 h-3 md:w-4 md:h-4" />
-                        </div>
-                    </div>
-                    <div className="text-center w-full">
-                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.score}%</h3>
-                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">الإنجاز</p>
-                    </div>
-                </div>
-
-                {/* 4. Completed */}
-                <div className="bg-white rounded-lg md:rounded-2xl p-2.5 md:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-slate-50 flex flex-col items-center md:items-stretch justify-between gap-1.5 md:gap-3">
-                    <div className="flex flex-col md:flex-row items-center justify-between pointer-events-none w-full">
-                        <span className="text-[8px] md:text-[11px] font-black text-emerald-600 order-2 md:order-1 mt-1 md:mt-0">منتهي</span>
-                        <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0 order-1 md:order-2">
-                            <CheckCircle2 size={16} className="w-3 h-3 md:w-4 md:h-4" />
-                        </div>
-                    </div>
-                    <div className="text-center w-full">
-                        <h3 className="text-lg md:text-3xl font-black text-slate-800 leading-none">{stats.completed}</h3>
-                        <p className="text-[7px] md:text-[9px] font-bold text-slate-400 mt-0.5 md:mt-1 truncate">تم الانتهاء</p>
-                    </div>
-                </div>
+                ))}
             </div>
 
-            {/* Smart Search & Filter */}
-            <div className="mx-2 md:mx-0 pt-2 flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full">
+            {/* ── Search & Filters (Sharp & Minimal) ── */}
+            <div className="px-4 flex flex-col md:flex-row gap-4 items-center">
                 <div className="relative flex-1 w-full">
-                    <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                    <Search className="absolute right-5 top-1/2 -translate-y-1/2 text-indigo-500" size={18} />
                     <input 
                         type="text" 
-                        placeholder="ابحث عن مهمة..." 
+                        placeholder="ابحث في أرشيف العمليات..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-xl py-3.5 px-4 pr-11 text-[11px] font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder:text-slate-400"
+                        className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 py-4 px-6 pr-14 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-widest"
                     />
                 </div>
 
-                <div className="flex items-center justify-between md:justify-end gap-1.5 md:gap-2 flex-row-reverse w-full md:w-auto shrink-0 overflow-x-auto no-scrollbar pb-1 md:pb-0">
-                    {['low', 'medium', 'high', 'all'].map(p => (
+                <div className="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar">
+                    {['high', 'medium', 'low', 'all'].map(p => (
                         <button 
                             key={p}
                             onClick={() => setFilterPriority(p as any)}
                             className={cn(
-                                "flex-1 md:flex-none px-2 md:px-5 py-2.5 md:py-2 rounded-xl md:rounded-full font-black text-[10px] md:text-[11px] transition-all whitespace-nowrap",
-                                filterPriority === p ? "bg-[#5c4fb1] text-white shadow-lg shadow-indigo-500/20" : "bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200"
+                                "px-6 py-4 border-2 font-black text-[10px] uppercase tracking-[0.2em] transition-all whitespace-nowrap min-w-[100px]",
+                                filterPriority === p 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-xl shadow-indigo-500/20" 
+                                    : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-indigo-200 dark:hover:border-indigo-900"
                             )}
                         >
-                            {p === 'all' ? 'الكل' : p === 'high' ? 'عاجل' : p === 'medium' ? 'متوسط' : 'هادئ'}
+                            {p === 'all' ? 'الكل' : p === 'high' ? 'عاجل جداً' : p === 'medium' ? 'متوسط' : 'هادئ'}
                         </button>
                     ))}
                 </div>
             </div>
 
-            {/* Tasks Canvas Area */}
-            <div className="mx-2 md:mx-0 mt-6 grid gap-4 grid-cols-1 md:grid-cols-2">
+            {/* ── Tasks Canvas (High Contrast Cards) ── */}
+            <div className="px-4 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                 {filteredTasks.length > 0 ? (
                     filteredTasks.map(task => {
                         const isHigh = task.priority === 'high';
@@ -240,63 +226,75 @@ export const Tasks = () => {
                             <div 
                                 key={task.id}
                                 className={cn(
-                                    "bg-white dark:bg-slate-900 rounded-[1.5rem] p-5 w-full relative group transition-all hover:shadow-lg border border-slate-50 dark:border-slate-800 flex flex-col",
-                                    isHigh && !isCompleted && "shadow-[0_8px_30px_rgba(244,63,94,0.1)] border-rose-100 dark:border-rose-900/30",
-                                    !isHigh && !isCompleted && "shadow-[0_8px_30px_rgba(0,0,0,0.03)]",
-                                    isCompleted && "opacity-60 shadow-none"
+                                    "relative group bg-white dark:bg-slate-900 border-2 transition-all duration-500 flex flex-col p-8",
+                                    isHigh && !isCompleted ? "border-rose-500/20 bg-rose-50/5" : "border-slate-100 dark:border-slate-800",
+                                    isCompleted && "opacity-60 grayscale border-slate-50 dark:border-slate-900 shadow-none"
                                 )}
                             >
-                                <div className="flex items-start justify-between mb-3 border-b border-slate-50 dark:border-slate-800 pb-3">
-                                    <div className="flex flex-col flex-1 pl-3">
-                                       <h3 className={cn("text-[13px] font-black text-slate-800 dark:text-slate-100", isCompleted && "line-through grayscale")}>
-                                           {task.title}
-                                       </h3>
-                                       <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-400 mt-1.5">
-                                           <Calendar size={12} className="opacity-70" />
-                                           <span>{task.dueDate}</span>
-                                       </div>
+                                {/* Priority Indicator Bar */}
+                                <div className={cn(
+                                    "absolute top-0 right-0 w-1 h-full",
+                                    task.priority === 'high' ? "bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]" : 
+                                    task.priority === 'medium' ? "bg-amber-500" : "bg-indigo-400"
+                                )}></div>
+
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                            {isCompleted && <CheckCircle2 size={16} className="text-emerald-500" />}
+                                            <h3 className={cn(
+                                                "text-lg font-black tracking-tight text-slate-800 dark:text-slate-100",
+                                                isCompleted && "line-through opacity-50"
+                                            )}>
+                                                {task.title}
+                                            </h3>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                            <Calendar size={14} className="text-indigo-500" />
+                                            <span>Deadline: {task.dueDate}</span>
+                                        </div>
                                     </div>
-                                    <span className={cn(
-                                        "px-2.5 py-1 rounded-lg font-black text-[9px] shrink-0",
-                                        task.priority === 'high' ? "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400" : 
-                                        task.priority === 'medium' ? "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400" : 
-                                        "bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                                    <div className={cn(
+                                        "px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border",
+                                        task.priority === 'high' ? "text-rose-600 border-rose-200 bg-rose-50 dark:bg-rose-900/10 dark:border-rose-900/30" : 
+                                        task.priority === 'medium' ? "text-amber-600 border-amber-200 bg-amber-50 dark:bg-amber-900/10 dark:border-amber-900/30" : 
+                                        "text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-900/10 dark:border-indigo-900/30"
                                     )}>
-                                        {task.priority === 'high' ? 'عاجل' : task.priority === 'medium' ? 'متوسط' : 'هادئ'}
-                                    </span>
+                                        {task.priority === 'high' ? 'High Priority' : task.priority === 'medium' ? 'Medium' : 'Normal'}
+                                    </div>
                                 </div>
-                                
-                                <p className="text-slate-500 dark:text-slate-400 font-bold text-[10px] mb-5 line-clamp-2 leading-relaxed flex-1">
-                                    {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
+
+                                <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-loose mb-10 line-clamp-3">
+                                    {task.description || "لا توجد تفاصيل إضافية لهذا السجل العملياتي..."}
                                 </p>
 
-                                {/* Actions */}
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800 mt-auto">
-                                    <div className="flex gap-2">
-                                        {task.status !== 'completed' && (
+                                {/* Action Console */}
+                                <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                                    <div className="flex gap-4">
+                                        {task.status !== 'completed' ? (
                                             <button 
                                                 onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
                                                 className={cn(
-                                                    "px-4 py-2 rounded-xl font-black text-xs transition-all flex items-center gap-2",
-                                                    task.status === 'pending' ? "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20" : "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-500/20"
+                                                    "group flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all",
+                                                    task.status === 'pending' ? "text-indigo-500 hover:text-indigo-600" : "text-emerald-500 hover:text-emerald-600"
                                                 )}
                                             >
-                                                {task.status === 'pending' ? <RefreshCcw size={16}/> : <CheckCircle2 size={16}/>}
-                                                {task.status === 'pending' ? 'بدء العمل' : 'إكمال المهمة'}
+                                                {task.status === 'pending' ? <Rocket size={16} /> : <CheckCircle2 size={16} />}
+                                                {task.status === 'pending' ? 'إطلاق العمل' : 'إغلاق الملف'}
+                                                <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                                             </button>
-                                        )}
-                                        {task.status === 'completed' && (
+                                        ) : (
                                             <button 
                                                 onClick={() => updateTaskStatus(task.id, 'pending')}
-                                                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-black text-slate-500 dark:text-slate-400 text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                                                className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors"
                                             >
-                                                إعادة فتح
+                                                إعادة فتح السجل
                                             </button>
                                         )}
                                     </div>
                                     <button 
                                         onClick={() => deleteTask(task.id)}
-                                        className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
+                                        className="text-slate-300 hover:text-rose-500 transition-all hover:scale-110"
                                     >
                                         <Trash2 size={18} />
                                     </button>
@@ -305,83 +303,88 @@ export const Tasks = () => {
                         )
                     })
                 ) : (
-                    <div className="col-span-full mt-4 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 dark:border-slate-800 p-12 flex flex-col items-center justify-center text-center shadow-sm">
-                        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-6">
-                            <ClipboardList size={28} className="text-slate-300 dark:text-slate-500" />
+                    <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 dark:border-slate-800">
+                        <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
+                            <ClipboardList size={32} className="text-indigo-500" />
                         </div>
-                        <h2 className="text-base font-black text-slate-800 dark:text-slate-200 mb-2">لا يوجد مهام حالياً</h2>
-                        <p className="text-slate-500 dark:text-slate-400 font-bold text-[11px] max-w-xs mx-auto leading-relaxed">ابدأ بإضافة مهامك الجديدة لتظهر في غرفة العمليات هنا.</p>
+                        <h2 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tighter mb-2">السجلات فارغة</h2>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">غرفة العمليات جاهزة لاستقبال مهام جديدة</p>
                     </div>
                 )}
             </div>
 
-            {/* Elegant Add Task Modal */}
+            {/* ── Premium Add Modal ── */}
             {showAddForm && (
-                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-in fade-in duration-200">
-                    <div className="bg-white dark:bg-slate-900 rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden transform md:animate-in md:zoom-in-95 md:duration-300">
-                        <div className="p-5 md:p-6 bg-[#5c4fb1] text-white flex justify-between items-center relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                            <h3 className="text-sm md:text-base font-black flex items-center gap-2 relative z-10">
-                                <Plus size={18} /> تسجيل مهمة جديدة
-                            </h3>
-                            <button 
-                                onClick={() => setShowAddForm(false)} 
-                                className="w-8 h-8 bg-white/10 backdrop-blur-md hover:bg-white/20 rounded-full flex items-center justify-center transition-colors relative z-10"
-                            >
-                                <span className="text-lg font-black leading-none pb-1">&times;</span>
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-2xl bg-slate-950/60 animate-in fade-in duration-300">
+                    <div className="bg-white dark:bg-slate-900 rounded-none border-t-8 border-indigo-600 w-full max-w-xl shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
+                        <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 bg-indigo-600 text-white flex items-center justify-center">
+                                    <Plus size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tighter">إنشاء عملية جديدة</h3>
+                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">New Operation Protocol</p>
+                                </div>
+                            </div>
+                            <button onClick={() => setShowAddForm(false)} className="text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
+                                <span className="text-2xl font-light">×</span>
                             </button>
                         </div>
                         
-                        <form onSubmit={handleAddTask} className="p-6 space-y-4">
-                            <div className="space-y-4">
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-700 dark:text-slate-300">عنوان المهمة</label>
+                        <form onSubmit={handleAddTask} className="p-10 space-y-8">
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                        <Sparkles size={12} className="text-indigo-500" /> مسمى العملية
+                                    </label>
                                     <input 
                                         required
                                         type="text" 
-                                        placeholder="ما الذي تريد إنجازه؟"
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl p-3.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-shadow transition-colors"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-sm font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-600 transition-all"
                                         value={newTask.title}
                                         onChange={e => setNewTask({...newTask, title: e.target.value})}
                                     />
                                 </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-slate-700 dark:text-slate-300">الأولوية</label>
+
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">مستوى الخطورة</label>
                                         <select 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl p-3.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 appearance-none cursor-pointer"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white cursor-pointer"
                                             value={newTask.priority}
                                             onChange={e => setNewTask({...newTask, priority: e.target.value as any})}
                                         >
-                                            <option value="low">هادئ</option>
-                                            <option value="medium">متوسط</option>
-                                            <option value="high">عاجل</option>
+                                            <option value="low">هادئ (Low)</option>
+                                            <option value="medium">متوسط (Medium)</option>
+                                            <option value="high">عاجل (Critical)</option>
                                         </select>
                                     </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-slate-700 dark:text-slate-300">تاريخ التنفيذ</label>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">تاريخ الاستحقاق</label>
                                         <input 
                                             type="date" 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl p-3.5 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white"
                                             value={newTask.dueDate}
                                             onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
                                         />
                                     </div>
                                 </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-700 dark:text-slate-300">التفاصيل والتوجيهات</label>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                        <ShieldCheck size={12} className="text-indigo-500" /> تفاصيل البروتوكول
+                                    </label>
                                     <textarea 
-                                        placeholder="اكتب هنا كافة المعلومات اللازمة..."
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-xl p-3.5 text-xs font-bold text-slate-800 dark:text-slate-200 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white h-32 resize-none"
                                         value={newTask.description}
                                         onChange={e => setNewTask({...newTask, description: e.target.value})}
                                     ></textarea>
                                 </div>
                             </div>
 
-                            <button type="submit" className="w-full bg-[#5c4fb1] hover:bg-indigo-600 text-white mt-2 py-3.5 rounded-xl font-black text-[11px] transition-colors flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20">
-                                <Rocket size={14} className="fill-white/20" />
-                                تأكيد إضافة المهمة
+                            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 font-black text-xs uppercase tracking-[0.3em] transition-all shadow-xl shadow-indigo-500/20 active:scale-95">
+                                تأكيد إطلاق العملية
                             </button>
                         </form>
                     </div>
