@@ -604,31 +604,32 @@ export const Home = () => {
                                                 "{reviews[currentIndex].content}"
                                             </p>
                                         </div>
+                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto">
+                                            <div className="bg-indigo-600/10 w-8 h-px"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Desktop View - Advanced Bento Grid with Varied Merging */}
+                        {/* Desktop View - Advanced Bento Grid with Dual Merging Patterns */}
                         <div className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
                             {reviews.map((review, index) => {
-                                // Logic for Varied Merging: One 2x2 (4 squares) and One 2x1 (2 squares)
-                                const isQuad = index === (currentIndex % reviews.length);
-                                const isDual = index === ((currentIndex + 3) % reviews.length);
-                                const isLarge = isQuad || isDual;
+                                // Logic for Dual Merging: Two cards take 2 columns each (2x1)
+                                const isFirstDual = index === (currentIndex % reviews.length);
+                                const isSecondDual = index === ((currentIndex + 3) % reviews.length);
+                                const isLarge = isFirstDual || isSecondDual;
                                 
                                 return (
                                     <div 
                                         key={index} 
                                         className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
-                                            ${isQuad 
-                                                ? 'lg:col-span-2 lg:row-span-2 bg-[#800020] border-[#800020] text-white p-10 min-h-[420px] justify-center' 
-                                                : isDual 
-                                                    ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center' 
-                                                    : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
+                                            ${isLarge 
+                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center min-h-[220px]' 
+                                                : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
-                                        <Quote size={isQuad ? 80 : isDual ? 50 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
+                                        <Quote size={isLarge ? 60 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
                                             ${isLarge ? 'text-white/10' : 'text-indigo-500/5 group-hover:text-indigo-500/15'}`} 
                                         />
                                         
