@@ -580,7 +580,6 @@ export const Home = () => {
                         <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading leading-tight">
                             ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
                     </div>
 
                     <div className="max-w-6xl mx-auto">
@@ -605,30 +604,31 @@ export const Home = () => {
                                                 "{reviews[currentIndex].content}"
                                             </p>
                                         </div>
-                                        
-                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Desktop View - Bento Grid Style with 2x2 Dynamic Merging */}
+                        {/* Desktop View - Advanced Bento Grid with Varied Merging */}
                         <div className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
                             {reviews.map((review, index) => {
-                                // Logic for 2x2 Dynamic Merging: One card takes the space of 4 (2 cols x 2 rows)
-                                const isLarge = index === (currentIndex % reviews.length);
+                                // Logic for Varied Merging: One 2x2 (4 squares) and One 2x1 (2 squares)
+                                const isQuad = index === (currentIndex % reviews.length);
+                                const isDual = index === ((currentIndex + 3) % reviews.length);
+                                const isLarge = isQuad || isDual;
                                 
                                 return (
                                     <div 
                                         key={index} 
                                         className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
-                                            ${isLarge 
-                                                ? 'lg:col-span-2 lg:row-span-2 bg-[#800020] border-[#800020] text-white p-10 min-h-[450px] justify-center' 
-                                                : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
+                                            ${isQuad 
+                                                ? 'lg:col-span-2 lg:row-span-2 bg-[#800020] border-[#800020] text-white p-10 min-h-[420px] justify-center' 
+                                                : isDual 
+                                                    ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center' 
+                                                    : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
-                                        <Quote size={isLarge ? 100 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
+                                        <Quote size={isQuad ? 80 : isDual ? 50 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
                                             ${isLarge ? 'text-white/10' : 'text-indigo-500/5 group-hover:text-indigo-500/15'}`} 
                                         />
                                         
