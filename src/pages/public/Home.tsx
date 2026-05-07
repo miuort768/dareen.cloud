@@ -601,7 +601,6 @@ export const Home = () => {
                                         </div>
                                         
                                         <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto">
-                                            <p className="text-[9px] text-indigo-600 font-black uppercase tracking-[0.2em]">{reviews[currentIndex].role}</p>
                                             <div className="flex gap-2">
                                                 <button onClick={prevSlide} className="w-8 h-8 rounded-none bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-slate-700">
                                                     <ChevronRight className="rotate-180" size={16} />
@@ -652,9 +651,6 @@ export const Home = () => {
                                         </div>
                                         
                                         <div className={`pt-4 border-t mt-auto flex justify-between items-center ${isLarge ? 'border-white/20' : 'border-gray-100 dark:border-slate-800'}`}>
-                                            <p className={`text-[9px] font-black uppercase tracking-[0.2em] ${isLarge ? 'text-white/70' : 'text-indigo-600'}`}>
-                                                {review.role}
-                                            </p>
                                             <div className={`w-8 h-px ${isLarge ? 'bg-white/30' : 'bg-indigo-100 dark:bg-slate-800'}`}></div>
                                         </div>
 
