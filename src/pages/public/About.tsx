@@ -20,7 +20,7 @@ export const About = () => {
             <PublicNavbar />
 
             {/* Hero Section */}
-            <section className="relative pt-16 pb-12 md:pt-20 md:pb-16 overflow-hidden bg-white dark:bg-slate-950">
+            <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-white dark:bg-slate-950">
                 {/* Creative Background Elements - Premium Royal Theme */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
                 <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-600/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
