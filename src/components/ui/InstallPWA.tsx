@@ -191,7 +191,7 @@ export const InstallPWA = () => {
         <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
             isDesktop ? 'bottom-6 right-6' : 'bottom-6 left-4 right-4'
         }`}>
-            <div className={`bg-[#064E3B] border border-white/10 shadow-2xl backdrop-blur-md flex items-center gap-4 p-4 rounded-3xl ${
+            <div className={`bg-[#064E3B] border border-white/10 backdrop-blur-md flex items-center gap-4 p-4 rounded-3xl ${
                 isDesktop ? 'max-w-[320px] ml-auto' : ''
             }`}>
                 <div className="w-12 h-12 bg-white/10 text-white flex items-center justify-center rounded-2xl shrink-0 backdrop-blur-sm border border-white/10">
@@ -208,7 +208,7 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-2 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-4 py-2 bg-white text-[#064E3B] font-black uppercase text-[10px] rounded-xl hover:bg-gray-100 transition-all flex items-center gap-2 active:scale-95 shadow-lg"
+                        className="px-4 py-2 bg-white text-[#064E3B] font-black uppercase text-[10px] rounded-xl hover:bg-gray-100 transition-all flex items-center gap-2 active:scale-95"
                     >
                         {isIOS || isMacSafari ? <Share size={12} /> : <Download size={12} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}
