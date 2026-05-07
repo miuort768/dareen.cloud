@@ -644,8 +644,8 @@ export const Home = () => {
 
             <MasarSection />
 
-            {/* FAQ Section */}
-            <section className="py-8 md:py-12 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
+            {/* FAQ Section - Spacing Optimized */}
+            <section className="py-4 md:py-6 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
                         backgroundImage: 'radial-gradient(circle at 15% 50%, #6366F1 0%, transparent 40%), radial-gradient(circle at 85% 50%, #8B5CF6 0%, transparent 40%)',
