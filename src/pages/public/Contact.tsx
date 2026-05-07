@@ -59,23 +59,23 @@ export const Contact = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-32 pb-20 relative">
+            <main className="flex-grow pt-24 md:pt-28 pb-12 relative">
                 {/* Background Decorations */}
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px] translate-y-1/4 -translate-x-1/4 pointer-events-none"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
                     {/* Page Header */}
-                    <div className="text-center max-w-4xl mx-auto mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-amber-400 rounded-full mb-6">
+                    <div className="text-center max-w-4xl mx-auto mb-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-amber-400 rounded-full mb-4">
                             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-2xl md:text-6xl font-heading font-black text-gray-900 dark:text-white mb-6 relative">
+                        <h1 className="text-2xl md:text-4xl font-heading font-black text-gray-900 dark:text-white mb-4 relative">
                             <span className="sr-only">تواصل مع منصة دارين السابعة لحجز الدروس الخصوصية أونلاين وتحفيظ القرآن في الكويت والخليج</span>
                             <span aria-hidden="true">تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-amber-500">دارين السابعة</span></span>
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-xl font-medium leading-relaxed px-4">
+                        <p className="text-gray-500 dark:text-slate-400 text-xs md:text-base font-medium leading-relaxed px-4">
                             يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.
                             فريقنا جاهز لخدمتكم على مدار الساعة.
                         </p>
@@ -131,9 +131,9 @@ export const Contact = () => {
                                             </select>
                                         </div>
 
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رسالتك</label>
-                                            <textarea required rows={5} className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white resize-none" placeholder="اكتب استفسارك بالتفصيل هنا..."></textarea>
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رسالتك</label>
+                                            <textarea required rows={4} className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-4 py-3 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white resize-none text-sm" placeholder="اكتب استفسارك بالتفصيل هنا..."></textarea>
                                         </div>
 
                                         <button
@@ -155,36 +155,36 @@ export const Contact = () => {
                         </div>
 
                         {/* Contact Info Side */}
-                        <div className="space-y-8">
+                        <div className="space-y-6">
                             {/* Visual Quote Card */}
-                            <div className="bg-gray-900 p-8 text-white relative overflow-hidden rounded-none">
+                            <div className="bg-gray-900 p-6 text-white relative overflow-hidden rounded-none">
                                 <Globe className="absolute -bottom-6 -left-6 text-white/5 w-48 h-48" />
                                 <div className="relative z-10">
-                                    <div className="h-1 w-24 bg-gradient-to-r from-indigo-500 to-amber-500 mb-6"></div>
-                                    <h3 className="text-2xl font-black mb-4 font-heading leading-tight text-white">سعداء بخدمتكم في كل مكان</h3>
-                                    <p className="text-gray-400 font-medium leading-relaxed">بفضل نظامنا التعليمي المطور، نصلكم أينما كنتم في مصر ودول الخليج. جودة التعليم لا تعرف حدوداً مع دارين.</p>
+                                    <div className="h-1 w-24 bg-gradient-to-r from-indigo-500 to-amber-500 mb-4"></div>
+                                    <h3 className="text-xl font-black mb-2 font-heading leading-tight text-white">سعداء بخدمتكم في كل مكان</h3>
+                                    <p className="text-gray-400 text-sm font-medium leading-relaxed">بفضل نظامنا التعليمي المطور، نصلكم أينما كنتم في مصر ودول الخليج. جودة التعليم لا تعرف حدوداً مع دارين.</p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 gap-6">
+                            <div className="grid grid-cols-1 gap-4">
                                 {contactInfo.map((info, idx) => (
                                     <a
                                         key={idx}
                                         href={info.link}
                                         target={info.link !== '#' ? '_blank' : undefined}
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-6 p-6 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all group rounded-none"
+                                        className="flex items-center gap-4 p-4.5 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all group rounded-none"
                                     >
-                                        <div className={cn("w-16 h-16 shrink-0 flex items-center justify-center rounded-none transition-all group-hover:scale-110", info.color)}>
-                                            <info.icon size={28} />
+                                        <div className={cn("w-14 h-14 shrink-0 flex items-center justify-center rounded-none transition-all group-hover:scale-110", info.color)}>
+                                            <info.icon size={24} />
                                         </div>
                                         <div className="flex-grow">
                                             <div className="flex items-center justify-between mb-1">
                                                 <span className="text-[10px] font-black uppercase text-gray-400 dark:text-slate-500 tracking-widest">{info.label}</span>
                                                 <ArrowLeft size={16} className="text-gray-200 dark:text-slate-700 group-hover:text-indigo-500 transition-colors group-hover:-translate-x-1" />
                                             </div>
-                                            <h4 className="text-lg font-black text-gray-800 dark:text-white">{info.title}</h4>
-                                            <p className="text-gray-500 dark:text-slate-400 font-bold" dir={info.title.includes('الهاتف') ? 'ltr' : 'rtl'}>{info.content}</p>
+                                            <h4 className="text-base font-black text-gray-800 dark:text-white">{info.title}</h4>
+                                            <p className="text-gray-500 dark:text-slate-400 font-bold text-sm" dir={info.title.includes('الهاتف') ? 'ltr' : 'rtl'}>{info.content}</p>
                                         </div>
                                     </a>
                                 ))}
