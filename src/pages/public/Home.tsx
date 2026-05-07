@@ -192,12 +192,16 @@ export const Home = () => {
                             </div>
                         </div>
                         <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
-                            <div className="relative w-full max-w-[500px] aspect-[4/5]">
+                            <div className="relative w-full max-w-[500px] aspect-[4/5] flex items-center justify-center">
+                                {/* Rotating Dashed Circle - Added as requested */}
+                                <div className="absolute inset-[-5%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
+                                <div className="absolute inset-[-8%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
+                                
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
                                     src="/hero-child.png"
                                     alt="Hero"
-                                    className="relative w-full h-full object-contain filter drop-shadow-2xl z-10"
+                                    className="relative w-full h-full object-contain filter drop-shadow-2xl z-20"
                                     fetchPriority="high"
                                     decoding="sync"
                                     onError={(e) => {
@@ -210,8 +214,8 @@ export const Home = () => {
                     
                 </div>
                 
-                {/* Dynamic Hero Banners (Full Width) */}
-                <div className="hidden md:grid w-full mt-12 md:mt-16 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
+                {/* Dynamic Hero Banners (Full Width) - Spacing Reduced as requested */}
+                <div className="hidden md:grid w-full mt-4 md:mt-6 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
                         <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-indigo-900 dark:hover:bg-indigo-900 transition-colors flex flex-row justify-between items-center gap-2 group">
                             <p className="text-[10px] lg:text-[11px] font-black text-amber-400 leading-tight flex-1">
