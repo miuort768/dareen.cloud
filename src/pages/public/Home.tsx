@@ -613,22 +613,22 @@ export const Home = () => {
                             </div>
                         </div>
 
-                        {/* Desktop View - Bento Grid Style with Dynamic Merging */}
-                        <div className="hidden lg:grid lg:grid-cols-3 gap-6 transition-all duration-1000">
+                        {/* Desktop View - Bento Grid Style with 2x2 Dynamic Merging */}
+                        <div className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
                             {reviews.map((review, index) => {
-                                // Logic for Dynamic Bento-style merging: Moves every 5 seconds
-                                const isLarge = index === (currentIndex % reviews.length) || index === ((currentIndex + 3) % reviews.length);
+                                // Logic for 2x2 Dynamic Merging: One card takes the space of 4 (2 cols x 2 rows)
+                                const isLarge = index === (currentIndex % reviews.length);
                                 
                                 return (
                                     <div 
                                         key={index} 
-                                        className={`group relative p-5 border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
+                                        className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
                                             ${isLarge 
-                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white' 
-                                                : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600'
+                                                ? 'lg:col-span-2 lg:row-span-2 bg-[#800020] border-[#800020] text-white p-10 min-h-[450px] justify-center' 
+                                                : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
-                                        <Quote size={isLarge ? 60 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
+                                        <Quote size={isLarge ? 100 : 30} className={`absolute -top-2 -left-2 transition-all duration-700 
                                             ${isLarge ? 'text-white/10' : 'text-indigo-500/5 group-hover:text-indigo-500/15'}`} 
                                         />
                                         
