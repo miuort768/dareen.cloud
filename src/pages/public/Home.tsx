@@ -74,6 +74,12 @@ export const Home = () => {
             avatar: "/images/avatars/mom3.png"
         },
         {
+            name: "أبو فهد",
+            role: "ولي أمر",
+            content: "والله يا جماعة دارين السابعة غير، عيالي استفادوا حيل وصاروا يحبون الحصة. الله يبيض وجيهكم وما قصرتوا صراحة على هالمجهود.",
+            avatar: "/images/avatars/dad1.png"
+        },
+        {
             name: "أم جاسم",
             role: "ولية أمر",
             content: "الله يعطيكم العافية على المتابعة الدورية، صج تهتمون بأدق التفاصيل والتقارير اللي توصلنا تريح البال وتطمنا على عيالنا.",
@@ -618,8 +624,8 @@ export const Home = () => {
                         {/* Desktop View - Bento Grid Style */}
                         <div className="hidden lg:grid lg:grid-cols-3 gap-6">
                             {reviews.map((review, index) => {
-                                // Logic for Bento-style merging: Index 0 and 3 take 2 columns and use burgundy color
-                                const isLarge = index === 0 || index === 3;
+                                // Logic for Bento-style merging: More varied distribution
+                                const isLarge = index === 0 || index === 2 || index === 4;
                                 
                                 return (
                                     <div 
