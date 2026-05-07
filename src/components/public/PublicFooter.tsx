@@ -6,11 +6,11 @@ export const PublicFooter = () => {
     const { adminPhone } = useSettings();
 
     return (
-        <footer className="relative bg-gray-900 text-white overflow-hidden pt-8 pb-6 md:pt-16 md:pb-10">
-            {/* Decorative Overlays - Watermelon Theme Shapes */}
+        <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-16 md:pb-10 transition-colors duration-500">
+            {/* Decorative Overlays - Premium Royal Theme Shapes */}
             <div className="absolute inset-0 pointer-events-none opacity-20">
-                <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-red-600 rounded-full blur-[120px]"></div>
-                <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-green-600 rounded-full blur-[120px]"></div>
+                <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-indigo-600 rounded-full blur-[120px]"></div>
+                <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-purple-600 rounded-full blur-[120px]"></div>
                 
                 {/* Geometric Floating Elements */}
                 <div className="absolute top-10 left-10 w-20 h-20 border border-white/5 rotate-45 animate-pulse"></div>
@@ -23,14 +23,14 @@ export const PublicFooter = () => {
                     {/* Brand */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white shadow-lg rounded-none">
+                            <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-indigo-900 flex items-center justify-center text-white shadow-lg rounded-none">
                                 <span className="text-2xl font-black">د</span>
                             </div>
                             <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 font-heading">
                                 دارين السابعة
                             </span>
                         </div>
-                        <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-red-600/30 pr-4">
+                        <p className="text-gray-400 text-sm leading-relaxed border-r-2 border-indigo-600/30 pr-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعلم.
                         </p>
                     </div>
@@ -38,7 +38,7 @@ export const PublicFooter = () => {
                     {/* Links */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-red-600"></span>
+                            <span className="w-8 h-0.5 bg-amber-500"></span>
                             روابط سريعة
                         </h3>
                         <ul className="space-y-3">
@@ -50,9 +50,9 @@ export const PublicFooter = () => {
                                 <li key={idx}>
                                     <Link
                                         to={link.path}
-                                        className="text-gray-400 hover:text-red-500 hover:translate-x-[-5px] transition-all flex items-center gap-2 text-sm"
+                                        className="text-gray-400 hover:text-amber-500 hover:translate-x-[-5px] transition-all flex items-center gap-2 text-sm"
                                     >
-                                        <span className="text-red-600">›</span> {link.name}
+                                        <span className="text-amber-500">›</span> {link.name}
                                     </Link>
                                 </li>
                             ))}
@@ -62,33 +62,33 @@ export const PublicFooter = () => {
                     {/* Contact */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-red-600"></span>
+                            <span className="w-8 h-0.5 bg-amber-500"></span>
                             تواصل معنا
                         </h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-sm text-gray-400">
-                                <MapPin className="w-5 h-5 text-red-600 shrink-0" />
+                                <MapPin className="w-5 h-5 text-amber-500 shrink-0" />
                                 <span>بني سويف - مصر</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
-                                <Phone className="w-5 h-5 text-red-600 shrink-0" />
+                                <Phone className="w-5 h-5 text-amber-500 shrink-0" />
                                 <a
                                     href={`https://wa.me/${adminPhone.replace(/\D/g, '')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-red-500 transition-colors"
+                                    className="hover:text-amber-500 transition-colors"
                                     dir="ltr"
                                 >
                                     +{adminPhone.replace(/\D/g, '')}
                                 </a>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-400">
-                                <Instagram className="w-5 h-5 text-red-600 shrink-0" />
+                                <Instagram className="w-5 h-5 text-amber-500 shrink-0" />
                                 <a
                                     href="https://www.instagram.com/daren_school/?hl=ar"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-red-500 transition-colors"
+                                    className="hover:text-amber-500 transition-colors"
                                 >
                                     @daren_school
                                 </a>
@@ -99,7 +99,7 @@ export const PublicFooter = () => {
                     {/* Newsletter */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                            <span className="w-8 h-0.5 bg-gold"></span>
+                            <span className="w-8 h-0.5 bg-amber-500"></span>
                             عروض المنصة
                         </h3>
                         <div className="space-y-3">
@@ -107,7 +107,7 @@ export const PublicFooter = () => {
                                 href={`https://wa.me/${adminPhone}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block w-full text-center bg-white/5 border border-white/10 px-4 py-3 text-sm text-white hover:bg-white/10 hover:border-gold transition-all"
+                                className="block w-full text-center bg-white/5 border border-white/10 px-4 py-3 text-sm text-white hover:bg-white/10 hover:border-amber-500 transition-all"
                             >
                                 تواصل معنا
                             </a>
@@ -115,7 +115,7 @@ export const PublicFooter = () => {
                                 href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين السابعة')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block w-full text-center bg-gradient-to-r from-gold to-gold-hover text-white font-bold py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+                                className="block w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 text-indigo-950 font-black py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
                             >
                                 اشترك الآن
                             </a>
@@ -132,17 +132,17 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-gray-800 to-gray-900 border border-white/10 shadow-lg shadow-black/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 shadow-lg shadow-black/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                             <span className="text-[10px] font-bold text-gray-400 tracking-wide">تصميم وتطوير</span>
-                            <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-green-400">مستر احمد عبدالله</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-amber-400">مستر احمد عبدالله</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-6 justify-center md:justify-end">
-                        <Link to="/privacy-policy" className="text-gray-500 hover:text-red-500 text-sm transition-colors">سياسة الخصوصية</Link>
-                        <Link to="/refund-policy" className="text-gray-500 hover:text-red-500 text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
+                        <Link to="/privacy-policy" className="text-gray-400 hover:text-amber-500 text-sm transition-colors">سياسة الخصوصية</Link>
+                        <Link to="/refund-policy" className="text-gray-400 hover:text-amber-500 text-sm transition-colors">سياسة الاسترجاع والإلغاء</Link>
                     </div>
                 </div>
             </div>
