@@ -607,14 +607,6 @@ export const Home = () => {
                                         </div>
                                         
                                         <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto">
-                                            <div className="flex gap-2">
-                                                <button onClick={prevSlide} className="w-8 h-8 rounded-none bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-slate-700">
-                                                    <ChevronRight className="rotate-180" size={16} />
-                                                </button>
-                                                <button onClick={nextSlide} className="w-8 h-8 rounded-none bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-slate-700">
-                                                    <LucideChevronLeft className="rotate-180" size={16} />
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

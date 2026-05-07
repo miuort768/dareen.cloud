@@ -10,7 +10,7 @@ export const MasarSection = () => {
             <div className="container mx-auto px-4 relative z-10">
 
                 {/* The Single Big Rectangle - Redesigned for Premium Royal Theme */}
-                <div className="max-w-6xl mx-auto bg-gradient-to-br from-indigo-950 via-slate-900 to-black shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative rounded-none">
+                <div className="max-w-6xl mx-auto bg-gradient-to-br from-purple-700 via-purple-800 to-indigo-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative rounded-none">
 
                     {/* Background Patterns - Sharper and More Modern */}
                     <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -38,14 +38,14 @@ export const MasarSection = () => {
                         <div className="w-full lg:w-[65%] p-6 md:p-12 lg:p-14 text-white relative z-20 text-center lg:text-right flex flex-col justify-center">
 
                             <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-600/20 border border-indigo-500/30 rounded-full backdrop-blur-md">
-                                    <Bell className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-                                    <span className="text-xs font-black text-indigo-50 uppercase tracking-widest">بوابة التميز الرقمي</span>
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 border border-purple-500/30 rounded-full backdrop-blur-md">
+                                    <Bell className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                                    <span className="text-xs font-black text-purple-50 uppercase tracking-widest">بوابة التميز الرقمي</span>
                                 </div>
                             </div>
 
                             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
-                                <span className="text-white">منصة</span> <span className="text-white bg-indigo-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(79,70,229,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للتعليم والتدريب</span>
+                                <span className="text-white">منصة</span> <span className="text-white bg-purple-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(147,51,234,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للتعليم والتدريب</span>
                             </h2>
 
                             <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
