@@ -211,17 +211,17 @@ export const Home = () => {
                 </div>
                 
                 {/* Dynamic Hero Banners (Full Width) */}
-                <div className="hidden md:grid w-full mt-12 md:mt-16 bg-amber-400 dark:bg-amber-500 border-y border-amber-500 dark:border-amber-600 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-amber-500/30 dark:divide-amber-600/50">
+                <div className="hidden md:grid w-full mt-12 md:mt-16 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
-                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-amber-300 dark:hover:bg-amber-400 transition-colors flex flex-row justify-between items-center gap-2 group">
-                            <p className="text-[10px] lg:text-[11px] font-black text-slate-900 leading-tight flex-1">
+                        <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-indigo-900 dark:hover:bg-indigo-900 transition-colors flex flex-row justify-between items-center gap-2 group">
+                            <p className="text-[10px] lg:text-[11px] font-black text-amber-400 leading-tight flex-1">
                                 {text}
                             </p>
                             <a 
                                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="shrink-0 px-2.5 py-1 bg-slate-900 text-amber-400 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-black transition-colors shadow-sm whitespace-nowrap"
+                                className="shrink-0 px-2.5 py-1 bg-amber-500 text-indigo-950 font-bold text-[9px] lg:text-[10px] rounded-none hover:bg-amber-400 transition-colors shadow-sm whitespace-nowrap"
                             >
                                 سجل الآن
                             </a>

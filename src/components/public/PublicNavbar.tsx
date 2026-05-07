@@ -46,35 +46,35 @@ export const PublicNavbar = () => {
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 pr-2 group">
                         <div className="relative group">
-                            <div className="absolute inset-0 bg-red-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                             <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-red-600 via-red-500 to-red-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
+                            <div className="absolute inset-0 bg-indigo-300 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                             <div className="relative w-11 h-11 overflow-hidden bg-gradient-to-tr from-indigo-600 via-indigo-500 to-indigo-900 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-[10deg] transition-all duration-500 border border-white/20">
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
                                 <GraduationCap size={24} className="relative z-10" />
                             </div>
-                            <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-green-600 fill-green-600 animate-pulse z-20 group-hover:scale-110 transition-transform" />
+                            <Sparkles size={12} className="absolute -top-[2px] -right-[2px] text-amber-500 fill-amber-500 animate-pulse z-20 group-hover:scale-110 transition-transform" />
                         </div>
                         <div className={cn(
                             "flex-col items-center pt-0.5 text-center",
                             isAuthenticated ? "hidden md:flex" : "flex"
                         )}>
-                            <h1 className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-red-600 to-red-900 tracking-tighter">
+                            <h1 className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-900 tracking-tighter">
                                 دارين السابعة
                             </h1>
-                            <span className="text-[9px] md:text-[11px] text-red-500/90 dark:text-red-400 font-bold mt-0.5 bg-red-50/80 dark:bg-red-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
+                            <span className="text-[9px] md:text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 bg-indigo-50/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-2 bg-green-100/50 dark:bg-slate-800/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-green-200 dark:border-slate-700 shadow-sm">
+                    <div className="hidden md:flex items-center gap-2 bg-indigo-50/50 dark:bg-slate-800/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-indigo-200 dark:border-slate-700 shadow-sm">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
                                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-500 ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-red-500 to-red-400 text-white shadow-lg shadow-red-400/30 -translate-y-0.5'
-                                    : 'text-gray-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-red-500'
+                                    ? 'bg-gradient-to-r from-indigo-600 to-indigo-400 text-white shadow-lg shadow-indigo-400/30 -translate-y-0.5'
+                                    : 'text-gray-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-indigo-600'
                                     }`}
                             >
                                 {item.name}
@@ -97,7 +97,7 @@ export const PublicNavbar = () => {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-2 text-gray-700 dark:text-slate-200 hover:text-red-500 transition-colors px-2 md:px-4 py-2"
+                                    className="flex items-center gap-2 text-gray-700 dark:text-slate-200 hover:text-indigo-600 transition-colors px-2 md:px-4 py-2"
                                 >
                                     <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -110,9 +110,9 @@ export const PublicNavbar = () => {
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 dark:text-slate-200 hover:bg-yellow-50 dark:hover:bg-slate-800 hover:text-green-600 transition-colors"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 transition-colors"
                                     >
-                                        <Sparkles className="w-5 h-5 text-green-600" />
+                                        <Sparkles className="w-5 h-5 text-indigo-600" />
                                         لوحة التحكم
                                     </Link>
                                     <button
@@ -127,7 +127,7 @@ export const PublicNavbar = () => {
                         ) : (
                             <Link
                                 to="/login"
-                                className="hidden md:flex bg-gradient-to-r from-red-500 to-red-500 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
+                                className="hidden md:flex bg-gradient-to-r from-indigo-600 to-indigo-500 text-white px-5 md:px-8 py-2 md:py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all font-bold text-xs md:text-sm"
                             >
                                 تسجيل الدخول
                             </Link>
@@ -136,7 +136,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-red-500 hover:bg-red-50 rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition-all active:scale-90"
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
@@ -156,11 +156,11 @@ export const PublicNavbar = () => {
                                 to={item.path}
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
-                                    ? 'bg-red-500 text-white shadow-lg'
+                                    ? 'bg-indigo-600 text-white shadow-lg'
                                     : 'text-gray-700 hover:bg-gray-50'
                                     }`}
                             >
-                                <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-red-500'}`}></span>
+                                <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-indigo-600'}`}></span>
                                 {item.name}
                             </Link>
                         ))}
@@ -173,7 +173,7 @@ export const PublicNavbar = () => {
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-gray-700 hover:bg-gray-50"
                                     >
-                                        <Sparkles className="w-5 h-5 text-green-600" />
+                                        <Sparkles className="w-5 h-5 text-indigo-600" />
                                         لوحة التحكم
                                     </Link>
                                     <button
@@ -188,7 +188,7 @@ export const PublicNavbar = () => {
                                 <Link
                                     to="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-500 text-white py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
+                                    className="flex items-center justify-center bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-4 rounded-full font-bold shadow-lg mt-2 active:scale-[0.98] transition-transform"
                                 >
                                     تسجيل الدخول
                                 </Link>
