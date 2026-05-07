@@ -6,7 +6,7 @@ export const MasarSection = () => {
     const { adminPhone } = useSettings();
 
     return (
-        <section className="py-12 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
+        <section className="py-4 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
             <div className="container mx-auto px-4 relative z-10">
 
                 {/* The Single Big Rectangle - Redesigned for Premium Royal Theme */}
