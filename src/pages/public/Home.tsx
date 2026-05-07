@@ -555,49 +555,52 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section */}
-            <section className="py-6 md:py-8 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
+            {/* Testimonials Section - Developed for Premium Royal Aesthetic */}
+            <section className="py-10 md:py-16 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-6 md:mb-8">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-100 rounded-full mb-3 mx-auto">
-                            <Quote size={12} className="text-indigo-600" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-700">ثقة متبادلة</span>
+                    <div className="text-center mb-10 md:mb-14">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-4 mx-auto">
+                            <Quote size={14} className="text-indigo-600" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-700">شركاء النجاح</span>
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-black mb-4 font-heading leading-tight">
-                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-400">أولياء الأمور؟</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-black mb-4 font-heading leading-tight">
+                            ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
                         </h2>
-                        <div className="h-1 w-16 bg-amber-500 mx-auto rounded-full"></div>
+                        <div className="h-1.5 w-24 bg-amber-500 mx-auto rounded-full"></div>
                     </div>
+
                     <div className="max-w-7xl mx-auto">
+                        {/* Mobile View - Reimagined Slider */}
                         <div className="lg:hidden">
                             <div className="relative group">
-                                <div className="p-5 bg-gray-50 border border-gray-100 rounded-none shadow-sm relative overflow-hidden flex flex-col min-h-[250px]">
-                                    <Quote size={30} className="text-indigo-500/5 absolute top-4 left-4" />
+                                <div className="p-8 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] relative overflow-hidden flex flex-col min-h-[280px]">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 -translate-y-1/2 translate-x-1/2 rounded-full blur-2xl"></div>
+                                    <Quote size={60} className="text-indigo-500/10 absolute -top-2 -left-2" />
+                                    
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
-                                        <div className="flex gap-1 mb-4 text-amber-500">
-                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                                        <div className="flex gap-1 mb-6 text-amber-500">
+                                            {[1, 2, 3, 4, 5].map(s => <Star key={s} size={16} fill="currentColor" />)}
                                         </div>
-                                        <div className="flex-grow overflow-y-auto pr-1 mb-4">
-                                            <p className="text-gray-600 text-sm leading-relaxed font-medium italic">
+                                        <div className="flex-grow mb-8">
+                                            <p className="text-gray-700 dark:text-slate-300 text-base leading-relaxed font-medium italic">
                                                 "{reviews[currentIndex].content}"
                                             </p>
                                         </div>
-                                        <div className="flex items-center justify-between pt-6 border-t border-gray-100 mt-auto">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-sm border border-gray-200">
-                                                    <img src={reviews[currentIndex].avatar} alt={reviews[currentIndex].name} className="w-full h-full object-cover" loading="lazy" />
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-black text-black text-base">{reviews[currentIndex].name}</h4>
-                                                    <p className="text-[10px] text-indigo-600 font-black uppercase tracking-widest">{reviews[currentIndex].role}</p>
-                                                </div>
+                                        <div className="flex items-center justify-between pt-6 border-t border-gray-100 dark:border-slate-800 mt-auto">
+                                            <div>
+                                                <h4 className="font-black text-black dark:text-white text-lg">{reviews[currentIndex].name}</h4>
+                                                <p className="text-[10px] text-indigo-600 font-black uppercase tracking-[0.2em] mt-1">{reviews[currentIndex].role}</p>
                                             </div>
-                                            <div className="flex gap-2">
-                                                <button onClick={prevSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-gray-100">
-                                                    <ChevronRight className="rotate-180" size={18} />
+                                            <div className="flex gap-3">
+                                                <button onClick={prevSlide} className="w-11 h-11 rounded-none bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-indigo-100 dark:border-slate-700">
+                                                    <ChevronRight className="rotate-180" size={20} />
                                                 </button>
-                                                <button onClick={nextSlide} className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-gray-100">
-                                                    <LucideChevronLeft className="rotate-180" size={18} />
+                                                <button onClick={nextSlide} className="w-11 h-11 rounded-none bg-indigo-50 dark:bg-slate-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all active:scale-90 border border-indigo-100 dark:border-slate-700">
+                                                    <LucideChevronLeft className="rotate-180" size={20} />
                                                 </button>
                                             </div>
                                         </div>
@@ -605,33 +608,39 @@ export const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden lg:grid lg:grid-cols-3 gap-3">
+
+                        {/* Desktop View - Premium Grid */}
+                        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
                             {reviews.map((review, index) => (
-                                <div key={index} className="group relative bg-gray-50 p-4 rounded-none border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
-                                    <Quote size={40} className="absolute -top-2 -left-2 text-indigo-500/5 group-hover:text-indigo-500/10 transition-colors" />
-                                    <div className="flex gap-1 mb-3 text-amber-500">
-                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} fill="currentColor" />)}
+                                <div key={index} className="group relative bg-white dark:bg-slate-900 p-8 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-700 hover:-translate-y-2 flex flex-col">
+                                    {/* Design Accents */}
+                                    <div className="absolute top-0 right-0 w-0 h-1 bg-indigo-600 group-hover:w-full transition-all duration-700"></div>
+                                    <Quote size={40} className="absolute -top-3 -left-3 text-indigo-500/5 group-hover:text-indigo-500/20 transition-all duration-700" />
+                                    
+                                    <div className="flex gap-1 mb-6 text-amber-500">
+                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} fill="currentColor" />)}
                                     </div>
-                                    <div className="mb-4">
-                                        <p className="text-gray-600 text-xs leading-relaxed font-medium italic">
+                                    
+                                    <div className="flex-grow mb-8">
+                                        <p className="text-gray-600 dark:text-slate-400 text-sm leading-relaxed font-medium italic relative z-10">
                                             "{review.content}"
                                         </p>
                                     </div>
-                                    <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
-                                        <div className="w-8 h-8 rounded-none overflow-hidden shadow-sm border border-white shrink-0 transform group-hover:scale-110 transition-transform">
-                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" loading="lazy" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-black text-black text-xs">{review.name}</h4>
-                                            <p className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider mt-0.5">{review.role}</p>
-                                        </div>
+                                    
+                                    <div className="pt-6 border-t border-gray-100 dark:border-slate-800 mt-auto">
+                                        <h4 className="font-black text-black dark:text-white text-base group-hover:text-indigo-600 transition-colors">{review.name}</h4>
+                                        <p className="text-[10px] text-indigo-600 font-black uppercase tracking-[0.2em] mt-1">{review.role}</p>
                                     </div>
+
+                                    {/* Bottom corner accent */}
+                                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-transparent group-hover:border-indigo-600/20 transition-all duration-700"></div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
             </section>
+
 
             <MasarSection />
 
