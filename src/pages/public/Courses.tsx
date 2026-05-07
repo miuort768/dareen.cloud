@@ -82,7 +82,7 @@ export const Courses = () => {
     });
 
     return (
-        <div className="min-h-full bg-gray-50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
+        <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
             <SEO
                 title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | دارين السابعة"
                 description="استكشف أفضل الدورات التعليمية والدروس الخصوصية الأونلاين في الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان). تأسيس شامل، مناهج خليجية، وتحفيظ قرآن."
@@ -95,19 +95,23 @@ export const Courses = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-white dark:bg-slate-950">
+            <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-[#fafafa] dark:bg-slate-950">
                 {/* Background Art - Premium Royal Theme */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.1]" 
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08]" 
                      style={{ 
-                         backgroundImage: 'radial-gradient(circle at 10% 20%, #4F46E5 0%, transparent 40%), radial-gradient(circle at 90% 80%, #7C3AED 0%, transparent 40%)',
+                         backgroundImage: 'radial-gradient(circle at 10% 20%, #4F46E5 0%, transparent 40%), radial-gradient(circle at 90% 80%, #7C3AED 0%, transparent 40%), radial-gradient(circle at 50% 50%, #EEF2FF 0%, transparent 60%)',
                          filter: 'blur(100px)'
                      }}>
                 </div>
+                {/* Subtle Decorative Blobs */}
+                <div className="absolute top-[20%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute bottom-[20%] -right-[10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
                 {/* Subtle Mesh Pattern */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05]"
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
                      style={{ 
                          backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '200px 200px'
+                         backgroundSize: '150px 150px'
                      }}>
                 </div>
 
