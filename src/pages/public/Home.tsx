@@ -555,8 +555,8 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section - Refined for High-Density Premium Royal Aesthetic */}
-            <section className="py-8 md:py-12 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
+            {/* Testimonials Section - Spacing Optimized */}
+            <section className="py-4 md:py-6 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 {/* Neon Indigo Dashed Lines - Section Boundaries */}
                 <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
                 <div className="absolute bottom-0 left-0 w-full h-px border-b border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
@@ -566,7 +566,7 @@ export const Home = () => {
                 <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="text-center mb-8 md:mb-10">
+                    <div className="text-center mb-4 md:mb-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-3 mx-auto">
                             <Quote size={12} className="text-indigo-600" />
                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-700">آراء يعتز بها</span>
