@@ -641,7 +641,7 @@ export const Home = () => {
                                         </div>
                                         
                                         <div className="flex-grow">
-                                            <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-lg text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
+                                            <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-sm text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
                                                 "{review.content}"
                                             </p>
                                         </div>
