@@ -132,7 +132,7 @@ export const Home = () => {
                     }}>
                 </div>
                 <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
+                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-6">
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
@@ -193,9 +193,9 @@ export const Home = () => {
                         </div>
                         <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
                             <div className="relative w-full max-w-[500px] aspect-[4/5] flex items-center justify-center">
-                                {/* Rotating Dashed Circle - Added as requested */}
-                                <div className="absolute inset-[-5%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
-                                <div className="absolute inset-[-8%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
+                                {/* Rotating Dashed Circle - Size Reduced */}
+                                <div className="absolute inset-[2%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
+                                <div className="absolute inset-[4%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
                                 
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
                                 <img
@@ -214,8 +214,8 @@ export const Home = () => {
                     
                 </div>
                 
-                {/* Dynamic Hero Banners (Full Width) - Spacing Reduced as requested */}
-                <div className="hidden md:grid w-full mt-4 md:mt-6 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
+                {/* Dynamic Hero Banners (Full Width) - Spacing Minimized further */}
+                <div className="hidden md:grid w-full mt-0 md:mt-0 bg-indigo-950 dark:bg-indigo-950 border-y border-indigo-800 dark:border-indigo-800 z-20 relative grid-cols-4 divide-x divide-x-reverse divide-indigo-800/50 dark:divide-indigo-800/50">
                     {bannersArray.slice(0, 4).map((text, idx) => text ? (
                         <div key={idx} className="px-3 lg:px-6 py-2 hover:bg-indigo-900 dark:hover:bg-indigo-900 transition-colors flex flex-row justify-between items-center gap-2 group">
                             <p className="text-[10px] lg:text-[11px] font-black text-amber-400 leading-tight flex-1">
