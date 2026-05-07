@@ -10,12 +10,12 @@ export const MasarSection = () => {
             <div className="container mx-auto px-4 relative z-10">
 
                 {/* The Single Big Rectangle - Redesigned for Premium Royal Theme */}
-                <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#7a0b80] via-[#5e0862] to-[#3a053d] shadow-[0_30px_60px_-15px_rgba(122,11,128,0.4)] overflow-hidden border border-white/5 relative rounded-none">
+                <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81] shadow-[0_30px_60px_-15px_rgba(30,27,75,0.4)] overflow-hidden border border-white/5 relative rounded-none">
 
                     {/* Background Patterns - Sharper and More Modern */}
                     <div className="absolute inset-0 opacity-20 pointer-events-none">
-                        <div className="absolute right-0 top-0 w-80 h-80 bg-[#7a0b80] rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
-                        <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-400 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+                        <div className="absolute right-0 top-0 w-80 h-80 bg-indigo-600/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
+                        <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-600/10 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
                     </div>
 
@@ -24,12 +24,12 @@ export const MasarSection = () => {
                         <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-l border-white/10 group">
                             <div className="relative w-full h-full flex items-center justify-center">
                                 {/* Decorative Glow behind the image */}
-                                <div className="absolute w-64 h-64 bg-white/10 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <div className="absolute w-64 h-64 bg-indigo-500/20 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
                                 <img
                                     src="/dareen_logo_new.jpg"
                                     alt="شعار دارين"
-                                    className="w-44 h-44 lg:w-72 lg:h-72 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-[#7a0b80]/50 transition-all duration-700 group-hover:scale-105"
+                                    className="w-44 h-44 lg:w-72 lg:h-72 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-indigo-500/50 transition-all duration-700 group-hover:scale-105"
                                 />
                             </div>
                         </div>
@@ -45,7 +45,7 @@ export const MasarSection = () => {
                             </div>
 
                             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
-                                <span className="text-white">مركز</span> <span className="text-white bg-[#7a0b80] px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(122,11,128,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
+                                <span className="text-white">مركز</span> <span className="text-white bg-indigo-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(79,70,229,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
                             </h2>
 
                             <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
