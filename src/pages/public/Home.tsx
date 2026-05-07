@@ -197,7 +197,7 @@ export const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
+                        <div className="flex w-full lg:w-[40%] justify-center z-10 relative mt-8 lg:mt-0">
                             <div className="relative w-full max-w-[500px] aspect-[4/5] flex items-center justify-center">
                                 {/* Rotating Dashed Circle - Size Reduced */}
                                 <div className="absolute inset-[2%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
