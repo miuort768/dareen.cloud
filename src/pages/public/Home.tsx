@@ -599,20 +599,17 @@ export const Home = () => {
                                             </div>
                                         </div>
                                         
-                                        <div className="flex-grow mb-4">
+                                        <div className="flex-grow">
                                             <p className="text-gray-600 dark:text-slate-300 text-xs leading-relaxed font-medium italic">
                                                 "{reviews[currentIndex].content}"
                                             </p>
-                                        </div>
-                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 mt-auto">
-                                            <div className="bg-indigo-600/10 w-8 h-px"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Desktop View - Advanced Bento Grid with Dual Merging Patterns */}
+                        {/* Desktop View - Bento Grid Style */}
                         <div className="hidden lg:grid lg:grid-cols-3 grid-flow-row-dense gap-6 transition-all duration-1000">
                             {reviews.map((review, index) => {
                                 // Logic for Dual Merging: Two cards take 2 columns each (2x1)
@@ -625,7 +622,7 @@ export const Home = () => {
                                         key={index} 
                                         className={`group relative border shadow-sm transition-all duration-700 hover:-translate-y-1 flex flex-col
                                             ${isLarge 
-                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center min-h-[220px]' 
+                                                ? 'lg:col-span-2 bg-[#800020] border-[#800020] text-white p-8 justify-center min-h-[200px]' 
                                                 : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800 text-gray-600 p-5'
                                             }`}
                                     >
@@ -643,14 +640,10 @@ export const Home = () => {
                                             </div>
                                         </div>
                                         
-                                        <div className="flex-grow mb-4">
+                                        <div className="flex-grow">
                                             <p className={`leading-relaxed font-medium italic ${isLarge ? 'text-lg text-white/90' : 'text-[11px] text-gray-600 dark:text-slate-400'}`}>
                                                 "{review.content}"
                                             </p>
-                                        </div>
-                                        
-                                        <div className={`pt-4 border-t mt-auto flex justify-between items-center ${isLarge ? 'border-white/20' : 'border-gray-100 dark:border-slate-800'}`}>
-                                            <div className={`w-8 h-px ${isLarge ? 'bg-white/30' : 'bg-indigo-100 dark:bg-slate-800'}`}></div>
                                         </div>
 
                                         {/* Corner accent */}
