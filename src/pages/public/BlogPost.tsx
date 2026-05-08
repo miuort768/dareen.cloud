@@ -41,7 +41,7 @@ export const BlogPost = () => {
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-4xl font-black mb-4">المقال غير موجود</h1>
-                    <Link to="/blog" className="text-red-600 font-bold underline">العودة للمدونة</Link>
+                    <Link to="/books" className="text-red-600 font-bold underline">العودة للمدونة</Link>
                 </div>
             </div>
         );
@@ -54,11 +54,11 @@ export const BlogPost = () => {
                 description={post.excerpt}
                 keywords={post.keywords}
                 image={post.coverImage}
-                url={`https://dareen-edu.com/blog/${post.slug}`}
+                url={`https://dareen-edu.com/books/${post.slug}`}
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
-                    { name: 'المدونة', item: '/blog' },
-                    { name: post.title, item: `/blog/${post.slug}` }
+                    { name: 'المدونة', item: '/books' },
+                    { name: post.title, item: `/books/${post.slug}` }
                 ]}
             />
             <PublicNavbar />
@@ -66,7 +66,7 @@ export const BlogPost = () => {
             <main className="flex-grow pt-24 md:pt-32 pb-20 relative">
                 {/* Article Header */}
                 <header className="container mx-auto px-4 max-w-4xl mb-12">
-                    <Link to="/blog" className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-bold text-sm mb-8">
+                    <Link to="/books" className="inline-flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-bold text-sm mb-8">
                         <ArrowRight size={16} />
                         <span>العودة لجميع المقالات</span>
                     </Link>

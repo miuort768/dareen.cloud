@@ -33,10 +33,10 @@ export const Blog = () => {
                 title="المدونة التعليمية | مقالات ونصائح للتفوق الدراسي"
                 description="استكشف أحدث المقالات التعليمية، نصائح المذاكرة، وتحديثات المناهج في السعودية، الكويت، ودول الخليج من خبراء دارين السابعة."
                 keywords="مدونة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
-                url="https://dareen-edu.com/blog"
+                url="https://dareen-edu.com/books"
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
-                    { name: 'المدونة', item: '/blog' }
+                    { name: 'المدونة', item: '/books' }
                 ]}
             />
             <PublicNavbar />
@@ -185,7 +185,7 @@ export const Blog = () => {
                             {posts.map((post, idx) => (
                                 <Link 
                                     key={post.id} 
-                                    to={`/blog/${post.slug}`} 
+                                    to={`/books/${post.slug}`} 
                                     className={cn(
                                         "group bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-none shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col h-full overflow-hidden",
                                         idx === 0 && "md:col-span-2 md:flex-row md:min-h-[400px]"

@@ -143,7 +143,7 @@ function App() {
       {/* Public Facing Actions - Only show on specific public pages */}
 
 
-      {['/', '/courses', '/about', '/contact', '/blog'].includes(location.pathname) || location.pathname.startsWith('/blog/') ? (
+      {['/', '/courses', '/about', '/contact', '/books'].includes(location.pathname) || location.pathname.startsWith('/books/') ? (
         <FloatingActions />
       ) : null}
       <Suspense fallback={<PageLoader />}>
@@ -154,8 +154,8 @@ function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/books" element={<Blog />} />
+          <Route path="/books/:slug" element={<BlogPost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-q8" element={<Login />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
