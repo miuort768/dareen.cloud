@@ -196,12 +196,15 @@ export const Blog = () => {
 
                                 {/* Back button */}
                                 {view !== 'types' && (
-                                    <button
-                                        onClick={() => setView(view === 'grades' ? 'curriculums' : 'types')}
-                                        className="w-full text-center text-[10px] font-black text-gray-400 hover:text-indigo-600 transition-colors mt-4 uppercase tracking-tighter"
-                                    >
-                                        ← {view === 'grades' ? 'العودة لاختيار المنهج' : 'العودة للتصنيفات الرئيسية'}
-                                    </button>
+                                    <div className="flex justify-center mt-5">
+                                        <button
+                                            onClick={() => setView(view === 'grades' ? 'curriculums' : 'types')}
+                                            className="inline-flex items-center gap-2 px-5 py-2 border border-indigo-200 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all duration-300 text-[11px] font-black uppercase tracking-widest group"
+                                        >
+                                            <span className="group-hover:-translate-x-1 transition-transform duration-300 inline-block">←</span>
+                                            <span>{view === 'grades' ? 'العودة لاختيار المنهج' : 'العودة للتصنيفات الرئيسية'}</span>
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         );
