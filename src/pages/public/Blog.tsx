@@ -209,40 +209,76 @@ export const Blog = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    {view === 'types' ? (
-                        /* TIER 1: HERO VIEW (Compact Desktop) */
+                    {(view === 'types' || view === 'curriculums' || view === 'grades') ? (
+                        /* HERO VIEW (For Types, Curriculums, Grades) */
                         <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:min-h-[450px] max-w-5xl mx-auto">
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={12} className="text-indigo-600" />
-                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600/80">منصة المعرفة الذكية</span>
+                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
+                                        {view === 'types' ? 'منصة المعرفة الذكية' 
+                                        : view === 'curriculums' ? `تحميل ${currentTypeName}` 
+                                        : currentCurriculumName}
+                                    </span>
                                 </div>
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4 leading-tight">
-                                    مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span>
+                                    {view === 'types' ? (<>مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span></>)
+                                    : view === 'curriculums' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المنهج الدراسي</span></>)
+                                    : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المرحلة الدراسية</span></>)}
                                 </h1>
                                 <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6 max-w-lg mx-auto lg:mx-0 font-medium">
-                                    دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية مصممة لتأخذك إلى القمة.
+                                    {view === 'types' ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية.'
+                                    : view === 'curriculums' ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج.`
+                                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل وصولك للمعلومة.`}
                                 </p>
 
-                                {/* Categories Grid - Hero Style (Compact) */}
+                                {/* Categories Grid - Hero Style */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                                    {types.map((type) => (
+                                    {view === 'types' && types.map((type) => (
                                         <button
                                             key={type.id}
                                             onClick={() => { setSelectedType(type.id); setView('curriculums'); }}
-                                            className={cn(
-                                                "relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10",
-                                                type.color
-                                            )}
+                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase">{type.name}</span>
                                         </button>
                                     ))}
-                                    <Link to="/courses" className="relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-indigo-950 group bg-slate-950 border border-white/5 sm:col-span-2">
-                                        <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">اكتشف المزيد من الدورات</span>
-                                    </Link>
+
+                                    {view === 'curriculums' && curriculums.map((curr) => (
+                                        <button
+                                            key={curr.id}
+                                            onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }}
+                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", curr.color)}
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2">{curr.name}</span>
+                                        </button>
+                                    ))}
+
+                                    {view === 'grades' && currentGrades.map((grade) => (
+                                        <button
+                                            key={grade.id}
+                                            onClick={() => { setSelectedLevel(grade.id); setView('classrooms'); }}
+                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", grade.color)}
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2">{grade.name}</span>
+                                        </button>
+                                    ))}
+
+                                    {/* Control Buttons */}
+                                    <div className="flex gap-2 sm:col-span-2">
+                                        {view !== 'types' && (
+                                            <button onClick={goBack} className="flex-1 relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-slate-700 group bg-slate-800 border border-white/5">
+                                                <span className="text-[10px] font-black text-white uppercase tracking-widest">العودة</span>
+                                            </button>
+                                        )}
+                                        <Link to="/courses" className="flex-[2] relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-indigo-950 group bg-slate-950 border border-white/5">
+                                            <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">تصفح الدورات</span>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
 
@@ -337,32 +373,26 @@ export const Blog = () => {
                             )}
                         </div>
                     ) : (
-                        /* TIER 2-6: STANDARD DRILL-DOWN VIEW */
+                        /* TIER 4-6: STANDARD DRILL-DOWN VIEW (Classrooms, Terms, Subjects) */
                         <>
                             <div className="text-center max-w-3xl mx-auto mb-8">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={14} className="text-indigo-600" />
                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
-                                        {view === 'curriculums' ? `تحميل ${currentTypeName}`
-                                        : view === 'grades' ? currentCurriculumName
-                                        : view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
+                                        {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
                                         : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
                                         : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
                                         : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
                                     </span>
                                 </div>
                                 <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
-                                    {view === 'curriculums' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentTypeName}</span></>)
-                                    : view === 'grades' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>)
-                                    : view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
+                                    {view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
                                     : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
                                     : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
                                     : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
                                 </h1>
                                 <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
-                                    {view === 'curriculums' ? 'اختر المنهج الدراسي.'
-                                    : view === 'grades' ? 'اختر المرحلة الدراسية المناسبة.'
-                                    : view === 'classrooms' ? 'اختر الصف الدراسي.'
+                                    {view === 'classrooms' ? 'اختر الصف الدراسي.'
                                     : view === 'terms' ? 'اختر الترم الدراسي.'
                                     : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
                                     : `${filteredPosts.length} نتيجة متاحة`}
@@ -371,22 +401,6 @@ export const Blog = () => {
 
                             <div className="max-w-4xl mx-auto mb-16">
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
-                                    {/* TIER 2: Curriculums */}
-                                    {view === 'curriculums' && curriculums.map(curr => (
-                                        <button key={curr.id} onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }} className={cn(btnBase, curr.color, "animate-in zoom-in-95 duration-300")}>
-                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{curr.name}</span>
-                                        </button>
-                                    ))}
-
-                                    {/* TIER 3: Educational Levels */}
-                                    {view === 'grades' && currentGrades.map(grade => (
-                                        <button key={grade.id} onClick={() => { setSelectedLevel(grade.id); setView('classrooms'); }} className={cn(btnBase, grade.color, "animate-in zoom-in-95 duration-300")}>
-                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{grade.name}</span>
-                                        </button>
-                                    ))}
-
                                     {/* TIER 4: Classrooms */}
                                     {view === 'classrooms' && currentClassrooms.map(cls => (
                                         <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }} className={cn(btnBase, "from-slate-800 to-slate-900 border border-white/5", "animate-in zoom-in-95 duration-300")}>
@@ -414,7 +428,7 @@ export const Blog = () => {
                                     ))}
 
                                     {/* Universal Back Button */}
-                                    {view !== 'types' && view !== 'results' && (
+                                    {(view !== 'types' && view !== 'results') && (
                                         <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
                                             <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
                                             <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
