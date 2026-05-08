@@ -207,7 +207,7 @@ export const Blog = () => {
                                         </Link>
                                     )}
 
-                                    {/* ── Back Button inside grid ── */}
+                                    {/* ── Back Button(s) inside grid ── */}
                                     {view !== 'types' && (
                                         <button
                                             onClick={() => setView(view === 'grades' ? 'curriculums' : 'types')}
@@ -217,6 +217,17 @@ export const Blog = () => {
                                             <span className="text-[9px] font-black text-white/60 uppercase tracking-widest">
                                                 {view === 'grades' ? 'المنهج' : 'الرئيسية'}
                                             </span>
+                                        </button>
+                                    )}
+
+                                    {/* ── Extra Home Button when in grades view ── */}
+                                    {view === 'grades' && (
+                                        <button
+                                            onClick={() => setView('types')}
+                                            className="relative h-16 flex flex-col items-center justify-center gap-1 transition-all duration-300 shadow-lg hover:bg-slate-900 group bg-slate-950 col-span-2 md:col-span-1 animate-in zoom-in-95 duration-300"
+                                        >
+                                            <span className="text-xl text-white group-hover:-translate-x-1 transition-transform duration-300">⌂</span>
+                                            <span className="text-[9px] font-black text-white/60 uppercase tracking-widest">الرئيسية</span>
                                         </button>
                                     )}
                                 </div>
