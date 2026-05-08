@@ -70,10 +70,11 @@ export const Blog = () => {
                         </p>
                     </div>
 
-                    {/* Interactive Categories Section - Redesigned */}
+                    {/* Interactive Categories Section - 3 Tier Navigation */}
                     {(() => {
-                        const [view, setView] = useState<'types' | 'curriculums'>('types');
+                        const [view, setView] = useState<'types' | 'curriculums' | 'grades'>('types');
                         const [selectedType, setSelectedType] = useState('');
+                        const [selectedCurriculum, setSelectedCurriculum] = useState('');
 
                         const types = [
                             { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', link: '/courses?category=foundation' },
@@ -83,16 +84,45 @@ export const Blog = () => {
                         ];
 
                         const curriculums = [
-                            { id: 'kuwait', name: 'منهج كويتي', color: 'from-blue-600 to-blue-800' },
-                            { id: 'qatar', name: 'منهج قطري', color: 'from-red-800 to-red-950' },
-                            { id: 'uae', name: 'منهج إماراتي', color: 'from-green-700 to-green-900' },
-                            { id: 'saudi', name: 'منهج سعودي', color: 'from-emerald-800 to-emerald-950' },
+                            { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800' },
+                            { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900' },
+                            { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900' },
+                            { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900' },
                         ];
+
+                        // Accurate grade levels per country
+                        const gradesMap: Record<string, { id: string; name: string; sub: string; color: string }[]> = {
+                            kuwait: [
+                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-blue-400 to-blue-600' },
+                                { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-blue-600 to-blue-800' },
+                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950' },
+                            ],
+                            qatar: [
+                                { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700' },
+                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950' },
+                            ],
+                            uae: [
+                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600' },
+                                { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800' },
+                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950' },
+                            ],
+                            saudi: [
+                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600' },
+                                { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800' },
+                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950' },
+                            ],
+                        };
+
+                        const currentGrades = gradesMap[selectedCurriculum] || [];
+
+                        const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
 
                         return (
                             <div className="max-w-5xl mx-auto mb-16">
                                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 px-2">
-                                    {view === 'types' ? (
+
+                                    {/* ── TIER 1: Types ── */}
+                                    {view === 'types' && (
                                         <>
                                             {types.map((cat) => (
                                                 cat.link ? (
@@ -100,74 +130,77 @@ export const Blog = () => {
                                                         key={cat.id}
                                                         to={cat.link}
                                                         onClick={() => window.scrollTo(0, 0)}
-                                                        className={cn(
-                                                            "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br",
-                                                            cat.color
-                                                        )}
+                                                        className={cn(btnBase, cat.color)}
                                                     >
-                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
-                                                            {cat.name}
-                                                        </span>
+                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">{cat.name}</span>
                                                     </Link>
                                                 ) : (
-                                                    <button 
+                                                    <button
                                                         key={cat.id}
-                                                        onClick={() => {
-                                                            setSelectedType(cat.id);
-                                                            setView('curriculums');
-                                                        }}
-                                                        className={cn(
-                                                            "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br",
-                                                            cat.color
-                                                        )}
+                                                        onClick={() => { setSelectedType(cat.id); setView('curriculums'); }}
+                                                        className={cn(btnBase, cat.color)}
                                                     >
-                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
-                                                            {cat.name}
-                                                        </span>
+                                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">{cat.name}</span>
                                                     </button>
                                                 )
                                             ))}
                                         </>
-                                    ) : (
+                                    )}
+
+                                    {/* ── TIER 2: Curriculums ── */}
+                                    {view === 'curriculums' && (
                                         <>
                                             {curriculums.map((curr) => (
-                                                <Link 
+                                                <button
                                                     key={curr.id}
-                                                    to={`/courses?category=${selectedType}&curriculum=${curr.id}`}
-                                                    onClick={() => window.scrollTo(0, 0)}
-                                                    className={cn(
-                                                        "relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-indigo-500/20 group bg-gradient-to-br animate-in zoom-in-95 duration-300",
-                                                        curr.color
-                                                    )}
+                                                    onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }}
+                                                    className={cn(btnBase, curr.color, "animate-in zoom-in-95 duration-300")}
                                                 >
-                                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">
-                                                        {curr.name}
-                                                    </span>
+                                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{curr.name}</span>
+                                                </button>
+                                            ))}
+                                        </>
+                                    )}
+
+                                    {/* ── TIER 3: Grades per Country ── */}
+                                    {view === 'grades' && (
+                                        <>
+                                            {currentGrades.map((grade) => (
+                                                <Link
+                                                    key={grade.id}
+                                                    to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${grade.id}`}
+                                                    onClick={() => window.scrollTo(0, 0)}
+                                                    className={cn(btnBase, grade.color, "animate-in zoom-in-95 duration-300")}
+                                                >
+                                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                                    <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{grade.name}</span>
+                                                    <span className="relative z-10 text-[8px] text-white/70 font-bold mt-0.5">{grade.sub}</span>
                                                 </Link>
                                             ))}
                                         </>
                                     )}
-                                    
-                                    <Link 
-                                        to="/courses"
-                                        className="relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:bg-indigo-600 group bg-slate-900 col-span-2 md:col-span-1"
-                                    >
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">
-                                            المزيد
-                                        </span>
-                                    </Link>
 
+                                    {/* ── More Button (always visible) ── */}
+                                    {view === 'types' && (
+                                        <Link
+                                            to="/courses"
+                                            className="relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 hover:bg-indigo-600 group bg-slate-900 col-span-2 md:col-span-1"
+                                        >
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">المزيد</span>
+                                        </Link>
+                                    )}
                                 </div>
-                                
-                                {view === 'curriculums' && (
-                                    <button 
-                                        onClick={() => setView('types')}
+
+                                {/* Back button */}
+                                {view !== 'types' && (
+                                    <button
+                                        onClick={() => setView(view === 'grades' ? 'curriculums' : 'types')}
                                         className="w-full text-center text-[10px] font-black text-gray-400 hover:text-indigo-600 transition-colors mt-4 uppercase tracking-tighter"
                                     >
-                                        ← العودة للتصنيفات الرئيسية
+                                        ← {view === 'grades' ? 'العودة لاختيار المنهج' : 'العودة للتصنيفات الرئيسية'}
                                     </button>
                                 )}
                             </div>
