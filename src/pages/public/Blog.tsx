@@ -275,18 +275,16 @@ export const Blog = () => {
                                             (view === 'curriculums' ? curriculums.length : 0) +
                                             (view === 'grades' ? currentGrades.length : 0);
                                         
-                                        const backButtonExists = view !== 'types';
-                                        const totalItems = currentItemsCount + (backButtonExists ? 1 : 1); // +1 for Browse Courses button
+                                        const backBtnCount = (view !== 'types' ? 1 : 0);
+                                        const browseBtnCount = 1;
+                                        const totalItems = currentItemsCount + backBtnCount + browseBtnCount;
                                         const isTotalOdd = totalItems % 2 !== 0;
 
                                         return (<>
                                             {view !== 'types' && (
                                                 <button
                                                     onClick={goBack}
-                                                    className={cn(
-                                                        "relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10",
-                                                        (isTotalOdd && false) /* logic placeholder */
-                                                    )}
+                                                    className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10"
                                                 >
                                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">العودة للخلف</span>
