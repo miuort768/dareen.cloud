@@ -65,7 +65,7 @@ export const Contact = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-28 pb-16 relative overflow-hidden">
+            <main className="flex-grow pt-24 md:pt-28 pb-6 relative overflow-hidden">
                 {/* Subtle background glows */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-none blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-none blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
