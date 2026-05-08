@@ -57,7 +57,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
           
           <div className="flex flex-col items-center gap-3">
             <p className="text-[10px] md:text-xs font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.4em] translate-x-[0.2em]">
-              التميز التعليمي
+              للتعليم والتدريب
             </p>
             <div className="flex items-center gap-1">
               <div className="h-[2px] w-8 bg-gradient-to-r from-transparent to-indigo-500"></div>
