@@ -4,7 +4,7 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Zap, CheckCircle, FileText, AlignLeft, Flag, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 
@@ -22,10 +22,10 @@ const types = [
 ];
 
 const curriculums = [
-    { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800', icon: Flag },
-    { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900', icon: Flag },
-    { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900', icon: Flag },
-    { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900', icon: Flag },
+    { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800', icon: Building2 },
+    { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900', icon: Anchor },
+    { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900', icon: Building },
+    { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900', icon: Palmtree },
 ];
 
 const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: any }[]> = {
