@@ -137,7 +137,7 @@ export const Home = () => {
                     }}>
                 </div>
                 <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-6">
+                    <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-2 lg:gap-6">
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
@@ -196,23 +196,23 @@ export const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex lg:w-[40%] justify-center z-10 relative mb-8 lg:mb-0">
-                            <div className="relative w-full max-w-[220px] lg:max-w-[375px] aspect-[4/5] flex items-center justify-center">
+                        <div className="flex lg:w-[40%] justify-center z-10 relative lg:mb-0">
+                            <div className="relative w-full max-w-[220px] lg:max-w-[375px] aspect-auto lg:aspect-[4/5] flex items-center justify-center">
                                 {/* Rotating Dashed Circle - Size Reduced */}
                                 <div className="absolute inset-[2%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>
                                 <div className="absolute inset-[4%] border-[1px] border-dashed border-purple-500/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
                                 
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-[3rem] blur-2xl animate-pulse"></div>
-                                <img
-                                    src="/hero-child.png"
-                                    alt="Hero"
-                                    className="relative w-full h-full object-contain filter drop-shadow-2xl z-20"
-                                    fetchPriority="high"
-                                    decoding="sync"
-                                    onError={(e) => {
-                                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
-                                    }}
-                                />
+                                    <img
+                                        src="/hero-child.png"
+                                        alt="Hero"
+                                        className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
+                                        fetchPriority="high"
+                                        decoding="sync"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000&auto=format&fit=crop';
+                                        }}
+                                    />
                             </div>
                         </div>
                     </div>

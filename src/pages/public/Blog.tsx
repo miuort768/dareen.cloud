@@ -211,7 +211,7 @@ export const Blog = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     {(view === 'types' || view === 'curriculums' || view === 'grades') ? (
                         /* HERO VIEW (For Types, Curriculums, Grades) */
-                        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:min-h-[450px] max-w-5xl mx-auto">
+                        <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4 lg:min-h-[450px] max-w-5xl mx-auto">
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
@@ -321,8 +321,8 @@ export const Blog = () => {
                             </div>
 
                             {/* Image Side (Desktop Only) */}
-                            <div className="flex w-full lg:w-1/2 justify-center relative mt-10 lg:mt-0">
-                                <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
+                            <div className="flex w-full lg:w-1/2 justify-center relative mt-2 lg:mt-0">
+                                <div className="relative w-full max-w-[400px] aspect-auto lg:aspect-square flex items-center justify-center">
                                     {/* Decorative Elements - Static */}
                                     <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full"></div>
                                     <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full"></div>
