@@ -242,16 +242,16 @@ export const Blog = () => {
 
                             {/* Image Side (Desktop Only) */}
                             <div className="hidden lg:flex lg:w-1/2 justify-center relative">
-                                <div className="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
+                                <div className="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
                                     {/* Decorative Elements */}
                                     <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
-                                    <div className="absolute inset-16 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
+                                    <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
                                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
                                     
                                     <img
                                         src="/dareen_books_portal_v3.png"
                                         alt="بوابة دارين التعليمية"
-                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(79,70,229,0.25)] hover:scale-105 transition-transform duration-700"
+                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.2)] hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
                             </div>
