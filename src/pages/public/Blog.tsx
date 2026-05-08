@@ -93,8 +93,8 @@ export const Blog = () => {
                         // Accurate grade levels per country
                         const gradesMap: Record<string, { id: string; name: string; sub: string; color: string }[]> = {
                             kuwait: [
-                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-blue-400 to-blue-600' },
-                                { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-blue-600 to-blue-800' },
+                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600' },
+                                { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800' },
                                 { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950' },
                             ],
                             qatar: [
