@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Phone, Mail, MapPin, Send, Globe, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, ArrowLeft } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
@@ -10,47 +10,53 @@ export const Contact = () => {
     const { adminPhone } = useSettings();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+    const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setFormState('submitting');
-        // Simulate API call
         setTimeout(() => setFormState('success'), 1500);
     };
 
-    const contactInfo = [
+    const contactCards = [
         {
             icon: Phone,
-            title: 'رقم الهاتف / واتساب',
-            content: adminPhone,
-            link: `https://wa.me/${whatsappNumber}`,
-            color: 'bg-amber-50 text-amber-600',
-            label: 'تواصل معنا مباشرة'
+            title: 'واتساب / هاتف',
+            value: adminPhone,
+            href: `https://wa.me/${whatsappNumber}`,
+            gradient: 'from-emerald-500 to-teal-600',
+            bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+            border: 'border-emerald-100 dark:border-emerald-500/20',
+            iconColor: 'text-emerald-600',
         },
         {
             icon: Mail,
             title: 'البريد الإلكتروني',
-            content: 'miuort768@gmail.com',
-            link: 'mailto:miuort768@gmail.com',
-            color: 'bg-indigo-50 text-indigo-600',
-            label: 'راسلنا عبر البريد'
+            value: 'miuort768@gmail.com',
+            href: 'mailto:miuort768@gmail.com',
+            gradient: 'from-indigo-500 to-purple-600',
+            bg: 'bg-indigo-50 dark:bg-indigo-500/10',
+            border: 'border-indigo-100 dark:border-indigo-500/20',
+            iconColor: 'text-indigo-600',
         },
         {
             icon: MapPin,
             title: 'المقر الرئيسي',
-            content: 'بني سويف - مصر',
-            link: '#',
-            color: 'bg-purple-50 text-purple-600',
-            label: 'تفضل بزيارتنا'
-        }
+            value: 'بني سويف — مصر',
+            href: '#',
+            gradient: 'from-amber-500 to-orange-600',
+            bg: 'bg-amber-50 dark:bg-amber-500/10',
+            border: 'border-amber-100 dark:border-amber-500/20',
+            iconColor: 'text-amber-600',
+        },
     ];
 
     return (
-        <div className="min-h-full bg-gray-50/50 dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col overflow-x-hidden">
+        <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 flex flex-col">
             <SEO
                 title="تواصل مع دارين السابعة | مدرسين خصوصي في السعودية، الكويت، قطر، الامارات، وعمان"
-                description="تواصل مع دارين السابعة واحجز أفضل المدرسين الخصوصيين أونلاين في دول الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان) لجميع المراحل الدراسية."
-                keywords="ارقام مدرسين السعودية, مدرس خصوصي قطر, منصة تعليم الكويت, تواصل مع دارين السابعة, مدرسين اونلاين الامارات, دروس تقوية عمان"
+                description="تواصل مع دارين السابعة واحجز أفضل المدرسين الخصوصيين أونلاين في دول الخليج."
+                keywords="ارقام مدرسين السعودية, مدرس خصوصي قطر, منصة تعليم الكويت, تواصل مع دارين السابعة"
                 url="https://dareen-edu.com/contact"
                 breadcrumbs={[
                     { name: 'الرئيسية', item: '/' },
@@ -59,138 +65,173 @@ export const Contact = () => {
             />
             <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-28 pb-12 relative">
-                {/* Background Decorations */}
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px] translate-y-1/4 -translate-x-1/4 pointer-events-none"></div>
+            <main className="flex-grow pt-24 md:pt-28 pb-16 relative overflow-hidden">
+                {/* Subtle background glows */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
-                <div className="container mx-auto px-4 relative z-10">
-                    {/* Page Header */}
-                    <div className="text-center max-w-4xl mx-auto mb-10">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 text-amber-400 rounded-full mb-4">
-                            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">نحن في خدمتك</span>
+                <div className="container mx-auto px-4 relative z-10 max-w-5xl">
+
+                    {/* ── Hero Header ── */}
+                    <div className="text-center mb-10">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
+                            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">نحن في خدمتك</span>
                         </div>
-                        <h1 className="text-2xl md:text-4xl font-heading font-black text-gray-900 dark:text-white mb-4 relative">
-                            <span className="sr-only">تواصل مع منصة دارين السابعة لحجز الدروس الخصوصية أونلاين وتحفيظ القرآن في الكويت والخليج</span>
-                            <span aria-hidden="true">تواصل مع <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-amber-500">دارين السابعة</span></span>
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-3">
+                            تواصل مع{' '}
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">
+                                دارين السابعة
+                            </span>
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 text-xs md:text-base font-medium leading-relaxed px-4">
-                            يسعدنا الرد على جميع استفساراتكم ومساعدتكم في الانضمام إلى عالم دارين التعليمي.
-                            فريقنا جاهز لخدمتكم على مدار الساعة.
+                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                            فريقنا جاهز للرد على جميع استفساراتك ومساعدتك في الانضمام إلى عالم دارين التعليمي.
                         </p>
                     </div>
 
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                        {/* Contact Form Container */}
-                        <div className="bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl p-8 md:p-12 shadow-2xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-slate-800/50 rounded-none relative overflow-hidden group">
-                            {/* Gradient border accent */}
-                            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-600 via-indigo-950 to-amber-500"></div>
-
-                            {formState === 'success' ? (
-                                <div className="py-20 text-center animate-fade-in">
-                                    <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-amber-500">
-                                        <CheckCircle2 size={48} />
-                                    </div>
-                                    <h2 className="text-3xl font-black text-gray-900 mb-4">تم الإرسال بنجاح!</h2>
-                                    <p className="text-gray-500 text-lg mb-8">شكراً لتواصلك معنا. سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
-                                    <button
-                                        onClick={() => setFormState('idle')}
-                                        className="px-8 py-4 bg-gray-900 text-white font-bold rounded-none hover:bg-indigo-600 transition-all"
-                                    >
-                                        إرسال رسالة أخرى
-                                    </button>
+                    {/* ── Contact Info Cards ── */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                        {contactCards.map((card) => (
+                            <a
+                                key={card.title}
+                                href={card.href}
+                                target={card.href !== '#' ? '_blank' : undefined}
+                                rel="noopener noreferrer"
+                                className={cn(
+                                    "group flex flex-col items-center text-center gap-3 p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+                                    card.bg, card.border
+                                )}
+                            >
+                                <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center bg-white dark:bg-slate-800 shadow-sm group-hover:scale-110 transition-transform", card.iconColor)}>
+                                    <card.icon size={22} />
                                 </div>
-                            ) : (
-                                <>
-                                    <div className="mb-10">
-                                        <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-2">أرسل لنا رسالة</h2>
-                                        <p className="text-gray-400 dark:text-slate-500 font-medium">املأ النموذج أدناه وسنتصل بك في غضون 24 ساعة.</p>
+                                <div>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-1">{card.title}</p>
+                                    <p className="text-sm font-bold text-gray-800 dark:text-white" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                </div>
+                                <ArrowLeft size={14} className="text-gray-300 group-hover:text-indigo-500 group-hover:-translate-x-1 transition-all" />
+                            </a>
+                        ))}
+                    </div>
+
+                    {/* ── Contact Form Card ── */}
+                    <div className="bg-white dark:bg-slate-900/60 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xl shadow-gray-200/40 dark:shadow-black/40">
+                        {/* Top accent bar */}
+                        <div className="h-1.5 bg-gradient-to-r from-indigo-600 via-purple-500 to-amber-500" />
+
+                        {formState === 'success' ? (
+                            <div className="py-20 text-center px-6">
+                                <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-5 text-emerald-500">
+                                    <CheckCircle2 size={44} />
+                                </div>
+                                <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">تم الإرسال بنجاح!</h2>
+                                <p className="text-gray-500 dark:text-slate-400 mb-8 text-sm">سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
+                                <button
+                                    onClick={() => setFormState('idle')}
+                                    className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-all text-sm"
+                                >
+                                    إرسال رسالة أخرى
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="p-6 md:p-10">
+                                <div className="mb-8">
+                                    <h2 className="text-xl font-black text-gray-900 dark:text-white mb-1">أرسل لنا رسالة</h2>
+                                    <p className="text-gray-400 text-sm">سنتواصل معك خلال 24 ساعة.</p>
+                                </div>
+
+                                <form onSubmit={handleSubmit} className="space-y-5">
+                                    {/* Row: Name + Phone */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">الاسم الكامل</label>
+                                            <input
+                                                required
+                                                type="text"
+                                                value={formData.name}
+                                                onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                                                className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all placeholder:text-gray-300"
+                                                placeholder="أدخل اسمك الكريم..."
+                                            />
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">رقم الهاتف</label>
+                                            <input
+                                                required
+                                                type="tel"
+                                                value={formData.phone}
+                                                onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                                                className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all text-left placeholder:text-gray-300"
+                                                placeholder="+965 XXXX XXXX"
+                                                dir="ltr"
+                                            />
+                                        </div>
                                     </div>
 
-                                    <form onSubmit={handleSubmit} className="space-y-6">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">الاسم الكامل</label>
-                                                <input required type="text" className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white" placeholder="أدخل اسمك هنا..." />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رقم الهاتف</label>
-                                                <input required type="tel" className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white text-left" placeholder="+965 XXXX XXXX" dir="ltr" />
-                                            </div>
-                                        </div>
+                                    {/* Subject */}
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">الموضوع</label>
+                                        <select
+                                            value={formData.subject}
+                                            onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
+                                            className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all"
+                                        >
+                                            <option>استفسار عن دورة تعليمية</option>
+                                            <option>طلب حصة تجريبية</option>
+                                            <option>مشكلة تقنية في المنصة</option>
+                                            <option>اقتراحات وتطوير</option>
+                                            <option>أخرى</option>
+                                        </select>
+                                    </div>
 
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">الموضوع</label>
-                                            <select className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-5 py-4 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white appearance-none">
-                                                <option>استفسار عن دورة تعليمية</option>
-                                                <option>طلب حصة تجريبية</option>
-                                                <option>مشكلة تقنية في المنصة</option>
-                                                <option>اقتراحات وتطوير</option>
-                                                <option>أخرى</option>
-                                            </select>
-                                        </div>
+                                    {/* Message */}
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">رسالتك</label>
+                                        <textarea
+                                            required
+                                            rows={4}
+                                            value={formData.message}
+                                            onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                                            className="w-full bg-gray-50 dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/10 transition-all resize-none placeholder:text-gray-300"
+                                            placeholder="اكتب استفسارك بالتفصيل هنا..."
+                                        />
+                                    </div>
 
-                                        <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest block">رسالتك</label>
-                                            <textarea required rows={4} className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-slate-700 px-4 py-3 outline-none focus:border-indigo-500 transition-all rounded-none font-bold text-gray-900 dark:text-white resize-none text-sm" placeholder="اكتب استفسارك بالتفصيل هنا..."></textarea>
-                                        </div>
-
+                                    {/* Action Buttons */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                        {/* Submit */}
                                         <button
-                                            disabled={formState === 'submitting'}
                                             type="submit"
+                                            disabled={formState === 'submitting'}
                                             className={cn(
-                                                "w-full py-5 bg-gray-900 dark:bg-indigo-600 text-white font-black text-sm uppercase tracking-[0.2em] rounded-none transition-all flex items-center justify-center gap-3 overflow-hidden group",
-                                                formState === 'submitting' ? 'bg-gray-400' : 'hover:bg-indigo-700 dark:hover:bg-indigo-700'
+                                                "flex items-center justify-center gap-2 py-3.5 rounded-xl font-black text-sm uppercase tracking-wider transition-all",
+                                                formState === 'submitting'
+                                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20'
                                             )}
                                         >
                                             <span className={cn(formState === 'submitting' && 'animate-pulse')}>
-                                                {formState === 'submitting' ? 'جاري الإرسال...' : 'إرسال الرسالة الآن'}
+                                                {formState === 'submitting' ? 'جاري الإرسال...' : 'إرسال الرسالة'}
                                             </span>
-                                            {formState !== 'submitting' && <Send size={18} className="group-hover:translate-x-[-5px] group-hover:-translate-y-1 transition-transform" />}
+                                            {formState !== 'submitting' && <Send size={16} />}
                                         </button>
-                                    </form>
-                                </>
-                            )}
-                        </div>
 
-                        {/* Contact Info Side */}
-                        <div className="space-y-6">
-                            {/* Visual Quote Card */}
-                            <div className="bg-gray-900 p-6 text-white relative overflow-hidden rounded-none">
-                                <Globe className="absolute -bottom-6 -left-6 text-white/5 w-48 h-48" />
-                                <div className="relative z-10">
-                                    <div className="h-1 w-24 bg-gradient-to-r from-indigo-500 to-amber-500 mb-4"></div>
-                                    <h3 className="text-xl font-black mb-2 font-heading leading-tight text-white">سعداء بخدمتكم في كل مكان</h3>
-                                    <p className="text-gray-400 text-sm font-medium leading-relaxed">بفضل نظامنا التعليمي المطور، نصلكم أينما كنتم في مصر ودول الخليج. جودة التعليم لا تعرف حدوداً مع دارين.</p>
-                                </div>
+                                        {/* WhatsApp CTA */}
+                                        <a
+                                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-2 py-3.5 rounded-xl font-black text-sm uppercase tracking-wider bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transition-all"
+                                        >
+                                            <MessageCircle size={16} />
+                                            <span>تواصل واتساب</span>
+                                        </a>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div className="grid grid-cols-1 gap-4">
-                                {contactInfo.map((info, idx) => (
-                                    <a
-                                        key={idx}
-                                        href={info.link}
-                                        target={info.link !== '#' ? '_blank' : undefined}
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-4 p-4.5 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all group rounded-none"
-                                    >
-                                        <div className={cn("w-14 h-14 shrink-0 flex items-center justify-center rounded-none transition-all group-hover:scale-110", info.color)}>
-                                            <info.icon size={24} />
-                                        </div>
-                                        <div className="flex-grow">
-                                            <div className="flex items-center justify-between mb-1">
-                                                <span className="text-[10px] font-black uppercase text-gray-400 dark:text-slate-500 tracking-widest">{info.label}</span>
-                                                <ArrowLeft size={16} className="text-gray-200 dark:text-slate-700 group-hover:text-indigo-500 transition-colors group-hover:-translate-x-1" />
-                                            </div>
-                                            <h4 className="text-base font-black text-gray-800 dark:text-white">{info.title}</h4>
-                                            <p className="text-gray-500 dark:text-slate-400 font-bold text-sm" dir={info.title.includes('الهاتف') ? 'ltr' : 'rtl'}>{info.content}</p>
-                                        </div>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
+                        )}
                     </div>
+
                 </div>
             </main>
 
