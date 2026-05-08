@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronRight, ChevronLeft as LucideChevronLeft, Quote, ChevronDown, HelpCircle } from 'lucide-react';
+import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronDown, HelpCircle, Quote } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
@@ -106,8 +106,7 @@ export const Home = () => {
         return () => clearInterval(timer);
     }, [reviews.length]);
 
-    const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % reviews.length);
-    const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+
 
     return (
         <div className="min-h-full bg-[rgb(var(--bg-surface))] font-sans text-[rgb(var(--text-main))] relative overflow-x-hidden transition-colors duration-500">
@@ -197,7 +196,7 @@ export const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden lg:flex lg:w-[40%] justify-center z-10 relative">
+                        <div className="flex lg:w-[40%] justify-center z-10 relative mb-8 lg:mb-0">
                             <div className="relative w-full max-w-[220px] lg:max-w-[375px] aspect-[4/5] flex items-center justify-center">
                                 {/* Rotating Dashed Circle - Size Reduced */}
                                 <div className="absolute inset-[2%] border-[1px] border-dashed border-indigo-600/40 rounded-full animate-spin-slow pointer-events-none"></div>

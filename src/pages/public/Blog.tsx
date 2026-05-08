@@ -321,7 +321,7 @@ export const Blog = () => {
                             </div>
 
                             {/* Image Side (Desktop Only) */}
-                            <div className="hidden lg:flex lg:w-1/2 justify-center relative">
+                            <div className="flex w-full lg:w-1/2 justify-center relative mt-10 lg:mt-0">
                                 <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
                                     {/* Decorative Elements - Static */}
                                     <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full"></div>
