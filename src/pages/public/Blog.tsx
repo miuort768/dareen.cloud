@@ -203,182 +203,61 @@ export const Blog = () => {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
-                    {/* Dynamic Header */}
-                    <div className="text-center max-w-3xl mx-auto mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
-                            <BookOpen size={14} className="text-indigo-600" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
-                                {view === 'types' ? 'منصة المعرفة الذكية'
-                                : view === 'curriculums' ? `تحميل ${currentTypeName}`
-                                : view === 'grades' ? currentCurriculumName
-                                : view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                                : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
-                                : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
-                                : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
-                            </span>
-                        </div>
-                        <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
-                            {view === 'types' ? (<>مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span></>)
-                            : view === 'curriculums' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentTypeName}</span></>)
-                            : view === 'grades' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>)
-                            : view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
-                            : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
-                            : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
-                            : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
-                            {view === 'types' ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء.'
-                            : view === 'curriculums' ? 'اختر المنهج الدراسي المناسب لبلدك.'
-                            : view === 'grades' ? 'اختر المرحلة الدراسية المناسبة.'
-                            : view === 'classrooms' ? 'اختر الصف الدراسي.'
-                            : view === 'terms' ? 'اختر الترم الدراسي.'
-                            : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
-                            : `${filteredPosts.length} نتيجة متاحة`}
-                        </p>
-                    </div>
+                    {view === 'types' ? (
+                        /* TIER 1: HERO VIEW (Desktop Optimized) */
+                        <div className="flex flex-col lg:flex-row items-center gap-12 lg:min-h-[550px] max-w-7xl mx-auto">
+                            {/* Text Content */}
+                            <div className="w-full lg:w-1/2 text-center lg:text-right">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6">
+                                    <BookOpen size={14} className="text-indigo-600" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">منصة المعرفة الذكية</span>
+                                </div>
+                                <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-white mb-6 leading-[1.1]">
+                                    مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span>
+                                </h1>
+                                <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 font-medium">
+                                    دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية مصممة لتأخذك إلى القمة.
+                                </p>
 
-                    {/* 5-Tier Navigation */}
-                    <div className="max-w-5xl mx-auto mb-16 px-2">
-                        <div className={cn(
-                            "grid gap-3",
-                            view === 'classrooms' && currentClassrooms.length > 5
-                                ? "grid-cols-3 md:grid-cols-6"
-                                : "grid-cols-2 md:grid-cols-5"
-                        )}>
-
-                            {/* TIER 1: Types */}
-                            {view === 'types' && (<>
-                                {types.map(cat => cat.link ? (
-                                    <Link key={cat.id} to={cat.link} onClick={() => window.scrollTo(0,0)} className={cn(btnBase, cat.color)}>
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">{cat.name}</span>
+                                {/* Categories Grid - Hero Style */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
+                                    {types.map((type) => (
+                                        <button
+                                            key={type.id}
+                                            onClick={() => { setSelectedType(type.id); setView('curriculums'); }}
+                                            className={cn(
+                                                "relative h-20 flex flex-col items-center justify-center transition-all duration-300 shadow-xl group bg-gradient-to-br overflow-hidden border border-white/10",
+                                                type.color
+                                            )}
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-xs font-black text-white text-center tracking-widest px-2 uppercase">{type.name}</span>
+                                        </button>
+                                    ))}
+                                    <Link to="/courses" className="relative h-20 flex items-center justify-center transition-all duration-300 shadow-xl hover:bg-indigo-950 group bg-slate-950 border border-white/5 sm:col-span-2">
+                                        <span className="text-xs font-black text-white uppercase tracking-[0.2em]">اكتشف المزيد من الدورات</span>
                                     </Link>
-                                ) : (
-                                    <button key={cat.id} onClick={() => { setSelectedType(cat.id); setView('curriculums'); }} className={cn(btnBase, cat.color)}>
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest px-2">{cat.name}</span>
-                                    </button>
-                                ))}
-                                <Link to="/courses" className="relative h-16 flex items-center justify-center transition-all duration-300 shadow-lg hover:bg-indigo-600 group bg-slate-900 col-span-2 md:col-span-1">
-                                    <span className="text-[10px] font-black text-white uppercase tracking-widest">المزيد</span>
-                                </Link>
-                            </>)}
+                                </div>
+                            </div>
 
-                            {/* TIER 2: Curriculums */}
-                            {view === 'curriculums' && (<>
-                                {curriculums.map(curr => (
-                                    <button key={curr.id} onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }} className={cn(btnBase, curr.color, "animate-in zoom-in-95 duration-300")}>
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{curr.name}</span>
-                                    </button>
-                                ))}
-                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 col-span-2 md:col-span-1 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
-                                </button>
-                            </>)}
-
-                            {/* TIER 3: Level (مرحلة) */}
-                            {view === 'grades' && (<>
-                                {currentGrades.map(grade => (
-                                    <button key={grade.id} onClick={() => { setSelectedLevel(grade.id); setView('classrooms'); }} className={cn(btnBase, grade.color, "animate-in zoom-in-95 duration-300")}>
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{grade.name}</span>
-                                        <span className="relative z-10 text-[8px] text-white/70 font-bold mt-0.5">{grade.sub}</span>
-                                    </button>
-                                ))}
-                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">المنهج</span>
-                                </button>
-                                <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
-                                </button>
-                            </>)}
-
-                            {/* TIER 4: Classrooms (صفوف) */}
-                            {view === 'classrooms' && (<>
-                                {currentClassrooms.map(g => (
-                                    <button key={g} onClick={() => { setSelectedGrade(g); setView('terms'); }} className="relative h-16 flex flex-col items-center justify-center gap-0.5 shadow-lg hover:bg-indigo-700 group bg-indigo-600 animate-in zoom-in-95 duration-300 overflow-hidden">
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-xs font-black text-white">الصف</span>
-                                        <span className="relative z-10 text-lg font-black text-white leading-none">{g}</span>
-                                    </button>
-                                ))}
-                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">المرحلة</span>
-                                </button>
-                                <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
-                                </button>
-                            </>)}
-
-                            {/* TIER 5: Terms (ترم) */}
-                            {view === 'terms' && (<>
-                                <button
-                                    onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
-                                    className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-indigo-500 to-indigo-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="relative z-10 text-xs font-black text-white">ترم أول</span>
-                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الأول</span>
-                                </button>
-                                <button
-                                    onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
-                                    className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-purple-500 to-purple-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="relative z-10 text-xs font-black text-white">ترم ثاني</span>
-                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الثاني</span>
-                                </button>
-                                <button
-                                    onClick={() => { setSelectedTerm(''); setView('subjects'); }}
-                                    className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-slate-500 to-slate-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
-                                >
-                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="relative z-10 text-[10px] font-black text-white uppercase tracking-widest">الكل</span>
-                                </button>
-                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الصف</span>
-                                </button>
-                                <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
-                                </button>
-                            </>)}
-
-                            {/* TIER 6: Subjects (مواد) */}
-                            {view === 'subjects' && (<>
-                                {currentSubjects.map(subj => (
-                                    <button
-                                        key={subj.id}
-                                        onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0,0); }}
-                                        className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}
-                                    >
-                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{subj.name}</span>
-                                    </button>
-                                ))}
-                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الترم</span>
-                                </button>
-                                <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
-                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
-                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
-                                </button>
-                            </>)}
-
+                            {/* Image Side (Desktop Only) */}
+                            <div className="hidden lg:flex lg:w-1/2 justify-center relative">
+                                <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+                                    {/* Decorative Elements */}
+                                    <div className="absolute inset-0 border-2 border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
+                                    <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
+                                    
+                                    <img
+                                        src="/dareen_books_portal_v3.png"
+                                        alt="بوابة دارين التعليمية"
+                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_30px_60px_rgba(79,70,229,0.35)] hover:scale-105 transition-transform duration-700"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-
-                    {/* TIER 7: Results - filtered posts */}
-                    {view === 'results' && (
+                    ) : view === 'results' ? (
+                        /* TIER 7: Results - filtered posts */
                         <div className="max-w-6xl mx-auto">
                             {/* Breadcrumb */}
                             <div className="flex flex-wrap items-center gap-2 mb-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -451,12 +330,97 @@ export const Blog = () => {
                                 </div>
                             )}
                         </div>
+                    ) : (
+                        /* TIER 2-6: STANDARD DRILL-DOWN VIEW */
+                        <>
+                            <div className="text-center max-w-3xl mx-auto mb-8">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
+                                    <BookOpen size={14} className="text-indigo-600" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
+                                        {view === 'curriculums' ? `تحميل ${currentTypeName}`
+                                        : view === 'grades' ? currentCurriculumName
+                                        : view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
+                                        : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
+                                        : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
+                                        : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
+                                    </span>
+                                </div>
+                                <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
+                                    {view === 'curriculums' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentTypeName}</span></>)
+                                    : view === 'grades' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>)
+                                    : view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
+                                    : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
+                                    : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
+                                    : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
+                                </h1>
+                                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
+                                    {view === 'curriculums' ? 'اختر المنهج الدراسي.'
+                                    : view === 'grades' ? 'اختر المرحلة الدراسية المناسبة.'
+                                    : view === 'classrooms' ? 'اختر الصف الدراسي.'
+                                    : view === 'terms' ? 'اختر الترم الدراسي.'
+                                    : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
+                                    : `${filteredPosts.length} نتيجة متاحة`}
+                                </p>
+                            </div>
+
+                            <div className="max-w-4xl mx-auto mb-16">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+                                    {/* TIER 2: Curriculums */}
+                                    {view === 'curriculums' && curriculums.map(curr => (
+                                        <button key={curr.id} onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }} className={cn(btnBase, curr.color, "animate-in zoom-in-95 duration-300")}>
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{curr.name}</span>
+                                        </button>
+                                    ))}
+
+                                    {/* TIER 3: Educational Levels */}
+                                    {view === 'grades' && currentGrades.map(grade => (
+                                        <button key={grade.id} onClick={() => { setSelectedLevel(grade.id); setView('classrooms'); }} className={cn(btnBase, grade.color, "animate-in zoom-in-95 duration-300")}>
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{grade.name}</span>
+                                        </button>
+                                    ))}
+
+                                    {/* TIER 4: Classrooms */}
+                                    {view === 'classrooms' && currentClassrooms.map(cls => (
+                                        <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }} className={cn(btnBase, "from-slate-800 to-slate-900 border border-white/5", "animate-in zoom-in-95 duration-300")}>
+                                            <div className="absolute inset-0 bg-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">الصف {gradeNames[cls] || cls}</span>
+                                        </button>
+                                    ))}
+
+                                    {/* TIER 5: Terms */}
+                                    {view === 'terms' && (<>
+                                        <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }} className={cn(btnBase, "from-indigo-600 to-indigo-800", "animate-in zoom-in-95 duration-300")}>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">ترم أول</span>
+                                        </button>
+                                        <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }} className={cn(btnBase, "from-purple-600 to-purple-800", "animate-in zoom-in-95 duration-300")}>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">ترم ثاني</span>
+                                        </button>
+                                    </>)}
+
+                                    {/* TIER 6: Subjects */}
+                                    {view === 'subjects' && currentSubjects.map(subj => (
+                                        <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0,0); }} className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}>
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{subj.name}</span>
+                                        </button>
+                                    ))}
+
+                                    {/* Universal Back Button */}
+                                    {view !== 'types' && view !== 'results' && (
+                                        <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
+                                            <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
+                                            <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </>
                     )}
-
-                    {/* Static posts removed from main view by user request */}
-
                 </div>
             </main>
+
 
             <PublicFooter />
         </div>
