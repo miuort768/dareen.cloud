@@ -30,23 +30,23 @@ const curriculums = [
 
 const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: any }[]> = {
     kuwait: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
-        { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950', icon: GraduationCap },
+        { id: 'primary', name: 'ابتدائي - كويتي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
+        { id: 'middle', name: 'متوسط - كويتي', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
+        { id: 'secondary', name: 'ثانوي - كويتي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950', icon: GraduationCap },
     ],
     qatar: [
-        { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700', icon: School },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950', icon: GraduationCap },
+        { id: 'basic', name: 'أساسي - قطري', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700', icon: School },
+        { id: 'secondary', name: 'ثانوي - قطري', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950', icon: GraduationCap },
     ],
     uae: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600', icon: School },
-        { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800', icon: School },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950', icon: GraduationCap },
+        { id: 'primary', name: 'ابتدائي - إماراتي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600', icon: School },
+        { id: 'preparatory', name: 'إعدادي - إماراتي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800', icon: School },
+        { id: 'secondary', name: 'ثانوي - إماراتي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950', icon: GraduationCap },
     ],
     saudi: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600', icon: School },
-        { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800', icon: School },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950', icon: GraduationCap },
+        { id: 'primary', name: 'ابتدائي - سعودي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600', icon: School },
+        { id: 'middle', name: 'متوسط - سعودي', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800', icon: School },
+        { id: 'secondary', name: 'ثانوي - سعودي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950', icon: GraduationCap },
     ],
 };
 
@@ -466,12 +466,10 @@ export const Blog = () => {
                                     ))}
 
                                     {/* Universal Back Button */}
-                                    {(view !== 'types' && view !== 'results') && (
-                                        <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
-                                            <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                            <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
-                                        </button>
-                                    )}
+                                    <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
+                                        <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
+                                        <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
+                                    </button>
                                 </div>
                             </div>
                         </>
