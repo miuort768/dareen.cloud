@@ -73,7 +73,47 @@ const classroomsMap: Record<string, Record<string, string[]>> = {
     },
 };
 
-type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms';
+const subjectsMap: Record<string, { id: string; name: string; color: string }[]> = {
+    primary: [
+        { id: 'islamic', name: 'إسلامية', color: 'from-teal-500 to-teal-700' },
+        { id: 'arabic', name: 'عربي', color: 'from-amber-500 to-amber-700' },
+        { id: 'math', name: 'رياضيات', color: 'from-blue-500 to-blue-700' },
+        { id: 'science', name: 'علوم', color: 'from-green-500 to-green-700' },
+        { id: 'english', name: 'إنجليزي', color: 'from-indigo-500 to-indigo-700' },
+        { id: 'social', name: 'اجتماعيات', color: 'from-orange-500 to-orange-700' },
+    ],
+    middle: [
+        { id: 'islamic', name: 'إسلامية', color: 'from-teal-500 to-teal-700' },
+        { id: 'arabic', name: 'عربي', color: 'from-amber-500 to-amber-700' },
+        { id: 'math', name: 'رياضيات', color: 'from-blue-500 to-blue-700' },
+        { id: 'physics', name: 'فيزياء', color: 'from-yellow-500 to-yellow-700' },
+        { id: 'chemistry', name: 'كيمياء', color: 'from-purple-500 to-purple-700' },
+        { id: 'biology', name: 'أحياء', color: 'from-green-600 to-green-800' },
+        { id: 'english', name: 'إنجليزي', color: 'from-indigo-500 to-indigo-700' },
+        { id: 'history', name: 'تاريخ', color: 'from-stone-500 to-stone-700' },
+        { id: 'geography', name: 'جغرافيا', color: 'from-cyan-500 to-cyan-700' },
+    ],
+    secondary: [
+        { id: 'islamic', name: 'إسلامية', color: 'from-teal-500 to-teal-700' },
+        { id: 'arabic', name: 'عربي', color: 'from-amber-500 to-amber-700' },
+        { id: 'math', name: 'رياضيات', color: 'from-blue-500 to-blue-700' },
+        { id: 'physics', name: 'فيزياء', color: 'from-yellow-500 to-yellow-700' },
+        { id: 'chemistry', name: 'كيمياء', color: 'from-purple-500 to-purple-700' },
+        { id: 'biology', name: 'أحياء', color: 'from-green-600 to-green-800' },
+        { id: 'english', name: 'إنجليزي', color: 'from-indigo-500 to-indigo-700' },
+        { id: 'computer', name: 'حاسب آلي', color: 'from-slate-500 to-slate-700' },
+        { id: 'stats', name: 'إحصاء', color: 'from-rose-500 to-rose-700' },
+        { id: 'history', name: 'تاريخ', color: 'from-stone-500 to-stone-700' },
+        { id: 'geography', name: 'جغرافيا', color: 'from-cyan-500 to-cyan-700' },
+    ],
+    // Qatar basic & UAE preparatory → middle-level subjects
+    basic: [],
+    preparatory: [],
+};
+subjectsMap.basic = subjectsMap.middle;
+subjectsMap.preparatory = subjectsMap.middle;
+
+type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects';
 
 export const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -83,17 +123,20 @@ export const Blog = () => {
     const [selectedCurriculum, setSelectedCurriculum] = useState('');
     const [selectedLevel, setSelectedLevel] = useState('');
     const [selectedGrade, setSelectedGrade] = useState('');
+    const [selectedTerm, setSelectedTerm] = useState('');
 
     const currentTypeName = types.find(t => t.id === selectedType)?.name || '';
     const currentCurriculumName = curriculums.find(c => c.id === selectedCurriculum)?.name || '';
     const currentLevelName = gradesMap[selectedCurriculum]?.find(g => g.id === selectedLevel)?.name || '';
     const currentGrades = gradesMap[selectedCurriculum] || [];
     const currentClassrooms = classroomsMap[selectedCurriculum]?.[selectedLevel] || [];
+    const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle;
+    const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
     const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
-    const btnDark = "relative h-16 flex flex-col items-center justify-center gap-1 transition-all duration-300 shadow-lg group overflow-hidden";
 
     const goBack = () => {
-        if (view === 'terms') setView('classrooms');
+        if (view === 'subjects') setView('terms');
+        else if (view === 'terms') setView('classrooms');
         else if (view === 'classrooms') setView('grades');
         else if (view === 'grades') setView('curriculums');
         else if (view === 'curriculums') setView('types');
@@ -154,7 +197,8 @@ export const Blog = () => {
                                 : view === 'curriculums' ? `تحميل ${currentTypeName}`
                                 : view === 'grades' ? currentCurriculumName
                                 : view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                                : `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`}
+                                : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
+                                : `${termLabel} — الصف ${gradeNames[selectedGrade]}`}
                             </span>
                         </div>
                         <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
@@ -162,14 +206,16 @@ export const Blog = () => {
                             : view === 'curriculums' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentTypeName}</span></>)
                             : view === 'grades' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>)
                             : view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
-                            : (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)}
+                            : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
+                            : (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
                             {view === 'types' ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء.'
                             : view === 'curriculums' ? 'اختر المنهج الدراسي المناسب لبلدك.'
                             : view === 'grades' ? 'اختر المرحلة الدراسية المناسبة.'
                             : view === 'classrooms' ? 'اختر الصف الدراسي.'
-                            : 'اختر الترم الدراسي للوصول للمحتوى.'}
+                            : view === 'terms' ? 'اختر الترم الدراسي.'
+                            : 'اختر المادة الدراسية للوصول للمحتوى.'}
                         </p>
                     </div>
 
@@ -254,35 +300,55 @@ export const Blog = () => {
 
                             {/* TIER 5: Terms (ترم) */}
                             {view === 'terms' && (<>
-                                <Link
-                                    to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${selectedLevel}&grade=${selectedGrade}&term=1`}
-                                    onClick={() => window.scrollTo(0,0)}
+                                <button
+                                    onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
                                     className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-indigo-500 to-indigo-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <span className="relative z-10 text-xs font-black text-white">ترم أول</span>
-                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الدراسي الأول</span>
-                                </Link>
-                                <Link
-                                    to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${selectedLevel}&grade=${selectedGrade}&term=2`}
-                                    onClick={() => window.scrollTo(0,0)}
+                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الأول</span>
+                                </button>
+                                <button
+                                    onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
                                     className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-purple-500 to-purple-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <span className="relative z-10 text-xs font-black text-white">ترم ثاني</span>
-                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الدراسي الثاني</span>
-                                </Link>
-                                <Link
-                                    to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${selectedLevel}&grade=${selectedGrade}`}
-                                    onClick={() => window.scrollTo(0,0)}
+                                    <span className="relative z-10 text-[9px] text-white/70 font-bold">الفصل الثاني</span>
+                                </button>
+                                <button
+                                    onClick={() => { setSelectedTerm(''); setView('subjects'); }}
                                     className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg group bg-gradient-to-br from-slate-500 to-slate-700 col-span-1 animate-in zoom-in-95 duration-300 overflow-hidden"
                                 >
                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     <span className="relative z-10 text-[10px] font-black text-white uppercase tracking-widest">الكل</span>
-                                </Link>
+                                </button>
                                 <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
                                     <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
                                     <span className="text-[9px] font-black text-white/60 uppercase">الصف</span>
+                                </button>
+                                <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
+                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
+                                    <span className="text-[9px] font-black text-white/60 uppercase">الرئيسية</span>
+                                </button>
+                            </>)}
+
+                            {/* TIER 6: Subjects (مواد) */}
+                            {view === 'subjects' && (<>
+                                {currentSubjects.map(subj => (
+                                    <Link
+                                        key={subj.id}
+                                        to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${selectedLevel}&grade=${selectedGrade}${selectedTerm ? `&term=${selectedTerm}` : ''}&subject=${subj.id}`}
+                                        onClick={() => window.scrollTo(0,0)}
+                                        className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}
+                                    >
+                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{subj.name}</span>
+                                    </Link>
+                                ))}
+                                <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
+                                    <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
+                                    <span className="text-[9px] font-black text-white/60 uppercase">الترم</span>
                                 </button>
                                 <button onClick={() => setView('types')} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-900 group bg-slate-950 animate-in zoom-in-95 duration-300">
                                     <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">⌂</span>
