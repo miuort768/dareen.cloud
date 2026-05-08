@@ -93,7 +93,13 @@ async function setupDatabase() {
             keywords TEXT,
             author TEXT,
             date TEXT DEFAULT CURRENT_TIMESTAMP,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            contentType TEXT,
+            curriculum TEXT,
+            level TEXT,
+            grade TEXT,
+            term TEXT,
+            subject TEXT
         );
 
         CREATE TABLE IF NOT EXISTS live_sessions (
@@ -390,6 +396,13 @@ async function setupDatabase() {
     await addColumnIfNotExists('sessions', 'homework', 'TEXT');
     await addColumnIfNotExists('sessions', 'needsCompensation', 'INTEGER DEFAULT 0');
     await addColumnIfNotExists('tasks', 'userId', 'TEXT');
+    // Blog classification columns
+    await addColumnIfNotExists('blog_posts', 'contentType', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'curriculum', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'level', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'grade', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'term', 'TEXT');
+    await addColumnIfNotExists('blog_posts', 'subject', 'TEXT');
 
     // Create unique index for parent username separately (SQLite restriction)
     try {
