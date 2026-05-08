@@ -205,7 +205,7 @@ export const Blog = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     {view === 'types' ? (
                         /* TIER 1: HERO VIEW (Compact Desktop) */
-                        <div className="flex flex-col lg:flex-row items-center gap-8 lg:min-h-[400px] max-w-6xl mx-auto">
+                        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:min-h-[450px] max-w-5xl mx-auto">
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
@@ -215,12 +215,12 @@ export const Blog = () => {
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4 leading-tight">
                                     مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span>
                                 </h1>
-                                <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6 max-w-xl mx-auto lg:mx-0 font-medium">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6 max-w-lg mx-auto lg:mx-0 font-medium">
                                     دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية مصممة لتأخذك إلى القمة.
                                 </p>
 
                                 {/* Categories Grid - Hero Style (Compact) */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto lg:mx-0">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
                                     {types.map((type) => (
                                         <button
                                             key={type.id}
@@ -242,7 +242,7 @@ export const Blog = () => {
 
                             {/* Image Side (Desktop Only) */}
                             <div className="hidden lg:flex lg:w-1/2 justify-center relative">
-                                <div className="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
+                                <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
                                     {/* Decorative Elements */}
                                     <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
                                     <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
