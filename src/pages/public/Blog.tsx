@@ -204,54 +204,54 @@ export const Blog = () => {
 
                 <div className="container mx-auto px-4 relative z-10">
                     {view === 'types' ? (
-                        /* TIER 1: HERO VIEW (Desktop Optimized) */
-                        <div className="flex flex-col lg:flex-row items-center gap-12 lg:min-h-[550px] max-w-7xl mx-auto">
+                        /* TIER 1: HERO VIEW (Compact Desktop) */
+                        <div className="flex flex-col lg:flex-row items-center gap-8 lg:min-h-[400px] max-w-6xl mx-auto">
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6">
-                                    <BookOpen size={14} className="text-indigo-600" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">منصة المعرفة الذكية</span>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
+                                    <BookOpen size={12} className="text-indigo-600" />
+                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600/80">منصة المعرفة الذكية</span>
                                 </div>
-                                <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-white mb-6 leading-[1.1]">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4 leading-tight">
                                     مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span>
                                 </h1>
-                                <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 font-medium">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6 max-w-xl mx-auto lg:mx-0 font-medium">
                                     دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية مصممة لتأخذك إلى القمة.
                                 </p>
 
-                                {/* Categories Grid - Hero Style */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0">
+                                {/* Categories Grid - Hero Style (Compact) */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto lg:mx-0">
                                     {types.map((type) => (
                                         <button
                                             key={type.id}
                                             onClick={() => { setSelectedType(type.id); setView('curriculums'); }}
                                             className={cn(
-                                                "relative h-20 flex flex-col items-center justify-center transition-all duration-300 shadow-xl group bg-gradient-to-br overflow-hidden border border-white/10",
+                                                "relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10",
                                                 type.color
                                             )}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-xs font-black text-white text-center tracking-widest px-2 uppercase">{type.name}</span>
+                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase">{type.name}</span>
                                         </button>
                                     ))}
-                                    <Link to="/courses" className="relative h-20 flex items-center justify-center transition-all duration-300 shadow-xl hover:bg-indigo-950 group bg-slate-950 border border-white/5 sm:col-span-2">
-                                        <span className="text-xs font-black text-white uppercase tracking-[0.2em]">اكتشف المزيد من الدورات</span>
+                                    <Link to="/courses" className="relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-indigo-950 group bg-slate-950 border border-white/5 sm:col-span-2">
+                                        <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">اكتشف المزيد من الدورات</span>
                                     </Link>
                                 </div>
                             </div>
 
                             {/* Image Side (Desktop Only) */}
                             <div className="hidden lg:flex lg:w-1/2 justify-center relative">
-                                <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+                                <div className="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
                                     {/* Decorative Elements */}
-                                    <div className="absolute inset-0 border-2 border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
-                                    <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
+                                    <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
+                                    <div className="absolute inset-16 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
                                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
                                     
                                     <img
                                         src="/dareen_books_portal_v3.png"
                                         alt="بوابة دارين التعليمية"
-                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_30px_60px_rgba(79,70,229,0.35)] hover:scale-105 transition-transform duration-700"
+                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(79,70,229,0.25)] hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
                             </div>
