@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, ChevronLeft, Target, Rocket
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -45,8 +45,6 @@ export const StudentDashboard = () => {
                 });
                 if (!res.ok) return;
                 const data = await res.json();
-                
-                // Update full student data during poll to get new homework/notes automatically
                 setStudentData(data);
 
                 if (data.isLive && data.activeSession) {
@@ -155,375 +153,375 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#f8faff] dark:bg-slate-950 pb-20 px-2 lg:px-8 pt-6 space-y-6 animate-in fade-in duration-700" dir="rtl">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-24 px-4 lg:px-12 pt-6 space-y-8 relative overflow-hidden" dir="rtl">
             
+            {/* Premium Background Decorations */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[100px]"></div>
+                
+                {/* Brutalist Grid Lines */}
+                <div className="absolute top-0 right-1/4 w-[1px] h-full bg-slate-200 dark:bg-slate-800/50 opacity-50"></div>
+                <div className="absolute top-1/3 left-0 w-full h-[1px] bg-slate-200 dark:bg-slate-800/50 opacity-50"></div>
+            </div>
+
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="mb-6 pr-2 lg:pr-0">
-                <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-1">
-                    مرحباً، <span className="text-indigo-600 dark:text-white">{studentData?.name?.split(' ')[0]} {studentData?.name?.split(' ')[1] || ''}</span>
-                </h1>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">جاهز لمواصلة رحلتك التعليمية اليوم؟</p>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div className="space-y-1">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-none mb-2">
+                        <Sparkles size={12} className="text-indigo-600 dark:text-indigo-400" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">نظام التفوق التعليمي</span>
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">
+                        مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span> ✨
+                    </h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-bold flex items-center gap-2">
+                        <CalendarDays size={14} className="text-indigo-500" />
+                        {todayArabic}، {format(new Date(), 'd MMMM yyyy', { locale: ar })}
+                    </p>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center gap-3 shadow-sm">
+                        <div className="flex flex-col items-end">
+                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">لقبك الحالي</span>
+                            <span className="text-sm font-black text-slate-900 dark:text-white leading-none">{rank.name}</span>
+                        </div>
+                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-none flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+                            <Trophy size={20} />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* ═══════════════ ACTIVE TIMER ═══════════════ */}
             {activeTimer && (
-                <div className="bg-rose-500 dark:bg-blue-600 text-white p-4 rounded-3xl shadow-lg shadow-rose-500/20 dark:shadow-blue-500/20 flex items-center justify-between animate-in slide-in-from-top duration-500">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
-                            <Clock size={20} />
+                <div className="relative z-10 bg-indigo-600 dark:bg-indigo-500 text-white p-6 border-b-4 border-indigo-900 dark:border-indigo-700 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
+                    <div className="flex items-center gap-5">
+                        <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-none border border-white/30 flex items-center justify-center animate-pulse shadow-inner">
+                            <Clock size={28} />
                         </div>
                         <div>
-                            <h3 className="font-black text-sm">الحصة مبدوءة الآن!</h3>
-                            <p className="text-[10px] font-bold opacity-90">
+                            <h3 className="font-heading font-black text-xl leading-none mb-1">الحصة مبدوءة الآن!</h3>
+                            <p className="text-xs font-bold opacity-80 flex items-center gap-2">
+                                <BookOpen size={14} />
                                 {activeTimer.subject}
-                                {activeTimer.teacherName && <span className="opacity-70"> · {activeTimer.teacherName}</span>}
+                                {activeTimer.teacherName && <span className="opacity-70"> • {activeTimer.teacherName}</span>}
                             </p>
                         </div>
                     </div>
-                    <div className="text-2xl font-black font-mono tracking-widest">
-                        {formatTime(activeTimer.seconds)}
+                    <div className="flex flex-col items-end gap-1">
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-60">الوقت المنقضي</span>
+                        <div className="text-5xl font-heading font-black tracking-tighter tabular-nums drop-shadow-lg">
+                            {formatTime(activeTimer.seconds)}
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* ═══════════════ LIVE CLASSES ═══════════════ */}
-            <LiveClasses />
-
-            {/* ═══════════════ NEXT CLASS CARD ═══════════════ */}
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative overflow-hidden bg-gradient-to-br from-[#a78bfa] to-[#8b5cf6] dark:from-rose-600 dark:to-rose-500 p-6 rounded-none shadow-lg shadow-purple-500/20 dark:shadow-rose-500/20 text-white"
-            >
-                <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-x-10 -translate-y-10" />
-                <Award className="absolute bottom-4 left-4 text-white/10" size={100} />
+            {/* ═══════════════ MAIN GRID ═══════════════ */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
                 
-                <div className="relative z-10 flex flex-col items-center text-center">
-                    <span className="text-[10px] uppercase font-black tracking-widest opacity-80 mb-3">الحصة القادمة</span>
-                    {todaySchedule.length > 0 ? (
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="flex items-center gap-3">
-                                <div className="flex gap-1.5 grayscale opacity-60">
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                </div>
-                                <div className="px-8 py-2.5 bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center justify-center">
-                                    <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-md">
-                                        {todaySchedule[0].slots[0].subject}
-                                    </h2>
-                                </div>
-                                <div className="flex gap-1.5 grayscale opacity-60">
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                    <div className="w-2 h-2 rounded-full border border-white" />
-                                </div>
-                            </div>
-                            <p className="text-sm font-bold bg-black/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
-                                اليوم الساعة {todaySchedule[0].slots[0].time} مساءً
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-center gap-2">
-                            <h2 className="text-xl md:text-2xl font-black mb-1">لا توجد حصص مجدولة</h2>
-                            <p className="text-sm font-bold opacity-90">استغل اليوم لمراجعة ما درسته!</p>
-                        </div>
-                    )}
-                </div>
-            </motion.div>
+                {/* Left Column: Schedule & Tasks */}
+                <div className="lg:col-span-8 space-y-8">
+                    
+                    {/* Live Classes Section */}
+                    <LiveClasses />
 
-            {/* ═══════════════ LATEST SESSION LOGS ═══════════════ */}
-            {latestCompletedSession && (latestCompletedSession.topics || latestCompletedSession.homework) && (
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2 mb-4">
-                        <BookOpen className="text-emerald-500" size={20} />
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white">ملخص آخر حصة ({latestCompletedSession.subject})</h3>
-                    </div>
-                    <div className="space-y-3">
-                        {latestCompletedSession.topics && (
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">ما تم إنجازه</span>
-                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed">{latestCompletedSession.topics}</p>
-                            </div>
-                        )}
-                        {latestCompletedSession.homework && (
-                            <div className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-2xl border border-amber-100 dark:border-amber-800/20">
-                                <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest block mb-1">الواجب المطلوب</span>
-                                <p className="text-xs font-bold text-amber-700 dark:text-amber-400 leading-relaxed">{latestCompletedSession.homework}</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* ═══════════════ STATS ROW ═══════════════ */}
-            <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-full flex items-center justify-center mb-2">
-                        <Star size={16} fill="currentColor" />
-                    </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{points}</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">مجموع النقاط</span>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/10 text-blue-500 rounded-full flex items-center justify-center mb-2">
-                        <CalendarDays size={16} />
-                    </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{stats.attendanceRate}%</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">معدل الحضور</span>
-                </div>
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-[22px] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 rounded-full flex items-center justify-center mb-2">
-                        <BookOpen size={16} />
-                    </div>
-                    <span className="text-lg md:text-2xl font-black text-slate-900 dark:text-white leading-none">{(studentData?.enrollments || []).length}</span>
-                    <span className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-tighter">عدد المواد</span>
-                </div>
-            </div>
-
-            {/* ═══════════════ CURRENT LEVEL CARD ═══════════════ */}
-            <div className="bg-indigo-50/50 dark:bg-indigo-900/10 p-5 rounded-3xl border border-indigo-100/50 dark:border-indigo-900/20">
-                <div className="flex justify-between items-start mb-4">
-                    <div className="text-right">
-                        <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest block mb-1">المستوى الحالي</span>
-                        <h3 className="text-xl font-black text-slate-900 dark:text-white">{rank.name}</h3>
-                    </div>
-                    <div className="text-left">
-                        <div className="px-3 py-1 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-full text-[10px] font-black border border-slate-100 dark:border-slate-800 shadow-sm">
-                            المستوى {Math.floor(points / 100) + 1}
-                        </div>
-                        <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-1 text-center">
-                            تبقي {(Math.floor(points / 100) + 1) * 100 - points} نقطة للمستوى التالي
-                        </p>
-                    </div>
-                </div>
-                <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-3">
+                    {/* Next Class - Premium Hero Card */}
                     <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Math.min((points % 100), 100)}%` }}
-                        className="h-full bg-[#8b5cf6]"
-                    />
-                </div>
-            </div>
-
-            {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
-            {(studentData?.enrollments || []).some((en: any) => en.nextSessionNotes) && (
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2 mb-4">
-                        <MessageSquare className="text-indigo-500" size={20} />
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات الحالية</h3>
-                    </div>
-                    <div className="space-y-3">
-                        {(studentData.enrollments || []).filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
-                            <div key={idx} className="bg-indigo-50/30 dark:bg-indigo-900/10 p-4 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20">
-                                <div className="flex justify-between items-center mb-2">
-                                    <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">{en.subject}</span>
-                                    <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="group relative overflow-hidden bg-slate-900 dark:bg-indigo-950 p-8 border-r-8 border-indigo-600 shadow-2xl"
+                    >
+                        {/* Background Shine */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                        <Award className="absolute -bottom-10 -left-10 text-white/5 rotate-12" size={260} />
+                        
+                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-8 bg-indigo-500"></div>
+                                    <h2 className="text-2xl font-heading font-black text-white uppercase tracking-tight">محطتك القادمة</h2>
                                 </div>
-                                <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
+                                
+                                {todaySchedule.length > 0 ? (
+                                    <div className="space-y-5">
+                                        <div className="flex flex-col gap-2">
+                                            <h3 className="text-4xl md:text-6xl font-heading font-black text-white drop-shadow-xl">
+                                                {todaySchedule[0].slots[0].subject}
+                                            </h3>
+                                            <div className="flex items-center gap-3 text-indigo-300 font-bold">
+                                                <Rocket size={18} />
+                                                <span className="text-lg">مع المعلمة {todaySchedule[0].slots[0].teacher}</span>
+                                            </div>
+                                        </div>
+                                        <div className="inline-flex items-center gap-4 px-5 py-2 bg-indigo-500/20 border border-indigo-500/30 backdrop-blur-md text-white font-black text-sm uppercase tracking-widest">
+                                            <Clock size={16} className="text-indigo-400" />
+                                            اليوم • الساعة {todaySchedule[0].slots[0].time} مساءً
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        <p className="text-2xl font-black text-slate-400 leading-relaxed max-w-md">لا توجد حصص مجدولة لليوم. استغل وقتك في مراجعة الأوسمة!</p>
+                                    </div>
+                                )}
                             </div>
-                        ))}
+
+                            <button 
+                                onClick={() => navigate('/chat')}
+                                className="h-20 w-20 md:h-32 md:w-32 bg-indigo-600 hover:bg-indigo-500 text-white flex flex-col items-center justify-center gap-2 transition-all active:scale-95 shadow-xl group/btn"
+                            >
+                                <MessageSquare size={24} className="group-hover/btn:scale-125 transition-transform" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">المحادثات</span>
+                            </button>
+                        </div>
+                    </motion.div>
+
+                    {/* Stats & Points Summary */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <StatCard icon={Star} label="إجمالي النقاط" value={points} color="indigo" />
+                        <StatCard icon={CalendarDays} label="معدل الحضور" value={`${stats.attendanceRate}%`} color="purple" />
+                        <StatCard icon={BookOpen} label="المواد النشطة" value={(studentData?.enrollments || []).length} color="slate" />
+                        <StatCard icon={Activity} label="المستوى" value={Math.floor(points / 100) + 1} color="emerald" />
                     </div>
-                </div>
-            )}
 
-            {/* ═══════════════ ACHIEVEMENT ADVISOR ═══════════════ */}
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-2 mb-6">
-                    <Activity className="text-[#8b5cf6]" size={20} />
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مستشار الإنجاز</h3>
-                </div>
-                <div className="space-y-6">
-                    <ProgressBarSimple label="معدل الحضور" value={stats.attendanceRate} />
-                    <ProgressBarSimple label="التقدم الأكاديمي" value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} />
-                    {next && <ProgressBarSimple label={`نحو لقب "${next.name}"`} value={Math.min(Math.round((points / next.minPoints) * 100), 100)} subLabel={`${points} / ${next.minPoints}`} />}
-                </div>
-            </div>
-
-            {/* ═══════════════ DAILY TASKS ═══════════════ */}
-            <div>
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">مهام اليوم</h3>
-                </div>
-                <div className="space-y-3">
-                    {todaySchedule.length > 0 ? todaySchedule[0].slots.map((slot: any, i: number) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-2xl flex items-center justify-center">
-                                    <BookOpen size={20} />
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-black text-slate-900 dark:text-white leading-tight">{slot.subject}</h4>
-                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 mt-0.5">المعلمة: {slot.teacher}</p>
-                                </div>
+                    {/* Progress & Ranking */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 shadow-sm group">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                            <div className="space-y-2">
+                                <h3 className="text-2xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">مسار التميز</h3>
+                                <p className="text-slate-500 dark:text-slate-400 text-sm font-bold">تبقى لك <span className="text-indigo-600 dark:text-indigo-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span> للوصول للمستوى التالي</p>
                             </div>
-                            <div className="text-left">
-                                <span className="text-[12px] font-black text-slate-900 dark:text-white block">{slot.time} م</span>
-                                <span className="inline-block px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-400 text-[8px] font-bold rounded-lg mt-1 tracking-tighter uppercase">قادم</span>
+                            <div className="px-6 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-black text-sm text-indigo-600 dark:text-indigo-400 tracking-widest uppercase">
+                                {rank.name}
                             </div>
                         </div>
-                    )) : (
-                        <p className="text-center py-6 text-slate-400 text-xs font-bold bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800">لا توجد مهام اليوم</p>
-                    )}
+                        
+                        <div className="relative h-4 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden border border-slate-200 dark:border-slate-800">
+                            <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${Math.min((points % 100), 100)}%` }}
+                                className="h-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 shadow-[0_0_15px_rgba(79,70,229,0.5)]"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Tasks & Homework Section */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-6 bg-purple-600"></div>
+                            <h3 className="text-2xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">الواجبات والملاحظات</h3>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {(studentData?.enrollments || []).filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
+                                <div key={idx} className="bg-white dark:bg-slate-900 border-r-4 border-indigo-500 p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                                    <div className="absolute top-0 left-0 w-16 h-16 bg-indigo-500/5 -translate-x-8 -translate-y-8 rounded-full group-hover:scale-150 transition-transform"></div>
+                                    <div className="flex justify-between items-center mb-4 relative z-10">
+                                        <span className="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest">{en.subject}</span>
+                                        <span className="text-[10px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
+                                    </div>
+                                    <p className="text-sm font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap relative z-10">{en.nextSessionNotes}</p>
+                                </div>
+                            ))}
+                            {(studentData?.enrollments || []).filter((en: any) => en.nextSessionNotes).length === 0 && (
+                                <div className="md:col-span-2 py-12 border-2 border-dashed border-slate-200 dark:border-slate-800 text-center space-y-3">
+                                    <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800/50 rounded-none flex items-center justify-center mx-auto text-slate-300">
+                                        <X size={24} />
+                                    </div>
+                                    <p className="text-sm font-black text-slate-400 uppercase tracking-widest">لا توجد واجبات حالية</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Column: Achievements & Sidebar */}
+                <div className="lg:col-span-4 space-y-8">
+                    
+                    {/* Quick Access Buttons */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <button 
+                            onClick={() => setShowBadges(!showBadges)}
+                            className="h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 transition-all active:scale-95 group hover:border-indigo-500 shadow-sm"
+                        >
+                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center rounded-none group-hover:scale-110 transition-transform">
+                                <Award size={24} />
+                            </div>
+                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">عرض الأوسمة</span>
+                        </button>
+                        <button 
+                            onClick={() => navigate('/forum')}
+                            className="h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 transition-all active:scale-95 group hover:border-purple-500 shadow-sm"
+                        >
+                            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/10 text-purple-600 dark:text-purple-400 flex items-center justify-center rounded-none group-hover:scale-110 transition-transform">
+                                <MessageSquare size={24} />
+                            </div>
+                            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">المنتدى</span>
+                        </button>
+                    </div>
+
+                    {/* Achievements Summary */}
+                    <div className="bg-slate-900 dark:bg-slate-900 border border-slate-800 p-8 shadow-2xl relative overflow-hidden">
+                        <Sparkles className="absolute top-4 left-4 text-indigo-500/20" size={48} />
+                        <h3 className="text-xl font-heading font-black text-white uppercase tracking-tight mb-8">إنجازاتك</h3>
+                        <div className="grid grid-cols-3 gap-6">
+                            {allBadges.slice(0, 6).map((badge, idx) => {
+                                const isEarned = (studentData?.badges || '').includes(badge.id);
+                                return (
+                                    <div key={idx} className="flex flex-col items-center gap-3 group/badge">
+                                        <div className={cn(
+                                            "w-16 h-16 rounded-none flex items-center justify-center transition-all duration-700 relative",
+                                            isEarned 
+                                                ? `bg-gradient-to-br ${badge.color} shadow-lg shadow-indigo-500/20 scale-110` 
+                                                : "bg-slate-800 grayscale opacity-20"
+                                        )}>
+                                            <badge.icon size={28} className={isEarned ? "text-white" : "text-slate-500"} />
+                                            {isEarned && <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/badge:opacity-100 transition-opacity" />}
+                                        </div>
+                                        <span className={cn(
+                                            "text-[8px] font-black text-center leading-tight uppercase tracking-tighter",
+                                            isEarned ? "text-white" : "text-slate-600"
+                                        )}>
+                                            {badge.name}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Activity Feed */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-6 bg-indigo-600"></div>
+                            <h3 className="text-xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">آخر النشاطات</h3>
+                        </div>
+                        <div className="space-y-4">
+                            {pointLogs.slice(0, 3).map((log, i) => (
+                                <div key={i} className="bg-white dark:bg-slate-900 p-5 border-l-4 border-emerald-500 shadow-sm group">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center rounded-none shrink-0 group-hover:scale-110 transition-transform">
+                                            <Star size={20} fill="currentColor" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-xs font-black text-slate-900 dark:text-slate-100 leading-tight">تلقيت {log.amount} نقطة</h4>
+                                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400">{log.action}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Support Block */}
+                    <div className="bg-gradient-to-r from-indigo-700 to-purple-800 p-8 shadow-2xl relative group overflow-hidden">
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                        <div className="relative z-10 space-y-6">
+                            <div className="space-y-1">
+                                <h4 className="text-2xl font-heading font-black text-white">تحتاج مساعدة؟</h4>
+                                <p className="text-xs font-bold text-indigo-100">فريق الدعم الفني متواجد دائماً لخدمتك</p>
+                            </div>
+                            <a 
+                                href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-3 bg-white text-indigo-900 py-4 font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-50 transition-colors shadow-xl"
+                            >
+                                <MessageSquare size={16} fill="currentColor" />
+                                تواصل الآن
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* ═══════════════ QUICK CHANNELS ═══════════════ */}
-            <div className="grid grid-cols-2 gap-4">
-                <button 
-                    onClick={() => navigate('/chat')}
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
-                >
-                    <MessageSquare className="text-[#8b5cf6]" size={18} />
-                    <span className="text-sm font-black text-slate-800 dark:text-indigo-300">المحادثات</span>
-                </button>
-                <button 
-                    onClick={() => setShowBadges(!showBadges)}
-                    className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-4 rounded-3xl border border-indigo-100 dark:border-indigo-900/20 flex items-center justify-center gap-3 transition-transform active:scale-95"
-                >
-                    <Award className="text-[#8b5cf6]" size={18} />
-                    <span className="text-sm font-black text-slate-800 dark:text-indigo-300">الأوسمة</span>
-                </button>
-            </div>
-
-            {/* ═══════════════ INLINE BADGES SECTION ═══════════════ */}
+            {/* Badges Overlay */}
             <AnimatePresence>
                 {showBadges && (
-                    <motion.div 
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                    >
-                        <div className="relative w-full bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 mt-2">
-                            <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-6 text-white relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl" />
+                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowBadges(false)}
+                            className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+                        />
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="relative w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden"
+                        >
+                            <div className="bg-slate-900 p-8 text-white flex justify-between items-center border-b border-slate-800">
+                                <div className="space-y-1">
+                                    <h2 className="text-3xl font-heading font-black italic tracking-tighter">قاعة المشاهير</h2>
+                                    <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em]">أوسمتك وإنجازاتك</p>
+                                </div>
                                 <button 
                                     onClick={() => setShowBadges(false)}
-                                    className="absolute top-4 left-4 text-white/60 hover:text-white"
+                                    className="w-12 h-12 bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center"
                                 >
-                                    <X size={20} />
+                                    <X size={24} />
                                 </button>
-                                <div className="relative z-10 flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/20 shadow-lg">
-                                        <Trophy size={24} className="text-yellow-300" />
-                                    </div>
-                                    <div className="text-right">
-                                        <h2 className="text-lg font-black italic">أوسمة التميز</h2>
-                                        <p className="text-[9px] font-bold text-indigo-100 opacity-80 uppercase tracking-widest">إنجازاتك المسجلة</p>
-                                    </div>
-                                </div>
                             </div>
-                            
-                            <div className="p-6">
-                                <div className="grid grid-cols-3 gap-4">
-                                    {allBadges.map((badge, idx) => {
-                                        const isEarned = (studentData?.badges || '').includes(badge.id);
-                                        return (
-                                            <div key={idx} className="flex flex-col items-center gap-2">
-                                                <div className={cn(
-                                                    "w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 relative group",
-                                                    isEarned 
-                                                        ? `bg-gradient-to-br ${badge.color} shadow-md scale-105` 
-                                                        : "bg-slate-50 dark:bg-slate-800/50 grayscale opacity-40"
-                                                )}>
-                                                    <badge.icon size={24} className={isEarned ? "text-white" : "text-slate-400"} />
-                                                    {isEarned && (
-                                                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
-                                                            <div className="w-1.5 h-1.5 bg-white rounded-full" />
-                                                        </div>
-                                                    )}
-                                                </div>
+                            <div className="p-10 grid grid-cols-2 md:grid-cols-3 gap-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                                {allBadges.map((badge, idx) => {
+                                    const isEarned = (studentData?.badges || '').includes(badge.id);
+                                    return (
+                                        <div key={idx} className="flex flex-col items-center gap-4 text-center group">
+                                            <div className={cn(
+                                                "w-24 h-24 rounded-none flex items-center justify-center transition-all duration-700 relative",
+                                                isEarned 
+                                                    ? `bg-gradient-to-br ${badge.color} shadow-2xl shadow-indigo-500/30 scale-105` 
+                                                    : "bg-slate-100 dark:bg-slate-800 grayscale opacity-20"
+                                            )}>
+                                                <badge.icon size={44} className={isEarned ? "text-white" : "text-slate-400"} />
+                                                {isEarned && (
+                                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-indigo-600 text-white flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-lg">
+                                                        <Star size={14} fill="currentColor" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="space-y-1">
                                                 <span className={cn(
-                                                    "text-[9px] font-black text-center leading-tight",
+                                                    "text-xs font-black uppercase tracking-widest block",
                                                     isEarned ? "text-slate-900 dark:text-white" : "text-slate-400"
                                                 )}>
                                                     {badge.name}
                                                 </span>
+                                                <p className="text-[10px] font-bold text-slate-400 line-clamp-2">استمر في التميز لفتح هذا الوسام</p>
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                                
-                                <div className="mt-6 pt-4 border-t border-slate-50 dark:border-slate-800">
-                                    <p className="text-[8px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center leading-relaxed truncate">
-                                        استمر في حضور حصصك والحصول على النقاط لفتح المزيد من الأوسمة الرائعة!
-                                    </p>
-                                </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
-
-            {/* ═══════════════ RECENT ACTIVITY ═══════════════ */}
-            <div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4">آخر النشاطات</h3>
-                <div className="space-y-3">
-                    {pointLogs.slice(0, 3).map((log, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-4 rounded-3xl shadow-sm border border-slate-50 dark:border-slate-800">
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-rose-50 dark:bg-rose-900/10 text-rose-500 rounded-2xl flex items-center justify-center shrink-0">
-                                    <Star size={22} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <h4 className="text-xs md:text-sm font-bold text-slate-800 dark:text-slate-200 leading-normal">
-                                        تلقيت {log.amount} نقطة جديدة: {log.action}
-                                    </h4>
-                                    <div className="flex items-center gap-1 mt-1.5">
-                                        {[1, 2, 3, 4, 5].map(starIdx => (
-                                            <Star key={starIdx} size={10} className="text-yellow-400 fill-yellow-400" />
-                                        ))}
-                                    </div>
-                                    <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 mt-2">منذ ساعتين</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    {pointLogs.length === 0 && (
-                        <p className="text-center py-6 text-slate-400 text-xs font-bold">لا توجد نشاطات حديثة</p>
-                    )}
-                </div>
-            </div>
-
-            {/* ═══════════════ SUPPORT BANNER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-rose-600 p-6 rounded-xl shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
-                <div className="text-center md:text-right relative z-10 w-full md:w-auto">
-                    <h4 className="text-lg font-black mb-1">هل تحتاج لمساعدة؟</h4>
-                    <p className="text-xs font-bold opacity-80 leading-normal">فريق الدعم متاح دائماً لخدمتك</p>
-                </div>
-                <a 
-                    href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-[#5c4fb1] dark:text-rose-600 px-6 py-3 rounded-[20px] font-black text-sm flex items-center gap-3 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
-                >
-                    <div className="w-8 h-8 bg-[#5c4fb1] dark:bg-rose-600 text-white rounded-[10px] flex items-center justify-center">
-                        <MessageSquare size={16} fill="currentColor" />
-                    </div>
-                    واتساب
-                </a>
-            </div>
-
-
 
         </div>
     );
 };
 
-const ProgressBarSimple = ({ label, value, subLabel }: { label: string; value: number; subLabel?: string }) => (
-    <div>
-        <div className="flex justify-between items-center mb-2.5">
-            <span className="text-xs font-black text-slate-700 dark:text-slate-300">{label}</span>
-            <span className="text-xs font-black text-slate-500 dark:text-slate-400">{subLabel || `${value}%`}</span>
+const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: string; value: string | number; color: string }) => {
+    const colors: any = {
+        indigo: "border-indigo-500 text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10",
+        purple: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-900/10",
+        slate: "border-slate-500 text-slate-600 bg-slate-50 dark:bg-slate-900/10",
+        emerald: "border-emerald-500 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10",
+    };
+    return (
+        <div className={cn("bg-white dark:bg-slate-900 border-b-4 p-5 flex flex-col items-center justify-center text-center shadow-sm", colors[color] || colors.indigo)}>
+            <div className="w-10 h-10 flex items-center justify-center mb-3">
+                <Icon size={24} />
+            </div>
+            <span className="text-2xl font-heading font-black text-slate-900 dark:text-white leading-none">{value}</span>
+            <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mt-2 tracking-widest">{label}</span>
         </div>
-        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${value}%` }}
-                className="h-full bg-[#8b5cf6]"
-            />
-        </div>
-    </div>
-);
+    );
+};
 
 const allBadges = [
     { id: 'diligent', name: 'المجتهد الصغير', icon: Star, color: 'from-amber-400 to-orange-500' },
