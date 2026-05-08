@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 
@@ -45,7 +45,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { MaintenanceScreen } from './components/MaintenanceScreen';
 import { FloatingActions } from './components/public/FloatingActions';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
-import { MouseGlow } from './components/ui/MouseGlow';
+
 
 
 
@@ -117,7 +117,7 @@ function App() {
 
   return (
     <>
-      <MouseGlow />
+
 
 
       {/* Maintenance Indicator for Admins */}
