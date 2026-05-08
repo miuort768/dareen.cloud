@@ -268,17 +268,23 @@ export const Blog = () => {
                                         </button>
                                     ))}
 
-                                    {/* Control Buttons */}
-                                    <div className="flex gap-2 sm:col-span-2">
-                                        {view !== 'types' && (
-                                            <button onClick={goBack} className="flex-1 relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-slate-700 group bg-slate-800 border border-white/5">
-                                                <span className="text-[10px] font-black text-white uppercase tracking-widest">العودة</span>
-                                            </button>
-                                        )}
-                                        <Link to="/courses" className="flex-[2] relative h-14 flex items-center justify-center transition-all duration-300 shadow-md hover:bg-indigo-950 group bg-slate-950 border border-white/5">
-                                            <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">تصفح الدورات</span>
-                                        </Link>
-                                    </div>
+                                    {/* Control Buttons - Integrated into grid with distinct colors */}
+                                    {view !== 'types' && (
+                                        <button
+                                            onClick={goBack}
+                                            className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10"
+                                        >
+                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">العودة للخلف</span>
+                                        </button>
+                                    )}
+                                    <Link
+                                        to="/courses"
+                                        className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-indigo-500 to-blue-700 overflow-hidden border border-white/10"
+                                    >
+                                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">تصفح الدورات</span>
+                                    </Link>
                                 </div>
                             </div>
 
