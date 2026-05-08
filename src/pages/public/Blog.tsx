@@ -113,7 +113,7 @@ const subjectsMap: Record<string, { id: string; name: string; color: string }[]>
 subjectsMap.basic = subjectsMap.middle;
 subjectsMap.preparatory = subjectsMap.middle;
 
-type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects';
+type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
 
 export const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -125,17 +125,32 @@ export const Blog = () => {
     const [selectedGrade, setSelectedGrade] = useState('');
     const [selectedTerm, setSelectedTerm] = useState('');
 
+    const [selectedSubject, setSelectedSubject] = useState('');
+
     const currentTypeName = types.find(t => t.id === selectedType)?.name || '';
     const currentCurriculumName = curriculums.find(c => c.id === selectedCurriculum)?.name || '';
     const currentLevelName = gradesMap[selectedCurriculum]?.find(g => g.id === selectedLevel)?.name || '';
+    const currentSubjectName = (subjectsMap[selectedLevel] || subjectsMap.middle).find(s => s.id === selectedSubject)?.name || '';
     const currentGrades = gradesMap[selectedCurriculum] || [];
     const currentClassrooms = classroomsMap[selectedCurriculum]?.[selectedLevel] || [];
     const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle;
     const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
     const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
 
+    // فلترة المقالات بناءً على الاختيارات
+    const filteredPosts = view === 'results' ? posts.filter(p => {
+        if (selectedType && p.contentType !== selectedType) return false;
+        if (selectedCurriculum && p.curriculum !== selectedCurriculum) return false;
+        if (selectedLevel && p.level !== selectedLevel) return false;
+        if (selectedGrade && p.grade !== selectedGrade) return false;
+        if (selectedTerm && p.term && p.term !== selectedTerm) return false;
+        if (selectedSubject && p.subject !== selectedSubject) return false;
+        return true;
+    }) : posts;
+
     const goBack = () => {
-        if (view === 'subjects') setView('terms');
+        if (view === 'results') setView('subjects');
+        else if (view === 'subjects') setView('terms');
         else if (view === 'terms') setView('classrooms');
         else if (view === 'classrooms') setView('grades');
         else if (view === 'grades') setView('curriculums');
@@ -198,7 +213,8 @@ export const Blog = () => {
                                 : view === 'grades' ? currentCurriculumName
                                 : view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
                                 : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
-                                : `${termLabel} — الصف ${gradeNames[selectedGrade]}`}
+                                : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
+                                : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
                             </span>
                         </div>
                         <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
@@ -207,7 +223,8 @@ export const Blog = () => {
                             : view === 'grades' ? (<>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>)
                             : view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
                             : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
-                            : (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)}
+                            : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
+                            : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
                             {view === 'types' ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء.'
@@ -215,7 +232,8 @@ export const Blog = () => {
                             : view === 'grades' ? 'اختر المرحلة الدراسية المناسبة.'
                             : view === 'classrooms' ? 'اختر الصف الدراسي.'
                             : view === 'terms' ? 'اختر الترم الدراسي.'
-                            : 'اختر المادة الدراسية للوصول للمحتوى.'}
+                            : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
+                            : `${filteredPosts.length} نتيجة متاحة`}
                         </p>
                     </div>
 
@@ -336,15 +354,14 @@ export const Blog = () => {
                             {/* TIER 6: Subjects (مواد) */}
                             {view === 'subjects' && (<>
                                 {currentSubjects.map(subj => (
-                                    <Link
+                                    <button
                                         key={subj.id}
-                                        to={`/courses?category=${selectedType}&curriculum=${selectedCurriculum}&level=${selectedLevel}&grade=${selectedGrade}${selectedTerm ? `&term=${selectedTerm}` : ''}&subject=${subj.id}`}
-                                        onClick={() => window.scrollTo(0,0)}
+                                        onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0,0); }}
                                         className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}
                                     >
                                         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{subj.name}</span>
-                                    </Link>
+                                    </button>
                                 ))}
                                 <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
                                     <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
@@ -360,69 +377,126 @@ export const Blog = () => {
                     </div>
 
 
-                    {loading ? (
-                        <div className="flex flex-col items-center justify-center py-24">
-                            <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
-                            <span className="text-xs font-black text-gray-400 uppercase tracking-widest">جاري تحميل المعرفة...</span>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                            {posts.map((post, idx) => (
-                                <Link 
-                                    key={post.id} 
-                                    to={`/books/${post.slug}`} 
-                                    className={cn(
-                                        "group bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-none shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col h-full overflow-hidden",
-                                        idx === 0 && "md:col-span-2 md:flex-row md:min-h-[400px]"
-                                    )}
-                                >
-                                    <div className={cn(
-                                        "relative w-full overflow-hidden shrink-0",
-                                        idx === 0 ? "md:w-[50%] aspect-video md:aspect-auto" : "aspect-video"
-                                    )}>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10"></div>
-                                        <img 
-                                            src={post.coverImage} 
-                                            alt={post.title} 
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                                        />
-                                        <div className="absolute top-4 right-4 z-20">
-                                            <span className="bg-indigo-600 text-white text-[9px] font-black px-3 py-1.5 uppercase tracking-wider shadow-xl">
-                                                {post.category}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="p-6 md:p-10 flex flex-col flex-grow justify-center">
-                                        <div className="flex items-center gap-4 text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mb-4">
-                                            <div className="flex items-center gap-1.5">
-                                                <Calendar size={14} className="text-indigo-500" /> 
-                                                <span>{post.date?.split('T')[0]}</span>
+                    {/* TIER 7: Results - filtered posts */}
+                    {view === 'results' && (
+                        <div className="max-w-6xl mx-auto">
+                            {/* Breadcrumb */}
+                            <div className="flex flex-wrap items-center gap-2 mb-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                <button onClick={() => setView('types')} className="hover:text-indigo-600 transition-colors">الرئيسية</button>
+                                <span>/</span><span className="text-slate-600">{currentTypeName}</span>
+                                <span>/</span><span className="text-slate-600">{currentCurriculumName}</span>
+                                <span>/</span><span className="text-slate-600">{currentLevelName}</span>
+                                <span>/</span><span className="text-slate-600">الصف {selectedGrade}</span>
+                                {selectedTerm && <><span>/</span><span className="text-slate-600">{termLabel}</span></>}
+                                <span>/</span><span className="text-indigo-600">{currentSubjectName}</span>
+                            </div>
+
+                            {/* Back buttons */}
+                            <div className="flex gap-2 mb-8">
+                                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-black uppercase tracking-widest transition-colors">
+                                    <span>←</span><span>تغيير المادة</span>
+                                </button>
+                                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-950 hover:bg-slate-800 text-white text-[11px] font-black uppercase tracking-widest transition-colors">
+                                    <span>⌂</span><span>الرئيسية</span>
+                                </button>
+                            </div>
+
+                            {loading ? (
+                                <div className="flex flex-col items-center justify-center py-24">
+                                    <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
+                                    <span className="text-xs font-black text-gray-400 uppercase tracking-widest">جاري التحميل...</span>
+                                </div>
+                            ) : filteredPosts.length === 0 ? (
+                                <div className="text-center py-24 border-2 border-dashed border-slate-200 dark:border-slate-800">
+                                    <BookOpen size={48} className="text-gray-200 mx-auto mb-4" />
+                                    <p className="text-gray-400 font-bold text-lg mb-2">لا يوجد محتوى لهذا التصنيف بعد</p>
+                                    <p className="text-gray-300 text-sm">سيتم إضافة المحتوى قريباً</p>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {filteredPosts.map((post) => (
+                                        <Link
+                                            key={post.id}
+                                            to={`/books/${post.slug}`}
+                                            onClick={() => window.scrollTo(0,0)}
+                                            className="group bg-white dark:bg-slate-900/40 shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col overflow-hidden"
+                                        >
+                                            <div className="relative aspect-video overflow-hidden">
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
+                                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                <div className="absolute top-3 right-3 z-20">
+                                                    <span className="bg-indigo-600 text-white text-[9px] font-black px-2 py-1 uppercase tracking-wider">{post.subject || post.category}</span>
+                                                </div>
                                             </div>
-                                            <div className="flex items-center gap-1.5">
-                                                <User size={14} className="text-indigo-500" /> 
-                                                <span>{post.author}</span>
+                                            <div className="p-5 flex flex-col flex-grow">
+                                                <div className="flex items-center gap-3 text-[10px] text-gray-400 font-black uppercase tracking-widest mb-3">
+                                                    <div className="flex items-center gap-1">
+                                                        <Calendar size={12} className="text-indigo-500" />
+                                                        <span>{post.date?.split('T')[0]}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <User size={12} className="text-indigo-500" />
+                                                        <span>{post.author}</span>
+                                                    </div>
+                                                </div>
+                                                <h2 className="font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-indigo-600 transition-colors leading-tight">{post.title}</h2>
+                                                <p className="text-gray-500 dark:text-slate-400 text-sm mb-4 line-clamp-2 leading-relaxed font-medium flex-grow">{post.excerpt}</p>
+                                                <div className="mt-auto inline-flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest">
+                                                    <span>اقرأ المقال</span>
+                                                    <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <h2 className={cn(
-                                            "font-black text-gray-900 dark:text-white mb-4 font-heading group-hover:text-indigo-600 transition-colors leading-tight",
-                                            idx === 0 ? "text-2xl md:text-3xl" : "text-xl"
-                                        )}>
-                                            {post.title}
-                                        </h2>
-                                        <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base mb-6 line-clamp-2 leading-relaxed font-medium">
-                                            {post.excerpt}
-                                        </p>
-                                        <div className="mt-auto inline-flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase tracking-[0.2em]">
-                                            <span>اقرأ المقال بالكامل</span>
-                                            <ArrowLeft size={18} className="group-hover:-translate-x-2 transition-transform" />
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
 
-                    {!loading && posts.length === 0 && (
+                    {/* Static posts - show only on main view */}
+                    {view === 'types' && (
+                        loading ? (
+                            <div className="flex flex-col items-center justify-center py-24">
+                                <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
+                                <span className="text-xs font-black text-gray-400 uppercase tracking-widest">جاري تحميل المعرفة...</span>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                                {posts.map((post, idx) => (
+                                    <Link
+                                        key={post.id}
+                                        to={`/books/${post.slug}`}
+                                        className={cn(
+                                            "group bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-none shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col h-full overflow-hidden",
+                                            idx === 0 && "md:col-span-2 md:flex-row md:min-h-[400px]"
+                                        )}
+                                    >
+                                        <div className={cn("relative w-full overflow-hidden shrink-0", idx === 0 ? "md:w-[50%] aspect-video md:aspect-auto" : "aspect-video")}>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
+                                            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                            <div className="absolute top-4 right-4 z-20">
+                                                <span className="bg-indigo-600 text-white text-[9px] font-black px-3 py-1.5 uppercase tracking-wider shadow-xl">{post.category}</span>
+                                            </div>
+                                        </div>
+                                        <div className="p-6 md:p-10 flex flex-col flex-grow justify-center">
+                                            <div className="flex items-center gap-4 text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mb-4">
+                                                <div className="flex items-center gap-1.5"><Calendar size={14} className="text-indigo-500" /><span>{post.date?.split('T')[0]}</span></div>
+                                                <div className="flex items-center gap-1.5"><User size={14} className="text-indigo-500" /><span>{post.author}</span></div>
+                                            </div>
+                                            <h2 className={cn("font-black text-gray-900 dark:text-white mb-4 font-heading group-hover:text-indigo-600 transition-colors leading-tight", idx === 0 ? "text-2xl md:text-3xl" : "text-xl")}>{post.title}</h2>
+                                            <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base mb-6 line-clamp-2 leading-relaxed font-medium">{post.excerpt}</p>
+                                            <div className="mt-auto inline-flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase tracking-[0.2em]">
+                                                <span>اقرأ المقال بالكامل</span>
+                                                <ArrowLeft size={18} className="group-hover:-translate-x-2 transition-transform" />
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        )
+                    )}
+
+                    {!loading && view === 'types' && posts.length === 0 && (
                         <div className="text-center py-24">
                             <BookOpen size={48} className="text-gray-200 mx-auto mb-4" />
                             <p className="text-gray-400 font-bold">لا توجد مقالات حالياً، ننتظرك قريباً!</p>
