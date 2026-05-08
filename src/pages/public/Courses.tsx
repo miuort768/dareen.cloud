@@ -97,22 +97,35 @@ export const Courses = () => {
 
             <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-[#fafafa] dark:bg-slate-950">
                 {/* Background Art - Premium Royal Theme */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08]" 
-                     style={{ 
-                         backgroundImage: 'radial-gradient(circle at 10% 20%, #4F46E5 0%, transparent 40%), radial-gradient(circle at 90% 80%, #7C3AED 0%, transparent 40%), radial-gradient(circle at 50% 50%, #EEF2FF 0%, transparent 60%)',
-                         filter: 'blur(100px)'
-                     }}>
-                </div>
-                {/* Subtle Decorative Blobs */}
-                <div className="absolute top-[20%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none"></div>
-                <div className="absolute bottom-[20%] -right-[10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                    {/* Radial Gradients */}
+                    <div className="absolute inset-0 opacity-[0.1]" 
+                         style={{ 
+                             backgroundImage: 'radial-gradient(circle at 10% 20%, #4F46E5 0%, transparent 40%), radial-gradient(circle at 90% 80%, #7C3AED 0%, transparent 40%), radial-gradient(circle at 50% 50%, #EEF2FF 0%, transparent 60%)',
+                             filter: 'blur(100px)'
+                         }}>
+                    </div>
+                    
+                    {/* Subtle Decorative Blobs */}
+                    <div className="absolute top-[20%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px]"></div>
+                    <div className="absolute bottom-[20%] -right-[10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-[120px]"></div>
 
-                {/* Subtle Mesh Pattern */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
-                     style={{ 
-                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '150px 150px'
-                     }}>
+                    {/* Geometric Shapes - Light & Visible */}
+                    <div className="absolute top-[10%] left-[5%] w-64 h-64 border border-indigo-500/10 rounded-full animate-spin-slow"></div>
+                    <div className="absolute top-[15%] left-[8%] w-48 h-48 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
+                    <div className="absolute bottom-[10%] right-[10%] w-96 h-96 border border-indigo-500/5 rounded-full animate-pulse"></div>
+                    
+                    {/* Brutalist Lines */}
+                    <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-indigo-500/10 to-transparent"></div>
+                    <div className="absolute bottom-[15%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/10 to-transparent"></div>
+
+                    {/* Subtle Mesh Pattern */}
+                    <div className="absolute inset-0 z-0 opacity-[0.04]"
+                         style={{ 
+                             backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                             backgroundSize: '150px 150px'
+                         }}>
+                    </div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
