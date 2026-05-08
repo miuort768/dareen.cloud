@@ -27,9 +27,9 @@ export const MasarSection = () => {
                                 <div className="absolute w-64 h-64 bg-indigo-500/20 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
                                 <img
-                                    src="/dareen_logo_new.jpg"
-                                    alt="شعار دارين"
-                                    className="w-44 h-44 lg:w-72 lg:h-72 object-contain rounded-none shadow-2xl border border-white/20 p-2 bg-black/20 hover:border-indigo-500/50 transition-all duration-700 group-hover:scale-105"
+                                    src="/dareen_books_banner.png"
+                                    alt="بوابة الكتب والملخصات - دارين"
+                                    className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
                                 />
                             </div>
                         </div>
@@ -54,7 +54,7 @@ export const MasarSection = () => {
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                 <Link
-                                    to="/blog"
+                                    to="/books"
                                     className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-none font-black text-lg shadow-2xl shadow-indigo-600/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group"
                                 >
                                     <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
