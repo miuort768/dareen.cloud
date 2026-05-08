@@ -188,18 +188,24 @@ export const Blog = () => {
             <PublicNavbar />
             
             <main className="flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden bg-[#fafafa] dark:bg-slate-950">
-                {/* Premium Background Elements */}
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08]" 
-                     style={{ 
-                         backgroundImage: 'radial-gradient(circle at 5% 10%, #4F46E5 0%, transparent 35%), radial-gradient(circle at 95% 90%, #7C3AED 0%, transparent 35%)',
-                         filter: 'blur(100px)'
-                     }}>
-                </div>
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]"
-                     style={{ 
-                         backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                         backgroundSize: '150px 150px'
-                     }}>
+                {/* Premium Background Elements - Enhanced */}
+                <div className="absolute inset-0 z-0 pointer-events-none">
+                    <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse"></div>
+                    <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px]"></div>
+                    <div className="absolute top-[20%] left-[5%] w-[15%] h-[15%] bg-indigo-400/5 rounded-full blur-[60px]"></div>
+                    
+                    <div className="absolute inset-0 opacity-[0.08]" 
+                         style={{ 
+                             backgroundImage: 'radial-gradient(circle at 5% 10%, #4F46E5 0%, transparent 35%), radial-gradient(circle at 95% 90%, #7C3AED 0%, transparent 35%)',
+                             filter: 'blur(100px)'
+                         }}>
+                    </div>
+                    <div className="absolute inset-0 opacity-[0.02]"
+                         style={{ 
+                             backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                             backgroundSize: '150px 150px'
+                         }}>
+                    </div>
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10">
@@ -243,15 +249,15 @@ export const Blog = () => {
                             {/* Image Side (Desktop Only) */}
                             <div className="hidden lg:flex lg:w-1/2 justify-center relative">
                                 <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center">
-                                    {/* Decorative Elements */}
-                                    <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full animate-spin-slow"></div>
-                                    <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
-                                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
+                                    {/* Decorative Elements - Static */}
+                                    <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full"></div>
+                                    <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl"></div>
                                     
                                     <img
                                         src="/dareen_books_portal_v3.png"
                                         alt="بوابة دارين التعليمية"
-                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.2)] hover:scale-105 transition-transform duration-700"
+                                        className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.2)]"
                                     />
                                 </div>
                             </div>
