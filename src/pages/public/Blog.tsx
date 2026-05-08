@@ -453,55 +453,8 @@ export const Blog = () => {
                         </div>
                     )}
 
-                    {/* Static posts - show only on main view */}
-                    {view === 'types' && (
-                        loading ? (
-                            <div className="flex flex-col items-center justify-center py-24">
-                                <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
-                                <span className="text-xs font-black text-gray-400 uppercase tracking-widest">جاري تحميل المعرفة...</span>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                                {posts.map((post, idx) => (
-                                    <Link
-                                        key={post.id}
-                                        to={`/books/${post.slug}`}
-                                        className={cn(
-                                            "group bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl rounded-none shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col h-full overflow-hidden",
-                                            idx === 0 && "md:col-span-2 md:flex-row md:min-h-[400px]"
-                                        )}
-                                    >
-                                        <div className={cn("relative w-full overflow-hidden shrink-0", idx === 0 ? "md:w-[50%] aspect-video md:aspect-auto" : "aspect-video")}>
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
-                                            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                            <div className="absolute top-4 right-4 z-20">
-                                                <span className="bg-indigo-600 text-white text-[9px] font-black px-3 py-1.5 uppercase tracking-wider shadow-xl">{post.category}</span>
-                                            </div>
-                                        </div>
-                                        <div className="p-6 md:p-10 flex flex-col flex-grow justify-center">
-                                            <div className="flex items-center gap-4 text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mb-4">
-                                                <div className="flex items-center gap-1.5"><Calendar size={14} className="text-indigo-500" /><span>{post.date?.split('T')[0]}</span></div>
-                                                <div className="flex items-center gap-1.5"><User size={14} className="text-indigo-500" /><span>{post.author}</span></div>
-                                            </div>
-                                            <h2 className={cn("font-black text-gray-900 dark:text-white mb-4 font-heading group-hover:text-indigo-600 transition-colors leading-tight", idx === 0 ? "text-2xl md:text-3xl" : "text-xl")}>{post.title}</h2>
-                                            <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base mb-6 line-clamp-2 leading-relaxed font-medium">{post.excerpt}</p>
-                                            <div className="mt-auto inline-flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black text-xs uppercase tracking-[0.2em]">
-                                                <span>اقرأ المقال بالكامل</span>
-                                                <ArrowLeft size={18} className="group-hover:-translate-x-2 transition-transform" />
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        )
-                    )}
+                    {/* Static posts removed from main view by user request */}
 
-                    {!loading && view === 'types' && posts.length === 0 && (
-                        <div className="text-center py-24">
-                            <BookOpen size={48} className="text-gray-200 mx-auto mb-4" />
-                            <p className="text-gray-400 font-bold">لا توجد مقالات حالياً، ننتظرك قريباً!</p>
-                        </div>
-                    )}
                 </div>
             </main>
 
