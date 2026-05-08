@@ -8,9 +8,53 @@ import { Calendar, User, ArrowLeft, BookOpen, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 
+const types = [
+    { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', link: '/courses?category=foundation' },
+    { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800', link: '' },
+    { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800', link: '' },
+    { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800', link: '' },
+];
+
+const curriculums = [
+    { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800' },
+    { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900' },
+    { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900' },
+    { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900' },
+];
+
+const gradesMap: Record<string, { id: string; name: string; sub: string; color: string }[]> = {
+    kuwait: [
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600' },
+        { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800' },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950' },
+    ],
+    qatar: [
+        { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700' },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950' },
+    ],
+    uae: [
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600' },
+        { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800' },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950' },
+    ],
+    saudi: [
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600' },
+        { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800' },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950' },
+    ],
+};
+
 export const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [view, setView] = useState<'types' | 'curriculums' | 'grades'>('types');
+    const [selectedType, setSelectedType] = useState('');
+    const [selectedCurriculum, setSelectedCurriculum] = useState('');
+
+    const currentTypeName = types.find(t => t.id === selectedType)?.name || '';
+    const currentCurriculumName = curriculums.find(c => c.id === selectedCurriculum)?.name || '';
+    const currentGrades = gradesMap[selectedCurriculum] || [];
+    const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -60,62 +104,32 @@ export const Blog = () => {
                     <div className="text-center max-w-3xl mx-auto mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6">
                             <BookOpen size={14} className="text-indigo-600" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">منصة المعرفة الذكية</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
+                                {view === 'types' ? 'منصة المعرفة الذكية' : view === 'curriculums' ? `تحميل ${currentTypeName}` : `${currentCurriculumName}`}
+                            </span>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6">
-                            مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span>
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6 transition-all duration-500">
+                            {view === 'types' ? (
+                                <>مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span></>
+                            ) : view === 'curriculums' ? (
+                                <>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentTypeName}</span></>
+                            ) : (
+                                <>تحميل <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentCurriculumName}</span></>
+                            )}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 font-bold text-sm md:text-lg leading-relaxed max-w-2xl mx-auto">
-                            دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء لرحلة تعليمية متميزة وفريدة من نوعها.
+                            {view === 'types'
+                                ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ونصائح الخبراء لرحلة تعليمية متميزة.'
+                                : view === 'curriculums'
+                                ? 'اختر المنهج الدراسي المناسب لبلدك للوصول إلى المحتوى التعليمي.'
+                                : 'اختر المرحلة الدراسية للوصول إلى المحتوى المناسب.'}
                         </p>
                     </div>
 
                     {/* Interactive Categories Section - 3 Tier Navigation */}
                     {(() => {
-                        const [view, setView] = useState<'types' | 'curriculums' | 'grades'>('types');
-                        const [selectedType, setSelectedType] = useState('');
-                        const [selectedCurriculum, setSelectedCurriculum] = useState('');
 
-                        const types = [
-                            { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', link: '/courses?category=foundation' },
-                            { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800', link: '' },
-                            { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800', link: '' },
-                            { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800', link: '' },
-                        ];
 
-                        const curriculums = [
-                            { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800' },
-                            { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900' },
-                            { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900' },
-                            { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900' },
-                        ];
-
-                        // Accurate grade levels per country
-                        const gradesMap: Record<string, { id: string; name: string; sub: string; color: string }[]> = {
-                            kuwait: [
-                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600' },
-                                { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800' },
-                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950' },
-                            ],
-                            qatar: [
-                                { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700' },
-                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950' },
-                            ],
-                            uae: [
-                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600' },
-                                { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800' },
-                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950' },
-                            ],
-                            saudi: [
-                                { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600' },
-                                { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800' },
-                                { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950' },
-                            ],
-                        };
-
-                        const currentGrades = gradesMap[selectedCurriculum] || [];
-
-                        const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
 
                         return (
                             <div className="max-w-5xl mx-auto mb-16">
