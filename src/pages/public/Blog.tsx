@@ -280,7 +280,10 @@ export const Blog = () => {
                                     )}
                                     <Link
                                         to="/courses"
-                                        className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-indigo-500 to-blue-700 overflow-hidden border border-white/10"
+                                        className={cn(
+                                            "relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-indigo-500 to-blue-700 overflow-hidden border border-white/10",
+                                            view === 'types' && "sm:col-span-2"
+                                        )}
                                     >
                                         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">تصفح الدورات</span>
