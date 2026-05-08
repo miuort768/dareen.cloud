@@ -4,7 +4,7 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
-import { Calendar, User, ArrowLeft, BookOpen, Loader2 } from 'lucide-react';
+import { Zap, CheckCircle, FileText, AlignLeft, Flag, GraduationCap, School, BookOpen, Loader2, ArrowLeft, Calendar, User } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 
@@ -15,38 +15,38 @@ const gradeNames: Record<string, string> = {
 };
 
 const types = [
-    { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', link: '/courses?category=foundation' },
-    { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800', link: '' },
-    { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800', link: '' },
-    { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800', link: '' },
+    { id: 'foundation', name: 'التأسيس', color: 'from-orange-500 to-orange-700', icon: Zap, link: '/courses?category=foundation' },
+    { id: 'solutions', name: 'حل الكتب', color: 'from-emerald-600 to-emerald-800', icon: CheckCircle, link: '' },
+    { id: 'notes', name: 'المذكرات', color: 'from-violet-600 to-violet-800', icon: FileText, link: '' },
+    { id: 'summaries', name: 'ملخصات', color: 'from-rose-600 to-rose-800', icon: AlignLeft, link: '' },
 ];
 
 const curriculums = [
-    { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800' },
-    { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900' },
-    { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900' },
-    { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900' },
+    { id: 'kuwait', name: 'منهج كويتي 🇰🇼', color: 'from-blue-600 to-blue-800', icon: Flag },
+    { id: 'qatar', name: 'منهج قطري 🇶🇦', color: 'from-red-700 to-red-900', icon: Flag },
+    { id: 'uae', name: 'منهج إماراتي 🇦🇪', color: 'from-green-700 to-green-900', icon: Flag },
+    { id: 'saudi', name: 'منهج سعودي 🇸🇦', color: 'from-emerald-700 to-emerald-900', icon: Flag },
 ];
 
-const gradesMap: Record<string, { id: string; name: string; sub: string; color: string }[]> = {
+const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: any }[]> = {
     kuwait: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600' },
-        { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800' },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950' },
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
+        { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950', icon: GraduationCap },
     ],
     qatar: [
-        { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700' },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950' },
+        { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700', icon: School },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950', icon: GraduationCap },
     ],
     uae: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600' },
-        { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800' },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950' },
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600', icon: School },
+        { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800', icon: School },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950', icon: GraduationCap },
     ],
     saudi: [
-        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600' },
-        { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800' },
-        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950' },
+        { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600', icon: School },
+        { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800', icon: School },
+        { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950', icon: GraduationCap },
     ],
 };
 
@@ -242,7 +242,10 @@ export const Blog = () => {
                                             className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase">{type.name}</span>
+                                            <div className="relative z-10 flex items-center gap-2">
+                                                <type.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-[11px] font-black text-white text-center tracking-widest uppercase">{type.name}</span>
+                                            </div>
                                         </button>
                                     ))}
 
@@ -253,7 +256,10 @@ export const Blog = () => {
                                             className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", curr.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2">{curr.name}</span>
+                                            <div className="relative z-10 flex items-center gap-2">
+                                                <curr.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-[11px] font-black text-white text-center tracking-widest">{curr.name}</span>
+                                            </div>
                                         </button>
                                     ))}
 
@@ -264,7 +270,10 @@ export const Blog = () => {
                                             className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", grade.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2">{grade.name}</span>
+                                            <div className="relative z-10 flex items-center gap-2">
+                                                <grade.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-[11px] font-black text-white text-center tracking-widest">{grade.name}</span>
+                                            </div>
                                         </button>
                                     ))}
 
@@ -287,7 +296,10 @@ export const Blog = () => {
                                                     className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10"
                                                 >
                                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                    <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">العودة للخلف</span>
+                                                    <div className="relative z-10 flex items-center gap-2">
+                                                        <ArrowLeft size={16} className="text-white/80 group-hover:-translate-x-1 transition-transform" />
+                                                        <span className="text-[11px] font-black text-white text-center tracking-widest uppercase font-heading">العودة للخلف</span>
+                                                    </div>
                                                 </button>
                                             )}
                                             <Link
@@ -298,7 +310,10 @@ export const Blog = () => {
                                                 )}
                                             >
                                                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                <span className="relative z-10 text-[11px] font-black text-white text-center tracking-widest px-2 uppercase font-heading">تصفح الدورات</span>
+                                                <div className="relative z-10 flex items-center gap-2">
+                                                    <BookOpen size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                    <span className="text-[11px] font-black text-white text-center tracking-widest uppercase font-heading">تصفح الدورات</span>
+                                                </div>
                                             </Link>
                                         </>);
                                     })()}
