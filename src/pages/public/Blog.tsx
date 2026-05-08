@@ -197,7 +197,7 @@ export const Blog = () => {
                                         </>
                                     )}
 
-                                    {/* ── More Button (always visible) ── */}
+                                    {/* ── More Button ── */}
                                     {view === 'types' && (
                                         <Link
                                             to="/courses"
@@ -206,20 +206,20 @@ export const Blog = () => {
                                             <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center uppercase tracking-widest">المزيد</span>
                                         </Link>
                                     )}
-                                </div>
 
-                                {/* Back button */}
-                                {view !== 'types' && (
-                                    <div className="flex justify-center mt-5">
+                                    {/* ── Back Button inside grid ── */}
+                                    {view !== 'types' && (
                                         <button
                                             onClick={() => setView(view === 'grades' ? 'curriculums' : 'types')}
-                                            className="inline-flex items-center gap-2 px-5 py-2 border border-indigo-200 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all duration-300 text-[11px] font-black uppercase tracking-widest group"
+                                            className="relative h-16 flex flex-col items-center justify-center gap-1 transition-all duration-300 shadow-lg hover:bg-slate-700 group bg-slate-800 col-span-2 md:col-span-1 animate-in zoom-in-95 duration-300"
                                         >
-                                            <span className="group-hover:-translate-x-1 transition-transform duration-300 inline-block">←</span>
-                                            <span>{view === 'grades' ? 'العودة لاختيار المنهج' : 'العودة للتصنيفات الرئيسية'}</span>
+                                            <span className="text-xl text-white group-hover:-translate-x-1 transition-transform duration-300">←</span>
+                                            <span className="text-[9px] font-black text-white/60 uppercase tracking-widest">
+                                                {view === 'grades' ? 'المنهج' : 'الرئيسية'}
+                                            </span>
                                         </button>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         );
                     })()}
