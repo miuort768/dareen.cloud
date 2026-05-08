@@ -585,8 +585,8 @@ export const Home = () => {
                         {/* Mobile View - Compact Slider */}
                         <div className="lg:hidden">
                             <div className="relative group">
-                                <div className="p-6 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[200px]">
-                                    <Quote size={40} className="text-indigo-500/10 absolute -top-1 -left-1" />
+                                <div className="p-4 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col min-h-[140px]">
+                                    <Quote size={30} className="text-indigo-500/10 absolute -top-1 -left-1" />
                                     
                                     <div className="relative z-10 flex flex-col h-full flex-grow">
                                         <div className="flex items-center justify-between mb-4">
