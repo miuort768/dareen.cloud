@@ -14,6 +14,13 @@ interface BlogPost {
     keywords: string;
     author: string;
     date: string;
+    // نظام التصنيف الجديد
+    contentType: string;   // notes | solutions | summaries | foundation
+    curriculum: string;    // kuwait | qatar | uae | saudi
+    level: string;         // primary | middle | secondary | basic | preparatory
+    grade: string;         // 1-12
+    term: string;          // 1 | 2 | ''
+    subject: string;       // arabic | math | physics ...
 }
 
 export const AdminBlog = () => {
@@ -54,7 +61,13 @@ export const AdminBlog = () => {
                 category: 'عام',
                 keywords: '',
                 author: 'إدارة دارين',
-                date: new Date().toISOString().split('T')[0]
+                date: new Date().toISOString().split('T')[0],
+                contentType: 'notes',
+                curriculum: 'kuwait',
+                level: 'middle',
+                grade: '7',
+                term: '1',
+                subject: 'arabic',
             });
         }
         setIsModalOpen(true);
@@ -240,6 +253,73 @@ export const AdminBlog = () => {
                                         onChange={(e) => setCurrentPost({ ...currentPost, date: e.target.value })}
                                         className="w-full bg-slate-50 dark:bg-slate-800 border-none px-4 py-3 focus:ring-2 focus:ring-red-500 font-bold text-sm"
                                     />
+                                </div>
+                            </div>
+
+                            {/* ── Classification Fields ── */}
+                            <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-800 p-4">
+                                <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-4">تصنيف المحتوى — يظهر في نظام التصفح</p>
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">نوع المحتوى</label>
+                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({...currentPost, contentType: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            <option value="notes">مذكرات</option>
+                                            <option value="solutions">حل كتب</option>
+                                            <option value="summaries">ملخصات</option>
+                                            <option value="foundation">تأسيس</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">المنهج</label>
+                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({...currentPost, curriculum: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            <option value="kuwait">كويتي</option>
+                                            <option value="qatar">قطري</option>
+                                            <option value="uae">إماراتي</option>
+                                            <option value="saudi">سعودي</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">المرحلة</label>
+                                        <select value={currentPost.level} onChange={e => setCurrentPost({...currentPost, level: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            <option value="primary">ابتدائي</option>
+                                            <option value="middle">متوسط</option>
+                                            <option value="secondary">ثانوي</option>
+                                            <option value="basic">أساسي (قطر)</option>
+                                            <option value="preparatory">إعدادي (إمارات)</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">الصف</label>
+                                        <select value={currentPost.grade} onChange={e => setCurrentPost({...currentPost, grade: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            {['1','2','3','4','5','6','7','8','9','10','11','12'].map(g => <option key={g} value={g}>الصف {g}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">الترم</label>
+                                        <select value={currentPost.term} onChange={e => setCurrentPost({...currentPost, term: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            <option value="1">ترم أول</option>
+                                            <option value="2">ترم ثاني</option>
+                                            <option value="">الكل</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase">المادة</label>
+                                        <select value={currentPost.subject} onChange={e => setCurrentPost({...currentPost, subject: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            <option value="arabic">عربي</option>
+                                            <option value="math">رياضيات</option>
+                                            <option value="islamic">إسلامية</option>
+                                            <option value="english">إنجليزي</option>
+                                            <option value="science">علوم</option>
+                                            <option value="physics">فيزياء</option>
+                                            <option value="chemistry">كيمياء</option>
+                                            <option value="biology">أحياء</option>
+                                            <option value="history">تاريخ</option>
+                                            <option value="geography">جغرافيا</option>
+                                            <option value="social">اجتماعيات</option>
+                                            <option value="computer">حاسب آلي</option>
+                                            <option value="stats">إحصاء</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
