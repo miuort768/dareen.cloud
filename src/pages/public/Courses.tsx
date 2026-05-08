@@ -191,6 +191,11 @@ export const Courses = () => {
                                 key={course.id}
                                 className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
                             >
+                                {/* Premium Shine Effect on Hover */}
+                                <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+                                    <div className="absolute top-0 -left-[150%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:left-[150%] transition-all duration-1000 ease-in-out"></div>
+                                </div>
+
                                 {/* Course Header (Clean Image Area) */}
                                 <div className="h-44 sm:h-44 relative overflow-hidden bg-white dark:bg-slate-800/50 flex items-start justify-center">
                                     <img
