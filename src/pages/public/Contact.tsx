@@ -98,18 +98,17 @@ export const Contact = () => {
                                 target={card.href !== '#' ? '_blank' : undefined}
                                 rel="noopener noreferrer"
                                 className={cn(
-                                    "group flex flex-col items-center text-center gap-3 p-6 rounded-none border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+                                    "group flex flex-row items-center gap-4 p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
                                     card.bg, card.border
                                 )}
                             >
-                                <div className={cn("w-12 h-12 rounded-none flex items-center justify-center bg-white dark:bg-slate-800 shadow-sm group-hover:scale-110 transition-transform", card.iconColor)}>
-                                    <card.icon size={22} />
+                                <div className={cn("w-11 h-11 shrink-0 flex items-center justify-center bg-white dark:bg-slate-800 shadow-sm group-hover:scale-110 transition-transform", card.iconColor)}>
+                                    <card.icon size={20} />
                                 </div>
-                                <div>
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-1">{card.title}</p>
-                                    <p className="text-sm font-bold text-gray-800 dark:text-white" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
+                                <div className="flex-grow min-w-0">
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
+                                    <p className="text-sm font-bold text-gray-800 dark:text-white truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
                                 </div>
-                                <ArrowLeft size={14} className="text-gray-300 group-hover:text-indigo-500 group-hover:-translate-x-1 transition-all" />
                             </a>
                         ))}
                     </div>
