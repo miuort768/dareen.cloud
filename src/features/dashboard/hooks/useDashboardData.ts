@@ -51,15 +51,33 @@ export const useDashboardData = (currentUser: User | null) => {
     const processedData = useMemo(() => {
         if (isLoading || !currentUser) return null;
 
-        const students = (studentsQuery.data as Student[]) || [];
-        const teachers = (teachersQuery.data as Teacher[]) || [];
-        const parents = (parentsQuery.data as Parent[]) || [];
-        const sessions = (sessionsQuery.data as Session[]) || [];
-        const teacherInvoices = (teacherInvoicesQuery.data as TeacherInvoice[]) || [];
-        const studentInvoices = (studentInvoicesQuery.data as StudentInvoice[]) || [];
-        const transactions = (transactionsQuery.data as Transaction[]) || [];
-        const fixedExpenses = (fixedExpensesQuery.data as FixedExpense[]) || [];
-        const evaluations = (evaluationsQuery.data as any[]) || [];
+        const studentsData = studentsQuery.data as any;
+        const students = Array.isArray(studentsData) ? studentsData : (studentsData?.data || []);
+        
+        const teachersData = teachersQuery.data as any;
+        const teachers = Array.isArray(teachersData) ? teachersData : (teachersData?.data || []);
+        
+        const parentsData = parentsQuery.data as any;
+        const parents = Array.isArray(parentsData) ? parentsData : (parentsData?.data || []);
+        
+        const sessionsData = sessionsQuery.data as any;
+        const sessions = Array.isArray(sessionsData) ? sessionsData : (sessionsData?.data || []);
+        
+        const teacherInvoicesData = teacherInvoicesQuery.data as any;
+        const teacherInvoices = Array.isArray(teacherInvoicesData) ? teacherInvoicesData : (teacherInvoicesData?.data || []);
+        
+        const studentInvoicesData = studentInvoicesQuery.data as any;
+        const studentInvoices = Array.isArray(studentInvoicesData) ? studentInvoicesData : (studentInvoicesData?.data || []);
+        
+        const transactionsData = transactionsQuery.data as any;
+        const transactions = Array.isArray(transactionsData) ? transactionsData : (transactionsData?.data || []);
+        
+        const fixedExpensesData = fixedExpensesQuery.data as any;
+        const fixedExpenses = Array.isArray(fixedExpensesData) ? fixedExpensesData : (fixedExpensesData?.data || []);
+        
+        const evaluationsData = evaluationsQuery.data as any;
+        const evaluations = Array.isArray(evaluationsData) ? evaluationsData : (evaluationsData?.data || []);
+
 
         const isTeacher = currentUser.role === 'teacher';
         const teacherName = currentUser.teacherName || currentUser.name;
@@ -68,18 +86,19 @@ export const useDashboardData = (currentUser: User | null) => {
         const normalizedCurrentUserTeacherName = teacherName.trim().toLowerCase();
 
         const filteredSessions = isTeacher
-            ? sessions.filter(s =>
+            ? sessions.filter((s: Session) =>
                 (s.teacherName?.trim().toLowerCase() === normalizedCurrentUserTeacherName) ||
                 (s.teacherId && s.teacherId === currentUser.id)
             )
             : sessions;
 
         const filteredStudents = isTeacher
-            ? students.filter(s => s.enrollments?.some(e =>
+            ? students.filter((s: Student) => s.enrollments?.some((e: any) =>
                 (e.teacher?.trim().toLowerCase() === normalizedCurrentUserTeacherName) ||
                 (e.teacherId && e.teacherId === currentUser.id)
             ))
             : students;
+
 
         // 2. Dates
         const now = new Date();
@@ -93,23 +112,23 @@ export const useDashboardData = (currentUser: User | null) => {
             try {
                 const d = new Date(dateStr);
                 return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-            } catch (e) {
+            } catch (e: any) {
                 return dateStr.startsWith(currentMonth);
             }
         };
 
         // 3. Sessions & Performance
-        const completedSessions = filteredSessions.filter(s =>
+        const completedSessions = sessions.filter((s: Session) =>
             ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
         );
-        const monthComplete = completedSessions.filter(s => isSameMonth(s.date));
+        const monthComplete = completedSessions.filter((s: Session) => isSameMonth(s.date));
 
         // Today's Scheduled via Schedule logic
         let todayScheduledCount = 0;
-        filteredStudents.forEach(s => {
-            s.enrollments?.forEach(en => {
+        filteredStudents.forEach((s: Student) => {
+            s.enrollments?.forEach((en: any) => {
                 if (isTeacher && en.teacher !== teacherName) return;
-                en.schedule?.forEach(slot => {
+                en.schedule?.forEach((slot: any) => {
                     if (slot.day === currentDayName) todayScheduledCount++;
                 });
             });
@@ -119,23 +138,23 @@ export const useDashboardData = (currentUser: User | null) => {
         const getSessionRev = (s: Session) => {
             // If price is explicitly 0, it might be a free session, but check if property exists
             if (s.hasOwnProperty('price') && s.price !== null && s.price !== undefined) return Number(s.price);
-            const stu = students.find(st => st.id === s.studentId);
+            const stu = students.find((st: Student) => st.id === s.studentId);
             return Number(stu?.sessionPrice) || 0;
         };
 
-        const getRevenue = (list: Session[]) => list.reduce((sum, s) => sum + getSessionRev(s), 0);
-        const getManualInc = (list: Transaction[]) => list.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+        const getRevenue = (list: Session[]) => list.reduce((sum: number, s: Session) => sum + getSessionRev(s), 0);
+        const getManualInc = (list: Transaction[]) => list.filter((t: Transaction) => t.type === 'income').reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0);
         
         // Cash Out (Paid Invoices)
-        const getPaidInv = (list: TeacherInvoice[]) => list.filter(inv =>
+        const getPaidInv = (list: TeacherInvoice[]) => list.filter((inv: TeacherInvoice) =>
             ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
-        ).reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        ).reduce((sum: number, inv: TeacherInvoice) => sum + (Number(inv.amount) || 0), 0);
         
-        const getManualExp = (list: Transaction[]) => list.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
-        const fixedTotal = fixedExpenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+        const getManualExp = (list: Transaction[]) => list.filter((t: Transaction) => t.type === 'expense').reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0);
+        const fixedTotal = fixedExpenses.reduce((sum: number, item: FixedExpense) => sum + (Number(item.amount) || 0), 0);
 
         const totalRevenueValue = getRevenue(completedSessions) + getManualInc(transactions);
-        const monthRevenueValue = getRevenue(monthComplete) + getManualInc(transactions.filter(t => isSameMonth(t.date)));
+        const monthRevenueValue = getRevenue(monthComplete) + getManualInc(transactions.filter((t: Transaction) => isSameMonth(t.date)));
 
         // Admin Expense Logic: Only count Paid Invoices + Manual Expenses + Fixed to avoid double counting with labor cost
         // Labor cost is "what we owe", not "what we spent". But many admins want to see it as expense.
@@ -145,8 +164,8 @@ export const useDashboardData = (currentUser: User | null) => {
             : (getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal);
 
         const monthExpensesValue = isTeacher
-            ? (getPaidInv(teacherInvoices.filter(inv => isSameMonth(inv.date))) + getManualExp(transactions.filter(t => isSameMonth(t.date))))
-            : (getPaidInv(teacherInvoices.filter(inv => isSameMonth(inv.date))) + getManualExp(transactions.filter(t => isSameMonth(t.date))) + fixedTotal);
+            ? (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date))))
+            : (getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date))) + getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date))) + fixedTotal);
 
         const totalNetProfitValue = totalRevenueValue - totalExpensesValue;
         const monthNetProfitValue = monthRevenueValue - monthExpensesValue;
@@ -166,14 +185,14 @@ export const useDashboardData = (currentUser: User | null) => {
                 return d.getFullYear() === y && (d.getMonth() + 1) === m;
             };
 
-            const mSess = filteredSessions.filter(s => isTargetMonth(s.date));
-            const mComp = mSess.filter(s =>
+            const mSess = sessions.filter((s: Session) => isTargetMonth(s.date));
+            const mComp = mSess.filter((s: Session) =>
                 ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase())
             );
 
-            const rev = getRevenue(mComp) + getManualInc(transactions.filter(t => isTargetMonth(t.date)));
-            const expInv = getPaidInv(teacherInvoices.filter(inv => isTargetMonth(inv.date)));
-            const expMan = getManualExp(transactions.filter(t => isTargetMonth(t.date)));
+            const rev = getRevenue(mComp) + getManualInc(transactions.filter((t: Transaction) => isTargetMonth(t.date)));
+            const expInv = getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isTargetMonth(inv.date)));
+            const expMan = getManualExp(transactions.filter((t: Transaction) => isTargetMonth(t.date)));
             const expFixed = (y === now.getFullYear() && m === (now.getMonth() + 1)) ? fixedTotal : 0;
 
             const exp = isTeacher ? (expInv + expMan) : (expInv + expMan + expFixed);
@@ -192,11 +211,11 @@ export const useDashboardData = (currentUser: User | null) => {
         const lowBalance: LowBalanceStudent[] = [];
         let anticipatedCollection = 0;
 
-        filteredStudents.forEach(s => {
-            s.enrollments?.forEach(en => {
+        filteredStudents.forEach((s: Student) => {
+            s.enrollments?.forEach((en: any) => {
                 if (isTeacher && en.teacher !== teacherName) return;
                 const total = Number(en.sessionsTotal) || 0;
-                const actualUsed = sessions.filter(ss =>
+                const actualUsed = sessions.filter((ss: Session) =>
                     ss.studentId === s.id &&
                     (ss.teacherId === en.teacherId || ss.teacherName === en.teacher) &&
                     ss.subject === en.subject &&
@@ -223,13 +242,13 @@ export const useDashboardData = (currentUser: User | null) => {
         // 6b. Focus List
         const focusStudentsList: any[] = [];
         if (isTeacher) {
-            filteredStudents.forEach(s => {
-                const stuSessions = filteredSessions.filter(ss => ss.studentId === s.id);
-                const stuCompleted = stuSessions.filter(ss => ss.status === 'completed');
+            filteredStudents.forEach((s: Student) => {
+                const stuSessions = sessions.filter((ss: Session) => ss.studentId === s.id);
+                const stuCompleted = stuSessions.filter((ss: Session) => ss.status === 'completed');
                 const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
                 
-                const stuEvals = evaluations.filter(e => e.studentId === s.id && e.teacherId === currentUser.id);
-                const lastEval = [...stuEvals].sort((a,b) => (b.date || '').localeCompare(a.date || ''))[0];
+                const stuEvals = evaluations.filter((e: any) => e.studentId === s.id && e.teacherId === currentUser.id);
+                const lastEval = [...stuEvals].sort((a: any, b: any) => (b.date || '').localeCompare(a.date || ''))[0];
                 const needsEval = stuCompleted.length > 0 && (!lastEval || (now.getTime() - new Date(lastEval.date).getTime()) > 7 * 24 * 60 * 60 * 1000);
 
                 if (attendanceRate < 0.7) {
@@ -247,7 +266,7 @@ export const useDashboardData = (currentUser: User | null) => {
             studentsCount: filteredStudents.length,
             teachersCount: teachers.length,
             parentsCount: parents.length,
-            totalEnrollments: filteredStudents.reduce((sum, s) => sum + (isTeacher ? (s.enrollments?.filter(e => e.teacher === teacherName).length || 0) : (s.enrollments?.length || 0)), 0),
+            totalEnrollments: filteredStudents.reduce((sum: number, s: Student) => sum + (isTeacher ? (s.enrollments?.filter((e: any) => e.teacher === teacherName).length || 0) : (s.enrollments?.length || 0)), 0),
             totalRevenue: totalRevenueValue,
             totalExpenses: totalExpensesValue,
             totalNetProfit: totalNetProfitValue,
@@ -256,14 +275,14 @@ export const useDashboardData = (currentUser: User | null) => {
             monthNetProfit: monthNetProfitValue,
             todaySessions: todayScheduledCount,
             completedSessions: completedSessions.length,
-            cancelledSessions: filteredSessions.filter(s =>
+            cancelledSessions: sessions.filter((s: Session) =>
                 ['cancelled', 'ملغاة', 'تم الإلغاء'].includes(s.status?.toLowerCase())
             ).length,
-            attendanceRate: filteredSessions.length > 0 ? Math.round((completedSessions.length / filteredSessions.length) * 100) : 0,
-            pendingInvoices: studentInvoices.filter(inv =>
+            attendanceRate: sessions.length > 0 ? Math.round((completedSessions.length / sessions.length) * 100) : 0,
+            pendingInvoices: studentInvoices.filter((inv: StudentInvoice) =>
                 ['pending', 'overdue', 'معلقة', 'غير مدفوعة', 'متأخرة'].includes(inv.status?.toLowerCase())
             ).length,
-            paidInvoices: studentInvoices.filter(inv =>
+            paidInvoices: studentInvoices.filter((inv: StudentInvoice) =>
                 ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
             ).length,
             lowBalanceCount: lowBalance.length,
@@ -285,10 +304,10 @@ export const useDashboardData = (currentUser: User | null) => {
                 ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
             ).length : undefined,
             bestStudentName: isTeacher && filteredStudents.length > 0 ? 
-                [...filteredStudents].sort((a,b) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0))[0]?.name : undefined,
-            todayTimeline: isTeacher ? filteredSessions
-                .filter(s => s.date === new Date().toLocaleDateString('en-CA'))
-                .map(s => ({
+                [...filteredStudents].sort((a: Student, b: Student) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0))[0]?.name : undefined,
+            todayTimeline: isTeacher ? sessions
+                .filter((s: Session) => s.date === new Date().toLocaleDateString('en-CA'))
+                .map((s: Session) => ({
                     id: s.id,
                     studentName: s.studentName,
                     time: s.time,
@@ -305,13 +324,13 @@ export const useDashboardData = (currentUser: User | null) => {
 
         return {
             stats,
-            todaySessions: filteredSessions.filter(s => s.date === today),
+            todaySessions: sessions.filter((s: Session) => s.date === today),
             monthlyData: chartData,
             lowBalanceStudents: lowBalance,
-            tasks: (tasksQuery.data as DashboardTask[] || []).filter(t =>
+            tasks: (tasksQuery.data as DashboardTask[] || []).filter((t: DashboardTask) =>
                 ['pending', 'قيد الانتظار', 'جديدة', 'new', 'in-progress', 'جاري التنفيذ', 'جاري'].includes(t.status?.toLowerCase())
             ),
-            topStudents: isTeacher ? filteredStudents.sort((a, b) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
+            topStudents: isTeacher ? filteredStudents.sort((a: Student, b: Student) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
             focusStudents: focusStudentsList
         };
     }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data]);
