@@ -94,7 +94,29 @@ export const Dashboard = () => {
                     </div>
                 ) : (
                     <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                        {/* Urgent / Announcements Row */}
+                        {/* 2. Main Analytics Grid (3 Columns) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            {/* Left: Recent Activity (Taking 3 cols) */}
+                            <div className="lg:col-span-3">
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            </div>
+
+                            {/* Middle: Main Charts (Taking 6 cols) */}
+                            <div className="lg:col-span-6">
+                                <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                            </div>
+
+                            {/* Right: Analytics/Distribution (Taking 3 cols) */}
+                            <div className="lg:col-span-3">
+                                <AnalyticsDashboard
+                                    students={rawStudents}
+                                    sessions={rawSessions}
+                                    monthlyData={monthlyData}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Bottom Row: Hall of Fame & Operations */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                             <div className="lg:col-span-12">
                                 <LiveClasses />
@@ -104,44 +126,13 @@ export const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Critical Operations Center */}
-                        <NotificationsCenter
-                            tasks={tasks}
-                            lowBalanceStudents={lowBalanceStudents}
-                            students={rawStudents}
-                            sessions={rawSessions}
-                            studentInvoices={rawStudentInvoices}
-                        />
-
-                        {/* Data & Analytics Hub */}
-                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                             <AnalyticsDashboard
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                monthlyData={monthlyData}
-                            />
-                        </div>
-
-                        {/* Hall of Fame */}
                         <HonorRoll students={rawStudents} />
 
-                        {/* Integrated Operations Center (Subscriptions & Tasks) */}
                         <OperationsDashboard 
                             tasks={tasks} 
                             lowBalanceStudents={lowBalanceStudents} 
                             stats={stats} 
                         />
-
-                        {/* Secondary Row */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                            <div className="lg:col-span-12">
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            </div>
-                        </div>
                     </div>
                 )}
             </div>

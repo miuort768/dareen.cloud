@@ -155,79 +155,75 @@ export const Sidebar = () => {
             {/* Desktop Sidebar - Hidden on Mobile */}
             <div
                 className={cn(
-                    "hidden lg:flex bg-white h-screen border-l border-gray-200 transition-all duration-300 flex-col fixed top-0 right-0 z-50 shrink-0 dark:bg-slate-950 dark:border-slate-900",
+                    "hidden lg:flex bg-[#0f172a] h-[calc(100vh-2rem)] m-4 rounded-[2rem] transition-all duration-500 flex-col fixed top-0 right-0 z-50 shrink-0 shadow-2xl border border-white/5",
                     collapsed ? "w-20" : "w-72"
                 )}
             >
                 {/* Search & Logo Area */}
                 <div className={cn(
-                    "h-14 items-center border-b border-gray-100 transition-all duration-300 dark:border-gray-800",
-                    collapsed ? "flex justify-center px-0" : "hidden xl:flex justify-between px-6"
+                    "h-28 flex flex-col items-center justify-center transition-all duration-300",
+                    collapsed ? "px-0" : "px-6"
                 )}>
-                    <div className={cn("flex items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
-                        <div className={cn("shrink-0", collapsed ? "w-8 h-8" : "w-6 h-6")}>
-                            <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
+                    <div className={cn("flex flex-col items-center gap-2 overflow-hidden whitespace-nowrap", collapsed && "gap-0")}>
+                        <div className={cn("shrink-0 bg-white/10 p-2 rounded-2xl border border-white/10 shadow-inner", collapsed ? "w-12 h-12" : "w-14 h-14")}>
+                            <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain rounded-lg" />
                         </div>
-                        <span className={cn(
-                            "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
-                            collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
+                        <div className={cn(
+                            "text-center transition-all duration-300",
+                            collapsed ? "w-0 opacity-0 overflow-hidden h-0" : "w-auto opacity-100"
                         )}>
-                            نظام دارين السابعة
-                        </span>
+                            <h2 className="font-black text-sm text-white tracking-tight leading-none mb-1">نظام دارين السابعة</h2>
+                            <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest opacity-60">منصة تعليمية متكاملة</p>
+                        </div>
                     </div>
                 </div>
 
                 {/* Navigation */}
-                <nav className={cn("flex-1 py-2 space-y-0.5 overflow-y-auto custom-scrollbar", collapsed ? "px-2" : "px-4")}>
+                <nav className={cn("flex-1 py-4 space-y-1 overflow-y-auto no-scrollbar", collapsed ? "px-3" : "px-5")}>
                     {filteredNavigation.map((item) => (
                         <NavLink
                             key={`${item.href}-${item.id}`}
                             to={item.href}
                             className={({ isActive }) => cn(
-                                "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-[13px]",
+                                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group relative text-[13px] font-bold",
                                 isActive
-                                    ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
-                                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
-                                collapsed && "justify-center py-1"
+                                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
+                                    : "text-gray-400 hover:bg-white/5 hover:text-white",
+                                collapsed && "justify-center px-0"
                             )}
                             title={collapsed ? item.name : ''}
                         >
                             <div className="relative shrink-0">
                                 <item.icon
-                                    size={collapsed ? 20 : 18}
-                                    className="shrink-0"
-                                    strokeWidth={collapsed ? 2.5 : 2}
+                                    size={collapsed ? 24 : 20}
+                                    className={cn("shrink-0 transition-transform duration-300", !collapsed && "group-hover:scale-110")}
+                                    strokeWidth={2}
                                 />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[9px] font-black rounded-full animate-pulse shadow-sm border border-white dark:border-slate-950">
+                                    <span className="absolute -top-1.5 -right-1.5 w-4.5 h-4.5 flex items-center justify-center bg-rose-500 text-white text-[9px] font-black rounded-full shadow-lg border-2 border-[#0f172a]">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </span>
                                 )}
                             </div>
                             <span className={cn(
-                                "whitespace-nowrap transition-all duration-300 font-bold",
+                                "whitespace-nowrap transition-all duration-300",
                                 collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                             )}>
                                 {item.name}
                             </span>
-                            {collapsed && (
-                                <div className="absolute left-full top-1/2 -translate-y-1/2 rtl:mr-2 rtl:left-full ltr:ml-2 ltr:left-auto ltr:right-full px-2 py-1 bg-gray-900 text-white text-xs rounded-none opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 dark:bg-gray-800 dark:text-gray-200">
-                                    {item.name}
-                                </div>
-                            )}
                         </NavLink>
                     ))}
                 </nav>
 
                 {/* Collapse Toggle */}
-                <div className="px-4 pt-2 pb-0 border-t border-gray-100 dark:border-gray-800">
+                <div className="px-5 py-2">
                     <button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="w-full flex items-center gap-3 px-4 py-2 rounded-none hover:bg-gray-50 text-gray-500 transition-colors dark:hover:bg-gray-800 dark:text-gray-400"
+                        className="w-full flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 transition-all border border-white/5"
                     >
                         {collapsed ? <ChevronRight size={18} className="mx-auto" /> : <ChevronLeft size={18} />}
                         <span className={cn(
-                            "whitespace-nowrap transition-all duration-300",
+                            "whitespace-nowrap transition-all duration-300 text-xs font-bold",
                             collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                         )}>
                             تصغير القائمة
@@ -235,18 +231,18 @@ export const Sidebar = () => {
                     </button>
                 </div>
 
-                {/* Logout */}
-                <div className="px-4 pb-4 pt-0">
+                {/* Logout Button Styled as in screenshot */}
+                <div className="p-5">
                     <button
                         onClick={handleLogout}
                         className={cn(
-                            "w-full flex items-center gap-3 px-4 py-2 rounded-none text-red-500 hover:bg-red-50 transition-colors dark:hover:bg-red-900/20",
-                            collapsed && "justify-center"
+                            "w-full flex items-center gap-3 px-4 py-4 rounded-2xl bg-white/5 hover:bg-red-500 group transition-all duration-300 border border-white/5 shadow-xl",
+                            collapsed ? "justify-center" : "justify-center"
                         )}
                     >
-                        <LogOut size={18} />
+                        <LogOut size={20} className="text-gray-400 group-hover:text-white transition-colors" />
                         <span className={cn(
-                            "whitespace-nowrap transition-all duration-300",
+                            "whitespace-nowrap transition-all duration-300 font-black text-xs text-gray-300 group-hover:text-white uppercase tracking-widest",
                             collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                         )}>
                             تسجيل الخروج
