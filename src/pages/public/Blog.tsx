@@ -30,23 +30,23 @@ const curriculums = [
 
 const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: any }[]> = {
     kuwait: [
-        { id: 'primary', name: 'ابتدائي - كويتي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
-        { id: 'middle', name: 'متوسط - كويتي', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
-        { id: 'secondary', name: 'ثانوي - كويتي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950', icon: GraduationCap },
+        { id: 'primary', name: 'المرحلة الابتدائية - كويتي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
+        { id: 'middle', name: 'المرحلة المتوسطة - كويتي', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
+        { id: 'secondary', name: 'المرحلة الثانوية - كويتي', sub: 'الصف ١٠ - ١٢', color: 'from-blue-800 to-blue-950', icon: GraduationCap },
     ],
     qatar: [
-        { id: 'basic', name: 'أساسي - قطري', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700', icon: School },
-        { id: 'secondary', name: 'ثانوي - قطري', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950', icon: GraduationCap },
+        { id: 'basic', name: 'المرحلة الأساسية - قطري', sub: 'الصف ١ - ٩', color: 'from-red-500 to-red-700', icon: School },
+        { id: 'secondary', name: 'المرحلة الثانوية - قطري', sub: 'الصف ١٠ - ١٢', color: 'from-red-800 to-red-950', icon: GraduationCap },
     ],
     uae: [
-        { id: 'primary', name: 'ابتدائي - إماراتي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600', icon: School },
-        { id: 'preparatory', name: 'إعدادي - إماراتي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800', icon: School },
-        { id: 'secondary', name: 'ثانوي - إماراتي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950', icon: GraduationCap },
+        { id: 'primary', name: 'المرحلة الابتدائية - إماراتي', sub: 'الصف ١ - ٥', color: 'from-green-400 to-green-600', icon: School },
+        { id: 'preparatory', name: 'المرحلة الإعدادية - إماراتي', sub: 'الصف ٦ - ٩', color: 'from-green-600 to-green-800', icon: School },
+        { id: 'secondary', name: 'المرحلة الثانوية - إماراتي', sub: 'الصف ١٠ - ١٢', color: 'from-green-800 to-green-950', icon: GraduationCap },
     ],
     saudi: [
-        { id: 'primary', name: 'ابتدائي - سعودي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600', icon: School },
-        { id: 'middle', name: 'متوسط - سعودي', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800', icon: School },
-        { id: 'secondary', name: 'ثانوي - سعودي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950', icon: GraduationCap },
+        { id: 'primary', name: 'المرحلة الابتدائية - سعودي', sub: 'الصف ١ - ٦', color: 'from-emerald-400 to-emerald-600', icon: School },
+        { id: 'middle', name: 'المرحلة المتوسطة - سعودي', sub: 'الصف ٧ - ٩', color: 'from-emerald-600 to-emerald-800', icon: School },
+        { id: 'secondary', name: 'المرحلة الثانوية - سعودي', sub: 'الصف ١٠ - ١٢', color: 'from-emerald-800 to-emerald-950', icon: GraduationCap },
     ],
 };
 
@@ -216,7 +216,7 @@ export const Blog = () => {
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={12} className="text-indigo-600" />
-                                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
+                                    <span className="text-[9px] font-black text-indigo-600/80">
                                         {view === 'types' ? 'منصة المعرفة الذكية' 
                                         : view === 'curriculums' ? `تحميل ${currentTypeName}` 
                                         : currentCurriculumName}
@@ -239,12 +239,12 @@ export const Blog = () => {
                                         <button
                                             key={type.id}
                                             onClick={() => { setSelectedType(type.id); setView('curriculums'); }}
-                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
+                                            className={cn("relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
                                                 <type.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[11px] font-black text-white text-center tracking-widest uppercase">{type.name}</span>
+                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{type.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -253,12 +253,12 @@ export const Blog = () => {
                                         <button
                                             key={curr.id}
                                             onClick={() => { setSelectedCurriculum(curr.id); setView('grades'); }}
-                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", curr.color)}
+                                            className={cn("relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", curr.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
                                                 <curr.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[11px] font-black text-white text-center tracking-widest">{curr.name}</span>
+                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{curr.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -267,12 +267,12 @@ export const Blog = () => {
                                         <button
                                             key={grade.id}
                                             onClick={() => { setSelectedLevel(grade.id); setView('classrooms'); }}
-                                            className={cn("relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", grade.color)}
+                                            className={cn("relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", grade.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
                                                 <grade.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[11px] font-black text-white text-center tracking-widest">{grade.name}</span>
+                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{grade.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -293,26 +293,26 @@ export const Blog = () => {
                                             {view !== 'types' && (
                                                 <button
                                                     onClick={goBack}
-                                                    className="relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10"
+                                                    className="relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-rose-500 to-rose-700 overflow-hidden border border-white/10"
                                                 >
                                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     <div className="relative z-10 flex items-center gap-2">
                                                         <ArrowLeft size={16} className="text-white/80 group-hover:-translate-x-1 transition-transform" />
-                                                        <span className="text-[11px] font-black text-white text-center tracking-widest uppercase font-heading">العودة للخلف</span>
+                                                        <span className="text-[10px] md:text-xs font-black text-white text-center font-heading">العودة للخلف</span>
                                                     </div>
                                                 </button>
                                             )}
                                             <Link
                                                 to="/courses"
                                                 className={cn(
-                                                    "relative h-14 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-indigo-500 to-blue-700 overflow-hidden border border-white/10",
+                                                    "relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br from-indigo-500 to-blue-700 overflow-hidden border border-white/10",
                                                     isTotalOdd && "sm:col-span-2"
                                                 )}
                                             >
                                                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                 <div className="relative z-10 flex items-center gap-2">
                                                     <BookOpen size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                    <span className="text-[11px] font-black text-white text-center tracking-widest uppercase font-heading">تصفح الدورات</span>
+                                                    <span className="text-[10px] md:text-xs font-black text-white text-center font-heading">تصفح الدورات</span>
                                                 </div>
                                             </Link>
                                         </>);
@@ -340,7 +340,7 @@ export const Blog = () => {
                         /* TIER 7: Results - filtered posts */
                         <div className="max-w-6xl mx-auto">
                             {/* Breadcrumb */}
-                            <div className="flex flex-wrap items-center gap-2 mb-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            <div className="flex flex-wrap items-center gap-2 mb-6 text-[10px] font-black text-slate-400 ">
                                 <button onClick={() => setView('types')} className="hover:text-indigo-600 transition-colors">الرئيسية</button>
                                 <span>/</span><span className="text-slate-600">{currentTypeName}</span>
                                 <span>/</span><span className="text-slate-600">{currentCurriculumName}</span>
@@ -352,10 +352,10 @@ export const Blog = () => {
 
                             {/* Back buttons */}
                             <div className="flex gap-2 mb-8">
-                                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-black uppercase tracking-widest transition-colors">
+                                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-black  transition-colors">
                                     <span>←</span><span>تغيير المادة</span>
                                 </button>
-                                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-950 hover:bg-slate-800 text-white text-[11px] font-black uppercase tracking-widest transition-colors">
+                                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-950 hover:bg-slate-800 text-white text-[11px] font-black  transition-colors">
                                     <span>⌂</span><span>الرئيسية</span>
                                 </button>
                             </div>
@@ -363,7 +363,7 @@ export const Blog = () => {
                             {loading ? (
                                 <div className="flex flex-col items-center justify-center py-24">
                                     <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mb-4" />
-                                    <span className="text-xs font-black text-gray-400 uppercase tracking-widest">جاري التحميل...</span>
+                                    <span className="text-xs font-black text-gray-400 ">جاري التحميل...</span>
                                 </div>
                             ) : filteredPosts.length === 0 ? (
                                 <div className="text-center py-24 border-2 border-dashed border-slate-200 dark:border-slate-800">
@@ -384,11 +384,11 @@ export const Blog = () => {
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
                                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute top-3 right-3 z-20">
-                                                    <span className="bg-indigo-600 text-white text-[9px] font-black px-2 py-1 uppercase tracking-wider">{post.subject || post.category}</span>
+                                                    <span className="bg-indigo-600 text-white text-[9px] font-black px-2 py-1 ">{post.subject || post.category}</span>
                                                 </div>
                                             </div>
                                             <div className="p-5 flex flex-col flex-grow">
-                                                <div className="flex items-center gap-3 text-[10px] text-gray-400 font-black uppercase tracking-widest mb-3">
+                                                <div className="flex items-center gap-3 text-[10px] text-gray-400 font-black  mb-3">
                                                     <div className="flex items-center gap-1">
                                                         <Calendar size={12} className="text-indigo-500" />
                                                         <span>{post.date?.split('T')[0]}</span>
@@ -400,7 +400,7 @@ export const Blog = () => {
                                                 </div>
                                                 <h2 className="font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-indigo-600 transition-colors leading-tight">{post.title}</h2>
                                                 <p className="text-gray-500 dark:text-slate-400 text-sm mb-4 line-clamp-2 leading-relaxed font-medium flex-grow">{post.excerpt}</p>
-                                                <div className="mt-auto inline-flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest">
+                                                <div className="mt-auto inline-flex items-center gap-2 text-indigo-600 font-black text-xs ">
                                                     <span>اقرأ المقال</span>
                                                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" />
                                                 </div>
@@ -416,7 +416,7 @@ export const Blog = () => {
                             <div className="text-center max-w-3xl mx-auto mb-8">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={14} className="text-indigo-600" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/80">
+                                    <span className="text-[10px] font-black  text-indigo-600/80">
                                         {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
                                         : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
                                         : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
@@ -443,17 +443,17 @@ export const Blog = () => {
                                     {view === 'classrooms' && currentClassrooms.map(cls => (
                                         <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }} className={cn(btnBase, "from-slate-800 to-slate-900 border border-white/5", "animate-in zoom-in-95 duration-300")}>
                                             <div className="absolute inset-0 bg-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">الصف {gradeNames[cls] || cls}</span>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">الصف {gradeNames[cls] || cls}</span>
                                         </button>
                                     ))}
 
                                     {/* TIER 5: Terms */}
                                     {view === 'terms' && (<>
                                         <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }} className={cn(btnBase, "from-indigo-600 to-indigo-800", "animate-in zoom-in-95 duration-300")}>
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">ترم أول</span>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">ترم أول</span>
                                         </button>
                                         <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }} className={cn(btnBase, "from-purple-600 to-purple-800", "animate-in zoom-in-95 duration-300")}>
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">ترم ثاني</span>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">ترم ثاني</span>
                                         </button>
                                     </>)}
 
@@ -461,7 +461,7 @@ export const Blog = () => {
                                     {view === 'subjects' && currentSubjects.map(subj => (
                                         <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0,0); }} className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}>
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center tracking-widest px-2">{subj.name}</span>
+                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">{subj.name}</span>
                                         </button>
                                     ))}
 

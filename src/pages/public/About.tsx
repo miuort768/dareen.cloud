@@ -29,10 +29,10 @@ export const About = () => {
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-none shadow-sm mb-4 animate-fade-in group hover:border-indigo-500 transition-all duration-500">
                         <Sparkles size={16} className="text-indigo-600 group-hover:rotate-12 transition-transform" />
-                        <span className="text-xs font-black tracking-[0.1em] uppercase text-gray-900 dark:text-white">دارين السابعة | ريادة تعليمية</span>
+                        <span className="text-xs font-black text-gray-900 dark:text-white">دارين السابعة | ريادة تعليمية</span>
                     </div>
 
-                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading tracking-tight leading-[1.6] md:leading-tight relative">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-[1.6] md:leading-tight relative">
                         <span className="sr-only">عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت والخليج</span>
                         <span aria-hidden="true">نحن لا نُدرّس فقط،<br /></span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-900 py-1 inline-block" aria-hidden="true">نحن نبني مستقبلاً</span>
@@ -48,7 +48,7 @@ export const About = () => {
                                 <Award size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">10+</span>
-                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">سنوات تميز</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">سنوات تميز</span>
                         </div>
 
                         <div className="flex flex-col items-center">
@@ -56,7 +56,7 @@ export const About = () => {
                                 <Users size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">5k+</span>
-                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">طالب فخور</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">طالب فخور</span>
                         </div>
 
                         <div className="flex flex-col items-center">
@@ -64,7 +64,7 @@ export const About = () => {
                                 <Heart size={24} />
                             </div>
                             <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">100%</span>
-                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">ثقة وتفاني</span>
+                            <span className="text-[10px] text-gray-400 dark:text-slate-500 font-black mt-1">ثقة وتفاني</span>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ export const About = () => {
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2 order-1 lg:order-2 text-right">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-none mb-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em]">تعرف عليـــنا</span>
+                                <span className="text-[10px] font-black ">تعرف عليـــنا</span>
                             </div>
                             <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 font-heading leading-tight md:leading-tight">
                                 ريادة في التعليم،<br />
@@ -148,7 +148,7 @@ export const About = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-600/10 mb-4">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">دستورنا التعليمي</span>
+                            <span className="text-[10px] font-black text-indigo-600">دستورنا التعليمي</span>
                         </div>
                         <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-4 font-heading">
                             القيم التي <span className="text-indigo-600">تُحدد هويتنا</span>
@@ -239,7 +239,7 @@ export const About = () => {
                                     <div className="w-full lg:w-[60%] text-center lg:text-right">
                                         <div className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-600/10 border border-indigo-500/20 mb-8 backdrop-blur-xl">
                                             <Sparkles className="w-4 h-4 text-indigo-500 animate-pulse" />
-                                            <span className="text-xs font-black uppercase tracking-[0.4em] text-indigo-50">انضم إلى عائلتنا</span>
+                                            <span className="text-xs font-black text-indigo-50">انضم إلى عائلتنا</span>
                                         </div>
 
                                         <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-4 font-heading text-white leading-tight md:leading-tight">
@@ -283,7 +283,7 @@ export const About = () => {
                                                         <Users size={28} />
                                                     </div>
                                                     <span className="text-4xl font-black text-white mb-2 block tracking-tight">5k+</span>
-                                                    <span className="text-[11px] text-indigo-500/80 font-black uppercase tracking-[0.2em]">طالب فعال</span>
+                                                    <span className="text-[11px] text-indigo-500/80 font-black ">طالب فعال</span>
                                                 </div>
                                                 
                                                 {/* Artistic Glow */}
@@ -299,7 +299,7 @@ export const About = () => {
                                                         <Target size={28} />
                                                     </div>
                                                     <span className="text-4xl font-black text-white mb-2 block tracking-tight">100%</span>
-                                                    <span className="text-[11px] text-amber-500/80 font-black uppercase tracking-[0.2em]">نسبة نجاح</span>
+                                                    <span className="text-[11px] text-amber-500/80 font-black ">نسبة نجاح</span>
                                                 </div>
 
                                                 {/* Artistic Glow */}

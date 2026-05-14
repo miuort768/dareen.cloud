@@ -141,7 +141,7 @@ export const Home = () => {
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                                <span className="text-indigo-900 font-bold text-[10px] sm:text-xs tracking-wide">منصة تعليمية بتصميم عصري</span>
+                                <span className="text-indigo-900 font-bold text-[10px] sm:text-xs">منصة تعليمية بتصميم عصري</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-none mb-0 relative">
                                 <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم واحد للدروس الخصوصية وتحفيظ القرآن في الكويت، قطر، السعودية، الامارات، وسلطنة عمان</span>
@@ -150,7 +150,7 @@ export const Home = () => {
                                     للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
-                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 tracking-tighter font-medium">
+                            <p className="text-[11px] sm:text-xs md:text-xs lg:text-sm text-slate-600 dark:text-slate-400 leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
                                 منصة متكاملة تجمع بين أفضل المعلمين وأحدث تقنيات التعليم الإلكتروني لضمان تفوق أبنائكم دائماً.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -305,7 +305,7 @@ export const Home = () => {
                                 <div className="flex-1 text-center lg:text-right">
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/50 border border-white/10 rounded-full mb-2 mx-auto lg:mx-0">
                                         <Award size={16} className="text-amber-500" />
-                                        <span className="text-xs font-bold uppercase tracking-wider text-gray-300">التميز التعليمي</span>
+                                        <span className="text-xs font-bold  text-gray-300">التميز التعليمي</span>
                                     </div>
                                     <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-white">بيئة تعليمية متطورة</h3>
                                     <p className="text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
@@ -353,7 +353,7 @@ export const Home = () => {
                         <div className="w-full lg:w-1/2 text-center">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full mb-6 mx-auto">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span className="text-emerald-900 font-bold text-xs uppercase tracking-wider">برامج تحفيظ متميزة</span>
+                                <span className="text-emerald-900 font-bold text-xs ">برامج تحفيظ متميزة</span>
                             </div>
                             <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-6 text-black leading-tight font-heading">
                                 رحلتك مع <span className="text-emerald-600 relative inline-block">
@@ -454,7 +454,7 @@ export const Home = () => {
                     <div className="text-center mb-4">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full mb-4 mx-auto scale-90">
                             <Zap size={12} className="text-amber-400" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">ابدأ رحلتك</span>
+                            <span className="text-[10px] font-black ">ابدأ رحلتك</span>
                         </div>
                         <h2 className="text-xl md:text-5xl font-black text-slate-900 dark:text-white font-heading">
                             كيف تشترك في <span className="text-indigo-600">المعهد؟</span>
@@ -574,7 +574,7 @@ export const Home = () => {
                     <div className="text-center mb-4 md:mb-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-600/5 border border-indigo-500/10 rounded-full mb-3 mx-auto">
                             <Quote size={12} className="text-indigo-600" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-700">آراء يعتز بها</span>
+                            <span className="text-[9px] font-black  text-indigo-700">آراء يعتز بها</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading leading-tight">
                             ماذا يقول <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-500">أولياء الأمور؟</span>
@@ -678,7 +678,7 @@ export const Home = () => {
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 backdrop-blur-sm border border-gray-100 rounded-full mb-2 mx-auto shadow-sm">
                             <HelpCircle size={12} className="text-indigo-600" />
-                            <span className="text-[9px] font-black uppercase tracking-wider text-gray-400">لديك استفسار؟</span>
+                            <span className="text-[9px] font-black  text-gray-400">لديك استفسار؟</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black text-black mb-3 font-heading">
                             الأسئلة <span className="text-indigo-600">الشائعة</span>

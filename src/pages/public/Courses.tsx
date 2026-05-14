@@ -134,7 +134,7 @@ export const Courses = () => {
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6 animate-fade-in group hover:border-indigo-200 dark:hover:border-indigo-500/50 shadow-sm transition-all">
                             <Sparkles size={14} className="text-indigo-600 dark:text-indigo-400" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 dark:text-indigo-300">استكشف مستقبل التعلم</span>
+                            <span className="text-[10px] font-black text-gray-500 dark:text-indigo-300">استكشف مستقبل التعلم</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight relative">
                             <span className="sr-only">أفضل الدورات التعليمية والدروس الخصوصية في الكويت ودول الخليج - تحفيظ قرآن وتأسيس شامل</span>
@@ -161,7 +161,7 @@ export const Courses = () => {
                                 />
                                 <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 w-6 h-6 group-focus-within:text-indigo-600 transition-colors" />
                             </div>
-                            <button className="px-10 py-5 bg-black text-white font-black text-sm uppercase tracking-widest rounded-xl hover:bg-indigo-600 transition-all duration-500 shadow-xl shadow-black/10 flex items-center justify-center gap-3">
+                            <button className="px-10 py-5 bg-black text-white font-black text-sm  rounded-xl hover:bg-indigo-600 transition-all duration-500 shadow-xl shadow-black/10 flex items-center justify-center gap-3">
                                 <span>بحث ذكي</span>
                                 <Target size={18} className="animate-pulse" />
                             </button>
@@ -178,7 +178,7 @@ export const Courses = () => {
                                         }`}
                                 >
                                     <cat.icon size={16} className={`${activeCategory === cat.value ? 'text-amber-500' : 'text-gray-300'} flex-shrink-0`} />
-                                    <span className={`tracking-tight whitespace-nowrap ${activeCategory === cat.value ? 'text-white' : ''}`}>{cat.label}</span>
+                                    <span className={` whitespace-nowrap ${activeCategory === cat.value ? 'text-white' : ''}`}>{cat.label}</span>
                                 </button>
                             ))}
                         </div>
@@ -208,7 +208,7 @@ export const Courses = () => {
                                     
                                     {/* Corner Status Badge */}
                                     <div className="absolute top-3 right-4 z-20">
-                                        <div className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-full text-[9px] font-black uppercase text-amber-500 tracking-tighter shadow-sm flex items-center gap-2">
+                                        <div className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-full text-[9px] font-black text-amber-500 shadow-sm flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                                             {course.price}
                                         </div>
@@ -241,7 +241,7 @@ export const Courses = () => {
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 leading-none">{course.students}</span>
-                                                    <span className="text-[8px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">طالب مسجل</span>
+                                                    <span className="text-[8px] font-bold text-gray-400 dark:text-slate-500  mt-0.5">طالب مسجل</span>
                                                 </div>
                                             </div>
                                             <div className="bg-gradient-to-r from-indigo-600 to-purple-500 px-3 py-1 rounded-full shadow-lg shadow-purple-500/20 flex items-center gap-1.5 animate-pulse-slow">
@@ -259,7 +259,7 @@ export const Courses = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center justify-center gap-2 group/btn bg-black dark:bg-indigo-600 text-white w-full py-4 hover:bg-indigo-700 dark:hover:bg-indigo-700 transition-all duration-500 overflow-hidden relative"
                                         >
-                                            <span className="relative z-10 text-[11px] font-black uppercase tracking-widest">احجز عن طريق الواتساب</span>
+                                            <span className="relative z-10 text-[11px] font-black ">احجز عن طريق الواتساب</span>
                                             <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/btn:left-[100%] transition-all duration-1000"></div>
                                         </a>
                                     </div>

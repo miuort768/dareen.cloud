@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, ArrowLeft } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
@@ -76,7 +76,7 @@ export const Contact = () => {
                     <div className="text-center mb-10">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-none mb-5">
                             <span className="w-2 h-2 rounded-none bg-indigo-500 animate-pulse" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-400">نحن في خدمتك</span>
+                            <span className="text-[10px] font-black  text-indigo-600 dark:text-indigo-400">نحن في خدمتك</span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-gray-900 dark:text-white mb-3">
                             تواصل مع{' '}
@@ -106,7 +106,7 @@ export const Contact = () => {
                                     <card.icon size={20} />
                                 </div>
                                 <div className="flex-grow min-w-0">
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
+                                    <p className="text-[9px] font-black  text-gray-400 dark:text-slate-500 mb-0.5">{card.title}</p>
                                     <p className="text-sm font-bold text-gray-800 dark:text-white truncate" dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}>{card.value}</p>
                                 </div>
                             </a>
@@ -143,7 +143,7 @@ export const Contact = () => {
                                     {/* Row: Name + Phone */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">الاسم الكامل</label>
+                                            <label className="text-[10px] font-black text-gray-400  block">الاسم الكامل</label>
                                             <input
                                                 required
                                                 type="text"
@@ -154,7 +154,7 @@ export const Contact = () => {
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">رقم الهاتف</label>
+                                            <label className="text-[10px] font-black text-gray-400  block">رقم الهاتف</label>
                                             <input
                                                 required
                                                 type="tel"
@@ -169,7 +169,7 @@ export const Contact = () => {
 
                                     {/* Subject */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">الموضوع</label>
+                                        <label className="text-[10px] font-black text-gray-400  block">الموضوع</label>
                                         <select
                                             value={formData.subject}
                                             onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
@@ -185,7 +185,7 @@ export const Contact = () => {
 
                                     {/* Message */}
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">رسالتك</label>
+                                        <label className="text-[10px] font-black text-gray-400  block">رسالتك</label>
                                         <textarea
                                             required
                                             rows={4}
@@ -203,7 +203,7 @@ export const Contact = () => {
                                             type="submit"
                                             disabled={formState === 'submitting'}
                                             className={cn(
-                                                "flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm uppercase tracking-wider transition-all",
+                                                "flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  transition-all",
                                                 formState === 'submitting'
                                                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                                     : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20'
@@ -220,7 +220,7 @@ export const Contact = () => {
                                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm uppercase tracking-wider bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transition-all"
+                                            className="flex items-center justify-center gap-2 py-3.5 rounded-none font-black text-sm  bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transition-all"
                                         >
                                             <MessageCircle size={16} />
                                             <span>تواصل واتساب</span>
