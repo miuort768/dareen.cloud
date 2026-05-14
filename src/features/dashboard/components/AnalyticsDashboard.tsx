@@ -51,19 +51,19 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
     return (
         <div className="w-full space-y-6" dir="rtl">
-            {/* Header / Tabs - Admin Sharp Style */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-900 border-2 border-slate-800 p-8 rounded-none shadow-2xl">
-                <div className="flex items-center gap-6 px-2">
-                    <div className="w-14 h-14 bg-indigo-600 text-white rounded-none flex items-center justify-center shadow-xl border border-indigo-400/30">
-                        <Database size={28} />
+            {/* Header / Tabs - Compact Sharp Admin Style */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-5 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <div className="flex items-center gap-4 px-1">
+                    <div className="w-12 h-12 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md">
+                        <Database size={24} />
                     </div>
                     <div>
-                        <h3 className="text-2xl font-black text-white leading-tight tracking-tight uppercase">مركز تحليل البيانات</h3>
-                        <p className="text-[10px] font-black text-slate-400 mt-1 uppercase tracking-[0.2em]">Enterprise Business Intelligence</p>
+                        <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل البيانات</h3>
+                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">Business Intelligence Unit</p>
                     </div>
                 </div>
 
-                <div className="flex bg-slate-800 p-1 rounded-none border border-slate-700">
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-none border-2 border-slate-950">
                     <TabButton 
                         active={activeTab === 'commitment'} 
                         onClick={() => setActiveTab('commitment')} 
@@ -79,47 +79,47 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
                 {/* Evolution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-none p-10 shadow-xl transition-all relative overflow-hidden", 
+                    "bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(16,185,129,0.1)] transition-all relative overflow-hidden", 
                     activeTab !== 'commitment' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
-                    <div className="flex items-center justify-between mb-10">
-                        <div className="flex items-center gap-5">
-                            <div className="w-12 h-12 bg-emerald-600 text-white rounded-none flex items-center justify-center shadow-lg">
-                                <TrendingUp size={24} />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-600" />
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm">
+                                <TrendingUp size={20} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white text-lg uppercase tracking-tight">التحليل التحصيلي التراكمي</h4>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Academic Progress Evolution</p>
+                                <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">التحليل التحصيلي</h4>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Academic Progression</p>
                             </div>
                         </div>
-                        <div className="bg-emerald-50 dark:bg-emerald-900/30 px-5 py-2 border border-emerald-100 dark:border-emerald-800/50">
-                            <span className="text-xs font-black text-emerald-600 tabular-nums uppercase tracking-widest">{overallRate}% GLOBAL</span>
+                        <div className="bg-emerald-600 text-white px-3 py-1 border border-slate-950">
+                            <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% GLOBAL</span>
                         </div>
                     </div>
 
-                    <div className="h-[350px] w-full" dir="ltr">
+                    <div className="h-[300px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={attendanceData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                            <AreaChart data={attendanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#059669" stopOpacity={0.3}/>
+                                        <stop offset="5%" stopColor="#059669" stopOpacity={0.2}/>
                                         <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="0" vertical={false} stroke="#f1f5f9" opacity={0.1} />
+                                <CartesianGrid strokeDasharray="0" vertical={false} stroke="#000" opacity={0.05} />
                                 <XAxis 
                                     dataKey="month" 
-                                    tick={{ fontSize: 10, fontWeight: '900', fill: '#94a3b8' }} 
+                                    tick={{ fontSize: 9, fontWeight: '900', fill: '#64748b' }} 
                                     axisLine={false} 
                                     tickLine={false} 
-                                    dy={15} 
+                                    dy={10} 
                                 />
                                 <YAxis 
-                                    tick={{ fontSize: 10, fontWeight: '900', fill: '#94a3b8' }} 
+                                    tick={{ fontSize: 9, fontWeight: '900', fill: '#64748b' }} 
                                     domain={[0, 100]} 
                                     axisLine={false} 
                                     tickLine={false} 
@@ -129,13 +129,13 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     cursor={{ stroke: '#059669', strokeWidth: 2 }}
                                     contentStyle={{ 
                                         borderRadius: '0px', 
-                                        border: '2px solid #059669', 
-                                        boxShadow: '20px 20px 0px 0px rgba(0,0,0,0.1)', 
-                                        fontSize: '11px', 
+                                        border: '2px solid #000', 
+                                        boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)', 
+                                        fontSize: '10px', 
                                         fontWeight: '900', 
-                                        backgroundColor: '#0f172a', 
-                                        color: '#fff',
-                                        padding: '12px 16px'
+                                        backgroundColor: '#fff', 
+                                        color: '#000',
+                                        padding: '8px 12px'
                                     }}
                                 />
                                 <Area 
@@ -143,9 +143,8 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     dataKey="rate" 
                                     stroke="#059669" 
                                     fill="url(#colorRate)" 
-                                    strokeWidth={4} 
-                                    dot={{ r: 4, fill: '#059669', strokeWidth: 2, stroke: '#fff' }} 
-                                    activeDot={{ r: 6, strokeWidth: 0 }} 
+                                    strokeWidth={3} 
+                                    dot={{ r: 3, fill: '#059669', strokeWidth: 1.5, stroke: '#fff' }} 
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
@@ -154,48 +153,57 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
                 {/* Distribution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-none p-10 shadow-xl transition-all relative overflow-hidden", 
+                    "bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(79,70,229,0.1)] transition-all relative overflow-hidden", 
                     activeTab !== 'database' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-2 h-full bg-indigo-600" />
-                    <div className="flex items-center justify-between mb-10">
-                        <div className="flex items-center gap-5">
-                            <div className="w-12 h-12 bg-indigo-600 text-white rounded-none flex items-center justify-center shadow-lg">
-                                <BarChart3 size={24} />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-indigo-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm">
+                                <BarChart3 size={20} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white text-lg uppercase tracking-tight">خارطة توزيع المناهج</h4>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Subject Distribution Map</p>
+                                <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">خارطة توزيع المناهج</h4>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Subject Analytics</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-50 dark:bg-indigo-900/30 px-5 py-2 border border-indigo-100 dark:border-indigo-800/50">
-                            <span className="text-xs font-black text-indigo-600 tabular-nums uppercase tracking-widest">{students.length} TOTAL USERS</span>
+                        <div className="bg-indigo-600 text-white px-3 py-1 border border-slate-950">
+                            <span className="text-[10px] font-black tabular-nums uppercase">{students.length} USERS</span>
                         </div>
                     </div>
 
-                    <div className="h-[330px] w-full" dir="ltr">
+                    <div className="h-[280px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={subjectStats} layout="vertical" margin={{ left: 20, right: 40, top: 10, bottom: 10 }}>
-                                <CartesianGrid strokeDasharray="0" stroke="#f1f5f9" horizontal={false} opacity={0.1} />
+                            <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 30, top: 0, bottom: 0 }}>
+                                <CartesianGrid strokeDasharray="0" stroke="#000" horizontal={false} opacity={0.05} />
                                 <XAxis type="number" hide />
                                 <YAxis 
                                     type="category" 
                                     dataKey="subject" 
-                                    tick={{ fontSize: 10, fontWeight: '900', fill: '#64748b' }} 
-                                    width={100} 
+                                    tick={{ fontSize: 9, fontWeight: '900', fill: '#64748b' }} 
+                                    width={80} 
                                     axisLine={false} 
                                     tickLine={false} 
                                 />
                                 <Tooltip 
                                     cursor={{ fill: 'rgba(79, 70, 229, 0.05)' }} 
-                                    contentStyle={{ borderRadius: '0px', border: '2px solid #4f46e5', boxShadow: '15px 15px 0px 0px rgba(0,0,0,0.1)', fontSize: '11px', fontWeight: '900', backgroundColor: '#0f172a', color: '#fff' }} 
+                                    contentStyle={{ 
+                                        borderRadius: '0px', 
+                                        border: '2px solid #000', 
+                                        boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)', 
+                                        fontSize: '10px', 
+                                        fontWeight: '900', 
+                                        backgroundColor: '#fff', 
+                                        color: '#000',
+                                        padding: '8px 12px'
+                                    }} 
                                 />
                                 <Bar 
                                     dataKey="sessions" 
                                     fill="#4f46e5" 
                                     radius={0} 
-                                    barSize={32}
-                                    label={{ position: 'right', fill: '#4f46e5', fontSize: 10, fontWeight: '900', offset: 10 }}
+                                    barSize={24}
+                                    label={{ position: 'right', fill: '#4f46e5', fontSize: 9, fontWeight: '900', offset: 8 }}
                                 />
                             </BarChart>
                         </ResponsiveContainer>
@@ -210,11 +218,11 @@ const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, on
     <button 
         onClick={onClick}
         className={cn(
-            "flex-1 px-10 py-3 rounded-none font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-3",
-            active ? "bg-indigo-600 text-white shadow-xl" : "text-slate-400 hover:text-white"
+            "flex-1 px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+            active ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
         )}
     >
-        <Icon size={16} />
+        <Icon size={14} />
         {label}
     </button>
 );

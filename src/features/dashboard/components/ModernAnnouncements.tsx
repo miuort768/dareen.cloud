@@ -70,20 +70,20 @@ export const ModernAnnouncements: React.FC = () => {
     };
 
     return (
-        <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] shadow-sm overflow-hidden mb-8 hover:shadow-md transition-all duration-500" dir="rtl">
+        <div className="relative bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden mb-6 hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all duration-300" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
                     className={cn(
-                        "w-full md:w-40 flex flex-row md:flex-col items-center justify-center p-6 gap-4 cursor-pointer transition-all border-b md:border-b-0 md:border-l border-slate-50 dark:border-slate-800",
+                        "w-full md:w-32 flex flex-row md:flex-col items-center justify-center p-5 gap-3 cursor-pointer transition-all border-b md:border-b-0 md:border-l-2 border-slate-950/10",
                         type.bg
                     )}
                 >
-                    <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-700">
-                        <type.icon size={28} className={type.color} />
+                    <div className="w-10 h-10 bg-white dark:bg-slate-800 border-2 border-slate-950 rounded-none flex items-center justify-center shadow-md">
+                        <type.icon size={20} className={type.color} />
                     </div>
-                    <span className={cn("text-[11px] font-bold uppercase tracking-widest leading-none text-center", type.color)}>
+                    <span className={cn("text-[9px] font-black uppercase tracking-tight leading-none text-center", type.color)}>
                         {type.label}
                     </span>
                 </div>
@@ -91,26 +91,26 @@ export const ModernAnnouncements: React.FC = () => {
                 {/* Content */}
                 <div 
                     onClick={() => setShowAcknowledge(true)}
-                    className="flex-1 p-8 md:p-12 relative cursor-pointer group"
+                    className="flex-1 p-6 md:p-8 relative cursor-pointer group"
                 >
-                    <div className="absolute top-6 left-8 flex items-center gap-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-full border border-indigo-100 dark:border-indigo-800/50">
-                        <Sparkles size={12} className="text-amber-500" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">إعلان {currentIndex + 1} / {announcements.length}</span>
+                    <div className="absolute top-4 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950 border border-slate-950 rounded-none">
+                        <Sparkles size={10} className="text-amber-400" />
+                        <span className="text-[8px] font-black uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={current.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.4 }}
-                            className="pr-2"
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="pr-1 mt-4"
                         >
-                            <h4 className="text-slate-800 dark:text-white font-bold text-xl md:text-2xl mb-4 leading-tight">
+                            <h4 className="text-slate-900 dark:text-white font-black text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
                                 {current.title}
                             </h4>
-                            <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed font-medium line-clamp-2 md:line-clamp-none">
+                            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm leading-relaxed font-bold line-clamp-2">
                                 {current.content}
                             </p>
                         </motion.div>
@@ -118,9 +118,9 @@ export const ModernAnnouncements: React.FC = () => {
 
                     {/* Navigation */}
                     {announcements.length > 1 && (
-                        <div className="absolute bottom-6 left-8 flex gap-2" onClick={e => e.stopPropagation()}>
-                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-indigo-600 hover:text-white rounded-xl transition-all shadow-sm"><ChevronRight size={20} /></button>
-                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-indigo-600 hover:text-white rounded-xl transition-all shadow-sm"><ChevronLeft size={20} /></button>
+                        <div className="absolute bottom-4 left-6 flex gap-2" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-950 hover:bg-slate-950 hover:text-white transition-all rounded-none"><ChevronRight size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-950 hover:bg-slate-950 hover:text-white transition-all rounded-none"><ChevronLeft size={16} /></button>
                         </div>
                     )}
                 </div>
@@ -129,7 +129,7 @@ export const ModernAnnouncements: React.FC = () => {
             {/* Progress Bar */}
             <div className="absolute bottom-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 w-full" />
             <motion.div 
-                className="absolute bottom-0 right-0 h-1 bg-indigo-500"
+                className="absolute bottom-0 right-0 h-1 bg-indigo-600"
                 initial={{ width: "0%" }}
                 animate={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
                 transition={{ duration: 0.5 }}
@@ -138,42 +138,42 @@ export const ModernAnnouncements: React.FC = () => {
             {/* Acknowledgment Modal */}
             <AnimatePresence>
                 {showAcknowledge && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 backdrop-blur-md bg-slate-950/40">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 backdrop-blur-sm bg-slate-950/40">
                         <motion.div 
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-8 md:p-12 max-w-lg w-full shadow-2xl"
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white dark:bg-slate-900 border-2 border-slate-950 p-6 md:p-10 max-w-lg w-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] rounded-none"
                         >
-                            <div className="flex items-center gap-6 mb-8">
-                                <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center shadow-inner", type.bg)}>
-                                    <type.icon size={36} className={type.color} />
+                            <div className="flex items-center gap-5 mb-8">
+                                <div className={cn("w-16 h-16 border-2 border-slate-950 flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] rounded-none", type.bg)}>
+                                    <type.icon size={28} className={type.color} />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold text-slate-800 dark:text-white leading-tight">تأكيد القراءة</h3>
-                                    <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mt-1">Important Notice</p>
+                                    <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">تأكيد القراءة</h3>
+                                    <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Important Compliance Notice</p>
                                 </div>
                             </div>
 
-                            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-6 md:p-8 mb-10 border-r-4 border-indigo-500">
-                                <p className="text-lg font-medium text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-5 md:p-8 mb-8 border-r-4 border-indigo-600 rounded-none">
+                                <p className="text-base font-bold text-slate-700 dark:text-slate-300 leading-relaxed italic">
                                     "{current.content}"
                                 </p>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-3">
                                 <button 
                                     onClick={handleDismiss}
-                                    className="h-14 bg-indigo-600 text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-200 dark:shadow-none"
+                                    className="h-12 bg-indigo-600 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-indigo-700 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:scale-[0.98] rounded-none"
                                 >
-                                    <Check size={20} />
+                                    <Check size={16} />
                                     موافق، قرأت
                                 </button>
                                 <button 
                                     onClick={() => setShowAcknowledge(false)}
-                                    className="h-14 bg-slate-100 dark:bg-slate-800 text-slate-500 font-bold rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active:scale-95"
+                                    className="h-12 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-50 border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] active:scale-[0.98] rounded-none"
                                 >
-                                    <X size={20} />
+                                    <X size={16} />
                                     إغلاق
                                 </button>
                             </div>
@@ -183,4 +183,5 @@ export const ModernAnnouncements: React.FC = () => {
             </AnimatePresence>
         </div>
     );
+
 };

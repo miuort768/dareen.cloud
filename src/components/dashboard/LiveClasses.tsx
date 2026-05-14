@@ -44,16 +44,21 @@ export const LiveClasses = () => {
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
 
     return (
-        <div className="space-y-4">
-            <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                    <Radio className="text-red-600 animate-pulse" size={20} />
-                    <h3 className="font-black text-lg uppercase tracking-tight italic">الحصص المباشرة</h3>
+        <div className="space-y-4" dir="rtl">
+            <div className="flex items-center justify-between bg-white dark:bg-slate-900 border-2 border-slate-950 p-4 rounded-none shadow-[6px_6px_0px_0px_rgba(220,38,38,1)]">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm animate-pulse">
+                        <Radio size={20} />
+                    </div>
+                    <div>
+                        <h3 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">غرفة البث المباشر</h3>
+                        <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Real-time Interactive Hub</p>
+                    </div>
                 </div>
                 {isTeacher && (
                     <button 
                         onClick={startNewSession}
-                        className="bg-red-600 text-white px-4 py-2 text-xs font-black uppercase tracking-widest hover:bg-red-700 transition-all shadow-lg shadow-red-600/20"
+                        className="bg-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none"
                     >
                         بدء بث جديد
                     </button>
@@ -61,30 +66,33 @@ export const LiveClasses = () => {
             </div>
 
             {sessions.length === 0 ? (
-                <div className="bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-800 p-10 text-center">
+                <div className="bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 p-12 text-center rounded-none transition-all">
                     <Monitor size={40} className="mx-auto text-slate-300 mb-4" />
-                    <p className="text-slate-500 font-bold text-sm">لا يوجد بث مباشر حالياً</p>
+                    <p className="text-slate-500 font-black text-[11px] uppercase tracking-widest">لا يوجد بث مباشر متاح حالياً</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {sessions.map(session => (
-                        <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 flex flex-col justify-between group hover:border-red-600 transition-all">
-                            <div>
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
-                                    <span className="text-[10px] font-black text-red-600 uppercase">Live Now</span>
+                        <div key={session.id} className="bg-white dark:bg-slate-900 border-2 border-slate-950 p-5 flex flex-col justify-between group hover:shadow-[8px_8px_0px_0px_rgba(220,38,38,1)] transition-all rounded-none relative">
+                            <div className="absolute top-4 left-4">
+                                <div className="flex items-center gap-1.5 bg-red-600 text-white px-2 py-0.5 border border-slate-950">
+                                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                                    <span className="text-[8px] font-black uppercase">LIVE</span>
                                 </div>
-                                <h4 className="font-black text-slate-900 dark:text-white mb-1 line-clamp-1">{session.title}</h4>
-                                <p className="text-xs text-slate-500 mb-4 flex items-center gap-2">
-                                    <Users size={12} /> {session.teacherName}
-                                </p>
+                            </div>
+                            <div className="mt-2">
+                                <h4 className="font-black text-sm text-slate-900 dark:text-white mb-1 line-clamp-1 uppercase tracking-tight">{session.title}</h4>
+                                <div className="flex items-center gap-2 text-slate-500 mb-6">
+                                    <Users size={12} className="text-red-600" />
+                                    <span className="text-[10px] font-bold uppercase">{session.teacherName}</span>
+                                </div>
                             </div>
                             <button 
                                 onClick={() => navigate(`/classroom/${session.id}`)}
-                                className="w-full bg-slate-900 dark:bg-white text-white dark:text-black py-3 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 group-hover:bg-red-600 group-hover:text-white transition-all"
+                                className="w-full bg-slate-950 text-white py-3 text-[10px] font-black uppercase border-2 border-slate-950 flex items-center justify-center gap-2 hover:bg-red-600 transition-colors"
                             >
-                                <PlayCircle size={18} />
-                                دخول البث
+                                <PlayCircle size={16} />
+                                دخول البث الآن
                             </button>
                         </div>
                     ))}
@@ -92,4 +100,5 @@ export const LiveClasses = () => {
             )}
         </div>
     );
+
 };

@@ -52,10 +52,10 @@ export const Dashboard = () => {
         <div className={cn(
             "min-h-full pb-20 pt-4 overflow-x-hidden relative",
             isTeacher 
-                ? "bg-[#f1f5f9] dark:bg-[#020617]" 
-                : "bg-slate-50 dark:bg-[#020617] admin-dashboard-surface"
+                ? "bg-slate-50 dark:bg-slate-950" 
+                : "bg-slate-100 dark:bg-slate-950"
         )} dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-8">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
                 {/* 1. Header & Quick Actions */}
                 <DashboardHeader
                     isTeacher={isTeacher}
@@ -99,7 +99,7 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                    <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
                         {/* Urgent / Announcements Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                             <div className="lg:col-span-12">

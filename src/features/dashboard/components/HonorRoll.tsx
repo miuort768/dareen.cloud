@@ -22,29 +22,26 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
     if (topStudents.length === 0) return null;
 
     return (
-        <div className="w-full mt-8" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-6 md:p-8 shadow-sm overflow-hidden relative group">
+        <div className="w-full mt-6" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative group">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 text-amber-500 rounded-2xl flex items-center justify-center shadow-sm relative transition-transform group-hover:rotate-6">
-                            <Trophy size={24} />
-                            <div className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white rounded-lg flex items-center justify-center border-2 border-white dark:border-slate-900">
-                                <Star size={10} fill="currentColor" />
-                            </div>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-amber-400 text-slate-950 border-2 border-slate-950 rounded-none flex items-center justify-center transition-transform group-hover:rotate-6">
+                            <Trophy size={20} />
                         </div>
                         <div>
-                            <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <h2 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-tight">
                                 لوحة الشرف
-                                <Sparkles className="text-amber-500" size={16} />
+                                <Sparkles className="text-amber-500" size={14} />
                             </h2>
-                            <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mt-1">Elite Students</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Elite Performance</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Grid - Responsive Layout */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {/* Compact Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                     {topStudents.map((student, index) => {
                         const isFirst = index === 0;
                         const isSecond = index === 1;
@@ -54,40 +51,40 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                             <div 
                                 key={student.id} 
                                 className={cn(
-                                    "relative p-5 rounded-3xl border transition-all hover:-translate-y-2 flex flex-col items-center text-center shadow-sm",
-                                    isFirst ? "bg-amber-50/40 border-amber-100 dark:bg-amber-900/10 dark:border-amber-900/20" : 
-                                    isSecond ? "bg-slate-50 border-slate-100 dark:bg-slate-800/30 dark:border-slate-700" :
-                                    isThird ? "bg-orange-50/30 border-orange-100 dark:bg-orange-900/10" :
-                                    "bg-white dark:bg-slate-900 border-slate-50 dark:border-slate-800"
+                                    "relative p-3 border-2 transition-all hover:-translate-y-1 flex flex-col items-center text-center rounded-none",
+                                    isFirst ? "bg-amber-50 border-amber-400 shadow-[3px_3px_0px_0px_rgba(251,191,36,1)]" : 
+                                    isSecond ? "bg-slate-50 border-slate-300 shadow-[3px_3px_0px_0px_rgba(148,163,184,1)]" :
+                                    isThird ? "bg-orange-50 border-orange-300 shadow-[3px_3px_0px_0px_rgba(251,146,60,1)]" :
+                                    "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
                                 )}
                             >
                                 <div className={cn(
-                                    "w-10 h-10 rounded-2xl flex items-center justify-center mb-4 shadow-sm",
-                                    isFirst ? "bg-amber-400 text-white" : 
+                                    "w-7 h-7 border border-slate-950/20 flex items-center justify-center mb-3 rounded-none",
+                                    isFirst ? "bg-amber-400 text-slate-950" : 
                                     isSecond ? "bg-slate-300 text-slate-700" :
                                     isThird ? "bg-orange-400 text-white" :
-                                    "bg-indigo-50 dark:bg-slate-800 text-indigo-500"
+                                    "bg-indigo-50 dark:bg-slate-700 text-indigo-500"
                                 )}>
-                                    {isFirst ? <Crown size={20} /> : 
-                                     isSecond ? <Award size={20} /> : 
-                                     <Star size={18} fill={index < 3 ? "currentColor" : "none"} />}
+                                    {isFirst ? <Crown size={14} /> : 
+                                     isSecond ? <Award size={14} /> : 
+                                     <Star size={12} fill={index < 3 ? "currentColor" : "none"} />}
                                 </div>
 
-                                <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-full border-2 border-white dark:border-slate-700 shadow-md flex items-center justify-center mb-3 relative overflow-hidden">
-                                     <span className="text-xl font-bold text-slate-300 dark:text-slate-600">{student.name.charAt(0)}</span>
+                                <div className="w-11 h-11 bg-white dark:bg-slate-700 border border-slate-950/10 flex items-center justify-center mb-2 relative overflow-hidden rounded-none">
+                                     <span className="text-lg font-black text-slate-200 dark:text-slate-500">{student.name.charAt(0)}</span>
                                      {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" />}
                                 </div>
 
-                                <div className="space-y-2 w-full">
+                                <div className="w-full">
                                     <p className={cn(
-                                        "text-xs md:text-sm font-bold truncate",
-                                        isFirst ? "text-amber-700 dark:text-amber-500" : "text-slate-800 dark:text-white"
+                                        "text-[10px] font-black truncate uppercase mb-1",
+                                        isFirst ? "text-amber-900" : "text-slate-900 dark:text-white"
                                     )}>
                                         {student.name}
                                     </p>
-                                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-100 dark:border-slate-700 shadow-sm">
-                                        <span className="text-xs font-bold text-indigo-600 tabular-nums">{student.totalPoints}</span>
-                                        <span className="text-[10px] font-bold text-slate-400">نقطة</span>
+                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950">
+                                        <span className="text-[9px] font-black tabular-nums">{student.totalPoints}</span>
+                                        <span className="text-[7px] font-black opacity-70">PTS</span>
                                     </div>
                                 </div>
                             </div>
@@ -97,4 +94,5 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
             </div>
         </div>
     );
+
 };

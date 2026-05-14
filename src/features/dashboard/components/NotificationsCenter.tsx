@@ -157,159 +157,152 @@ export const NotificationsCenter = ({
 
     return (
         <div className="w-full space-y-6" dir="rtl">
-            {/* Header / Tabs Style - Premium Admin Sharp */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-slate-900 border-2 border-slate-800 p-6 rounded-none shadow-xl">
-                <div className="flex items-center gap-5 px-2">
-                    <div className="w-12 h-12 bg-indigo-600 text-white rounded-none flex items-center justify-center shadow-lg rotate-3 group-hover:rotate-0 transition-transform">
-                        <ShieldAlert size={24} />
+            {/* Header / Tabs - Compact Sharp Admin Style */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-5 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <div className="flex items-center gap-4 px-1">
+                    <div className="w-10 h-10 bg-indigo-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md transition-transform hover:rotate-3">
+                        <ShieldAlert size={20} />
                     </div>
                     <div>
-                        <h3 className="text-xl font-black text-white leading-tight tracking-tight uppercase">مركز العمليات الذكي</h3>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Intelligent Operations Center</p>
+                        <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز العمليات الذكي</h3>
+                        <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Intelligent Control Room</p>
                     </div>
                 </div>
 
-                <div className="flex bg-slate-800 p-1 rounded-none border border-slate-700">
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-none border-2 border-slate-950">
                     <button 
                         onClick={() => setActiveTab('smart')}
                         className={cn(
-                            "px-8 py-3 rounded-none font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2",
-                            activeTab === 'smart' ? "bg-indigo-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
+                            "px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
+                            activeTab === 'smart' ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
-                        <Zap size={14} />
+                        <Zap size={12} />
                         إخطارات ذكية
                     </button>
                     <button 
                         onClick={() => setActiveTab('room')}
                         className={cn(
-                            "px-8 py-3 rounded-none font-black text-[10px] uppercase tracking-widest transition-all flex items-center gap-2",
-                            activeTab === 'room' ? "bg-indigo-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
+                            "px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
+                            activeTab === 'room' ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
-                        <Bell size={14} />
+                        <Bell size={12} />
                         غرفة التنبيهات
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pb-10">
-                {/* ── 1. إخطارات ذكية (Left/Large Card) ── */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pb-6">
+                {/* ── 1. Smart Alerts (Left) ── */}
                 <div className={cn(
-                    "lg:col-span-7 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-none p-8 shadow-xl transition-all relative overflow-hidden",
+                    "lg:col-span-7 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 shadow-[6px_6px_0px_0px_rgba(225,29,72,0.1)] transition-all relative overflow-hidden",
                     activeTab !== 'smart' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-2 h-full bg-rose-600" />
-                    <div className="flex items-center justify-between mb-10">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-rose-600 text-white rounded-none flex items-center justify-center">
-                                <AlertTriangle size={20} />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-600" />
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 bg-rose-600 text-white rounded-none flex items-center justify-center border border-slate-950/10">
+                                <AlertTriangle size={18} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight">النظام التحليلي الذكي</h4>
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Critical AI Insights</p>
+                                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">النظام التحليلي</h4>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Critical AI Monitoring</p>
                             </div>
                         </div>
-                        <div className="bg-rose-50 dark:bg-rose-900/20 px-4 py-1.5 border border-rose-100 dark:border-rose-900/30">
-                            <span className="text-[10px] font-black text-rose-600 uppercase tracking-widest">{filteredSmartAlerts.filter(a => a.priority === 'high').length} CRITICAL</span>
+                        <div className="bg-rose-600 text-white px-3 py-1 border border-slate-950">
+                            <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} CRITICAL</span>
                         </div>
                     </div>
 
-                    <div className="space-y-4">
-                        {filteredSmartAlerts.map(alert => (
+                    <div className="space-y-3">
+                        {filteredSmartAlerts.map((alert: any) => (
                             <div key={alert.id} className={cn(
-                                "p-5 rounded-none border-2 flex items-center justify-between group transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50",
-                                alert.type === 'critical' ? "bg-rose-50/20 border-rose-100 dark:border-rose-900/20" : 
-                                alert.type === 'success' ? "bg-emerald-50/20 border-emerald-100 dark:border-emerald-900/20" :
-                                "bg-amber-50/20 border-amber-100 dark:border-amber-900/20"
+                                "p-4 rounded-none border-2 flex items-center justify-between group transition-all",
+                                alert.type === 'critical' ? "bg-rose-50/50 border-rose-600" : 
+                                alert.type === 'success' ? "bg-emerald-50/50 border-emerald-600" :
+                                "bg-amber-50/50 border-amber-500"
                             )}>
-                                <div className="flex items-center gap-5">
+                                <div className="flex items-center gap-4">
                                     <div className={cn(
-                                        "w-12 h-12 rounded-none flex items-center justify-center text-white shadow-xl",
+                                        "w-10 h-10 rounded-none flex items-center justify-center text-white border-2 border-slate-950",
                                         alert.type === 'critical' ? "bg-rose-600" :
                                         alert.type === 'success' ? "bg-emerald-600" : "bg-amber-500"
                                     )}>
-                                        {alert.type === 'success' ? <CheckCircle2 size={22} /> : <AlertTriangle size={22} />}
+                                        {alert.type === 'success' ? <CheckCircle2 size={18} /> : <AlertTriangle size={18} />}
                                     </div>
                                     <div>
-                                        <h3 className={cn("font-black text-sm uppercase tracking-tight", 
-                                            alert.type === 'critical' ? "text-rose-700 dark:text-rose-400" :
-                                            alert.type === 'success' ? "text-emerald-700 dark:text-emerald-400" : 
-                                            "text-amber-700 dark:text-amber-400"
-                                        )}>{alert.title}</h3>
-                                        <p className={cn("text-[11px] font-bold mt-1", 
-                                            alert.type === 'critical' ? "text-rose-600" :
-                                            alert.type === 'success' ? "text-emerald-600" : "text-amber-600"
-                                        )}>{alert.desc}</p>
+                                        <h3 className="font-black text-xs uppercase tracking-tight text-slate-900 dark:text-white">{alert.title}</h3>
+                                        <p className="text-[10px] font-bold mt-1 text-slate-600 dark:text-slate-400">{alert.desc}</p>
                                     </div>
                                 </div>
                                 {alert.action && (
-                                    <button onClick={alert.action} className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
-                                        <ArrowLeft size={18} />
+                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center bg-slate-950 text-white hover:bg-indigo-600 transition-all border border-slate-950">
+                                        <ArrowLeft size={14} />
                                     </button>
                                 )}
                             </div>
                         ))}
                         {filteredSmartAlerts.length === 0 && (
-                            <div className="text-center py-24 opacity-30 italic text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">
-                                No Intelligence Data Found
+                            <div className="text-center py-16 border-2 border-dashed border-slate-100 dark:border-slate-800">
+                                <p className="text-[9px] font-black text-slate-400 uppercase">No Intelligence Data</p>
                             </div>
                         )}
                     </div>
                 </div>
 
-                {/* ── 2. غرفة التنبيهات (Right Card) ── */}
+                {/* ── 2. Alerts Room (Right) ── */}
                 <div className={cn(
-                    "lg:col-span-5 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-none p-8 shadow-xl transition-all relative overflow-hidden",
+                    "lg:col-span-5 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 shadow-[6px_6px_0px_0px_rgba(79,70,229,0.1)] transition-all relative overflow-hidden",
                     activeTab !== 'room' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-2 h-full bg-indigo-600" />
-                    <div className="flex items-center justify-between mb-10">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-indigo-600 text-white rounded-none flex items-center justify-center">
-                                <Bell size={20} />
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 bg-indigo-600 text-white rounded-none flex items-center justify-center border border-slate-950/10">
+                                <Bell size={18} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight">غرفة التحكم والعمليات</h4>
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Live Operations Center</p>
+                                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">غرفة العمليات</h4>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Live Operations Center</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-50 dark:bg-indigo-900/20 px-4 py-1.5 border border-indigo-100 dark:border-indigo-900/30">
-                            <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">{filteredRoomAlerts.length} ALERTS</span>
+                        <div className="bg-indigo-600 text-white px-3 py-1 border border-slate-950">
+                            <span className="text-[9px] font-black uppercase">{filteredRoomAlerts.length} ALERTS</span>
                         </div>
                     </div>
 
-                    <div className="space-y-4 max-h-[500px] overflow-y-auto custom-scrollbar">
-                        {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map(alert => (
-                            <div key={alert.id} className="flex items-center justify-between group p-3 border-b border-slate-50 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all">
-                                <div className="flex items-center gap-5 min-w-0">
-                                    <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all flex items-center justify-center shadow-sm">
-                                        <alert.icon size={20} />
+                    <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
+                        {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert: any) => (
+                            <div key={alert.id} className="flex items-center justify-between group p-3 border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-none hover:border-slate-950">
+                                <div className="flex items-center gap-4 min-w-0">
+                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700">
+                                        <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
-                                        <h4 className="text-xs font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">{alert.title}</h4>
-                                        <p className="text-[10px] font-bold text-slate-400 truncate mt-1">{alert.description}</p>
+                                        <h4 className="text-[11px] font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">{alert.title}</h4>
+                                        <p className="text-[9px] font-bold text-slate-400 truncate mt-0.5">{alert.description}</p>
                                     </div>
                                 </div>
                                 {alert.actionLabel === 'واتساب' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-9 px-5 bg-emerald-600 text-white hover:bg-emerald-700 text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+                                        className="h-8 px-4 bg-emerald-600 text-white hover:bg-emerald-700 text-[8px] font-black uppercase tracking-widest border border-slate-950 transition-all active:scale-[0.98]"
                                     >
                                         WHATSAPP
                                     </button>
                                 ) : (
                                     <Link 
                                         to={alert.link || '#'} 
-                                        className="h-9 px-5 bg-slate-900 text-white hover:bg-black text-[10px] font-black uppercase tracking-widest transition-all active:scale-95"
+                                        className="h-8 px-4 bg-slate-950 text-white hover:bg-indigo-600 text-[8px] font-black uppercase tracking-widest border border-slate-950 transition-all active:scale-[0.98] flex items-center justify-center"
                                     >
                                         {alert.actionLabel}
                                     </Link>
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-24 opacity-30 italic text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">
-                                All Systems Nominal
+                            <div className="text-center py-16 border-2 border-dashed border-slate-100 dark:border-slate-800">
+                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">All Systems Nominal</p>
                             </div>
                         )}
                     </div>

@@ -39,82 +39,82 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
     }, [sessions]);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-xl shadow-sm flex flex-col h-full overflow-hidden animate-in fade-in duration-700" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full overflow-hidden" dir="rtl">
             {/* Header Section */}
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-amber-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-200 dark:shadow-none text-white">
-                        <Trophy size={24} />
+                    <div className="w-10 h-10 bg-amber-500 rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md text-white">
+                        <Trophy size={20} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">الأكثر حضوراً</h3>
-                        <p className="text-[10px] font-black text-amber-500 mt-1 uppercase tracking-widest italic flex items-center gap-1.5">
-                            <span className="w-1 h-1 bg-amber-500 rounded-full animate-pulse" />
-                            إحصائيات الشهر الجاري
+                        <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">الأكثر حضوراً</h3>
+                        <p className="text-[9px] font-black text-amber-500 mt-0.5 uppercase tracking-tight flex items-center gap-1.5">
+                            Attendance Leaders
                         </p>
                     </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-                    <TrendingUp size={18} />
+                <div className="w-8 h-8 rounded-none border-2 border-slate-950 flex items-center justify-center text-slate-400">
+                    <TrendingUp size={16} />
                 </div>
             </div>
 
             {/* Students List */}
-            <div className="space-y-4 flex-1 overflow-y-auto pr-2 -mr-2 custom-scrollbar">
+            <div className="space-y-2 flex-1 overflow-y-auto pr-1">
                 {topPresentStudents.length > 0 ? (
                     topPresentStudents.map((stu, i) => (
                         <div 
                             key={i} 
-                            className="flex items-center justify-between p-4 bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl border border-transparent hover:border-amber-100 dark:hover:border-amber-900/30 transition-all group relative overflow-hidden"
+                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-2 border-slate-950/10 hover:border-slate-950 transition-all rounded-none group relative overflow-hidden"
                         >
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-3">
                                 <div className="relative">
-                                    <div className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center border border-slate-100 dark:border-slate-700 text-slate-400">
-                                        <User size={20} />
+                                    <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center border-2 border-slate-950 text-slate-400">
+                                        <User size={18} />
                                     </div>
                                     <div className={cn(
-                                        "absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black border-2 border-white dark:border-slate-900 shadow-sm",
+                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-black border-2 border-slate-950 shadow-sm",
                                         i === 0 ? "bg-amber-400 text-amber-900" :
                                         i === 1 ? "bg-slate-300 text-slate-800" :
-                                        i === 2 ? "bg-orange-400 text-white" : "bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
+                                        i === 2 ? "bg-orange-400 text-white" : "bg-white text-slate-500 dark:bg-slate-700 dark:text-slate-400"
                                     )}>
                                         {i + 1}
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-sm text-slate-900 dark:text-white group-hover:text-amber-600 transition-colors">{stu.name}</h4>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">طالب متميز</p>
+                                    <h4 className="font-black text-xs text-slate-900 dark:text-white group-hover:text-amber-600 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
+                                    <p className="text-[8px] font-bold text-slate-400 uppercase mt-0.5">Top Performer</p>
                                 </div>
                             </div>
                             
                             <div className="text-left">
-                                <div className="text-xl font-black text-slate-900 dark:text-white leading-none">{stu.count}</div>
-                                <div className="text-[9px] font-black text-amber-500 uppercase mt-1">حصة مكتملة</div>
+                                <div className="text-xl font-black text-slate-900 dark:text-white tabular-nums leading-none">{stu.count}</div>
+                                <div className="text-[8px] font-black text-amber-500 uppercase mt-1">Sessions</div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <div className="flex flex-col items-center justify-center py-20 opacity-40">
-                        <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-3xl flex items-center justify-center mb-4">
-                            <User size={32} className="text-slate-300" />
+                    <div className="flex flex-col items-center justify-center py-16 opacity-40">
+                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border-2 border-slate-950/10 rounded-none flex items-center justify-center mb-4">
+                            <User size={24} className="text-slate-300" />
                         </div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">لا توجد بيانات حضور حالياً</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase">No records found</p>
                     </div>
                 )}
             </div>
 
             {/* Footer Summary */}
-            <div className="mt-6 pt-6 border-t border-slate-50 dark:border-slate-800">
-                <div className="bg-indigo-600 rounded-2xl p-4 text-white flex items-center justify-between">
+            <div className="mt-6">
+                <div className="bg-indigo-600 border-2 border-slate-950 rounded-none p-4 text-white flex items-center justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:translate-y-[-2px]">
                     <div>
-                        <h4 className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">حصص الشهر الجاري</h4>
-                        <p className="text-lg font-black leading-none">{totalMonthSessions}</p>
+                        <h4 className="text-[9px] font-black uppercase opacity-80 mb-0.5">Total Month Sessions</h4>
+                        <p className="text-xl font-black tabular-nums leading-none">{totalMonthSessions}</p>
                     </div>
-                    <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                        <TrendingUp size={20} />
+                    <div className="w-9 h-9 bg-white/10 rounded-none flex items-center justify-center border border-white/20">
+                        <TrendingUp size={18} />
                     </div>
                 </div>
             </div>
         </div>
     );
+
 };
