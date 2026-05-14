@@ -19,6 +19,7 @@ import { StudentQuickBrief } from '../features/dashboard/components/StudentQuick
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
+import { cn } from '../lib/utils';
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -48,8 +49,13 @@ export const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 pt-4 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
+        <div className={cn(
+            "min-h-full pb-20 pt-4 overflow-x-hidden relative",
+            isTeacher 
+                ? "bg-[#f1f5f9] dark:bg-[#020617]" 
+                : "bg-slate-50 dark:bg-[#020617] admin-dashboard-surface"
+        )} dir="rtl">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-8">
                 {/* 1. Header & Quick Actions */}
                 <DashboardHeader
                     isTeacher={isTeacher}
@@ -94,29 +100,7 @@ export const Dashboard = () => {
                     </div>
                 ) : (
                     <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                        {/* 2. Main Analytics Grid (3 Columns) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                            {/* Left: Recent Activity (Taking 3 cols) */}
-                            <div className="lg:col-span-3">
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            </div>
-
-                            {/* Middle: Main Charts (Taking 6 cols) */}
-                            <div className="lg:col-span-6">
-                                <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                            </div>
-
-                            {/* Right: Analytics/Distribution (Taking 3 cols) */}
-                            <div className="lg:col-span-3">
-                                <AnalyticsDashboard
-                                    students={rawStudents}
-                                    sessions={rawSessions}
-                                    monthlyData={monthlyData}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Bottom Row: Hall of Fame & Operations */}
+                        {/* Urgent / Announcements Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                             <div className="lg:col-span-12">
                                 <LiveClasses />
@@ -126,13 +110,44 @@ export const Dashboard = () => {
                             </div>
                         </div>
 
+                        {/* Critical Operations Center */}
+                        <NotificationsCenter
+                            tasks={tasks}
+                            lowBalanceStudents={lowBalanceStudents}
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                        />
+
+                        {/* Data & Analytics Hub */}
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                             <AnalyticsDashboard
+                                students={rawStudents}
+                                sessions={rawSessions}
+                                monthlyData={monthlyData}
+                            />
+                        </div>
+
+                        {/* Hall of Fame */}
                         <HonorRoll students={rawStudents} />
 
+                        {/* Integrated Operations Center (Subscriptions & Tasks) */}
                         <OperationsDashboard 
                             tasks={tasks} 
                             lowBalanceStudents={lowBalanceStudents} 
                             stats={stats} 
                         />
+
+                        {/* Secondary Row */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div className="lg:col-span-12">
+                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

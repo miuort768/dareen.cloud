@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import { AreaChart as AreaIcon } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { BarChart2, Target } from 'lucide-react';
 import type { DashboardMonthData as MonthData } from '../types';
 import { cn } from '../../../lib/utils';
 
@@ -21,36 +21,30 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Sample data to match the screenshot if monthlyData is missing some fields
-    const chartData = monthlyData.map(d => ({
-        ...d,
-        students: d.completed * 2 // Just for visualization to match the image growth
-    }));
-
     return (
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-[2rem] shadow-sm overflow-hidden border border-slate-50 dark:border-slate-800 h-full">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8" dir="rtl">
-                <div className="flex items-center gap-3">
-                    <AreaIcon size={20} className="text-[#5c59f2]" />
-                    <h3 className="text-lg font-black text-slate-800 dark:text-white leading-tight">إحصائيات الطلاب</h3>
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] shadow-sm p-6 overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-slate-900 dark:bg-black text-white rounded-2xl flex items-center justify-center shadow-lg">
+                        <BarChart2 size={24} />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-white leading-tight">مركز تحليل البيانات</h3>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">نظرة عامة على أداء المؤسسة</p>
+                    </div>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                    <button className="text-[10px] font-black text-slate-400 px-3 py-1 bg-slate-50 dark:bg-slate-800 rounded-lg">الشهر الماضي</button>
-                    <button className="text-[10px] font-black text-indigo-600 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg border border-indigo-100 dark:border-indigo-800">هذا الشهر</button>
+                <div className="flex flex-wrap gap-2" dir="rtl">
+                    <LegendItem color="bg-[#5c59f2]" label="الإيرادات" />
+                    <LegendItem color="bg-emerald-500" label="الأداء" />
+                    {!isTeacher && <LegendItem color="bg-rose-500" label="المصروفات" />}
                 </div>
             </div>
 
-            <div className="h-[280px] w-full" dir="ltr">
+            <div className="h-[300px] w-full" dir="ltr">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                        <defs>
-                            <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#5c59f2" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="#5c59f2" stopOpacity={0}/>
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={4}>
+                        <CartesianGrid strokeDasharray="6 6" vertical={false} stroke="#f1f5f9" />
                         <XAxis
                             dataKey="month"
                             axisLine={false}
@@ -62,29 +56,41 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                             axisLine={false}
                             tickLine={false}
                             tick={{ fontSize: fontSize, fontWeight: 'bold', fill: '#94a3b8' }}
+                            tickFormatter={(val) => val >= 1000 ? `${(val / 1000).toFixed(0)}k` : val}
                         />
                         <Tooltip
+                            cursor={{ fill: 'rgba(241, 245, 249, 0.5)' }}
                             content={({ active, payload, label }) => {
                                 if (active && payload && payload.length) {
                                     return (
-                                        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl border border-white/10" dir="rtl">
-                                            <p className="text-[10px] font-bold opacity-60 mb-1">{label}</p>
-                                            <p className="text-sm font-black">{payload[0].value.toLocaleString()} طالب</p>
+                                        <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-xl min-w-[180px]" dir="rtl">
+                                            <div className="flex items-center gap-2 mb-3 border-b border-slate-50 dark:border-slate-700 pb-2">
+                                                <Target size={14} className="text-indigo-500" />
+                                                <p className="text-xs font-bold text-slate-800 dark:text-white">{label}</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                {payload.map((entry: any, index: number) => (
+                                                    <div key={index} className="flex items-center justify-between">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                                                            <span className="text-[10px] font-bold text-slate-400">{entry.name}</span>
+                                                        </div>
+                                                        <span className="text-xs font-bold text-slate-800 dark:text-white">
+                                                            {entry.value.toLocaleString()}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     );
                                 }
                                 return null;
                             }}
                         />
-                        <Area 
-                            type="monotone" 
-                            dataKey="students" 
-                            stroke="#5c59f2" 
-                            strokeWidth={4}
-                            fillOpacity={1} 
-                            fill="url(#colorStudents)" 
-                        />
-                    </AreaChart>
+                        <Bar dataKey="revenue" name="الإيرادات" fill="#5c59f2" radius={[4, 4, 0, 0]} barSize={10} />
+                        <Bar dataKey="completed" name="الأداء" fill="#10B981" radius={[4, 4, 0, 0]} barSize={10} />
+                         {!isTeacher && <Bar dataKey="expenses" name="المصروفات" fill="#F43F5E" radius={[4, 4, 0, 0]} barSize={10} />}
+                    </BarChart>
                 </ResponsiveContainer>
             </div>
         </div>
