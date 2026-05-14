@@ -68,7 +68,7 @@ export const PublicNavbar = () => {
 
                     {/* Desktop Nav */}
                     <div className="hidden md:flex items-center gap-2 bg-indigo-50/50 dark:bg-slate-800/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-indigo-200 dark:border-slate-700 shadow-sm">
-                        {navItems.filter(item => !isActive(item.path)).map((item) => (
+                        {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
