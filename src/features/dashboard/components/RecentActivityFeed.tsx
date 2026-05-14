@@ -33,13 +33,7 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
             status: t.status === 'completed' ? 'مهمة منجزة' : 'قيد التنفيذ',
             color: t.status === 'completed' ? 'emerald' : 'amber'
         }))
-    ].sort((a, b) => {
-        const timeA = a.time ? new Date(a.time).getTime() : 0;
-        const timeB = b.time ? new Date(b.time).getTime() : 0;
-        return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
-    }).slice(0, 8);
-
-
+    ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
 
     return (
         <div className="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 p-8 rounded-none shadow-xl flex flex-col h-full relative overflow-hidden transition-all duration-500 group/feed" dir="rtl">
