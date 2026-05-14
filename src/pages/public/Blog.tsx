@@ -135,7 +135,7 @@ export const Blog = () => {
     const currentClassrooms = classroomsMap[selectedCurriculum]?.[selectedLevel] || [];
     const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle;
     const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
-    const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 group bg-gradient-to-br overflow-hidden";
+    const btnBase = "relative h-16 flex flex-col items-center justify-center transition-all duration-300 shadow-lg shadow-black/5 dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] group bg-gradient-to-br overflow-hidden";
 
     // فلترة المقالات بناءً على الاختيارات
     const filteredPosts = view === 'results' ? posts.filter(p => {
@@ -239,7 +239,7 @@ export const Blog = () => {
                                         <button
                                             key={type.id}
                                             onClick={() => { setSelectedType(type.id); setView('curriculums'); }}
-                                            className={cn("relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
+                                            className={cn("relative min-h-[3.5rem] py-2 px-3 flex flex-col items-center justify-center transition-all duration-300 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] group bg-gradient-to-br overflow-hidden border border-white/10", type.color)}
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
@@ -466,7 +466,7 @@ export const Blog = () => {
                                     ))}
 
                                     {/* Universal Back Button */}
-                                    <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
+                                    <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
                                         <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
                                         <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
                                     </button>
