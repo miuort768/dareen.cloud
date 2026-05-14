@@ -1,25 +1,23 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { LayoutGrid } from 'lucide-react';
-import { cn } from '../../../lib/utils';
 
 interface AnalyticsDashboardProps {
-    students: any[];
     sessions: any[];
 }
 
 const COLORS = ['#5c59f2', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
-export const AnalyticsDashboard = ({ students, sessions }: AnalyticsDashboardProps) => {
+export const AnalyticsDashboard = ({ sessions }: AnalyticsDashboardProps) => {
     
     const distributionData = useMemo(() => {
         const map: Record<string, number> = {};
-        sessions.forEach(s => {
-            const sub = s.subject || 'أخرى';
+        (sessions || []).forEach(s => {
+            const sub = s?.subject || 'أخرى';
             map[sub] = (map[sub] || 0) + 1;
         });
         
-        const total = sessions.length || 1;
+        const total = (sessions || []).length || 1;
         
         return Object.entries(map)
             .map(([name, value]) => ({
@@ -52,9 +50,10 @@ export const AnalyticsDashboard = ({ students, sessions }: AnalyticsDashboardPro
                                 outerRadius={80}
                                 paddingAngle={5}
                                 dataKey="value"
+                                cornerRadius={10}
                             >
                                 {distributionData.map((_, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} cornerRadius={10} />
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
                             <Tooltip 

@@ -1,10 +1,7 @@
-import { Link } from 'react-router-dom';
 import { 
     BookOpen, 
-    FileText, 
-    CheckCircle2, 
-    TrendingUp,
-    Users
+    FileText,
+    CheckCircle2
 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardStats as Stats } from '../types';
@@ -127,7 +124,7 @@ export const OperationsDashboard = ({ stats, sessions }: OperationsDashboardProp
                     </div>
                     <div className="text-center">
                         <p className="text-[10px] font-bold text-slate-400 mb-1">حصص ملغاة</p>
-                        <p className="text-sm font-black text-rose-600">{sessions.filter(s => s.status === 'cancelled').length}</p>
+                        <p className="text-sm font-black text-rose-600">{(sessions || []).filter(s => s?.status === 'cancelled').length}</p>
                     </div>
                 </div>
             </div>
