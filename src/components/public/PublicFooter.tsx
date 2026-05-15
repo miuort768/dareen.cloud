@@ -13,7 +13,7 @@ export const PublicFooter = () => {
                 <div className="absolute -bottom-[50%] -left-[20%] w-[80%] h-[80%] bg-purple-600 rounded-full blur-[120px]"></div>
                 
                 {/* Geometric Floating Elements */}
-                <div className="absolute top-10 left-10 w-20 h-20 border border-white/5 rotate-45 animate-pulse"></div>
+                <div className="absolute top-10 left-10 w-20 h-20 border border-white/5 rotate-45"></div>
                 <div className="absolute bottom-20 right-10 w-32 h-32 border border-white/5 -rotate-12"></div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')] opacity-20"></div>
             </div>
@@ -50,7 +50,7 @@ export const PublicFooter = () => {
                                 <li key={idx}>
                                     <Link
                                         to={link.path}
-                                        className="text-gray-400 hover:text-amber-500 hover:translate-x-[-5px] transition-all flex items-center gap-2 text-sm"
+                                        className="text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2 text-sm"
                                     >
                                         <span className="text-amber-500">›</span> {link.name}
                                     </Link>
@@ -143,10 +143,10 @@ export const PublicFooter = () => {
 
                     <div className="text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 shadow-lg shadow-black/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                             <span className="text-[10px] font-bold text-gray-400 tracking-wide">تصميم وتطوير</span>
                             <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-amber-400">مستر احمد عبدالله</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                         </div>
                     </div>
 
