@@ -132,7 +132,7 @@ export const PublicFooter = () => {
                     </div>
 
                     <div className="text-center">
-                        <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 shadow-lg shadow-indigo-500/20 overflow-hidden group cursor-default">
+                        <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-900 to-slate-900 border border-white/10 overflow-hidden group cursor-default">
                             {/* Continuous Shine Effect */}
                             <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow z-0"></div>
                             
