@@ -102,7 +102,7 @@ export const PublicFooter = () => {
                             <span className="w-8 h-0.5 bg-amber-500"></span>
                             تحميل التطبيق
                         </h3>
-                        <div className="space-y-4">
+                        <div className="flex flex-col gap-1 items-start">
                             <a
                                 href="#"
                                 target="_blank"
@@ -112,7 +112,7 @@ export const PublicFooter = () => {
                                 <img 
                                     src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
                                     alt="Get it on Google Play" 
-                                    className="h-12 w-auto"
+                                    className="w-[165px] h-auto object-contain -mr-2"
                                     onError={(e) => { (e.target as HTMLImageElement).src = '/images/google-play.png' }}
                                 />
                             </a>
@@ -125,7 +125,7 @@ export const PublicFooter = () => {
                                 <img 
                                     src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
                                     alt="Download on the App Store" 
-                                    className="h-12 w-auto"
+                                    className="w-[140px] h-auto object-contain"
                                     onError={(e) => { (e.target as HTMLImageElement).src = '/images/app-store.png' }}
                                 />
                             </a>
