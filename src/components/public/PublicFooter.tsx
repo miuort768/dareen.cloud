@@ -102,17 +102,17 @@ export const PublicFooter = () => {
                             <span className="w-8 h-0.5 bg-amber-500"></span>
                             تحميل التطبيق
                         </h3>
-                        <div className="flex flex-col gap-1 items-start">
+                        <div className="flex flex-col gap-2 items-start">
                             <a
                                 href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block transition-transform hover:-translate-y-1 hover:opacity-90"
+                                className="block hover:opacity-90"
                             >
                                 <img 
                                     src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
                                     alt="Get it on Google Play" 
-                                    className="w-[165px] h-auto object-contain -mr-2"
+                                    className="h-[52px] w-auto object-contain -mr-1"
                                     onError={(e) => { (e.target as HTMLImageElement).src = '/images/google-play.png' }}
                                 />
                             </a>
@@ -120,12 +120,12 @@ export const PublicFooter = () => {
                                 href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block transition-transform hover:-translate-y-1 hover:opacity-90"
+                                className="block hover:opacity-90"
                             >
                                 <img 
                                     src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
                                     alt="Download on the App Store" 
-                                    className="w-[140px] h-auto object-contain"
+                                    className="h-[40px] w-auto object-contain"
                                     onError={(e) => { (e.target as HTMLImageElement).src = '/images/app-store.png' }}
                                 />
                             </a>
