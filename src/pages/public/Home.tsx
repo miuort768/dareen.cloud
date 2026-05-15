@@ -43,7 +43,7 @@ export const Home = () => {
                 isDeleting = false;
                 typingSpeed = 500;
             } else {
-                isDeleting ? i-- : i++;
+                i += isDeleting ? -1 : 1;
                 typingSpeed = isDeleting ? 75 : 150;
             }
 
