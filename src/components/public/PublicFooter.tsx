@@ -6,7 +6,7 @@ export const PublicFooter = () => {
     const { adminPhone } = useSettings();
 
     return (
-        <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-16 md:pb-10 transition-colors duration-500">
+        <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500">
             {/* Decorative Overlays - Premium Royal Theme Shapes */}
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <div className="absolute -top-[50%] -right-[20%] w-[80%] h-[80%] bg-indigo-600 rounded-full blur-[120px]"></div>
@@ -19,7 +19,7 @@ export const PublicFooter = () => {
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 mb-10">
                     {/* Brand */}
                     <div className="space-y-6">
                         <div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ export const PublicFooter = () => {
 
                     {/* Links */}
                     <div>
-                        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                             <span className="w-8 h-0.5 bg-amber-500"></span>
                             روابط سريعة
                         </h3>
@@ -61,7 +61,7 @@ export const PublicFooter = () => {
 
                     {/* Contact */}
                     <div>
-                        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                             <span className="w-8 h-0.5 bg-amber-500"></span>
                             تواصل معنا
                         </h3>
@@ -98,7 +98,7 @@ export const PublicFooter = () => {
 
                     {/* Newsletter */}
                     <div>
-                        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                             <span className="w-8 h-0.5 bg-amber-500"></span>
                             عروض المنصة
                         </h3>
@@ -124,7 +124,7 @@ export const PublicFooter = () => {
                 </div>
 
                 {/* Bottom */}
-                <div className="border-t border-white/10 pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-6">
+                <div className="border-t border-white/10 pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="text-center md:text-right">
                         <p className="text-gray-500 text-sm">
                             &copy; {new Date().getFullYear()} <span className="text-white font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
