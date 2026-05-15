@@ -43,6 +43,15 @@ module.exports = {
         'gold': '0 10px 30px -10px rgba(212, 175, 55, 0.3)',
         'gold-hover': '0 20px 40px -10px rgba(212, 175, 55, 0.4)',
         'glass': '0 8px 32px 0 rgba(15, 23, 42, 0.05)',
+      },
+      keyframes: {
+        shine: {
+          '0%': { left: '-100%' },
+          '100%': { left: '100%' },
+        }
+      },
+      animation: {
+        'shine-slow': 'shine 3s ease-in-out infinite',
       }
     },
   },
