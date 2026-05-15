@@ -47,11 +47,11 @@ export const MasarSection = () => {
                                 </div>
                             </div>
 
-                            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-6 font-heading leading-tight">
+                            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-3 font-heading leading-tight">
                                 <span className="text-white">مركز</span> <span className="text-white bg-indigo-600 px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-[0_10px_20px_rgba(79,70,229,0.3)] text-shadow-none whitespace-nowrap">دارين</span> <span className="text-white">للمذكرات التعليمية</span>
                             </h2>
 
-                            <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
+                            <p className="text-gray-300 text-xs md:text-sm lg:text-base leading-relaxed mb-6 max-w-2xl mx-auto lg:mx-0 font-medium opacity-90">
                                 حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                             </p>
 
