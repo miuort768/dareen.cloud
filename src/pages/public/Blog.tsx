@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -28,7 +28,7 @@ const curriculums = [
     { id: 'saudi', name: 'منهج سعودي', color: 'from-emerald-700 to-emerald-900', icon: Palmtree },
 ];
 
-const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: any }[]> = {
+const gradesMap: Record<string, { id: string; name: string; sub: string; color: string; icon: React.ElementType }[]> = {
     kuwait: [
         { id: 'primary', name: 'المرحلة الابتدائية - كويتي', sub: 'الصف ١ - ٥', color: 'from-blue-400 to-blue-600', icon: School },
         { id: 'middle', name: 'المرحلة المتوسطة - كويتي', sub: 'الصف ٦ - ٩', color: 'from-blue-600 to-blue-800', icon: GraduationCap },
@@ -116,7 +116,7 @@ subjectsMap.preparatory = subjectsMap.middle;
 type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
 
 export const Blog = () => {
-    const [posts, setPosts] = useState<any[]>([]);
+    const [posts, setPosts] = useState<typeof staticPosts>([]);
     const [loading, setLoading] = useState(true);
     const [view, setView] = useState<ViewType>('types');
     const [selectedType, setSelectedType] = useState('');
@@ -161,7 +161,7 @@ export const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const data = await api.get<any[]>('/blog');
+                const data = await api.get<typeof staticPosts>('/blog');
                 setPosts(data.length > 0 ? data : staticPosts);
             } catch (err) {
                 console.error('Failed to fetch blog posts:', err);
