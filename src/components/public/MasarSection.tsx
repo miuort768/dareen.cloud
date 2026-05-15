@@ -22,7 +22,10 @@ export const MasarSection = () => {
                     <div className="flex flex-col lg:flex-row items-stretch min-h-[400px]">
                         {/* Image Side - Modern and Sharp with a subtle glow */}
                         <div className="w-full lg:w-[40%] relative shrink-0 overflow-hidden bg-white/[0.08] backdrop-blur-md flex items-center justify-center p-8 lg:p-4 border-b lg:border-b-0 lg:border-l border-white/10 group">
-                            <div className="relative w-full h-full flex items-center justify-center">
+                            {/* Continuous Shine Effect */}
+                            <div className="absolute top-0 -left-[100%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine-slow pointer-events-none z-30"></div>
+                            
+                            <div className="relative w-full h-full flex items-center justify-center z-10">
                                 {/* Decorative Glow behind the image */}
                                 <div className="absolute w-64 h-64 bg-indigo-500/20 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
