@@ -96,28 +96,38 @@ export const PublicFooter = () => {
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
+                    {/* App Download */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                             <span className="w-8 h-0.5 bg-amber-500"></span>
-                            عروض المنصة
+                            تحميل التطبيق
                         </h3>
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             <a
-                                href={`https://wa.me/${adminPhone}`}
+                                href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block w-full text-center bg-white/5 border border-white/10 px-4 py-3 text-sm text-white hover:bg-white/10 hover:border-amber-500 transition-all"
+                                className="block transition-transform hover:-translate-y-1 hover:opacity-90"
                             >
-                                تواصل معنا
+                                <img 
+                                    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                                    alt="Get it on Google Play" 
+                                    className="h-12 w-auto"
+                                    onError={(e) => { (e.target as HTMLImageElement).src = '/images/google-play.png' }}
+                                />
                             </a>
                             <a
-                                href={`https://wa.me/${adminPhone}?text=${encodeURIComponent('السلام عليكم، أرغب في الاشتراك في منصة دارين السابعة')}`}
+                                href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 text-indigo-950 font-black py-3 text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+                                className="block transition-transform hover:-translate-y-1 hover:opacity-90"
                             >
-                                اشترك الآن
+                                <img 
+                                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                                    alt="Download on the App Store" 
+                                    className="h-12 w-auto"
+                                    onError={(e) => { (e.target as HTMLImageElement).src = '/images/app-store.png' }}
+                                />
                             </a>
                         </div>
                     </div>
