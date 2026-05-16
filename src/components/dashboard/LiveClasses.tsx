@@ -45,7 +45,7 @@ export const LiveClasses = () => {
 
     return (
         <div className="space-y-4" dir="rtl">
-            <div className="flex items-center justify-between bg-white dark:bg-slate-900 border-2 border-slate-950 p-4 rounded-none shadow-[6px_6px_0px_0px_rgba(220,38,38,1)]">
+            <div className="flex items-center justify-between bg-white dark:bg-slate-900 border-2 border-slate-950 p-4 rounded-none">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-red-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm animate-pulse">
                         <Radio size={20} />
@@ -58,7 +58,7 @@ export const LiveClasses = () => {
                 {isTeacher && (
                     <button 
                         onClick={startNewSession}
-                        className="bg-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border-2 border-slate-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all active:translate-y-0 active:shadow-none"
+                        className="bg-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border-2 border-slate-950 hover:bg-red-700 transition-all active:scale-[0.98]"
                     >
                         بدء بث جديد
                     </button>
