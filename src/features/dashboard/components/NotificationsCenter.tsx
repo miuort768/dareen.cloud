@@ -193,10 +193,10 @@ export const NotificationsCenter = ({
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pb-6">
                 {/* ── 1. Smart Alerts (Left) ── */}
                 <div className={cn(
-                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
+                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden h-full",
                     activeTab !== 'smart' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="flex items-center justify-between mb-8">
@@ -252,7 +252,7 @@ export const NotificationsCenter = ({
 
                 {/* ── 2. Alerts Room (Right) ── */}
                 <div className={cn(
-                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
+                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden h-full",
                     activeTab !== 'room' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="flex items-center justify-between mb-8">
