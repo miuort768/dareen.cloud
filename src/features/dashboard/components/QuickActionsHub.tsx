@@ -44,12 +44,12 @@ export const QuickActionsHub = () => {
                 <Link
                     key={i}
                     to={action.href}
-                    className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 active:scale-[0.98] relative overflow-hidden shadow-sm hover:shadow-md"
+                    className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-none hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 active:scale-[0.98] relative overflow-hidden shadow-sm hover:shadow-md"
                 >
                     <div className="absolute top-0 right-0 w-12 h-12 bg-slate-950/5 -translate-y-6 translate-x-6 rotate-45 group-hover:rotate-0 transition-transform duration-500" />
                     
                     <div className="flex items-center justify-between lg:justify-start lg:gap-4 relative z-10 w-full lg:w-auto">
-                        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center transition-all group-hover:rotate-6 border border-slate-950/10 shrink-0", action.bg)}>
+                        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center transition-all group-hover:rotate-6 border border-slate-950/10 shrink-0", action.bg)}>
                             <action.icon size={18} className={action.color} />
                         </div>
                         
