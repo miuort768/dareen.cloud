@@ -45,9 +45,9 @@ export const LiveClasses = () => {
 
     return (
         <div className="space-y-4" dir="rtl">
-            <div className="flex items-center justify-between bg-white dark:bg-slate-900 border-2 border-slate-950 p-4 rounded-none">
+            <div className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm animate-pulse">
+                    <div className="w-10 h-10 bg-red-600 text-white rounded-xl flex items-center justify-center border border-slate-950/10 shadow-sm animate-pulse">
                         <Radio size={20} />
                     </div>
                     <div>
@@ -58,7 +58,7 @@ export const LiveClasses = () => {
                 {isTeacher && (
                     <button 
                         onClick={startNewSession}
-                        className="bg-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border-2 border-slate-950 hover:bg-red-700 transition-all active:scale-[0.98]"
+                        className="bg-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border border-red-500 rounded-xl hover:bg-red-700 transition-all active:scale-[0.98]"
                     >
                         بدء بث جديد
                     </button>
@@ -73,7 +73,7 @@ export const LiveClasses = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {sessions.map(session => (
-                        <div key={session.id} className="bg-white dark:bg-slate-900 border-2 border-slate-950 p-5 flex flex-col justify-between group hover:shadow-[8px_8px_0px_0px_rgba(220,38,38,1)] transition-all rounded-none relative">
+                        <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 flex flex-col justify-between group hover:border-red-600/50 transition-all rounded-2xl relative shadow-sm">
                             <div className="absolute top-4 left-4">
                                 <div className="flex items-center gap-1.5 bg-red-600 text-white px-2 py-0.5 border border-slate-950">
                                     <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
@@ -89,7 +89,7 @@ export const LiveClasses = () => {
                             </div>
                             <button 
                                 onClick={() => navigate(`/classroom/${session.id}`)}
-                                className="w-full bg-slate-950 text-white py-3 text-[10px] font-black uppercase border-2 border-slate-950 flex items-center justify-center gap-2 hover:bg-red-600 transition-colors"
+                                className="w-full bg-slate-900 text-white py-3 text-[10px] font-black uppercase rounded-xl flex items-center justify-center gap-2 hover:bg-red-600 transition-colors"
                             >
                                 <PlayCircle size={16} />
                                 دخول البث الآن

@@ -9,8 +9,8 @@ interface DashboardStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, value: string | number, icon: LucideIcon, color: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-3 flex items-center gap-3 rounded-none transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50 h-full group">
-        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center shrink-0 border-2 border-slate-900/10 group-hover:border-slate-900/30 transition-colors", bg)}>
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex items-center gap-3 rounded-2xl transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50 h-full group shadow-sm">
+        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border border-slate-900/10 group-hover:border-slate-900/30 transition-colors", bg)}>
             <Icon size={18} className={color} />
         </div>
         <div className="flex flex-col min-w-0">
