@@ -1,4 +1,4 @@
-import { UserPlus, FilePlus, Megaphone, ArrowLeft, Calendar, Rocket } from 'lucide-react';
+import { UserPlus, FilePlus, Megaphone, Calendar, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 
@@ -46,10 +46,10 @@ export const QuickActionsHub = () => {
                     to={action.href}
                     className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-none hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 active:scale-[0.98] relative overflow-hidden shadow-sm hover:shadow-md"
                 >
-                    <div className="absolute top-0 right-0 w-12 h-12 bg-slate-950/5 -translate-y-6 translate-x-6 rotate-45 group-hover:rotate-0 transition-transform duration-500" />
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-slate-950/5 -translate-y-6 translate-x-6 rotate-45 transition-transform duration-500" />
                     
                     <div className="flex items-center justify-between lg:justify-start lg:gap-4 relative z-10 w-full lg:w-auto">
-                        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center transition-all group-hover:rotate-6 border border-slate-950/10 shrink-0", action.bg)}>
+                        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center border border-slate-950/10 shrink-0", action.bg)}>
                             <action.icon size={18} className={action.color} />
                         </div>
                         
@@ -59,10 +59,9 @@ export const QuickActionsHub = () => {
                             <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tight">{action.description}</p>
                         </div>
 
-                        {/* Arrows/Rocket for Mobile only in this flex box */}
-                        <div className="flex items-center gap-1.5 lg:hidden">
-                            <Rocket size={12} className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <ArrowLeft size={16} className="text-slate-300 group-hover:text-indigo-600 group-hover:-translate-x-1 transition-all" />
+                        {/* Rocket for Mobile only */}
+                        <div className="flex items-center lg:hidden">
+                            <Rocket size={14} className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
                     </div>
                     
@@ -72,10 +71,9 @@ export const QuickActionsHub = () => {
                         <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tight">{action.description}</p>
                     </div>
 
-                    {/* Arrows/Rocket for Desktop - Positioned at far left */}
-                    <div className="hidden lg:flex items-center gap-1.5 relative z-10">
-                        <Rocket size={12} className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <ArrowLeft size={16} className="text-slate-300 group-hover:text-indigo-600 group-hover:-translate-x-1 transition-all" />
+                    {/* Rocket for Desktop */}
+                    <div className="hidden lg:flex items-center relative z-10">
+                        <Rocket size={14} className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                 </Link>
             ))}
