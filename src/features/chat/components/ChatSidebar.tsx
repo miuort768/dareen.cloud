@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
     Search, 
     ShieldCheck, MessageSquarePlus,
-    Sun, Moon, Trash2
+    Sun, Trash2
 } from 'lucide-react';
 import { NotificationDropdown } from '../../../components/ui/NotificationDropdown';
 import { useDarkMode } from '../../../hooks/useDarkMode';
@@ -66,7 +66,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                             className="p-1.5 text-[#54656f] dark:text-[#aebac1] hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
                         >
-                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                            <Sun size={18} />
                         </button>
                         <div className="text-[#54656f] dark:text-[#aebac1]">
                             <NotificationDropdown />
