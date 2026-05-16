@@ -48,29 +48,29 @@ export const FinanceStats = ({
     netProfit,
     monthProfit,
 }: FinanceStatsProps) => {
-    const isProfit = netProfit >= 0;
+    const isProfit = (netProfit || 0) >= 0;
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6" dir="rtl">
             <StatCard
                 title="إجمالي الإيرادات"
-                value={totalIncome.toLocaleString()}
+                value={(totalIncome || 0).toLocaleString()}
                 icon={TrendingUp}
                 gradient="bg-gradient-to-br from-emerald-500 to-emerald-700"
-                sub={`+${monthIncome.toLocaleString()} هذا الشهر`}
+                sub={`+${(monthIncome || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: 'وارد', color: 'bg-white/20 text-white' }}
             />
             <StatCard
                 title="مستحقات المعلمات"
-                value={totalExpenses.toLocaleString()}
+                value={(totalExpenses || 0).toLocaleString()}
                 icon={TrendingDown}
                 gradient="bg-gradient-to-br from-rose-500 to-rose-700"
-                sub={`-${monthExpenses.toLocaleString()} هذا الشهر`}
+                sub={`-${(monthExpenses || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: 'صادر', color: 'bg-white/20 text-white' }}
             />
             <StatCard
                 title="المصروفات التشغيلية"
-                value={totalFixedExpenses.toLocaleString()}
+                value={(totalFixedExpenses || 0).toLocaleString()}
                 icon={Wallet}
                 gradient="bg-gradient-to-br from-indigo-600 to-violet-800"
                 sub="مصروفات ثابتة"
@@ -78,12 +78,12 @@ export const FinanceStats = ({
             />
             <StatCard
                 title="صافي الربح"
-                value={netProfit.toLocaleString()}
+                value={(netProfit || 0).toLocaleString()}
                 icon={DollarSign}
                 gradient={isProfit
                     ? "bg-gradient-to-br from-amber-500 to-orange-700"
                     : "bg-gradient-to-br from-slate-600 to-slate-800"}
-                sub={`${monthProfit >= 0 ? '+' : ''}${monthProfit.toLocaleString()} هذا الشهر`}
+                sub={`${(monthProfit || 0) >= 0 ? '+' : ''}${(monthProfit || 0).toLocaleString()} هذا الشهر`}
                 badge={{ label: isProfit ? 'ربح' : 'خسارة', color: isProfit ? 'bg-white/20 text-white' : 'bg-rose-500/40 text-white' }}
             />
         </div>
