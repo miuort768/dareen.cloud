@@ -53,8 +53,15 @@ export const Sidebar = () => {
         navigate('/login');
     };
 
+    const getDashboardLink = () => {
+        if (currentUser?.role === 'parent') return '/parent-dashboard';
+        if (currentUser?.role === 'student') return '/student-dashboard';
+        if (currentUser?.role === 'teacher') return '/teacher-dashboard';
+        return '/admin-dashboard';
+    };
+
     const navigation = [
-        { name: 'لوحة التحكم', href: '/admin-dashboard', id: 'dashboard', icon: LayoutDashboard },
+        { name: 'لوحة التحكم', href: getDashboardLink(), id: 'dashboard', icon: LayoutDashboard },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'العملاء والمهتمين', href: '/leads', id: 'leads', icon: UserPlus },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },

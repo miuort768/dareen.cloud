@@ -13,6 +13,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m
 const Settings = lazy(() => import('./pages/Settings'));
 const ParentDashboard = lazy(() => import('./pages/ParentDashboard').then(m => ({ default: m.ParentDashboard })));
 const StudentDashboard = lazy(() => import('./pages/StudentDashboard').then(m => ({ default: m.StudentDashboard })));
+const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard').then(m => ({ default: m.TeacherDashboard })));
 const ParentStudents = lazy(() => import('./pages/ParentStudents').then(m => ({ default: m.ParentStudents })));
 const ParentAnnouncements = lazy(() => import('./pages/ParentAnnouncements').then(m => ({ default: m.ParentAnnouncements })));
 const Evaluations = lazy(() => import('./pages/Evaluations').then(m => ({ default: m.Evaluations })));
@@ -84,7 +85,7 @@ const DashboardRedirect = () => {
   const { currentUser } = useApp();
   if (currentUser?.role === 'parent') return <Navigate to="/parent-dashboard" replace />;
   if (currentUser?.role === 'student') return <Navigate to="/student-dashboard" replace />;
-  if (currentUser?.role === 'teacher') return <Navigate to="/admin-dashboard" replace />;
+  if (currentUser?.role === 'teacher') return <Navigate to="/teacher-dashboard" replace />;
   if (currentUser?.role === 'chat_user') return <Navigate to="/chat" replace />;
   return <Navigate to="/admin-dashboard" replace />;
 };
@@ -167,6 +168,7 @@ function App() {
           >
             <Route path="dashboard" element={<DashboardRedirect />} />
             <Route path="admin-dashboard" element={<ProtectedRoute permission="dashboard"><Dashboard /></ProtectedRoute>} />
+            <Route path="teacher-dashboard" element={<ProtectedRoute permission="dashboard"><TeacherDashboard /></ProtectedRoute>} />
             <Route path="parent-dashboard" element={<ProtectedRoute permission="parent_dashboard"><ParentDashboard /></ProtectedRoute>} />
             <Route path="student-dashboard" element={<ProtectedRoute permission="student_dashboard"><StudentDashboard /></ProtectedRoute>} />
             <Route path="parent-students" element={<ProtectedRoute permission="parent_students"><ParentStudents /></ProtectedRoute>} />
