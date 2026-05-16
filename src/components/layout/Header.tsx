@@ -101,7 +101,7 @@ export const Header = () => {
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     className="w-11 h-11 flex items-center justify-center text-white hover:bg-white/10 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                    {theme === 'dark' ? <Sun size={20} /> : <Sun size={20} />}
                 </button>
 
                 {/* Notifications */}
@@ -113,7 +113,7 @@ export const Header = () => {
                     to={currentUser?.role === 'admin' ? '/settings' : '/profile'} 
                     className="flex items-center pr-3 border-r border-white/20 shrink-0 group transition-all"
                 >
-                    <div className="w-10 h-10 bg-white/20 flex items-center justify-center text-white rounded-xl shrink-0 border border-white/20 group-hover:ring-2 group-hover:ring-white/20 group-active:scale-95 transition-all overflow-hidden">
+                    <div className="w-10 h-10 bg-white/20 flex items-center justify-center text-white rounded-xl shrink-0 border-[0.5px] border-white/30 group-hover:ring-1 group-hover:ring-white/20 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
                             <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
                         ) : (
