@@ -67,8 +67,8 @@ export const Header = () => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-indigo-600/40 dark:bg-purple-800/40 backdrop-blur-xl border-b border-white/20 dark:border-white/10 flex items-center justify-between transition-all duration-500 z-[9999]",
-            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl border border-white/20 dark:border-white/10 px-4 md:px-8 max-w-full"
+            "h-[60px] lg:h-[75px] bg-slate-950 dark:bg-slate-900 backdrop-blur-xl border-b border-white/10 flex items-center justify-between transition-all duration-500 z-[9999]",
+            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl border border-white/10 px-4 md:px-8 max-w-full shadow-2xl shadow-black/20"
         )}>
 
             {/* Left Section: Branding & Title */}
