@@ -48,9 +48,7 @@ export const TeacherDashboard = () => {
                 />
 
                 {/* 2. Stats Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <DashboardStats stats={stats} isTeacher={true} />
-                </div>
+                <DashboardStats stats={stats} isTeacher={true} />
 
                 {/* 3. Main Content Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in slide-in-from-bottom-4 duration-500">

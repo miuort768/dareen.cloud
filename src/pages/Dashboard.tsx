@@ -47,14 +47,10 @@ export const Dashboard = () => {
                     currentUser={currentUser}
                 />
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <QuickActionsHub />
-                </div>
+                <QuickActionsHub />
 
                 {/* 2. Stats Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <DashboardStats stats={stats} isTeacher={false} />
-                </div>
+                <DashboardStats stats={stats} isTeacher={false} />
 
                 {/* 3. Main Content Section */}
                 <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
