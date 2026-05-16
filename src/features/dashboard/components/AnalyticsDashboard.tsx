@@ -85,7 +85,6 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                     "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
                     activeTab !== 'commitment' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
@@ -156,7 +155,6 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                     "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
                     activeTab !== 'database' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">

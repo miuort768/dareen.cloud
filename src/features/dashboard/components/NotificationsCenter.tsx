@@ -199,7 +199,6 @@ export const NotificationsCenter = ({
                     "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
                     activeTab !== 'smart' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-rose-600 text-white rounded-xl flex items-center justify-center border border-white/10">
@@ -256,7 +255,6 @@ export const NotificationsCenter = ({
                     "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
                     activeTab !== 'room' && "hidden lg:block opacity-40 grayscale"
                 )}>
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10">
