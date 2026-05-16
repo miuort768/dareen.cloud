@@ -82,12 +82,12 @@ export const Header = () => {
                 {title && (
                     <div className="min-w-0 overflow-hidden pr-1 flex flex-col">
                         <h1 className={cn(
-                            "text-sm md:text-xl font-black text-white truncate tracking-tight leading-tight",
+                            "text-base md:text-xl font-black text-white truncate tracking-tight leading-tight",
                             (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
                         )}>
                             {title}
                         </h1>
-                        <p className="text-[7px] md:text-[10px] font-normal text-indigo-100 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
+                        <p className="text-[9px] md:text-[10px] font-normal text-indigo-100 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
                             دارين للتعليم والتدريب
                         </p>
                     </div>
@@ -99,7 +99,7 @@ export const Header = () => {
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-11 h-11 flex items-center justify-center text-white hover:bg-white/10 rounded-none transition-colors shrink-0"
+                    className="w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-none transition-colors shrink-0"
                 >
                     {theme === 'dark' ? <Sun size={20} /> : <Sun size={20} />}
                 </button>

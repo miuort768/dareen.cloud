@@ -144,7 +144,7 @@ export const NotificationDropdown = () => {
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative w-11 h-11 flex items-center justify-center rounded-none hover:bg-white/10 text-white transition-none"
+                className="relative w-10 h-10 flex items-center justify-center rounded-none hover:bg-white/10 text-white transition-none"
             >
                 <Bell size={24} className={cn(unreadCount > 0 ? "text-amber-400 animate-pulse" : "text-white/90")} />
                 {notificationsEnabled && unreadCount > 0 && (
