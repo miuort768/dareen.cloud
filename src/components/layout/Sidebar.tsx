@@ -55,16 +55,12 @@ export const Sidebar = () => {
 
     const navigation = [
         { name: 'لوحة التحكم', href: '/admin-dashboard', id: 'dashboard', icon: LayoutDashboard },
-        { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
-        { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
-        { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
-        { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
+        { name: 'العملاء والمهتمين', href: '/leads', id: 'leads', icon: UserPlus },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
-        { name: 'التقييمات والنقاط', href: '/evaluations', id: 'dashboard', icon: Award },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
-        { name: 'العملاء والمهتمين', href: '/leads', id: 'leads', icon: UserPlus },
+        { name: 'التقييمات والنقاط', href: '/evaluations', id: 'dashboard', icon: Award },
         { name: 'المالية', href: '/finance', id: 'finance', icon: Wallet },
         { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
@@ -73,11 +69,15 @@ export const Sidebar = () => {
         { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student-invoices', icon: DollarSign },
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher-invoices', icon: Receipt },
-        { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
-        { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
+        { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
+        { name: 'بوابة المتابعة', href: '/parent-dashboard', id: 'parent_dashboard', icon: Home },
+        { name: 'حساب الطالب', href: '/student-dashboard', id: 'student_dashboard', icon: GraduationCap },
+        { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
+        { name: 'لوحة الإعلانات', href: '/parent-announcements', id: 'parent_announcements', icon: Megaphone },
+        { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
     ];
 
     // Filter navigation based on permissions
