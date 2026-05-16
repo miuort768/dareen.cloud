@@ -5,6 +5,7 @@ export interface ChatMessage {
     senderName: string;
     content: string;
     timestamp: string;
+    readAt?: string;
 }
 
 export interface Conversation {

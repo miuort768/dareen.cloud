@@ -6,6 +6,7 @@ import {
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Virtuoso } from 'react-virtuoso';
 import { cn } from '../../../lib/utils';
 import { useChatContext } from '../../../context/ChatContext';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
@@ -46,21 +47,20 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     setTyping,
     markAsRead
 }) => {
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const virtuosoRef = useRef<any>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const { typingUsers } = useChatContext();
 
-    const scrollToBottom = (behavior: ScrollBehavior = "auto") => {
-        messagesEndRef.current?.scrollIntoView({ behavior });
+    const scrollToBottom = () => {
+        if (filteredMessages.length > 0) {
+            virtuosoRef.current?.scrollToIndex({
+                index: filteredMessages.length - 1,
+                behavior: 'smooth'
+            });
+        }
     };
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            scrollToBottom("smooth");
-        }, 100);
-        return () => clearTimeout(timer);
-    }, [messages]);
 
     // Mark as read when conversation is active or new messages arrive
     useEffect(() => {
@@ -74,25 +74,24 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         }
     }, [selectedConv, messages.length, markAsRead, currentUser?.id]);
 
-    const handleScroll = () => {
-        if (!scrollContainerRef.current) return;
-        const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-        const isFarUp = scrollHeight - scrollTop - clientHeight > 300;
-        setShowScrollBottom(isFarUp);
-    };
-
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
-    // Safer and more efficient message sorting
-    const sortedMessages = useMemo(() => {
-        return [...messages].sort((a, b) => {
+    // Safer and more efficient message sorting + Searching
+    const filteredMessages = useMemo(() => {
+        let list = [...messages].sort((a, b) => {
             const timeA = new Date(a.timestamp).getTime();
             const timeB = new Date(b.timestamp).getTime();
             if (isNaN(timeA)) return 1;
             if (isNaN(timeB)) return -1;
             return timeA - timeB;
         });
-    }, [messages]);
+
+        if (searchQuery.trim()) {
+            list = list.filter(m => m.content.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+
+        return list;
+    }, [messages, searchQuery]);
 
     return (
         <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">
@@ -146,7 +145,29 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                 {currentUser?.role === 'admin' && (
                     <div className="flex items-center gap-5 text-[#54656f] dark:text-[#aebac1]">
-                        <button className="hover:bg-black/5 dark:hover:bg-white/5 p-2 rounded-full transition-colors">
+                        <div className={cn(
+                            "flex items-center bg-white/10 dark:bg-black/20 rounded-full px-3 py-1 transition-all",
+                            showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0"
+                        )}>
+                            <input 
+                                type="text"
+                                placeholder="بحث..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-slate-400"
+                                autoFocus
+                            />
+                        </div>
+                        <button 
+                            onClick={() => {
+                                setShowSearchBar(!showSearchBar);
+                                if (showSearchBar) setSearchQuery('');
+                            }}
+                            className={cn(
+                                "p-2 rounded-full transition-colors",
+                                showSearchBar ? "bg-indigo-600 text-white" : "hover:bg-black/5 dark:hover:bg-white/5"
+                            )}
+                        >
                             <Search size={20} />
                         </button>
                         <div className="relative" ref={menuRef}>
@@ -191,63 +212,67 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
             </header>
 
-            {/* Messages - WhatsApp Bubbles */}
-            <div 
-                ref={scrollContainerRef}
-                onScroll={handleScroll}
-                className="flex-1 overflow-y-auto px-3 md:px-10 lg:px-20 pt-6 pb-20 flex flex-col space-y-2 custom-scrollbar relative z-10 max-w-full overflow-x-hidden"
-            >
-                {sortedMessages.map((msg, idx) => {
-                    const isMe = msg.senderId === currentUser?.id;
-                    const isGroup = selectedConv.isGroup;
-                    
-                    return (
-                        <div 
-                            key={msg.id || idx} 
-                            className={cn(
-                                "flex w-full mb-1",
-                                isMe ? "justify-start" : "justify-end"
-                            )}
-                        >
-                            <div className={cn(
-                                "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
-                                isMe 
-                                    ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tl-none ml-2" 
-                                    : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tr-none mr-2"
-                            )}>
-                                {isGroup && !isMe && (
-                                    <span className="block text-[12.5px] font-bold text-[#e542a3] mb-0.5 text-right">
-                                        {msg.senderName}
-                                    </span>
+            {/* Messages - Virtualized Scroll for Performance */}
+            <div className="flex-1 relative z-10">
+                <Virtuoso
+                    ref={virtuosoRef}
+                    data={filteredMessages}
+                    initialTopMostItemIndex={filteredMessages.length - 1}
+                    followOutput="smooth"
+                    className="custom-scrollbar"
+                    style={{ height: '100%', width: '100%' }}
+                    atBottomStateChange={(atBottom) => {
+                        setShowScrollBottom(!atBottom);
+                    }}
+                    itemContent={(index, msg) => {
+                        const isMe = msg.senderId === currentUser?.id;
+                        const isGroup = selectedConv.isGroup;
+                        
+                        return (
+                            <div 
+                                className={cn(
+                                    "flex w-full mb-2 px-3 md:px-10 lg:px-20",
+                                    index === 0 && "pt-6",
+                                    isMe ? "justify-start" : "justify-end"
                                 )}
-
-                                <div className="text-[14.2px] text-[#111b21] dark:text-[#e9edef] leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
-                                    {msg.content}
-                                </div>
-                                
-                                <div className="flex items-center justify-end gap-1 mt-1">
-                                    <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
-                                        {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
-                                            ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
-                                            : '--:--'}
-                                    </span>
-                                    {isMe && (
-                                        <div className="flex">
-                                            {new Date().getTime() - new Date(msg.timestamp).getTime() > 10000 ? (
-                                                <CheckCheck size={14} className="text-[#53bdeb]" />
-                                            ) : new Date().getTime() - new Date(msg.timestamp).getTime() > 3000 ? (
-                                                <CheckCheck size={14} className="text-[#8696a0]" />
-                                            ) : (
-                                                <CheckCheck size={14} className="text-[#8696a0] opacity-50" />
-                                            )}
-                                        </div>
+                            >
+                                <div className={cn(
+                                    "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
+                                    isMe 
+                                        ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tl-none ml-2" 
+                                        : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tr-none mr-2"
+                                )}>
+                                    {isGroup && !isMe && (
+                                        <span className="block text-[12.5px] font-bold text-[#e542a3] mb-0.5 text-right">
+                                            {msg.senderName}
+                                        </span>
                                     )}
+
+                                    <div className="text-[14.2px] text-[#111b21] dark:text-[#e9edef] leading-[1.4] whitespace-pre-wrap text-right tracking-tight">
+                                        {msg.content}
+                                    </div>
+                                    
+                                    <div className="flex items-center justify-end gap-1 mt-1">
+                                        <span className="text-[10px] text-[#667781] dark:text-[#8696a0]">
+                                            {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) 
+                                                ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar })
+                                                : '--:--'}
+                                        </span>
+                                        {isMe && (
+                                            <div className="flex">
+                                                {msg.readAt ? (
+                                                    <CheckCheck size={14} className="text-[#53bdeb]" />
+                                                ) : (
+                                                    <CheckCheck size={14} className="text-[#8696a0]" />
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
-                <div ref={messagesEndRef} />
+                        );
+                    }}
+                />
             </div>
 
             {/* Scroll to Bottom Button */}
@@ -257,7 +282,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        onClick={() => scrollToBottom("smooth")}
+                        onClick={scrollToBottom}
                         className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
                     >
                         <ArrowDown size={20} />
