@@ -157,10 +157,10 @@ export const NotificationsCenter = ({
 
     return (
         <div className="w-full space-y-6" dir="rtl">
-            {/* Header / Tabs - Compact Sharp Admin Style */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-5 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            {/* Header / Tabs - Soft Modern style */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-10 h-10 bg-indigo-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md transition-transform hover:rotate-3">
+                    <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm transition-transform hover:rotate-3">
                         <ShieldAlert size={20} />
                     </div>
                     <div>
@@ -169,12 +169,12 @@ export const NotificationsCenter = ({
                     </div>
                 </div>
 
-                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-none border-2 border-slate-950">
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
                     <button 
                         onClick={() => setActiveTab('smart')}
                         className={cn(
-                            "px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
-                            activeTab === 'smart' ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                            "px-6 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
+                            activeTab === 'smart' ? "bg-white dark:bg-slate-900 text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
                         <Zap size={12} />
@@ -183,8 +183,8 @@ export const NotificationsCenter = ({
                     <button 
                         onClick={() => setActiveTab('room')}
                         className={cn(
-                            "px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
-                            activeTab === 'room' ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                            "px-6 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all flex items-center gap-2",
+                            activeTab === 'room' ? "bg-white dark:bg-slate-900 text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                         )}
                     >
                         <Bell size={12} />
@@ -196,13 +196,13 @@ export const NotificationsCenter = ({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pb-6">
                 {/* ── 1. Smart Alerts (Left) ── */}
                 <div className={cn(
-                    "lg:col-span-7 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 shadow-[6px_6px_0px_0px_rgba(225,29,72,0.1)] transition-all relative overflow-hidden",
+                    "lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
                     activeTab !== 'smart' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-rose-600 text-white rounded-none flex items-center justify-center border border-slate-950/10">
+                            <div className="w-9 h-9 bg-rose-600 text-white rounded-xl flex items-center justify-center border border-white/10">
                                 <AlertTriangle size={18} />
                             </div>
                             <div>
@@ -210,7 +210,7 @@ export const NotificationsCenter = ({
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Critical AI Monitoring</p>
                             </div>
                         </div>
-                        <div className="bg-rose-600 text-white px-3 py-1 border border-slate-950">
+                        <div className="bg-rose-600 text-white px-3 py-1 rounded-full border border-rose-500/50">
                             <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} CRITICAL</span>
                         </div>
                     </div>
@@ -218,14 +218,14 @@ export const NotificationsCenter = ({
                     <div className="space-y-3">
                         {filteredSmartAlerts.map((alert: any) => (
                             <div key={alert.id} className={cn(
-                                "p-4 rounded-none border-2 flex items-center justify-between group transition-all",
-                                alert.type === 'critical' ? "bg-rose-50/50 border-rose-600" : 
-                                alert.type === 'success' ? "bg-emerald-50/50 border-emerald-600" :
-                                "bg-amber-50/50 border-amber-500"
+                                "p-4 rounded-xl border flex items-center justify-between group transition-all",
+                                alert.type === 'critical' ? "bg-rose-50/50 dark:bg-rose-500/5 border-rose-200 dark:border-rose-500/30" : 
+                                alert.type === 'success' ? "bg-emerald-50/50 dark:bg-emerald-500/5 border-emerald-200 dark:border-emerald-500/30" :
+                                "bg-amber-50/50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/30"
                             )}>
                                 <div className="flex items-center gap-4">
                                     <div className={cn(
-                                        "w-10 h-10 rounded-none flex items-center justify-center text-white border-2 border-slate-950",
+                                        "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm",
                                         alert.type === 'critical' ? "bg-rose-600" :
                                         alert.type === 'success' ? "bg-emerald-600" : "bg-amber-500"
                                     )}>
@@ -237,14 +237,14 @@ export const NotificationsCenter = ({
                                     </div>
                                 </div>
                                 {alert.action && (
-                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center bg-slate-950 text-white hover:bg-indigo-600 transition-all border border-slate-950">
+                                    <button onClick={alert.action} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-600 dark:text-white hover:bg-indigo-600 hover:text-white transition-all border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm">
                                         <ArrowLeft size={14} />
                                     </button>
                                 )}
                             </div>
                         ))}
                         {filteredSmartAlerts.length === 0 && (
-                            <div className="text-center py-16 border-2 border-dashed border-slate-100 dark:border-slate-800">
+                            <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                                 <p className="text-[9px] font-black text-slate-400 uppercase">No Intelligence Data</p>
                             </div>
                         )}
@@ -253,13 +253,13 @@ export const NotificationsCenter = ({
 
                 {/* ── 2. Alerts Room (Right) ── */}
                 <div className={cn(
-                    "lg:col-span-5 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 shadow-[6px_6px_0px_0px_rgba(79,70,229,0.1)] transition-all relative overflow-hidden",
+                    "lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm transition-all relative overflow-hidden",
                     activeTab !== 'room' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-indigo-600 text-white rounded-none flex items-center justify-center border border-slate-950/10">
+                            <div className="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10">
                                 <Bell size={18} />
                             </div>
                             <div>
@@ -267,16 +267,16 @@ export const NotificationsCenter = ({
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Live Operations Center</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-600 text-white px-3 py-1 border border-slate-950">
+                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50">
                             <span className="text-[9px] font-black uppercase">{filteredRoomAlerts.length} ALERTS</span>
                         </div>
                     </div>
 
                     <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
                         {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert: any) => (
-                            <div key={alert.id} className="flex items-center justify-between group p-3 border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-none hover:border-slate-950">
+                            <div key={alert.id} className="flex items-center justify-between group p-3 border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-xl hover:border-indigo-600/30">
                                 <div className="flex items-center gap-4 min-w-0">
-                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700">
+                                    <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700 rounded-xl">
                                         <alert.icon size={16} />
                                     </div>
                                     <div className="min-w-0">
@@ -287,21 +287,21 @@ export const NotificationsCenter = ({
                                 {alert.actionLabel === 'واتساب' ? (
                                     <button 
                                         onClick={alert.action} 
-                                        className="h-8 px-4 bg-emerald-600 text-white hover:bg-emerald-700 text-[8px] font-black uppercase tracking-widest border border-slate-950 transition-all active:scale-[0.98]"
+                                        className="h-8 px-4 bg-emerald-600 text-white hover:bg-emerald-700 text-[8px] font-black uppercase tracking-widest rounded-lg border border-emerald-500/50 transition-all active:scale-[0.98] shadow-sm"
                                     >
                                         WHATSAPP
                                     </button>
                                 ) : (
                                     <Link 
                                         to={alert.link || '#'} 
-                                        className="h-8 px-4 bg-slate-950 text-white hover:bg-indigo-600 text-[8px] font-black uppercase tracking-widest border border-slate-950 transition-all active:scale-[0.98] flex items-center justify-center"
+                                        className="h-8 px-4 bg-indigo-600 text-white hover:bg-indigo-700 text-[8px] font-black uppercase tracking-widest rounded-lg border border-indigo-500/50 transition-all active:scale-[0.98] flex items-center justify-center shadow-sm"
                                     >
                                         {alert.actionLabel}
                                     </Link>
                                 )}
                             </div>
                         )) : (
-                            <div className="text-center py-16 border-2 border-dashed border-slate-100 dark:border-slate-800">
+                            <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">All Systems Nominal</p>
                             </div>
                         )}
@@ -310,5 +310,6 @@ export const NotificationsCenter = ({
             </div>
         </div>
     );
+
 };
 
