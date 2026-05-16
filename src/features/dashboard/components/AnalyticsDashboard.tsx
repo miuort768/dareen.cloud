@@ -51,10 +51,10 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
     return (
         <div className="w-full space-y-6" dir="rtl">
-            {/* Header / Tabs - Compact Sharp Admin Style */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-5 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            {/* Header / Tabs - Soft Modern style */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-12 h-12 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md">
+                    <div className="w-12 h-12 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
                         <Database size={24} />
                     </div>
                     <div>
@@ -63,7 +63,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                     </div>
                 </div>
 
-                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-none border-2 border-slate-950">
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
                     <TabButton 
                         active={activeTab === 'commitment'} 
                         onClick={() => setActiveTab('commitment')} 
@@ -82,13 +82,13 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
                 {/* Evolution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(16,185,129,0.1)] transition-all relative overflow-hidden", 
+                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
                     activeTab !== 'commitment' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-emerald-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm">
+                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
                                 <TrendingUp size={20} />
                             </div>
                             <div>
@@ -96,7 +96,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Academic Progression</p>
                             </div>
                         </div>
-                        <div className="bg-emerald-600 text-white px-3 py-1 border border-slate-950">
+                        <div className="bg-emerald-600 text-white px-3 py-1 rounded-full border border-emerald-500/50 shadow-sm">
                             <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% GLOBAL</span>
                         </div>
                     </div>
@@ -106,11 +106,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             <AreaChart data={attendanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#059669" stopOpacity={0.2}/>
-                                        <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
+                                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="0" vertical={false} stroke="#000" opacity={0.05} />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ccc" opacity={0.2} />
                                 <XAxis 
                                     dataKey="month" 
                                     tick={{ fontSize: 9, fontWeight: '900', fill: '#64748b' }} 
@@ -126,11 +126,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     tickFormatter={(val) => `${val}%`}
                                 />
                                 <Tooltip 
-                                    cursor={{ stroke: '#059669', strokeWidth: 2 }}
+                                    cursor={{ stroke: '#10b981', strokeWidth: 2 }}
                                     contentStyle={{ 
-                                        borderRadius: '0px', 
-                                        border: '2px solid #000', 
-                                        boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)', 
+                                        borderRadius: '12px', 
+                                        border: '1px solid #e2e8f0', 
+                                        boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', 
                                         fontSize: '10px', 
                                         fontWeight: '900', 
                                         backgroundColor: '#fff', 
@@ -139,12 +139,12 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     }}
                                 />
                                 <Area 
-                                    type="stepAfter" 
+                                    type="monotone" 
                                     dataKey="rate" 
-                                    stroke="#059669" 
+                                    stroke="#10b981" 
                                     fill="url(#colorRate)" 
                                     strokeWidth={3} 
-                                    dot={{ r: 3, fill: '#059669', strokeWidth: 1.5, stroke: '#fff' }} 
+                                    dot={{ r: 3, fill: '#10b981', strokeWidth: 1.5, stroke: '#fff' }} 
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
@@ -153,13 +153,13 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
                 {/* Distribution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(79,70,229,0.1)] transition-all relative overflow-hidden", 
+                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
                     activeTab !== 'database' && "hidden lg:block opacity-40 grayscale"
                 )}>
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-indigo-600" />
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-indigo-600 text-white rounded-none flex items-center justify-center border-2 border-slate-950 shadow-sm">
+                            <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
                                 <BarChart3 size={20} />
                             </div>
                             <div>
@@ -167,7 +167,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Subject Analytics</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-600 text-white px-3 py-1 border border-slate-950">
+                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50 shadow-sm">
                             <span className="text-[10px] font-black tabular-nums uppercase">{students.length} USERS</span>
                         </div>
                     </div>
@@ -175,7 +175,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                     <div className="h-[280px] w-full" dir="ltr">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={subjectStats} layout="vertical" margin={{ left: 10, right: 30, top: 0, bottom: 0 }}>
-                                <CartesianGrid strokeDasharray="0" stroke="#000" horizontal={false} opacity={0.05} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#ccc" horizontal={false} opacity={0.2} />
                                 <XAxis type="number" hide />
                                 <YAxis 
                                     type="category" 
@@ -186,11 +186,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                     tickLine={false} 
                                 />
                                 <Tooltip 
-                                    cursor={{ fill: 'rgba(79, 70, 229, 0.05)' }} 
+                                    cursor={{ fill: 'rgba(79, 70, 229, 0.03)' }} 
                                     contentStyle={{ 
-                                        borderRadius: '0px', 
-                                        border: '2px solid #000', 
-                                        boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)', 
+                                        borderRadius: '12px', 
+                                        border: '1px solid #e2e8f0', 
+                                        boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', 
                                         fontSize: '10px', 
                                         fontWeight: '900', 
                                         backgroundColor: '#fff', 
@@ -201,7 +201,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <Bar 
                                     dataKey="sessions" 
                                     fill="#4f46e5" 
-                                    radius={0} 
+                                    radius={[0, 4, 4, 0]} 
                                     barSize={24}
                                     label={{ position: 'right', fill: '#4f46e5', fontSize: 9, fontWeight: '900', offset: 8 }}
                                 />
@@ -218,8 +218,8 @@ const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, on
     <button 
         onClick={onClick}
         className={cn(
-            "flex-1 px-6 py-2 rounded-none font-black text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2",
-            active ? "bg-indigo-600 text-white shadow-md border-2 border-slate-950" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            "flex-1 px-6 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+            active ? "bg-white dark:bg-slate-900 text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
         )}
     >
         <Icon size={14} />

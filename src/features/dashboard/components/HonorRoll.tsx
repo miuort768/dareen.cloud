@@ -23,11 +23,11 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
     return (
         <div className="w-full mt-6" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 rounded-none p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative group">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm relative group">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-amber-400 text-slate-950 border-2 border-slate-950 rounded-none flex items-center justify-center transition-transform group-hover:rotate-6">
+                        <div className="w-10 h-10 bg-amber-400 text-slate-950 border border-white/20 rounded-xl flex items-center justify-center transition-transform group-hover:rotate-6 shadow-sm">
                             <Trophy size={20} />
                         </div>
                         <div>
@@ -51,15 +51,15 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                             <div 
                                 key={student.id} 
                                 className={cn(
-                                    "relative p-3 border-2 transition-all hover:-translate-y-1 flex flex-col items-center text-center rounded-none",
-                                    isFirst ? "bg-amber-50 border-amber-400 shadow-[3px_3px_0px_0px_rgba(251,191,36,1)]" : 
-                                    isSecond ? "bg-slate-50 border-slate-300 shadow-[3px_3px_0px_0px_rgba(148,163,184,1)]" :
-                                    isThird ? "bg-orange-50 border-orange-300 shadow-[3px_3px_0px_0px_rgba(251,146,60,1)]" :
-                                    "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+                                    "relative p-3 border transition-all hover:-translate-y-1 flex flex-col items-center text-center rounded-2xl shadow-sm",
+                                    isFirst ? "bg-amber-50/50 border-amber-200 dark:bg-amber-900/10 dark:border-amber-500/30" : 
+                                    isSecond ? "bg-slate-50 border-slate-200 dark:bg-slate-800/40 dark:border-slate-700" :
+                                    isThird ? "bg-orange-50 border-orange-200 dark:bg-orange-900/10 dark:border-orange-500/30" :
+                                    "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700"
                                 )}
                             >
                                 <div className={cn(
-                                    "w-7 h-7 border border-slate-950/20 flex items-center justify-center mb-3 rounded-none",
+                                    "w-7 h-7 border border-white/20 flex items-center justify-center mb-3 rounded-lg shadow-sm",
                                     isFirst ? "bg-amber-400 text-slate-950" : 
                                     isSecond ? "bg-slate-300 text-slate-700" :
                                     isThird ? "bg-orange-400 text-white" :
@@ -70,7 +70,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                      <Star size={12} fill={index < 3 ? "currentColor" : "none"} />}
                                 </div>
 
-                                <div className="w-11 h-11 bg-white dark:bg-slate-700 border border-slate-950/10 flex items-center justify-center mb-2 relative overflow-hidden rounded-none">
+                                <div className="w-11 h-11 bg-white dark:bg-slate-700 border border-slate-100 dark:border-slate-600 flex items-center justify-center mb-2 relative overflow-hidden rounded-full shadow-inner">
                                      <span className="text-lg font-black text-slate-200 dark:text-slate-500">{student.name.charAt(0)}</span>
                                      {student.avatar && <img src={student.avatar} alt={student.name} className="absolute inset-0 w-full h-full object-cover" />}
                                 </div>
@@ -78,11 +78,11 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
                                 <div className="w-full">
                                     <p className={cn(
                                         "text-[10px] font-black truncate uppercase mb-1",
-                                        isFirst ? "text-amber-900" : "text-slate-900 dark:text-white"
+                                        isFirst ? "text-amber-900 dark:text-amber-400" : "text-slate-900 dark:text-white"
                                     )}>
                                         {student.name}
                                     </p>
-                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950">
+                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950 rounded-full">
                                         <span className="text-[9px] font-black tabular-nums">{student.totalPoints}</span>
                                         <span className="text-[7px] font-black opacity-70">PTS</span>
                                     </div>
@@ -94,5 +94,6 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
             </div>
         </div>
     );
+
 
 };
