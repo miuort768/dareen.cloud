@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap } from 'lucide-react';
+import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, User } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { cn } from '../../lib/utils';
@@ -97,8 +97,17 @@ export const PublicNavbar = () => {
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center gap-2 text-gray-700 dark:text-slate-200 hover:text-indigo-600 transition-colors px-2 md:px-4 py-2"
+                                    className="flex items-center gap-3 text-gray-700 dark:text-slate-200 hover:text-indigo-600 transition-all px-2 md:px-4 py-2 group"
                                 >
+                                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-indigo-100 dark:border-indigo-900 shadow-sm group-hover:border-indigo-500 transition-all">
+                                        {currentUser?.avatar ? (
+                                            <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="w-full h-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center">
+                                                <User className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                            </div>
+                                        )}
+                                    </div>
                                     <span className="font-bold text-xs md:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>

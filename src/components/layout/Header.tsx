@@ -2,12 +2,14 @@ import { Moon, Sun, User } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
+import { useApp } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { cn } from '../../lib/utils';
 
 export const Header = () => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
+    const { currentUser } = useApp();
 
 
     const getPageTitle = (path: string) => {
@@ -107,11 +109,15 @@ export const Header = () => {
                     <NotificationDropdown />
                 </div>
 
-                <div className="flex items-center pr-3 border-r border-slate-200 dark:border-white/20 shrink-0">
-                    <div className="w-10 h-10 bg-slate-100 dark:bg-white/20 flex items-center justify-center text-slate-600 dark:text-white rounded-xl shrink-0 border border-slate-200 dark:border-white/20">
-                        <User size={20} />
+                <Link to="/settings" className="flex items-center pr-3 border-r border-slate-200 dark:border-white/20 shrink-0 group transition-all">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-white/20 flex items-center justify-center text-slate-600 dark:text-white rounded-xl shrink-0 border border-slate-200 dark:border-white/20 group-hover:ring-2 group-hover:ring-primary-500/20 group-active:scale-95 transition-all overflow-hidden">
+                        {currentUser?.avatar ? (
+                            <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
+                        ) : (
+                            <User size={20} />
+                        )}
                     </div>
-                </div>
+                </Link>
             </div>
         </header>
     );
