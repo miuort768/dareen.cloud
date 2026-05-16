@@ -56,17 +56,6 @@ export const NotificationsCenter = ({
     const smartAlerts = useMemo(() => {
         const result: any[] = [];
         
-        // Specific requested alert: Monira Ahmed - Absence 60%
-        result.push({
-            id: 'specific-monira',
-            type: 'critical',
-            title: 'منيرة احمد',
-            desc: 'غياب 60%',
-            action: () => navigate('/attendance'),
-            color: 'red',
-            priority: 'high'
-        });
-
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
                 result.push({
@@ -86,7 +75,7 @@ export const NotificationsCenter = ({
             if (studentSessions.length < 3) return;
             const absent = studentSessions.filter(ss => ss.status === 'cancelled').length;
             const rate = (absent / studentSessions.length) * 100;
-            if (rate > 30 && s.name !== 'منيرة احمد') {
+            if (rate > 30) {
                 result.push({
                     id: `absent-${s.id}`,
                     type: 'warning',
