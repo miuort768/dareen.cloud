@@ -46,7 +46,7 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                     </div>
                     <div>
                         <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">سجل النشاطات</h3>
-                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">Real-time Logging</p>
+                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">سجل المراقبة الفورية</p>
                     </div>
                 </div>
                 <div className="w-8 h-8 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-400">
@@ -101,18 +101,16 @@ export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps)
                 ) : (
                     <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-2xl">
                         <History size={24} className="text-slate-200 mb-2" />
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">No Recent Activity</p>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">لا توجد نشاطات مؤخراً</p>
                     </div>
                 )}
             </div>
 
             <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
                 <button className="w-full h-11 bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-[10px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all rounded-xl shadow-sm active:scale-[0.98]">
-                    View Full System Logs
+                    عرض سجل النظام الكامل
                 </button>
             </div>
         </div>
     );
-
 };
-

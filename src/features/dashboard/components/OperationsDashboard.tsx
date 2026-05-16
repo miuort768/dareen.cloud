@@ -34,7 +34,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         </div>
                         <div>
                             <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">تجديد الاشتراكات</h3>
-                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-tight">Billing Management</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-tight">إدارة التحصيل المالي</p>
                         </div>
                     </div>
                     <div className="bg-rose-500 text-white px-3 py-1 text-[9px] font-black uppercase rounded-full shadow-sm">
@@ -67,7 +67,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                                             ? "text-rose-600 border-rose-200 bg-rose-50" 
                                             : "text-amber-600 border-amber-200 bg-amber-50"
                                     )}>
-                                        {item.remainingSessions === 0 ? 'EXPIRED' : `${item.remainingSessions} SESSIONS`}
+                                        {item.remainingSessions === 0 ? 'منتهي' : `${item.remainingSessions} جلسة`}
                                     </span>
                                     <button 
                                         onClick={() => sendWhatsAppReminder(item, undefined, adminPhone)}
@@ -82,7 +82,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     ) : (
                         <div className="py-12 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                             <UserX size={24} className="text-slate-200 mx-auto mb-2" />
-                            <p className="text-[9px] font-black text-slate-400 uppercase">No Pending Renewals</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase">لا توجد تجديدات معلقة</p>
                         </div>
                     )}
                 </div>
@@ -105,7 +105,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                         </div>
                         <div>
                             <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">المهام والطلبات</h3>
-                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-tight">Operational Workflow</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-tight">سير العمليات التشغيلية</p>
                         </div>
                     </div>
                     <div className="bg-amber-100 dark:bg-amber-900/30 text-amber-600 px-3 py-1 text-[9px] font-black uppercase rounded-full">
@@ -147,7 +147,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                     ) : (
                         <div className="py-12 text-center border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
                             <ListTodo size={24} className="text-slate-200 mx-auto mb-2" />
-                            <p className="text-[9px] font-black text-slate-400 uppercase">All Tasks Completed</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase">تم إنجاز كافة المهام</p>
                         </div>
                     )}
                 </div>

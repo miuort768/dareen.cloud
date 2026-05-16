@@ -151,7 +151,7 @@ export const ModernAnnouncements: React.FC = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">تأكيد القراءة</h3>
-                                    <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Important Compliance Notice</p>
+                                    <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">إشعار الامتثال الهام</p>
                                 </div>
                             </div>
 
@@ -167,7 +167,7 @@ export const ModernAnnouncements: React.FC = () => {
                                     className="h-12 bg-indigo-600 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-indigo-700 rounded-xl transition-all shadow-sm active:scale-[0.98]"
                                 >
                                     <Check size={16} />
-                                    موافق، قرأت
+                                    موافق، تم الاطلاع
                                 </button>
                                 <button 
                                     onClick={() => setShowAcknowledge(false)}

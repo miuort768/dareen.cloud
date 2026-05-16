@@ -20,7 +20,7 @@ const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, valu
                     {value || 0}
                 </span>
                 {typeof value === 'string' && value.includes(',') && (
-                    <span className="text-[9px] font-black text-slate-300 uppercase">EGP</span>
+                    <span className="text-[9px] font-black text-slate-300 uppercase">ج.م</span>
                 )}
             </div>
         </div>

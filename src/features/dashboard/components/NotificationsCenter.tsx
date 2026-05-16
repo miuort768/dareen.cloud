@@ -165,7 +165,7 @@ export const NotificationsCenter = ({
                     </div>
                     <div>
                         <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز العمليات الذكي</h3>
-                        <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">Intelligent Control Room</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">غرفة التحكم الذكية</p>
                     </div>
                 </div>
 
@@ -206,11 +206,11 @@ export const NotificationsCenter = ({
                             </div>
                             <div>
                                 <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">النظام التحليلي</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Critical AI Monitoring</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">مراقبة الأنظمة الذكية</p>
                             </div>
                         </div>
                         <div className="bg-rose-600 text-white px-3 py-1 rounded-full border border-rose-500/50">
-                            <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} CRITICAL</span>
+                            <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} تنبيه حرج</span>
                         </div>
                     </div>
 
@@ -244,7 +244,7 @@ export const NotificationsCenter = ({
                         ))}
                         {filteredSmartAlerts.length === 0 && (
                             <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
-                                <p className="text-[9px] font-black text-slate-400 uppercase">No Intelligence Data</p>
+                                <p className="text-[9px] font-black text-slate-400 uppercase">لا توجد بيانات ذكية حالياً</p>
                             </div>
                         )}
                     </div>
@@ -262,11 +262,11 @@ export const NotificationsCenter = ({
                             </div>
                             <div>
                                 <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">غرفة العمليات</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Live Operations Center</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">مركز العمليات المباشر</p>
                             </div>
                         </div>
                         <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50">
-                            <span className="text-[9px] font-black uppercase">{filteredRoomAlerts.length} ALERTS</span>
+                            <span className="text-[9px] font-black uppercase">{filteredRoomAlerts.length} تنبيهات</span>
                         </div>
                     </div>
 
@@ -287,20 +287,20 @@ export const NotificationsCenter = ({
                                         onClick={alert.action} 
                                         className="h-8 px-4 bg-emerald-600 text-white hover:bg-emerald-700 text-[8px] font-black uppercase tracking-widest rounded-lg border border-emerald-500/50 transition-all active:scale-[0.98] shadow-sm"
                                     >
-                                        WHATSAPP
+                                        واتساب
                                     </button>
                                 ) : (
                                     <Link 
                                         to={alert.link || '#'} 
                                         className="h-8 px-4 bg-indigo-600 text-white hover:bg-indigo-700 text-[8px] font-black uppercase tracking-widest rounded-lg border border-indigo-500/50 transition-all active:scale-[0.98] flex items-center justify-center shadow-sm"
                                     >
-                                        {alert.actionLabel}
+                                        عرض
                                     </Link>
                                 )}
                             </div>
                         )) : (
                             <div className="text-center py-16 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
-                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">All Systems Nominal</p>
+                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">كافة الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         )}
                     </div>

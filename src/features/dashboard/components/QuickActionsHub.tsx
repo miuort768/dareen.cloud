@@ -10,7 +10,7 @@ export const QuickActionsHub = () => {
             href: '/students?action=new', 
             color: 'text-white',
             bg: 'bg-indigo-600',
-            description: 'New Registration'
+            description: 'تسجيل جديد'
         },
         { 
             title: 'إصدار فاتورة', 
@@ -18,7 +18,7 @@ export const QuickActionsHub = () => {
             href: '/student-invoices?action=new', 
             color: 'text-white',
             bg: 'bg-emerald-600',
-            description: 'Financial Invoice'
+            description: 'فاتورة مالية'
         },
         { 
             title: 'الجدول الاسبوعي', 
@@ -26,7 +26,7 @@ export const QuickActionsHub = () => {
             href: '/schedule', 
             color: 'text-white',
             bg: 'bg-amber-500',
-            description: 'Time Management'
+            description: 'إدارة المواعيد'
         },
         { 
             title: 'إعلان عام', 
@@ -34,7 +34,7 @@ export const QuickActionsHub = () => {
             href: '/announcements?action=new', 
             color: 'text-white',
             bg: 'bg-rose-600',
-            description: 'Public Broadcast'
+            description: 'بث عام'
         }
     ];
 

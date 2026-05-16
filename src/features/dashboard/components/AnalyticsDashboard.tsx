@@ -59,7 +59,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                     </div>
                     <div>
                         <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل البيانات</h3>
-                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">Business Intelligence Unit</p>
+                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">وحدة ذكاء الأعمال</p>
                     </div>
                 </div>
 
@@ -92,11 +92,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             </div>
                             <div>
                                 <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">التحليل التحصيلي</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Academic Progression</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">التقدم الأكاديمي</p>
                             </div>
                         </div>
                         <div className="bg-emerald-600 text-white px-3 py-1 rounded-full border border-emerald-500/50 shadow-sm">
-                            <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% GLOBAL</span>
+                            <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% إجمالي</span>
                         </div>
                     </div>
 
@@ -162,11 +162,11 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                             </div>
                             <div>
                                 <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">خارطة توزيع المناهج</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">Subject Analytics</p>
+                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">تحليلات المناهج</p>
                             </div>
                         </div>
                         <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50 shadow-sm">
-                            <span className="text-[10px] font-black tabular-nums uppercase">{students.length} USERS</span>
+                            <span className="text-[10px] font-black tabular-nums uppercase">{students.length} مستخدم</span>
                         </div>
                     </div>
 
