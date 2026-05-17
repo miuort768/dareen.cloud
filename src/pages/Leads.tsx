@@ -72,8 +72,8 @@ const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, v
     </div>
 );
 
-// Custom Confirm Dialog
-const ConfirmLostModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
+// Custom Confirm Delete Dialog
+const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
         <div className="bg-white dark:bg-slate-900 rounded-none shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
             {/* Header */}
@@ -81,13 +81,13 @@ const ConfirmLostModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCa
                 <div className="w-9 h-9 bg-white/10 flex items-center justify-center rounded-none">
                     <AlertTriangle size={20} className="text-white" />
                 </div>
-                <h3 className="text-sm font-black text-white uppercase tracking-widest">تأكيد الرفض</h3>
+                <h3 className="text-sm font-black text-white uppercase tracking-widest">حذف العميل نهائياً</h3>
             </div>
             {/* Body */}
             <div className="p-6">
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">هل رفض هذا العميل؟</p>
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
                 <p className="text-xs text-slate-400 font-medium leading-relaxed">
-                    سيتم إخفاء العميل من القائمة الرئيسية <span className="text-rose-500 font-bold">وسيُحسب ضمن نسبة الفشل</span> في إحصائيات التحويل.
+                    سيتم حذف هذا العميل <span className="text-rose-500 font-bold">بشكل نهائي وكامل من قاعدة البيانات</span>، ولا يمكن التراجع عن هذا الإجراء.
                 </p>
             </div>
             {/* Actions */}
@@ -102,7 +102,7 @@ const ConfirmLostModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCa
                     onClick={onConfirm}
                     className="flex-1 py-3 text-xs font-black text-white bg-rose-600 hover:bg-rose-700 transition-all uppercase tracking-widest"
                 >
-                    نعم، رفض
+                    نعم، احذف نهائياً
                 </button>
             </div>
         </div>
@@ -152,9 +152,9 @@ export const Leads: React.FC = () => {
         }
     });
 
-    // Mark as Lost Mutation (replaces hard delete — counts towards conversion rate)
-    const markLostMutation = useMutation({
-        mutationFn: (id: string) => crmService.update(id, { status: 'lost' }),
+    // Delete Mutation (permanent delete)
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => crmService.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
@@ -170,8 +170,8 @@ export const Leads: React.FC = () => {
     });
 
     const handleMarkLost = (id: string) => setConfirmLeadId(id);
-    const handleConfirmLost = () => {
-        if (confirmLeadId) markLostMutation.mutate(confirmLeadId);
+    const handleConfirmDelete = () => {
+        if (confirmLeadId) deleteMutation.mutate(confirmLeadId);
         setConfirmLeadId(null);
     };
 
@@ -583,10 +583,10 @@ export const Leads: React.FC = () => {
                 </div>
             )}
 
-            {/* Confirm Lost Modal */}
+            {/* Confirm Delete Modal */}
             {confirmLeadId && (
-                <ConfirmLostModal
-                    onConfirm={handleConfirmLost}
+                <ConfirmDeleteModal
+                    onConfirm={handleConfirmDelete}
                     onCancel={() => setConfirmLeadId(null)}
                 />
             )}
