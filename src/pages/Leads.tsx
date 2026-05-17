@@ -29,7 +29,7 @@ import { PageLoader } from '../components/ui/PageLoader';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden',
         className
     )}>
         {children}
@@ -193,8 +193,8 @@ export const Leads: React.FC = () => {
             {/* Header */}
             <div className="bg-teal-800 px-4 md:px-8 py-5 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border-b border-teal-900/50">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
-                        <Users size={24} />
+                    <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
+                        <Users size={32} className="md:w-6 md:h-6" />
                     </div>
                     <div>
                         <h1 className="text-xl font-black text-white uppercase tracking-tighter">إدارة العملاء والمهتمين</h1>
@@ -248,7 +248,6 @@ export const Leads: React.FC = () => {
                     value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} 
                     icon={TrendingUp} 
                     bg="bg-indigo-600"
-                    subValue="نسبة النجاح"
                 />
             </div>
 
@@ -260,7 +259,7 @@ export const Leads: React.FC = () => {
                         <input 
                             type="text" 
                             placeholder="ابحث بالاسم أو رقم الهاتف..." 
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-9 py-2 outline-none text-xs font-bold focus:border-emerald-500"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-9 py-2 outline-none text-xs font-bold focus:border-emerald-500"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -269,7 +268,7 @@ export const Leads: React.FC = () => {
                         <div className="flex items-center gap-2 w-full md:w-auto">
                             <Filter size={14} className="text-emerald-600 hidden md:block" />
                             <select 
-                                className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
+                                className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-none text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value as any)}
                             >
