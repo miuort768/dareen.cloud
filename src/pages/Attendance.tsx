@@ -198,7 +198,7 @@ export const Attendance = () => {
             />
 
             {isTeacher && (
-                <div className="px-4 md:px-6 mb-2">
+                <div className="px-0 mb-2">
                     <PrimaryBtn
                         onClick={async () => {
                             const selectedDayName = new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' });
@@ -270,7 +270,7 @@ export const Attendance = () => {
                 />
             )}
 
-            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
                         <SectionCard className="p-0 overflow-hidden rounded-none">

@@ -51,7 +51,7 @@ export const FinanceStats = ({
     const isProfit = (netProfit || 0) >= 0;
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6" dir="rtl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0" dir="rtl">
             <StatCard
                 title="إجمالي الإيرادات"
                 value={(totalIncome || 0).toLocaleString()}

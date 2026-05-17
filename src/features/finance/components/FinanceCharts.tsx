@@ -56,7 +56,7 @@ const AreaTooltip = ({ active, payload, label }: any) => {
 
 export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceChartsProps) => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 md:px-6" dir="rtl">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 px-0" dir="rtl">
             
             {/* ── Area Chart ── */}
             <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col">

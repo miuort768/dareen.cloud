@@ -421,7 +421,7 @@ export const TeacherInvoices = () => {
         <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
 
             {/* ── Header ── */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
                         <img src="/logo.png" alt="Logo" className="w-6 h-6 object-contain" />
@@ -438,7 +438,7 @@ export const TeacherInvoices = () => {
             </div>
 
             {/* ── Stats Grid ── */}
-            <div className="px-4 md:px-6">
+            <div className="px-0">
                 <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
                     {[
                         { label: 'المعلمات', value: stats.totalTeachers, icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
@@ -460,7 +460,7 @@ export const TeacherInvoices = () => {
             </div>
 
             {/* ── Action Bar ── */}
-            <div className="px-4 md:px-6">
+            <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
@@ -528,7 +528,7 @@ export const TeacherInvoices = () => {
                 </SectionCard>
             </div>
 
-            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {/* ── Add/Edit Form ── */}
                 {showForm && (
                     <SectionCard className="mb-4 animate-in slide-in-from-top-2">

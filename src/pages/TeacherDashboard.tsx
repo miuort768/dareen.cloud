@@ -40,7 +40,7 @@ export const TeacherDashboard = () => {
         <div className={cn(
             "min-h-full pb-20 pt-4 overflow-x-hidden relative bg-[#f1f5f9] dark:bg-[#020617]"
         )} dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
+            <div className="max-w-[1600px] mx-auto px-0 space-y-6">
                 {/* 1. Header */}
                 <DashboardHeader
                     isTeacher={true}

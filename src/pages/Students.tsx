@@ -316,7 +316,7 @@ export const Students = () => {
                 <input ref={fileInputRef} type="file" accept=".json,.csv" onChange={handleImportFile} className="hidden" />
 
                 {showAddForm && (
-                    <div className="px-4 md:px-6">
+                    <div className="px-0">
                         <StudentForm
                             onSubmit={handleAddOrUpdateStudent}
                             initialData={editId ? students.find(s => s.id === editId) : null}
@@ -326,7 +326,7 @@ export const Students = () => {
                 )}
 
                 {!showDetails ? (
-                    <div className="px-4 md:px-6 animate-in fade-in duration-300">
+                    <div className="px-0 animate-in fade-in duration-300">
                         <StudentTable
                             students={students}
                             selectedId={selectedStudent?.id}
@@ -338,7 +338,7 @@ export const Students = () => {
                         />
                     </div>
                 ) : (
-                    <div className="px-4 md:px-6 animate-in slide-in-from-right-8 duration-500">
+                    <div className="px-0 animate-in slide-in-from-right-8 duration-500">
                         {selectedStudent && (
                             <StudentDetails
                                 student={selectedStudent}

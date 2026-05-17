@@ -333,7 +333,7 @@ export const Teachers = () => {
                 />
 
                 {showAddForm && (
-                    <div className="px-4 md:px-6">
+                    <div className="px-0">
                         <TeacherForm
                             onSubmit={handleAddTeacher}
                             initialData={editId ? teachers.find(t => t.id === editId) : null}
@@ -342,7 +342,7 @@ export const Teachers = () => {
                     </div>
                 )}
 
-                <div className="px-4 md:px-6">
+                <div className="px-0">
                     <div className={cn(
                         "grid gap-6 transition-all duration-700",
                         showDetails ? "lg:grid-cols-12" : "grid-cols-1"

@@ -466,7 +466,7 @@ export const StudentInvoices = () => {
         <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
 
             {/* ── Header ── */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
                         <FileText size={18} className="text-[#5c59f2]" />
@@ -483,7 +483,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* ── Stats Grid ── */}
-            <div className="px-4 md:px-6">
+            <div className="px-0">
                 <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
                     {[
                         { label: 'المحصل', value: `${totalRevenue.toLocaleString()} ج.م`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
@@ -505,7 +505,7 @@ export const StudentInvoices = () => {
             </div>
 
             {/* ── Action Bar ── */}
-            <div className="px-4 md:px-6">
+            <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
@@ -550,7 +550,7 @@ export const StudentInvoices = () => {
                 </SectionCard>
             </div>
 
-            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {/* ── Form ── */}
                 {showForm && (
                     <SectionCard className="mb-4 animate-in slide-in-from-top-2">

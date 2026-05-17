@@ -21,7 +21,7 @@ export const StudentToolbar = ({
     totalCount
 }: StudentToolbarProps) => {
     return (
-        <div className="px-4 md:px-6 mb-6">
+        <div className="px-0 mb-6">
             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4" dir="rtl">
                 {/* Search Input */}
                 <div className="relative flex-1 w-full">

@@ -42,7 +42,7 @@ export const Dashboard = () => {
             "min-h-full pb-20 pt-4 overflow-x-hidden relative bg-[#f1f5f9] dark:bg-[#020617]"
         )} dir="rtl">
             {/* Desktop View */}
-            <div className="hidden md:block max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
+            <div className="hidden md:block max-w-[1600px] mx-auto px-0 space-y-6">
                 {/* 1. Header & Quick Actions */}
                 <DashboardHeader
                     isTeacher={false}
@@ -108,7 +108,7 @@ export const Dashboard = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="block md:hidden px-4">
+            <div className="block md:hidden px-0">
                 <MobileAdminDashboard 
                     stats={stats} 
                     lowBalanceStudents={lowBalanceStudents} 

@@ -23,7 +23,7 @@ const StatItem = ({ label, value, icon: Icon, color, symbol, bg, borderAccent }:
 
 export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, averageSessionsPerStudent }: StudentStatsProps) => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-6">
             <StatItem 
                 label="إجمالي القوة الطلابية" 
                 value={totalStudents} 

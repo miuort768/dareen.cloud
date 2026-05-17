@@ -60,7 +60,7 @@ const THEME_COLORS = [
     { id: 'coffee', label: 'قهوة', class: 'bg-stone-600' },
 ];
 
-type TabId = 'general' | 'appearance' | 'users' | 'policies' | 'advanced' | 'audit';
+type TabId = 'general' | 'appearance' | 'users' | 'mobile' | 'policies' | 'advanced' | 'audit';
 
 // ── Reusable sub-components ───────────────────────────────────────────────────
 
@@ -461,7 +461,7 @@ const Settings = () => {
         <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
 
             {/* ── Header ── */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
                         <img src="/logo.png" alt="Logo" className="w-6 h-6 object-contain" />
@@ -480,7 +480,7 @@ const Settings = () => {
             {/* ── Tab Navigation ── */}
             <div className="px-0 md:px-0">
                 <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-2 shadow-sm">
-                    <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 md:px-6">
+                    <div className="flex overflow-x-auto no-scrollbar gap-2 px-0">
                         {TABS.map(tab => (
                             <button
                                 key={tab.id}
@@ -501,7 +501,7 @@ const Settings = () => {
             </div>
 
             {/* ── Tab Content ── */}
-            <div className="px-4 md:px-6 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
 
                 {/* ── GENERAL ── */}
                 {activeTab === 'general' && (

@@ -334,7 +334,7 @@ export const MonthlyClosing: React.FC = () => {
     return (
         <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
             {/* Header */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-4 md:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-xl">
                         <ActivityIcon size={18} className="text-rose-500" />
@@ -388,7 +388,7 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 py-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 py-4">
                 <StatItem 
                     title="صافي الربح المتوقع" 
                     value={netProjectedProfit.toLocaleString()} 
@@ -424,7 +424,7 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Navigation Tabs */}
-            <div className="px-4 md:px-6 mb-4">
+            <div className="px-0 mb-4">
                 <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
                     {[
                         { id: 'payroll', label: 'الرواتب', icon: Receipt },
@@ -453,7 +453,7 @@ export const MonthlyClosing: React.FC = () => {
             </div>
 
             {/* Tab Contents */}
-            <div className="px-4 md:px-6 md:animate-in md:fade-in md:duration-500">
+            <div className="px-0 md:animate-in md:fade-in md:duration-500">
                 {activeTab === 'payroll' && (
                     <SectionCard>
                         <div className="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">

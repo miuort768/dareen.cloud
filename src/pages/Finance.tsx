@@ -105,7 +105,7 @@ export const Finance = () => {
                 />
 
                 {/* Filter Bar */}
-                <div className="px-4 md:px-6">
+                <div className="px-0">
                     <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden">
                         {/* Filter Header */}
                         <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
@@ -188,7 +188,7 @@ export const Finance = () => {
                 </div>
 
                 {/* Transactions Log */}
-                <div className="px-4 md:px-6">
+                <div className="px-0">
                     <TransactionsLog
                         transactions={state.filteredTransactions}
                         totalCount={state.filteredTransactions.length}

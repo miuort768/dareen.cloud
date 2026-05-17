@@ -23,7 +23,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
     const hasActiveFilters = searchTerm || filterStatus !== 'all' || filterTeacher !== 'all';
 
     return (
-        <div className="px-4 md:px-6 mb-4">
+        <div className="px-0 mb-4">
             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
                     <div className="flex items-center gap-3">

@@ -41,7 +41,7 @@ const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: a
 
 export const TeacherStats = ({ totalTeachers, totalStudents, uniqueSubjects, averagePrice }: TeacherStatsProps) => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 mb-8" dir="rtl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 mb-8" dir="rtl">
             <StatCard 
                 label="إجمالي المعلمات" 
                 value={totalTeachers} 

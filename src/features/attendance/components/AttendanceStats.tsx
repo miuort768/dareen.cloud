@@ -24,7 +24,7 @@ const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value
 export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacherStats, isTeacher }) => {
     if (isTeacher && teacherStats) {
         return (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 mb-4" dir="rtl">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-4" dir="rtl">
                 <StatItem 
                     title="الحصص المتوقعة" 
                     value={teacherStats.expected} 
@@ -52,7 +52,7 @@ export const AttendanceStats: React.FC<AttendanceStatsProps> = ({ stats, teacher
     }
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-4 md:px-6 mb-4" dir="rtl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 mb-4" dir="rtl">
             <StatItem 
                 title="مجدولة (اليوم)" 
                 value={stats.todayScheduled} 

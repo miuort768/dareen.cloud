@@ -46,7 +46,7 @@ export const Reports = () => {
             <ReportsHeader onExport={() => window.print()} />
 
             {/* ── Tab Selection ── */}
-            <div className="px-4 md:px-6 no-print">
+            <div className="px-0 no-print">
                 <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
@@ -72,7 +72,7 @@ export const Reports = () => {
             </div>
 
             {/* ── Reports Content ── */}
-            <div className="px-4 md:px-6 transition-all duration-300 animate-in fade-in slide-in-from-bottom-2">
+            <div className="px-0 transition-all duration-300 animate-in fade-in slide-in-from-bottom-2">
 
                 {/* ── نظرة عامة ── */}
                 {state.activeReport === 'overview' && (
