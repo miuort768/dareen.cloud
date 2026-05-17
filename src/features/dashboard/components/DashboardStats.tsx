@@ -9,7 +9,7 @@ interface DashboardStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, value: string | number, icon: LucideIcon, color: string, bg: string }) => (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex items-center gap-3 rounded-2xl transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-indigo-500/30 dark:hover:border-indigo-400/30 hover:shadow-[0_0_12px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_0_12px_rgba(99,102,241,0.1)] h-full group shadow-sm hover:-translate-y-0.5">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 flex items-center gap-3 rounded-none md:rounded-2xl transition-all duration-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-indigo-500/30 dark:hover:border-indigo-400/30 hover:shadow-[0_0_12px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_0_12px_rgba(99,102,241,0.1)] h-full group shadow-sm hover:-translate-y-0.5">
         <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border border-slate-900/10 group-hover:border-slate-900/30 transition-colors", bg)}>
             <Icon size={18} className={color} />
         </div>
@@ -29,7 +29,7 @@ const StatCard = ({ title, value, icon: Icon, color, bg }: { title: string, valu
 
 export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full">
             <StatCard title="إجمالي الطلاب" value={stats.studentsCount} icon={Users} color="text-indigo-600" bg="bg-indigo-50" />
             <StatCard title="الاشتراكات النشطة" value={stats.totalEnrollments} icon={BookOpen} color="text-emerald-600" bg="bg-emerald-50" />
             <StatCard title="حصص اليوم" value={stats.todaySessions} icon={CalendarCheck} color="text-amber-500" bg="bg-amber-50" />
