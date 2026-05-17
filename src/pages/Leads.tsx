@@ -441,7 +441,7 @@ export const Leads: React.FC = () => {
                                         {lead.studentName.charAt(0)}
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-bold text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName}</h4>
+                                        <h4 className="text-base font-black text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName}</h4>
                                     </div>
                                 </div>
                                 <div className="text-left flex flex-col items-end gap-1">
