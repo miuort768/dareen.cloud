@@ -27,47 +27,37 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
 
     const handleClose = () => {
         setIsExiting(true);
-        setTimeout(onClose, 400); // Wait for exit animation
+        setTimeout(onClose, 300); // Wait for exit animation
     };
 
     if (!isOpen && !isExiting) return null;
 
     return (
-        <div className="fixed bottom-4 left-4 md:bottom-8 md:left-8 z-[300] flex items-end justify-start p-0 pointer-events-none" dir="rtl">
+        <div className="fixed bottom-6 left-6 z-[300] w-full max-w-sm pointer-events-none" dir="rtl">
             <div className={cn(
-                "relative bg-white dark:bg-slate-900 border-2 border-emerald-500 shadow-[8px_8px_0px_0px_rgba(16,185,129,1)] p-6 max-w-sm w-full pointer-events-auto transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]",
-                isExiting ? "opacity-0 scale-95 translate-y-8" : "animate-in slide-in-from-bottom-12 fade-in"
+                "bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/30 rounded-lg p-4 pointer-events-auto transition-all duration-300 ease-out shadow-none",
+                isExiting ? "opacity-0 translate-y-4 scale-95" : "animate-in slide-in-from-bottom-4 fade-in"
             )}>
-                <button 
-                    onClick={handleClose}
-                    className="absolute top-3 left-3 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-1"
-                >
-                    <X size={18} />
-                </button>
-
-                <div className="flex items-start gap-4">
-                    <div className="relative w-12 h-12 flex-shrink-0">
-                        <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" />
-                        <div className="relative w-full h-full bg-emerald-500 text-white rounded-none flex items-center justify-center border-2 border-emerald-600 shadow-[2px_2px_0px_0px_rgba(4,120,87,1)]">
-                            <CheckCircle2 size={24} className="animate-pulse" />
-                        </div>
+                <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 text-emerald-500 dark:text-emerald-400 mt-0.5">
+                        <CheckCircle2 size={18} className="stroke-[2.5]" />
                     </div>
                     
-                    <div className="flex-1 pt-1">
-                        <h3 className="text-lg font-black text-emerald-600 dark:text-emerald-400 mb-1 tracking-tighter">
+                    <div className="flex-1 min-w-0">
+                        <h3 className="text-xs font-bold text-emerald-950 dark:text-emerald-200">
                             {title}
                         </h3>
-                        <p className="text-xs font-bold text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        <p className="text-[11px] text-emerald-800/80 dark:text-emerald-400/80 mt-0.5 leading-relaxed font-medium">
                             {message}
                         </p>
-                        
-                        <button 
-                            onClick={handleClose}
-                            className="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(4,120,87,1)] active:shadow-none active:translate-y-0.5 active:translate-x-0.5 transition-all"
-                        >
-                            إخفاء
-                        </button>
                     </div>
+
+                    <button 
+                        onClick={handleClose}
+                        className="flex-shrink-0 text-emerald-500/60 hover:text-emerald-950 dark:text-emerald-400/60 dark:hover:text-emerald-200 transition-colors p-0.5 rounded hover:bg-emerald-100/50 dark:hover:bg-emerald-950/50"
+                    >
+                        <X size={14} />
+                    </button>
                 </div>
             </div>
         </div>
