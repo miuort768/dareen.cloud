@@ -11,6 +11,7 @@ import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { SendNotificationModal } from '../shared/components/SendNotificationModal';
 import { PageLoader } from '../components/ui/PageLoader';
+import { SuccessModal } from '../shared/components/SuccessModal';
 
 // Feature Components
 import { Plus, X } from 'lucide-react';
@@ -32,9 +33,8 @@ export const Teachers = () => {
     const {
         teachers,
         isLoading: loadingTeachers,
-        createTeacher,
         createTeacherAsync,
-        updateTeacher,
+        updateTeacherAsync,
         deleteTeacher
     } = useTeachers();
 
@@ -69,6 +69,7 @@ export const Teachers = () => {
     const [secureModalData, setSecureModalData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
     const [deletingTeacherId, setDeletingTeacherId] = useState<string | null>(null);
     const [notifyingTeacher, setNotifyingTeacher] = useState<Teacher | null>(null);
+    const [successModalData, setSuccessModalData] = useState<{ isOpen: boolean; title: string; message: string }>({ isOpen: false, title: '', message: '' });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Stats calculations
@@ -90,14 +91,28 @@ export const Teachers = () => {
     );
 
     // Handlers
-    const handleAddTeacher = (data: Omit<Teacher, 'id'>) => {
-        if (editId) {
-            updateTeacher({ ...data, id: editId } as Teacher);
-        } else {
-            createTeacher(data);
+    const handleAddTeacher = async (data: Omit<Teacher, 'id'>) => {
+        try {
+            if (editId) {
+                await updateTeacherAsync({ ...data, id: editId } as Teacher);
+                setSuccessModalData({
+                    isOpen: true,
+                    title: 'تحديث ناجح',
+                    message: 'تم تحديث بيانات المعلمة بنجاح'
+                });
+            } else {
+                await createTeacherAsync(data);
+                setSuccessModalData({
+                    isOpen: true,
+                    title: 'عملية ناجحة',
+                    message: 'تم إضافة المعلمة بنجاح'
+                });
+            }
+            setShowAddForm(false);
+            setEditId(null);
+        } catch (error) {
+            // error is handled by the mutation hook via Toast
         }
-        setShowAddForm(false);
-        setEditId(null);
     };
 
     const handleEditTeacher = (teacher: Teacher) => {
@@ -405,6 +420,13 @@ export const Teachers = () => {
                 onClose={() => setNotifyingTeacher(null)}
                 onSend={handleSendTeacherNotification}
                 recipientName={notifyingTeacher?.name || ''}
+            />
+
+            <SuccessModal
+                isOpen={successModalData.isOpen}
+                title={successModalData.title}
+                message={successModalData.message}
+                onClose={() => setSuccessModalData({ ...successModalData, isOpen: false })}
             />
         </div>
     );

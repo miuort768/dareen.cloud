@@ -15,7 +15,6 @@ export const useTeachers = () => {
         mutationFn: teacherService.create,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['teachers'] });
-            showNotification('تم إضافة المعلمة بنجاح', 'success');
         },
         onError: (error: Error) => {
             showNotification(error.message || 'فشل في إضافة المعلمة', 'error');
@@ -26,7 +25,6 @@ export const useTeachers = () => {
         mutationFn: teacherService.update,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['teachers'] });
-            showNotification('تم تحديث بيانات المعلمة بنجاح', 'success');
         },
         onError: (error: Error) => {
             showNotification(error.message || 'فشل في تحديث بيانات المعلمة', 'error');
@@ -47,9 +45,8 @@ export const useTeachers = () => {
     return {
         teachers: teachersQuery.data || [],
         isLoading: teachersQuery.isLoading,
-        createTeacher: createMutation.mutate,
         createTeacherAsync: createMutation.mutateAsync,
-        updateTeacher: updateMutation.mutate,
+        updateTeacherAsync: updateMutation.mutateAsync,
         deleteTeacher: deleteMutation.mutate
     };
 };
