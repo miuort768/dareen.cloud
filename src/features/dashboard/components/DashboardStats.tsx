@@ -9,7 +9,7 @@ interface DashboardStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, color, bg, cardBg, cardBorder }: { title: string, value: string | number, icon: LucideIcon, color: string, bg: string, cardBg: string, cardBorder: string }) => (
-    <div className={cn("p-3 flex items-center gap-3 rounded-none md:rounded-2xl transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_0_12px_rgba(99,102,241,0.1)] h-full group shadow-sm border", cardBg, cardBorder)}>
+    <div className={cn("p-3 flex items-center gap-3 rounded-none transition-all duration-300 hover:shadow-[0_0_12px_rgba(99,102,241,0.15)] dark:hover:shadow-[0_0_12px_rgba(99,102,241,0.1)] h-full group shadow-sm border", cardBg, cardBorder)}>
         <div className={cn("stats-icon-box flex items-center justify-center shrink-0 border border-slate-900/10 group-hover:border-slate-900/30 transition-colors", bg)}>
             <Icon className={color} />
         </div>
