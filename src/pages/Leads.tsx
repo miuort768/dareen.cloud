@@ -571,6 +571,10 @@ export const Leads: React.FC = () => {
                                     <option value="high">عالية جداً 🔥</option>
                                 </select>
                             </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">ملاحظات</label>
+                                <textarea name="notes" rows={2} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white resize-none" placeholder="اكتب أي تفاصيل أو ملاحظات عن العميل هنا..." />
+                            </div>
                             <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-3 mt-4 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10 disabled:opacity-60 disabled:cursor-not-allowed">
                                 {addMutation.isPending ? '⏳ جاري الحفظ...' : 'حفظ العميل وبدء المتابعة'}
                             </PrimaryBtn>
