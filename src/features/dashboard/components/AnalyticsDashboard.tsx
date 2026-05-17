@@ -95,7 +95,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">التقدم الأكاديمي</p>
                             </div>
                         </div>
-                        <div className="bg-emerald-600 text-white px-3 py-1 rounded-full border border-emerald-500/50 shadow-sm">
+                        <div className="bg-emerald-600 text-white px-3 py-1 rounded-none border border-emerald-500/50 shadow-sm">
                             <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% إجمالي</span>
                         </div>
                     </div>
@@ -165,7 +165,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">تحليلات المناهج</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50 shadow-sm">
+                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-none border border-indigo-500/50 shadow-sm">
                             <span className="text-[10px] font-black tabular-nums uppercase">{students.length} مستخدم</span>
                         </div>
                     </div>

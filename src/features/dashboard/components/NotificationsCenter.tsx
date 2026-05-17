@@ -198,7 +198,7 @@ export const NotificationsCenter = ({
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">مراقبة الأنظمة الذكية</p>
                             </div>
                         </div>
-                        <div className="bg-rose-600 text-white px-3 py-1 rounded-full border border-rose-500/50">
+                        <div className="bg-rose-600 text-white px-3 py-1 rounded-none border border-rose-500/50">
                             <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} تنبيه حرج</span>
                         </div>
                     </div>
@@ -254,7 +254,7 @@ export const NotificationsCenter = ({
                                 <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">مركز العمليات المباشر</p>
                             </div>
                         </div>
-                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-full border border-indigo-500/50">
+                        <div className="bg-indigo-600 text-white px-3 py-1 rounded-none border border-indigo-500/50">
                             <span className="text-[9px] font-black uppercase">{filteredRoomAlerts.length} تنبيهات</span>
                         </div>
                     </div>
