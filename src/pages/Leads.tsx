@@ -322,10 +322,10 @@ export const Leads: React.FC = () => {
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm">
-                                                {lead.studentName.charAt(0)}
+                                                {lead.studentName?.charAt(0) || 'ع'}
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{lead.studentName}</h4>
+                                                <h4 className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{lead.studentName || 'عميل بدون اسم'}</h4>
                                                 <p className="text-[9px] text-slate-400 font-medium mt-0.5">
                                                     مضاف: {new Date(lead.createdAt).toLocaleDateString('ar-EG')}
                                                 </p>
@@ -437,10 +437,10 @@ export const Leads: React.FC = () => {
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-bold text-sm rounded-none">
-                                        {lead.studentName.charAt(0)}
+                                        {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-black text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName}</h4>
+                                        <h4 className="text-xl font-black text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName || 'عميل بدون اسم'}</h4>
                                     </div>
                                 </div>
                                 <div className="text-left flex flex-col items-end gap-1">
@@ -567,8 +567,8 @@ export const Leads: React.FC = () => {
                         }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                 <div className="space-y-1 md:space-y-1.5">
-                                    <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل</label>
-                                    <input name="name" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                    <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل (اختياري)</label>
+                                    <input name="name" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" placeholder="مثال: أم أحمد (أو اتركه فارغاً)" />
                                 </div>
                                 <div className="space-y-1 md:space-y-1.5">
                                     <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">المنهج</label>

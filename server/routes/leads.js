@@ -34,9 +34,10 @@ router.post('/', authMiddleware, async (req, res) => {
         const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         const id = uuidv4();
         const createdAt = new Date().toISOString();
+        const finalName = studentName && studentName.trim() ? studentName.trim() : "عميل بدون اسم";
         await req.db.run(
             'INSERT INTO leads (id, studentName, phone, subject, curriculum, status, priority, notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [id, studentName, phone, subject, curriculum || '', status || 'new', priority || 'medium', notes || '', createdAt]
+            [id, finalName, phone, subject, curriculum || '', status || 'new', priority || 'medium', notes || '', createdAt]
         );
         const lead = await req.db.get('SELECT * FROM leads WHERE id = ?', [id]);
         
