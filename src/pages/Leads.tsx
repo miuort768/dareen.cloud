@@ -310,6 +310,7 @@ export const Leads: React.FC = () => {
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">العميل</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">التواصل</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">المادة</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">المنهج</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">الحالة</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">الأولوية</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">إجراءات</th>
@@ -337,16 +338,14 @@ export const Leads: React.FC = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="flex flex-col gap-1">
-                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
-                                                <Tag size={12} className="text-indigo-500" /> {lead.subject}
-                                            </span>
-                                            {lead.curriculum && (
-                                                <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 mr-1">
-                                                    المنهج: {lead.curriculum}
-                                                </span>
-                                            )}
-                                        </div>
+                                        <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
+                                            <Tag size={12} className="text-indigo-500" /> {lead.subject}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-none border border-slate-200 dark:border-slate-700">
+                                            {lead.curriculum || '—'}
+                                        </span>
                                     </td>
                                     <td className="px-6 py-4">
                                         <select 
