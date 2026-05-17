@@ -13,12 +13,15 @@ export const Header = () => {
 
 
     const getPageTitle = (path: string) => {
+        // Extract base path to handle nested routes like /students/123
+        const basePath = '/' + path.split('/')[1];
+
         // Handle generic dashboard paths
-        if (path === '/' || path === '/dashboard' || path === '/admin-dashboard') {
+        if (basePath === '/' || basePath === '/dashboard' || basePath === '/admin-dashboard' || basePath === '/teacher-dashboard' || basePath === '/student-dashboard') {
             return { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب.' };
         }
 
-        switch (path) {
+        switch (basePath) {
             case '/students':
                 return { title: 'إدارة الطلاب', subtitle: 'قائمة بجميع الطلاب المسجلين وحالاتهم.' };
             case '/parents':
@@ -51,15 +54,27 @@ export const Header = () => {
                 return { title: 'منتدى دارين', subtitle: 'مساحة لمشاركة الأفكار والنقاشات الهادفة.' };
             case '/settings':
                 return { title: 'إعدادات النظام', subtitle: 'تكوين إعدادات النظام.' };
-
             case '/parent-dashboard':
                 return { title: 'لوحة التحكم', subtitle: 'نظرة عامة على أداء أبنائك.' };
             case '/parent-students':
                 return { title: 'أبنائي', subtitle: 'متابعة الحضور والتقويم الخاص بالأبناء.' };
             case '/parent-announcements':
                 return { title: 'إعلانات المنصة', subtitle: 'آخر المستجدات والتنبيهات العامة.' };
+            case '/evaluations':
+                return { title: 'التقييمات', subtitle: 'متابعة تقييمات الطلاب الأكاديمية.' };
+            case '/monthly-closing':
+                return { title: 'الإقفال الشهري', subtitle: 'إدارة الإقفال الشهري والتقارير.' };
+            case '/leads':
+                return { title: 'العملاء المحتملين', subtitle: 'إدارة طلبات التسجيل والمهتمين.' };
+            case '/admin':
+                if (path.includes('/blog')) return { title: 'إدارة المدونة', subtitle: 'إدارة مقالات المدونة والكتب.' };
+                return { title: 'الإدارة', subtitle: 'لوحة تحكم الإدارة.' };
+            case '/classroom':
+                return { title: 'الفصل الدراسي', subtitle: 'منصة التعلم التفاعلي.' };
+            case '/profile':
+                return { title: 'الملف الشخصي', subtitle: 'إدارة الحساب والإعدادات الشخصية.' };
             default:
-                return { title: '', subtitle: '' };
+                return { title: 'لوحة التحكم', subtitle: 'نظرة عامة على النظام' };
         }
     };
 
@@ -67,14 +82,14 @@ export const Header = () => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-slate-950 dark:bg-slate-900 backdrop-blur-xl border-b border-white/10 flex items-center justify-between transition-all duration-500 z-[9999]",
-            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl border border-white/10 px-4 md:px-8 max-w-full shadow-2xl shadow-black/20"
+            "h-[60px] lg:h-[75px] bg-white dark:bg-slate-900 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 flex items-center justify-between transition-all duration-500 z-[9999]",
+            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl border border-slate-200 dark:border-white/10 px-4 md:px-8 max-w-full shadow-sm shadow-black/5 dark:shadow-2xl dark:shadow-black/20"
         )}>
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 flex items-center justify-center shadow-lg rounded-none border border-slate-200 dark:border-white/20 bg-white dark:bg-white transform lg:-rotate-3 overflow-hidden">
+                    <div className="w-10 h-10 flex items-center justify-center shadow-sm rounded-none border border-slate-200 dark:border-white/20 bg-white dark:bg-white transform lg:-rotate-3 overflow-hidden">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
@@ -82,12 +97,12 @@ export const Header = () => {
                 {title && (
                     <div className="min-w-0 overflow-hidden pr-1 flex flex-col">
                         <h1 className={cn(
-                            "text-base md:text-xl font-black text-white truncate tracking-tight leading-tight",
+                            "text-base md:text-xl font-black text-slate-800 dark:text-white truncate tracking-tight leading-tight",
                             (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
                         )}>
                             {title}
                         </h1>
-                        <p className="text-[9px] md:text-[10px] font-normal text-indigo-100 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
+                        <p className="text-[9px] md:text-[10px] font-normal text-slate-500 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
                             دارين للتعليم والتدريب
                         </p>
                     </div>
@@ -99,9 +114,9 @@ export const Header = () => {
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-none transition-colors shrink-0"
+                    className="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={20} /> : <Sun size={20} />}
+                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
 
                 {/* Notifications */}
@@ -111,9 +126,9 @@ export const Header = () => {
 
                 <Link 
                     to={currentUser?.role === 'admin' ? '/settings' : '/profile'} 
-                    className="flex items-center pr-3 border-r border-white/20 shrink-0 group transition-all"
+                    className="flex items-center pr-3 border-r border-slate-200 dark:border-white/20 shrink-0 group transition-all"
                 >
-                    <div className="w-10 h-10 bg-white/20 flex items-center justify-center text-white rounded-xl shrink-0 border-[0.5px] border-white/30 group-hover:ring-1 group-hover:ring-white/20 group-active:scale-95 transition-all overflow-hidden">
+                    <div className="w-10 h-10 bg-slate-100 dark:bg-white/20 flex items-center justify-center text-slate-600 dark:text-white rounded-xl shrink-0 border-[0.5px] border-slate-200 dark:border-white/30 group-hover:ring-1 group-hover:ring-slate-300 dark:group-hover:ring-white/20 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
                             <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
                         ) : (
