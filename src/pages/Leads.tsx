@@ -519,7 +519,7 @@ export const Leads: React.FC = () => {
             {/* Add Lead Modal */}
             {isAddModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
                         <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
                             <div className="flex items-center gap-3">
                                 <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
