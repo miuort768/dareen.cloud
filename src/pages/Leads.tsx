@@ -310,7 +310,7 @@ export const Leads: React.FC = () => {
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">العميل</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">التواصل</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">المادة</th>
-                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">المنهج</th>
+                                <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">الملاحظات</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700">الحالة</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">الأولوية</th>
                                 <th className="px-6 py-3 font-black text-[10px] tracking-widest text-white uppercase border-b border-rose-700 text-center">إجراءات</th>
@@ -342,10 +342,16 @@ export const Leads: React.FC = () => {
                                             <Tag size={12} className="text-indigo-500" /> {lead.subject}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-none border border-slate-200 dark:border-slate-700">
-                                            {lead.curriculum || '—'}
-                                        </span>
+                                    <td className="px-6 py-4 max-w-[220px]">
+                                        {lead.notes ? (
+                                            <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 p-2 text-[10px] font-black text-slate-700 dark:text-slate-300 leading-normal rounded-none h-[45px] overflow-y-auto custom-scrollbar" style={{ direction: 'rtl' }}>
+                                                {lead.notes}
+                                            </div>
+                                        ) : (
+                                            <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 p-2 text-[10px] font-medium text-slate-400 dark:text-slate-500 rounded-none h-[45px] flex items-center justify-center">
+                                                —
+                                            </div>
+                                        )}
                                     </td>
                                     <td className="px-6 py-4">
                                         <select 
