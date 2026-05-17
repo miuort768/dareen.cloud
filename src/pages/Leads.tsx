@@ -442,9 +442,6 @@ export const Leads: React.FC = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-bold text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName}</h4>
-                                        <span className={cn("text-[9px] font-bold px-1.5 py-0.5 rounded uppercase", statusConfig[lead.status].bg, statusConfig[lead.status].color)}>
-                                            {statusConfig[lead.status].label}
-                                        </span>
                                     </div>
                                 </div>
                                 <div className="text-left flex flex-col items-end gap-1">
