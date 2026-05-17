@@ -1,4 +1,4 @@
-const CACHE_NAME = 'darin-academy-v1';
+const CACHE_NAME = 'darin-academy-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
