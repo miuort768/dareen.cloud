@@ -224,7 +224,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Quick Stats Bar */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-6 py-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-8 py-6">
                 <StatItem 
                     title="إجمالي المهتمين" 
                     value={stats?.total || 0} 
@@ -253,7 +253,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Filters & Search */}
-            <div className="px-4 md:px-6 mb-6">
+            <div className="px-4 md:px-8 mb-6">
                 <SectionCard className="p-3 flex flex-col md:flex-row gap-3 items-center">
                     <div className="relative flex-1 w-full">
                         <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
@@ -284,7 +284,7 @@ export const Leads: React.FC = () => {
             </div>
 
             {/* Leads Table/Cards */}
-            <div className="px-4 md:px-6">
+            <div className="px-4 md:px-8">
                 {/* Desktop Table */}
                 <div className="hidden lg:block overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <table className="w-full text-right border-collapse">
