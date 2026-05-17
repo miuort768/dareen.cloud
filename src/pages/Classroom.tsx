@@ -93,6 +93,7 @@ export const Classroom = () => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peersRef = useRef<Map<string, Peer.Instance>>(new Map());
+    const connectedStudentsRef = useRef<Set<string>>(new Set());
     const localStreamRef = useRef<MediaStream | null>(null);
     const connectionStatusRef = useRef<ConnectionStatus>('connecting');
     const iceConfigRef = useRef<IceServerConfig>(STUN_ONLY_CONFIG);
@@ -187,6 +188,7 @@ export const Classroom = () => {
         });
         peer.on('connect', () => {
             console.log(`[Classroom] Peer connected with student: ${studentId}`);
+            connectedStudentsRef.current.add(studentId);
             if (mountedRef.current) {
                 setConnectionStatus('connected');
                 setViewerCount(peersRef.current.size);
@@ -201,11 +203,13 @@ export const Classroom = () => {
             setRetryCount(0);
         });
         peer.on('close', () => {
+            connectedStudentsRef.current.delete(studentId);
             peersRef.current.delete(studentId);
             if (mountedRef.current) setViewerCount(peersRef.current.size);
         });
         peer.on('error', (err: Error) => {
             console.warn(`[Classroom] Peer error (teacher→${studentId}):`, err.message);
+            connectedStudentsRef.current.delete(studentId);
             destroyPeer(studentId);
             if (mountedRef.current) setViewerCount(peersRef.current.size);
         });
@@ -510,7 +514,9 @@ export const Classroom = () => {
             if (isTeacher) {
                 socket.on('student_joined', (data: { studentId: string }) => {
                     if (!mountedRef.current || !localStreamRef.current) return;
-                    if (!peersRef.current.has(data.studentId)) {
+                    // If student is not successfully connected, or we don't have a peer for them
+                    if (!connectedStudentsRef.current.has(data.studentId) || !peersRef.current.has(data.studentId)) {
+                        console.log(`[Classroom] Student ${data.studentId} joined/rejoining. Creating new peer connection.`);
                         createPeer(data.studentId, localStreamRef.current);
                     }
                 });
@@ -532,7 +538,10 @@ export const Classroom = () => {
 
                 socket.on('teacher_signal', (data: { signal: Peer.SignalData }) => {
                     if (!mountedRef.current || !localStreamRef.current) return;
-                    if (!peersRef.current.has('teacher')) {
+                    
+                    const isOffer = (data.signal as any).type === 'offer';
+                    if (isOffer || !peersRef.current.has('teacher')) {
+                        console.log('[Classroom] Received fresh teacher offer signal. Re-initializing peer connection.');
                         addPeer(data.signal, localStreamRef.current);
                     } else {
                         peersRef.current.get('teacher')?.signal(data.signal);
