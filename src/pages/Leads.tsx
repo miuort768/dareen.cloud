@@ -436,11 +436,16 @@ export const Leads: React.FC = () => {
                             {/* Top Row */}
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-900 text-white flex items-center justify-center font-bold text-sm rounded-none">
+                                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-none shrink-0">
                                         {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-black text-slate-800 dark:text-white leading-tight mb-1">{lead.studentName || 'عميل بدون اسم'}</h4>
+                                        <h4 
+                                            style={{ fontSize: '24px', fontWeight: '900' }} 
+                                            className="text-slate-800 dark:text-white leading-tight mb-1"
+                                        >
+                                            {lead.studentName || 'عميل بدون اسم'}
+                                        </h4>
                                     </div>
                                 </div>
                                 <div className="text-left flex flex-col items-end gap-1">
