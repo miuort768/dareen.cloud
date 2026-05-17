@@ -142,29 +142,82 @@ export const TeacherDetails = ({
                     <div className="space-y-2">
                         {enrolledStudents.map(student => {
                             const enrollment = student.enrollments.find((e: Enrollment) => e.teacher === teacher.name)!;
+                            const actualUsed = enrollment.sessionsUsed || 0;
+                            const remaining = (enrollment.sessionsTotal || 0) - actualUsed;
+                            const isLow = remaining <= 2;
+                            const progressPercent = enrollment.sessionsTotal ? Math.round((actualUsed / enrollment.sessionsTotal) * 100) : 0;
+
                             return (
-                                <div key={student.id} className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none flex justify-between items-center group hover:border-[var(--primary-color,#5c59f2)] transition-all">
-                                    <div className="min-w-0">
-                                        <p className="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate uppercase tracking-tight">{student.name}</p>
-                                        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">{student.grade} • {enrollment?.subject}</p>
-                                    </div>
-                                    <div className="flex gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button
-                                            onClick={() => onLogAttendance(student, enrollment)}
-                                            className="w-8 h-8 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-none transition-all"
-                                            title="تسجيل حضور"
-                                        >
-                                            <CheckCircle2 size={16} strokeWidth={2.5} />
-                                        </button>
-                                        {!isTeacherView && (
+                                <div key={student.id} className={cn(
+                                    "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm relative transition-all group",
+                                    (enrollment as any).isFrozen && "opacity-50 grayscale",
+                                    isLow ? "border-rose-200 dark:border-rose-900/50" : "hover:border-[var(--primary-color,#5c59f2)]"
+                                )}>
+                                    <div className="flex justify-between items-start mb-3">
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <h5 className="font-black text-xs text-slate-800 dark:text-white uppercase">{student.name}</h5>
+                                                {isLow && <span className="text-[8px] font-black text-rose-500 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 px-1.5 py-0.5 rounded-none animate-pulse uppercase">رصيد منخفض</span>}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[9px] font-black text-slate-400 uppercase bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-100 dark:border-slate-700">{student.grade}</span>
+                                                <span className="text-[9px] font-black text-slate-500 uppercase">{enrollment.subject}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
-                                                onClick={() => onUnenroll(student, teacher.name)}
-                                                className="w-8 h-8 flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white rounded-none transition-all"
-                                                title="إلغاء التسجيل"
+                                                onClick={() => onLogAttendance(student, enrollment)}
+                                                className="w-7 h-7 flex items-center justify-center text-emerald-500 hover:bg-emerald-500 hover:text-white rounded-none transition-all border border-transparent hover:border-emerald-600 shadow-sm"
+                                                title="تسجيل حضور"
                                             >
-                                                <Trash2 size={16} strokeWidth={2.5} />
+                                                <CheckCircle2 size={14} strokeWidth={2.5} />
                                             </button>
-                                        )}
+                                            {!isTeacherView && (
+                                                <button
+                                                    onClick={() => onUnenroll(student, teacher.name)}
+                                                    className="w-7 h-7 flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white rounded-none transition-all border border-transparent hover:border-rose-600 shadow-sm"
+                                                    title="إلغاء التسجيل"
+                                                >
+                                                    <Trash2 size={14} strokeWidth={2.5} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {[...Array(enrollment.sessionsTotal || 0)].map((_, idx) => (
+                                                <div 
+                                                    key={idx} 
+                                                    className={cn(
+                                                        "w-4 h-4 border flex items-center justify-center rounded-none text-[7px] font-black font-mono transition-all",
+                                                        idx < actualUsed 
+                                                            ? "bg-emerald-500 border-emerald-600 text-white shadow-sm" 
+                                                            : idx === actualUsed 
+                                                                ? "bg-white dark:bg-slate-800 border-[var(--primary-color,#5c59f2)] text-[var(--primary-color,#5c59f2)] shadow-sm" 
+                                                                : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600"
+                                                    )}
+                                                >
+                                                    {idx < actualUsed ? <CheckCircle2 size={10} strokeWidth={3} /> : idx + 1}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                            <div className="flex-1 max-w-[120px]">
+                                                <div className="flex justify-between text-[8px] font-black text-slate-400 uppercase mb-1">
+                                                    <span>الإنجاز</span>
+                                                    <span className="tabular-nums">{progressPercent}%</span>
+                                                </div>
+                                                <div className="h-1 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden">
+                                                    <div className={cn("h-full", isLow ? "bg-rose-500" : "bg-indigo-500")} style={{ width: `${progressPercent}%` }} />
+                                                </div>
+                                            </div>
+                                            <div className="text-center px-2">
+                                                <p className="text-[8px] font-black text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
+                                                <p className={cn("text-xs font-black font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             );
