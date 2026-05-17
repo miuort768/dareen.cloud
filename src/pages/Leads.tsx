@@ -441,11 +441,11 @@ export const Leads: React.FC = () => {
                         >
                             {/* Top Row */}
                             <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-3">
                                     <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-none shrink-0">
                                         {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
-                                    <div>
+                                    <div className="pt-2">
                                         <h4 
                                             style={{ fontSize: '32px', fontWeight: '950' }} 
                                             className="text-slate-950 dark:text-white leading-none mb-1 block"
