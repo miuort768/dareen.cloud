@@ -90,10 +90,10 @@ export const MobileAdminDashboard = ({
 
             {/* ═══════════════ 4. NAVIGATION GRID (Parent Style buttons) ═══════════════ */}
             <div className="grid grid-cols-2 gap-2">
-                <NavButton label="طالب جديد" icon={UserPlus} onClick={() => navigate('/students?action=new')} />
-                <NavButton label="إصدار فاتورة" icon={FilePlus} onClick={() => navigate('/student-invoices?action=new')} />
-                <NavButton label="الجدول الدراسي" icon={Calendar} onClick={() => navigate('/schedule')} />
-                <NavButton label="بث إعلان عام" icon={Megaphone} onClick={() => navigate('/announcements?action=new')} />
+                <NavButton label="إضافة طالب جديد" subtext="تسجيل جديد" icon={UserPlus} onClick={() => navigate('/students?action=new')} />
+                <NavButton label="إصدار فاتورة" subtext="فاتورة مالية" icon={FilePlus} onClick={() => navigate('/student-invoices?action=new')} />
+                <NavButton label="الجدول الاسبوعي" subtext="إدارة المواعيد" icon={Calendar} onClick={() => navigate('/schedule')} />
+                <NavButton label="إعلان عام" subtext="بث عام" icon={Megaphone} onClick={() => navigate('/announcements?action=new')} />
             </div>
 
             {/* ═══════════════ 5. TODAY'S CLASS PROGRESS (Parent Style Progress Bar) ═══════════════ */}
@@ -192,14 +192,15 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
 };
 
 /* Navigation Button Sub-component (Parent Style) */
-const NavButton = ({ label, icon: Icon, onClick }: any) => (
+const NavButton = ({ label, subtext, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-3.5 rounded-none border border-indigo-100/30 dark:border-indigo-900/20 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"
+        className="bg-[#fff1f2] dark:bg-[#311116] p-3.5 rounded-none border border-[#ffe4e6] dark:border-[#5a1c24] flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-905 hover:shadow-md group"
     >
-        <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm group-hover:scale-110 transition-transform">
+        <div className="w-9 h-9 bg-white dark:bg-[#4c1d24] rounded-none flex items-center justify-center text-[#f43f5e] dark:text-[#fb7185] shadow-sm group-hover:scale-110 transition-transform">
             <Icon size={16} strokeWidth={1.5} />
         </div>
-        <span className="text-[9px] font-black text-slate-700 dark:text-slate-400 tracking-tight leading-none">{label}</span>
+        <span className="text-[10px] font-black text-[#e11d48] dark:text-[#fb7185] tracking-tight leading-none">{label}</span>
+        <span className="text-[8px] font-bold text-slate-500 dark:text-slate-400 leading-none mt-0.5">{subtext}</span>
     </button>
 );
