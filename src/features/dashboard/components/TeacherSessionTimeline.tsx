@@ -23,15 +23,15 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
             {/* Header */}
             <div className="flex items-center justify-between mb-4 px-1">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-indigo-600 rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md">
-                        <Clock size={20} className="text-white" />
+                    <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <Clock size={20} />
                     </div>
                     <div>
                         <h3 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">الجدول الزمني</h3>
-                        <p className="text-[9px] text-slate-400 font-black mt-0.5 uppercase tracking-tight">Daily Schedule Hub</p>
+                        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-black mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-600 text-white border-2 border-slate-950 rounded-none">
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500 text-white border border-emerald-450 rounded-none shadow-sm">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                     <span className="text-[9px] font-black uppercase">LIVE NOW</span>
                 </div>
@@ -48,25 +48,29 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
                         <div
                             key={session.id}
                             className={cn(
-                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[160px] p-4 rounded-none border-2 transition-all relative group/card",
+                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[160px] p-4 rounded-none border transition-all relative group/card shadow-sm",
                                 isCompleted
-                                    ? "bg-emerald-50 dark:bg-emerald-900/10 border-emerald-600"
+                                    ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-500/30"
                                     : isCancelled
-                                    ? "bg-rose-50 dark:bg-rose-900/10 border-rose-600"
-                                    : "bg-white dark:bg-slate-900 border-slate-950 hover:shadow-[6px_6px_0px_0px_rgba(79,70,229,1)] hover:-translate-y-1"
+                                    ? "bg-rose-50 dark:bg-rose-950/20 border-rose-500/30"
+                                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 hover:shadow-md hover:-translate-y-1"
                             )}
                         >
                             {/* Time + status icon */}
                             <div className="flex items-center justify-between mb-4">
                                 <div className={cn(
-                                    "px-2 py-0.5 rounded-none text-[10px] font-black tabular-nums border-2 border-slate-950 shadow-sm",
-                                    isCompleted ? "bg-emerald-600 text-white" : isCancelled ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-900"
+                                    "px-2 py-0.5 rounded-none text-[10px] font-black tabular-nums border",
+                                    isCompleted 
+                                        ? "bg-emerald-500 text-white border-emerald-400" 
+                                        : isCancelled 
+                                        ? "bg-rose-500 text-white border-rose-400" 
+                                        : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-200 dark:border-slate-700"
                                 )}>
                                     {session.time}
                                 </div>
-                                {isCompleted && <CheckCircle2 size={16} className="text-emerald-600" />}
-                                {isCancelled && <AlertCircle size={16} className="text-rose-600" />}
-                                {isOngoing && <div className="w-2.5 h-2.5 bg-indigo-600 rounded-none border border-slate-950 animate-pulse" />}
+                                {isCompleted && <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400" />}
+                                {isCancelled && <AlertCircle size={16} className="text-rose-600 dark:text-rose-400" />}
+                                {isOngoing && <div className="w-2.5 h-2.5 bg-indigo-600 dark:bg-indigo-400 rounded-none border border-white/20 animate-pulse" />}
                             </div>
 
                             {/* Student name */}
@@ -77,7 +81,7 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
                             {/* Subject */}
                             <div className="flex items-center gap-2">
                                 <div className={cn(
-                                    "w-1.5 h-1.5 rounded-none border border-slate-950/20",
+                                    "w-1.5 h-1.5 rounded-none border border-slate-300 dark:border-slate-700",
                                     isCompleted ? "bg-emerald-600" : isCancelled ? "bg-rose-600" : "bg-indigo-600"
                                 )} />
                                 <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate uppercase">
@@ -86,20 +90,20 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
                             </div>
 
                             {/* Status label */}
-                            <div className="mt-4 pt-3 border-t-2 border-slate-950/5 flex justify-between items-center">
+                            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
                                 <span className={cn(
                                     "text-[9px] font-black uppercase",
                                     isCompleted ? "text-emerald-600" : isCancelled ? "text-rose-600" : "text-indigo-600"
                                 )}>
-                                    {isCompleted ? 'COMPLETED' : isCancelled ? 'CANCELLED' : 'UPCOMING'}
+                                    {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
                                 </span>
-                                {isOngoing && <Play size={10} className="text-indigo-600 fill-current" />}
+                                {isOngoing && <Play size={10} className="text-indigo-600 dark:text-indigo-400 fill-current" />}
                             </div>
 
-                            {/* Hover play overlay - Brutalist Style */}
+                            {/* Hover play overlay */}
                             {isOngoing && (
-                                <button className="absolute inset-2 bg-indigo-600 text-white rounded-none border-2 border-slate-950 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                                    <div className="w-9 h-9 bg-white text-indigo-600 rounded-none border-2 border-slate-950 flex items-center justify-center mb-2 shadow-sm">
+                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-750/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10 shadow-lg">
+                                    <div className="w-9 h-9 bg-white text-indigo-600 rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-black text-[9px] uppercase">بدء الحصة</span>
@@ -111,5 +115,4 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
             </div>
         </div>
     );
-
 };

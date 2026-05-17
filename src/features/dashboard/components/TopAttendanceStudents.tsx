@@ -39,21 +39,21 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
     }, [sessions]);
 
     return (
-        <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full overflow-hidden" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full overflow-hidden transition-all" dir="rtl">
             {/* Header Section */}
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-amber-500 rounded-none flex items-center justify-center border-2 border-slate-950 shadow-md text-white">
+                    <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-sm">
                         <Trophy size={20} />
                     </div>
                     <div>
                         <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">الأكثر حضوراً</h3>
                         <p className="text-[9px] font-black text-amber-500 mt-0.5 uppercase tracking-tight flex items-center gap-1.5">
-                            Attendance Leaders
+                            قادة الحضور والالتزام
                         </p>
                     </div>
                 </div>
-                <div className="w-8 h-8 rounded-none border-2 border-slate-950 flex items-center justify-center text-slate-400">
+                <div className="w-8 h-8 rounded-none border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400">
                     <TrendingUp size={16} />
                 </div>
             </div>
@@ -64,49 +64,49 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
                     topPresentStudents.map((stu, i) => (
                         <div 
                             key={i} 
-                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border-2 border-slate-950/10 hover:border-slate-950 transition-all rounded-none group relative overflow-hidden"
+                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 hover:border-amber-500/50 transition-all rounded-none group relative overflow-hidden"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="relative">
-                                    <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center border-2 border-slate-950 text-slate-400">
+                                    <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-none flex items-center justify-center border border-slate-200 dark:border-slate-700 text-slate-400">
                                         <User size={18} />
                                     </div>
                                     <div className={cn(
-                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-black border-2 border-slate-950 shadow-sm",
-                                        i === 0 ? "bg-amber-400 text-amber-900" :
-                                        i === 1 ? "bg-slate-300 text-slate-800" :
-                                        i === 2 ? "bg-orange-400 text-white" : "bg-white text-slate-500 dark:bg-slate-700 dark:text-slate-400"
+                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-black border border-slate-200 dark:border-slate-700 shadow-sm",
+                                        i === 0 ? "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/30" :
+                                        i === 1 ? "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500" :
+                                        i === 2 ? "bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-500/20 dark:text-orange-400 dark:border-orange-500/30" : "bg-white text-slate-500 dark:bg-slate-800 dark:text-slate-400"
                                     )}>
                                         {i + 1}
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-xs text-slate-900 dark:text-white group-hover:text-amber-600 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
-                                    <p className="text-[8px] font-bold text-slate-400 uppercase mt-0.5">Top Performer</p>
+                                    <h4 className="font-black text-xs text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
+                                    <p className="text-[8px] font-bold text-slate-400 uppercase mt-0.5">أداء متميز</p>
                                 </div>
                             </div>
                             
                             <div className="text-left">
                                 <div className="text-xl font-black text-slate-900 dark:text-white tabular-nums leading-none">{stu.count}</div>
-                                <div className="text-[8px] font-black text-amber-500 uppercase mt-1">Sessions</div>
+                                <div className="text-[8px] font-black text-amber-500 uppercase mt-1">حصة</div>
                             </div>
                         </div>
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-16 opacity-40">
-                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border-2 border-slate-950/10 rounded-none flex items-center justify-center mb-4">
+                        <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none flex items-center justify-center mb-4">
                             <User size={24} className="text-slate-300" />
                         </div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase">No records found</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase">لا توجد سجلات حالياً</p>
                     </div>
                 )}
             </div>
 
             {/* Footer Summary */}
             <div className="mt-6">
-                <div className="bg-indigo-600 border-2 border-slate-950 rounded-none p-4 text-white flex items-center justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:translate-y-[-2px]">
+                <div className="bg-indigo-600 dark:bg-indigo-750 border border-indigo-500 rounded-none p-4 text-white flex items-center justify-between shadow-sm transition-transform hover:translate-y-[-2px]">
                     <div>
-                        <h4 className="text-[9px] font-black uppercase opacity-80 mb-0.5">Total Month Sessions</h4>
+                        <h4 className="text-[9px] font-black uppercase opacity-80 mb-0.5">إجمالي حصص الشهر</h4>
                         <p className="text-xl font-black tabular-nums leading-none">{totalMonthSessions}</p>
                     </div>
                     <div className="w-9 h-9 bg-white/10 rounded-none flex items-center justify-center border border-white/20">
@@ -116,5 +116,4 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
             </div>
         </div>
     );
-
 };
