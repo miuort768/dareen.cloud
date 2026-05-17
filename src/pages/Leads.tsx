@@ -512,9 +512,9 @@ export const Leads: React.FC = () => {
                                 <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
                                     <UserPlus size={18} className="text-white" />
                                 </div>
-                                <h2 className="text-sm font-bold">إضافة عميل محتمل جديد</h2>
+                                <h2 className="text-sm font-bold text-white dark:text-white">إضافة عميل محتمل جديد</h2>
                             </div>
-                            <button onClick={() => setIsAddModalOpen(false)} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg"><X size={18} /></button>
+                            <button onClick={() => setIsAddModalOpen(false)} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg text-white"><X size={18} /></button>
                         </div>
                         <form ref={formRef} className="p-6 space-y-4" onSubmit={(e) => {
                             e.preventDefault();
@@ -530,21 +530,21 @@ export const Leads: React.FC = () => {
                         }}>
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل</label>
-                                <input name="name" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500" />
+                                <input name="name" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-1.5">
                                     <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">رقم الهاتف</label>
-                                    <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500" />
+                                    <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                                 </div>
                                 <div className="space-y-1.5">
                                     <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">المادة المهتم بها</label>
-                                    <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500" />
+                                    <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                                 </div>
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">الأولوية</label>
-                                <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500">
+                                <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white">
                                     <option value="low">منخفضة</option>
                                     <option value="medium">متوسطة</option>
                                     <option value="high">عالية جداً 🔥</option>
