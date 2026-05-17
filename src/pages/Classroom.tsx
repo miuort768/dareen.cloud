@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
     Mic, MicOff, Video, VideoOff, PhoneOff, 
-    MessageSquare, Users, Loader2, Volume2
+    MessageSquare, Users, Loader2, Volume2, WifiOff
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
@@ -27,6 +27,7 @@ export const Classroom = () => {
     const [isMuted, setIsMuted] = useState(false);
     const [isCameraOff, setIsCameraOff] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [viewerCount, setViewerCount] = useState(0);
     const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'waiting'>('connecting');
     const [needsInteraction, setNeedsInteraction] = useState(false);
@@ -34,11 +35,20 @@ export const Classroom = () => {
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
     const peersRef = useRef<Map<string, Peer.Instance>>(new Map());
-    const socket = socketService.getSocket();
+    // Store stream in ref to avoid stale closure issues in socket handlers
+    const localStreamRef = useRef<MediaStream | null>(null);
+    const connectionStatusRef = useRef(connectionStatus);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
     const roomName = `live_session_${id}`;
 
+    // Keep ref in sync
+    useEffect(() => {
+        connectionStatusRef.current = connectionStatus;
+    }, [connectionStatus]);
+
+    // Sync remote video
     useEffect(() => {
         if (remoteVideoRef.current && remoteStream) {
             remoteVideoRef.current.srcObject = remoteStream;
@@ -46,6 +56,7 @@ export const Classroom = () => {
         }
     }, [remoteStream]);
 
+    // Sync local video
     useEffect(() => {
         if (localVideoRef.current && localStream) {
             localVideoRef.current.srcObject = localStream;
@@ -53,21 +64,75 @@ export const Classroom = () => {
         }
     }, [localStream]);
 
+    const createPeer = useCallback((studentId: string, s: MediaStream) => {
+        const socket = socketService.getSocket();
+        const peer = new Peer({ initiator: true, trickle: false, config: ICE_CONFIG, stream: s });
+        
+        peer.on('signal', signal => {
+            socket.emit('teacher_signal', { conversationId: roomName, studentId, signal });
+        });
+        peer.on('stream', (st: MediaStream) => {
+            setRemoteStream(st);
+            setConnectionStatus('connected');
+        });
+        peer.on('close', () => {
+            peersRef.current.delete(studentId);
+            setViewerCount(peersRef.current.size);
+        });
+        peer.on('error', (err: Error) => {
+            console.error('Peer error (teacher):', err);
+            peersRef.current.delete(studentId);
+            setViewerCount(peersRef.current.size);
+        });
+
+        peersRef.current.set(studentId, peer);
+        setViewerCount(peersRef.current.size);
+    }, [roomName]);
+
+    const addPeer = useCallback((signal: unknown, s: MediaStream) => {
+        const socket = socketService.getSocket();
+        const peer = new Peer({ initiator: false, trickle: false, config: ICE_CONFIG, stream: s });
+
+        peer.on('signal', (sig: unknown) => {
+            socket.emit('student_request', { conversationId: roomName, studentId: currentUser?.id, signal: sig });
+        });
+        peer.on('stream', (st: MediaStream) => {
+            setRemoteStream(st);
+            setConnectionStatus('connected');
+        });
+        peer.on('error', (err: Error) => {
+            console.error('Peer error (student):', err);
+        });
+
+        peer.signal(signal);
+        peersRef.current.set('teacher', peer);
+    }, [roomName, currentUser?.id]);
+
+    // Main init effect — deps do NOT include connectionStatus to avoid re-running on status change
     useEffect(() => {
+        const socket = socketService.getSocket();
         let stream: MediaStream | null = null;
-        let interval: any = null;
 
         const init = async () => {
             try {
-                const constraints = isTeacher 
+                const constraints = isTeacher
                     ? { video: { width: 1280, height: 720 }, audio: true }
                     : { audio: true, video: false };
-                
+
                 try {
                     stream = await navigator.mediaDevices.getUserMedia(constraints);
                 } catch {
-                    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    // Fallback: audio-only
+                    try {
+                        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    } catch {
+                        setError('لا يمكن الوصول إلى الميكروفون أو الكاميرا. يرجى السماح بالأذونات.');
+                        setLoading(false);
+                        return;
+                    }
                 }
+
+                localStreamRef.current = stream;
                 setLocalStream(stream);
                 setLoading(false);
                 setConnectionStatus('waiting');
@@ -75,122 +140,219 @@ export const Classroom = () => {
                 socket.emit('join_conversation', roomName);
 
                 if (isTeacher) {
-                    socket.on('student_joined', (data) => {
-                        if (!peersRef.current.has(data.studentId)) {
-                            createPeer(data.studentId, stream!);
+                    socket.on('student_joined', (data: { studentId: string }) => {
+                        if (!peersRef.current.has(data.studentId) && localStreamRef.current) {
+                            createPeer(data.studentId, localStreamRef.current);
                         }
                     });
 
-                    socket.on('student_request', (data) => {
+                    socket.on('student_request', (data: { studentId: string; signal: unknown }) => {
                         peersRef.current.get(data.studentId)?.signal(data.signal);
                     });
 
-                    interval = setInterval(() => {
+                    // Announce readiness every 5s
+                    intervalRef.current = setInterval(() => {
                         socket.emit('teacher_ready', { conversationId: roomName, teacherId: currentUser?.id });
                     }, 5000);
 
                 } else {
-                    socket.on('teacher_signal', (data) => {
-                        if (!peersRef.current.has('teacher')) {
-                            addPeer(data.signal, stream!);
+                    socket.on('teacher_signal', (data: { signal: unknown }) => {
+                        if (!peersRef.current.has('teacher') && localStreamRef.current) {
+                            addPeer(data.signal, localStreamRef.current);
                         } else {
                             peersRef.current.get('teacher')?.signal(data.signal);
                         }
                     });
 
-                    interval = setInterval(() => {
-                        if (connectionStatus !== 'connected') {
+                    // Poll for teacher every 3s only when not connected
+                    intervalRef.current = setInterval(() => {
+                        if (connectionStatusRef.current !== 'connected') {
                             socket.emit('student_joined', { conversationId: roomName, studentId: currentUser?.id });
                         }
                     }, 3000);
                 }
             } catch {
+                setError('حدث خطأ غير متوقع أثناء الاتصال.');
                 setLoading(false);
             }
-        };
-
-        const createPeer = (studentId: string, s: MediaStream) => {
-            const peer = new Peer({ initiator: true, trickle: false, config: ICE_CONFIG, stream: s });
-            peer.on('signal', signal => {
-                socket.emit('teacher_signal', { conversationId: roomName, studentId, signal });
-            });
-            peer.on('stream', st => { setRemoteStream(st); setConnectionStatus('connected'); });
-            peer.on('close', () => { peersRef.current.delete(studentId); setViewerCount(peersRef.current.size); });
-            peersRef.current.set(studentId, peer);
-            setViewerCount(peersRef.current.size);
-        };
-
-        const addPeer = (signal: any, s: MediaStream) => {
-            const peer = new Peer({ initiator: false, trickle: false, config: ICE_CONFIG, stream: s });
-            peer.on('signal', sig => {
-                socket.emit('student_request', { conversationId: roomName, studentId: currentUser?.id, signal: sig });
-            });
-            peer.on('stream', st => { setRemoteStream(st); setConnectionStatus('connected'); });
-            peer.signal(signal);
-            peersRef.current.set('teacher', peer);
         };
 
         init();
 
         return () => {
-            clearInterval(interval);
+            if (intervalRef.current) clearInterval(intervalRef.current);
             socket.off('student_joined');
             socket.off('student_request');
             socket.off('teacher_signal');
             stream?.getTracks().forEach(t => t.stop());
+            localStreamRef.current = null;
             peersRef.current.forEach(p => p.destroy());
+            peersRef.current.clear();
         };
-    }, [id, isTeacher, currentUser?.id, socket, roomName, connectionStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, isTeacher, currentUser?.id]); // intentionally omit connectionStatus, createPeer, addPeer to avoid re-inits
 
-    const handleLeave = () => { navigate(-1); };
+    const toggleMute = useCallback(() => {
+        if (localStreamRef.current) {
+            const newMuted = !isMuted;
+            localStreamRef.current.getAudioTracks().forEach(t => { t.enabled = !newMuted; });
+            setIsMuted(newMuted);
+        }
+    }, [isMuted]);
+
+    const toggleCamera = useCallback(() => {
+        if (localStreamRef.current) {
+            const newCameraOff = !isCameraOff;
+            localStreamRef.current.getVideoTracks().forEach(t => { t.enabled = !newCameraOff; });
+            setIsCameraOff(newCameraOff);
+        }
+    }, [isCameraOff]);
+
+    const handleLeave = useCallback(() => {
+        navigate(-1);
+    }, [navigate]);
+
+    // --- Error State ---
+    if (error) {
+        return (
+            <div className="fixed inset-0 bg-gray-950 text-white flex flex-col items-center justify-center gap-4" dir="rtl">
+                <WifiOff size={48} className="text-red-500" />
+                <p className="font-black text-sm uppercase tracking-widest text-red-400">{error}</p>
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mt-4 bg-red-600 text-white px-6 py-2 text-xs font-black uppercase rounded"
+                >
+                    العودة
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="fixed inset-0 bg-black text-white flex flex-col overflow-hidden" dir="rtl">
-            <div className="h-14 border-b border-white/10 flex items-center justify-between px-4 bg-gray-900/50 backdrop-blur-xl z-50">
+            {/* Top bar */}
+            <div className="h-14 border-b border-white/10 flex items-center justify-between px-4 bg-gray-900/50 backdrop-blur-xl z-50 shrink-0">
                 <div className="flex items-center gap-3">
-                    <div className={cn("px-3 py-1 text-[10px] font-black uppercase tracking-widest flex items-center gap-2", connectionStatus === 'connected' ? "bg-red-600" : "bg-yellow-600")}>
+                    <div className={cn(
+                        "px-3 py-1 text-[10px] font-black uppercase tracking-widest flex items-center gap-2",
+                        connectionStatus === 'connected' ? "bg-red-600" : "bg-yellow-600"
+                    )}>
                         <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                         {connectionStatus === 'connected' ? 'LIVE' : 'جاري الربط...'}
                     </div>
-                    {isTeacher && <div className="text-white/40 text-xs flex items-center gap-1"><Users size={14} /> {viewerCount}</div>}
+                    {isTeacher && (
+                        <div className="text-white/40 text-xs flex items-center gap-1">
+                            <Users size={14} /> {viewerCount}
+                        </div>
+                    )}
                 </div>
-                <button onClick={handleLeave} className="p-2 bg-red-600 rounded"><PhoneOff size={18} /></button>
+                <button
+                    onClick={handleLeave}
+                    className="p-2 bg-red-600 rounded hover:bg-red-700 transition-colors"
+                >
+                    <PhoneOff size={18} />
+                </button>
             </div>
 
-            <div className="flex-1 relative bg-black flex items-center justify-center">
+            {/* Video area */}
+            <div className="flex-1 relative bg-black flex items-center justify-center overflow-hidden">
                 {isTeacher ? (
-                    <video ref={localVideoRef} autoPlay muted playsInline className="w-full h-full object-contain -scale-x-100" />
+                    <video
+                        ref={localVideoRef}
+                        autoPlay
+                        muted
+                        playsInline
+                        className="w-full h-full object-contain -scale-x-100"
+                    />
                 ) : (
                     <>
-                        <video ref={remoteVideoRef} autoPlay playsInline className="w-full h-full object-contain" />
+                        <video
+                            ref={remoteVideoRef}
+                            autoPlay
+                            playsInline
+                            className="w-full h-full object-contain"
+                        />
                         {connectionStatus !== 'connected' && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900">
                                 <Loader2 className="w-10 h-10 text-red-600 animate-spin mb-4" />
-                                <p className="text-xs font-black opacity-40 uppercase tracking-widest">جاري محاولة الاتصال...</p>
+                                <p className="text-xs font-black opacity-40 uppercase tracking-widest">
+                                    جاري محاولة الاتصال...
+                                </p>
                             </div>
                         )}
                         {needsInteraction && (
                             <div className="absolute inset-0 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center z-50">
-                                <button onClick={() => { setNeedsInteraction(false); remoteVideoRef.current?.play(); }} className="flex flex-col items-center gap-4 group">
-                                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
+                                <button
+                                    onClick={() => {
+                                        setNeedsInteraction(false);
+                                        remoteVideoRef.current?.play();
+                                    }}
+                                    className="flex flex-col items-center gap-4 group"
+                                >
+                                    <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:bg-red-700 transition-colors">
                                         <Volume2 size={32} className="text-white animate-pulse" />
                                     </div>
-                                    <p className="font-black text-sm uppercase tracking-widest">انقر لتشغيل الصوت والبث</p>
+                                    <p className="font-black text-sm uppercase tracking-widest">
+                                        انقر لتشغيل الصوت والبث
+                                    </p>
                                 </button>
                             </div>
                         )}
                     </>
                 )}
-                {loading && <div className="absolute inset-0 bg-gray-950 flex items-center justify-center"><Loader2 className="w-8 h-8 text-red-600 animate-spin" /></div>}
+
+                {/* Loading overlay */}
+                {loading && (
+                    <div className="absolute inset-0 bg-gray-950 flex items-center justify-center">
+                        <Loader2 className="w-8 h-8 text-red-600 animate-spin" />
+                    </div>
+                )}
             </div>
 
-            <div className="h-24 bg-black/90 border-t border-white/10 flex items-center justify-center gap-6 px-4">
-                <button onClick={() => { if (localStream) { localStream.getAudioTracks().forEach(t => t.enabled = isMuted); setIsMuted(!isMuted); } }} className={cn("w-14 h-14 rounded-full flex items-center justify-center border-4", isMuted ? "bg-red-600" : "bg-white text-black")}>{isMuted ? <MicOff size={24} /> : <Mic size={24} />}</button>
-                <button onClick={handleLeave} className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center border-4 border-black"><PhoneOff size={28} /></button>
+            {/* Controls bar */}
+            <div className="h-24 bg-black/90 border-t border-white/10 flex items-center justify-center gap-6 px-4 shrink-0">
+                {/* Mute */}
+                <button
+                    onClick={toggleMute}
+                    className={cn(
+                        "w-14 h-14 rounded-full flex items-center justify-center border-4 transition-colors",
+                        isMuted ? "bg-red-600 border-red-800 text-white" : "bg-white border-white/10 text-black"
+                    )}
+                    title={isMuted ? 'تشغيل الميكروفون' : 'كتم الميكروفون'}
+                >
+                    {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
+                </button>
+
+                {/* Leave */}
+                <button
+                    onClick={handleLeave}
+                    className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center border-4 border-black hover:bg-red-700 transition-colors"
+                    title="مغادرة البث"
+                >
+                    <PhoneOff size={28} />
+                </button>
+
+                {/* Camera (teacher only) */}
                 {isTeacher && (
-                    <button onClick={() => { if (localStream) { localStream.getVideoTracks().forEach(t => t.enabled = isCameraOff); setIsCameraOff(!isCameraOff); } }} className={cn("w-14 h-14 rounded-full flex items-center justify-center border-4", isCameraOff ? "bg-red-600" : "bg-white text-black")}>{isCameraOff ? <VideoOff size={24} /> : <Video size={24} />}</button>
+                    <button
+                        onClick={toggleCamera}
+                        className={cn(
+                            "w-14 h-14 rounded-full flex items-center justify-center border-4 transition-colors",
+                            isCameraOff ? "bg-red-600 border-red-800 text-white" : "bg-white border-white/10 text-black"
+                        )}
+                        title={isCameraOff ? 'تشغيل الكاميرا' : 'إيقاف الكاميرا'}
+                    >
+                        {isCameraOff ? <VideoOff size={24} /> : <Video size={24} />}
+                    </button>
                 )}
-                <button className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center"><MessageSquare size={24} /></button>
+
+                {/* Chat (placeholder) */}
+                <button
+                    className="w-14 h-14 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                    title="المحادثة"
+                >
+                    <MessageSquare size={24} />
+                </button>
             </div>
         </div>
     );
