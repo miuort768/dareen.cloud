@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { 
     Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, 
     TrendingUp, TrendingDown, DollarSign, UserPlus, FilePlus, 
-    Calendar, Megaphone, Clock, ShieldCheck, Headphones, Activity, Bell
+    Calendar, Megaphone, Clock, ShieldCheck, Headphones, Activity, Bell,
+    ArrowUpRight, AlertCircle
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
@@ -17,219 +18,297 @@ export const MobileAdminDashboard = ({
     lowBalanceStudents,
 }: MobileAdminDashboardProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [activeTab, setActiveTab] = useState<'academic' | 'finance'>('academic');
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    // Get live quick highlights
     const lowBalanceCount = lowBalanceStudents.length;
-    const todaySessionsCount = stats.todaySessions || 0;
+    
+    // Academic calculations
+    const todaySessions = stats.todaySessions || 0;
+    const completedSessions = stats.completedSessions || 0;
+    const completionRate = todaySessions > 0 ? Math.round((completedSessions / todaySessions) * 100) : 0;
+    
+    // Circular Progress stroke calculations
+    const radius = 30;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (completionRate / 100) * circumference;
 
     return (
-        <div className="space-y-4 pb-12 animate-in fade-in slide-in-from-bottom-2 duration-300">
-            {/* 1. Header Command Card */}
-            <div className="relative overflow-hidden bg-slate-950 text-white p-4 border border-slate-800 rounded-none shadow-2xl">
-                {/* Decorative Neon Glows */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rotate-45 blur-2xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-500/10 blur-2xl pointer-events-none" />
-
-                <div className="relative z-10 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center bg-indigo-600/20 border border-indigo-500/30 rounded-none">
-                            <ShieldCheck size={20} className="text-indigo-400" />
+        <div className="space-y-4 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-300 select-none bg-slate-50/50 dark:bg-slate-950/20" dir="rtl">
+            
+            {/* ─── 1. App Navigation Header (iOS App Style) ─── */}
+            <div className="flex items-center justify-between px-1 pt-2">
+                <div className="flex items-center gap-3">
+                    {/* Glowing Profile Avatar */}
+                    <div className="relative">
+                        <div className="w-10 h-10 bg-indigo-600 text-white font-black text-xs flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-md">
+                            مدير
                         </div>
-                        <div>
-                            <div className="flex items-center gap-1.5 mb-0.5">
-                                <span className="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[8px] font-black px-1.5 py-0.5 rounded-none uppercase tracking-widest leading-none">
-                                    مدير النظام
-                                </span>
-                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
-                            </div>
-                            <h2 className="text-sm font-black tracking-tight text-white">مركز القيادة والتحكم</h2>
-                        </div>
+                        <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full animate-pulse" />
                     </div>
-
-                    {/* Compact Live Clock */}
-                    <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 border border-white/10 rounded-none text-white/90">
-                        <Clock size={12} className="text-amber-400" />
-                        <span className="text-[10px] font-black tabular-nums">
-                            {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                        </span>
+                    <div>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">لوحة الإدارة العليا</p>
+                        <h2 className="text-sm font-black text-slate-900 dark:text-white tracking-tight">مرحباً، المدير العام 👋</h2>
                     </div>
                 </div>
 
-                {/* Horizontal Divider */}
-                <div className="h-[1px] bg-slate-800 my-3" />
-
-                {/* Real-time System Health/Summary Banner */}
-                <div className="flex items-center justify-between text-[9px] font-bold text-slate-400">
-                    <div className="flex items-center gap-1.5">
-                        <Activity size={10} className="text-emerald-400" />
-                        <span>النظام متصل ويعمل بكفاءة</span>
-                    </div>
-                    <span>{new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'long', weekday: 'short' }).format(new Date())}</span>
+                {/* Status Bell Icon */}
+                <div className="relative w-9 h-9 flex items-center justify-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm active:scale-95 transition-transform">
+                    <Bell size={16} className="text-slate-600 dark:text-slate-300" />
+                    {lowBalanceCount > 0 && (
+                        <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full" />
+                    )}
                 </div>
             </div>
 
-            {/* 2. Urgent Operations (Low Balance Alert) */}
+            {/* ─── 2. iOS Push Notification Style Alert ─── */}
             {lowBalanceCount > 0 && (
-                <div className="bg-rose-500/10 border border-rose-500/20 p-3 rounded-none flex items-center justify-between gap-3 animate-pulse">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-8 h-8 bg-rose-600 text-white rounded-none flex items-center justify-center shrink-0">
-                            <Bell size={14} className="animate-bounce" />
+                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/50 p-3.5 shadow-lg relative animate-in slide-in-from-top duration-300">
+                    <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0 border border-rose-500/20">
+                            <AlertCircle size={16} />
                         </div>
-                        <div className="min-w-0">
-                            <h4 className="text-[11px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-tight">إشعار حرج بالرصيد</h4>
-                            <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate mt-0.5">
-                                يوجد {lowBalanceCount} طلاب شارف رصيدهم على الانتهاء!
+                        <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-0.5">
+                                <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">إخطار عمليات حرج</span>
+                                <span className="text-[8px] font-bold text-slate-400">الآن</span>
+                            </div>
+                            <p className="text-[11px] font-black text-slate-900 dark:text-white leading-tight">
+                                انتبه: {lowBalanceCount} طلاب بدون رصيد كافٍ!
+                            </p>
+                            <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 mt-1">
+                                يرجى مراجعة الاشتراكات وإرسال تذكيرات الدفع لتجنب إيقاف الحصص.
                             </p>
                         </div>
                     </div>
-                    <Link 
-                        to="/students" 
-                        className="px-3 h-7 bg-rose-600 hover:bg-rose-700 text-[8px] font-black text-white uppercase tracking-widest rounded-none flex items-center transition-all active:scale-[0.98]"
-                    >
-                        تحصيل الآن
-                    </Link>
+                    <div className="mt-3 flex gap-2">
+                        <Link 
+                            to="/students" 
+                            className="flex-1 h-7 bg-rose-600 hover:bg-rose-700 text-[8px] font-black text-white uppercase tracking-widest flex items-center justify-center active:scale-[0.98] transition-all"
+                        >
+                            تحصيل الاشتراكات
+                        </Link>
+                    </div>
                 </div>
             )}
 
-            {/* 3. Quick Actions Circular Menu */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-none shadow-sm">
-                <h3 className="text-[9px] font-black text-slate-400 uppercase mb-3 tracking-widest text-right">إجراءات إدارية سريعة</h3>
-                <div className="grid grid-cols-4 gap-2">
-                    <QuickActionItem href="/students?action=new" icon={UserPlus} label="طالب جديد" color="bg-indigo-600" />
-                    <QuickActionItem href="/student-invoices?action=new" icon={FilePlus} label="فاتورة" color="bg-emerald-600" />
-                    <QuickActionItem href="/schedule" icon={Calendar} label="الجدول" color="bg-amber-500" />
-                    <QuickActionItem href="/announcements?action=new" icon={Megaphone} label="إعلان عام" color="bg-rose-600" />
+            {/* ─── 3. Segmented Control (App Tab Bar Switcher) ─── */}
+            <div className="bg-slate-100 dark:bg-slate-900/50 p-1 flex border border-slate-200/40 dark:border-slate-800/30">
+                <button
+                    onClick={() => setActiveTab('academic')}
+                    className={cn(
+                        "flex-1 py-2 text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                        activeTab === 'academic' 
+                            ? "bg-white dark:bg-slate-900 text-indigo-600 shadow-sm border border-slate-200/50 dark:border-slate-800" 
+                            : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    )}
+                >
+                    <Activity size={12} />
+                    📊 المؤشرات التعليمية
+                </button>
+                <button
+                    onClick={() => setActiveTab('finance')}
+                    className={cn(
+                        "flex-1 py-2 text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                        activeTab === 'finance' 
+                            ? "bg-white dark:bg-slate-900 text-emerald-600 shadow-sm border border-slate-200/50 dark:border-slate-800" 
+                            : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                    )}
+                >
+                    <DollarSign size={12} />
+                    💰 المؤشرات المالية
+                </button>
+            </div>
+
+            {/* ─── 4. Dynamic Dashboard View (App Widgets) ─── */}
+            {activeTab === 'academic' ? (
+                /* ──📊 ACADEMIC HUB WIDGETS ── */
+                <div className="space-y-3">
+                    
+                    {/* Ring Progress Hub Card */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 p-4 shadow-sm relative overflow-hidden">
+                        <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                                <span className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[8px] font-black px-1.5 py-0.5 uppercase tracking-widest">
+                                    معدل الإنجاز اليومي
+                                </span>
+                                <h3 className="text-base font-black text-slate-900 dark:text-white tracking-tight mt-1.5">حصص اليوم</h3>
+                                <p className="text-[10px] font-bold text-slate-500">تم تنفيذ {completedSessions} من أصل {todaySessions} حصة</p>
+                            </div>
+
+                            {/* Circular Progress Ring */}
+                            <div className="relative flex items-center justify-center shrink-0">
+                                <svg className="w-18 h-18 transform -rotate-90">
+                                    <circle
+                                        cx="36"
+                                        cy="36"
+                                        r={radius}
+                                        className="stroke-slate-100 dark:stroke-slate-800"
+                                        strokeWidth="6"
+                                        fill="transparent"
+                                    />
+                                    <circle
+                                        cx="36"
+                                        cy="36"
+                                        r={radius}
+                                        className="stroke-amber-500 transition-all duration-500"
+                                        strokeWidth="6"
+                                        fill="transparent"
+                                        strokeDasharray={circumference}
+                                        strokeDashoffset={strokeDashoffset}
+                                        strokeLinecap="square"
+                                    />
+                                </svg>
+                                <span className="absolute text-[11px] font-black text-slate-900 dark:text-white tabular-nums">
+                                    {completionRate}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Dual Stats Quick Grid */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-indigo-50/50 dark:bg-indigo-950/10 border border-indigo-100 dark:border-indigo-900/30 p-3.5 shadow-sm">
+                            <div className="w-8 h-8 bg-indigo-600 text-white flex items-center justify-center mb-3">
+                                <Users size={16} />
+                            </div>
+                            <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">إجمالي الطلاب</p>
+                            <span className="text-xl font-black text-indigo-700 dark:text-indigo-400 tabular-nums">{stats.studentsCount}</span>
+                        </div>
+
+                        <div className="bg-emerald-50/40 dark:bg-emerald-950/10 border border-emerald-100 dark:border-emerald-900/30 p-3.5 shadow-sm">
+                            <div className="w-8 h-8 bg-emerald-600 text-white flex items-center justify-center mb-3">
+                                <BookOpen size={16} />
+                            </div>
+                            <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">اشتراكات نشطة</p>
+                            <span className="text-xl font-black text-emerald-700 dark:text-emerald-400 tabular-nums">{stats.totalEnrollments}</span>
+                        </div>
+
+                        <div className="bg-purple-50/40 dark:bg-purple-950/10 border border-purple-100 dark:border-purple-900/30 p-3.5 shadow-sm col-span-2">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 bg-purple-600 text-white flex items-center justify-center">
+                                        <GraduationCap size={16} />
+                                    </div>
+                                    <div>
+                                        <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight">إجمالي الكادر التعليمي</p>
+                                        <h4 className="text-base font-black text-slate-900 dark:text-white leading-none mt-1">المعلمون والمدربون</h4>
+                                    </div>
+                                </div>
+                                <span className="text-lg font-black text-purple-700 dark:text-purple-400 tabular-nums">{stats.teachersCount} معلم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                /* ──💰 FINANCIAL APP HUB WIDGETS ── */
+                <div className="space-y-3">
+                    
+                    {/* Fintech Credit Card / Cashflow Widget */}
+                    <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-950 text-white p-4 shadow-xl border border-white/5">
+                        {/* Decorative card micro-elements */}
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rotate-45 blur-xl pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-indigo-500/10 blur-xl pointer-events-none" />
+                        
+                        <div className="relative z-10 flex items-center justify-between mb-4">
+                            <span className="text-[8px] font-black uppercase tracking-widest text-indigo-300/80">المحفظة الاستثمارية للشركة</span>
+                            <div className="flex gap-1">
+                                <span className="w-3 h-3 bg-white/10 rounded-full" />
+                                <span className="w-3 h-3 bg-white/20 rounded-full" />
+                            </div>
+                        </div>
+
+                        <div className="relative z-10 space-y-1">
+                            <p className="text-[9px] text-white/50 font-black uppercase tracking-widest">صافي الأرباح المحققة</p>
+                            <h3 className="text-2xl font-black text-white tabular-nums tracking-tighter flex items-center gap-1.5">
+                                {(stats.totalNetProfit || 0).toLocaleString()} 
+                                <span className="text-xs font-black text-indigo-300">ج.م</span>
+                            </h3>
+                        </div>
+
+                        <div className="h-[1px] bg-white/10 my-4" />
+
+                        {/* Dual Columns for Cash In & Cash Out */}
+                        <div className="grid grid-cols-2 gap-4 relative z-10">
+                            <div className="space-y-0.5">
+                                <div className="flex items-center gap-1 text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                                    <TrendingUp size={10} className="text-emerald-400" />
+                                    <span>إجمالي الإيرادات</span>
+                                </div>
+                                <p className="text-xs font-black text-emerald-400 tabular-nums">{(stats.totalRevenue || 0).toLocaleString()} ج.م</p>
+                            </div>
+
+                            <div className="space-y-0.5">
+                                <div className="flex items-center gap-1 text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                                    <TrendingDown size={10} className="text-rose-400" />
+                                    <span>إجمالي المصروفات</span>
+                                </div>
+                                <p className="text-xs font-black text-rose-400 tabular-nums">{(stats.totalExpenses || 0).toLocaleString()} ج.م</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Financial Operations Actions */}
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 shadow-sm">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">إدارة الفواتير والمدفوعات</h4>
+                                <p className="text-[9px] font-bold text-slate-400 mt-1">مراجعة التقارير وسندات الصرف المالي</p>
+                            </div>
+                            <Link 
+                                to="/student-invoices" 
+                                className="h-8 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-[8px] font-black uppercase tracking-widest flex items-center justify-center active:scale-95 transition-all shadow-sm"
+                            >
+                                فتح الحسابات
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ─── 5. App Quick Actions Grid (Rounded app icons look) ─── */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
+                <h3 className="text-[9px] font-black text-slate-400 uppercase mb-4 tracking-widest text-right">أدوات الوصول السريع</h3>
+                <div className="grid grid-cols-4 gap-3">
+                    <AppActionItem href="/students?action=new" icon={UserPlus} label="طالب جديد" color="bg-indigo-600" />
+                    <AppActionItem href="/student-invoices?action=new" icon={FilePlus} label="إصدار فاتورة" color="bg-emerald-600" />
+                    <AppActionItem href="/schedule" icon={Calendar} label="الجدول" color="bg-amber-500" />
+                    <AppActionItem href="/announcements?action=new" icon={Megaphone} label="بث إعلان" color="bg-rose-600" />
                 </div>
             </div>
 
-            {/* 4. Color-Coded Stats Cards - Compact Vertical Stack */}
-            <div className="space-y-2">
-                <h3 className="text-[9px] font-black text-slate-400 uppercase tracking-widest text-right px-1">المؤشرات المالية والأكاديمية</h3>
-                
-                <div className="grid grid-cols-1 gap-2">
-                    <MobileStatCard 
-                        title="إجمالي الطلاب" 
-                        value={stats.studentsCount} 
-                        icon={Users} 
-                        color="text-indigo-600" 
-                        bg="bg-indigo-50" 
-                        cardBg="bg-indigo-50/60 dark:bg-indigo-950/20"
-                        cardBorder="border-indigo-100 dark:border-indigo-900/40"
-                    />
-                    <MobileStatCard 
-                        title="الاشتراكات النشطة" 
-                        value={stats.totalEnrollments} 
-                        icon={BookOpen} 
-                        color="text-emerald-600" 
-                        bg="bg-emerald-50" 
-                        cardBg="bg-emerald-50/50 dark:bg-emerald-950/15"
-                        cardBorder="border-emerald-100 dark:border-emerald-900/35"
-                    />
-                    <MobileStatCard 
-                        title="حصص اليوم" 
-                        value={todaySessionsCount} 
-                        icon={CalendarCheck} 
-                        color="text-amber-500" 
-                        bg="bg-amber-50" 
-                        cardBg="bg-amber-50/40 dark:bg-amber-950/10"
-                        cardBorder="border-amber-100 dark:border-amber-900/30"
-                    />
-                    <MobileStatCard 
-                        title="الحصص المنفذة" 
-                        value={stats.completedSessions} 
-                        icon={CheckCircle2} 
-                        color="text-rose-600" 
-                        bg="bg-rose-50" 
-                        cardBg="bg-rose-50/40 dark:bg-rose-950/10"
-                        cardBorder="border-rose-100 dark:border-rose-900/30"
-                    />
-                    <MobileStatCard 
-                        title="إجمالي المعلمين" 
-                        value={stats.teachersCount} 
-                        icon={GraduationCap} 
-                        color="text-purple-600" 
-                        bg="bg-purple-50" 
-                        cardBg="bg-purple-50/40 dark:bg-purple-950/10"
-                        cardBorder="border-purple-100 dark:border-purple-900/30"
-                    />
-                    <MobileStatCard 
-                        title="إجمالي الإيرادات" 
-                        value={`${(stats.totalRevenue || 0).toLocaleString()} ج.م`} 
-                        icon={TrendingUp} 
-                        color="text-emerald-600" 
-                        bg="bg-emerald-50" 
-                        cardBg="bg-cyan-50/50 dark:bg-cyan-950/15"
-                        cardBorder="border-cyan-100 dark:border-cyan-900/35"
-                    />
-                    <MobileStatCard 
-                        title="إجمالي المصروفات" 
-                        value={`${(stats.totalExpenses || 0).toLocaleString()} ج.م`} 
-                        icon={TrendingDown} 
-                        color="text-rose-600" 
-                        bg="bg-rose-50" 
-                        cardBg="bg-pink-50/40 dark:bg-pink-950/10"
-                        cardBorder="border-pink-100 dark:border-pink-900/30"
-                    />
-                    <MobileStatCard 
-                        title="صافي الربح" 
-                        value={`${(stats.totalNetProfit || 0).toLocaleString()} ج.م`} 
-                        icon={DollarSign} 
-                        color="text-indigo-600" 
-                        bg="bg-indigo-50" 
-                        cardBg="bg-sky-50/60 dark:bg-sky-950/20"
-                        cardBorder="border-sky-100 dark:border-sky-900/40"
-                    />
-                </div>
-            </div>
-
-            {/* 5. Support CTA */}
-            <div className="bg-indigo-900 dark:bg-slate-950 text-white p-4 border border-white/10 rounded-none shadow-lg text-center relative overflow-hidden">
+            {/* ─── 6. Support CTA ─── */}
+            <div className="bg-indigo-950 dark:bg-slate-950 text-white p-4 shadow-lg text-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rotate-45 blur-xl pointer-events-none" />
-                <h4 className="text-xs font-black mb-1">تحتاج إلى مساعدة فنية؟</h4>
-                <p className="text-[9px] text-white/60 mb-3 font-bold">الدعم الفني المباشر لمدير النظام جاهز دائماً</p>
+                <h4 className="text-xs font-black mb-1">مركز الدعم الفني لمدير النظام</h4>
+                <p className="text-[9px] text-white/50 mb-4 font-bold">تواصل مباشر وسريع لحل أي استفسارات أو مشاكل تقنية</p>
                 <button
                     onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
-                    className="w-full h-9 bg-amber-500 hover:bg-amber-600 text-white text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 border border-amber-400/50 rounded-none active:scale-[0.98]"
+                    className="w-full h-10 bg-amber-500 hover:bg-amber-600 text-white text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
                 >
                     <Headphones size={12} />
-                    <span>تواصل مع الدعم الفني</span>
+                    <span>تواصل معنا عبر واتساب</span>
                 </button>
             </div>
         </div>
     );
 };
 
-/* Quick Action Sub-component */
-const QuickActionItem = ({ href, icon: Icon, label, color }: { href: string; icon: any; label: string; color: string }) => (
+/* App Action Item Sub-component */
+const AppActionItem = ({ href, icon: Icon, label, color }: { href: string; icon: any; label: string; color: string }) => (
     <Link 
         to={href}
-        className="flex flex-col items-center justify-center p-3 border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-all rounded-none group active:scale-[0.96]"
+        className="flex flex-col items-center justify-center group active:scale-[0.94] transition-all"
     >
-        <div className={cn("w-10 h-10 rounded-none flex items-center justify-center text-white mb-2 shadow-sm transition-transform group-hover:scale-105", color)}>
-            <Icon size={18} />
+        <div className={cn("w-12 h-12 flex items-center justify-center text-white mb-2 shadow-md transition-transform group-hover:scale-105", color)}>
+            <Icon size={20} />
         </div>
-        <span className="text-[9px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight text-center leading-none">
+        <span className="text-[9px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight text-center leading-tight">
             {label}
         </span>
     </Link>
-);
-
-/* Stat Card Sub-component */
-const MobileStatCard = ({ title, value, icon: Icon, color, bg, cardBg, cardBorder }: { title: string; value: string | number; icon: any; color: string; bg: string; cardBg: string; cardBorder: string }) => (
-    <div className={cn("p-3 flex items-center gap-3 rounded-none border shadow-sm transition-all", cardBg, cardBorder)}>
-        <div className={cn("stats-icon-box flex items-center justify-center shrink-0 border border-slate-900/10", bg)}>
-            <Icon className={color} />
-        </div>
-        <div className="flex flex-col min-w-0">
-            <h4 className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase leading-none mb-1.5 truncate tracking-tight">{title}</h4>
-            <span className="text-base font-black text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none">
-                {value ?? 0}
-            </span>
-        </div>
-    </div>
 );
