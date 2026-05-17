@@ -12,6 +12,7 @@ import { QuickActionsHub } from '../features/dashboard/components/QuickActionsHu
 import { RecentActivityFeed } from '../features/dashboard/components/RecentActivityFeed';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
+import { MobileAdminDashboard } from '../features/dashboard/components/MobileAdminDashboard';
 import { cn } from '../lib/utils';
 
 export const Dashboard = () => {
@@ -40,7 +41,8 @@ export const Dashboard = () => {
         <div className={cn(
             "min-h-full pb-20 pt-4 overflow-x-hidden relative bg-[#f1f5f9] dark:bg-[#020617]"
         )} dir="rtl">
-            <div className="max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
+            {/* Desktop View */}
+            <div className="hidden md:block max-w-[1600px] mx-auto px-4 md:px-6 space-y-6">
                 {/* 1. Header & Quick Actions */}
                 <DashboardHeader
                     isTeacher={false}
@@ -53,7 +55,7 @@ export const Dashboard = () => {
                 <DashboardStats stats={stats} isTeacher={false} />
 
                 {/* 3. Main Content Section */}
-                <div className="hidden md:block space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+                <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
                     {/* Urgent / Announcements Row */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-12">
@@ -103,6 +105,14 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Mobile View */}
+            <div className="block md:hidden px-4">
+                <MobileAdminDashboard 
+                    stats={stats} 
+                    lowBalanceStudents={lowBalanceStudents} 
+                />
             </div>
         </div>
     );
