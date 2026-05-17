@@ -966,4 +966,54 @@ html, body {
     height: 1.35rem !important;
   }
 }
+
+/* ─── Premium Sharp Neo-Brutalist Border Overrides ─── */
+.rounded-3xl,
+.rounded-2xl,
+.rounded-xl,
+.rounded-lg,
+.rounded-md,
+.rounded-sm {
+  border-radius: 0px !important;
+}
+
+button, 
+input, 
+select, 
+textarea, 
+.card,
+.widget,
+.badge:not(.rounded-full) {
+  border-radius: 0px !important;
+}
+
+/* ─── High Density Desktop Spacing & Padding Optimizations ─── */
+@media (min-width: 1024px) {
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important; /* Compress vertical spacing from 24px to 16px */
+  }
+  .gap-6 {
+    gap: 1rem !important; /* Compress grid gaps from 24px to 16px */
+  }
+  .p-6 {
+    padding: 1rem !important; /* Compress container padding from 24px to 16px */
+  }
+  .p-8 {
+    padding: 1.25rem !important; /* Compress large padding from 32px to 20px */
+  }
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .py-6 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .mb-6 {
+    margin-bottom: 1rem !important;
+  }
+  .mt-6 {
+    margin-top: 1rem !important;
+  }
+}
 }
