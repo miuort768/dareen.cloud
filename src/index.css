@@ -967,25 +967,6 @@ html, body {
   }
 }
 
-/* ─── Premium Sharp Neo-Brutalist Border Overrides ─── */
-.rounded-3xl,
-.rounded-2xl,
-.rounded-xl,
-.rounded-lg,
-.rounded-md,
-.rounded-sm {
-  border-radius: 0px !important;
-}
-
-button, 
-input, 
-select, 
-textarea, 
-.card,
-.widget,
-.badge:not(.rounded-full) {
-  border-radius: 0px !important;
-}
 
 /* ─── High Density Desktop Spacing & Padding Optimizations ─── */
 @media (min-width: 1024px) {
