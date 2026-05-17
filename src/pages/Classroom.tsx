@@ -17,8 +17,7 @@ import {
     Mic, MicOff, Video, VideoOff, PhoneOff,
     MessageSquare, Users, Loader2, Volume2, WifiOff,
     Signal, SignalLow, SignalMedium, RotateCcw,
-    Monitor, Eraser, Trash2, Edit3, Palette,
-    Type, XCircle
+    Monitor, Eraser, Trash2, Edit3
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { cn } from '../lib/utils';
@@ -186,6 +185,13 @@ export const Classroom = () => {
         peer.on('signal', signal => {
             socket.emit('teacher_signal', { conversationId: roomName, studentId, signal });
         });
+        peer.on('connect', () => {
+            console.log(`[Classroom] Peer connected with student: ${studentId}`);
+            if (mountedRef.current) {
+                setConnectionStatus('connected');
+                setViewerCount(peersRef.current.size);
+            }
+        });
         peer.on('stream', (st: MediaStream) => {
             if (!mountedRef.current) return;
             setRemoteStream(st);
@@ -226,6 +232,12 @@ export const Classroom = () => {
                 studentId: currentUser?.id,
                 signal: sig,
             });
+        });
+        peer.on('connect', () => {
+            console.log('[Classroom] Peer connected with teacher!');
+            if (mountedRef.current) {
+                setConnectionStatus('connected');
+            }
         });
         peer.on('stream', (st: MediaStream) => {
             if (!mountedRef.current) return;
@@ -510,6 +522,14 @@ export const Classroom = () => {
                 }, 5000);
 
             } else {
+                // Listen to teacher_ready to start handshaking immediately
+                socket.on('teacher_ready', () => {
+                    console.log('[Classroom] Teacher is ready, initiating connection...');
+                    if (mountedRef.current && localStreamRef.current) {
+                        socket.emit('student_joined', { conversationId: roomName, studentId: currentUser?.id });
+                    }
+                });
+
                 socket.on('teacher_signal', (data: { signal: Peer.SignalData }) => {
                     if (!mountedRef.current || !localStreamRef.current) return;
                     if (!peersRef.current.has('teacher')) {
@@ -565,6 +585,7 @@ export const Classroom = () => {
             socket.off('student_joined');
             socket.off('student_request');
             socket.off('teacher_signal');
+            socket.off('teacher_ready');
             socket.off('whiteboard_state');
             socket.off('drawing');
             socket.off('clear_whiteboard');
