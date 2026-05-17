@@ -31,12 +31,12 @@ router.get('/stats', authMiddleware, async (req, res) => {
 // POST create lead
 router.post('/', authMiddleware, async (req, res) => {
     try {
-        const { studentName, phone, subject, status, priority, notes } = req.body;
+        const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         const id = uuidv4();
         const createdAt = new Date().toISOString();
         await req.db.run(
-            'INSERT INTO leads (id, studentName, phone, subject, status, priority, notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-            [id, studentName, phone, subject, status || 'new', priority || 'medium', notes || '', createdAt]
+            'INSERT INTO leads (id, studentName, phone, subject, curriculum, status, priority, notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [id, studentName, phone, subject, curriculum || '', status || 'new', priority || 'medium', notes || '', createdAt]
         );
         const lead = await req.db.get('SELECT * FROM leads WHERE id = ?', [id]);
         res.status(201).json(lead);
@@ -48,10 +48,10 @@ router.post('/', authMiddleware, async (req, res) => {
 // PUT update lead
 router.put('/:id', authMiddleware, async (req, res) => {
     try {
-        const { studentName, phone, subject, status, priority, notes } = req.body;
+        const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         await req.db.run(
-            'UPDATE leads SET studentName = COALESCE(?, studentName), phone = COALESCE(?, phone), subject = COALESCE(?, subject), status = COALESCE(?, status), priority = COALESCE(?, priority), notes = COALESCE(?, notes) WHERE id = ?',
-            [studentName, phone, subject, status, priority, notes, req.params.id]
+            'UPDATE leads SET studentName = COALESCE(?, studentName), phone = COALESCE(?, phone), subject = COALESCE(?, subject), curriculum = COALESCE(?, curriculum), status = COALESCE(?, status), priority = COALESCE(?, priority), notes = COALESCE(?, notes) WHERE id = ?',
+            [studentName, phone, subject, curriculum, status, priority, notes, req.params.id]
         );
         const lead = await req.db.get('SELECT * FROM leads WHERE id = ?', [req.params.id]);
         res.json(lead);

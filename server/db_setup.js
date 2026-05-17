@@ -349,6 +349,7 @@ async function setupDatabase() {
             studentName TEXT NOT NULL,
             phone TEXT NOT NULL,
             subject TEXT,
+            curriculum TEXT,
             status TEXT DEFAULT 'new',
             priority TEXT DEFAULT 'medium',
             notes TEXT,
@@ -403,6 +404,7 @@ async function setupDatabase() {
     await addColumnIfNotExists('blog_posts', 'grade', 'TEXT');
     await addColumnIfNotExists('blog_posts', 'term', 'TEXT');
     await addColumnIfNotExists('blog_posts', 'subject', 'TEXT');
+    await addColumnIfNotExists('leads', 'curriculum', 'TEXT');
 
     // Create unique index for parent username separately (SQLite restriction)
     try {

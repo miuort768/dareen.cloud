@@ -320,9 +320,16 @@ export const Leads: React.FC = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
-                                            <Tag size={12} className="text-indigo-500" /> {lead.subject}
-                                        </span>
+                                        <div className="flex flex-col gap-1">
+                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
+                                                <Tag size={12} className="text-indigo-500" /> {lead.subject}
+                                            </span>
+                                            {lead.curriculum && (
+                                                <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 mr-1">
+                                                    المنهج: {lead.curriculum}
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <select 
@@ -443,9 +450,16 @@ export const Leads: React.FC = () => {
                                     <Phone size={12} className="text-emerald-500 shrink-0" />
                                     <span className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate font-mono">{lead.phone}</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl flex items-center gap-2">
-                                    <Tag size={12} className="text-indigo-400 shrink-0" />
-                                    <span className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate">{lead.subject}</span>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl flex flex-col justify-center gap-1 min-w-0">
+                                    <div className="flex items-center gap-2">
+                                        <Tag size={12} className="text-indigo-400 shrink-0" />
+                                        <span className="text-xs font-bold text-slate-600 dark:text-slate-300 truncate">{lead.subject}</span>
+                                    </div>
+                                    {lead.curriculum && (
+                                        <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 mr-5 truncate">
+                                            المنهج: {lead.curriculum}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
 
@@ -523,14 +537,21 @@ export const Leads: React.FC = () => {
                                 studentName: formData.get('name') as string,
                                 phone: formData.get('phone') as string,
                                 subject: formData.get('subject') as string,
+                                curriculum: formData.get('curriculum') as string,
                                 status: 'new',
                                 priority: formData.get('priority') as any,
                                 notes: formData.get('notes') as string
                             });
                         }}>
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل</label>
-                                <input name="name" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل</label>
+                                    <input name="name" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">المنهج</label>
+                                    <input name="curriculum" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-1.5">

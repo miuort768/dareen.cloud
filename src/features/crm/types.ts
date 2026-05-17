@@ -8,6 +8,7 @@ export interface Lead {
     parentName?: string;
     phone: string;
     subject: string;
+    curriculum?: string;
     status: LeadStatus;
     priority: LeadPriority;
     notes?: string;
