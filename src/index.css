@@ -943,4 +943,27 @@ html, body {
 .animate-marquee-rtl:hover {
   animation-play-state: paused;
 }
+
+/* Stats Icon Box Custom styling */
+.stats-icon-box {
+  width: 2.75rem !important; /* 44px */
+  height: 2.75rem !important;
+  border-radius: 0px !important; /* Sharp square edges */
+}
+.stats-icon-box svg {
+  width: 1.45rem !important;
+  height: 1.45rem !important;
+}
+
+@media (max-width: 768px) {
+  .stats-icon-box {
+    width: 2.6rem !important; /* 42px on mobile (larger than before!) */
+    height: 2.6rem !important;
+    border-radius: 0px !important; /* Sharp square edges */
+  }
+  .stats-icon-box svg {
+    width: 1.35rem !important; /* Larger icon on mobile! */
+    height: 1.35rem !important;
+  }
+}
 }
