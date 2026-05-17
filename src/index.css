@@ -613,6 +613,27 @@ html, body {
     .my-8 { margin-top: 0.6rem !important; margin-bottom: 0.6rem !important; }
     .my-10 { margin-top: 0.7rem !important; margin-bottom: 0.7rem !important; }
 
+    /* ─── Restore Dashboard Header Sizes to Original on Mobile ─── */
+    header h1 {
+      font-size: 1rem !important; /* text-base */
+      line-height: 1.5rem !important;
+    }
+    header p {
+      font-size: 9px !important; /* text-[9px] */
+    }
+    header .w-10.h-10 {
+      width: 2.5rem !important; /* w-10 = 40px */
+      height: 2.5rem !important; /* h-10 = 40px */
+    }
+    header .w-8.h-8 {
+      width: 2rem !important; /* w-8 = 32px */
+      height: 2rem !important; /* h-8 = 32px */
+    }
+    header svg {
+      width: 1.25rem !important; /* size 20 */
+      height: 1.25rem !important;
+    }
+
     /* Transform Table to Cards on Mobile */
     .premium-table,
     .premium-table thead,
