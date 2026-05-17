@@ -49,7 +49,7 @@ export const Parents = () => {
                 
                 {/* ── Form Section ── */}
                 {state.showAddForm && (
-                    <div className="px-4 md:px-8 animate-in slide-in-from-top-4 duration-500">
+                    <div className="px-0 animate-in slide-in-from-top-4 duration-500">
                         <ParentForm
                             isEdit={isEdit}
                             formData={state.newParent}
@@ -60,7 +60,7 @@ export const Parents = () => {
                 )}
 
                 {/* ── Main Content Area ── */}
-                <div className="px-4 md:px-8">
+                <div className="px-0">
                     {!state.showDetails ? (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                             {/* Toolbar - Only visible when not in details mode */}
