@@ -374,9 +374,8 @@ async function startServer() {
                 console.log(`   🚶 User ${userId} left room: ${conversationId}`);
             });
 
-            socket.on('disconnect', (reason) => {
-                console.log(`🔌 Socket Disconnected: ${socket.id} (Reason: ${reason})`);
-            });
+            // Note: do NOT register two 'disconnect' handlers for same socket.
+            // The main disconnect handler is below at the end of io.on('connection')
 
             socket.on('join_personal_room', (id) => {
                 if (id === userId) {
@@ -403,15 +402,28 @@ async function startServer() {
                 console.log(`   ✅ Teacher ready in room ${data.conversationId}`);
             });
 
-            socket.on('teacher_stopped', (data) => {
-                // Teacher stopped sharing
+            socket.on('teacher_stopped', async (data) => {
+                // Teacher stopped sharing - notify all students
                 socket.to(data.conversationId).emit('teacher_stopped', data);
-                // Also broadcast meeting ended event to EVERYONE
-                io.in(data.conversationId).emit('meeting_ended', {
-                    conversationId: data.conversationId
-                });
+                io.in(data.conversationId).emit('meeting_ended', { conversationId: data.conversationId });
                 console.log(`   🛑 Teacher stopped in room ${data.conversationId}`);
+
+                // End the live session in the DB by matching the room name
+                try {
+                    const sessionId = data.conversationId?.replace('live_session_', '');
+                    if (sessionId) {
+                        const db = await getDb();
+                        await db.run(
+                            'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
+                            [sessionId, userId]
+                        );
+                        console.log(`   💾 Live session ${sessionId} marked as ended in DB`);
+                    }
+                } catch (err) {
+                    console.error('[Live] Failed to end session in DB:', err);
+                }
             });
+
 
             socket.on('student_joined', (data) => {
                 // Student joined, request teacher status
