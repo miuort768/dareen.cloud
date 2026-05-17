@@ -53,7 +53,7 @@ export const Dashboard = () => {
                 <DashboardStats stats={stats} isTeacher={false} />
 
                 {/* 3. Main Content Section */}
-                <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+                <div className="hidden md:block space-y-6 animate-in slide-in-from-bottom-4 duration-500">
                     {/* Urgent / Announcements Row */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-12">
