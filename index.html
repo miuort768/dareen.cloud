@@ -52,6 +52,30 @@
 </head>
 
 <body>
+  <!-- ⚡ PWA Cache Buster: Visit URL with ?clear=1 to force update all static assets -->
+  <script>
+    if (window.location.search.includes('clear=1')) {
+      console.log('Force clearing PWA caches and service workers...');
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (let name of names) {
+            caches.delete(name);
+          }
+        });
+      }
+      const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      setTimeout(function() {
+        window.location.href = cleanUrl;
+      }, 500);
+    }
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
