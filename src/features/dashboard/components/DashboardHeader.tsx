@@ -18,7 +18,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
     return (
         <div className={cn(
-            "relative overflow-hidden bg-indigo-900 dark:bg-slate-950 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-6 border border-white/10 rounded-none mb-6 shadow-2xl shadow-indigo-500/10"
+            "hidden md:flex relative overflow-hidden bg-indigo-900 dark:bg-slate-950 px-6 md:px-8 py-6 flex-col md:flex-row md:items-center justify-between gap-6 border border-white/10 rounded-none mb-6 shadow-2xl shadow-indigo-500/10"
         )} dir="rtl">
             
             {/* Glows from Finance style */}
