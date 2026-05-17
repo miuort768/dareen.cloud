@@ -116,7 +116,7 @@ export const Header = () => {
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     className="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-none transition-colors shrink-0"
                 >
-                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                    <Sun size={20} />
                 </button>
 
                 {/* Notifications */}
