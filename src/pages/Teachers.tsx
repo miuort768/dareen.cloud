@@ -357,46 +357,38 @@ export const Teachers = () => {
                     </div>
                 )}
 
-                <div className="px-0">
-                    <div className={cn(
-                        "grid gap-6 transition-all duration-700",
-                        showDetails ? "lg:grid-cols-12" : "grid-cols-1"
-                    )}>
-                        <div className={cn(
-                            "transition-all duration-700",
-                            showDetails ? "lg:col-span-8" : "w-full"
-                        )}>
-                            <TeacherTable
-                                teachers={filteredTeachers}
-                                onEdit={handleEditTeacher}
-                                onDelete={setDeletingTeacherId}
-                                onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
-                                onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-                                selectedId={selectedTeacher?.id}
-                                studentCounts={studentCounts}
+                {!showDetails ? (
+                    <div className="px-0 animate-in fade-in duration-300">
+                        <TeacherTable
+                            teachers={filteredTeachers}
+                            onEdit={handleEditTeacher}
+                            onDelete={setDeletingTeacherId}
+                            onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
+                            onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
+                            selectedId={selectedTeacher?.id}
+                            studentCounts={studentCounts}
+                        />
+                    </div>
+                ) : (
+                    <div className="px-0 animate-in slide-in-from-right-8 duration-500">
+                        {selectedTeacher && (
+                            <TeacherDetails
+                                teacher={selectedTeacher}
+                                onClose={() => setShowDetails(false)}
+                                students={students}
+                                sessions={sessions}
+                                onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
+                                onDeleteSession={async (id) => {
+                                    await api.delete(`/sessions/${id}`);
+                                    queryClient.invalidateQueries({ queryKey: ['sessions'] });
+                                }}
+                                onSendNotification={(t) => setNotifyingTeacher(t)}
+                                isTeacherView={isTeacher}
                             />
-                        </div>
-
-                        {showDetails && selectedTeacher && (
-                            <div className="lg:col-span-4 animate-in slide-in-from-left-4 duration-500">
-                                <TeacherDetails
-                                    teacher={selectedTeacher}
-                                    onClose={() => setShowDetails(false)}
-                                    students={students}
-                                    sessions={sessions}
-                                    onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                    onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
-                                    onDeleteSession={async (id) => {
-                                        await api.delete(`/sessions/${id}`);
-                                        queryClient.invalidateQueries({ queryKey: ['sessions'] });
-                                    }}
-                                    onSendNotification={(t) => setNotifyingTeacher(t)}
-                                    isTeacherView={isTeacher}
-                                />
-                            </div>
                         )}
                     </div>
-                </div>
+                )}
             </div>
 
             <ConfirmModal
