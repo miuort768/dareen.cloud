@@ -441,17 +441,19 @@ export const Leads: React.FC = () => {
                         >
                             {/* Top Row */}
                             <div className="flex justify-between items-start mb-4">
-                                <div className="flex items-start gap-3">
-                                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-none shrink-0">
+                                <div className="flex items-start gap-3 min-w-0 flex-1">
+                                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-none shrink-0 mt-1">
                                         {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
-                                    <div className="pt-2">
-                                        <h4 
-                                            style={{ fontSize: '32px', fontWeight: '950' }} 
-                                            className="text-slate-950 dark:text-white leading-none mb-1 block"
-                                        >
-                                            {lead.studentName || 'عميل بدون اسم'}
-                                        </h4>
+                                    <div className="pt-1 flex-1 min-w-0">
+                                        <div className="bg-teal-50/70 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/30 px-3.5 py-2 rounded-none inline-block max-w-full shadow-sm">
+                                            <h4 
+                                                style={{ fontSize: '34px', fontWeight: '950' }} 
+                                                className="text-slate-900 dark:text-white leading-none block truncate"
+                                            >
+                                                {lead.studentName || 'عميل بدون اسم'}
+                                            </h4>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="text-left flex flex-col items-end gap-1">
