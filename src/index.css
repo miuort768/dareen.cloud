@@ -569,10 +569,49 @@ html, body {
     .p-5 { padding: 0.45rem !important; }
     .p-4 { padding: 0.4rem !important; }
     .p-3 { padding: 0.3rem !important; }
+
+    .gap-3 { gap: 0.3rem !important; }
+    .gap-4 { gap: 0.35rem !important; }
+    .gap-5 { gap: 0.4rem !important; }
     .gap-6 { gap: 0.45rem !important; }
-    .gap-8 { gap: 0.65rem !important; }
+    .gap-8 { gap: 0.6rem !important; }
+    .gap-10 { gap: 0.7rem !important; }
+    .gap-12 { gap: 0.8rem !important; }
+
+    .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.3rem !important; }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.35rem !important; }
+    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.4rem !important; }
     .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.45rem !important; }
-    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.65rem !important; }
+    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.6rem !important; }
+    .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.7rem !important; }
+
+    .space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.3rem !important; }
+    .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.35rem !important; }
+    .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.45rem !important; }
+
+    /* Margins */
+    .mt-4 { margin-top: 0.35rem !important; }
+    .mt-6 { margin-top: 0.45rem !important; }
+    .mt-8 { margin-top: 0.6rem !important; }
+    .mt-10 { margin-top: 0.7rem !important; }
+    .mt-12 { margin-top: 0.8rem !important; }
+
+    .mb-4 { margin-bottom: 0.35rem !important; }
+    .mb-5 { margin-bottom: 0.4rem !important; }
+    .mb-6 { margin-bottom: 0.45rem !important; }
+    .mb-8 { margin-bottom: 0.6rem !important; }
+    .mb-10 { margin-bottom: 0.7rem !important; }
+    .mb-12 { margin-bottom: 0.8rem !important; }
+
+    .py-6 { padding-top: 0.45rem !important; padding-bottom: 0.45rem !important; }
+    .py-8 { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
+    .py-10 { padding-top: 0.7rem !important; padding-bottom: 0.7rem !important; }
+    .py-12 { padding-top: 0.8rem !important; padding-bottom: 0.8rem !important; }
+    .py-16 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+
+    .my-6 { margin-top: 0.45rem !important; margin-bottom: 0.45rem !important; }
+    .my-8 { margin-top: 0.6rem !important; margin-bottom: 0.6rem !important; }
+    .my-10 { margin-top: 0.7rem !important; margin-bottom: 0.7rem !important; }
 
     /* Transform Table to Cards on Mobile */
     .premium-table,
