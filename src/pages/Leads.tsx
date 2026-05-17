@@ -477,6 +477,15 @@ export const Leads: React.FC = () => {
                                 </div>
                             </div>
 
+                            {/* Notes */}
+                            {lead.notes && (
+                                <div className="mb-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 p-3 rounded-xl">
+                                    <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-bold">
+                                        {lead.notes}
+                                    </p>
+                                </div>
+                            )}
+
                             {/* Status selector */}
                             <div className="mb-3">
                                 <select
