@@ -388,6 +388,19 @@ async function startServer() {
                 socket.to(data.conversationId).emit('typing', data);
             });
 
+            // Collaborative Whiteboard events
+            socket.on('drawing', (data) => {
+                socket.to(data.conversationId).emit('drawing', data);
+            });
+
+            socket.on('whiteboard_state', (data) => {
+                socket.to(data.conversationId).emit('whiteboard_state', data);
+            });
+
+            socket.on('clear_whiteboard', (data) => {
+                socket.to(data.conversationId).emit('clear_whiteboard', data);
+            });
+
             // Simple-Peer Meeting Signals (New System)
             socket.on('teacher_ready', (data) => {
                 // Teacher started sharing, notify all students in room
