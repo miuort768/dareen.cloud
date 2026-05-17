@@ -195,12 +195,12 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
 const NavButton = ({ label, subtext, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="bg-[#fff1f2] dark:bg-[#311116] p-3.5 rounded-none border border-[#ffe4e6] dark:border-[#5a1c24] flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-905 hover:shadow-md group"
+        className="bg-[#fff1f2] dark:bg-[#311116] p-2.5 rounded-none border border-[#ffe4e6] dark:border-[#5a1c24] flex flex-col items-center justify-center gap-1 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-905 hover:shadow-md group"
     >
-        <div className="w-9 h-9 bg-white dark:bg-[#4c1d24] rounded-none flex items-center justify-center text-[#f43f5e] dark:text-[#fb7185] shadow-sm group-hover:scale-110 transition-transform">
-            <Icon size={16} strokeWidth={1.5} />
+        <div className="w-8 h-8 bg-white dark:bg-[#4c1d24] rounded-none flex items-center justify-center text-[#f43f5e] dark:text-[#fb7185] shadow-sm group-hover:scale-110 transition-transform">
+            <Icon size={14} strokeWidth={1.5} />
         </div>
-        <span className="text-[10px] font-black text-[#e11d48] dark:text-[#fb7185] tracking-tight leading-none">{label}</span>
-        <span className="text-[8px] font-bold text-slate-500 dark:text-slate-400 leading-none mt-0.5">{subtext}</span>
+        <span className="text-[9.5px] font-black text-[#e11d48] dark:text-[#fb7185] tracking-tight leading-none">{label}</span>
+        <span className="text-[7.5px] font-bold text-slate-500 dark:text-slate-400 leading-none mt-0.5">{subtext}</span>
     </button>
 );
