@@ -215,7 +215,7 @@ export const Leads: React.FC = () => {
                         <Users size={32} className="md:w-6 md:h-6" />
                     </div>
                     <div>
-                        <h1 className="text-xl font-black text-white uppercase tracking-tighter">إدارة العملاء والمهتمين</h1>
+                        <h1 className="text-xl font-black text-white uppercase tracking-tighter">إدارة العملاء والمهتمين - تحديث v5</h1>
                         <p className="text-[10px] text-teal-200/70 font-bold uppercase tracking-widest mt-1">تتبع مسار تحويل الطلاب والمشتركين الجدد</p>
                     </div>
                 </div>
