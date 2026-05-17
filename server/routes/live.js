@@ -1,12 +1,61 @@
+/**
+ * /api/live/turn-credentials
+ * Returns short-lived HMAC-signed TURN credentials.
+ * Based on the RFC 5389 time-limited credential mechanism (same as Twilio/Agora).
+ * Credentials expire in 1 hour.
+ */
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const { checkRole } = require('../middleware/auth');
 
-// Simple ID generator (no uuid dependency needed)
+// Simple ID generator
 const genId = () => crypto.randomBytes(16).toString('hex');
 
-// GET /api/live/active — Filtered by role
+// ── TURN Credentials ────────────────────────────────────────────────────────
+router.get('/turn-credentials', (req, res) => {
+    const secret = process.env.TURN_SECRET;
+    const turnUrl = process.env.TURN_SERVER_URL;
+
+    if (!secret || !turnUrl) {
+        // No TURN configured — return only STUN (still works on open networks)
+        return res.json({
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' },
+            ]
+        });
+    }
+
+    // Generate time-limited credential (expires in 1 hour)
+    const expiresAt = Math.floor(Date.now() / 1000) + 3600;
+    const userId = req.user?.id || 'anon';
+    const username = `${expiresAt}:${userId}`;
+    const credential = crypto
+        .createHmac('sha1', secret)
+        .update(username)
+        .digest('base64');
+
+    res.json({
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            {
+                urls: turnUrl,
+                username,
+                credential,
+            },
+            // Also add TURNS (TLS) if configured
+            ...(process.env.TURNS_SERVER_URL ? [{
+                urls: process.env.TURNS_SERVER_URL,
+                username,
+                credential,
+            }] : []),
+        ],
+        expiresAt,
+    });
+});
+
+// ── GET /api/live/active — Filtered by role ──────────────────────────────────
 router.get('/active', async (req, res) => {
     try {
         const { id, role, permissions } = req.user;
@@ -14,16 +63,11 @@ router.get('/active', async (req, res) => {
         let params = [];
 
         if (permissions?.includes('*')) {
-            // Admin sees all active sessions
             query = 'SELECT * FROM live_sessions WHERE status = "active" ORDER BY started_at DESC';
         } else if (role === 'teacher') {
-            // Teacher sees only their own sessions
             query = 'SELECT * FROM live_sessions WHERE teacherId = ? AND status = "active"';
             params = [id];
         } else if (role === 'student') {
-            // Student sees:
-            // 1. Sessions explicitly targeted to them (always visible)
-            // 2. General broadcasts (no targetStudentId) from their enrolled teachers
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
@@ -34,9 +78,6 @@ router.get('/active', async (req, res) => {
             `;
             params = [id, id];
         } else if (role === 'parent') {
-            // Parent sees:
-            // 1. Sessions explicitly targeted to their children
-            // 2. General broadcasts from teachers their children are enrolled with
             query = `
                 SELECT * FROM live_sessions 
                 WHERE status = "active" 
@@ -61,13 +102,17 @@ router.get('/active', async (req, res) => {
     }
 });
 
-// POST /api/live/start — Teacher or Admin starts a session
-router.post('/start', checkRole(['admin', 'teacher']), async (req, res) => {
+// ── POST /api/live/start — Teacher starts a session ─────────────────────────
+router.post('/start', async (req, res) => {
+    // Only teachers and admins
+    if (!['teacher', 'admin'].includes(req.user.role) && !req.user.permissions?.includes('*')) {
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
     try {
         const { title, subject, targetStudentId } = req.body;
         const id = genId();
         const teacherId = req.user.id;
-        // JWT payload uses 'teacherName' for teachers, 'username' as fallback
         const teacherName = req.user.teacherName || req.user.name || req.user.username || 'معلمة';
 
         // End any previous active sessions for this teacher
@@ -89,13 +134,18 @@ router.post('/start', checkRole(['admin', 'teacher']), async (req, res) => {
     }
 });
 
-// POST /api/live/end/:id — End a session
-router.post('/end/:id', checkRole(['admin', 'teacher']), async (req, res) => {
+// ── POST /api/live/end/:id — End a session ───────────────────────────────────
+router.post('/end/:id', async (req, res) => {
     try {
-        await req.db.run(
-            'UPDATE live_sessions SET status = "ended" WHERE id = ? AND teacherId = ?',
-            [req.params.id, req.user.id]
+        const result = await req.db.run(
+            'UPDATE live_sessions SET status = "ended" WHERE id = ?',
+            [req.params.id]
         );
+
+        if (result.changes === 0) {
+            return res.status(404).json({ error: 'Session not found or already ended' });
+        }
+
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
