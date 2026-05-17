@@ -39,6 +39,11 @@ router.post('/', authMiddleware, async (req, res) => {
             [id, studentName, phone, subject, curriculum || '', status || 'new', priority || 'medium', notes || '', createdAt]
         );
         const lead = await req.db.get('SELECT * FROM leads WHERE id = ?', [id]);
+        
+        // Emit Socket Event
+        const io = req.app.get('socketio');
+        if (io) io.emit('lead_updated');
+
         res.status(201).json(lead);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -54,6 +59,11 @@ router.put('/:id', authMiddleware, async (req, res) => {
             [studentName, phone, subject, curriculum, status, priority, notes, req.params.id]
         );
         const lead = await req.db.get('SELECT * FROM leads WHERE id = ?', [req.params.id]);
+        
+        // Emit Socket Event
+        const io = req.app.get('socketio');
+        if (io) io.emit('lead_updated');
+
         res.json(lead);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -64,6 +74,11 @@ router.put('/:id', authMiddleware, async (req, res) => {
 router.delete('/:id', authMiddleware, async (req, res) => {
     try {
         await req.db.run('DELETE FROM leads WHERE id = ?', [req.params.id]);
+        
+        // Emit Socket Event
+        const io = req.app.get('socketio');
+        if (io) io.emit('lead_updated');
+
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });

@@ -22,6 +22,7 @@ import {
 import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
+import { socketService } from '../lib/socket';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { PageLoader } from '../components/ui/PageLoader';
 
@@ -128,6 +129,23 @@ export const Leads: React.FC = () => {
         queryKey: ['lead-stats'],
         queryFn: crmService.getStats
     });
+
+    // Real-time synchronization via WebSockets
+    useEffect(() => {
+        const socket = socketService.getSocket();
+        
+        const handleLeadUpdate = () => {
+            console.log('Real-time update received: lead_updated');
+            queryClient.invalidateQueries({ queryKey: ['leads'] });
+            queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
+        };
+
+        socket.on('lead_updated', handleLeadUpdate);
+
+        return () => {
+            socket.off('lead_updated', handleLeadUpdate);
+        };
+    }, [queryClient]);
 
     // Add Mutation
     const addMutation = useMutation({
