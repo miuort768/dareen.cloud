@@ -441,8 +441,8 @@ export const Leads: React.FC = () => {
                                     </div>
                                     <div>
                                         <h4 
-                                            style={{ fontSize: '24px', fontWeight: '900' }} 
-                                            className="text-slate-800 dark:text-white leading-tight mb-1"
+                                            style={{ fontSize: '32px', fontWeight: '950' }} 
+                                            className="text-slate-950 dark:text-white leading-none mb-1 block"
                                         >
                                             {lead.studentName || 'عميل بدون اسم'}
                                         </h4>
