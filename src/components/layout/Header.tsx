@@ -95,14 +95,14 @@ export const Header = () => {
                 </Link>
 
                 {title && (
-                    <div className="min-w-0 overflow-hidden pr-1 flex flex-col">
+                    <div className="min-w-0 overflow-hidden pr-1.5 flex flex-col gap-0.5 justify-center">
                         <h1 className={cn(
-                            "text-base md:text-xl font-black text-slate-800 dark:text-white truncate tracking-tight leading-tight",
+                            "text-[14px] md:text-xl font-black text-slate-800 dark:text-white truncate tracking-tight leading-none",
                             (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
                         )}>
                             {title}
                         </h1>
-                        <p className="text-[9px] md:text-[10px] font-normal text-slate-500 dark:text-white/60 uppercase tracking-widest leading-tight mt-0.5 mb-1">
+                        <p className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-white/60 uppercase tracking-widest leading-none m-0">
                             دارين للتعليم والتدريب
                         </p>
                     </div>
