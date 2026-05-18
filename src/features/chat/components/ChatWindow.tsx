@@ -74,6 +74,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         }
     }, [selectedConv, messages.length, markAsRead, currentUser?.id]);
 
+    // Automatically scroll to bottom when messages list size or active conversation changes
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            scrollToBottom();
+        }, 150);
+        return () => clearTimeout(timer);
+    }, [messages.length, selectedConv.id]);
+
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
     // Safer and more efficient message sorting + Searching
@@ -149,14 +157,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             "flex items-center bg-white/10 dark:bg-black/20 rounded-full px-3 py-1 transition-all",
                             showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0"
                         )}>
-                            <input 
-                                type="text"
-                                placeholder="بحث..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-slate-400"
-                                autoFocus
-                            />
+                            {showSearchBar && (
+                                <input 
+                                    type="text"
+                                    placeholder="بحث..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="bg-transparent border-none text-xs text-right w-full focus:ring-0 placeholder:text-slate-400"
+                                    autoFocus
+                                />
+                            )}
                         </div>
                         <button 
                             onClick={() => {
@@ -221,6 +231,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     followOutput="smooth"
                     className="custom-scrollbar"
                     style={{ height: '100%', width: '100%' }}
+                    components={{
+                        Footer: () => <div className="h-8" />
+                    }}
                     atBottomStateChange={(atBottom) => {
                         setShowScrollBottom(!atBottom);
                     }}
