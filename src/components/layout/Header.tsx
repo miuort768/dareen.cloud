@@ -1,4 +1,4 @@
-import { Moon, Sun, User } from 'lucide-react';
+import { Sun, User } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../hooks/useDarkMode';
@@ -90,7 +90,7 @@ export const Header = () => {
             <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
                     <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_15px_rgba(52,211,153,0.3)] bg-white dark:bg-slate-900 overflow-hidden shrink-0 transition-all duration-300 hover:scale-105">
-                        <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
+                        <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                 </Link>
 
