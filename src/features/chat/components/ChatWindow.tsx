@@ -238,7 +238,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         setShowScrollBottom(!atBottom);
                     }}
                     itemContent={(index, msg) => {
-                        const isMe = msg.senderId === currentUser?.id;
+                        const isMe = String(msg.senderId) === String(currentUser?.id);
                         const isGroup = selectedConv.isGroup;
                         
                         return (
@@ -252,8 +252,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                 <div className={cn(
                                     "max-w-[90%] md:max-w-[75%] px-3 py-1.5 shadow-[0_1px_0.5px_rgba(0,0,0,0.13)] relative",
                                     isMe 
-                                        ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tl-none ml-2" 
-                                        : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tr-none mr-2"
+                                        ? "bg-[#d9fdd3] dark:bg-[#005c4b] rounded-[7.5px] rounded-tr-none mr-2" 
+                                        : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tl-none ml-2"
                                 )}>
                                     {isGroup && !isMe && (
                                         <span className="block text-[12.5px] font-bold text-[#e542a3] mb-0.5 text-right">
