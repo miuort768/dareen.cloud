@@ -145,13 +145,28 @@ export const Chat: React.FC = () => {
         <div 
             dir="rtl"
             className={cn(
-                "flex overflow-hidden bg-white dark:bg-slate-900",
-                "fixed inset-x-0 top-0 lg:relative lg:inset-auto lg:bottom-auto lg:w-full lg:h-screen z-10 overflow-x-hidden transition-all duration-300",
+                "flex flex-col overflow-hidden bg-white dark:bg-slate-900",
+                "fixed inset-x-0 top-0 lg:relative lg:inset-auto lg:bottom-auto lg:w-full lg:h-screen z-10 transition-all duration-300",
                 selectedConv ? "bottom-0" : "bottom-[70px]"
             )}
         >
+            {/* Standard Global Header */}
+            <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#5c59f2]/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+                <div className="relative z-10 flex items-center gap-4">
+                    <div className="w-11 h-11 flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 rounded-none shadow-2xl">
+                        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+                    </div>
+                    <div>
+                        <div className="flex flex-col">
+                            <h1 className="text-lg md:text-2xl font-black text-white tracking-tighter uppercase">مركز المحادثات</h1>
+                            <p className="text-xs md:text-sm font-light text-slate-300 uppercase tracking-widest mt-0.5">تواصل آمن ومباشر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <div className="flex w-full h-full max-w-full mx-auto relative z-10">
+            <div className="flex w-full flex-1 min-h-0 mx-auto relative z-10">
                 <ChatSidebar
                     conversations={conversations}
                     selectedConv={selectedConv}
