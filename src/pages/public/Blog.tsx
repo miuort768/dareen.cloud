@@ -215,8 +215,8 @@ export const Blog = () => {
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2 text-center lg:text-right">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
-                                    <BookOpen size={12} className="text-indigo-600" />
-                                    <span className="text-[9px] font-black text-indigo-600/80">
+                                    <BookOpen size={14} className="text-indigo-600" />
+                                    <span className="text-xs md:text-sm font-black text-indigo-600/80">
                                         {view === 'types' ? 'منصة المعرفة الذكية'
                                             : view === 'curriculums' ? `تحميل ${currentTypeName}`
                                                 : currentCurriculumName}
@@ -243,8 +243,8 @@ export const Blog = () => {
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
-                                                <type.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{type.name}</span>
+                                                <type.icon size={18} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-xs sm:text-sm font-black text-white text-center">{type.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -257,8 +257,8 @@ export const Blog = () => {
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
-                                                <curr.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{curr.name}</span>
+                                                <curr.icon size={18} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-xs sm:text-sm font-black text-white text-center">{curr.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -271,8 +271,8 @@ export const Blog = () => {
                                         >
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="relative z-10 flex items-center gap-2">
-                                                <grade.icon size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                <span className="text-[10px] md:text-xs font-black text-white text-center">{grade.name}</span>
+                                                <grade.icon size={18} className="text-white/80 group-hover:scale-110 transition-transform" />
+                                                <span className="text-xs sm:text-sm font-black text-white text-center">{grade.name}</span>
                                             </div>
                                         </button>
                                     ))}
@@ -298,7 +298,7 @@ export const Blog = () => {
                                                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     <div className="relative z-10 flex items-center gap-2">
                                                         <ArrowLeft size={16} className="text-white/80 group-hover:-translate-x-1 transition-transform" />
-                                                        <span className="text-[10px] md:text-xs font-black text-white text-center font-heading">العودة للخلف</span>
+                                                        <span className="text-xs sm:text-sm font-black text-white text-center font-heading">العودة للخلف</span>
                                                     </div>
                                                 </button>
                                             )}
@@ -312,7 +312,7 @@ export const Blog = () => {
                                                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                 <div className="relative z-10 flex items-center gap-2">
                                                     <BookOpen size={16} className="text-white/80 group-hover:scale-110 transition-transform" />
-                                                    <span className="text-[10px] md:text-xs font-black text-white text-center font-heading">تصفح الدورات</span>
+                                                    <span className="text-xs sm:text-sm font-black text-white text-center font-heading">تصفح الدورات</span>
                                                 </div>
                                             </Link>
                                         </>);
@@ -340,7 +340,7 @@ export const Blog = () => {
                         /* TIER 7: Results - filtered posts */
                         <div className="max-w-6xl mx-auto">
                             {/* Breadcrumb */}
-                            <div className="flex flex-wrap items-center gap-2 mb-6 text-[10px] font-black text-slate-400 ">
+                            <div className="flex flex-wrap items-center gap-2 mb-6 text-xs sm:text-sm font-black text-slate-400 ">
                                 <button onClick={() => setView('types')} className="hover:text-indigo-600 transition-colors">الرئيسية</button>
                                 <span>/</span><span className="text-slate-600">{currentTypeName}</span>
                                 <span>/</span><span className="text-slate-600">{currentCurriculumName}</span>
@@ -352,10 +352,10 @@ export const Blog = () => {
 
                             {/* Back buttons */}
                             <div className="flex gap-2 mb-8">
-                                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-black  transition-colors">
+                                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-black  transition-colors">
                                     <span>←</span><span>تغيير المادة</span>
                                 </button>
-                                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2 bg-slate-950 hover:bg-slate-800 text-white text-[11px] font-black  transition-colors">
+                                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs sm:text-sm font-black  transition-colors">
                                     <span>⌂</span><span>الرئيسية</span>
                                 </button>
                             </div>
@@ -384,21 +384,21 @@ export const Blog = () => {
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
                                                 <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute top-3 right-3 z-20">
-                                                    <span className="bg-indigo-600 text-white text-[9px] font-black px-2 py-1 ">{post.subject || post.category}</span>
+                                                    <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1 ">{post.subject || post.category}</span>
                                                 </div>
                                             </div>
                                             <div className="p-5 flex flex-col flex-grow">
-                                                <div className="flex items-center gap-3 text-[10px] text-gray-400 font-black  mb-3">
+                                                <div className="flex items-center gap-3 text-xs text-gray-400 font-black  mb-3">
                                                     <div className="flex items-center gap-1">
-                                                        <Calendar size={12} className="text-indigo-500" />
+                                                        <Calendar size={14} className="text-indigo-500" />
                                                         <span>{post.date?.split('T')[0]}</span>
                                                     </div>
                                                     <div className="flex items-center gap-1">
-                                                        <User size={12} className="text-indigo-500" />
+                                                        <User size={14} className="text-indigo-500" />
                                                         <span>{post.author}</span>
                                                     </div>
                                                 </div>
-                                                <h2 className="font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-indigo-600 transition-colors leading-tight">{post.title}</h2>
+                                                <h2 className="text-base sm:text-lg md:text-xl font-black text-gray-900 dark:text-white mb-3 font-heading group-hover:text-indigo-600 transition-colors leading-tight">{post.title}</h2>
                                                 <p className="text-gray-500 dark:text-slate-400 text-sm mb-4 line-clamp-2 leading-relaxed font-medium flex-grow">{post.excerpt}</p>
                                                 <div className="mt-auto inline-flex items-center gap-2 text-indigo-600 font-black text-xs ">
                                                     <span>اقرأ المقال</span>
@@ -416,7 +416,7 @@ export const Blog = () => {
                             <div className="text-center max-w-3xl mx-auto mb-8">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={14} className="text-indigo-600" />
-                                    <span className="text-[10px] font-black  text-indigo-600/80">
+                                    <span className="text-xs sm:text-sm font-black  text-indigo-600/80">
                                         {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
                                             : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
                                                 : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
@@ -443,17 +443,17 @@ export const Blog = () => {
                                     {view === 'classrooms' && currentClassrooms.map(cls => (
                                         <button key={cls} onClick={() => { setSelectedGrade(cls); setView('terms'); }} className={cn(btnBase, "from-slate-800 to-slate-900 border border-white/5", "animate-in zoom-in-95 duration-300")}>
                                             <div className="absolute inset-0 bg-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">الصف {gradeNames[cls] || cls}</span>
+                                            <span className="relative z-10 text-xs sm:text-sm font-black text-white text-center  px-2">الصف {gradeNames[cls] || cls}</span>
                                         </button>
                                     ))}
 
                                     {/* TIER 5: Terms */}
                                     {view === 'terms' && (<>
                                         <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }} className={cn(btnBase, "from-indigo-600 to-indigo-800", "animate-in zoom-in-95 duration-300")}>
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">ترم أول</span>
+                                            <span className="relative z-10 text-xs sm:text-sm font-black text-white text-center  px-2">ترم أول</span>
                                         </button>
                                         <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }} className={cn(btnBase, "from-purple-600 to-purple-800", "animate-in zoom-in-95 duration-300")}>
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">ترم ثاني</span>
+                                            <span className="relative z-10 text-xs sm:text-sm font-black text-white text-center  px-2">ترم ثاني</span>
                                         </button>
                                     </>)}
 
@@ -461,14 +461,14 @@ export const Blog = () => {
                                     {view === 'subjects' && currentSubjects.map(subj => (
                                         <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }} className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}>
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">{subj.name}</span>
+                                            <span className="relative z-10 text-xs sm:text-sm font-black text-white text-center  px-2">{subj.name}</span>
                                         </button>
                                     ))}
 
                                     {/* Universal Back Button */}
                                     <button onClick={goBack} className="relative h-16 flex flex-col items-center justify-center gap-1 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:bg-slate-700 group bg-slate-800 animate-in zoom-in-95 duration-300">
                                         <span className="text-xl text-white group-hover:-translate-x-1 transition-transform">←</span>
-                                        <span className="text-[9px] font-black text-white/60 uppercase">العودة</span>
+                                        <span className="text-xs font-black text-white/60 uppercase">العودة</span>
                                     </button>
                                 </div>
                             </div>
