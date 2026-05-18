@@ -53,23 +53,23 @@ const gradesMap: Record<string, { id: string; name: string; sub: string; color: 
 // Classrooms per curriculum per level
 const classroomsMap: Record<string, Record<string, string[]>> = {
     kuwait: {
-        primary: ['1','2','3','4','5'],
-        middle: ['6','7','8','9'],
-        secondary: ['10','11','12'],
+        primary: ['1', '2', '3', '4', '5'],
+        middle: ['6', '7', '8', '9'],
+        secondary: ['10', '11', '12'],
     },
     qatar: {
-        basic: ['1','2','3','4','5','6','7','8','9'],
-        secondary: ['10','11','12'],
+        basic: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+        secondary: ['10', '11', '12'],
     },
     uae: {
-        primary: ['1','2','3','4','5'],
-        preparatory: ['6','7','8','9'],
-        secondary: ['10','11','12'],
+        primary: ['1', '2', '3', '4', '5'],
+        preparatory: ['6', '7', '8', '9'],
+        secondary: ['10', '11', '12'],
     },
     saudi: {
-        primary: ['1','2','3','4','5','6'],
-        middle: ['7','8','9'],
-        secondary: ['10','11','12'],
+        primary: ['1', '2', '3', '4', '5', '6'],
+        middle: ['7', '8', '9'],
+        secondary: ['10', '11', '12'],
     },
 };
 
@@ -186,25 +186,25 @@ export const Blog = () => {
                 ]}
             />
             <PublicNavbar />
-            
+
             <main className="flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden bg-[#fafafa] dark:bg-slate-950">
                 {/* Premium Background Elements - Enhanced */}
                 <div className="absolute inset-0 z-0 pointer-events-none">
                     <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse"></div>
                     <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px]"></div>
                     <div className="absolute top-[20%] left-[5%] w-[15%] h-[15%] bg-indigo-400/5 rounded-full blur-[60px]"></div>
-                    
-                    <div className="absolute inset-0 opacity-[0.08]" 
-                         style={{ 
-                             backgroundImage: 'radial-gradient(circle at 5% 10%, #4F46E5 0%, transparent 35%), radial-gradient(circle at 95% 90%, #7C3AED 0%, transparent 35%)',
-                             filter: 'blur(100px)'
-                         }}>
+
+                    <div className="absolute inset-0 opacity-[0.08]"
+                        style={{
+                            backgroundImage: 'radial-gradient(circle at 5% 10%, #4F46E5 0%, transparent 35%), radial-gradient(circle at 95% 90%, #7C3AED 0%, transparent 35%)',
+                            filter: 'blur(100px)'
+                        }}>
                     </div>
                     <div className="absolute inset-0 opacity-[0.02]"
-                         style={{ 
-                             backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                             backgroundSize: '150px 150px'
-                         }}>
+                        style={{
+                            backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
+                            backgroundSize: '150px 150px'
+                        }}>
                     </div>
                 </div>
 
@@ -217,20 +217,20 @@ export const Blog = () => {
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                                     <BookOpen size={12} className="text-indigo-600" />
                                     <span className="text-[9px] font-black text-indigo-600/80">
-                                        {view === 'types' ? 'منصة المعرفة الذكية' 
-                                        : view === 'curriculums' ? `تحميل ${currentTypeName}` 
-                                        : currentCurriculumName}
+                                        {view === 'types' ? 'منصة المعرفة الذكية'
+                                            : view === 'curriculums' ? `تحميل ${currentTypeName}`
+                                                : currentCurriculumName}
                                     </span>
                                 </div>
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4 leading-tight">
                                     {view === 'types' ? (<>مدونة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span></>)
-                                    : view === 'curriculums' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المنهج الدراسي</span></>)
-                                    : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المرحلة الدراسية</span></>)}
+                                        : view === 'curriculums' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المنهج الدراسي</span></>)
+                                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المرحلة الدراسية</span></>)}
                                 </h1>
                                 <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed mb-6 max-w-lg mx-auto lg:mx-0 font-medium">
                                     {view === 'types' ? 'دليلك الشامل للتفوق الدراسي، أحدث المناهج الخليجية، ومصادر تعليمية حصرية.'
-                                    : view === 'curriculums' ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج.`
-                                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل وصولك للمعلومة.`}
+                                        : view === 'curriculums' ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج.`
+                                            : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل وصولك للمعلومة.`}
                                 </p>
 
                                 {/* Categories Grid - Hero Style */}
@@ -279,11 +279,11 @@ export const Blog = () => {
 
                                     {/* Control Buttons - Integrated into grid with dynamic balancing */}
                                     {(() => {
-                                        const currentItemsCount = 
+                                        const currentItemsCount =
                                             (view === 'types' ? types.length : 0) +
                                             (view === 'curriculums' ? curriculums.length : 0) +
                                             (view === 'grades' ? currentGrades.length : 0);
-                                        
+
                                         const backBtnCount = (view !== 'types' ? 1 : 0);
                                         const browseBtnCount = 1;
                                         const totalItems = currentItemsCount + backBtnCount + browseBtnCount;
@@ -327,7 +327,7 @@ export const Blog = () => {
                                     <div className="absolute inset-4 border border-dashed border-indigo-500/20 rounded-full"></div>
                                     <div className="absolute inset-12 border border-dashed border-purple-500/10 rounded-full"></div>
                                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-600/10 rounded-full blur-3xl"></div>
-                                    
+
                                     <img
                                         src="/dareen_books_portal_v3.png"
                                         alt="بوابة دارين التعليمية"
@@ -377,7 +377,7 @@ export const Blog = () => {
                                         <Link
                                             key={post.id}
                                             to={`/books/${post.slug}`}
-                                            onClick={() => window.scrollTo(0,0)}
+                                            onClick={() => window.scrollTo(0, 0)}
                                             className="group bg-white dark:bg-slate-900/40 shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 border border-gray-100 dark:border-slate-800/50 flex flex-col overflow-hidden"
                                         >
                                             <div className="relative aspect-video overflow-hidden">
@@ -418,22 +418,22 @@ export const Blog = () => {
                                     <BookOpen size={14} className="text-indigo-600" />
                                     <span className="text-[10px] font-black  text-indigo-600/80">
                                         {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                                        : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
-                                        : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
-                                        : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
+                                            : view === 'terms' ? `الصف ${gradeNames[selectedGrade]} — ${currentLevelName}`
+                                                : view === 'subjects' ? `${termLabel} — الصف ${gradeNames[selectedGrade]}`
+                                                    : `${currentSubjectName} — الصف ${gradeNames[selectedGrade]}`}
                                     </span>
                                 </div>
-                                <h1 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
+                                <h1 className="text-4xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-3 transition-all duration-500">
                                     {view === 'classrooms' ? (<>مرحلة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentLevelName}</span></>)
-                                    : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
-                                    : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
-                                    : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
+                                        : view === 'terms' ? (<>الصف <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{gradeNames[selectedGrade]}</span> — اختر الترم</>)
+                                            : view === 'subjects' ? (<>مواد <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{termLabel}</span> — الصف {gradeNames[selectedGrade]}</>)
+                                                : (<><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">{currentSubjectName}</span> — الصف {gradeNames[selectedGrade]}</>)}
                                 </h1>
                                 <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xl mx-auto font-medium">
                                     {view === 'classrooms' ? 'اختر الصف الدراسي.'
-                                    : view === 'terms' ? 'اختر الترم الدراسي.'
-                                    : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
-                                    : `${filteredPosts.length} نتيجة متاحة`}
+                                        : view === 'terms' ? 'اختر الترم الدراسي.'
+                                            : view === 'subjects' ? 'اختر المادة الدراسية للوصول للمحتوى.'
+                                                : `${filteredPosts.length} نتيجة متاحة`}
                                 </p>
                             </div>
 
@@ -459,7 +459,7 @@ export const Blog = () => {
 
                                     {/* TIER 6: Subjects */}
                                     {view === 'subjects' && currentSubjects.map(subj => (
-                                        <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0,0); }} className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}>
+                                        <button key={subj.id} onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }} className={cn(btnBase, subj.color, "animate-in zoom-in-95 duration-300")}>
                                             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <span className="relative z-10 text-[10px] sm:text-xs font-black text-white text-center  px-2">{subj.name}</span>
                                         </button>

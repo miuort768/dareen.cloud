@@ -79,7 +79,7 @@ export const BlogPost = () => {
                         </div>
                     </div>
 
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-8">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-8">
                         {post.title}
                     </h1>
                 </header>

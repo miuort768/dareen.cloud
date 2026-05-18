@@ -109,7 +109,7 @@ export const AdminBlog = () => {
         }
     };
 
-    const filteredPosts = posts.filter(post => 
+    const filteredPosts = posts.filter(post =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -191,7 +191,7 @@ export const AdminBlog = () => {
                             <h2 className="text-xl font-black">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><X size={20} /></button>
                         </div>
-                        
+
                         <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
@@ -262,7 +262,7 @@ export const AdminBlog = () => {
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">نوع المحتوى</label>
-                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({...currentPost, contentType: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                        <select value={currentPost.contentType} onChange={e => setCurrentPost({ ...currentPost, contentType: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
                                             <option value="notes">مذكرات</option>
                                             <option value="solutions">حل كتب</option>
                                             <option value="summaries">ملخصات</option>
@@ -271,7 +271,7 @@ export const AdminBlog = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">المنهج</label>
-                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({...currentPost, curriculum: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                        <select value={currentPost.curriculum} onChange={e => setCurrentPost({ ...currentPost, curriculum: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
                                             <option value="kuwait">كويتي</option>
                                             <option value="qatar">قطري</option>
                                             <option value="uae">إماراتي</option>
@@ -280,7 +280,7 @@ export const AdminBlog = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">المرحلة</label>
-                                        <select value={currentPost.level} onChange={e => setCurrentPost({...currentPost, level: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                        <select value={currentPost.level} onChange={e => setCurrentPost({ ...currentPost, level: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
                                             <option value="primary">ابتدائي</option>
                                             <option value="middle">متوسط</option>
                                             <option value="secondary">ثانوي</option>
@@ -290,13 +290,13 @@ export const AdminBlog = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">الصف</label>
-                                        <select value={currentPost.grade} onChange={e => setCurrentPost({...currentPost, grade: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
-                                            {['1','2','3','4','5','6','7','8','9','10','11','12'].map(g => <option key={g} value={g}>الصف {g}</option>)}
+                                        <select value={currentPost.grade} onChange={e => setCurrentPost({ ...currentPost, grade: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map(g => <option key={g} value={g}>الصف {g}</option>)}
                                         </select>
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">الترم</label>
-                                        <select value={currentPost.term} onChange={e => setCurrentPost({...currentPost, term: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                        <select value={currentPost.term} onChange={e => setCurrentPost({ ...currentPost, term: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
                                             <option value="1">ترم أول</option>
                                             <option value="2">ترم ثاني</option>
                                             <option value="">الكل</option>
@@ -304,7 +304,7 @@ export const AdminBlog = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-black text-slate-400 uppercase">المادة</label>
-                                        <select value={currentPost.subject} onChange={e => setCurrentPost({...currentPost, subject: e.target.value})} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
+                                        <select value={currentPost.subject} onChange={e => setCurrentPost({ ...currentPost, subject: e.target.value })} className="w-full bg-white dark:bg-slate-800 border-none px-3 py-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500">
                                             <option value="arabic">عربي</option>
                                             <option value="math">رياضيات</option>
                                             <option value="islamic">إسلامية</option>
@@ -338,9 +338,9 @@ export const AdminBlog = () => {
                                 </div>
                                 {currentPost.coverImage && (
                                     <div className="mt-2 h-32 w-full border border-slate-100 dark:border-slate-800 overflow-hidden">
-                                        <img 
-                                            src={currentPost.coverImage} 
-                                            alt="Preview" 
+                                        <img
+                                            src={currentPost.coverImage}
+                                            alt="Preview"
                                             className="w-full h-full object-cover"
                                             onError={(e) => {
                                                 (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=Invalid+Image+Link';

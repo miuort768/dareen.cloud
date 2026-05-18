@@ -9,6 +9,12 @@ export interface BlogPost {
     author: string;
     category: string;
     keywords: string;
+    contentType?: string;
+    curriculum?: string;
+    level?: string;
+    grade?: string;
+    term?: string;
+    subject?: string;
 }
 
 export const blogPosts: BlogPost[] = [];
