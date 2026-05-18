@@ -463,8 +463,8 @@ const Settings = () => {
             {/* ── Header ── */}
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
-                        <img src="/logo.png" alt="Logo" className="w-6 h-6 object-contain" />
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <h1 className="text-sm font-bold text-slate-800 dark:text-white">إعدادات النظام</h1>

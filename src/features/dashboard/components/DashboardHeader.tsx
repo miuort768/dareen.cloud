@@ -27,8 +27,8 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
             {/* Identity & Welcome */}
             <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
-                <div className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-none transition-all hover:bg-white/20">
-                    <ShieldCheck size={24} className="text-white" />
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                    <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                 </div>
                 
                 <div className="text-right">

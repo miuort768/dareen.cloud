@@ -234,9 +234,9 @@ export const Schedule = () => {
                     <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                     <div className="relative flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-none">
-                                <img src="/logo.png" alt="Logo" className="w-7 h-7 object-contain" />
-                            </div>
+                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
+                    </div>
                             <div>
                                 <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">
                                     {isTeacher ? `جدول أ. ${currentUser?.name.split(' ')[0]}` : 'الجدول الأسبوعي'}

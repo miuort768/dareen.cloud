@@ -286,8 +286,8 @@ export const Teachers = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#5c59f2]/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
                 
                 <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-11 h-11 flex items-center justify-center bg-white/5 backdrop-blur-md border border-white/10 rounded-none shadow-2xl">
-                        <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <div className="flex flex-col">
