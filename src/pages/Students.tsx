@@ -143,7 +143,7 @@ export const Students = () => {
             });
             queryClient.invalidateQueries({ queryKey: ['students'] });
             showNotification(isFrozen ? '✅ تم تجميد الاشتراك بنجاح' : '✅ تم تفعيل الاشتراك مجدداً', 'success');
-        } catch {
+        } catch (error) {
             showNotification('فشل تحديث حالة الاشتراك', 'error');
         }
     };
@@ -201,7 +201,7 @@ export const Students = () => {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
             showNotification('تم تصدير البيانات بنجاح', 'success');
-        } catch {
+        } catch (error) {
             showNotification('فشل تصدير البيانات', 'error');
         }
     };

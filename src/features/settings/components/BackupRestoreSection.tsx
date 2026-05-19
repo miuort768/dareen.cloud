@@ -11,6 +11,8 @@ interface BackupRestoreSectionProps {
 export const BackupRestoreSection = ({
     onExport,
     onImport,
+    fileInputRef: _fileInputRef,
+    autoBackup: _autoBackup
 }: BackupRestoreSectionProps) => {
     return (
         <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">

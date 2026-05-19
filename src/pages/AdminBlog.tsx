@@ -41,7 +41,7 @@ export const AdminBlog = () => {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog');
             setPosts(data);
-        } catch {
+        } catch (err) {
             showNotification('فشل في جلب المقالات', 'error');
         } finally {
             setLoading(false);
@@ -79,7 +79,7 @@ export const AdminBlog = () => {
             await api.delete(`/blog/${id}`);
             showNotification('تم حذف المقال بنجاح', 'success');
             setPosts(posts.filter(p => p.id !== id));
-        } catch {
+        } catch (err) {
             showNotification('فشل حذف المقال', 'error');
         }
     };

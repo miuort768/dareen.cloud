@@ -85,7 +85,7 @@ export const Announcements = () => {
             setEditingAnnouncement(null);
             setFormData({ title: '', content: '', type: 'general', isActive: true });
             fetchAnnouncements();
-        } catch {
+        } catch (error) {
             showNotification('فشل حفظ الإعلان', 'error');
         }
     };
@@ -96,7 +96,7 @@ export const Announcements = () => {
             await api.delete(`/announcements/${id}`);
             showNotification('تم حذف الإعلان', 'success');
             fetchAnnouncements();
-        } catch {
+        } catch (error) {
             showNotification('فشل حذف الإعلان', 'error');
         }
     };

@@ -1,4 +1,4 @@
-import '../types/express.d.ts'
+/// <reference path="../types/express.d.ts" />
 import { Request, Response, NextFunction } from 'express';
 import { TeacherService } from '../services/TeacherService';
 import { TeacherRepository } from '../repositories/TeacherRepository';

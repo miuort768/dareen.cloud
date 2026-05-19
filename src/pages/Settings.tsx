@@ -422,7 +422,7 @@ const Settings = () => {
                 setAutoFreezeThreshold(Number(localAutoFreeze))
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
-        } catch { alert('خطأ في الحفظ'); }
+        } catch (e) { alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 
@@ -716,7 +716,7 @@ const Settings = () => {
                                     try {
                                         await setHeroBanners(JSON.stringify(localHeroBanners));
                                         showNotify('تم حفظ البطاقات بنجاح');
-                                    } catch {
+                                    } catch(e) {
                                         alert('خطأ في الحفظ');
                                     } finally {
                                         setIsSaving(false);

@@ -179,7 +179,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
                         body: message.content,
                         tag: message.conversationId, // Group notifications from same chat
-                        // @ts-expect-error - Index signature not needed for string access on object type
+                        // @ts-ignore
                         renotify: true
                     });
                 }

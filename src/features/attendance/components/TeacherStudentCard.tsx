@@ -71,7 +71,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         setTimerSeconds(Math.floor((Date.now() - startedAt) / 1000));
                     }, 1000);
                 }
-            } catch { console.error('Failed to restore timer'); }
+            } catch (e) { console.error('Failed to restore timer', e); }
         }
         return () => {
             if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
@@ -91,7 +91,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch { /* silent */ }
+            } catch (e) { /* silent */ }
         } else {
             const start = Date.now();
             setTimerSeconds(0);
@@ -110,7 +110,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch { /* silent */ }
+            } catch (e) { /* silent */ }
         }
     };
 

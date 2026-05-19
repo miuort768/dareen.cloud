@@ -10,6 +10,7 @@ import {
     TrendingUp,
     Rocket,
     ClipboardList,
+    Activity,
     Sparkles,
     ShieldCheck,
     ArrowUpRight

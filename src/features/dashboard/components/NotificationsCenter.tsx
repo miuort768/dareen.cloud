@@ -136,7 +136,7 @@ export const NotificationsCenter = ({
                 icon: Bell,
                 color: 'amber'
             })) : [])
-        ].sort((a) => (a.priority === 'high' ? -1 : 1));
+        ].sort((a, _) => (a.priority === 'high' ? -1 : 1));
 
         return notifications;
     }, [tasks, lowBalanceStudents, adminPhone]);

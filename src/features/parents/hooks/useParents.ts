@@ -215,7 +215,7 @@ export const useParents = () => {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
             showNotification('تم تصدير بيانات أولياء الأمور بنجاح', 'success');
-        } catch {
+        } catch (error) {
             showNotification('حدث خطأ أثناء تصدير البيانات', 'error');
         }
     };

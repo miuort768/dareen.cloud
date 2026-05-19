@@ -90,7 +90,7 @@ export const ImportantNotifications = ({
             icon: ListTodo,
             color: 'amber'
         })) : [])
-    ].sort((a) => (a.priority === 'high' ? -1 : 1)) as NotificationItem[];
+    ].sort((a, _) => (a.priority === 'high' ? -1 : 1)) as NotificationItem[];
 
     const visibleNotifications = Array.isArray(notifications)
         ? notifications.filter(n => !dismissedIds.includes(n.id))

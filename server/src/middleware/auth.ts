@@ -1,4 +1,4 @@
-import '../types/express.d.ts'
+/// <reference path="../types/express.d.ts" />
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../utils/AppError';
@@ -16,7 +16,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret') as JWTPayload;
         req.user = decoded;
         next();
-    } catch {
+    } catch (error) {
         return next(new AppError('Invalid or expired token', 401));
     }
 };
