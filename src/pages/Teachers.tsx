@@ -110,7 +110,7 @@ export const Teachers = () => {
             }
             setShowAddForm(false);
             setEditId(null);
-        } catch (error) {
+        } catch {
             // error is handled by the mutation hook via Toast
         }
     };
@@ -157,7 +157,7 @@ export const Teachers = () => {
             showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
             queryClient.invalidateQueries({ queryKey: ['students'] });
             queryClient.invalidateQueries({ queryKey: ['sessions'] });
-        } catch (error) {
+        } catch {
             showNotification('فشل تسجيل الحضور', 'error');
         } finally {
             setSecureModalData(null);
@@ -177,7 +177,7 @@ export const Teachers = () => {
                 read: false
             });
             showNotification('تم إرسال التنبيه للمعلمة بنجاح', 'success');
-        } catch (error) {
+        } catch {
             showNotification('فشل إرسال التنبيه', 'error');
         } finally {
             setNotifyingTeacher(null);
@@ -197,7 +197,7 @@ export const Teachers = () => {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
             showNotification('تم تصدير البيانات بنجاح', 'success');
-        } catch (error) {
+        } catch {
             showNotification('حدث خطأ أثناء التصدير', 'error');
         }
     };
@@ -245,7 +245,7 @@ export const Teachers = () => {
 
                 showNotification(`اكتملت عملية الاستيراد`, 'success');
                 queryClient.invalidateQueries({ queryKey: ['teachers'] });
-            } catch (error) {
+            } catch {
                 showNotification('فشل قراءة الملف', 'error');
             }
         };
@@ -260,7 +260,7 @@ export const Teachers = () => {
             await api.delete('/teachers');
             queryClient.invalidateQueries({ queryKey: ['teachers'] });
             showNotification(`تم الحذف بنجاح`, 'success');
-        } catch (error) {
+        } catch {
             showNotification('فشل الحذف', 'error');
         }
     };

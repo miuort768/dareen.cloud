@@ -7,13 +7,18 @@ export class TeacherService {
 
     async getAllTeachers(): Promise<TeacherResponse[]> {
         const teachers = await this.teacherRepo.findAll();
-        return teachers.map(({ password, ...rest }) => rest);
+        return teachers.map(teacher => {
+            const rest = { ...teacher };
+            delete rest.password;
+            return rest;
+        });
     }
 
     async getTeacherById(id: string): Promise<TeacherResponse | null> {
         const teacher = await this.teacherRepo.findById(id);
         if (!teacher) return null;
-        const { password, ...rest } = teacher;
+        const rest = { ...teacher };
+        delete rest.password;
         return rest;
     }
 
@@ -23,7 +28,8 @@ export class TeacherService {
             ...data,
             password: hashedPassword
         });
-        const { password, ...rest } = teacher;
+        const rest = { ...teacher };
+        delete rest.password;
         return rest;
     }
 
@@ -32,7 +38,8 @@ export class TeacherService {
             data.password = await bcrypt.hash(data.password, 10);
         }
         const teacher = await this.teacherRepo.update(id, data);
-        const { password, ...rest } = teacher;
+        const rest = { ...teacher };
+        delete rest.password;
         return rest;
     }
 

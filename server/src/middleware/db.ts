@@ -1,4 +1,4 @@
-/// <reference path="../types/express.d.ts" />
+import '../types/express.d.ts'
 import { Request, Response, NextFunction } from 'express';
 import { getDb } from '../utils/db';
 

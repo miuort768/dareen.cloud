@@ -40,7 +40,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
         try {
             const error = await response.json();
             errorMessage = error.error || error.message || errorMessage;
-        } catch (e) {
+        } catch {
             errorMessage = response.statusText || errorMessage;
         }
         throw new Error(errorMessage);

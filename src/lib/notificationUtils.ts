@@ -30,7 +30,7 @@ export const sendNativeNotification = async (title: string, options?: Notificati
             icon: '/logo.png',
             badge: '/logo.png',
             silent: false,
-            // @ts-ignore
+            // @ts-expect-error - Notification API may not be available in all environments
             vibrate: [200, 100, 200], // Mobile vibration pattern
             ...options
         };

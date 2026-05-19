@@ -2,7 +2,7 @@ import { TrendingUp, Award, AlertCircle, Clock } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
-import { cn } from '../../../lib/utils';
+
 
 interface TeacherAchievementsProps {
     stats: Stats;

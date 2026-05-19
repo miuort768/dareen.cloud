@@ -59,7 +59,7 @@ export const Profile = () => {
             showNotification('تم تحديث الملف الشخصي بنجاح', 'success');
             setPassword('');
             setConfirmPassword('');
-        } catch (error) {
+        } catch {
             showNotification('فشل تحديث البيانات', 'error');
         } finally {
             setIsSaving(false);

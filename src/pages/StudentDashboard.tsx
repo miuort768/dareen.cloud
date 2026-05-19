@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, ChevronLeft, Target, Rocket
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, Rocket
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -85,11 +85,6 @@ export const StudentDashboard = () => {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    const latestCompletedSession = useMemo(() => {
-        const completed = [...sessions].filter(s => s.status === 'completed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        return completed[0];
-    }, [sessions]);
-
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
@@ -131,7 +126,7 @@ export const StudentDashboard = () => {
 
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const { next } = getNextRank(points, STUDENT_RANKS);
+    getNextRank(points, STUDENT_RANKS);
 
     const weeklySchedule = useMemo(() => {
         if (!studentData) return [];
