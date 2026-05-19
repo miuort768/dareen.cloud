@@ -7,7 +7,7 @@ import {
   ClipboardList
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { useChatContext } from '../../context/ChatContext';
+import { useChatStore } from '../../store/chatStore';
 import { cn } from '../../lib/utils';
 import { triggerHaptic } from '../../lib/haptics';
 
@@ -15,7 +15,7 @@ export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser } = useApp();
-  const { activeConversationId } = useChatContext();
+  const activeConversationId = useChatStore(s => s.activeConversationId);
 
   const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;
 

@@ -4,7 +4,7 @@ import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
 import { useApp } from '../context/AppContext';
-import { useChatContext } from '../context/ChatContext';
+import { useChatStore } from '../store/chatStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
@@ -27,7 +27,7 @@ export const Chat: React.FC = () => {
     } = useChat(String(currentUser?.id));
 
     const [selectedConv, setSelectedConv] = useState<Conversation | null>(null);
-    const { setActiveConversationId } = useChatContext();
+    const setActiveConversationId = useChatStore(s => s.setActiveConversationId);
     const [newMessage, setNewMessage] = useState('');
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);

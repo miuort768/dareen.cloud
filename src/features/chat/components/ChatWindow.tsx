@@ -8,7 +8,7 @@ import { ar } from 'date-fns/locale';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Virtuoso } from 'react-virtuoso';
 import { cn } from '../../../lib/utils';
-import { useChatContext } from '../../../context/ChatContext';
+import { useChatStore } from '../../../store/chatStore';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
 import type { User } from '../../../types/auth';
 
@@ -51,7 +51,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const [showScrollBottom, setShowScrollBottom] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const { typingUsers } = useChatContext();
+    const typingUsers = useChatStore(s => s.typingUsers);
 
     const scrollToBottom = () => {
         if (filteredMessages.length > 0) {

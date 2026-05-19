@@ -1,14 +1,14 @@
 import { useAuthStore } from '../store/authStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useUIStore } from '../store/uiStore';
-import { useUsers } from './UserContext';
+import { useUserStore } from '../store/userStore';
 import type { User } from '../types/auth';
 
 export const useApp = () => {
     const ui = useUIStore();
     const auth = useAuthStore();
     const settings = useSettingsStore();
-    const users = useUsers();
+    const users = useUserStore();
 
     return {
         // UI
@@ -73,6 +73,11 @@ export const useApp = () => {
         setTelegramHandle: settings.setTelegramHandle,
         setHeroBanners: settings.setHeroBanners,
         // Users
-        ...users
+        users: users.users,
+        addUser: users.addUser,
+        editUser: users.editUser,
+        deleteUser: users.deleteUser,
+        refreshUsers: users.fetchUsers,
+        isUsersLoading: users.isLoading
     };
 };

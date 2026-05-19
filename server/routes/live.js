@@ -55,6 +55,40 @@ router.get('/turn-credentials', (req, res) => {
     });
 });
 
+// ── LiveKit Token Generation ────────────────────────────────────────────────
+const { AccessToken } = require('livekit-server-sdk');
+
+router.get('/token', (req, res) => {
+    const roomName = req.query.room;
+    const participantName = req.user?.name || req.user?.username || req.user?.teacherName || 'مستخدم';
+    const participantId = req.user?.id ? String(req.user.id) : genId();
+
+    if (!roomName) {
+        return res.status(400).json({ error: 'Room name is required' });
+    }
+
+    const apiKey = process.env.LIVEKIT_API_KEY || 'devkey';
+    const apiSecret = process.env.LIVEKIT_API_SECRET || 'secret';
+
+    const at = new AccessToken(apiKey, apiSecret, {
+        identity: participantId,
+        name: participantName,
+    });
+    
+    const isTeacher = req.user?.role === 'teacher' || req.user?.role === 'admin' || req.user?.permissions?.includes('*');
+
+    at.addGrant({
+        roomJoin: true,
+        room: roomName,
+        canPublish: isTeacher,
+        canPublishData: true,
+        canSubscribe: true,
+    });
+
+    const token = at.toJwt();
+    res.json({ token });
+});
+
 // ── GET /api/live/active — Filtered by role ──────────────────────────────────
 router.get('/active', async (req, res) => {
     try {

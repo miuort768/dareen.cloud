@@ -167,11 +167,14 @@ html, body {
   }
 
   /* ── Typography Hierarchy ── */
-  h1 { @apply tracking-tight font-black;  color: rgb(var(--text-main)); }   /* 900 */
-  h2 { @apply tracking-tight font-bold;   color: rgb(var(--text-main)); }   /* 700 */
-  h3 { @apply tracking-tight font-semibold; color: rgb(var(--text-main)); } /* 600 */
-  h4 { @apply tracking-tight font-medium; color: rgb(var(--text-muted)); }  /* 500 */
-  h5, h6 { @apply tracking-tight font-normal; color: rgb(var(--text-muted)); } /* 400 */
+  h1 { @apply tracking-tight font-black font-heading;  color: rgb(var(--text-main)); line-height: 1.2; }   /* 900 */
+  h2 { @apply tracking-tight font-bold font-heading;   color: rgb(var(--text-main)); line-height: 1.2; }   /* 700 */
+  h3 { @apply tracking-tight font-bold font-sans; color: rgb(var(--text-main)); line-height: 1.4; } /* 700 (Tajawal 600 unsupported) */
+  h4 { @apply tracking-tight font-medium font-sans; color: rgb(var(--text-muted)); line-height: 1.4; }  /* 500 */
+  h5, h6 { @apply tracking-tight font-normal font-sans; color: rgb(var(--text-muted)); line-height: 1.5; } /* 400 */
+  
+  body, p { line-height: 1.65; }
+  li, td { line-height: 1.5; }
 
   /* --- Global Dark Mode Overrides for Premium Navigation --- */
   .dark body {
@@ -620,21 +623,8 @@ html, body {
   }
 
   @media (max-width: 768px) {
-    /* ─── Global Font Scale on Mobile ─────────────────────────────────────── */
-    h1, .text-4xl, .text-5xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }  /* 30px */
-    h2, .text-3xl            { font-size: 1.625rem !important; line-height: 2rem    !important; }  /* 26px */
-    h3, .text-2xl            { font-size: 1.375rem !important; line-height: 1.75rem !important; }  /* 22px */
-    h4, .text-xl             { font-size: 1.25rem  !important; line-height: 1.6rem  !important; }  /* 20px */
-    h5, .text-lg             { font-size: 1.125rem !important; line-height: 1.5rem  !important; }  /* 18px */
-    h6, .text-base           { font-size: 1rem     !important; line-height: 1.5rem  !important; }  /* 16px */
-    body, p, button {
-      font-size: 0.9375rem !important; /* 15px */
-    }
-    table td, table th {
-      font-size: 0.8125rem !important; /* 13px */
-    }
-    label, .text-xs, .badge {
-      font-size: 0.6875rem !important; /* 11px */
+    :root {
+      font-size: 15px; /* scale down everything proportionally on mobile */
     }
 
     /* ─── Global SVG Icon Sizes on Mobile ─────────────────────────────────── */
@@ -697,13 +687,6 @@ html, body {
     .my-10 { margin-top: 1.75rem !important; margin-bottom: 1.75rem !important; }
 
     /* ─── Dashboard Header fixed sizes on Mobile ──────────────────────────── */
-    header h1 {
-      font-size: 1.125rem !important; /* 18px */
-      line-height: 1.5rem !important;
-    }
-    header p {
-      font-size: 0.75rem !important;  /* 12px */
-    }
     header .w-10.h-10 {
       width: 2.5rem !important;  /* 40px */
       height: 2.5rem !important;

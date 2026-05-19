@@ -3,6 +3,7 @@ import { BookOpen, Calendar, Clock, Edit, Trash2, TrendingUp, Activity, MessageS
 import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 import { useNavigate } from 'react-router-dom';
+import { startLiveSession } from '../../../services/liveSessionService';
 
 interface TeacherStudentCardProps {
     student: Student;
@@ -139,24 +140,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
     const startLiveStream = async () => {
         try {
-            const token = localStorage.getItem('auth_token');
-            const response = await fetch('/api/live/start', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    title: `حصة مباشرة: ${student.name}`,
-                    subject: en.subject,
-                    targetStudentId: student.id
-                })
+            const result = await startLiveSession({
+                title: `حصة مباشرة: ${student.name}`,
+                subject: en.subject,
+                targetStudentId: student.id,
             });
-            const data = await response.json();
-            if (!response.ok) return;
-            navigate(`/classroom/${data.id}`);
+            navigate(`/classroom/${result.id}`);
         } catch (err: any) {
-            alert(`خطأ في الشبكة: ${err.message}`);
+            alert(`فشل بدء البث: ${err.message}`);
         }
     };
 

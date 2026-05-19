@@ -500,6 +500,7 @@ async function startServer() {
                     teacherSocketId: socket.id, 
                     subject: data.subject,
                     type: data.type || 'video',
+                    sessionId: data.sessionId,               // ← جلب sessionId من الإرسال
                     timestamp: new Date().toISOString()
                 };
 

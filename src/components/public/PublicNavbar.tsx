@@ -60,7 +60,7 @@ export const PublicNavbar = () => {
                             <h1 className="site-title text-[13px] md:text-[17px] font-black leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-900">
                                 دارين السابعة
                             </h1>
-                            <span className="text-[9px] md:text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 bg-indigo-50/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md" style={{ fontFamily: '"Aref Ruqaa", serif' }}>
+                            <span className="text-[9px] md:text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5 bg-indigo-50/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md italic">
                                 أفضل مدرسة افتراضية
                             </span>
                         </div>

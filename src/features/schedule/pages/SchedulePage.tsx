@@ -17,6 +17,7 @@ import {
 import { useApp } from '../../../context/AppContext';
 import { cn } from '../../../lib/utils';
 import { api } from '../../../lib/api';
+import { startLiveSession } from '../../../services/liveSessionService';
 
 // Interfaces
 interface Student {
@@ -540,16 +541,18 @@ export const Schedule = () => {
                                 {/* Actions */}
                                 {currentUser?.role === 'teacher' && (
                                     <button
-                                        onClick={() => {
-                                            const socket = (window as any).socket;
-                                            if (socket?.connected) {
-                                                socket.emit('call_student', { studentId: String(selectedEvent.studentId), subject: selectedEvent.subject, type: 'video' });
-                                                navigate(`/classroom/${selectedEvent.studentId}`);
-                                            } else {
-                                                alert('⚠️ نظام الاتصال غير متصل.');
+                                        onClick={async () => {
+                                            try {
+                                                const result = await startLiveSession({
+                                                    title: `حصة مباشرة: ${selectedEvent.subject}`,
+                                                    subject: selectedEvent.subject,
+                                                    targetStudentId: selectedEvent.studentId,
+                                                });
+                                                navigate(`/classroom/${result.id}`);
+                                            } catch {
+                                                alert('فشل بدء البث المباشر');
                                             }
-                                        }}
-                                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 font-black text-xs flex items-center justify-center gap-2 transition-colors"
+                                        }},
                                     >
                                         <Video size={15} /> بدء الحصة المباشرة
                                     </button>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
-import { useChatContext } from '../context/ChatContext';
+import { useChatStore } from '../store/chatStore';
 import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types';
 
 // Standalone hook for messages to follow React Rules of Hooks
@@ -29,7 +29,8 @@ export const useMessages = (conversationId?: string) => {
 
 export const useChat = (userId?: string) => {
     const queryClient = useQueryClient();
-    const { typingUsers, setTyping, totalUnreadCount } = useChatContext();
+    const typingUsers = useChatStore(s => s.typingUsers);
+    const setTyping = useChatStore(s => s.setTyping);
 
     // Fetch conversations
     const { data: conversations = [], isLoading: isLoadingConversations, refetch: refetchConversations } = useQuery<Conversation[]>({
@@ -41,6 +42,8 @@ export const useChat = (userId?: string) => {
         enabled: !!userId,
         staleTime: 60000,
     });
+
+    const totalUnreadCount = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0);
 
     // Fetch available users
     const { data: availableUsers = [] } = useQuery<ChatUser[]>({

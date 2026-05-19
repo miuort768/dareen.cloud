@@ -50,6 +50,8 @@ const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m
 
 
 
+import { useChatSocketInit } from './hooks/useChatSocketInit';
+
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
   const { isAuthenticated, currentUser } = useApp();
@@ -95,6 +97,9 @@ function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // Initialize Global Socket Listeners for Chat & Live Sessions
+  useChatSocketInit();
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');

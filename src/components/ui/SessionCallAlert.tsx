@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Video, X, BellRing, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
+import { socketService } from '../../lib/socket';
 
 export const SessionCallAlert = () => {
     const { currentUser } = useApp();
@@ -9,48 +10,28 @@ export const SessionCallAlert = () => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        let socket = (window as any).socket;
-        let retryCount = 0;
-        let timeoutId: any;
+        const socket = socketService.getSocket();
+        if (!socket || currentUser?.role !== 'student') return;
 
-        const setupListeners = () => {
-            socket = (window as any).socket;
-            if (!socket && retryCount < 10) {
-                retryCount++;
-                timeoutId = setTimeout(setupListeners, 1000);
-                return;
-            }
-
-            if (!socket || currentUser?.role !== 'student') return;
-
-            const handleInvite = (data: any) => {
-                console.log("📞 [Socket] SessionCallAlert: Received session invite", data);
-                setCallData(data);
-                setShow(true);
-                
-                // Play audio alert
-                const audio = new Audio('/notification.mp3');
-                audio.play().catch(() => console.log("Audio play blocked"));
-            };
-
-            socket.on('session_invite', handleInvite);
-            
-            socket.on('session_ended', () => {
-                setShow(false);
-                setCallData(null);
-            });
-
-            return () => {
-                socket.off('session_invite', handleInvite);
-                socket.off('session_ended');
-            };
+        const handleInvite = (data: any) => {
+            console.log("📞 [Alert] Session invite", data);
+            setCallData(data);
+            setShow(true);
+            const audio = new Audio('/notification.mp3');
+            audio.play().catch(() => {});
         };
 
-        const cleanup = setupListeners();
+        const handleEnded = () => {
+            setShow(false);
+            setCallData(null);
+        };
+
+        socket.on('session_invite', handleInvite);
+        socket.on('session_ended', handleEnded);
 
         return () => {
-            if (timeoutId) clearTimeout(timeoutId);
-            if (cleanup) cleanup();
+            socket.off('session_invite', handleInvite);
+            socket.off('session_ended', handleEnded);
         };
     }, [currentUser]);
 
@@ -86,8 +67,8 @@ export const SessionCallAlert = () => {
                             <div className="flex gap-2">
                                 <button 
                                     onClick={() => {
-                                        if (currentUser?.id) {
-                                            window.location.href = `/classroom/${currentUser.id}`;
+                                        if (callData?.sessionId) {
+                                            window.location.href = `/classroom/${callData.sessionId}`;
                                         }
                                     }}
                                     className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-black text-xs flex items-center justify-center gap-2"

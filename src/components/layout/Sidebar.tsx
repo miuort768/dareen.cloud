@@ -27,7 +27,8 @@ import {
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
-import { useChatContext } from '../../context/ChatContext';
+import { useChatStore } from '../../store/chatStore';
+import { useChat } from '../../hooks/useChat';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 
 export const Sidebar = () => {
@@ -40,7 +41,8 @@ export const Sidebar = () => {
         setSidebarCollapsed: setCollapsed
     } = useApp();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { totalUnreadCount, activeConversationId } = useChatContext();
+    const activeConversationId = useChatStore(s => s.activeConversationId);
+    const { totalUnreadCount } = useChat(String(currentUser?.id));
     const navigate = useNavigate();
 
     // Persist collapsed state

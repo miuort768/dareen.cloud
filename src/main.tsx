@@ -6,7 +6,7 @@ import './index.css'
 import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { AppProvider } from './context/AppContext.tsx'
-import { ChatProvider } from './context/ChatContext.tsx'
+// ChatProvider has been removed and replaced by Zustand
 
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -47,9 +47,7 @@ createRoot(document.getElementById('root')!).render(
         <HelmetProvider>
           <Router>
             <AppProvider>
-              <ChatProvider>
-                <App />
-              </ChatProvider>
+              <App />
             </AppProvider>
           </Router>
         </HelmetProvider>
