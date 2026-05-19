@@ -59,7 +59,7 @@ export const BottomNav = () => {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]">
-      <div className="flex justify-around items-center h-[82px]">
+      <div className="flex justify-around items-center h-[76px]">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
@@ -79,9 +79,9 @@ export const BottomNav = () => {
                 "p-1.5 rounded-xl transition-all duration-300",
                 isActive && "bg-red-50 dark:bg-teal-400/10 scale-110"
               )}>
-                <Icon size={30} strokeWidth={isActive ? 2.5 : 2} />
+                <Icon size={28} strokeWidth={isActive ? 2.5 : 2} />
               </div>
-              <span className="text-[12px] font-bold tracking-tight">
+              <span className="text-[11px] font-bold tracking-tight">
                 {item.label}
               </span>
               
