@@ -47,33 +47,51 @@ html, body {
 
 @layer base {
   :root {
-    /* Watermelon Red - Default */
-    --color-primary: 252 52 104;
-    --text-main: 15 23 42;
-    --text-muted: 71 85 105;
-    --text-dim: 148 163 184;
-    --bg-surface: 243 244 246; /* Gray-100 for lighter base */
-    --bg-card: 255 255 255;
-    --border-main: 226 232 240; /* slate-200 */
-    --border-accent: 15 23 42; /* sharp black border */
+    /* ── Dareen Brand: Watermelon Rose ── */
+    --color-primary:   236 72 153; /* rose-500  – vibrant brand */
+    --color-primary-h: 254 205 223; /* rose-200  – tint for badges */
+    --color-success:   52 211 153;  /* emerald-400 */
+    --color-warning:   251 191 36;  /* amber-400   */
+    --color-gold:      212 175 55;  /* gold         */
+
+    --text-main:   15 23 42;
+    --text-muted:  71 85 105;
+    --text-dim:   148 163 184;
+
+    --bg-surface:  243 244 246;
+    --bg-card:     255 255 255;
+    --bg-hover:    241 245 249;
+
+    --border-main:   226 232 240;
+    --border-accent:  15  23  42;
+
+    --shadow-premium: 0 0 20px rgba(236,72,153,0.12);
+    --glass-bg:    rgba(255,255,255,0.72);
+    --glass-border:rgba(255,255,255,0.45);
   }
 
-  /* Premium Dark Mode for Public & Private Pages */
+  /* ── Unified Dark Mode – same brand hue, adjusted luminance ── */
   .dark {
-    --bg-surface: 2 6 23;      /* Deep midnight blue-black */
-    --bg-card: 15 23 42;       /* Slate-900 for cards */
-    --bg-hover: 30 41 59;      /* Slate-800 for hover states */
-    
-    --text-main: 248 250 252;  /* Slate-50 - Bright and crisp */
-    --text-muted: 148 163 184; /* Slate-400 */
-    --text-dim: 71 85 105;    /* Slate-600 */
-    
-    --color-primary: 94 234 212; /* Teal-300 for premium neon feel */
-    --border-main: 30 41 59;   /* Slate-800 */
-    --border-accent: 51 65 85; /* Slate-700 */
-    
-    /* Global glow for sharp designs in dark mode */
-    --shadow-premium: 0 0 15px rgba(94, 234, 212, 0.1);
+    --color-primary:   251 113 133; /* rose-400 – lighter for dark bg */
+    --color-primary-h:  63  12  24; /* dark rose tint for hover */
+    --color-success:   52 211 153;
+    --color-warning:   251 191 36;
+    --color-gold:      212 175 55;
+
+    --bg-surface:  2 6 23;
+    --bg-card:    15 23 42;
+    --bg-hover:   30 41 59;
+
+    --text-main:  248 250 252;
+    --text-muted: 148 163 184;
+    --text-dim:    71  85 105;
+
+    --border-main:    30 41 59;
+    --border-accent:  51 65 85;
+
+    --shadow-premium: 0 0 20px rgba(251,113,133,0.12);
+    --glass-bg:    rgba(15,23,42,0.65);
+    --glass-border:rgba(255,255,255,0.06);
   }
 
   html {
@@ -148,15 +166,12 @@ html, body {
     overflow-x: hidden !important;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply tracking-tight font-black;
-    color: rgb(var(--text-main));
-  }
+  /* ── Typography Hierarchy ── */
+  h1 { @apply tracking-tight font-black;  color: rgb(var(--text-main)); }   /* 900 */
+  h2 { @apply tracking-tight font-bold;   color: rgb(var(--text-main)); }   /* 700 */
+  h3 { @apply tracking-tight font-semibold; color: rgb(var(--text-main)); } /* 600 */
+  h4 { @apply tracking-tight font-medium; color: rgb(var(--text-muted)); }  /* 500 */
+  h5, h6 { @apply tracking-tight font-normal; color: rgb(var(--text-muted)); } /* 400 */
 
   /* --- Global Dark Mode Overrides for Premium Navigation --- */
   .dark body {
@@ -492,12 +507,74 @@ html, body {
     transition: none !important;
   } */
 
-  /* Page Transitions - Disabled */
-  .page-enter, .page-enter-active, .page-exit, .page-exit-active {
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
+  /* Page Transitions – now handled by framer-motion PageTransition component */
+  /* Legacy CSS class stubs kept for compatibility */
+  .page-enter { opacity: 0; transform: translateY(12px); }
+  .page-enter-active { opacity: 1; transform: translateY(0); transition: opacity 220ms ease, transform 220ms ease; }
+  .page-exit { opacity: 1; }
+  .page-exit-active { opacity: 0; transform: translateY(-8px); transition: opacity 220ms ease, transform 220ms ease; }
+
+  /* ─── Glassmorphism System Utilities ──────────────────────────────────── */
+
+  /* Glass Card – for general cards and panels */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.4);
+    border-radius: 1rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
+  .glass-card:hover {
+    box-shadow: 0 16px 40px rgba(0,0,0,0.09), 0 0 0 1px rgba(var(--color-primary),0.15), inset 0 1px 0 rgba(255,255,255,0.4);
+    transform: translateY(-4px);
+  }
+  .dark .glass-card {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  /* Glass Nav – for sticky header / bottom navigation */
+  .glass-nav {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .dark .glass-nav {
+    border-bottom-color: rgba(255,255,255,0.04);
+  }
+
+  /* Glass Modal – for dialog backdrops and panels */
+  .glass-modal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  }
+  .dark .glass-modal {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Glass Sidebar */
+  .glass-sidebar {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid var(--glass-border);
+  }
+  .dark .glass-sidebar {
+    border-left-color: rgba(255,255,255,0.04);
+  }
+
+  /* Glow ring – primary-coloured outline glow */
+  .glow-primary {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary), 0.25),
+                0 0 16px rgba(var(--color-primary), 0.1);
+  }
+
 
   @keyframes shine {
     from {
