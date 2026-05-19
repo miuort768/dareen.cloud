@@ -4,124 +4,142 @@ type FetchOptions = RequestInit & {
     params?: Record<string, string>;
 };
 
-let activeRequests = 0;
+class ApiClient {
+    private baseUrl: string;
+    private activeRequests: number;
 
-const fetchWithProgress = async (input: RequestInfo | URL, init?: RequestInit) => {
-    if (activeRequests === 0) {
-        // NProgress.start();
+    constructor() {
+        this.baseUrl = API_BASE_URL;
+        this.activeRequests = 0;
     }
-    activeRequests++;
-    
-    try {
-        const response = await fetch(input, init);
-        return response;
-    } finally {
-        activeRequests = Math.max(0, activeRequests - 1);
-        if (activeRequests === 0) {
-            // NProgress.done();
+
+    private getAuthHeader(): Record<string, string> {
+        const token = localStorage.getItem('auth_token');
+        return token ? { 'Authorization': `Bearer ${token}` } : {};
+    }
+
+    private async fetchWithProgress(input: string, init?: RequestInit): Promise<Response> {
+        if (this.activeRequests === 0) {
+            // NProgress.start() can be loaded here in the future
         }
-    }
-};
+        this.activeRequests++;
 
-const getAuthHeader = (): Record<string, string> => {
-    const token = localStorage.getItem('auth_token');
-    return token ? { 'Authorization': `Bearer ${token}` } : {};
-};
-
-async function handleResponse<T>(response: Response): Promise<T> {
-    if (response.status === 401) {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('app_isAuthenticated');
-        window.dispatchEvent(new Event('auth_logout'));
-    }
-
-    if (!response.ok) {
-        let errorMessage = 'حدث خطأ ما في الاتصال بالسيرفر';
         try {
-            const error = await response.json();
-            errorMessage = error.error || error.message || errorMessage;
-        } catch (e) {
-            errorMessage = response.statusText || errorMessage;
+            return await fetch(input, init);
+        } finally {
+            this.activeRequests = Math.max(0, this.activeRequests - 1);
+            if (this.activeRequests === 0) {
+                // NProgress.done() can be called here in the future
+            }
         }
-        throw new Error(errorMessage);
     }
-    return response.json();
-}
 
-export const api = {
-    async get<T>(url: string, options: FetchOptions = {}): Promise<T> {
-        let fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        if (options.params) {
-            const params = new URLSearchParams(options.params).toString();
-            const separator = fullUrl.includes('?') ? '&' : '?';
-            fullUrl += `${separator}${params}`;
+    private async handleResponse<T>(response: Response): Promise<T> {
+        if (response.status === 401) {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('app_isAuthenticated');
+            localStorage.removeItem('app_current_user');
+            
+            // Fire global logout event to sync tabs and Zustand stores
+            if (typeof window !== 'undefined') {
+                window.dispatchEvent(new Event('auth_logout'));
+            }
         }
-        const response = await fetchWithProgress(fullUrl, {
+
+        if (!response.ok) {
+            let errorMessage = 'حدث خطأ ما في الاتصال بالسيرفر';
+            try {
+                const error = await response.json();
+                errorMessage = error.error || error.message || errorMessage;
+            } catch (e) {
+                errorMessage = response.statusText || errorMessage;
+            }
+            throw new Error(errorMessage);
+        }
+
+        return response.json();
+    }
+
+    private buildUrl(url: string, params?: Record<string, string>): string {
+        let fullUrl = url.startsWith('http') ? url : `${this.baseUrl}${url}`;
+        if (params) {
+            const searchParams = new URLSearchParams(params).toString();
+            const separator = fullUrl.includes('?') ? '&' : '?';
+            fullUrl += `${separator}${searchParams}`;
+        }
+        return fullUrl;
+    }
+
+    public async get<T>(url: string, options: FetchOptions = {}): Promise<T> {
+        const fullUrl = this.buildUrl(url, options.params);
+        const response = await this.fetchWithProgress(fullUrl, {
             ...options,
             method: 'GET',
             headers: {
-                ...getAuthHeader(),
+                ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
         });
-        return handleResponse<T>(response);
-    },
+        return this.handleResponse<T>(response);
+    }
 
-    async post<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
-        const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetchWithProgress(fullUrl, {
+    public async post<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
+        const fullUrl = this.buildUrl(url, options.params);
+        const response = await this.fetchWithProgress(fullUrl, {
             ...options,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                ...getAuthHeader(),
+                ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
         });
-        return handleResponse<T>(response);
-    },
+        return this.handleResponse<T>(response);
+    }
 
-    async put<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
-        const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetchWithProgress(fullUrl, {
+    public async put<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
+        const fullUrl = this.buildUrl(url, options.params);
+        const response = await this.fetchWithProgress(fullUrl, {
             ...options,
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                ...getAuthHeader(),
+                ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
         });
-        return handleResponse<T>(response);
-    },
+        return this.handleResponse<T>(response);
+    }
 
-    async patch<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
-        const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetchWithProgress(fullUrl, {
+    public async patch<T>(url: string, data?: unknown, options: FetchOptions = {}): Promise<T> {
+        const fullUrl = this.buildUrl(url, options.params);
+        const response = await this.fetchWithProgress(fullUrl, {
             ...options,
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                ...getAuthHeader(),
+                ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
             body: data ? JSON.stringify(data) : undefined,
         });
-        return handleResponse<T>(response);
-    },
+        return this.handleResponse<T>(response);
+    }
 
-    async delete<T>(url: string, options: FetchOptions = {}): Promise<T> {
-        const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-        const response = await fetchWithProgress(fullUrl, {
+    public async delete<T>(url: string, options: FetchOptions = {}): Promise<T> {
+        const fullUrl = this.buildUrl(url, options.params);
+        const response = await this.fetchWithProgress(fullUrl, {
             ...options,
             method: 'DELETE',
             headers: {
-                ...getAuthHeader(),
+                ...this.getAuthHeader(),
                 ...options.headers as Record<string, string>,
             },
         });
-        return handleResponse<T>(response);
-    },
-};
+        return this.handleResponse<T>(response);
+    }
+}
+
+export const api = new ApiClient();
