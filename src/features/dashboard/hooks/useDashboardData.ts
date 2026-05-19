@@ -5,6 +5,16 @@ import type { User } from '../../../types/auth';
 import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense, Enrollment, ScheduleSlot } from '../../../types';
 import type { DashboardStats, DashboardMonthData, LowBalanceStudent, DashboardTask } from '../types';
 
+const getSafeArray = (val: any): any[] => {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (val.data && Array.isArray(val.data)) return val.data;
+    if (typeof val === 'object') {
+        return (Object.values(val).find(Array.isArray) as any[]) || [];
+    }
+    return [];
+};
+
 export const useDashboardData = (currentUser: User | null) => {
     const queryClient = useQueryClient();
 
@@ -330,9 +340,9 @@ export const useDashboardData = (currentUser: User | null) => {
         topStudents: processedData?.topStudents || [],
         focusStudents: processedData?.focusStudents || [],
         loading: isLoading,
-        rawStudents: (studentsQuery.data as any[]) || [],
-        rawSessions: (sessionsQuery.data as any[]) || [],
-        rawStudentInvoices: (studentInvoicesQuery.data as any[]) || [],
+        rawStudents: getSafeArray(studentsQuery.data),
+        rawSessions: getSafeArray(sessionsQuery.data),
+        rawStudentInvoices: getSafeArray(studentInvoicesQuery.data),
         fetchDashboardData: () => queryClient.invalidateQueries(), // Or specific keys
         updateSessionStatus: (id: string, status: 'scheduled' | 'completed' | 'cancelled') => updateSessionStatusMutation.mutateAsync({ id, status })
     };

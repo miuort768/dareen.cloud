@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, ChevronLeft, Target, Rocket
+    Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, Rocket
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -9,7 +9,7 @@ import { useApp } from '../context/AppContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
-import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
+import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PageLoader } from '../components/ui/PageLoader';
@@ -47,19 +47,21 @@ export const StudentDashboard = () => {
                 const data = await res.json();
                 setStudentData(data);
 
-                if (data.isLive && data.activeSession) {
+                if (data.isLive && data.activeSession && data.activeSession.startedAt) {
                     const startedAt = new Date(data.activeSession.startedAt).getTime();
-                    activeStartRef.current = startedAt;
-                    if (!timerTickRef.current) {
-                        timerTickRef.current = setInterval(() => {
-                            if (activeStartRef.current) {
-                                setActiveTimer({
-                                    seconds: Math.floor((Date.now() - activeStartRef.current) / 1000),
-                                    subject: data.activeSession.subject,
-                                    teacherName: data.activeSession.teacherName || ''
-                                });
-                            }
-                        }, 1000);
+                    if (!isNaN(startedAt)) {
+                        activeStartRef.current = startedAt;
+                        if (!timerTickRef.current) {
+                            timerTickRef.current = setInterval(() => {
+                                if (activeStartRef.current) {
+                                    setActiveTimer({
+                                        seconds: Math.round((Date.now() - activeStartRef.current) / 1000),
+                                        subject: data.activeSession.subject,
+                                        teacherName: data.activeSession.teacherName || ''
+                                    });
+                                }
+                            }, 1000);
+                        }
                     }
                 } else {
                     if (timerTickRef.current) {
@@ -84,11 +86,6 @@ export const StudentDashboard = () => {
         const secs = totalSecs % 60;
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
-
-    const latestCompletedSession = useMemo(() => {
-        const completed = [...sessions].filter(s => s.status === 'completed').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        return completed[0];
-    }, [sessions]);
 
     useEffect(() => {
         const fetchStudentData = async () => {
@@ -131,7 +128,6 @@ export const StudentDashboard = () => {
 
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const { next } = getNextRank(points, STUDENT_RANKS);
 
     const weeklySchedule = useMemo(() => {
         if (!studentData) return [];
@@ -346,7 +342,7 @@ export const StudentDashboard = () => {
                         <h3 className="text-sm md:text-xl font-heading font-black text-white uppercase tracking-tight mb-6">إنجازاتك</h3>
                         <div className="grid grid-cols-3 gap-4">
                             {allBadges.slice(0, 6).map((badge, idx) => {
-                                const isEarned = (studentData?.badges || '').includes(badge.id);
+                                const isEarned = studentData?.badges && (typeof studentData.badges === 'string' || Array.isArray(studentData.badges)) ? studentData.badges.includes(badge.id) : false;
                                 return (
                                     <div key={idx} className="flex flex-col items-center gap-2">
                                         <div className={cn(
@@ -431,7 +427,7 @@ export const StudentDashboard = () => {
                             </div>
                             <div className="p-6 md:p-10 grid grid-cols-3 gap-4 md:gap-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
                                 {allBadges.map((badge, idx) => {
-                                    const isEarned = (studentData?.badges || '').includes(badge.id);
+                                    const isEarned = studentData?.badges && (typeof studentData.badges === 'string' || Array.isArray(studentData.badges)) ? studentData.badges.includes(badge.id) : false;
                                     return (
                                         <div key={idx} className="flex flex-col items-center gap-2 md:gap-4 text-center">
                                             <div className={cn(

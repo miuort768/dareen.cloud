@@ -4,9 +4,10 @@ import { useMemo } from 'react';
 
 interface TopAttendanceStudentsProps {
     sessions: any[];
+    onStudentClick?: (student: any) => void;
 }
 
-export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) => {
+export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanceStudentsProps) => {
     const topPresentStudents = useMemo(() => {
         const studentStats: Record<string, { name: string; count: number }> = {};
         const now = new Date();
@@ -64,7 +65,8 @@ export const TopAttendanceStudents = ({ sessions }: TopAttendanceStudentsProps) 
                     topPresentStudents.map((stu, i) => (
                         <div 
                             key={i} 
-                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 hover:border-amber-500/50 transition-all rounded-none group relative overflow-hidden"
+                            onClick={() => onStudentClick?.({ id: stu.name, name: stu.name })}
+                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 hover:border-amber-500/50 transition-all rounded-none group relative overflow-hidden cursor-pointer"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="relative">

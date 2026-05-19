@@ -57,7 +57,10 @@ export const TeacherDashboard = () => {
                         <ModernAnnouncements />
                         
                         {(stats.todayTimeline || []).length > 0 && (
-                            <TeacherSessionTimeline sessions={stats.todayTimeline || []} />
+                            <TeacherSessionTimeline 
+                                sessions={stats.todayTimeline || []} 
+                                onStudentClick={setBriefingStudent}
+                            />
                         )}
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,7 +74,10 @@ export const TeacherDashboard = () => {
                     </div>
 
                     <div className="lg:col-span-4 space-y-6">
-                        <TopAttendanceStudents sessions={rawSessions} />
+                        <TopAttendanceStudents 
+                            sessions={rawSessions} 
+                            onStudentClick={setBriefingStudent}
+                        />
                     </div>
                 </div>
             </div>

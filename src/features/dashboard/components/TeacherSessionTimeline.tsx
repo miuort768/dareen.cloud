@@ -11,9 +11,10 @@ interface TimelineSession {
 
 interface TeacherSessionTimelineProps {
     sessions: TimelineSession[];
+    onStudentClick?: (student: any) => void;
 }
 
-export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps) => {
+export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSessionTimelineProps) => {
     if (!sessions || sessions.length === 0) return null;
 
     const sortedSessions = [...sessions].sort((a, b) => a.time.localeCompare(b.time));
@@ -47,8 +48,9 @@ export const TeacherSessionTimeline = ({ sessions }: TeacherSessionTimelineProps
                     return (
                         <div
                             key={session.id}
+                            onClick={() => onStudentClick?.({ id: session.studentName, name: session.studentName })}
                             className={cn(
-                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[160px] p-4 rounded-none border transition-all relative group/card shadow-sm",
+                                "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[160px] p-4 rounded-none border transition-all relative group/card shadow-sm cursor-pointer",
                                 isCompleted
                                     ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-500/30"
                                     : isCancelled

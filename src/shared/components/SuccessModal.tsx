@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CheckCircle2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -12,6 +12,7 @@ interface SuccessModalProps {
 
 export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message, onClose, autoClose = true }: SuccessModalProps) => {
     const [isExiting, setIsExiting] = useState(false);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -25,9 +26,16 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
         }
     }, [isOpen, autoClose]);
 
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
     const handleClose = () => {
         setIsExiting(true);
-        setTimeout(onClose, 300); // Wait for exit animation
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(onClose, 300); // Wait for exit animation
     };
 
     if (!isOpen && !isExiting) return null;

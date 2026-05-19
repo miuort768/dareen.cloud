@@ -32,7 +32,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
     if (response.status === 401) {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('app_isAuthenticated');
-        // window.location.href = '/login';
+        window.dispatchEvent(new Event('auth_logout'));
     }
 
     if (!response.ok) {
@@ -53,7 +53,8 @@ export const api = {
         let fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
         if (options.params) {
             const params = new URLSearchParams(options.params).toString();
-            fullUrl += `?${params}`;
+            const separator = fullUrl.includes('?') ? '&' : '?';
+            fullUrl += `${separator}${params}`;
         }
         const response = await fetchWithProgress(fullUrl, {
             ...options,

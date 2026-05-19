@@ -129,6 +129,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [isAuthenticated, currentUser]);
 
+    useEffect(() => {
+        const handleForceLogout = () => {
+            logout();
+        };
+        window.addEventListener('auth_logout', handleForceLogout);
+        return () => {
+            window.removeEventListener('auth_logout', handleForceLogout);
+        };
+    }, []);
+
     return (
         <AuthContext.Provider value={{ currentUser, isAuthenticated, isLoading, login, logout, updateCurrentUser }}>
             {children}

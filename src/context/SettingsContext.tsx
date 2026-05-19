@@ -92,10 +92,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.academy_address !== undefined && settings.academy_address !== null) setAcademyAddressState(settings.academy_address);
                     if (settings.admin_phone !== undefined && settings.admin_phone !== null) setAdminPhoneState(settings.admin_phone);
                     if (settings.theme_color !== undefined && settings.theme_color !== null) setThemeColorState(settings.theme_color);
-                    if (settings.notifications_enabled !== undefined && settings.notifications_enabled !== null) setNotificationsEnabledState(settings.notifications_enabled === 'true');
-                    if (settings.auto_backup !== undefined && settings.auto_backup !== null) setAutoBackupState(settings.auto_backup === 'true');
-                    if (settings.maintenance_mode !== undefined && settings.maintenance_mode !== null) setMaintenanceModeState(settings.maintenance_mode === 'true');
-                    if (settings.whatsapp_auto_notify !== undefined && settings.whatsapp_auto_notify !== null) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
+                    if (settings.notifications_enabled !== undefined && settings.notifications_enabled !== null) setNotificationsEnabledState(settings.notifications_enabled === true || settings.notifications_enabled === 'true');
+                    if (settings.auto_backup !== undefined && settings.auto_backup !== null) setAutoBackupState(settings.auto_backup === true || settings.auto_backup === 'true');
+                    if (settings.maintenance_mode !== undefined && settings.maintenance_mode !== null) setMaintenanceModeState(settings.maintenance_mode === true || settings.maintenance_mode === 'true');
+                    if (settings.whatsapp_auto_notify !== undefined && settings.whatsapp_auto_notify !== null) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === true || settings.whatsapp_auto_notify === 'true');
                     if (settings.default_session_price !== undefined && settings.default_session_price !== null) setDefaultSessionPriceState(Number(settings.default_session_price));
                     if (settings.default_teacher_price !== undefined && settings.default_teacher_price !== null) setDefaultTeacherPriceState(Number(settings.default_teacher_price));
                     if (settings.currency_symbol !== undefined && settings.currency_symbol !== null) setCurrencySymbolState(settings.currency_symbol);
@@ -103,7 +103,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     if (settings.semesters !== undefined && settings.semesters !== null) setSemestersState(settings.semesters);
                     if (settings.whatsapp_template !== undefined && settings.whatsapp_template !== null) setWhatsappTemplateState(settings.whatsapp_template);
                     if (settings.balance_warning_threshold !== undefined && settings.balance_warning_threshold !== null) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
-                    if (settings.backdate_lock_enabled !== undefined && settings.backdate_lock_enabled !== null) setBackdateLockEnabledState(settings.backdate_lock_enabled === 'true');
+                    if (settings.backdate_lock_enabled !== undefined && settings.backdate_lock_enabled !== null) setBackdateLockEnabledState(settings.backdate_lock_enabled === true || settings.backdate_lock_enabled === 'true');
                     if (settings.teacher_commission_type !== undefined && settings.teacher_commission_type !== null) setTeacherCommissionTypeState(settings.teacher_commission_type as any);
                     if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) setAutoFreezeThresholdState(Number(settings.auto_freeze_threshold));
                     if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) setTelegramHandleState(settings.telegram_handle);

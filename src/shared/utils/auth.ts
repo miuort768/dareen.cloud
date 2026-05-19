@@ -6,14 +6,20 @@ export const authUtils = {
     },
 
     logout: () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('app_isAuthenticated');
+        try {
+            localStorage.removeItem('user');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('app_isAuthenticated');
+        } catch { /* ignore */ }
         window.location.href = '/login';
     },
 
     getCurrentUser: () => {
-        const user = localStorage.getItem('user');
-        return user ? JSON.parse(user) : null;
+        try {
+            const user = localStorage.getItem('user');
+            return user ? JSON.parse(user) : null;
+        } catch {
+            return null;
+        }
     }
 };

@@ -223,6 +223,8 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             socket.off('session_invite', handleSessionInvite);
             socket.off('session_ended', handleSessionEnded);
 
+            // Clean up all pending typing timeouts to prevent memory leaks
+            Object.values(typingTimeouts).forEach(timeout => clearTimeout(timeout));
         };
     }, [isAuthenticated, currentUser, queryClient]);
 

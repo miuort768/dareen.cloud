@@ -39,8 +39,22 @@ export const ParentDashboard = () => {
                 const students = await api.get<any[]>('/parents/my-children');
                 setChildren(students);
                 
-                const sessionsPromises = students.map(s => api.get<any[]>(`/parents/child-sessions/${s.id}`));
-                const logsPromises = students.map(s => api.get<any[]>(`/student-portal/me/points-log?studentId=${s.id}`));
+                const sessionsPromises = students.map(async s => {
+                    try {
+                        return await api.get<any[]>(`/parents/child-sessions/${s.id}`) || [];
+                    } catch (e) {
+                        console.error(`Failed to fetch sessions for child ${s.id}:`, e);
+                        return [];
+                    }
+                });
+                const logsPromises = students.map(async s => {
+                    try {
+                        return await api.get<any[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
+                    } catch (e) {
+                        console.error(`Failed to fetch logs for child ${s.id}:`, e);
+                        return [];
+                    }
+                });
                 
                 const [allSessionsResults, allLogsResults] = await Promise.all([
                     Promise.all(sessionsPromises),
@@ -51,10 +65,14 @@ export const ParentDashboard = () => {
                 
                 // Add student name to each log for parent view
                 const flattenedLogs = allLogsResults.map((logs, idx) => 
-                    logs.map((l: any) => ({ ...l, studentName: students[idx].name }))
+                    (Array.isArray(logs) ? logs : []).map((l: any) => ({ ...l, studentName: students[idx].name }))
                 ).flat();
                 
-                setAllPointLogs(flattenedLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()));
+                setAllPointLogs(flattenedLogs.sort((a, b) => {
+                    const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+                    const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+                    return timeB - timeA;
+                }));
 
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
@@ -151,7 +169,7 @@ export const ParentDashboard = () => {
                 });
             });
         });
-        return tasks.sort((a, b) => a.time.localeCompare(b.time));
+        return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     }, [children, todayArabic]);
 
     if (isLoading) {
@@ -338,7 +356,14 @@ export const ParentDashboard = () => {
                                 </h4>
                                 <p className="text-[7px] font-bold text-slate-400 dark:text-slate-500 mt-1 flex items-center gap-1">
                                     <Clock size={8} />
-                                    {format(new Date(log.timestamp), 'eeee, d MMMM HH:mm', { locale: ar })}
+                                    {log.timestamp ? (() => {
+                                        try {
+                                            const d = new Date(log.timestamp);
+                                            return isNaN(d.getTime()) ? '' : format(d, 'eeee, d MMMM HH:mm', { locale: ar });
+                                        } catch {
+                                            return '';
+                                        }
+                                    })() : ''}
                                 </p>
                             </div>
                         </div>
