@@ -112,6 +112,7 @@ export const Dashboard = () => {
                 <MobileAdminDashboard 
                     stats={stats} 
                     lowBalanceStudents={lowBalanceStudents} 
+                    onRefresh={fetchDashboardData}
                 />
             </div>
         </div>
