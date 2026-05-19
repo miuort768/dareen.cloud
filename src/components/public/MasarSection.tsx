@@ -29,11 +29,13 @@ export const MasarSection = () => {
                                 {/* Decorative Glow behind the image */}
                                 <div className="absolute w-64 h-64 bg-indigo-500/20 blur-[80px] rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 
-                                <img
-                                    src="/dareen_books_portal_v3.png"
-                                    alt="بوابة الكتب والملخصات - دارين"
-                                    className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
-                                />
+<img
+    src="/dareen_books_portal_v3.png"
+    alt="بوابة الكتب والملخصات - دارين"
+    loading="lazy"
+    decoding="async"
+    className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+/>
                             </div>
                         </div>
 

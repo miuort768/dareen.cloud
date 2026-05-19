@@ -77,7 +77,7 @@ export const Home = () => {
             name: "أبو فهد",
             role: "ولي أمر",
             content: "والله يا جماعة دارين السابعة غير، عيالي استفادوا حيل وصاروا يحبون الحصة. الله يبيض وجيهكم وما قصرتوا صراحة على هالمجهود.",
-            avatar: "/images/avatars/dad1.png"
+            avatar: "/images/avatars/mom1.png"
         },
         {
             name: "أم جاسم",

@@ -382,7 +382,7 @@ export const Blog = () => {
                                         >
                                             <div className="relative aspect-video overflow-hidden">
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-10" />
-                                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 <div className="absolute top-3 right-3 z-20">
                                                     <span className="bg-indigo-600 text-white text-xs font-black px-3 py-1 ">{post.subject || post.category}</span>
                                                 </div>

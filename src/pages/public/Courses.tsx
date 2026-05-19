@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Search, Users, Sparkles, LayoutGrid, GraduationCap, BookOpen, Globe, Languages, Target, Star } from 'lucide-react';
+import { Search, Users, Sparkles, LayoutGrid, GraduationCap, BookOpen, Globe, Languages, Target, Star, MessageCircle, Clock, ChevronDown } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
-// Import course images
 import foundationNewImg from '../../assets/courses/foundation-new.jpg';
 import foundationV2Img from '../../assets/courses/foundation-v2.jpg';
 import kuwaitiImg from '../../assets/courses/kuwaiti-curriculum.jpg';
@@ -23,264 +23,277 @@ import englishImg from '../../assets/courses/english-course.jpg';
 import memorizeImg from '../../assets/courses/memorize-curriculum.jpg';
 
 const COURSES = [
-    { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'تأسيس شامل في اللغة العربية والإنجليزية والرياضيات بأساليب تفاعلية حديثة.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img },
-    { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationNewImg },
-    { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', rating: 4.7, price: 'متاح الآن', image: memorizeImg },
-    { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', rating: 4.6, price: 'متاح الآن', image: tajweedImg },
-
-    // Gulf & Regional Curricula
-    { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '4.5k', rating: 4.7, price: 'متاح الآن', image: kuwaitiImg },
-    { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل للمنهج السعودي المطور لجميع المراحل مع نخبة من الأساتذة.', students: '4.1k', rating: 4.8, price: 'متاح الآن', image: saudiImg },
-    { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة، مع التركيز على نواتج التعلم المتطورة.', students: '3.2k', rating: 4.5, price: 'متاح الآن', image: uaeImg },
-    { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '3.3k', rating: 4.6, price: 'متاح الآن', image: qatariImg },
-    { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', rating: 4.4, price: 'متاح الآن', image: omanImg },
-    { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية للمنهج المصري بأسلوب مبسط يحاكي النظام التعليمي.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: egyptImg },
-    { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية، مع التركيز على المواد العلمية والأدبية.', students: '2.8k', rating: 4.3, price: 'متاح الآن', image: jordanImg },
-
-    { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: englishImg },
-    { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة لجميع المستويات.', students: '4.2k', rating: 4.7, price: 'متاح الآن', image: arabicImg },
-    { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين بأسلوب تفاعلي ممتع.', students: '2.9k', rating: 4.5, price: 'متاح الآن', image: frenchImg },
-    { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات والأساليب العلمية.', students: '3.5k', rating: 4.9, price: 'متاح الآن', image: skillsImg },
+  { id: 1, category: 'foundation', title: 'كورس التأسيس الشامل', desc: 'تأسيس شامل في اللغة العربية والإنجليزية والرياضيات بأساليب تفاعلية حديثة.', students: '5.2k', rating: 4.9, price: 'متاح الآن', image: foundationV2Img, level: 'مبتدئ', sessions: '24 حصة', color: 'from-emerald-500 to-teal-600' },
+  { id: 2, category: 'quran', title: 'حفظ القرآن الكريم', desc: 'حلقات تحفيظ فردية وجماعية مع التركيز على التجويد والمراجعة المستمرة.', students: '8.4k', rating: 4.8, price: 'متاح الآن', image: foundationNewImg, level: 'جميع المستويات', sessions: 'مستمر', color: 'from-amber-500 to-orange-600' },
+  { id: 14, category: 'quran', title: 'حفظ مقرر دراسي', desc: 'تحفيظ المنهج الدراسي للتربية الإسلامية بدقة وإتقان لجميع المراحل الدراسية.', students: '4.3k', rating: 4.7, price: 'متاح الآن', image: memorizeImg, level: 'جميع المراحل', sessions: 'حسب المقرر', color: 'from-amber-500 to-orange-600' },
+  { id: 15, category: 'quran', title: 'أحكام التجويد والتلاوة', desc: 'دراسة تطبيقية ونظرية لأحكام التجويد لتحسين جودة التلاوة وإتقان مخارج الحروف.', students: '3.6k', rating: 4.6, price: 'متاح الآن', image: tajweedImg, level: 'متوسط', sessions: '12 حصة', color: 'from-amber-500 to-orange-600' },
+  { id: 3, category: 'gulf', title: 'المنهج الكويتي', desc: 'تغطية شاملة لجميع مواد المنهج الكويتي للمراحل الابتدائية والمتوسطة والثانوية.', students: '4.5k', rating: 4.7, price: 'متاح الآن', image: kuwaitiImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 9, category: 'gulf', title: 'المنهج السعودي', desc: 'شرح متكامل للمنهج السعودي المطور لجميع المراحل مع نخبة من الأساتذة.', students: '4.1k', rating: 4.8, price: 'متاح الآن', image: saudiImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 10, category: 'gulf', title: 'المنهج الإماراتي', desc: 'متابعة دقيقة وشرح وافٍ للمناهج الإماراتية الحديثة.', students: '3.2k', rating: 4.5, price: 'متاح الآن', image: uaeImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 4, category: 'gulf', title: 'المنهج القطري', desc: 'دروس تقوية ومتابعة يومية لطلاب المنهج القطري مع نخبة من المعلمين المختصين.', students: '3.3k', rating: 4.6, price: 'متاح الآن', image: qatariImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 5, category: 'gulf', title: 'منهج سلطنة عُمان', desc: 'شرح مبسط ووافٍ للمناهج العمانية، يركز على الفهم العميق والتحضير للاختبارات.', students: '3.1k', rating: 4.4, price: 'متاح الآن', image: omanImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 11, category: 'gulf', title: 'المنهج المصري', desc: 'دروس تقوية للمنهج المصري بأسلوب مبسط يحاكي النظام التعليمي.', students: '4.8k', rating: 4.7, price: 'متاح الآن', image: egyptImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 6, category: 'gulf', title: 'المنهج الأردني', desc: 'تعليم عالي الجودة يواكب المعايير الأردنية.', students: '2.8k', rating: 4.3, price: 'متاح الآن', image: jordanImg, level: 'جميع المراحل', sessions: 'مستمر', color: 'from-sky-500 to-blue-600' },
+  { id: 7, category: 'english', title: 'اللغة الإنجليزية', desc: 'تطوير مهارات التحدث والكتابة باللغة الإنجليزية باستخدام مناهج عالمية تفاعلية.', students: '3.9k', rating: 4.8, price: 'متاح الآن', image: englishImg, level: 'جميع المستويات', sessions: '20 حصة', color: 'from-violet-500 to-purple-600' },
+  { id: 12, category: 'english', title: 'اللغة العربية', desc: 'تحسين مهارات القراءة والكتابة والنحو العربي بأساليب مبسطة وشيقة.', students: '4.2k', rating: 4.7, price: 'متاح الآن', image: arabicImg, level: 'جميع المستويات', sessions: '16 حصة', color: 'from-violet-500 to-purple-600' },
+  { id: 13, category: 'english', title: 'اللغة الفرنسية', desc: 'تعلم أساسيات ومستويات اللغة الفرنسية مع نخبة من المتخصصين.', students: '2.9k', rating: 4.5, price: 'متاح الآن', image: frenchImg, level: 'مبتدئ', sessions: '12 حصة', color: 'from-violet-500 to-purple-600' },
+  { id: 8, category: 'skills', title: 'كورس القدرات', desc: 'تجهيز الطلاب لاختبارات القدرات العامة (الكمي واللفظي) بأحدث الاستراتيجيات.', students: '3.5k', rating: 4.9, price: 'متاح الآن', image: skillsImg, level: 'ثانوي', sessions: '15 حصة', color: 'from-rose-500 to-pink-600' },
 ];
 
 const CATEGORIES = [
-    { label: 'الكل', value: 'all', icon: LayoutGrid },
-    { label: 'التأسيس', value: 'foundation', icon: GraduationCap },
-    { label: 'القرآن الكريم', value: 'quran', icon: BookOpen },
-    { label: 'مناهج الخليج', value: 'gulf', icon: Globe },
-    { label: 'اللغات', value: 'english', icon: Languages },
-    { label: 'القدرات', value: 'skills', icon: Target },
+  { label: 'الكل', value: 'all', icon: LayoutGrid, color: 'text-slate-900 dark:text-slate-100' },
+  { label: 'التأسيس', value: 'foundation', icon: GraduationCap, color: 'text-emerald-500' },
+  { label: 'القرآن الكريم', value: 'quran', icon: BookOpen, color: 'text-amber-500' },
+  { label: 'مناهج الخليج', value: 'gulf', icon: Globe, color: 'text-sky-500' },
+  { label: 'اللغات', value: 'english', icon: Languages, color: 'text-violet-500' },
+  { label: 'القدرات', value: 'skills', icon: Target, color: 'text-rose-500' },
 ];
 
-// Star rating component
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.06 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
 const StarRating = ({ rating }: { rating: number }) => (
-    <div className="flex items-center gap-0.5">
-        {[1, 2, 3, 4, 5].map((star) => (
-            <Star
-                key={star}
-                size={10}
-                className={star <= Math.floor(rating) ? 'text-amber-400 fill-amber-400' : 'text-amber-200 fill-amber-100'}
-            />
-        ))}
-        <span className="text-[9px] font-black text-gray-600 mr-1">{rating}</span>
-    </div>
+  <div className="flex items-center gap-0.5">
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Star
+        key={star}
+        size={10}
+        className={star <= Math.floor(rating) ? 'text-amber-400 fill-amber-400' : 'text-amber-200 fill-amber-100'}
+      />
+    ))}
+    <span className="text-[10px] font-black text-gray-600 mr-1">{rating}</span>
+  </div>
 );
 
 export const Courses = () => {
-    const { adminPhone } = useSettingsStore();
-    const whatsappNumber = adminPhone.replace(/\D/g, '');
-    const [activeCategory, setActiveCategory] = useState('all');
-    const [searchQuery, setSearchQuery] = useState('');
+  const { adminPhone } = useSettingsStore();
+  const whatsappNumber = adminPhone.replace(/\D/g, '');
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredCourses = COURSES.filter(course => {
-        const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
-        const searchLower = (searchQuery || '').toLowerCase().trim();
-        const matchesSearch = !searchLower ||
-            (course.title || '').toLowerCase().includes(searchLower) ||
-            (course.desc || '').toLowerCase().includes(searchLower);
-        return matchesCategory && matchesSearch;
-    });
+  const filteredCourses = useMemo(() =>
+    COURSES.filter(course => {
+      const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
+      const searchLower = (searchQuery || '').toLowerCase().trim();
+      const matchesSearch = !searchLower ||
+        (course.title || '').toLowerCase().includes(searchLower) ||
+        (course.desc || '').toLowerCase().includes(searchLower);
+      return matchesCategory && matchesSearch;
+    }),
+    [activeCategory, searchQuery]
+  );
 
-    return (
-        <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
-            <SEO
-                title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | دارين السابعة"
-                description="استكشف أفضل الدورات التعليمية والدروس الخصوصية الأونلاين في الخليج (الكويت، السعودية، قطر، الامارات، سلطنة عمان). تأسيس شامل، مناهج خليجية، وتحفيظ قرآن."
-                keywords="دورات الكويت, دروس خصوصية قطر, معلمين السعودية, منصة الامارات التعليمية, منهج سلطنة عمان, قدرات وتحصيلي السعودية, دارين السابعة, تحفيظ قرآن الخليج"
-                url="https://dareen-edu.com/courses"
-                breadcrumbs={[
-                    { name: 'الرئيسية', item: '/' },
-                    { name: 'الدورات التعليمية', item: '/courses' }
-                ]}
-            />
-            <PublicNavbar />
+  return (
+    <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100 relative flex flex-col">
+      <SEO
+        title="أفضل دورات تعليمية في الكويت، قطر، السعودية، الامارات، وعمان | دارين السابعة"
+        description="استكشف أفضل الدورات التعليمية والدروس الخصوصية الأونلاين في الخليج. تأسيس شامل، مناهج خليجية، وتحفيظ قرآن."
+        keywords="دورات الكويت, دروس خصوصية قطر, معلمين السعودية, منصة الامارات التعليمية, منهج سلطنة عمان, قدرات وتحصيلي السعودية, دارين السابعة, تحفيظ قرآن الخليج"
+        url="https://dareen-edu.com/courses"
+        breadcrumbs={[
+          { name: 'الرئيسية', item: '/' },
+          { name: 'الدورات التعليمية', item: '/courses' }
+        ]}
+      />
+      <PublicNavbar />
 
-            <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden bg-[#fafafa] dark:bg-slate-950">
-                {/* Background Art - Premium Royal Theme */}
-                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                    {/* Radial Gradients */}
-                    <div className="absolute inset-0 opacity-[0.1]" 
-                         style={{ 
-                             backgroundImage: 'radial-gradient(circle at 10% 20%, #4F46E5 0%, transparent 40%), radial-gradient(circle at 90% 80%, #7C3AED 0%, transparent 40%), radial-gradient(circle at 50% 50%, #EEF2FF 0%, transparent 60%)',
-                             filter: 'blur(100px)'
-                         }}>
-                    </div>
-                    
-                    {/* Subtle Decorative Blobs */}
-                    <div className="absolute top-[20%] -left-[10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px]"></div>
-                    <div className="absolute bottom-[20%] -right-[10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-[120px]"></div>
-
-                    {/* Geometric Shapes - Light & Visible */}
-                    <div className="absolute top-[10%] left-[5%] w-64 h-64 border border-indigo-500/10 rounded-full animate-spin-slow"></div>
-                    <div className="absolute top-[15%] left-[8%] w-48 h-48 border border-dashed border-purple-500/10 rounded-full animate-reverse-spin-slow"></div>
-                    <div className="absolute bottom-[10%] right-[10%] w-96 h-96 border border-indigo-500/5 rounded-full animate-pulse"></div>
-                    
-                    {/* Brutalist Lines */}
-                    <div className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-indigo-500/10 to-transparent"></div>
-                    <div className="absolute bottom-[15%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/10 to-transparent"></div>
-
-                    {/* Subtle Mesh Pattern */}
-                    <div className="absolute inset-0 z-0 opacity-[0.04]"
-                         style={{ 
-                             backgroundImage: 'url("https://www.transparenttextures.com/patterns/simple-dashed.png")',
-                             backgroundSize: '150px 150px'
-                         }}>
-                    </div>
-                </div>
-
-                <div className="container mx-auto px-4 relative z-10">
-
-                    {/* Header */}
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/50 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6 animate-fade-in group hover:border-indigo-200 dark:hover:border-indigo-500/50 shadow-sm transition-all">
-                            <Sparkles size={14} className="text-indigo-600 dark:text-indigo-400" />
-                            <span className="text-[10px] font-black text-gray-500 dark:text-indigo-300">استكشف مستقبل التعلم</span>
-                        </div>
-                        <h1 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight relative">
-                            <span className="sr-only">أفضل الدورات التعليمية والدروس الخصوصية في الكويت ودول الخليج - تحفيظ قرآن وتأسيس شامل</span>
-                            <span className="block mb-2 md:mb-3" aria-hidden="true">دورات <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">دارين السابعة</span></span>
-                            <span className="text-xl md:text-3xl text-gray-400 dark:text-slate-400 font-bold block" aria-hidden="true">
-                                استثمر في <span className="text-indigo-600 underline decoration-amber-500/30 decoration-8 underline-offset-8">مستقبل طفلك</span> اليوم
-                            </span>
-                        </h1>
-                        <p className="text-xs md:text-lg text-slate-900 dark:text-slate-100 max-w-3xl mx-auto leading-relaxed font-black mt-8">
-                            نقدم باقة متنوعة من البرامج التعليمية المصممة بعناية لتناسب جميع المستويات والمراحل الدراسية، بأساليب تفاعلية تجعل التعلم متعة حقيقية.
-                        </p>
-                    </div>
-
-                    {/* Search & Filters */}
-                    <div className="max-w-5xl mx-auto mb-12 relative px-2">
-                        <div className="flex flex-col md:flex-row gap-4">
-                            <div className="flex-1 relative group">
-                                <input
-                                    type="text"
-                                    placeholder="ابحث عن دورتك المفضلة..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full px-12 py-5 rounded-xl bg-white border border-gray-100 shadow-2xl shadow-indigo-500/5 focus:border-indigo-500/30 focus:ring-4 focus:ring-indigo-500/5 outline-none transition-all text-lg placeholder:text-gray-300 font-bold"
-                                />
-                                <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 w-6 h-6 group-focus-within:text-indigo-600 transition-colors" />
-                            </div>
-                            <button className="px-10 py-5 bg-black text-white font-black text-sm  rounded-xl hover:bg-indigo-600 transition-all duration-500 shadow-xl shadow-black/10 flex items-center justify-center gap-3">
-                                <span>بحث ذكي</span>
-                                <Target size={18} className="animate-pulse" />
-                            </button>
-                        </div>
-
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap justify-center gap-2 md:gap-3 mt-8">
-                            {CATEGORIES.map((cat) => (
-                                <button
-                                    key={cat.value}
-                                    onClick={() => setActiveCategory(cat.value)}
-                                    className={`flex items-center justify-center gap-2 px-4 md:px-6 py-3.5 rounded-full font-black text-[10px] md:text-sm transition-all duration-500 border-2 ${activeCategory === cat.value
-                                        ? 'bg-slate-900 dark:bg-slate-100 border-slate-900 dark:border-slate-100 text-white dark:text-slate-950 shadow-xl shadow-black/20 dark:shadow-indigo-500/20 -translate-y-1'
-                                        : 'bg-white dark:bg-slate-900/50 dark:backdrop-blur-md text-gray-500 dark:text-slate-400 border-gray-100 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-100 hover:text-slate-900 dark:hover:text-slate-100'
-                                        }`}
-                                >
-                                    <cat.icon size={16} className={`${activeCategory === cat.value ? 'text-amber-500' : 'text-gray-300'} flex-shrink-0`} />
-                                    <span className={` whitespace-nowrap ${activeCategory === cat.value ? 'text-white' : ''}`}>{cat.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Desktop Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
-                        {filteredCourses.map((course) => (
-                            <div
-                                key={course.id}
-                                className="group relative bg-white dark:bg-slate-900/40 dark:backdrop-blur-xl border border-gray-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg shadow-gray-200/20 dark:shadow-black/50 hover:shadow-2xl dark:hover:shadow-indigo-500/10 transition-all duration-500"
-                            >
-                                {/* Premium Shine Effect on Hover */}
-                                <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-                                    <div className="absolute top-0 -left-[150%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:left-[150%] transition-all duration-1000 ease-in-out"></div>
-                                </div>
-
-                                {/* Course Header (Clean Image Area) */}
-                                <div className="h-44 sm:h-44 relative overflow-hidden bg-white dark:bg-slate-800/50 flex items-start justify-center">
-                                    <img
-                                        src={course.image}
-                                        alt={course.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="w-full h-full object-contain object-top scale-100 group-hover:scale-[1.03] transition-transform duration-500"
-                                    />
-                                    
-                                    {/* Corner Status Badge */}
-                                    <div className="absolute top-3 right-4 z-20">
-                                        <div className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-full text-[9px] font-black text-amber-500 shadow-sm flex items-center gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                                            {course.price}
-                                        </div>
-                                    </div>
-                                    {/* Star Rating Badge - Inside image container for perfect overlay */}
-                                    <div className="absolute bottom-3 left-4 z-30 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 px-2.5 py-1.5 flex items-center gap-1">
-                                        <StarRating rating={course.rating} />
-                                    </div>
-                                </div>
-
-                                {/* Course Content */}
-                                <div className="px-5 pt-3 pb-0 flex flex-col flex-grow relative">
-
-                                    <div className="mt-2 mb-2 flex-grow flex flex-col justify-start">
-                                        <h3 className="text-base md:text-lg font-black font-heading leading-tight text-slate-900 dark:text-slate-50 group-hover:text-indigo-600 transition-colors">
-                                            {course.title}
-                                        </h3>
-                                        <div className="h-1 w-12 bg-indigo-500/20 rounded-full mt-1.5 mb-2 group-hover:w-20 group-hover:bg-indigo-500/50 transition-all duration-700"></div>
-                                    </div>
-
-                                    <p className="text-gray-400 text-[11px] md:text-xs leading-relaxed font-medium line-clamp-3 mb-4 mt-2">
-                                        {course.desc}
-                                    </p>
-
-                                    <div className="mt-auto border-t border-gray-50">
-                                        <div className="flex items-center justify-between py-3 px-1">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 rounded-full bg-indigo-50 flex items-center justify-center">
-                                                    <Users size={12} className="text-indigo-500" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 leading-none">{course.students}</span>
-                                                    <span className="text-[8px] font-bold text-gray-400 dark:text-slate-500  mt-0.5">طالب مسجل</span>
-                                                </div>
-                                            </div>
-                                            <div className="bg-gradient-to-r from-indigo-600 to-purple-500 px-3 py-1 rounded-full shadow-lg shadow-purple-500/20 flex items-center gap-1.5 animate-pulse-slow">
-                                                <Sparkles size={10} className="text-white fill-white" />
-                                                <span className="text-[10px] font-black text-white">
-                                                    مجاناً
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {/* Full-width WhatsApp Button */}
-                                        <a
-                                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center justify-center gap-2 group/btn bg-black dark:bg-indigo-600 text-white w-full py-4 hover:bg-indigo-700 dark:hover:bg-indigo-700 transition-all duration-500 overflow-hidden relative"
-                                        >
-                                            <span className="relative z-10 text-[11px] font-black ">احجز عن طريق الواتساب</span>
-                                            <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/btn:left-[100%] transition-all duration-1000"></div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {filteredCourses.length === 0 && (
-                        <div className="text-center py-24 bg-white border border-dashed border-gray-200 rounded-none">
-                            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <Search size={32} className="text-gray-200" />
-                            </div>
-                            <h3 className="text-2xl font-black text-gray-900 mb-2">عفواً، لا توجد نتائج</h3>
-                            <p className="text-gray-400 font-medium">جرب البحث بكلمات مختلفة أو اختر تصنيفاً آخر.</p>
-                        </div>
-                    )}
-                </div>
-            </main>
-
-            <PublicFooter />
+      <main className="flex-grow pt-24 md:pt-32 pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-indigo-500/8 to-purple-500/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-sky-500/5 to-indigo-500/5 rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-indigo-200/20 to-transparent" />
         </div>
-    );
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+          <div className="text-center mb-10 md:mb-14">
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-6"
+            >
+              <Sparkles size={13} className="text-indigo-600 dark:text-indigo-400" />
+              <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">استكشف مسيرتك التعليمية</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-[1.15] tracking-tight"
+            >
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                دورات
+              </span>{' '}
+              دارين السابعة
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium"
+            >
+              برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="max-w-4xl mx-auto mb-10"
+          >
+            <div className="relative group">
+              <input
+                type="text"
+                placeholder="ابحث عن دورتك المفضلة..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-5 pr-12 py-4 rounded-2xl bg-white dark:bg-slate-900/80 dark:backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 shadow-lg shadow-slate-200/50 dark:shadow-black/20 focus:border-indigo-400/50 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-base placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold"
+              />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 dark:text-slate-600 w-5 h-5 group-focus-within:text-indigo-500 transition-colors" />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-black text-xs transition-all duration-300 ${
+                    activeCategory === cat.value
+                      ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 shadow-lg shadow-slate-900/20'
+                      : 'bg-white dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/50 hover:border-slate-900/20 dark:hover:border-slate-100/20 hover:text-slate-900 dark:hover:text-slate-100'
+                  }`}
+                >
+                  <cat.icon size={14} className={activeCategory === cat.value ? 'text-white dark:text-slate-950' : cat.color} />
+                  <span>{cat.label}</span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {filteredCourses.length > 0 ? (
+            <motion.div
+              key={activeCategory + searchQuery}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6"
+            >
+              {filteredCourses.map((course) => (
+                <motion.div
+                  key={course.id}
+                  variants={cardVariants}
+                  className="group relative bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/5 transition-all duration-500"
+                >
+                  <div className="relative h-44 overflow-hidden bg-slate-50 dark:bg-slate-800/30">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
+                    />
+
+                    {/* Gradient fade at bottom */}
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
+
+                    {/* Category badge */}
+                    <div className="absolute top-3 right-3 z-10">
+                      <div className={`px-2.5 py-1 rounded-lg text-[9px] font-black text-white shadow-lg bg-gradient-to-br ${course.color}`}>
+                        {CATEGORIES.find(c => c.value === course.category)?.label || course.category}
+                      </div>
+                    </div>
+
+                    {/* Rating badge */}
+                    <div className="absolute bottom-3 left-3 z-10">
+                      <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                        <StarRating rating={course.rating} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 pb-0 flex flex-col flex-1">
+                    <h3 className="text-sm md:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      {course.title}
+                    </h3>
+
+                    <div className="flex items-center gap-3 mt-2 mb-3">
+                      <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400 dark:text-slate-500">
+                        <GraduationCap size={10} />
+                        {course.level}
+                      </span>
+                      <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400 dark:text-slate-500">
+                        <Clock size={10} />
+                        {course.sessions}
+                      </span>
+                    </div>
+
+                    <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
+                      {course.desc}
+                    </p>
+
+                    <div className="mt-auto flex items-center justify-between py-3 border-t border-slate-100 dark:border-slate-800/50">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
+                          <Users size={12} className="text-indigo-500" />
+                        </div>
+                        <div>
+                          <span className="text-[11px] font-black text-slate-900 dark:text-slate-100 leading-none block">{course.students}</span>
+                          <span className="text-[8px] font-bold text-slate-400 dark:text-slate-500">طالب</span>
+                        </div>
+                      </div>
+
+                      <span className="flex items-center gap-1.5 text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-lg">
+                        <Sparkles size={10} />
+                        تجربة مجانية
+                      </span>
+                    </div>
+                  </div>
+
+                  <a
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-4 mb-4 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-[12px] font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 active:scale-[0.98]"
+                  >
+                    <MessageCircle size={14} />
+                    تواصل عبر واتساب
+                  </a>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-20"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
+                <Search size={28} className="text-slate-300 dark:text-slate-600" />
+              </div>
+              <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 mb-1">لا توجد نتائج</h3>
+              <p className="text-sm text-slate-400 dark:text-slate-500 font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
+            </motion.div>
+          )}
+        </div>
+      </main>
+
+      <PublicFooter />
+    </div>
+  );
 };

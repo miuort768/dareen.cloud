@@ -159,7 +159,7 @@ export const AdminBlog = () => {
                     {filteredPosts.map(post => (
                         <div key={post.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-md group overflow-hidden">
                             <div className="relative h-40 overflow-hidden">
-                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 <div className="absolute top-2 right-2">
                                     <span className="bg-red-600 text-white text-[10px] font-black px-2 py-1 uppercase">{post.category}</span>
                                 </div>

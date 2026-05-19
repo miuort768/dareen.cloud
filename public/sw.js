@@ -4,8 +4,7 @@ const ASSETS_TO_CACHE = [
   '/index.html',
   '/manifest.json',
   '/logo.png',
-  '/chat-avatar.jpg',
-  '/group-avatar.png'
+  '/chat-avatar.jpg'
 ];
 
 // Install Event

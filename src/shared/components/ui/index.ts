@@ -18,3 +18,5 @@ export { EmptyState }      from './EmptyState';
 export { StaggeredList, StaggeredGrid } from './StaggeredList';
 
 export { PageTransition }  from './PageTransition';
+
+export { Image }            from './Image';

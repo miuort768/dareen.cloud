@@ -15,7 +15,7 @@ export const SEO: React.FC<SEOProps> = ({
     title,
     description,
     keywords,
-    image = '/og-image.jpg',
+    image = '/logo.png',
     url = 'https://dareen-edu.com/',
     preloadImages = [],
     breadcrumbs
