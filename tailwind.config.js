@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         sans: ['Cairo', 'sans-serif'],
         heading: ['Tajawal', 'sans-serif'],
+        display: ['Changa', 'sans-serif'],
       },
       colors: {
         primary: {
