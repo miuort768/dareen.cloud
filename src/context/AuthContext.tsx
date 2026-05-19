@@ -15,12 +15,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(() => {
-        const savedUser = localStorage.getItem('app_current_user');
-        return savedUser ? JSON.parse(savedUser) : null;
+        try {
+            const savedUser = localStorage.getItem('app_current_user');
+            return savedUser ? JSON.parse(savedUser) : null;
+        } catch {
+            localStorage.removeItem('app_current_user');
+            return null;
+        }
     });
-    const [isAuthenticated, setIsAuthenticated] = useState(() =>
-        localStorage.getItem('app_isAuthenticated') === 'true'
-    );
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        try {
+            return localStorage.getItem('app_isAuthenticated') === 'true';
+        } catch {
+            return false;
+        }
+    });
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {

@@ -86,28 +86,28 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
             try {
                 const settings = await api.get<any>('/system/public-settings');
                 if (settings) {
-                    if (settings.academy_name) setAcademyNameState(settings.academy_name);
-                    if (settings.academy_logo) setAcademyLogoState(settings.academy_logo);
-                    if (settings.academy_tagline) setAcademyTaglineState(settings.academy_tagline);
-                    if (settings.academy_address) setAcademyAddressState(settings.academy_address);
-                    if (settings.admin_phone) setAdminPhoneState(settings.admin_phone);
-                    if (settings.theme_color) setThemeColorState(settings.theme_color);
-                    if (settings.notifications_enabled) setNotificationsEnabledState(settings.notifications_enabled === 'true');
-                    if (settings.auto_backup) setAutoBackupState(settings.auto_backup === 'true');
-                    if (settings.maintenance_mode) setMaintenanceModeState(settings.maintenance_mode === 'true');
-                    if (settings.whatsapp_auto_notify) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
-                    if (settings.default_session_price) setDefaultSessionPriceState(Number(settings.default_session_price));
-                    if (settings.default_teacher_price) setDefaultTeacherPriceState(Number(settings.default_teacher_price));
-                    if (settings.currency_symbol) setCurrencySymbolState(settings.currency_symbol);
-                    if (settings.semester_name) setSemesterNameState(settings.semester_name);
-                    if (settings.semesters) setSemestersState(settings.semesters);
-                    if (settings.whatsapp_template) setWhatsappTemplateState(settings.whatsapp_template);
-                    if (settings.balance_warning_threshold) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
-                    if (settings.backdate_lock_enabled) setBackdateLockEnabledState(settings.backdate_lock_enabled === 'true');
-                    if (settings.teacher_commission_type) setTeacherCommissionTypeState(settings.teacher_commission_type as any);
-                    if (settings.auto_freeze_threshold) setAutoFreezeThresholdState(Number(settings.auto_freeze_threshold));
-                    if (settings.telegram_handle) setTelegramHandleState(settings.telegram_handle);
-                    if (settings.hero_banners) setHeroBannersState(settings.hero_banners);
+                    if (settings.academy_name !== undefined && settings.academy_name !== null) setAcademyNameState(settings.academy_name);
+                    if (settings.academy_logo !== undefined && settings.academy_logo !== null) setAcademyLogoState(settings.academy_logo);
+                    if (settings.academy_tagline !== undefined && settings.academy_tagline !== null) setAcademyTaglineState(settings.academy_tagline);
+                    if (settings.academy_address !== undefined && settings.academy_address !== null) setAcademyAddressState(settings.academy_address);
+                    if (settings.admin_phone !== undefined && settings.admin_phone !== null) setAdminPhoneState(settings.admin_phone);
+                    if (settings.theme_color !== undefined && settings.theme_color !== null) setThemeColorState(settings.theme_color);
+                    if (settings.notifications_enabled !== undefined && settings.notifications_enabled !== null) setNotificationsEnabledState(settings.notifications_enabled === 'true');
+                    if (settings.auto_backup !== undefined && settings.auto_backup !== null) setAutoBackupState(settings.auto_backup === 'true');
+                    if (settings.maintenance_mode !== undefined && settings.maintenance_mode !== null) setMaintenanceModeState(settings.maintenance_mode === 'true');
+                    if (settings.whatsapp_auto_notify !== undefined && settings.whatsapp_auto_notify !== null) setWhatsappAutoNotifyState(settings.whatsapp_auto_notify === 'true');
+                    if (settings.default_session_price !== undefined && settings.default_session_price !== null) setDefaultSessionPriceState(Number(settings.default_session_price));
+                    if (settings.default_teacher_price !== undefined && settings.default_teacher_price !== null) setDefaultTeacherPriceState(Number(settings.default_teacher_price));
+                    if (settings.currency_symbol !== undefined && settings.currency_symbol !== null) setCurrencySymbolState(settings.currency_symbol);
+                    if (settings.semester_name !== undefined && settings.semester_name !== null) setSemesterNameState(settings.semester_name);
+                    if (settings.semesters !== undefined && settings.semesters !== null) setSemestersState(settings.semesters);
+                    if (settings.whatsapp_template !== undefined && settings.whatsapp_template !== null) setWhatsappTemplateState(settings.whatsapp_template);
+                    if (settings.balance_warning_threshold !== undefined && settings.balance_warning_threshold !== null) setBalanceWarningThresholdState(Number(settings.balance_warning_threshold));
+                    if (settings.backdate_lock_enabled !== undefined && settings.backdate_lock_enabled !== null) setBackdateLockEnabledState(settings.backdate_lock_enabled === 'true');
+                    if (settings.teacher_commission_type !== undefined && settings.teacher_commission_type !== null) setTeacherCommissionTypeState(settings.teacher_commission_type as any);
+                    if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) setAutoFreezeThresholdState(Number(settings.auto_freeze_threshold));
+                    if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) setTelegramHandleState(settings.telegram_handle);
+                    if (settings.hero_banners !== undefined && settings.hero_banners !== null) setHeroBannersState(settings.hero_banners);
                 }
             } catch (e) {
                 console.error("Error fetching settings:", e);

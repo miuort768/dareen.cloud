@@ -69,7 +69,7 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
   if (permission && currentUser) {
     const hasExplicitPermission = currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission);
     const isParentAccess = currentUser.role === 'parent' && (permission.startsWith('parent_') || permission === 'parent_announcements');
-    const isStudentAccess = currentUser.role === 'student' && (permission.startsWith('student_') || permission === 'parent_announcements');
+    const isStudentAccess = currentUser.role === 'student' && permission.startsWith('student_');
     const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard';
 
     if (!hasExplicitPermission && !isParentAccess && !isStudentAccess && !isTeacherDashboard) {
@@ -94,6 +94,7 @@ const DashboardRedirect = () => {
 function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
@@ -126,7 +127,7 @@ function App() {
         <div className="fixed top-0 inset-x-0 z-[9999] bg-amber-600 text-white text-[10px] font-black py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
           <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
-            onClick={() => window.location.href = '/settings'}
+            onClick={() => navigate('/settings')}
             className="underline hover:no-underline"
           >
             انقر هنا للإلغاء

@@ -7,6 +7,16 @@ import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
 
+const sanitizeHTML = (html: string) => {
+    if (!html) return '';
+    return html
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+        .replace(/on\w+\s*=\s*"[^"]*"/gi, '')
+        .replace(/on\w+\s*=\s*'[^']*'/gi, '')
+        .replace(/on\w+\s*=\s*[^\s>]+/gi, '')
+        .replace(/javascript:/gi, 'no-javascript:');
+};
+
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
     const [post, setPost] = useState<any>(null);
@@ -96,17 +106,19 @@ export const BlogPost = () => {
                     <div 
                         className="prose prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-red-600 prose-img:shadow-xl max-w-none mb-12"
                         dangerouslySetInnerHTML={{ 
-                            __html: post.content
-                                .split('\n')
-                                .map((line: string) => {
-                                    const trimmed = line.trim();
-                                    const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-                                    if (imgRegex.test(trimmed)) {
-                                        return `<img src="${trimmed}" alt="Article Image" class="w-full h-auto rounded-none shadow-lg my-8" />`;
-                                    }
-                                    return line;
-                                })
-                                .join('<br/>') 
+                            __html: sanitizeHTML(
+                                post.content
+                                    .split('\n')
+                                    .map((line: string) => {
+                                        const trimmed = line.trim();
+                                        const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+                                        if (imgRegex.test(trimmed)) {
+                                            return `<img src="${trimmed}" alt="Article Image" class="w-full h-auto rounded-none shadow-lg my-8" />`;
+                                        }
+                                        return line;
+                                    })
+                                    .join('<br/>')
+                            )
                         }}
                     />
                     

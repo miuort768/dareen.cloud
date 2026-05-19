@@ -17,7 +17,6 @@ class SocketService {
                 transports: ['polling', 'websocket'],
                 autoConnect: true,
                 auth: { token: token || 'guest' },
-                query: { token: token || 'guest' }, 
                 reconnection: true,
                 reconnectionAttempts: Infinity,
                 timeout: 30000
