@@ -620,95 +620,101 @@ html, body {
   }
 
   @media (max-width: 768px) {
-    /* ─── Global Font Scale on Mobile (Comfortable Readable Sizes) ─── */
-    h1, .text-4xl, .text-5xl { font-size: 1.5rem !important; line-height: 1.8rem !important; }
-    h2, .text-3xl { font-size: 1.3rem !important; line-height: 1.6rem !important; }
-    h3, .text-2xl { font-size: 1.15rem !important; line-height: 1.45rem !important; }
-    h4, .text-xl { font-size: 1.05rem !important; line-height: 1.35rem !important; }
-    h5, .text-lg { font-size: 0.95rem !important; }
-    h6, .text-base { font-size: 0.875rem !important; }
-    body, p, td, th, button {
-      font-size: 0.8125rem !important;
+    /* ─── Global Font Scale on Mobile ─────────────────────────────────────── */
+    h1, .text-4xl, .text-5xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }  /* 30px */
+    h2, .text-3xl            { font-size: 1.625rem !important; line-height: 2rem    !important; }  /* 26px */
+    h3, .text-2xl            { font-size: 1.375rem !important; line-height: 1.75rem !important; }  /* 22px */
+    h4, .text-xl             { font-size: 1.25rem  !important; line-height: 1.6rem  !important; }  /* 20px */
+    h5, .text-lg             { font-size: 1.125rem !important; line-height: 1.5rem  !important; }  /* 18px */
+    h6, .text-base           { font-size: 1rem     !important; line-height: 1.5rem  !important; }  /* 16px */
+    body, p, button {
+      font-size: 0.9375rem !important; /* 15px */
+    }
+    table td, table th {
+      font-size: 0.8125rem !important; /* 13px */
+    }
+    label, .text-xs, .badge {
+      font-size: 0.6875rem !important; /* 11px */
     }
 
-    /* ─── Global SVG Icon Sizes on Mobile (Dashboard icons use w-10.h-10) ─── */
-    .w-16.h-16 { width: 3rem !important; height: 3rem !important; }
-    .w-14.h-14 { width: 2.75rem !important; height: 2.75rem !important; }
-    .w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; }
-    .w-10.h-10 { width: 2.25rem !important; height: 2.25rem !important; }
-    .w-8.h-8 { width: 2rem !important; height: 2rem !important; }
-    .w-6.h-6 { width: 1.5rem !important; height: 1.5rem !important; }
-    .w-5.h-5 { width: 1.25rem !important; height: 1.25rem !important; }
-    .w-4.h-4 { width: 1rem !important; height: 1rem !important; }
+    /* ─── Global SVG Icon Sizes on Mobile ─────────────────────────────────── */
+    .w-16.h-16 { width: 3.5rem  !important; height: 3.5rem  !important; } /* 56px */
+    .w-14.h-14 { width: 3.25rem !important; height: 3.25rem !important; } /* 52px */
+    .w-12.h-12 { width: 3rem    !important; height: 3rem    !important; } /* 48px */
+    .w-10.h-10 { width: 2.5rem  !important; height: 2.5rem  !important; } /* 40px – Dashboard stats */
+    .w-8.h-8   { width: 2.25rem !important; height: 2.25rem !important; } /* 36px */
+    .w-6.h-6   { width: 1.75rem !important; height: 1.75rem !important; } /* 28px – button icons */
+    .w-5.h-5   { width: 1.5rem  !important; height: 1.5rem  !important; } /* 24px */
+    .w-4.h-4   { width: 1.25rem !important; height: 1.25rem !important; } /* 20px */
 
-    /* ─── Padding & Spacing Adjustments (Comfortable & Spacious) ─── */
-    .p-6 { padding: 1rem !important; }
-    .p-5 { padding: 0.9rem !important; }
-    .p-4 { padding: 0.75rem !important; }
-    .p-3 { padding: 0.6rem !important; }
+    /* ─── Padding & Spacing Adjustments ───────────────────────────────────── */
+    .p-6 { padding: 1.25rem !important; }  /* 20px */
+    .p-5 { padding: 1rem    !important; }  /* 16px */
+    .p-4 { padding: 0.875rem !important; } /* 14px */
+    .p-3 { padding: 0.75rem !important; }  /* 12px */
 
-    .gap-3 { gap: 0.6rem !important; }
-    .gap-4 { gap: 0.75rem !important; }
-    .gap-5 { gap: 0.9rem !important; }
-    .gap-6 { gap: 1rem !important; }
-    .gap-8 { gap: 1.25rem !important; }
-    .gap-10 { gap: 1.5rem !important; }
-    .gap-12 { gap: 1.75rem !important; }
+    .gap-3 { gap: 0.75rem !important; }   /* 12px */
+    .gap-4 { gap: 1rem    !important; }   /* 16px */
+    .gap-5 { gap: 1.125rem !important; }  /* 18px */
+    .gap-6 { gap: 1.25rem !important; }   /* 20px */
+    .gap-8 { gap: 1.5rem  !important; }   /* 24px */
+    .gap-10 { gap: 1.75rem !important; }  /* 28px */
+    .gap-12 { gap: 2rem    !important; }  /* 32px */
 
-    .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.6rem !important; }
-    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem !important; }
-    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.9rem !important; }
-    .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem !important; }
-    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.25rem !important; }
-    .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem !important; }
+    .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem !important; }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem    !important; }
+    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.125rem !important; }
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.25rem !important; }
+    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem  !important; }
+    .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.75rem !important; }
 
-    .space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.6rem !important; }
-    .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.75rem !important; }
-    .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 1rem !important; }
+    .space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.75rem !important; }
+    .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 1rem    !important; }
+    .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 1.25rem !important; }
 
     /* Margins */
-    .mt-4 { margin-top: 0.75rem !important; }
-    .mt-6 { margin-top: 1rem !important; }
-    .mt-8 { margin-top: 1.25rem !important; }
-    .mt-10 { margin-top: 1.5rem !important; }
-    .mt-12 { margin-top: 1.75rem !important; }
+    .mt-4 { margin-top: 1rem    !important; }   /* 16px */
+    .mt-6 { margin-top: 1.25rem !important; }   /* 20px */
+    .mt-8 { margin-top: 1.5rem  !important; }   /* 24px */
+    .mt-10 { margin-top: 1.75rem !important; }  /* 28px */
+    .mt-12 { margin-top: 2rem   !important; }   /* 32px */
 
-    .mb-4 { margin-bottom: 0.75rem !important; }
-    .mb-5 { margin-bottom: 0.9rem !important; }
-    .mb-6 { margin-bottom: 1rem !important; }
-    .mb-8 { margin-bottom: 1.25rem !important; }
-    .mb-10 { margin-bottom: 1.5rem !important; }
-    .mb-12 { margin-bottom: 1.75rem !important; }
+    .mb-4 { margin-bottom: 1rem    !important; }
+    .mb-5 { margin-bottom: 1.125rem !important; }
+    .mb-6 { margin-bottom: 1.25rem !important; }
+    .mb-8 { margin-bottom: 1.5rem  !important; }
+    .mb-10 { margin-bottom: 1.75rem !important; }
+    .mb-12 { margin-bottom: 2rem   !important; }
 
-    .py-6 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
-    .py-8 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
-    .py-10 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
-    .py-12 { padding-top: 1.75rem !important; padding-bottom: 1.75rem !important; }
-    .py-16 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+    .py-6 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+    .py-8 { padding-top: 1.5rem  !important; padding-bottom: 1.5rem  !important; }
+    .py-10 { padding-top: 1.75rem !important; padding-bottom: 1.75rem !important; }
+    .py-12 { padding-top: 2rem   !important; padding-bottom: 2rem   !important; }
+    .py-16 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
 
-    .my-6 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
-    .my-8 { margin-top: 1.25rem !important; margin-bottom: 1.25rem !important; }
-    .my-10 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
+    .my-6 { margin-top: 1.25rem !important; margin-bottom: 1.25rem !important; }
+    .my-8 { margin-top: 1.5rem  !important; margin-bottom: 1.5rem  !important; }
+    .my-10 { margin-top: 1.75rem !important; margin-bottom: 1.75rem !important; }
 
-    /* ─── Restore Dashboard Header Sizes to Original on Mobile ─── */
+    /* ─── Dashboard Header fixed sizes on Mobile ──────────────────────────── */
     header h1 {
-      font-size: 1rem !important; /* text-base */
+      font-size: 1.125rem !important; /* 18px */
       line-height: 1.5rem !important;
     }
     header p {
-      font-size: 9px !important; /* text-[9px] */
+      font-size: 0.75rem !important;  /* 12px */
     }
     header .w-10.h-10 {
-      width: 2.5rem !important; /* w-10 = 40px */
-      height: 2.5rem !important; /* h-10 = 40px */
+      width: 2.5rem !important;  /* 40px */
+      height: 2.5rem !important;
     }
     header .w-8.h-8 {
-      width: 2rem !important; /* w-8 = 32px */
-      height: 2rem !important; /* h-8 = 32px */
+      width: 2.25rem !important; /* 36px */
+      height: 2.25rem !important;
     }
     header svg {
-      width: 1.25rem !important; /* size 20 */
-      height: 1.25rem !important;
+      width: 1.5rem !important;  /* 24px */
+      height: 1.5rem !important;
     }
 
     /* Transform Table to Cards on Mobile */

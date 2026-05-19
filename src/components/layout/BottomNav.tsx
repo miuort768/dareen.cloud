@@ -79,9 +79,9 @@ export const BottomNav = () => {
                 "p-2 rounded-xl transition-all duration-300",
                 isActive && "bg-red-50 dark:bg-teal-400/10 scale-110"
               )}>
-                <Icon size={30} strokeWidth={isActive ? 2.5 : 2} />
+                <Icon size={32} strokeWidth={isActive ? 2.5 : 2} />
               </div>
-              <span className="text-[12px] font-black tracking-tight">
+              <span className="text-[11px] font-black tracking-tight">
                 {item.label}
               </span>
               
