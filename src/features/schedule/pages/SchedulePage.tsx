@@ -552,7 +552,7 @@ export const Schedule = () => {
                                             } catch {
                                                 alert('فشل بدء البث المباشر');
                                             }
-                                        }},
+                                        }}
                                     >
                                         <Video size={15} /> بدء الحصة المباشرة
                                     </button>
