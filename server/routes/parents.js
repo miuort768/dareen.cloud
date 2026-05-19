@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authMiddleware, checkRole } = require('../middleware/auth');
 
 // Using req.db from middleware
 
@@ -7,7 +8,7 @@ const router = express.Router();
 const logger = require('../utils/logger');
 
 // 1. Get all parents
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const parents = await req.db.all('SELECT * FROM parents ORDER BY name ASC');
         res.json(parents);
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 // 2. Add parent
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id, name, phone, email, username, password } = req.body;
     const bcrypt = require('bcrypt');
     const dbUsername = username || phone;
@@ -44,7 +45,7 @@ router.post('/', async (req, res) => {
 });
 
 // 3. Update parent
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     const { name, phone, email, username, password } = req.body;
     const bcrypt = require('bcrypt');
@@ -75,7 +76,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // 4. Delete parent
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         await req.db.run('DELETE FROM parents WHERE id = ?', [id]);
@@ -87,7 +88,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // 5. Parent Portal: Get Children (with deep data)
-router.get('/my-children', async (req, res) => {
+router.get('/my-children', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const parentPhone = req.user.phone;
         const children = await req.db.all('SELECT * FROM students WHERE parentPhone = ?', [parentPhone]);
@@ -114,7 +115,7 @@ router.get('/my-children', async (req, res) => {
 });
 
 // 6. Parent Portal: Get Child Sessions
-router.get('/child-sessions/:studentId', async (req, res) => {
+router.get('/child-sessions/:studentId', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const { studentId } = req.params;
         const parentPhone = req.user.phone;
@@ -132,7 +133,7 @@ router.get('/child-sessions/:studentId', async (req, res) => {
 });
 
 // 7. Parent Portal: Get Child Invoices
-router.get('/child-invoices/:studentId', async (req, res) => {
+router.get('/child-invoices/:studentId', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
     try {
         const { studentId } = req.params;
         const parentPhone = req.user.phone;

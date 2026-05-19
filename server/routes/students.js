@@ -28,18 +28,33 @@ router.get('/', authMiddleware, async (req, res) => {
             return safeStudent;
         };
 
+        let teacherStudentIds = null;
+        if (isTeacher) {
+            const enrollments = await req.db.all('SELECT studentId FROM enrollments WHERE teacherId = ?', [req.user.id]);
+            teacherStudentIds = enrollments.map(e => e.studentId);
+            if (teacherStudentIds.length === 0) {
+                return res.json(!isNaN(page) && !isNaN(limit) ? { data: [], total: 0, page, limit, totalPages: 0 } : []);
+            }
+        }
+
         if (!isNaN(page) && !isNaN(limit)) {
             const offset = (page - 1) * limit;
-            let querySql = 'SELECT id FROM students';
-            let countSql = 'SELECT COUNT(*) as total FROM students';
+            let whereClauses = [];
             let params = [];
 
+            if (isTeacher) {
+                whereClauses.push(`id IN (${teacherStudentIds.map(() => '?').join(',')})`);
+                params.push(...teacherStudentIds);
+            }
+
             if (q) {
-                const searchClause = ' WHERE lower(name) LIKE ? OR parentPhone LIKE ? OR studentPhone LIKE ?';
-                querySql += searchClause;
-                countSql += searchClause;
+                whereClauses.push('(lower(name) LIKE ? OR parentPhone LIKE ? OR studentPhone LIKE ?)');
                 params.push(`%${q}%`, `%${q}%`, `%${q}%`);
             }
+
+            const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
+            let querySql = `SELECT id FROM students${whereSql}`;
+            let countSql = `SELECT COUNT(*) as total FROM students${whereSql}`;
 
             querySql += ' LIMIT ? OFFSET ?';
             const studentIdsRaw = await req.db.all(querySql, [...params, limit, offset]);
@@ -58,7 +73,12 @@ router.get('/', authMiddleware, async (req, res) => {
                 totalPages: Math.ceil(countResult.total / limit)
             });
         } else {
-            const studentsWithEnrollments = await getStudentsWithEnrollments(req.db);
+            let studentsWithEnrollments;
+            if (isTeacher) {
+                studentsWithEnrollments = await getStudentsWithEnrollments(req.db, teacherStudentIds);
+            } else {
+                studentsWithEnrollments = await getStudentsWithEnrollments(req.db);
+            }
             res.json(studentsWithEnrollments.map(mapStudent));
         }
 

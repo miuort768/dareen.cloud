@@ -9,12 +9,26 @@ import { api } from '../../lib/api';
 
 const sanitizeHTML = (html: string) => {
     if (!html) return '';
-    return html
-        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-        .replace(/on\w+\s*=\s*"[^"]*"/gi, '')
-        .replace(/on\w+\s*=\s*'[^']*'/gi, '')
-        .replace(/on\w+\s*=\s*[^\s>]+/gi, '')
-        .replace(/javascript:/gi, 'no-javascript:');
+    
+    // Strip HTML comments
+    let sanitized = html.replace(/<!--[\s\S]*?-->/g, '');
+    
+    // Strip script tags entirely
+    sanitized = sanitized.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+    
+    // Strip style tags entirely
+    sanitized = sanitized.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+
+    // Strip inline event handlers (onmouseover, onclick, onerror, etc.)
+    sanitized = sanitized.replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '');
+    
+    // Strip javascript: URI schemes in links or media sources
+    sanitized = sanitized.replace(/(href|src|action)\s*=\s*["']?\s*javascript:[^"'>]*/gi, '');
+    
+    // Strip potentially dangerous tags (iframe, object, embed, frame, applet, meta, link)
+    sanitized = sanitized.replace(/<(iframe|object|embed|frame|frameset|applet|meta|link)[^>]*>([\s\S]*?<\/\1>)?/gi, '');
+
+    return sanitized;
 };
 
 export const BlogPost = () => {
