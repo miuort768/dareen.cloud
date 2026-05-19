@@ -1,0 +1,274 @@
+import { create } from 'zustand';
+import { api } from '../lib/api';
+
+interface SettingsState {
+    academyName: string;
+    academyLogo: string;
+    academyTagline: string;
+    academyAddress: string;
+    adminPhone: string;
+    themeColor: string;
+    notificationsEnabled: boolean;
+    autoBackup: boolean;
+    maintenanceMode: boolean;
+    whatsappAutoNotify: boolean;
+    defaultSessionPrice: number;
+    defaultTeacherPrice: number;
+    currencySymbol: string;
+    semesterName: string;
+    semesters: string;
+    whatsappTemplate: string;
+    balanceWarningThreshold: number;
+    backdateLockEnabled: boolean;
+    teacherCommissionType: 'percentage' | 'fixed';
+    autoFreezeThreshold: number;
+    telegramHandle: string;
+    heroBanners: string;
+    isSettingsLoading: boolean;
+
+    fetchSettings: () => Promise<void>;
+    setAcademyName: (name: string) => Promise<void>;
+    setAcademyLogo: (logo: string) => Promise<void>;
+    setAcademyTagline: (tagline: string) => Promise<void>;
+    setAcademyAddress: (address: string) => Promise<void>;
+    setAdminPhone: (phone: string) => Promise<void>;
+    setThemeColor: (color: string) => Promise<void>;
+    setNotificationsEnabled: (enabled: boolean) => Promise<void>;
+    setAutoBackup: (enabled: boolean) => Promise<void>;
+    setMaintenanceMode: (enabled: boolean) => Promise<void>;
+    setWhatsappAutoNotify: (enabled: boolean) => Promise<void>;
+    setDefaultSessionPrice: (price: number) => Promise<void>;
+    setDefaultTeacherPrice: (price: number) => Promise<void>;
+    setCurrencySymbol: (symbol: string) => Promise<void>;
+    setSemesterName: (name: string) => Promise<void>;
+    setSemesters: (semesters: string) => Promise<void>;
+    setWhatsappTemplate: (template: string) => Promise<void>;
+    setBalanceWarningThreshold: (threshold: number) => Promise<void>;
+    setBackdateLockEnabled: (enabled: boolean) => Promise<void>;
+    setTeacherCommissionType: (type: 'percentage' | 'fixed') => Promise<void>;
+    setAutoFreezeThreshold: (threshold: number) => Promise<void>;
+    setTelegramHandle: (handle: string) => Promise<void>;
+    setHeroBanners: (banners: string) => Promise<void>;
+}
+
+// Global CSS Theme injector
+const applyThemeColor = (color: string) => {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
+    const colors: Record<string, string> = {
+        indigo: '79 70 229', blue: '37 99 235', emerald: '16 185 129', rose: '225 29 72',
+        amber: '217 119 6', purple: '147 51 234', cyan: '8 145 178', teal: '13 148 136',
+        orange: '234 88 12', slate: '71 85 105', pink: '219 39 119', lime: '101 163 13',
+        sky: '2 132 199', fuchsia: '192 38 211',
+        sunset: '234 88 12', ocean: '37 99 235', forest: '16 185 129', royal: '147 51 234',
+        electric: '139 92 246', mint: '20 184 166', berry: '190 24 93', gold: '234 179 8',
+        crimson: '190 18 60', midnight: '15 23 42', lava: '220 38 38', lavender: '167 139 250',
+        spring: '132 204 22', flame: '249 115 22', nebula: '139 92 246', aurora: '34 197 94',
+        fire: '239 68 68', ice: '14 165 233', jungle: '21 128 61', desert: '180 83 9',
+        coffee: '120 113 108'
+    };
+    root.style.setProperty('--color-primary', colors[color] || colors.indigo);
+};
+
+const updateSettingOnApi = async (key: string, value: string) => {
+    try {
+        await api.post('/system/settings', { key, value });
+    } catch (e) {
+        console.error("Error updating setting:", e);
+        throw e;
+    }
+};
+
+export const useSettingsStore = create<SettingsState>((set, get) => ({
+    academyName: 'دارين السابعة',
+    academyLogo: '',
+    academyTagline: 'مستقبل أفضل لأبنائنا',
+    academyAddress: '',
+    adminPhone: '201015098836',
+    themeColor: localStorage.getItem('app_theme_color') || 'indigo',
+    notificationsEnabled: localStorage.getItem('app_notifications') !== 'false',
+    autoBackup: false,
+    maintenanceMode: false,
+    whatsappAutoNotify: false,
+    defaultSessionPrice: 0,
+    defaultTeacherPrice: 0,
+    currencySymbol: 'ج.م',
+    semesterName: 'الفصل الدراسي',
+    semesters: 'الفصل الأول,الفصل الثاني',
+    whatsappTemplate: 'تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}',
+    balanceWarningThreshold: 2,
+    backdateLockEnabled: false,
+    teacherCommissionType: 'fixed',
+    autoFreezeThreshold: 3,
+    telegramHandle: 'dareen_app',
+    heroBanners: JSON.stringify([
+        "انضم إلى أفضل منصة تعليمية",
+        "تأسيس قوي لجميع المراحل",
+        "نخبة من المعلمين المتخصصين",
+        "متابعة دورية وتقييم مستمر"
+    ]),
+    isSettingsLoading: true,
+
+    fetchSettings: async () => {
+        try {
+            const settings = await api.get<any>('/system/public-settings');
+            if (settings) {
+                const updates: Partial<SettingsState> = {};
+                if (settings.academy_name !== undefined && settings.academy_name !== null) updates.academyName = settings.academy_name;
+                if (settings.academy_logo !== undefined && settings.academy_logo !== null) updates.academyLogo = settings.academy_logo;
+                if (settings.academy_tagline !== undefined && settings.academy_tagline !== null) updates.academyTagline = settings.academy_tagline;
+                if (settings.academy_address !== undefined && settings.academy_address !== null) updates.academyAddress = settings.academy_address;
+                if (settings.admin_phone !== undefined && settings.admin_phone !== null) updates.adminPhone = settings.admin_phone;
+                if (settings.theme_color !== undefined && settings.theme_color !== null) {
+                    updates.themeColor = settings.theme_color;
+                    applyThemeColor(settings.theme_color);
+                } else {
+                    applyThemeColor(get().themeColor);
+                }
+                if (settings.notifications_enabled !== undefined && settings.notifications_enabled !== null) {
+                    updates.notificationsEnabled = settings.notifications_enabled === true || settings.notifications_enabled === 'true';
+                }
+                if (settings.auto_backup !== undefined && settings.auto_backup !== null) {
+                    updates.autoBackup = settings.auto_backup === true || settings.auto_backup === 'true';
+                }
+                if (settings.maintenance_mode !== undefined && settings.maintenance_mode !== null) {
+                    updates.maintenanceMode = settings.maintenance_mode === true || settings.maintenance_mode === 'true';
+                }
+                if (settings.whatsapp_auto_notify !== undefined && settings.whatsapp_auto_notify !== null) {
+                    updates.whatsappAutoNotify = settings.whatsapp_auto_notify === true || settings.whatsapp_auto_notify === 'true';
+                }
+                if (settings.default_session_price !== undefined && settings.default_session_price !== null) {
+                    updates.defaultSessionPrice = Number(settings.default_session_price);
+                }
+                if (settings.default_teacher_price !== undefined && settings.default_teacher_price !== null) {
+                    updates.defaultTeacherPrice = Number(settings.default_teacher_price);
+                }
+                if (settings.currency_symbol !== undefined && settings.currency_symbol !== null) updates.currencySymbol = settings.currency_symbol;
+                if (settings.semester_name !== undefined && settings.semester_name !== null) updates.semesterName = settings.semester_name;
+                if (settings.semesters !== undefined && settings.semesters !== null) updates.semesters = settings.semesters;
+                if (settings.whatsapp_template !== undefined && settings.whatsapp_template !== null) updates.whatsappTemplate = settings.whatsapp_template;
+                if (settings.balance_warning_threshold !== undefined && settings.balance_warning_threshold !== null) {
+                    updates.balanceWarningThreshold = Number(settings.balance_warning_threshold);
+                }
+                if (settings.backdate_lock_enabled !== undefined && settings.backdate_lock_enabled !== null) {
+                    updates.backdateLockEnabled = settings.backdate_lock_enabled === true || settings.backdate_lock_enabled === 'true';
+                }
+                if (settings.teacher_commission_type !== undefined && settings.teacher_commission_type !== null) {
+                    updates.teacherCommissionType = settings.teacher_commission_type as any;
+                }
+                if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) {
+                    updates.autoFreezeThreshold = Number(settings.auto_freeze_threshold);
+                }
+                if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) updates.telegramHandle = settings.telegram_handle;
+                if (settings.hero_banners !== undefined && settings.hero_banners !== null) updates.heroBanners = settings.hero_banners;
+
+                set({ ...updates, isSettingsLoading: false });
+            } else {
+                applyThemeColor(get().themeColor);
+                set({ isSettingsLoading: false });
+            }
+        } catch (e) {
+            console.error("Error fetching settings:", e);
+            applyThemeColor(get().themeColor);
+            set({ isSettingsLoading: false });
+        }
+    },
+
+    setAcademyName: async (name) => {
+        set({ academyName: name });
+        await updateSettingOnApi('academy_name', name);
+    },
+    setAcademyLogo: async (logo) => {
+        set({ academyLogo: logo });
+        await updateSettingOnApi('academy_logo', logo);
+    },
+    setAcademyTagline: async (tagline) => {
+        set({ academyTagline: tagline });
+        await updateSettingOnApi('academy_tagline', tagline);
+    },
+    setAcademyAddress: async (address) => {
+        set({ academyAddress: address });
+        await updateSettingOnApi('academy_address', address);
+    },
+    setAdminPhone: async (phone) => {
+        set({ adminPhone: phone });
+        await updateSettingOnApi('admin_phone', phone);
+    },
+    setThemeColor: async (color) => {
+        set({ themeColor: color });
+        localStorage.setItem('app_theme_color', color);
+        applyThemeColor(color);
+        await updateSettingOnApi('theme_color', color);
+    },
+    setNotificationsEnabled: async (enabled) => {
+        set({ notificationsEnabled: enabled });
+        localStorage.setItem('app_notifications', String(enabled));
+        await updateSettingOnApi('notifications_enabled', String(enabled));
+    },
+    setAutoBackup: async (enabled) => {
+        set({ autoBackup: enabled });
+        await updateSettingOnApi('auto_backup', String(enabled));
+    },
+    setMaintenanceMode: async (enabled) => {
+        set({ maintenanceMode: enabled });
+        await updateSettingOnApi('maintenance_mode', String(enabled));
+    },
+    setWhatsappAutoNotify: async (enabled) => {
+        set({ whatsappAutoNotify: enabled });
+        await updateSettingOnApi('whatsapp_auto_notify', String(enabled));
+    },
+    setDefaultSessionPrice: async (price) => {
+        set({ defaultSessionPrice: price });
+        await updateSettingOnApi('default_session_price', String(price));
+    },
+    setDefaultTeacherPrice: async (price) => {
+        set({ defaultTeacherPrice: price });
+        await updateSettingOnApi('default_teacher_price', String(price));
+    },
+    setCurrencySymbol: async (symbol) => {
+        set({ currencySymbol: symbol });
+        await updateSettingOnApi('currency_symbol', symbol);
+    },
+    setSemesterName: async (name) => {
+        set({ semesterName: name });
+        await updateSettingOnApi('semester_name', name);
+    },
+    setSemesters: async (semesters) => {
+        set({ semesters });
+        await updateSettingOnApi('semesters', semesters);
+    },
+    setWhatsappTemplate: async (template) => {
+        set({ whatsappTemplate: template });
+        await updateSettingOnApi('whatsapp_template', template);
+    },
+    setBalanceWarningThreshold: async (threshold) => {
+        set({ balanceWarningThreshold: threshold });
+        await updateSettingOnApi('balance_warning_threshold', String(threshold));
+    },
+    setBackdateLockEnabled: async (enabled) => {
+        set({ backdateLockEnabled: enabled });
+        await updateSettingOnApi('backdate_lock_enabled', String(enabled));
+    },
+    setTeacherCommissionType: async (type) => {
+        set({ teacherCommissionType: type });
+        await updateSettingOnApi('teacher_commission_type', type);
+    },
+    setAutoFreezeThreshold: async (threshold) => {
+        set({ autoFreezeThreshold: threshold });
+        await updateSettingOnApi('auto_freeze_threshold', String(threshold));
+    },
+    setTelegramHandle: async (handle) => {
+        set({ telegramHandle: handle });
+        await updateSettingOnApi('telegram_handle', handle);
+    },
+    setHeroBanners: async (banners) => {
+        set({ heroBanners: banners });
+        await updateSettingOnApi('hero_banners', banners);
+    }
+}));
+
+// Initialize theme color on load
+if (typeof window !== 'undefined') {
+    const savedColor = localStorage.getItem('app_theme_color') || 'indigo';
+    applyThemeColor(savedColor);
+}
