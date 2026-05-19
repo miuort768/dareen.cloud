@@ -124,6 +124,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
 }));
 
+// Auto-verify token on store initialization
+if (typeof window !== 'undefined') {
+    useAuthStore.getState().verifyToken();
+}
+
 // Setup global auth logout event listener
 if (typeof window !== 'undefined') {
     window.addEventListener('auth_logout', () => {

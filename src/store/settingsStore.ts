@@ -267,6 +267,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     }
 }));
 
+// Auto-fetch settings on store initialization
+if (typeof window !== 'undefined') {
+    useSettingsStore.getState().fetchSettings();
+}
+
 // Initialize theme color on load
 if (typeof window !== 'undefined') {
     const savedColor = localStorage.getItem('app_theme_color') || 'indigo';
