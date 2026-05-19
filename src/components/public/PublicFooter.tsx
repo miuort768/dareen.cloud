@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 
 export const PublicFooter = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
 
     return (
         <footer className="relative bg-indigo-950 text-white overflow-hidden pt-8 pb-6 md:pt-10 md:pb-6 transition-colors duration-500">

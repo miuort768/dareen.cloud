@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Moon, Sun } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { cn } from '../../lib/utils';
 
 export const FloatingActions = () => {
-    const { adminPhone, telegramHandle } = useSettings();
+    const { adminPhone, telegramHandle } = useSettingsStore();
     const [theme, setTheme] = useDarkMode();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
 

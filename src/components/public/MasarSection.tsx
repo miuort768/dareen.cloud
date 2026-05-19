@@ -1,9 +1,9 @@
 import { ArrowLeft, BookOpen, Bell, MessageCircle, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 
 export const MasarSection = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
 
     return (
         <section className="py-4 bg-white dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">

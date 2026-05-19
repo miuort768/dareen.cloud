@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Search, Users, Sparkles, LayoutGrid, GraduationCap, BookOpen, Globe, Languages, Target, Star } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 // Import course images
@@ -67,7 +67,7 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 export const Courses = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [activeCategory, setActiveCategory] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');

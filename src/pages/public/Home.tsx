@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronDown, HelpCircle, Quote } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
 import { cn } from '../../lib/utils';
 
 export const Home = () => {
-    const { adminPhone, heroBanners } = useSettings();
+    const { adminPhone, heroBanners } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [typewriterText, setTypewriterText] = useState("");

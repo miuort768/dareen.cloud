@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
 
 export const Contact = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
     const [formData, setFormData] = useState({ name: '', phone: '', subject: 'استفسار عن دورة تعليمية', message: '' });

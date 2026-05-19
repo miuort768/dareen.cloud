@@ -1,11 +1,11 @@
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Scale, FileCheck, AlertCircle, UserX, CreditCard, BookOpen, Headphones } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const TermsOfService = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
     return (
         <div className="min-h-full bg-white dark:bg-slate-950 font-sans text-gray-800 dark:text-slate-100">
             <SEO

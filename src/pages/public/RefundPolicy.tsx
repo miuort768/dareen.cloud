@@ -1,11 +1,11 @@
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { RefreshCcw, ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones } from 'lucide-react';
-import { useSettings } from '../../context/SettingsContext';
+import { useSettings } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const RefundPolicy = () => {
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
 
     return (
