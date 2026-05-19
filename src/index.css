@@ -15,7 +15,7 @@
 
 html, body {
   padding-top: var(--safe-area-top);
-  padding-bottom: calc(var(--safe-area-bottom) + 70px); /* Space for BottomNav */
+  padding-bottom: calc(var(--safe-area-bottom) + 82px); /* Space for BottomNav */
   padding-left: var(--safe-area-left);
   padding-right: var(--safe-area-right);
 }
@@ -543,75 +543,75 @@ html, body {
   }
 
   @media (max-width: 768px) {
-    /* ─── Global Font Scale Downs on Mobile ─── */
-    h1, .text-4xl, .text-5xl { font-size: 1.15rem !important; line-height: 1.45rem !important; }
-    h2, .text-3xl { font-size: 1.05rem !important; line-height: 1.3rem !important; }
-    h3, .text-2xl { font-size: 0.95rem !important; line-height: 1.2rem !important; }
-    h4, .text-xl { font-size: 0.85rem !important; line-height: 1.1rem !important; }
-    h5, .text-lg { font-size: 0.75rem !important; }
-    h6, .text-base { font-size: 0.7rem !important; }
+    /* ─── Global Font Scale on Mobile (Comfortable Readable Sizes) ─── */
+    h1, .text-4xl, .text-5xl { font-size: 1.5rem !important; line-height: 1.8rem !important; }
+    h2, .text-3xl { font-size: 1.3rem !important; line-height: 1.6rem !important; }
+    h3, .text-2xl { font-size: 1.15rem !important; line-height: 1.45rem !important; }
+    h4, .text-xl { font-size: 1.05rem !important; line-height: 1.35rem !important; }
+    h5, .text-lg { font-size: 0.95rem !important; }
+    h6, .text-base { font-size: 0.875rem !important; }
     body, p, td, th, button {
-      font-size: 0.725rem !important;
+      font-size: 0.8125rem !important;
     }
 
-    /* ─── Global SVG Icon Scale Downs on Mobile ─── */
-    .w-16.h-16 { width: 1.85rem !important; height: 1.85rem !important; }
-    .w-14.h-14 { width: 1.65rem !important; height: 1.65rem !important; }
-    .w-12.h-12 { width: 1.45rem !important; height: 1.45rem !important; }
-    .w-10.h-10 { width: 1.25rem !important; height: 1.25rem !important; }
-    .w-8.h-8 { width: 1.05rem !important; height: 1.05rem !important; }
-    .w-6.h-6 { width: 0.9rem !important; height: 0.9rem !important; }
-    .w-5.h-5 { width: 0.8rem !important; height: 0.8rem !important; }
-    .w-4.h-4 { width: 0.7rem !important; height: 0.7rem !important; }
+    /* ─── Global SVG Icon Sizes on Mobile (Dashboard icons use w-10.h-10) ─── */
+    .w-16.h-16 { width: 3rem !important; height: 3rem !important; }
+    .w-14.h-14 { width: 2.75rem !important; height: 2.75rem !important; }
+    .w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; }
+    .w-10.h-10 { width: 2.25rem !important; height: 2.25rem !important; }
+    .w-8.h-8 { width: 2rem !important; height: 2rem !important; }
+    .w-6.h-6 { width: 1.5rem !important; height: 1.5rem !important; }
+    .w-5.h-5 { width: 1.25rem !important; height: 1.25rem !important; }
+    .w-4.h-4 { width: 1rem !important; height: 1rem !important; }
 
-    /* ─── Padding & Spacing Adjustments ─── */
-    .p-6 { padding: 0.5rem !important; }
-    .p-5 { padding: 0.45rem !important; }
-    .p-4 { padding: 0.4rem !important; }
-    .p-3 { padding: 0.3rem !important; }
+    /* ─── Padding & Spacing Adjustments (Comfortable & Spacious) ─── */
+    .p-6 { padding: 1rem !important; }
+    .p-5 { padding: 0.9rem !important; }
+    .p-4 { padding: 0.75rem !important; }
+    .p-3 { padding: 0.6rem !important; }
 
-    .gap-3 { gap: 0.3rem !important; }
-    .gap-4 { gap: 0.35rem !important; }
-    .gap-5 { gap: 0.4rem !important; }
-    .gap-6 { gap: 0.45rem !important; }
-    .gap-8 { gap: 0.6rem !important; }
-    .gap-10 { gap: 0.7rem !important; }
-    .gap-12 { gap: 0.8rem !important; }
+    .gap-3 { gap: 0.6rem !important; }
+    .gap-4 { gap: 0.75rem !important; }
+    .gap-5 { gap: 0.9rem !important; }
+    .gap-6 { gap: 1rem !important; }
+    .gap-8 { gap: 1.25rem !important; }
+    .gap-10 { gap: 1.5rem !important; }
+    .gap-12 { gap: 1.75rem !important; }
 
-    .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.3rem !important; }
-    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.35rem !important; }
-    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.4rem !important; }
-    .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.45rem !important; }
-    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.6rem !important; }
-    .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.7rem !important; }
+    .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.6rem !important; }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem !important; }
+    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.9rem !important; }
+    .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem !important; }
+    .space-y-8 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.25rem !important; }
+    .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem !important; }
 
-    .space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.3rem !important; }
-    .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.35rem !important; }
-    .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.45rem !important; }
+    .space-x-3 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.6rem !important; }
+    .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 0.75rem !important; }
+    .space-x-6 > :not([hidden]) ~ :not([hidden]) { margin-inline-start: 1rem !important; }
 
     /* Margins */
-    .mt-4 { margin-top: 0.35rem !important; }
-    .mt-6 { margin-top: 0.45rem !important; }
-    .mt-8 { margin-top: 0.6rem !important; }
-    .mt-10 { margin-top: 0.7rem !important; }
-    .mt-12 { margin-top: 0.8rem !important; }
+    .mt-4 { margin-top: 0.75rem !important; }
+    .mt-6 { margin-top: 1rem !important; }
+    .mt-8 { margin-top: 1.25rem !important; }
+    .mt-10 { margin-top: 1.5rem !important; }
+    .mt-12 { margin-top: 1.75rem !important; }
 
-    .mb-4 { margin-bottom: 0.35rem !important; }
-    .mb-5 { margin-bottom: 0.4rem !important; }
-    .mb-6 { margin-bottom: 0.45rem !important; }
-    .mb-8 { margin-bottom: 0.6rem !important; }
-    .mb-10 { margin-bottom: 0.7rem !important; }
-    .mb-12 { margin-bottom: 0.8rem !important; }
+    .mb-4 { margin-bottom: 0.75rem !important; }
+    .mb-5 { margin-bottom: 0.9rem !important; }
+    .mb-6 { margin-bottom: 1rem !important; }
+    .mb-8 { margin-bottom: 1.25rem !important; }
+    .mb-10 { margin-bottom: 1.5rem !important; }
+    .mb-12 { margin-bottom: 1.75rem !important; }
 
-    .py-6 { padding-top: 0.45rem !important; padding-bottom: 0.45rem !important; }
-    .py-8 { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
-    .py-10 { padding-top: 0.7rem !important; padding-bottom: 0.7rem !important; }
-    .py-12 { padding-top: 0.8rem !important; padding-bottom: 0.8rem !important; }
-    .py-16 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+    .py-6 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+    .py-8 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+    .py-10 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+    .py-12 { padding-top: 1.75rem !important; padding-bottom: 1.75rem !important; }
+    .py-16 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
 
-    .my-6 { margin-top: 0.45rem !important; margin-bottom: 0.45rem !important; }
-    .my-8 { margin-top: 0.6rem !important; margin-bottom: 0.6rem !important; }
-    .my-10 { margin-top: 0.7rem !important; margin-bottom: 0.7rem !important; }
+    .my-6 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+    .my-8 { margin-top: 1.25rem !important; margin-bottom: 1.25rem !important; }
+    .my-10 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
 
     /* ─── Restore Dashboard Header Sizes to Original on Mobile ─── */
     header h1 {
