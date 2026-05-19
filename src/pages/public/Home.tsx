@@ -528,9 +528,9 @@ export const Home = () => {
 
                                     {/* Glass Content Card */}
                                     <div className="text-center px-1 md:px-4 w-full">
-                                        <h3 className="text-[9px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
+                                        <div className="text-[12px] md:text-sm font-black text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
                                             {step.title}
-                                        </h3>
+                                        </div>
                                         <p className="hidden sm:block text-[8px] md:text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-bold">
                                             {step.desc}
                                         </p>
