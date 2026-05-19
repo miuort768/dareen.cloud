@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Eraser, Trash2 } from 'lucide-react';
-import { cn } from '../../../lib/utils';
-import { socketService } from '../../../lib/socket';
+import { cn } from '../../lib/utils';
+import { socketService } from '../../lib/socket';
 
 interface DrawingPoint {
     x0: number;

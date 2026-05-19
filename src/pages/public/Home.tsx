@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Play, ArrowLeft, Star, Heart, CheckCircle, Lightbulb, Users, Award, Zap, Clock, Mic, ClipboardCheck, BookOpen, ChevronDown, HelpCircle, Quote } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
 import { cn } from '../../lib/utils';

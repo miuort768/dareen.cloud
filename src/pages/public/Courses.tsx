@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Search, Users, Sparkles, LayoutGrid, GraduationCap, BookOpen, Globe, Languages, Target, Star } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 // Import course images

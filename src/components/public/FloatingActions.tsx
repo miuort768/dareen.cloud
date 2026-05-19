@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Moon, Sun } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { useDarkMode } from '../../hooks/useDarkMode';
 import { cn } from '../../lib/utils';
 

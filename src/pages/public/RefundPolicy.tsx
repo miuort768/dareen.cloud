@@ -1,7 +1,7 @@
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { RefreshCcw, ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const RefundPolicy = () => {

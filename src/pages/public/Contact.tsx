@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 import { cn } from '../../lib/utils';
 

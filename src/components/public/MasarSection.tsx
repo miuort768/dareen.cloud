@@ -1,6 +1,6 @@
 import { ArrowLeft, BookOpen, Bell, MessageCircle, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 
 export const MasarSection = () => {
     const { adminPhone } = useSettingsStore();

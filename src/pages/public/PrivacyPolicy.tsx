@@ -1,7 +1,7 @@
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Shield, Lock, Eye, Database, UserCheck, FileText, Headphones } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
 export const PrivacyPolicy = () => {

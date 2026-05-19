@@ -2,20 +2,17 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     LiveKitRoom,
-    VideoConference,
     RoomAudioRenderer,
     useConnectionState,
     useRoomContext,
     useTracks,
-    TrackReference,
     ParticipantTile,
     ControlBar,
-    ConnectionState
 } from '@livekit/components-react';
-import { Track } from 'livekit-client';
+import { Track, ConnectionState } from 'livekit-client';
 import '@livekit/components-styles';
 
-import { PhoneOff, Loader2, Users, Monitor, MonitorOff, Edit3 } from 'lucide-react';
+import { PhoneOff, Loader2, Users, Edit3 } from 'lucide-react';
 import { useApp } from '../context/useApp';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
@@ -31,7 +28,7 @@ const ClassroomTopBar = ({ isTeacher, roomName, onLeave, toggleWhiteboard, isWhi
     useEffect(() => {
         if (!room) return;
         const updateCount = () => {
-            setParticipantCount(room.participants.size);
+            setParticipantCount(room.numParticipants);
         };
         room.on('participantConnected', updateCount);
         room.on('participantDisconnected', updateCount);
@@ -42,7 +39,7 @@ const ClassroomTopBar = ({ isTeacher, roomName, onLeave, toggleWhiteboard, isWhi
         };
     }, [room]);
 
-    const statusConfig: Record<ConnectionState, { color: string; label: string }> = {
+    const statusConfig: Record<string, { color: string; label: string }> = {
         [ConnectionState.Connecting]: { color: 'bg-yellow-600', label: 'جاري الاتصال...' },
         [ConnectionState.Connected]: { color: 'bg-red-600', label: 'LIVE' },
         [ConnectionState.Reconnecting]: { color: 'bg-orange-500', label: 'إعادة الاتصال...' },
@@ -88,7 +85,6 @@ const ClassroomTopBar = ({ isTeacher, roomName, onLeave, toggleWhiteboard, isWhi
 
 // --- Custom Video Layout ---
 const ClassroomVideoLayout = ({ isTeacher }: { isTeacher: boolean }) => {
-    // We want to show camera and screen share tracks
     const tracks = useTracks(
         [
             { source: Track.Source.Camera, withPlaceholder: true },
@@ -139,7 +135,6 @@ export const Classroom = () => {
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
     const roomName = `live_session_${id}`;
 
-    // Get LiveKit URL from env or fallback to local dev
     const serverUrl = import.meta.env.VITE_LIVEKIT_URL || 'ws://localhost:7880';
 
     useEffect(() => {
@@ -233,10 +228,8 @@ export const Classroom = () => {
                 />
                 
                 <div className="flex-1 relative flex">
-                    {/* Video Conference Layout */}
                     <ClassroomVideoLayout isTeacher={isTeacher} />
                     
-                    {/* Whiteboard Overlay */}
                     <Whiteboard 
                         isTeacher={isTeacher} 
                         roomName={roomName} 

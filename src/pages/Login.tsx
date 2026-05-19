@@ -5,7 +5,8 @@ import {
     Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
-import { useApp, useSettings } from '../context/AppContext';
+import { useApp } from '../context/AppContext';
+import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
 
@@ -17,7 +18,7 @@ export const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useApp();
-    const { adminPhone } = useSettings();
+    const { adminPhone } = useSettingsStore();
     const navigate = useNavigate();
 
     // Typewriter effect logic

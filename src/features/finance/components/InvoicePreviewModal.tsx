@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { useSettings } from '../../../context/AppContext';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 interface InvoicePreviewModalProps {
     isOpen: boolean;
@@ -20,7 +20,7 @@ interface InvoicePreviewModalProps {
 }
 
 export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreviewModalProps) => {
-    const { academyName, adminPhone } = useSettings();
+    const { academyName, adminPhone } = useSettingsStore();
     const [hidePricing, setHidePricing] = useState(false);
 
     if (!isOpen) return null;

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
-import { useSettings } from '../../store/settingsStore';
+import { useSettingsStore } from '../../store/settingsStore';
 
 export const PublicFooter = () => {
     const { adminPhone } = useSettingsStore();
