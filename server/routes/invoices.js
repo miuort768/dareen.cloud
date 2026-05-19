@@ -55,7 +55,7 @@ router.get('/teacher', async (req, res) => {
 
 router.post('/teacher', validate(createTeacherInvoiceSchema), async (req, res) => {
     const body = req.body;
-    const id = body.id || `inv_t_${Math.random().toString(36).substr(2, 7)}`;
+    const id = body.id || `inv_t_${require('crypto').randomBytes(4).toString('hex')}`;
     try {
         await req.db.run(
             `INSERT INTO teacher_invoices (id, teacherId, teacher, specialization, amount, paymentMethod, status, personalExpenses, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -154,7 +154,7 @@ router.post('/student', validate(createStudentInvoiceSchema), async (req, res) =
     if (!body.studentId) {
         return res.status(400).json({ error: 'Student ID is required' });
     }
-    const id = body.id || `inv_s_${Math.random().toString(36).substr(2, 7)}`;
+    const id = body.id || `inv_s_${require('crypto').randomBytes(4).toString('hex')}`;
     try {
         const description = body.description || '';
         const items = body.items ? (typeof body.items === 'string' ? body.items : JSON.stringify(body.items)) : null;

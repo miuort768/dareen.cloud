@@ -21,7 +21,7 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 // 2. Add teacher
 router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id, name, phone1, phone2, subject, price, email, username, password } = req.body;
-    const newId = id || `t_${Math.random().toString(36).substr(2, 7)}`;
+    const newId = id || `t_${require('crypto').randomBytes(4).toString('hex')}`;
 
     try {
         if (!name) {

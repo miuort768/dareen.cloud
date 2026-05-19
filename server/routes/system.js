@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { getStudentEnrollments, withTransaction } = require('../utils/dbHelper');
+const { authMiddleware, checkRole } = require('../middleware/auth');
+
+// Apply robust defense-in-depth protection to ALL system endpoints (Admin only)
+router.use(authMiddleware);
+router.use(checkRole(['admin']));
 
 
 // Using req.db from middleware
@@ -28,7 +33,7 @@ router.get('/backup', async (req, res) => {
             req.db.all('SELECT * FROM completed_sessions'),
             req.db.all('SELECT * FROM dismissed_notifications'),
             req.db.all('SELECT * FROM system_settings'),
-            req.db.all('SELECT id, name, username, password, role, permissions FROM users'),
+            req.db.all('SELECT id, name, username, role, permissions FROM users'),
             req.db.all('SELECT * FROM announcements'),
             req.db.all('SELECT * FROM conversations'),
             req.db.all('SELECT * FROM messages'),

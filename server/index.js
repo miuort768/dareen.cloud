@@ -9,6 +9,7 @@ const compression = require('compression');
 const dbMiddleware = require('./middleware/db');
 const { sanitizeInput, activityAuditor } = require('./middleware/advanced');
 const helmet = require('helmet');
+const { setupDatabase } = require('./db_setup');
 
 const { authRouter } = require('./routes/auth');
 const { studentRouter } = require('./routes/students');
@@ -44,19 +45,29 @@ const PORT = process.env.PORT || 3001;
 app.use(compression());
 app.use(cors({
     origin: function (origin, callback) {
+        const isProd = process.env.NODE_ENV === 'production';
         const allowedOrigins = [
             process.env.FRONTEND_URL,
-            'http://localhost:3001',
-            'http://localhost:5173',
-            'http://localhost:5174',
-            'http://localhost:5175',
-            'http://localhost:5176'
-        ].filter(Boolean); // Remove undefined/null
+            'https://dareen.cloud',
+            'https://www.dareen.cloud'
+        ];
+        
+        if (!isProd) {
+            allowedOrigins.push(
+                'http://localhost:3001',
+                'http://localhost:5173',
+                'http://localhost:5174',
+                'http://localhost:5175',
+                'http://localhost:5176'
+            );
+        }
+
+        const filteredOrigins = allowedOrigins.filter(Boolean); // Remove undefined/null
 
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
+        if (filteredOrigins.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
             callback(null, true);
         } else {
             console.log('Blocked by CORS:', origin); // Log blocked origins
@@ -74,7 +85,7 @@ app.get('/health', (req, res) => {
 // Automated SEO Sitemap Generator
 app.get('/sitemap.xml', (req, res) => {
     try {
-        const baseUrl = 'https://dareen-edu.com';
+        const baseUrl = 'https://dareen.cloud';
         const date = new Date().toISOString().split('T')[0];
         
         // Dynamic public routes
@@ -117,7 +128,7 @@ Disallow: /dashboard
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://dareen-edu.com/sitemap.xml
+Sitemap: https://dareen.cloud/sitemap.xml
 `);
 });
 
@@ -127,7 +138,7 @@ app.use(helmet({
         directives: {
             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
             "img-src": ["'self'", "data:", "https:", "http:"],
-            "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+            "script-src": ["'self'", "'unsafe-inline'"],
             "connect-src": ["'self'", "https:", "http:", "ws:", "wss:"]
         }
     },
@@ -154,7 +165,6 @@ async function startServer() {
         console.log('Database initialized successfully');
 
         // Run DB Setup/Migration on start
-        const { setupDatabase } = require('./db_setup');
         await setupDatabase();
 
         app.use(dbMiddleware);
@@ -260,6 +270,11 @@ async function startServer() {
         apiRouter.use('/users', checkRole(['admin']), (req, res, next) => {
             req.url = '/users' + req.url;
             systemRouter(req, res, next);
+        });
+
+        // API 404 handler (Issue S34)
+        apiRouter.use((req, res) => {
+            res.status(404).json({ error: 'Not Found', message: 'API endpoint not found.' });
         });
 
         // Serve static files from the React app with long-term caching

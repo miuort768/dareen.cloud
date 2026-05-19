@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
         // delete any existing session for this student/subject
         await req.db.run(`DELETE FROM active_sessions WHERE studentId = ? AND subject = ?`, [studentId, subject]);
 
-        const id = Date.now().toString() + Math.random().toString(36).substring(2,5);
+        const id = Date.now().toString() + '_' + require('crypto').randomBytes(2).toString('hex');
         await req.db.run(
             `INSERT INTO active_sessions (id, studentId, teacherId, teacherName, subject, startedAt) VALUES (?, ?, ?, ?, ?, ?)`,
             [id, studentId, req.user.id, req.user.teacherName || req.user.name, subject, new Date().toISOString()]

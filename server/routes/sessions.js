@@ -7,7 +7,7 @@ const validate = require('../middleware/validation');
 const { createSessionSchema, updateSessionSchema } = require('../utils/validators');
 
 // 1. Get all sessions
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     try {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
@@ -23,14 +23,42 @@ router.get('/', async (req, res) => {
             params.push(`%${q}%`, `%${q}%`, `%${q}%`);
         }
 
-        if (studentId) {
+        // Role-based Access Control checks (Prevention of Broken Object Level Authorization)
+        if (req.user.role === 'student') {
+            // Students can only fetch their own sessions
             whereClauses.push('studentId = ?');
-            params.push(studentId);
-        }
-
-        if (teacherId) {
+            params.push(req.user.id);
+        } else if (req.user.role === 'parent') {
+            // Parents can only fetch sessions for their children
+            const children = await req.db.all('SELECT id FROM students WHERE parentPhone = ? OR parentId = ?', [req.user.phone, req.user.id]);
+            const childIds = children.map(c => c.id);
+            if (childIds.length === 0) {
+                return res.json(!isNaN(page) && !isNaN(limit) ? { data: [], total: 0, page, limit, totalPages: 0 } : []);
+            }
+            if (studentId) {
+                if (!childIds.includes(studentId)) {
+                    return res.status(403).json({ error: 'Access denied: student is not your child' });
+                }
+                whereClauses.push('studentId = ?');
+                params.push(studentId);
+            } else {
+                whereClauses.push(`studentId IN (${childIds.map(() => '?').join(',')})`);
+                params.push(...childIds);
+            }
+        } else if (req.user.role === 'teacher') {
+            // Teachers can only fetch sessions they teach
             whereClauses.push('teacherId = ?');
-            params.push(teacherId);
+            params.push(req.user.id);
+        } else {
+            // Admin/supervisor can request anything, apply filters if passed
+            if (studentId) {
+                whereClauses.push('studentId = ?');
+                params.push(studentId);
+            }
+            if (teacherId) {
+                whereClauses.push('teacherId = ?');
+                params.push(teacherId);
+            }
         }
 
         const whereSql = whereClauses.length > 0 ? ` WHERE ${whereClauses.join(' AND ')}` : '';
@@ -77,7 +105,7 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
 
     try {
         const newItem = await withTransaction(req.db, async (tx) => {
-            const id = body.id || `sess_${Math.random().toString(36).substr(2, 7)}`;
+            const id = body.id || `sess_${require('crypto').randomBytes(4).toString('hex')}`;
             let studentPrice = body.price || 0;
             let teacherPrice = 0;
 
@@ -217,7 +245,7 @@ router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, 
 });
 
 // 4. Delete session
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         await withTransaction(req.db, async (tx) => {

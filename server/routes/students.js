@@ -78,7 +78,7 @@ const stripPassword = (student) => {
 // 2. Add student
 router.post('/', validate(createStudentSchema), async (req, res) => {
     const { id, name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password } = req.body;
-    const newId = id || `std_${Math.random().toString(36).substr(2, 7)}`;
+    const newId = id || `std_${require('crypto').randomBytes(4).toString('hex')}`;
     const bcrypt = require('bcrypt');
 
     try {
@@ -203,7 +203,7 @@ router.put('/:id', validate(updateStudentSchema), async (req, res) => {
 });
 
 // 4. Delete student
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
         await withTransaction(req.db, async (tx) => {
