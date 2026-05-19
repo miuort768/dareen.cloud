@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { authMiddleware, checkRole } = require('../middleware/auth');
+
+router.use(authMiddleware);
 
 // Using req.db from middleware
 
@@ -35,8 +38,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 2. Add notification
-router.post('/', async (req, res) => {
+// 2. Add notification (Admin only)
+router.post('/', checkRole(['admin']), async (req, res) => {
     const body = req.body;
     const { v4: uuidv4 } = require('uuid');
     const id = body.id || uuidv4();

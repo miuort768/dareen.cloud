@@ -321,7 +321,29 @@ async function startServer() {
         const io = new Server(server, {
             path: '/api/socket.io',
             cors: {
-                origin: "*",
+                origin: function (origin, callback) {
+                    const isProd = process.env.NODE_ENV === 'production';
+                    const allowedOrigins = [
+                        process.env.FRONTEND_URL,
+                        'https://dareen.cloud',
+                        'https://www.dareen.cloud'
+                    ];
+                    if (!isProd) {
+                        allowedOrigins.push(
+                            'http://localhost:3001',
+                            'http://localhost:5173',
+                            'http://localhost:5174',
+                            'http://localhost:5175',
+                            'http://localhost:5176'
+                        );
+                    }
+                    const filtered = allowedOrigins.filter(Boolean);
+                    if (!origin || filtered.indexOf(origin) !== -1 || process.env.FRONTEND_URL === '*') {
+                        callback(null, true);
+                    } else {
+                        callback(new Error('Not allowed by CORS'));
+                    }
+                },
                 methods: ["GET", "POST"]
             },
             pingTimeout: 60000,
@@ -345,10 +367,6 @@ async function startServer() {
             if (!token) return next(new Error('Authentication error'));
 
             try {
-                if (token === 'guest') {
-                    socket.data.user = { id: 'guest', role: 'guest', name: 'Guest User' };
-                    return next();
-                }
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
                 socket.data.user = decoded;
                 next();

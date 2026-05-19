@@ -10,7 +10,10 @@ const ensureDb = (req, res, next) => {
     next();
 };
 
+const { authMiddleware } = require('../middleware/auth');
+
 router.use(ensureDb);
+router.use(authMiddleware);
 
 const logger = require('../utils/logger');
 

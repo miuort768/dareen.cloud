@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
+const { authMiddleware } = require('../middleware/auth');
+
+router.use(authMiddleware);
 
 // Get all forum posts (Filter out pending if not admin)
 router.get('/', async (req, res) => {

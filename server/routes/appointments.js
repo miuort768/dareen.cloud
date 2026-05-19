@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../utils/logger');
+const { authMiddleware, checkRole } = require('../middleware/auth');
 
-// GET /api/appointments/completed-sessions - Get IDs of completed sessions for the current day
-router.get('/completed-sessions', async (req, res) => {
+router.use(authMiddleware);
+
+// GET /api/appointments/completed-sessions - Get IDs of completed sessions (Admin/Teacher only)
+router.get('/completed-sessions', checkRole(['admin', 'teacher']), async (req, res) => {
     try {
         const sessions = await req.db.all('SELECT id FROM completed_sessions');
         res.json(sessions.map(s => s.id));
@@ -13,8 +16,8 @@ router.get('/completed-sessions', async (req, res) => {
     }
 });
 
-// POST /api/appointments/completed-sessions - Mark a session as completed
-router.post('/completed-sessions', async (req, res) => {
+// POST /api/appointments/completed-sessions - Mark a session as completed (Admin/Teacher only)
+router.post('/completed-sessions', checkRole(['admin', 'teacher']), async (req, res) => {
     const { id } = req.body;
     if (!id) return res.status(400).json({ error: 'ID is required' });
 
@@ -27,8 +30,8 @@ router.post('/completed-sessions', async (req, res) => {
     }
 });
 
-// DELETE /api/appointments/completed-sessions/reset - Clear all completed sessions (usually done via scheduled task or day change)
-router.delete('/completed-sessions/reset', async (req, res) => {
+// DELETE /api/appointments/completed-sessions/reset - Clear all completed sessions (Admin only)
+router.delete('/completed-sessions/reset', checkRole(['admin']), async (req, res) => {
     try {
         await req.db.run('DELETE FROM completed_sessions');
         res.json({ success: true });

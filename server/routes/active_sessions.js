@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { authMiddleware } = require('../middleware/auth');
+
+router.use(authMiddleware);
 
 router.get('/my', async (req, res) => {
     try {
@@ -48,6 +51,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') return res.status(403).json({error: 'Forbidden'});
     const { studentId, subject } = req.body;
     try {
         if(studentId && subject) {
