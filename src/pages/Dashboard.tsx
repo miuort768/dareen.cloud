@@ -26,7 +26,8 @@ export const Dashboard = () => {
         loading,
         rawStudents,
         rawSessions,
-        rawStudentInvoices
+        rawStudentInvoices,
+        fetchDashboardData
     } = useDashboardData(currentUser);
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
