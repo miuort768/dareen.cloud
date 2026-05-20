@@ -177,7 +177,7 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6 animate-in fade-in duration-700">
             
@@ -236,7 +236,7 @@ export const ParentDashboard = () => {
 
             {/* ═══════════════ QUICK STATS ═══════════════ */}
             <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <QuickStatCard icon={Users} label="الأبناء" value={stats.childCount} color="indigo" />
+                <QuickStatCard icon={Users} label="الأبناء" value={stats.childCount} color="amber" />
                 <QuickStatCard icon={CalendarDays} label="قادمة" value={stats.upcomingSessions} color="blue" />
                 <QuickStatCard icon={Star} label="الانضباط" value={`${stats.attendanceRate}%`} color="rose" />
             </div>
@@ -251,21 +251,21 @@ export const ParentDashboard = () => {
             {children.some(child => child.enrollments?.some((en: any) => en.nextSessionNotes)) && (
                 <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-2 mb-3">
-                        <MessageSquare className="text-indigo-500" size={16} />
+                        <MessageSquare className="text-amber-500" size={16} />
                         <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات</h3>
                     </div>
                     <div className="space-y-3">
                         {children.filter(child => child.enrollments?.some((en: any) => en.nextSessionNotes)).map((child) => (
                             <div key={child.id} className="space-y-1">
                                 <div className="flex items-center gap-2 px-1">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                                     <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{child.name}</span>
                                 </div>
                                 <div className="space-y-2">
                                     {child.enrollments.filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
-                                        <div key={idx} className="bg-indigo-50/30 dark:bg-indigo-900/10 p-3 rounded-xl border border-indigo-100/30 dark:border-indigo-900/20">
+                                        <div key={idx} className="bg-amber-50/30 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100/30 dark:border-amber-900/20">
                                             <div className="flex justify-between items-center mb-1">
-                                                <span className="text-[9px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">{en.subject}</span>
+                                                <span className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest">{en.subject}</span>
                                                 <span className="text-[8px] font-bold text-slate-400">{en.teacher}</span>
                                             </div>
                                             <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 leading-relaxed">{en.nextSessionNotes}</p>
@@ -279,7 +279,7 @@ export const ParentDashboard = () => {
             )}
 
             {/* ═══════════════ ACADEMIC PROGRESS ═══════════════ */}
-            <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl md:rounded-3xl p-4 md:p-6 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-br from-amber-600 to-amber-700 rounded-2xl md:rounded-3xl p-4 md:p-6 text-white shadow-xl relative overflow-hidden">
                 <div className="relative z-10">
                     <div className="flex justify-between items-start mb-4">
                         <div>
@@ -309,7 +309,7 @@ export const ParentDashboard = () => {
             {/* ═══════════════ TODAY'S TASKS ═══════════════ */}
             <div className="space-y-2">
                 <div className="flex items-center gap-2 px-1">
-                    <Calendar className="text-indigo-600 dark:text-indigo-400" size={16} />
+                    <Calendar className="text-amber-600 dark:text-amber-400" size={16} />
                     <h3 className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest italic">جدول حصص اليوم</h3>
                 </div>
 
@@ -317,7 +317,7 @@ export const ParentDashboard = () => {
                     {todayTasks.map((task, idx) => (
                         <div key={idx} className="bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
                              <div className="flex items-center gap-2">
-                                <div className="w-9 h-9 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 rounded-xl flex items-center justify-center">
+                                <div className="w-9 h-9 bg-amber-50 dark:bg-amber-900/10 text-amber-500 rounded-xl flex items-center justify-center">
                                     <BookOpen size={16} />
                                 </div>
                                 <div>
@@ -352,7 +352,7 @@ export const ParentDashboard = () => {
                                 <Star size={14} fill="currentColor" />
                             </div>
                             <div className="min-w-0 flex-1">
-                                <p className="text-[8px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-0.5 truncate">{log.studentName}</p>
+                                    <p className="text-[8px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-0.5 truncate">{log.studentName}</p>
                                 <h4 className="text-[10px] font-bold text-slate-800 dark:text-slate-200 leading-snug">
                                     تلقى {log.amount} نقطة: {log.action}
                                 </h4>
@@ -379,7 +379,7 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ═══════════════ SUPPORT FOOTER ═══════════════ */}
-            <div className="bg-[#5c4fb1] dark:bg-[#4a3f9e] p-5 rounded-3xl shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="bg-gradient-to-l from-amber-600 to-amber-500 p-5 rounded-3xl shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
                 <div className="text-center md:text-right relative z-10 w-full md:w-auto">
                     <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
@@ -388,9 +388,9 @@ export const ParentDashboard = () => {
                 <a 
                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-[#5c4fb1] px-5 py-2 rounded-2xl font-black text-[10px] flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
+                    className="bg-white text-amber-600 px-5 py-2 rounded-2xl font-black text-[10px] flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl w-full md:w-auto justify-center"
                 >
-                    <div className="w-6 h-6 bg-[#5c4fb1] text-white rounded-md flex items-center justify-center">
+                    <div className="w-6 h-6 bg-amber-600 text-white rounded-md flex items-center justify-center">
                         <MessageSquare size={12} fill="currentColor" />
                     </div>
                     تواصل معنا
@@ -404,7 +404,7 @@ export const ParentDashboard = () => {
 
 const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
     const colors: any = {
-        indigo: "bg-indigo-50 dark:bg-indigo-900/10 text-indigo-500 shadow-indigo-100 dark:shadow-none",
+        amber: "bg-amber-50 dark:bg-amber-900/10 text-amber-500 shadow-amber-100 dark:shadow-none",
         blue: "bg-blue-50 dark:bg-blue-900/10 text-blue-500 shadow-blue-100 dark:shadow-none",
         rose: "bg-rose-50 dark:bg-rose-900/10 text-rose-500 shadow-rose-100 dark:shadow-none"
     };
@@ -422,9 +422,9 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
 const NavButton = ({ label, icon: Icon, onClick }: any) => (
     <button 
         onClick={onClick}
-        className="bg-[#f2f0ff] dark:bg-indigo-950/20 p-3 rounded-2xl border border-indigo-100/30 dark:border-indigo-900/20 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"
+        className="bg-amber-50/50 dark:bg-amber-950/20 p-3 rounded-2xl border border-amber-100/30 dark:border-amber-900/20 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"
     >
-        <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-sm group-hover:scale-110 transition-transform">
+        <div className="w-9 h-9 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm group-hover:scale-110 transition-transform">
             <Icon size={16} strokeWidth={1.5} />
         </div>
         <span className="text-[10px] font-black text-slate-700 dark:text-slate-400 tracking-tight">{label}</span>

@@ -149,28 +149,28 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-24 space-y-6 md:space-y-8">
             
             {/* Premium Background Decorations */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-sky-500/5 dark:bg-sky-500/10 rounded-full blur-[120px] animate-pulse"></div>
                 <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[100px]"></div>
             </div>
 
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-3">
                 <div className="space-y-1">
-                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-lg mb-1">
-                        <Sparkles size={10} className="text-indigo-600 dark:text-indigo-400" />
-                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">نظام التفوق</span>
+                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 border border-sky-100 dark:border-sky-500/20 rounded-lg mb-1">
+                        <Sparkles size={10} className="text-sky-600 dark:text-sky-400" />
+                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">نظام التفوق</span>
                     </div>
                     <h1 className="text-2xl md:text-5xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">
-                        مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span> ✨
+                        مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span> ✨
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 text-[10px] md:text-sm font-bold flex items-center gap-1.5">
-                        <CalendarDays size={12} className="text-indigo-500" />
+                        <CalendarDays size={12} className="text-sky-500" />
                         {todayArabic}، {format(new Date(), 'd MMMM', { locale: ar })}
                     </p>
                 </div>
@@ -181,7 +181,7 @@ export const StudentDashboard = () => {
                             <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
                             <span className="text-xs font-black text-slate-900 dark:text-white">{rank.name}</span>
                         </div>
-                        <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-md">
+                        <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-md">
                             <Trophy size={16} />
                         </div>
                     </div>
@@ -190,7 +190,7 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ ACTIVE TIMER ═══════════════ */}
             {activeTimer && (
-                <div className="relative z-10 bg-indigo-600 dark:bg-indigo-500 text-white p-4 md:p-6 border-b-2 md:border-b-4 border-indigo-900 dark:border-indigo-700 shadow-xl flex flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
+                <div className="relative z-10 bg-sky-600 dark:bg-sky-500 text-white p-4 md:p-6 border-b-2 md:border-b-4 border-sky-900 dark:border-sky-700 shadow-xl flex flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
                     <div className="flex items-center gap-3 md:gap-5">
                         <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 flex items-center justify-center animate-pulse">
                             <Clock size={20} className="md:hidden" />
@@ -223,14 +223,14 @@ export const StudentDashboard = () => {
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="group relative overflow-hidden bg-slate-900 dark:bg-indigo-950 p-5 md:p-8 border-r-4 md:border-r-8 border-indigo-600 shadow-2xl"
+                        className="group relative overflow-hidden bg-slate-900 dark:bg-sky-950 p-5 md:p-8 border-r-4 md:border-r-8 border-sky-600 shadow-2xl"
                     >
                         <Award className="absolute -bottom-6 -left-6 text-white/5 rotate-12" size={120} />
                         
                         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
                             <div className="space-y-3 md:space-y-4">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1 h-5 bg-indigo-500"></div>
+                                    <div className="w-1 h-5 bg-sky-500"></div>
                                     <h2 className="text-xs md:text-2xl font-heading font-black text-white uppercase tracking-tight">الحصة القادمة</h2>
                                 </div>
                                 
@@ -240,13 +240,13 @@ export const StudentDashboard = () => {
                                             <h3 className="text-2xl md:text-6xl font-heading font-black text-white">
                                                 {todaySchedule[0].slots[0].subject}
                                             </h3>
-                                            <div className="flex items-center gap-2 text-indigo-300 font-bold text-xs md:text-lg">
+                                            <div className="flex items-center gap-2 text-sky-300 font-bold text-xs md:text-lg">
                                                 <Rocket size={14} className="md:size-18" />
                                                 <span>مع المعلمة {todaySchedule[0].slots[0].teacher}</span>
                                             </div>
                                         </div>
-                                        <div className="inline-flex items-center gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-indigo-500/20 border border-indigo-500/30 backdrop-blur-md text-white font-black text-[10px] md:text-sm uppercase tracking-widest">
-                                            <Clock size={12} className="text-indigo-400" />
+                                        <div className="inline-flex items-center gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-sky-500/20 border border-sky-500/30 backdrop-blur-md text-white font-black text-[10px] md:text-sm uppercase tracking-widest">
+                                            <Clock size={12} className="text-sky-400" />
                                             اليوم • {todaySchedule[0].slots[0].time} مساءً
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@ export const StudentDashboard = () => {
 
                             <button 
                                 onClick={() => navigate('/chat')}
-                                className="h-12 w-full md:h-32 md:w-32 bg-indigo-600 hover:bg-indigo-500 text-white flex flex-row md:flex-col items-center justify-center gap-3 md:gap-2 transition-all active:scale-95 shadow-xl"
+                                className="h-12 w-full md:h-32 md:w-32 bg-sky-600 hover:bg-sky-500 text-white flex flex-row md:flex-col items-center justify-center gap-3 md:gap-2 transition-all active:scale-95 shadow-xl"
                             >
                                 <MessageSquare size={18} className="md:size-24" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">المحادثات</span>
@@ -267,7 +267,7 @@ export const StudentDashboard = () => {
 
                     {/* Stats & Points Summary */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <StatCard icon={Star} label="النقاط" value={points} color="indigo" />
+                        <StatCard icon={Star} label="النقاط" value={points} color="sky" />
                         <StatCard icon={CalendarDays} label="الحضور" value={`${stats.attendanceRate}%`} color="purple" />
                         <StatCard icon={BookOpen} label="المواد" value={(studentData?.enrollments || []).length} color="slate" />
                         <StatCard icon={Activity} label="المستوى" value={Math.floor(points / 100) + 1} color="emerald" />
@@ -278,9 +278,9 @@ export const StudentDashboard = () => {
                         <div className="flex flex-row items-end justify-between gap-4 mb-4 md:mb-8">
                             <div className="space-y-1">
                                 <h3 className="text-sm md:text-2xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">مسار التميز</h3>
-                                <p className="text-slate-500 dark:text-slate-400 text-[9px] md:text-sm font-bold">تبقى لك <span className="text-indigo-600 dark:text-indigo-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
+                                <p className="text-slate-500 dark:text-slate-400 text-[9px] md:text-sm font-bold">تبقى لك <span className="text-sky-600 dark:text-sky-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
                             </div>
-                            <div className="px-3 py-1 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-black text-[9px] md:text-sm text-indigo-600 dark:text-indigo-400 tracking-widest uppercase">
+                            <div className="px-3 py-1 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-black text-[9px] md:text-sm text-sky-600 dark:text-sky-400 tracking-widest uppercase">
                                 {rank.name}
                             </div>
                         </div>
@@ -288,7 +288,7 @@ export const StudentDashboard = () => {
                             <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${Math.min((points % 100), 100)}%` }}
-                                className="h-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600"
+                                className="h-full bg-gradient-to-r from-sky-600 via-purple-600 to-sky-600"
                             />
                         </div>
                     </div>
@@ -302,9 +302,9 @@ export const StudentDashboard = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {(studentData?.enrollments || []).filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
-                                <div key={idx} className="bg-white dark:bg-slate-900 border-r-4 border-indigo-500 p-4 md:p-6 shadow-sm">
+                                <div key={idx} className="bg-white dark:bg-slate-900 border-r-4 border-sky-500 p-4 md:p-6 shadow-sm">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="px-2 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[8px] font-black uppercase tracking-widest">{en.subject}</span>
+                                        <span className="px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 text-[8px] font-black uppercase tracking-widest">{en.subject}</span>
                                         <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
                                     </div>
                                     <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
@@ -323,7 +323,7 @@ export const StudentDashboard = () => {
                             onClick={() => setShowBadges(!showBadges)}
                             className="h-24 md:h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 shadow-sm"
                         >
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center rounded-xl">
+                            <div className="w-8 h-8 md:w-12 md:h-12 bg-sky-50 dark:bg-sky-900/10 text-sky-600 dark:text-sky-400 flex items-center justify-center rounded-xl">
                                 <Award size={18} className="md:size-24" />
                             </div>
                             <span className="text-[8px] md:text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">الأوسمة</span>
@@ -388,13 +388,13 @@ export const StudentDashboard = () => {
                     </div>
 
                     {/* Support Block */}
-                    <div className="bg-gradient-to-r from-indigo-700 to-purple-800 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                    <div className="bg-gradient-to-r from-sky-700 to-purple-800 p-6 md:p-8 shadow-2xl relative overflow-hidden">
                         <div className="relative z-10 space-y-4">
                             <h4 className="text-lg md:text-2xl font-heading font-black text-white leading-tight">تحتاج مساعدة؟</h4>
                             <a 
                                 href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2 bg-white text-indigo-900 py-3 md:py-4 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-xl"
+                                className="flex items-center justify-center gap-2 bg-white text-sky-900 py-3 md:py-4 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-xl"
                             >
                                 <MessageSquare size={14} fill="currentColor" />
                                 تواصل الآن
@@ -460,13 +460,13 @@ export const StudentDashboard = () => {
 
 const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: string; value: string | number; color: string }) => {
     const colors: any = {
-        indigo: "border-indigo-500 text-indigo-600 bg-indigo-50 dark:bg-indigo-900/10",
+        sky: "border-sky-500 text-sky-600 bg-sky-50 dark:bg-sky-900/10",
         purple: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-900/10",
         slate: "border-slate-500 text-slate-600 bg-slate-50 dark:bg-slate-900/10",
         emerald: "border-emerald-500 text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10",
     };
     return (
-        <div className={cn("bg-white dark:bg-slate-900 border-b-2 md:border-b-4 p-3 md:p-5 flex flex-col items-center justify-center text-center shadow-sm", colors[color] || colors.indigo)}>
+        <div className={cn("bg-white dark:bg-slate-900 border-b-2 md:border-b-4 p-3 md:p-5 flex flex-col items-center justify-center text-center shadow-sm", colors[color] || colors.sky)}>
             <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center mb-1.5 md:mb-3">
                 <Icon size={18} className="md:size-24" />
             </div>
@@ -478,7 +478,7 @@ const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: strin
 
 const allBadges = [
     { id: 'diligent', name: 'المجتهد الصغير', icon: Star, color: 'from-amber-400 to-orange-500' },
-    { id: 'attendance', name: 'بطل الحضور', icon: CalendarDays, color: 'from-blue-400 to-indigo-600' },
+    { id: 'attendance', name: 'بطل الحضور', icon: CalendarDays, color: 'from-blue-400 to-sky-600' },
     { id: 'reader', name: 'القارئ المتميز', icon: BookOpen, color: 'from-emerald-400 to-teal-600' },
     { id: 'star', name: 'نجم الأسبوع', icon: Award, color: 'from-rose-400 to-pink-600' },
     { id: 'golden', name: 'المستوى الذهبي', icon: Trophy, color: 'from-yellow-400 to-amber-600' },
