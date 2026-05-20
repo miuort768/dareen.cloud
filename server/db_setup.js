@@ -356,6 +356,32 @@ async function setupDatabase() {
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
 
+        CREATE TABLE IF NOT EXISTS trial_sessions (
+            id TEXT PRIMARY KEY,
+            studentName TEXT NOT NULL,
+            parentPhone TEXT NOT NULL,
+            subject TEXT,
+            teacherId TEXT,
+            teacherName TEXT,
+            date TEXT NOT NULL,
+            time TEXT,
+            status TEXT DEFAULT 'pending',
+            notes TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE SET NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS teacher_availability (
+            id TEXT PRIMARY KEY,
+            teacherId TEXT NOT NULL,
+            teacherName TEXT NOT NULL,
+            dayOfWeek INTEGER NOT NULL,
+            startTime TEXT NOT NULL,
+            endTime TEXT NOT NULL,
+            isAvailable INTEGER DEFAULT 1,
+            FOREIGN KEY(teacherId) REFERENCES teachers(id) ON DELETE CASCADE
+        );
+
         -- Tables created above
     `);
 
@@ -639,7 +665,8 @@ async function setupDatabase() {
             { key: 'balance_warning_threshold', value: '2' },
             { key: 'chatbot_enabled', value: 'false' },
             { key: 'chatbot_welcome_msg', value: 'أهلاً بك في منصة دارين، كيف يمكنني مساعدتك اليوم؟' },
-            { key: 'chatbot_name', value: 'مساعد دارين' }
+            { key: 'chatbot_name', value: 'مساعد دارين' },
+            { key: 'reminder_minutes_before', value: '30' }
         ];
         for (const s of defaultSettings) {
             await db.run('INSERT INTO system_settings (key, value) VALUES (?, ?)', [s.key, s.value]);

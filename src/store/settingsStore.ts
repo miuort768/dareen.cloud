@@ -24,6 +24,7 @@ interface SettingsState {
     autoFreezeThreshold: number;
     telegramHandle: string;
     heroBanners: string;
+    reminderMinutesBefore: number;
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
@@ -49,6 +50,7 @@ interface SettingsState {
     setAutoFreezeThreshold: (threshold: number) => Promise<void>;
     setTelegramHandle: (handle: string) => Promise<void>;
     setHeroBanners: (banners: string) => Promise<void>;
+    setReminderMinutesBefore: (minutes: number) => Promise<void>;
 }
 
 // Global CSS Theme injector
@@ -101,6 +103,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     teacherCommissionType: 'fixed',
     autoFreezeThreshold: 3,
     telegramHandle: 'dareen_app',
+    reminderMinutesBefore: 30,
     heroBanners: JSON.stringify([
         "انضم إلى أفضل منصة تعليمية",
         "تأسيس قوي لجميع المراحل",
@@ -161,6 +164,9 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                 }
                 if (settings.telegram_handle !== undefined && settings.telegram_handle !== null) updates.telegramHandle = settings.telegram_handle;
                 if (settings.hero_banners !== undefined && settings.hero_banners !== null) updates.heroBanners = settings.hero_banners;
+                if (settings.reminder_minutes_before !== undefined && settings.reminder_minutes_before !== null) {
+                    updates.reminderMinutesBefore = Number(settings.reminder_minutes_before);
+                }
 
                 set({ ...updates, isSettingsLoading: false });
             } else {
@@ -264,6 +270,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setHeroBanners: async (banners) => {
         set({ heroBanners: banners });
         await updateSettingOnApi('hero_banners', banners);
+    },
+    setReminderMinutesBefore: async (minutes) => {
+        set({ reminderMinutesBefore: minutes });
+        await updateSettingOnApi('reminder_minutes_before', String(minutes));
     }
 }));
 

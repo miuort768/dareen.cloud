@@ -32,6 +32,8 @@ const Announcements = lazy(() => import('./pages/Announcements').then(m => ({ de
 const Forum = lazy(() => import('./pages/Forum').then(m => ({ default: m.Forum })));
 const MonthlyClosing = lazy(() => import('./pages/MonthlyClosing').then(m => ({ default: m.MonthlyClosing })));
 const Leads = lazy(() => import('./pages/Leads').then(m => ({ default: m.Leads })));
+const TrialSessions = lazy(() => import('./pages/TrialSessions').then(m => ({ default: m.TrialSessions })));
+const TeacherAvailability = lazy(() => import('./pages/TeacherAvailability').then(m => ({ default: m.TeacherAvailability })));
 const Agenda = lazy(() => import('./pages/Agenda').then(m => ({ default: m.Agenda })));
 const Appointments = lazy(() => import('./pages/Appointments').then(m => ({ default: m.Appointments })));
 const About = lazy(() => import('./pages/public/About').then(m => ({ default: m.About })));
@@ -190,6 +192,8 @@ function App() {
             <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
             <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
             <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
+            <Route path="trial-sessions" element={<ProtectedRoute permission="*"><TrialSessions /></ProtectedRoute>} />
+            <Route path="teacher-availability" element={<ProtectedRoute permission="*"><TeacherAvailability /></ProtectedRoute>} />
             <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
             <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
             <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />

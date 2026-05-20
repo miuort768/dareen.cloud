@@ -22,7 +22,9 @@ import {
     UserPlus,
     Home,
     Megaphone,
-    MessageSquare
+    MessageSquare,
+    BookOpen,
+    Clock
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useApp } from '../../context/AppContext';
@@ -66,6 +68,7 @@ export const Sidebar = () => {
         { name: 'لوحة التحكم', href: getDashboardLink(), id: 'dashboard', icon: LayoutDashboard },
         { name: 'الدردشة', href: '/chat', id: 'chat', icon: totalUnreadCount > 0 ? MessageSquare : MessageCircle },
         { name: 'العملاء والمهتمين', href: '/leads', id: 'leads', icon: UserPlus },
+        { name: 'جلسات المراجعة', href: '/trial-sessions', id: 'trial-sessions', icon: BookOpen },
         { name: 'المعلمات', href: '/teachers', id: 'teachers', icon: Presentation },
         { name: 'الطلاب', href: '/students', id: 'students', icon: GraduationCap },
         { name: 'أولياء الأمور', href: '/parents', id: 'parents', icon: Users },
@@ -74,6 +77,7 @@ export const Sidebar = () => {
         { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
         { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
         { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
+        { name: 'متاحات المعلمات', href: '/teacher-availability', id: 'teacher-availability', icon: Clock },
         { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
         { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student-invoices', icon: DollarSign },

@@ -218,6 +218,7 @@ export const Settings = () => {
         autoFreezeThreshold, setAutoFreezeThreshold,
         telegramHandle, setTelegramHandle,
         heroBanners, setHeroBanners,
+        reminderMinutesBefore, setReminderMinutesBefore,
         user, users, addUser, editUser, deleteUser
     } = useApp();
 
@@ -1062,6 +1063,22 @@ export const Settings = () => {
                                 >
                                     <CheckCircle2 size={13} /> حفظ وتفعيل القالب
                                 </PrimaryBtn>
+                            </div>
+                        </SectionCard>
+
+                        <SectionCard>
+                            <SectionTitle icon={Bell} label="تذكير أولياء الأمور بالحصص" sub="Parent Session Reminders" />
+                            <div className="space-y-3">
+                                <div>
+                                    <FieldLabel>إرسال تذكير قبل الحصة بـ (دقائق)</FieldLabel>
+                                    <InputField
+                                        type="number"
+                                        value={reminderMinutesBefore}
+                                        onChange={e => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))}
+                                        placeholder="30"
+                                    />
+                                    <p className="text-[10px] text-slate-400 mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
+                                </div>
                             </div>
                         </SectionCard>
 

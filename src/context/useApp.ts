@@ -49,6 +49,7 @@ export const useApp = () => {
         autoFreezeThreshold: settings.autoFreezeThreshold,
         telegramHandle: settings.telegramHandle,
         heroBanners: settings.heroBanners,
+        reminderMinutesBefore: settings.reminderMinutesBefore,
         isSettingsLoading: settings.isSettingsLoading,
         setAcademyName: settings.setAcademyName,
         setAcademyLogo: settings.setAcademyLogo,
@@ -72,6 +73,7 @@ export const useApp = () => {
         setAutoFreezeThreshold: settings.setAutoFreezeThreshold,
         setTelegramHandle: settings.setTelegramHandle,
         setHeroBanners: settings.setHeroBanners,
+        setReminderMinutesBefore: settings.setReminderMinutesBefore,
         // Users
         users: users.users,
         addUser: users.addUser,

@@ -33,6 +33,8 @@ const { pushRouter, sendPushToUser } = require('./routes/push');
 const leadsRouter = require('./routes/leads');
 const blogRouter = require('./routes/blog');
 const liveRouter = require('./routes/live');
+const trialSessionsRouter = require('./routes/trial_sessions');
+const teacherAvailabilityRouter = require('./routes/teacher_availability');
 
 
 
@@ -196,11 +198,12 @@ async function startServer() {
         // Public system settings (Accessable before login for Maintenance Mode & Branding)
         apiRouter.get('/system/public-settings', async (req, res) => {
             try {
-                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                const settings = await req.db.all('SELECT * FROM system_settings WHERE key IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     [
                         'maintenance_mode', 'academy_name', 'admin_phone', 'theme_color', 
                         'notifications_enabled', 'auto_backup',
-                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name', 'hero_banners'
+                        'chatbot_enabled', 'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
+                        'reminder_minutes_before'
                     ]);
                 const settingsMap = {};
                 settings.forEach(s => settingsMap[s.key] = s.value);
@@ -242,6 +245,8 @@ async function startServer() {
         apiRouter.use('/appointments', appointmentsRouter);
         apiRouter.use('/push', pushRouter);
         apiRouter.use('/leads', leadsRouter);
+        apiRouter.use('/trial-sessions', trialSessionsRouter);
+        apiRouter.use('/teacher-availability', teacherAvailabilityRouter);
 
 
         // Compatibility middleware for invoices inside API
@@ -562,8 +567,60 @@ async function startServer() {
 
         });
 
+        // ─── Reminder Scheduler: Check upcoming sessions every 60 seconds ───
+        const startReminderScheduler = () => {
+            const CHECK_INTERVAL = 60 * 1000;
+
+            setInterval(async () => {
+                try {
+                    const db = await getDb();
+                    const settings = await db.get(`SELECT value FROM system_settings WHERE key = 'reminder_minutes_before'`);
+                    const minutesBefore = parseInt(settings?.value) || 30;
+
+                    const targetDate = new Date(Date.now() + minutesBefore * 60 * 1000);
+                    const targetToday = targetDate.toISOString().split('T')[0];
+                    const targetTime = `${String(targetDate.getHours()).padStart(2, '0')}:${String(targetDate.getMinutes()).padStart(2, '0')}`;
+
+                    const upcoming = await db.all(
+                        `SELECT s.*, st.parentPhone FROM sessions s LEFT JOIN students st ON st.id = s.studentId WHERE s.date = ? AND s.time = ? AND s.status = 'scheduled'`,
+                        [targetToday, targetTime]
+                    );
+
+                    for (const session of upcoming) {
+                        const notifId = require('uuid').v4();
+                        const title = 'تذكير بالحصة القادمة';
+                        const message = `موعد حصة ${session.subject} مع ${session.teacherName} بعد ${minutesBefore} دقيقة`;
+
+                        if (session.parentPhone) {
+                            const parents = await db.all('SELECT id FROM parents WHERE phone = ?', [session.parentPhone]);
+                            for (const parent of parents) {
+                                const existing = await db.get(
+                                    'SELECT id FROM notifications WHERE receiverId = ? AND title = ? AND message = ? AND date(time) = date(?)',
+                                    [parent.id, title, message, new Date().toISOString()]
+                                );
+                                if (!existing) {
+                                    await db.run(
+                                        `INSERT INTO notifications (id, senderId, receiverId, senderName, title, message, type, time, read, link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                        [notifId, 'system', parent.id, 'النظام', title, message, 'warning', new Date().toISOString(), 0, '/parent-dashboard']
+                                    );
+                                    const io = app.get('socketio');
+                                    if (io) {
+                                        io.to(`user_${parent.id}`).emit('notification', { id: notifId, title, message, type: 'warning', time: new Date().toISOString() });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error('[ReminderScheduler] Error:', err.message);
+                }
+            }, CHECK_INTERVAL);
+            console.log(`⏰ Reminder scheduler started (checking every ${CHECK_INTERVAL / 1000}s)`);
+        };
+
         const serverInstance = server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
+            startReminderScheduler();
         });
 
         // Graceful Shutdown
