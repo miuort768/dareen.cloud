@@ -1,10 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
-  Calendar, 
-  MessageSquare, 
-  User, 
-  LayoutDashboard,
-  ClipboardList
+  Calendar, MessageSquare, User, LayoutDashboard, ClipboardList
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { useChatStore } from '../../store/chatStore';
@@ -19,9 +15,7 @@ export const BottomNav = () => {
 
   const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;
 
-  if (isChatActive) {
-    return null;
-  }
+  if (isChatActive) return null;
 
   const handleNav = (path: string) => {
     triggerHaptic('light');
@@ -35,31 +29,15 @@ export const BottomNav = () => {
       path: currentUser?.role === 'parent' ? '/parent-dashboard' : 
             currentUser?.role === 'student' ? '/student-dashboard' : '/admin-dashboard',
     },
-    {
-      label: 'الجدول',
-      icon: Calendar,
-      path: '/schedule',
-    },
-    {
-      label: 'المهام',
-      icon: ClipboardList,
-      path: '/tasks',
-    },
-    {
-      label: 'الدردشة',
-      icon: MessageSquare,
-      path: '/chat',
-    },
-    {
-      label: 'حسابي',
-      icon: User,
-      path: '/settings',
-    }
+    { label: 'الجدول', icon: Calendar, path: '/schedule' },
+    { label: 'المهام', icon: ClipboardList, path: '/tasks' },
+    { label: 'الدردشة', icon: MessageSquare, path: '/chat' },
+    { label: 'حسابي', icon: User, path: '/settings' },
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 pb-[env(safe-area-inset-bottom)]">
-      <div className="flex justify-around items-center h-[82px]">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[50] bg-white/90 dark:bg-slate-950/90 backdrop-blur-2xl border-t border-slate-200/50 dark:border-slate-800/50 pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-slate-900/10">
+      <div className="flex justify-around items-center h-[72px] px-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
@@ -69,24 +47,31 @@ export const BottomNav = () => {
               key={item.path}
               onClick={() => handleNav(item.path)}
               className={cn(
-                "flex flex-col items-center justify-center w-full h-full gap-2 transition-all duration-300 touch-manipulation",
-                isActive 
-                  ? "text-red-600 dark:text-teal-400" 
-                  : "text-slate-400 dark:text-slate-500"
+                "flex flex-col items-center justify-center w-full h-full gap-1 transition-all duration-200 touch-manipulation relative",
               )}
             >
               <div className={cn(
-                "p-2 rounded-xl transition-all duration-300",
-                isActive && "bg-red-50 dark:bg-teal-400/10 scale-110"
+                "p-1.5 rounded-2xl transition-all duration-200",
+                isActive && "bg-indigo-50 dark:bg-indigo-950/40"
               )}>
-                <Icon size={32} strokeWidth={isActive ? 2.5 : 2} />
+                <Icon 
+                  size={24} 
+                  className={cn(
+                    "transition-all duration-200",
+                    isActive 
+                      ? "text-indigo-600 dark:text-indigo-400 stroke-[2.5]" 
+                      : "text-slate-400 dark:text-slate-500 stroke-[1.5]"
+                  )} 
+                />
               </div>
-              <span className="text-[11px] font-black tracking-tight">
+              <span className={cn(
+                "text-[10px] font-black tracking-tight transition-all duration-200",
+                isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
+              )}>
                 {item.label}
               </span>
-              
               {isActive && (
-                <div className="absolute top-0 w-8 h-1 bg-red-600 dark:bg-teal-400 rounded-full" />
+                <div className="absolute -top-0.5 w-6 h-1 bg-indigo-500 dark:bg-indigo-400 rounded-full" />
               )}
             </button>
           );
