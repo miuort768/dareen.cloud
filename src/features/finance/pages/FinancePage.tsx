@@ -1,4 +1,4 @@
-import { Search, Filter, Calendar, CalendarCheck, Download, Plus, TrendingUp } from 'lucide-react';
+import { CalendarCheck, Download, Plus, TrendingUp } from 'lucide-react';
 import { TransactionsLog } from '../components/TransactionsLog';
 import { FinanceCharts } from '../components/FinanceCharts';
 import { FinanceStats } from '../components/FinanceStats';
@@ -96,19 +96,15 @@ export const Finance = () => {
                     </div>
 
                     <FinanceCharts
-                        monthlyData={state.monthlyData}
-                        isTeacher={false}
+                        monthlyData={state.monthlyData || []}
+                        pieData={state.pieData || []}
+                        totalExpenses={state.totalExpenses || 0}
                     />
 
                     <TransactionsLog
-                        searchTerm={state.searchTerm}
-                        onSearchChange={actions.setSearchTerm}
-                        filter={state.filter}
-                        onFilterChange={actions.setFilter}
-                        transactions={state.filteredTransactions}
-                        onDelete={actions.handleDeleteTransaction}
-                        monthIncome={state.monthIncome}
-                        monthExpenses={state.monthExpenses}
+                        transactions={state.filteredTransactions || []}
+                        totalCount={state.filteredTransactions?.length || 0}
+                        onDeleteAll={actions.handleDeleteAllTransactions}
                     />
                 </div>
 
