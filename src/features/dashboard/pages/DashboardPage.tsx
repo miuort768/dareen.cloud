@@ -14,6 +14,18 @@ import { PageLoader } from '../../../components/ui/PageLoader';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { cn } from '../../../lib/utils';
+import { motion } from 'framer-motion';
+
+const Section = ({ id, children, className }: { id?: string; children: React.ReactNode; className?: string }) => (
+    <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        className={cn("relative", className)}
+    >
+        {children}
+    </motion.section>
+);
 
 export const Dashboard = () => {
     const { currentUser } = useApp();
@@ -40,76 +52,110 @@ export const Dashboard = () => {
 
     return (
         <div className={cn(
-            "min-h-full pb-20 pt-4 overflow-x-hidden relative bg-[#f1f5f9] dark:bg-[#020617]"
+            "min-h-full pb-24 overflow-x-hidden relative",
+            "bg-gradient-to-br from-slate-50 via-white to-indigo-50/30",
+            "dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20"
         )} dir="rtl">
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0ZjQ2ZTUiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50 pointer-events-none" />
+
             {/* Desktop View */}
-            <div className="hidden md:block max-w-[1600px] mx-auto px-0 space-y-6">
-                {/* 1. Header & Quick Actions */}
-                <DashboardHeader
-                    isTeacher={false}
-                    currentUser={currentUser}
-                />
+            <div className="hidden md:block max-w-[1600px] mx-auto px-6 space-y-8 relative z-10">
+                {/* 1. Header */}
+                <Section>
+                    <DashboardHeader
+                        isTeacher={false}
+                        currentUser={currentUser}
+                    />
+                </Section>
 
-                <QuickActionsHub />
+                {/* 2. Quick Actions */}
+                <Section>
+                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <h2 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tight">الإجراءات السريعة</h2>
+                        </div>
+                        <QuickActionsHub />
+                    </div>
+                </Section>
 
-                {/* 2. Stats Grid */}
-                <DashboardStats stats={stats} isTeacher={false} />
+                {/* 3. Stats Grid */}
+                <Section>
+                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h2 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tight">مؤشرات الأداء الرئيسية</h2>
+                        </div>
+                        <DashboardStats stats={stats} isTeacher={false} />
+                    </div>
+                </Section>
 
-                {/* 3. Main Content Section */}
-                <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-                    {/* Urgent / Announcements Row */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div className="lg:col-span-12">
+                {/* 4. Main Content Sections */}
+                <div className="space-y-8">
+                    {/* Live Classes & Announcements */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <Section className="h-full">
                             <LiveClasses />
-                        </div>
-                        <div className="lg:col-span-12">
+                        </Section>
+                        <Section className="h-full">
                             <ModernAnnouncements />
-                        </div>
+                        </Section>
                     </div>
 
                     {/* Critical Operations Center */}
-                    <NotificationsCenter
-                        tasks={tasks}
-                        lowBalanceStudents={lowBalanceStudents}
-                        students={rawStudents}
-                        sessions={rawSessions}
-                        studentInvoices={rawStudentInvoices}
-                    />
+                    <Section>
+                        <NotificationsCenter
+                            tasks={tasks}
+                            lowBalanceStudents={lowBalanceStudents}
+                            students={rawStudents}
+                            sessions={rawSessions}
+                            studentInvoices={rawStudentInvoices}
+                        />
+                    </Section>
 
-                    {/* Data & Analytics Hub */}
-                    <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                        <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                    </div>
+                    {/* Charts & Analytics */}
+                    <Section>
+                        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
+                        </div>
+                    </Section>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                         <AnalyticsDashboard
+                    <Section>
+                        <AnalyticsDashboard
                             students={rawStudents}
                             sessions={rawSessions}
                             monthlyData={monthlyData}
                         />
-                    </div>
+                    </Section>
 
                     {/* Hall of Fame */}
-                    <HonorRoll students={rawStudents} />
+                    <Section>
+                        <HonorRoll students={rawStudents} />
+                    </Section>
 
-                    {/* Integrated Operations Center (Subscriptions & Tasks) */}
-                    <OperationsDashboard 
-                        tasks={tasks} 
-                        lowBalanceStudents={lowBalanceStudents} 
-                        stats={stats} 
-                    />
-
-                    {/* Secondary Row */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div className="lg:col-span-12">
+                    {/* Operations & Activity */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <Section>
+                            <OperationsDashboard 
+                                tasks={tasks} 
+                                lowBalanceStudents={lowBalanceStudents} 
+                                stats={stats} 
+                            />
+                        </Section>
+                        <Section>
                             <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                        </div>
+                        </Section>
                     </div>
                 </div>
             </div>
 
             {/* Mobile View */}
-            <div className="block md:hidden px-0">
+            <div className="block md:hidden px-4 pt-4">
                 <MobileAdminDashboard 
                     stats={stats} 
                     lowBalanceStudents={lowBalanceStudents} 

@@ -70,7 +70,7 @@ export const ModernAnnouncements: React.FC = () => {
     };
 
     return (
-        <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden mb-6 transition-all duration-300" dir="rtl">
+        <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mb-6 transition-all duration-300 h-full" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div 
