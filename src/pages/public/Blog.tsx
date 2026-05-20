@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
@@ -16,10 +15,10 @@ const gradeNames: Record<string, string> = {
 };
 
 const types = [
-  { id: 'foundation', name: 'التأسيس', gradient: 'from-amber-500 to-orange-600', icon: Zap, desc: 'أساسيات التعلم للمراحل المبكرة' },
-  { id: 'solutions', name: 'حل الكتب', gradient: 'from-emerald-500 to-teal-600', icon: CheckCircle, desc: 'حلول نموذجية لجميع المواد' },
-  { id: 'notes', name: 'المذكرات', gradient: 'from-violet-500 to-purple-600', icon: FileText, desc: 'مذكرات ومراجعات شاملة' },
-  { id: 'summaries', name: 'ملخصات', gradient: 'from-rose-500 to-pink-600', icon: AlignLeft, desc: 'ملخصات سريعة للمراجعة النهائية' },
+  { id: 'foundation', name: 'التأسيس', gradient: 'from-amber-500 to-orange-600', icon: Zap },
+  { id: 'solutions', name: 'حل الكتب', gradient: 'from-emerald-500 to-teal-600', icon: CheckCircle },
+  { id: 'notes', name: 'المذكرات', gradient: 'from-violet-500 to-purple-600', icon: FileText },
+  { id: 'summaries', name: 'ملخصات', gradient: 'from-rose-500 to-pink-600', icon: AlignLeft },
 ];
 
 const curriculums = [
@@ -92,14 +91,11 @@ subjectsMap.preparatory = subjectsMap.middle;
 
 type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.05 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] } },
+const classroomsMap: Record<string, Record<string, string[]>> = {
+  kuwait: { primary: ['1', '2', '3', '4', '5'], middle: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
+  qatar: { basic: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], secondary: ['10', '11', '12'] },
+  uae: { primary: ['1', '2', '3', '4', '5'], preparatory: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
+  saudi: { primary: ['1', '2', '3', '4', '5', '6'], middle: ['7', '8', '9'], secondary: ['10', '11', '12'] },
 };
 
 export const Blog = () => {
@@ -121,15 +117,6 @@ export const Blog = () => {
   const currentClassrooms = classroomsMap[selectedCurriculum]?.[selectedLevel] || [];
   const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle;
   const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
-  const breadcrumbLabel = `${currentTypeName} · ${currentCurriculumName}` + (currentLevelName ? ` · ${currentLevelName}` : '') + (selectedGrade ? ` · الصف ${selectedGrade}` : '');
-
-  // Classroom/level maps (unchanged from original)
-  const classroomsMap: Record<string, Record<string, string[]>> = {
-    kuwait: { primary: ['1', '2', '3', '4', '5'], middle: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-    qatar: { basic: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-    uae: { primary: ['1', '2', '3', '4', '5'], preparatory: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
-    saudi: { primary: ['1', '2', '3', '4', '5', '6'], middle: ['7', '8', '9'], secondary: ['10', '11', '12'] },
-  };
 
   const filteredPosts = view === 'results' ? posts.filter(p => {
     if (selectedType && p.contentType !== selectedType) return false;
@@ -150,14 +137,8 @@ export const Blog = () => {
     else if (view === 'curriculums') setView('types');
   };
 
-  const getBreadcrumb = () => {
-    const crumbs: { label: string; onClick: () => void }[] = [{ label: 'الرئيسية', onClick: () => setView('types') }];
-    if (currentTypeName) crumbs.push({ label: currentTypeName, onClick: () => setView('curriculums') });
-    if (currentCurriculumName) crumbs.push({ label: currentCurriculumName, onClick: () => setView('grades') });
-    if (currentLevelName) crumbs.push({ label: currentLevelName, onClick: () => setView('classrooms') });
-    if (selectedGrade) crumbs.push({ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') });
-    return crumbs;
-  };
+  const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades';
+  const gridItems = view === 'types' ? types : view === 'curriculums' ? curriculums : currentGrades;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -173,94 +154,9 @@ export const Blog = () => {
     fetchPosts();
   }, []);
 
-  if (view === 'results') {
-    return (
-      <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
-        <SEO title="المدونة التعليمية | دارين السابعة" description="تصفح المحتوى التعليمي" />
-        <PublicNavbar />
-        <main className="flex-grow pt-24 md:pt-32 pb-16 relative overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/8 rounded-full blur-[120px]" />
-            <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/8 rounded-full blur-[120px]" />
-          </div>
-          <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
-            <div className="flex items-center gap-2 mb-6 text-xs sm:text-sm font-bold text-slate-400 flex-wrap">
-              {getBreadcrumb().map((crumb, i) => (
-                <span key={i} className="flex items-center gap-2">
-                  {i > 0 && <ChevronLeft size={12} className="text-slate-300" />}
-                  <button onClick={crumb.onClick} className={i === getBreadcrumb().length - 1 ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}>{crumb.label}</button>
-                </span>
-              ))}
-              {selectedSubject && <><ChevronLeft size={12} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
-            </div>
-
-            <div className="flex gap-2 mb-8">
-              <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-black rounded-xl transition-all">
-                <ArrowLeft size={14} />
-                <span>تغيير المادة</span>
-              </button>
-              <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
-                <Library size={14} />
-                <span>الرئيسية</span>
-              </button>
-            </div>
-
-            {loading ? (
-              <div className="flex flex-col items-center justify-center py-24">
-                <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-4" />
-                <span className="text-xs font-black text-slate-400">جاري التحميل...</span>
-              </div>
-            ) : filteredPosts.length === 0 ? (
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-24">
-                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
-                  <BookOpen size={28} className="text-slate-300 dark:text-slate-600" />
-                </div>
-                <p className="text-slate-500 font-black text-lg mb-1">لا يوجد محتوى بعد</p>
-                <p className="text-slate-400 text-sm font-medium">سيتم إضافة المحتوى قريباً لهذا التصنيف</p>
-              </motion.div>
-            ) : (
-              <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredPosts.map((post) => (
-                  <motion.div key={post.id} variants={cardVariants}>
-                    <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                      className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
-                      <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
-                        <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
-                        <div className="absolute top-3 right-3 z-10">
-                          <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{post.subject || post.category}</span>
-                        </div>
-                      </div>
-                      <div className="p-4 flex flex-col flex-1">
-                        <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
-                          <span className="flex items-center gap-1"><Calendar size={12} /><span>{post.date?.split('T')[0]}</span></span>
-                          <span className="flex items-center gap-1"><User size={12} /><span>{post.author}</span></span>
-                        </div>
-                        <h2 className="text-sm sm:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2">{post.title}</h2>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
-                        <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
-                          <span>اقرأ المقال</span>
-                          <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </div>
-        </main>
-        <PublicFooter />
-      </div>
-    );
-  }
-
-  const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades';
-  const gridItems = view === 'types' ? types : view === 'curriculums' ? curriculums : currentGrades;
-
   return (
     <div className="min-h-full bg-[#fafafa] dark:bg-slate-950 font-sans relative flex flex-col">
-      <SEO title="المدونة التعليمية | مقالات ونصائح للتفوق الدراسي"
+      <SEO title="المدونة التعليمية | دارين السابعة"
         description="استكشف أحدث المقالات التعليمية، نصائح المذاكرة، وتحديثات المناهج في السعودية، الكويت، ودول الخليج."
         keywords="مدونة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
         url="https://dareen-edu.com/books"
@@ -278,16 +174,14 @@ export const Blog = () => {
           {isHeroView ? (
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
               <div className="w-full lg:w-[55%] text-center lg:text-right">
-                <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
+                <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-5">
                   <BookOpen size={13} className="text-indigo-600 dark:text-indigo-400" />
                   <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                   </span>
-                </motion.div>
+                </div>
 
-                <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-                  className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-slate-900 dark:text-slate-50 mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
                   {view === 'types' ? (
                     <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600 dark:from-indigo-400 dark:to-purple-400">دارين</span> التعليمية</>
                   ) : view === 'curriculums' ? (
@@ -295,21 +189,19 @@ export const Blog = () => {
                   ) : (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-600">المرحلة</span></>
                   )}
-                </motion.h1>
+                </h1>
 
-                <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}
-                  className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
+                <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
                   {view === 'types'
                     ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في الخليج'
                     : view === 'curriculums'
                       ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                       : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-                </motion.p>
+                </p>
 
-                <motion.div variants={containerVariants} initial="hidden" animate="visible"
-                  className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                  {gridItems.map((item: any) => (
-                    <motion.div key={item.id} variants={cardVariants}>
+                <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
+                  {gridItems.map((item: any, i: number) => (
+                    <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
                       <button
                         onClick={() => {
                           if (view === 'types') { setSelectedType(item.id); setView('curriculums'); }
@@ -325,33 +217,31 @@ export const Blog = () => {
                         <item.icon size={20} className="relative z-10" />
                         <span className="relative z-10 text-xs sm:text-sm font-black text-center leading-tight">{item.name}</span>
                         {item.sub && <span className="relative z-10 text-[9px] text-white/70 font-bold">{item.sub}</span>}
-                        {item.desc && <span className="relative z-10 text-[9px] text-white/60 font-medium hidden sm:block">{item.desc}</span>}
                       </button>
-                    </motion.div>
+                    </div>
                   ))}
 
                   {view !== 'types' && (
-                    <motion.div variants={cardVariants}>
+                    <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${gridItems.length * 80}ms` }}>
                       <button onClick={goBack}
                         className="w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all duration-300 active:scale-[0.97]">
                         <ArrowLeft size={18} />
                         <span className="text-xs font-black">العودة</span>
                       </button>
-                    </motion.div>
+                    </div>
                   )}
 
-                  <motion.div variants={cardVariants}>
+                  <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${(gridItems.length + (view !== 'types' ? 1 : 0)) * 80}ms` }}>
                     <Link to="/courses"
-                      className="w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white transition-all duration-300 active:scale-[0.97] shadow-lg">
+                      className="w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-700 text-white transition-all duration-300 active:scale-[0.97] block shadow-lg">
                       <Sparkles size={18} />
                       <span className="text-xs font-black">الدورات</span>
                     </Link>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               </div>
 
-              <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                className="hidden lg:flex w-full lg:w-[45%] justify-center">
+              <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-left-8 duration-700 delay-300">
                 <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center">
                   <div className="absolute inset-4 border border-dashed border-indigo-500/15 rounded-full" />
                   <div className="absolute inset-12 border border-dashed border-purple-500/8 rounded-full" />
@@ -359,11 +249,84 @@ export const Blog = () => {
                   <img src="/dareen_books_portal_v3.png" alt="بوابة دارين التعليمية" loading="lazy"
                     className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(79,70,229,0.15)]" />
                 </div>
-              </motion.div>
+              </div>
+            </div>
+          ) : view === 'results' ? (
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-2 mb-6 text-xs sm:text-sm font-bold text-slate-400 flex-wrap">
+                {[
+                  { label: 'الرئيسية', onClick: () => setView('types') },
+                  ...(currentTypeName ? [{ label: currentTypeName, onClick: () => setView('curriculums') }] : []),
+                  ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
+                  ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
+                  ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
+                ].map((crumb, i, arr) => (
+                  <span key={i} className="flex items-center gap-2">
+                    {i > 0 && <ChevronLeft size={12} className="text-slate-300" />}
+                    <button onClick={crumb.onClick}
+                      className={i === arr.length - 1 && !selectedSubject ? 'text-indigo-600' : 'hover:text-indigo-500 transition-colors'}
+                    >{crumb.label}</button>
+                  </span>
+                ))}
+                {selectedSubject && <><ChevronLeft size={12} className="text-slate-300" /><span className="text-indigo-600 font-black">{currentSubjectName}</span></>}
+              </div>
+
+              <div className="flex gap-2 mb-8">
+                <button onClick={goBack} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-black rounded-xl transition-all">
+                  <ArrowLeft size={14} /><span>تغيير المادة</span>
+                </button>
+                <button onClick={() => setView('types')} className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 hover:bg-slate-800 text-white text-xs font-black rounded-xl transition-all">
+                  <Library size={14} /><span>الرئيسية</span>
+                </button>
+              </div>
+
+              {loading ? (
+                <div className="flex flex-col items-center justify-center py-24">
+                  <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-4" />
+                  <span className="text-xs font-black text-slate-400">جاري التحميل...</span>
+                </div>
+              ) : filteredPosts.length === 0 ? (
+                <div className="text-center py-24 animate-in fade-in duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-700/50">
+                    <BookOpen size={28} className="text-slate-300 dark:text-slate-600" />
+                  </div>
+                  <p className="text-slate-500 font-black text-lg mb-1">لا يوجد محتوى بعد</p>
+                  <p className="text-slate-400 text-sm font-medium">سيتم إضافة المحتوى قريباً لهذا التصنيف</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {filteredPosts.map((post, i) => (
+                    <div key={post.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
+                      <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
+                        className="group block bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl border border-slate-100 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 h-full flex flex-col">
+                        <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-800/30">
+                          <img src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
+                          <div className="absolute top-3 right-3 z-10">
+                            <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-sm">{post.subject || post.category}</span>
+                          </div>
+                        </div>
+                        <div className="p-4 flex flex-col flex-1">
+                          <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2">
+                            <span className="flex items-center gap-1"><Calendar size={12} /><span>{post.date?.split('T')[0]}</span></span>
+                            <span className="flex items-center gap-1"><User size={12} /><span>{post.author}</span></span>
+                          </div>
+                          <h2 className="text-sm sm:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2">{post.title}</h2>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 flex-1">{post.excerpt}</p>
+                          <div className="mt-4 inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-black text-[11px] group/link">
+                            <span>اقرأ المقال</span>
+                            <ArrowLeft size={14} className="group-hover/link:-translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <>
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto mb-8">
+              <div className="text-center max-w-3xl mx-auto mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50/60 dark:bg-indigo-500/10 backdrop-blur-sm border border-indigo-100 dark:border-indigo-500/20 rounded-full mb-4">
                   <BookOpen size={13} className="text-indigo-600 dark:text-indigo-400" />
                   <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-300">
@@ -382,57 +345,57 @@ export const Blog = () => {
                     : view === 'terms' ? 'اختر الترم الدراسي'
                       : `${filteredPosts.length} نتيجة متاحة`}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-4xl mx-auto">
+              <div className="max-w-4xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {view === 'classrooms' && currentClassrooms.map(cls => (
-                    <motion.div key={cls} variants={cardVariants}>
+                  {view === 'classrooms' && currentClassrooms.map((cls, i) => (
+                    <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <button onClick={() => { setSelectedGrade(cls); setView('terms'); }}
                         className="w-full py-5 px-3 flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white border border-white/5 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97]">
                         <GraduationCap size={22} />
                         <span className="text-xs sm:text-sm font-black text-center">الصف {gradeNames[cls] || cls}</span>
                       </button>
-                    </motion.div>
+                    </div>
                   ))}
 
                   {view === 'terms' && (
                     <>
-                      <motion.div variants={cardVariants}>
+                      <div className="animate-in zoom-in-95 duration-500">
                         <button onClick={() => { setSelectedTerm('1'); setView('subjects'); }}
                           className="w-full py-5 px-3 flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97]">
                           <BookOpen size={22} />
                           <span className="text-xs sm:text-sm font-black">ترم أول</span>
                         </button>
-                      </motion.div>
-                      <motion.div variants={cardVariants}>
+                      </div>
+                      <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: '60ms' }}>
                         <button onClick={() => { setSelectedTerm('2'); setView('subjects'); }}
                           className="w-full py-5 px-3 flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97]">
                           <BookOpen size={22} />
                           <span className="text-xs sm:text-sm font-black">ترم ثاني</span>
                         </button>
-                      </motion.div>
+                      </div>
                     </>
                   )}
 
-                  {view === 'subjects' && currentSubjects.map(subj => (
-                    <motion.div key={subj.id} variants={cardVariants}>
+                  {view === 'subjects' && currentSubjects.map((subj, i) => (
+                    <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
                       <button onClick={() => { setSelectedSubject(subj.id); setView('results'); window.scrollTo(0, 0); }}
                         className={cn("w-full py-5 px-3 flex flex-col items-center justify-center gap-2 rounded-2xl bg-gradient-to-br text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97]", subj.gradient)}>
                         <span className="text-xs sm:text-sm font-black text-center">{subj.name}</span>
                       </button>
-                    </motion.div>
+                    </div>
                   ))}
 
-                  <motion.div variants={cardVariants}>
+                  <div className="animate-in zoom-in-95 duration-500">
                     <button onClick={goBack}
                       className="w-full py-5 px-3 flex flex-col items-center justify-center gap-2 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all duration-300 active:scale-[0.97]">
                       <ArrowLeft size={20} />
                       <span className="text-xs font-black">العودة</span>
                     </button>
-                  </motion.div>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             </>
           )}
         </div>
