@@ -14,8 +14,9 @@ export const BottomNav = () => {
   const activeConversationId = useChatStore(s => s.activeConversationId);
 
   const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;
+  const isDashboard = location.pathname.includes('/admin-dashboard') || location.pathname.includes('/teacher-dashboard') || location.pathname.includes('/student-dashboard') || location.pathname.includes('/parent-dashboard');
 
-  if (isChatActive) return null;
+  if (isChatActive || isDashboard) return null;
 
   const handleNav = (path: string) => {
     triggerHaptic('light');
