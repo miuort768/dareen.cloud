@@ -228,7 +228,7 @@ export const Courses = () => {
                   </div>
 
                   <div className="p-4 pb-0 flex flex-col flex-1">
-                    <h3 className="text-sm md:text-base font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-lg md:text-xl font-heading font-black text-slate-900 dark:text-slate-50 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       {course.title}
                     </h3>
 
