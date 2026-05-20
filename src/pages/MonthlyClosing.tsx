@@ -332,9 +332,11 @@ export const MonthlyClosing: React.FC = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #4f46e5 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
             {/* Header */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-xl">
                         <ActivityIcon size={18} className="text-rose-500" />
@@ -704,7 +706,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
 
                 {activeTab === 'summary' && (
-                    <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden border-none rounded-none shadow-2xl">
+                    <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden border-none rounded-2xl shadow-2xl">
                         {/* Geometric Accents */}
                         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
                         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-500/5 -rotate-12 translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
@@ -748,7 +750,7 @@ export const MonthlyClosing: React.FC = () => {
 
                                 <div className="pt-8 border-t border-white/5 flex flex-wrap gap-8">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-none bg-slate-900 flex items-center justify-center border border-white/10">
+                                        <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center border border-white/10">
                                             <TrendingUp size={16} className="text-emerald-500" />
                                         </div>
                                         <div>
@@ -757,7 +759,7 @@ export const MonthlyClosing: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-none bg-slate-900 flex items-center justify-center border border-white/10">
+                                        <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center border border-white/10">
                                             <Receipt size={16} className="text-rose-500" />
                                         </div>
                                         <div>
@@ -769,7 +771,7 @@ export const MonthlyClosing: React.FC = () => {
                             </div>
 
                             <div className="lg:col-span-5">
-                                <div className="bg-white/[0.02] border border-white/10 p-10 h-full flex flex-col justify-between rounded-none relative">
+                                <div className="bg-white/[0.02] border border-white/10 p-10 h-full flex flex-col justify-between rounded-2xl relative">
                                     <div className="absolute top-0 right-0 w-2 h-2 bg-[#5c59f2] -translate-x-1/2 -translate-y-1/2"></div>
                                     <div className="absolute bottom-0 left-0 w-2 h-2 bg-[#5c59f2] translate-x-1/2 translate-y-1/2"></div>
                                     
@@ -815,6 +817,7 @@ export const MonthlyClosing: React.FC = () => {
                     onClose={() => setSelectedTeacherForSlip(null)} 
                 />
             )}
+            </div>
         </div>
     );
 };

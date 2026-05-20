@@ -30,7 +30,7 @@ import { PageLoader } from '../components/ui/PageLoader';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden',
         className
     )}>
         {children}
@@ -60,11 +60,11 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled, type = 'butto
 
 
 const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, value: string | number, icon: any, subValue?: string, bg: string }) => (
-    <div className={cn("p-4 rounded-none shadow-sm flex flex-col items-center text-center text-white relative overflow-hidden", bg)}>
+    <div className={cn("p-4 rounded-2xl shadow-sm flex flex-col items-center text-center text-white relative overflow-hidden", bg)}>
         <div className="absolute -right-4 -top-4 opacity-10">
             <Icon size={64} />
         </div>
-        <div className="relative z-10 w-8 h-8 rounded-none flex items-center justify-center mb-2 bg-white/10 backdrop-blur-sm">
+        <div className="relative z-10 w-8 h-8 rounded-lg flex items-center justify-center mb-2 bg-white/10 backdrop-blur-sm">
             <Icon size={16} className="text-white" />
         </div>
         <p className="relative z-10 text-[10px] font-black uppercase tracking-widest text-white/80">{title}</p>
@@ -76,10 +76,10 @@ const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, v
 // Custom Confirm Delete Dialog
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-        <div className="bg-white dark:bg-slate-900 rounded-none shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
             {/* Header */}
             <div className="bg-rose-600 px-5 py-4 flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/10 flex items-center justify-center rounded-none">
+                <div className="w-9 h-9 bg-white/10 flex items-center justify-center rounded-lg">
                     <AlertTriangle size={20} className="text-white" />
                 </div>
                 <h3 className="text-sm font-black text-white uppercase tracking-widest">حذف العميل نهائياً</h3>
@@ -207,11 +207,13 @@ export const Leads: React.FC = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
             {/* Header */}
-            <div className="bg-teal-800 px-4 md:px-8 py-5 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border-b border-teal-900/50">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-none shadow-inner border border-white/10">
+                    <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-xl shadow-inner border border-white/10">
                         <Users size={32} className="md:w-6 md:h-6" />
                     </div>
                     <div>
@@ -224,7 +226,7 @@ export const Leads: React.FC = () => {
                     <button
                         onClick={() => setShowLost(!showLost)}
                         className={cn(
-                            "h-10 px-4 rounded-none flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all border",
+                            "h-10 px-4 rounded-xl flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all border",
                             showLost
                                 ? "bg-white text-rose-600 border-white"
                                 : "bg-white/10 text-white border-white/20 hover:bg-white/20"
@@ -234,7 +236,7 @@ export const Leads: React.FC = () => {
                         <span className="hidden sm:inline">{showLost ? 'الكل' : 'المرفوضون'}</span>
                         {!showLost && <span className="bg-rose-500 text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center">{leads.filter(l => l.status === 'lost').length}</span>}
                     </button>
-                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-none bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50 w-full md:w-auto">
+                    <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-10 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white border border-emerald-400/50 w-full md:w-auto">
                         <Plus size={16} />
                         إضافة عميل محتمل
                     </PrimaryBtn>
@@ -277,7 +279,7 @@ export const Leads: React.FC = () => {
                         <input 
                             type="text" 
                             placeholder="ابحث بالاسم أو رقم الهاتف..." 
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-9 py-2 outline-none text-xs font-bold focus:border-emerald-500"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-9 py-2 outline-none text-xs font-bold focus:border-emerald-500"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -286,7 +288,7 @@ export const Leads: React.FC = () => {
                         <div className="flex items-center gap-2 w-full md:w-auto">
                             <Filter size={14} className="text-emerald-600 hidden md:block" />
                             <select 
-                                className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-none text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
+                                className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500"
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value as any)}
                             >
@@ -303,7 +305,7 @@ export const Leads: React.FC = () => {
             {/* Leads Table/Cards */}
             <div className="px-0">
                 {/* Desktop Table */}
-                <div className="hidden lg:block overflow-x-auto rounded-none border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+                <div className="hidden lg:block overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-rose-600">
                             <tr>
@@ -338,7 +340,7 @@ export const Leads: React.FC = () => {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-none w-fit border border-slate-200 dark:border-slate-700">
+                                            <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-lg w-fit border border-slate-200 dark:border-slate-700">
                                                 <Tag size={12} className="text-indigo-500" /> {lead.subject}
                                             </span>
                                         </td>
@@ -406,7 +408,7 @@ export const Leads: React.FC = () => {
                                     {lead.notes && (
                                         <tr className="bg-amber-50/5 dark:bg-amber-950/5 no-print">
                                             <td colSpan={6} className="px-6 py-2.5 border-b border-slate-100 dark:border-slate-800/80">
-                                                <div className="bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/40 dark:border-amber-900/20 p-3 rounded-none text-xs leading-relaxed text-slate-700 dark:text-slate-300 font-bold flex items-start gap-2 max-w-full">
+                                                <div className="bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/40 dark:border-amber-900/20 p-3 rounded-xl text-xs leading-relaxed text-slate-700 dark:text-slate-300 font-bold flex items-start gap-2 max-w-full">
                                                     <span className="text-[10px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest shrink-0 mt-0.5">ملاحظات العميل:</span>
                                                     <span>{lead.notes}</span>
                                                 </div>
@@ -436,17 +438,17 @@ export const Leads: React.FC = () => {
                         <div
                             key={lead.id}
                             onDoubleClick={() => handleMarkLost(lead.id)}
-                            className="bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden border-r-4 border-r-teal-600 cursor-pointer"
+                            className="bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm active:scale-[0.98] transition-all relative overflow-hidden border-r-4 border-r-teal-600 cursor-pointer"
                             title="اضغط مرتين للإخفاء"
                         >
                             {/* Top Row */}
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-start gap-3 min-w-0 flex-1">
-                                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-none shrink-0 mt-1">
+                                    <div className="w-12 h-12 bg-slate-900 text-white flex items-center justify-center font-black text-base rounded-xl shrink-0 mt-1">
                                         {lead.studentName?.charAt(0) || 'ع'}
                                     </div>
                                     <div className="pt-1 flex-1 min-w-0">
-                                        <div className="bg-teal-50/70 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/30 px-3.5 py-2 rounded-none inline-block max-w-full shadow-sm">
+                                        <div className="bg-teal-50/70 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/30 px-3.5 py-2 rounded-xl inline-block max-w-full shadow-sm">
                                             <h4 
                                                 style={{ fontSize: '34px', fontWeight: '950' }} 
                                                 className="text-slate-900 dark:text-white leading-none block truncate"
@@ -555,7 +557,7 @@ export const Leads: React.FC = () => {
             {/* Add Lead Modal */}
             {isAddModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
                         <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
                             <div className="flex items-center gap-3">
                                 <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
@@ -581,26 +583,26 @@ export const Leads: React.FC = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                 <div className="space-y-1 md:space-y-1.5">
                                     <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">اسم الطالب / العميل (اختياري)</label>
-                                    <input name="name" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" placeholder="مثال: أم أحمد (أو اتركه فارغاً)" />
+                                    <input name="name" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" placeholder="مثال: أم أحمد (أو اتركه فارغاً)" />
                                 </div>
                                 <div className="space-y-1 md:space-y-1.5">
                                     <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">المنهج</label>
-                                    <input name="curriculum" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                    <input name="curriculum" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                 <div className="space-y-1 md:space-y-1.5">
                                     <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">رقم الهاتف</label>
-                                    <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                    <input name="phone" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                                 </div>
                                 <div className="space-y-1 md:space-y-1.5">
                                     <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">المادة المهتم بها</label>
-                                    <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
+                                    <input name="subject" required className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white" />
                                 </div>
                             </div>
                             <div className="space-y-1 md:space-y-1.5">
                                 <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">الأولوية</label>
-                                <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white">
+                                <select name="priority" className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white">
                                     <option value="low">منخفضة</option>
                                     <option value="medium">متوسطة</option>
                                     <option value="high">عالية جداً 🔥</option>
@@ -608,9 +610,9 @@ export const Leads: React.FC = () => {
                             </div>
                             <div className="space-y-1 md:space-y-1.5">
                                 <label className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase mr-1">ملاحظات</label>
-                                <textarea name="notes" rows={2} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-none px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white resize-none" placeholder="اكتب أي تفاصيل أو ملاحظات عن العميل هنا..." />
+                                <textarea name="notes" rows={2} className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-[11px] md:text-xs font-bold outline-none focus:border-emerald-500 text-slate-900 dark:text-white resize-none" placeholder="اكتب أي تفاصيل أو ملاحظات عن العميل هنا..." />
                             </div>
-                            <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-2 md:py-3 mt-4 text-[11px] md:text-xs rounded-none bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10 disabled:opacity-60 disabled:cursor-not-allowed">
+                            <PrimaryBtn type="submit" disabled={addMutation.isPending} className="w-full py-2 md:py-3 mt-4 text-[11px] md:text-xs rounded-xl bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/10 disabled:opacity-60 disabled:cursor-not-allowed">
                                 {addMutation.isPending ? '⏳ جاري الحفظ...' : 'حفظ العميل وبدء المتابعة'}
                             </PrimaryBtn>
                         </form>
@@ -625,6 +627,7 @@ export const Leads: React.FC = () => {
                     onCancel={() => setConfirmLeadId(null)}
                 />
             )}
+            </div>
         </div>
     );
 };

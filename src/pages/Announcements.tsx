@@ -138,10 +138,12 @@ export const Announcements = () => {
     };
 
     return (
-        <div className="space-y-8 pb-32 min-h-full md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-700" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
-            <div className="-mx-3 lg:mx-0 relative overflow-hidden rounded-none bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4 lg:p-10 shadow-2xl shadow-indigo-500/10 border-l border-t border-white/10">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6">
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
@@ -192,7 +194,7 @@ export const Announcements = () => {
                         <div 
                             key={ann.id} 
                             className={cn(
-                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 md:p-5 transition-all duration-300 hover:shadow-2xl relative flex flex-col",
+                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 md:p-5 transition-all duration-300 hover:shadow-2xl relative flex flex-col",
                                 !ann.isActive && "opacity-60 grayscale border-dashed"
                             )}
                         >
@@ -256,7 +258,7 @@ export const Announcements = () => {
             {/* ═══════════════ PREMIUM EDIT MODAL ═══════════════ */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/60 md:animate-in md:fade-in md:duration-300">
-                    <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-2xl overflow-hidden rounded-none">
+                    <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-2xl overflow-hidden rounded-2xl">
                         <div className="p-5 bg-slate-900 text-white flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-3">
                                 <Megaphone className="text-primary-500" size={18} />
@@ -275,7 +277,7 @@ export const Announcements = () => {
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-xs outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-xs outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all"
                                     placeholder="أدخل عنوان الإعلان..."
                                 />
                             </div>
@@ -286,7 +288,7 @@ export const Announcements = () => {
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
-                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all cursor-pointer"
+                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all cursor-pointer"
                                     >
                                         <option value="general">إعـلان عـام</option>
                                         <option value="urgent">تنبيـه عـاجل</option>
@@ -328,7 +330,7 @@ export const Announcements = () => {
                                     rows={4}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all leading-relaxed italic"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all leading-relaxed italic"
                                     placeholder="اكتب تفاصيل الإعلان هنا..."
                                 />
                             </div>
@@ -344,7 +346,7 @@ export const Announcements = () => {
                     </div>
                 </div>
             )}
-
+            </div>
         </div>
     );
 };

@@ -463,21 +463,23 @@ export const StudentInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
             {/* ── Header ── */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
-                        <FileText size={18} className="text-[#5c59f2]" />
+                    <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-xl">
+                        <FileText size={18} className="text-indigo-200" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">فواتير وتحصيل الطلاب</h1>
-                        <p className="text-[10px] text-slate-400">إدارة التدفقات النقدية والمستحقات الدراسية</p>
+                        <h1 className="text-sm font-bold text-white">فواتير وتحصيل الطلاب</h1>
+                        <p className="text-[10px] text-indigo-200/80">إدارة التدفقات النقدية والمستحقات الدراسية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700">
-                    <Sparkles size={12} className="text-amber-400" />
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                    <Sparkles size={12} className="text-amber-300" />
                     {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                 </div>
             </div>
@@ -762,6 +764,7 @@ export const StudentInvoices = () => {
                     invoice={previewInvoice}
                 />
             )}
+            </div>
         </div>
     );
 };

@@ -149,7 +149,9 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-24 px-3 md:px-12 pt-4 md:pt-6 space-y-6 md:space-y-8 relative overflow-hidden" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-24 space-y-6 md:space-y-8">
             
             {/* Premium Background Decorations */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -160,7 +162,7 @@ export const StudentDashboard = () => {
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-3">
                 <div className="space-y-1">
-                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-none mb-1">
+                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-lg mb-1">
                         <Sparkles size={10} className="text-indigo-600 dark:text-indigo-400" />
                         <span className="text-[8px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">نظام التفوق</span>
                     </div>
@@ -179,7 +181,7 @@ export const StudentDashboard = () => {
                             <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
                             <span className="text-xs font-black text-slate-900 dark:text-white">{rank.name}</span>
                         </div>
-                        <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-none flex items-center justify-center text-white shadow-md">
+                        <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-md">
                             <Trophy size={16} />
                         </div>
                     </div>
@@ -190,7 +192,7 @@ export const StudentDashboard = () => {
             {activeTimer && (
                 <div className="relative z-10 bg-indigo-600 dark:bg-indigo-500 text-white p-4 md:p-6 border-b-2 md:border-b-4 border-indigo-900 dark:border-indigo-700 shadow-xl flex flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
                     <div className="flex items-center gap-3 md:gap-5">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-none border border-white/30 flex items-center justify-center animate-pulse">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 flex items-center justify-center animate-pulse">
                             <Clock size={20} className="md:hidden" />
                             <Clock size={28} className="hidden md:block" />
                         </div>
@@ -282,7 +284,7 @@ export const StudentDashboard = () => {
                                 {rank.name}
                             </div>
                         </div>
-                        <div className="relative h-2 md:h-4 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <div className="relative h-2 md:h-4 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
                             <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${Math.min((points % 100), 100)}%` }}
@@ -321,7 +323,7 @@ export const StudentDashboard = () => {
                             onClick={() => setShowBadges(!showBadges)}
                             className="h-24 md:h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 shadow-sm"
                         >
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center rounded-none">
+                            <div className="w-8 h-8 md:w-12 md:h-12 bg-indigo-50 dark:bg-indigo-900/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center rounded-xl">
                                 <Award size={18} className="md:size-24" />
                             </div>
                             <span className="text-[8px] md:text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">الأوسمة</span>
@@ -330,7 +332,7 @@ export const StudentDashboard = () => {
                             onClick={() => navigate('/forum')}
                             className="h-24 md:h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 shadow-sm"
                         >
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-purple-50 dark:bg-purple-900/10 text-purple-600 dark:text-purple-400 flex items-center justify-center rounded-none">
+                            <div className="w-8 h-8 md:w-12 md:h-12 bg-purple-50 dark:bg-purple-900/10 text-purple-600 dark:text-purple-400 flex items-center justify-center rounded-xl">
                                 <MessageSquare size={18} className="md:size-24" />
                             </div>
                             <span className="text-[8px] md:text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">المنتدى</span>
@@ -346,7 +348,7 @@ export const StudentDashboard = () => {
                                 return (
                                     <div key={idx} className="flex flex-col items-center gap-2">
                                         <div className={cn(
-                                            "w-12 h-12 md:w-16 md:h-16 rounded-none flex items-center justify-center transition-all",
+                                            "w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all",
                                             isEarned 
                                                 ? `bg-gradient-to-br ${badge.color} shadow-lg scale-105` 
                                                 : "bg-slate-800 grayscale opacity-20"
@@ -431,7 +433,7 @@ export const StudentDashboard = () => {
                                     return (
                                         <div key={idx} className="flex flex-col items-center gap-2 md:gap-4 text-center">
                                             <div className={cn(
-                                                "w-16 h-16 md:w-24 md:h-24 rounded-none flex items-center justify-center transition-all",
+                                                "w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center transition-all",
                                                 isEarned ? `bg-gradient-to-br ${badge.color} shadow-lg scale-105` : "bg-slate-100 dark:bg-slate-800 grayscale opacity-20"
                                             )}>
                                                 <badge.icon size={28} className={isEarned ? "text-white" : "text-slate-400"} />
@@ -450,6 +452,7 @@ export const StudentDashboard = () => {
                     </div>
                 )}
             </AnimatePresence>
+            </div>
 
         </div>
     );

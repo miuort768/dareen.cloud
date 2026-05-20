@@ -12,12 +12,16 @@ import {
     Plus,
     Printer,
     Video,
-    X
+    X,
+    CalendarDays,
+    Share2,
+    Loader2
 } from 'lucide-react';
 import { useApp } from '../../../context/AppContext';
 import { cn } from '../../../lib/utils';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
+import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 
 // Interfaces
 interface Student {
@@ -109,7 +113,14 @@ export const Schedule = () => {
         subject: ''
     });
     const [mobileActiveDay, setMobileActiveDay] = useState<string>('');
+    const [sharedLink] = useState(() => window.location.href);
     const [loading, setLoading] = useState(true);
+
+    const isToday = (day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
+
+    const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter(e => e.day === day);
+
+    const getColorIndex = (event: ScheduleEvent) => Math.max(0, uniqueTeachers.indexOf(event.teacherName));
 
     const navigate = useNavigate();
 
@@ -227,438 +238,258 @@ export const Schedule = () => {
     );
 
     return (
-        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 lg:px-8 pb-32 pt-2 overflow-x-hidden" dir="rtl">
-            <div className="space-y-4 md:pb-6 md:animate-in md:fade-in md:duration-500">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
-                {/* ── Gradient Header ── */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-lg shadow-indigo-500/20 px-2 md:px-6 py-6 md:py-8 border-y md:border-none border-indigo-400/30 print:hidden">
-                    <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
-                    <div className="relative flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
-                    </div>
-                            <div>
-                                <h1 className="text-base md:text-2xl font-black text-white tracking-tight leading-none">
-                                    {isTeacher ? `جدول أ. ${currentUser?.name.split(' ')[0]}` : 'الجدول الأسبوعي'}
-                                </h1>
-                                <p className="text-[9px] md:text-[11px] font-bold text-white/60 mt-1">إدارة المواعيد والحصص</p>
-                            </div>
+                {/* Header */}
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10 backdrop-blur-md flex items-center justify-center">
+                            <CalendarDays size={24} className="text-white" />
                         </div>
-                        <button
-                            onClick={() => window.print()}
-                            className="hidden md:flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-4 py-2 text-[10px] font-black uppercase tracking-wider transition-all border border-white/20 print:hidden"
-                        >
-                            <Printer size={14} /> طباعة الجدول
-                        </button>
-                    </div>
-                </div>
-
-                {/* Print-only Header */}
-                <div className="hidden print:block text-center mb-8 border-b-2 border-slate-950 pb-4" dir="rtl">
-                    <h1 className="text-3xl font-black text-slate-950">الجدول الدراسي الأسبوعي</h1>
-                    <p className="text-sm font-bold text-slate-600 mt-2">دارين السابعة — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
-                </div>
-
-                {/* ── Stats Row ── */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 px-0 md:px-0 print:hidden">
-                    {[
-                        { label: 'إجمالي الحصص', val: allEvents.length, icon: LayoutGrid, color: 'text-indigo-600 bg-indigo-50' },
-                        { label: 'الطلاب', val: new Set(allEvents.map(e => e.studentName)).size, icon: User, color: 'text-emerald-600 bg-emerald-50' },
-                        { label: 'المواد', val: new Set(allEvents.map(e => e.subject)).size, icon: BookOpen, color: 'text-purple-600 bg-purple-50' },
-                        { label: 'اليوم النشط', val: mobileActiveDay, icon: Clock, color: 'text-amber-600 bg-amber-50' }
-                    ].map((stat, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 border-y md:border border-slate-200 dark:border-slate-800 p-2.5 md:p-4 shadow-sm flex items-center gap-2 md:gap-3">
-                            <div className={cn('w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shrink-0', stat.color)}>
-                                <stat.icon size={14} className="md:hidden" />
-                                <stat.icon size={18} className="hidden md:block" />
-                            </div>
-                            <div className="min-w-0">
-                                <p className="text-[7px] md:text-[9px] font-black text-slate-400 uppercase tracking-widest truncate">{stat.label}</p>
-                                <h3 className="text-sm md:text-xl font-black text-slate-900 dark:text-white truncate leading-tight">{stat.val}</h3>
-                            </div>
+                        <div>
+                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tighter">الجداول الدراسية</h1>
+                            <p className="text-xs md:text-sm text-slate-300/80 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
-                    ))}
-                </div>
-
-                {/* ── Filter Bar ── */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2 md:p-3 flex items-center gap-2 shadow-sm print:hidden">
-                    <div className="flex-1 relative">
-                        <Search className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400" size={13} />
-                        <input
-                            type="text"
-                            placeholder="ابحث بالاسم أو المادة..."
-                            value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-3 pr-8 font-bold text-[10px] md:text-xs text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
-                        />
                     </div>
-                    <select
-                        value={filterDay}
-                        onChange={e => setFilterDay(e.target.value)}
-                        className="hidden md:block bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 px-2 font-black text-[9px] md:text-[10px] outline-none cursor-pointer text-slate-800 dark:text-white min-w-[80px]"
-                    >
-                        <option value="all">كل الأيام</option>
-                        {DAYS_OF_WEEK.map(d => <option key={d} value={d}>{d}</option>)}
-                    </select>
-                    {currentUser?.role !== 'parent' && (
-                        <button
-                            onClick={() => setShowAddModal(true)}
-                            className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 text-[10px] font-black uppercase tracking-wider transition-all shrink-0"
-                        >
-                            <Plus size={13} strokeWidth={2.5} />
-                            <span className="hidden sm:inline">إضافة</span>
-                        </button>
-                    )}
-                </div>
 
-                {/* ── Desktop Table ── */}
-                <div className="hidden md:block overflow-x-auto border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-                    <table className="w-full border-collapse table-fixed min-w-[900px]">
-                        <thead>
-                            <tr className="bg-slate-900 dark:bg-slate-950 print:bg-slate-100 text-white print:text-black">
-                                <th className="p-2.5 border-l border-slate-700 print:border-slate-300 text-[9px] font-black uppercase tracking-widest w-16 text-center">الوقت</th>
-                                {DAYS_OF_WEEK.map(day => {
-                                    const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
-                                    return (
-                                        <th key={day} className={cn(
-                                            "p-2.5 border-l border-slate-700 print:border-slate-300 text-[10px] font-black",
-                                            isToday && "text-indigo-300 print:text-indigo-600"
-                                        )}>
-                                            {day}
-                                            {isToday && <span className="inline-block w-1.5 h-1.5 bg-indigo-400 rounded-full mr-1 animate-pulse print:hidden" />}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {TIME_SLOTS.map(slot => (
-                                <tr key={`${slot.hour}-${slot.period}`} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
-                                    <td className="bg-slate-50 dark:bg-slate-800/30 border-b border-l border-slate-100 dark:border-slate-700/50 p-1.5 text-center">
-                                        <span className="text-[9px] font-black text-slate-400 block">{slot.label}</span>
-                                    </td>
-                                    {DAYS_OF_WEEK.map(day => {
-                                        const events = getEventsForSlot(day, slot.hour, slot.period);
-                                        const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
-                                        return (
-                                            <td
-                                                key={day}
-                                                className={cn(
-                                                    "border-b border-l border-slate-100 dark:border-slate-700/50 p-1 h-16 relative cursor-pointer group/cell",
-                                                    isToday && "bg-indigo-50/30 dark:bg-indigo-900/10",
-                                                    events.length === 0 && "hover:bg-slate-50 dark:hover:bg-slate-800/30"
-                                                )}
-                                                onClick={() => {
-                                                    if (events.length === 0) {
-                                                        setEnrollData({ ...enrollData, day, hour: String(slot.hour), period: slot.period });
-                                                        setShowAddModal(true);
-                                                    }
-                                                }}
-                                            >
-                                                <div className="flex flex-col gap-1">
-                                                    {events.length === 1 ? (
-                                                        events.map(ev => {
-                                                            const style = getTeacherStyle(ev.teacherName);
-                                                            return (
-                                                                <div
-                                                                    key={ev.id}
-                                                                    onClick={(e) => { e.stopPropagation(); setSelectedEvent(ev); setShowDetails(true); }}
-                                                                    className={cn("p-1 relative overflow-hidden border border-slate-200 dark:border-slate-700 hover:scale-[1.02] transition-transform", style.bg)}
-                                                                >
-                                                                    <div className={cn("absolute right-0 top-0 bottom-0 w-1", style.bar)} />
-                                                                    <h4 className="text-[8px] font-black leading-tight truncate pr-2">{ev.studentName}</h4>
-                                                                    <div className="flex items-center justify-between mt-0.5 pr-2">
-                                                                        <span className="text-[7px] font-bold opacity-60 truncate">{ev.subject}</span>
-                                                                        <div className="flex items-center gap-0.5 shrink-0">
-                                                                            <Zap size={6} className="text-amber-500 fill-current" />
-                                                                            <span className="text-[7px] font-black">{ev.studentPoints}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            );
-                                                        })
-                                                    ) : events.length > 1 ? (
-                                                        <div
-                                                            onClick={(e) => { e.stopPropagation(); setSharedEvents(events); setShowSharedModal(true); }}
-                                                            className="p-1.5 bg-indigo-600 text-white flex flex-col items-center justify-center gap-1 hover:bg-indigo-700 transition-colors shadow-sm"
-                                                        >
-                                                            <Users size={14} strokeWidth={2.5} />
-                                                            <span className="text-[9px] font-black text-center leading-tight">يوجد حصص مشتركة</span>
-                                                            <span className="text-[7px] font-bold opacity-80">({events.length} حصص)</span>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="opacity-0 group-hover/cell:opacity-100 transition-opacity flex justify-center py-2">
-                                                            <Plus size={11} className="text-slate-300" />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        );
-                                    })}
-                                </tr>
+                    <div className="relative z-10 flex items-center gap-2 no-print">
+                        {/* Search */}
+                        <div className="relative">
+                            <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40" />
+                            <input
+                                type="text"
+                                placeholder="بحث..."
+                                value={searchTerm}
+                                onChange={e => setSearchTerm(e.target.value)}
+                                className="w-40 h-9 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-[10px] font-bold rounded-xl px-8 focus:outline-none focus:border-indigo-500 transition-all"
+                            />
+                        </div>
+
+                        {/* Day Filter */}
+                        <select
+                            value={filterDay}
+                            onChange={e => setFilterDay(e.target.value)}
+                            className="h-9 px-3 bg-white/10 border border-white/10 text-white text-[10px] font-black rounded-xl focus:outline-none focus:border-indigo-500 transition-all uppercase tracking-widest"
+                        >
+                            <option value="all" className="text-slate-900">كل الأيام</option>
+                            {DAYS_OF_WEEK.map(day => (
+                                <option key={day} value={day} className="text-slate-900">{day}</option>
                             ))}
-                        </tbody>
-                    </table>
+                        </select>
+
+                        <button
+                            onClick={() => setShowSharedModal(true)}
+                            className="h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-black rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg shadow-amber-500/20 border border-amber-400/30 flex items-center gap-2 uppercase tracking-widest"
+                        >
+                            <Share2 size={13} />
+                            مشاركة
+                        </button>
+                    </div>
                 </div>
 
-                {/* ── Mobile View ── */}
-                <div className="md:hidden space-y-3 max-w-full overflow-hidden">
-                    {/* Day Picker */}
-                    <div className="flex overflow-x-auto gap-1.5 pb-2 no-scrollbar overscroll-behavior-x-contain touch-pan-x">
-                        {DAYS_OF_WEEK.map(day => {
-                            const isToday = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
-                            const dayEventCount = filteredEvents.filter(e => e.day === day).length;
-                            return (
-                                <button
-                                    key={day}
-                                    onClick={() => setMobileActiveDay(day)}
-                                    className={cn(
-                                        "shrink-0 px-3 py-2 font-black text-[11px] uppercase transition-all relative",
-                                        mobileActiveDay === day
-                                            ? "bg-indigo-600 text-white"
-                                            : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600"
-                                    )}
-                                >
-                                    {day}
-                                    {isToday && <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-rose-500 rounded-full" />}
-                                    {dayEventCount > 0 && (
-                                        <span className={cn(
-                                            "absolute -bottom-0.5 right-1/2 translate-x-1/2 w-1.5 h-1.5 rounded-full",
-                                            mobileActiveDay === day ? "bg-white" : "bg-indigo-400"
-                                        )} />
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
+                {/* Live Classes */}
+                <LiveClasses />
 
-                    {/* Events for selected day - Grouped by time */}
-                    <div className="space-y-2">
-                        {TIME_SLOTS.map(slot => {
-                            const events = getEventsForSlot(mobileActiveDay, slot.hour, slot.period);
-                            if (events.length === 0) return null;
+                {/* Schedule Grid */}
+                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mt-6">
+                    <div className="overflow-x-auto custom-scrollbar">
+                        <div className="min-w-[900px]">
+                            {/* Grid Header: Days */}
+                            <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-200 dark:border-slate-800">
+                                <div className="p-3 text-[9px] font-black text-slate-400 uppercase tracking-widest border-l border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                                    الوقت
+                                </div>
+                                {DAYS_OF_WEEK.map((day, idx) => (
+                                    <div key={day} className={cn(
+                                        "p-3 text-[10px] font-black text-center border-l border-slate-100 dark:border-slate-800 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50 uppercase tracking-tight",
+                                        isToday(day) ? "text-indigo-600 dark:text-indigo-400" : "text-slate-700 dark:text-slate-300"
+                                    )}>
+                                        <span>{day}</span>
+                                        {isToday(day) && (
+                                            <span className="mr-1.5 w-1.5 h-1.5 bg-indigo-500 rounded-full inline-block animate-pulse" />
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
 
-                            return (
-                                <div key={`${slot.hour}-${slot.period}`}>
-                                    {events.length === 1 ? (
-                                        events.map(ev => {
-                                            const style = getTeacherStyle(ev.teacherName);
+                            {/* Grid Body: Time Slots */}
+                            {TIME_SLOTS.map((slot, slotIdx) => {
+                                const currentTimeSlots = filteredEvents.filter(e => e.hour === slot.hour && e.period === slot.period);
+                                const isEmpty = currentTimeSlots.length === 0;
+
+                                return (
+                                    <div key={`${slot.hour}-${slot.period}`} className={cn(
+                                        "grid grid-cols-[80px_repeat(7,1fr)]",
+                                        slotIdx % 2 === 0 ? "bg-white dark:bg-slate-900/40" : "bg-slate-50/50 dark:bg-slate-950/30"
+                                    )}>
+                                        <div className="p-2 text-[9px] font-black text-slate-400 border-l border-b border-slate-100 dark:border-slate-800 flex items-center justify-center h-full">
+                                            <Clock size={10} className="ml-1 inline" />
+                                            {slot.label}
+                                        </div>
+
+                                        {DAYS_OF_WEEK.map((day) => {
+                                            const dayEvents = getDayEvents(currentTimeSlots, day);
+                                            const event = dayEvents[0];
+
+                                            if (event) {
+                                                const colorIdx = getColorIndex(event);
+                                                const { bg, text, bar } = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length];
+
+                                                return (
+                                                    <div
+                                                        key={`${day}-${slot.hour}`}
+                                                        onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
+                                                        className={cn(
+                                                            "p-1.5 border-l last:border-l-0 border-b border-slate-100 dark:border-slate-800 cursor-pointer transition-all hover:z-10 hover:shadow-lg hover:-translate-y-0.5 relative group min-h-[65px]",
+                                                            bg
+                                                        )}
+                                                    >
+                                                        {/* Color bar */}
+                                                        <div className={cn("absolute top-0 right-0 w-full h-0.5 rounded-full", bar)} />
+
+                                                        <div className="flex items-start gap-1.5 h-full">
+                                                            <div className={cn("w-1 h-full rounded-full shrink-0 mt-0.5", bar)} />
+                                                            <div className="min-w-0 flex-1">
+                                                                <p className={cn("text-[9px] font-black leading-tight mb-0.5 truncate", text)}>
+                                                                    {event.studentName}
+                                                                </p>
+                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.subject}</p>
+                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.teacherName}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+
                                             return (
                                                 <div
-                                                    key={ev.id}
-                                                    onClick={() => { setSelectedEvent(ev); setShowDetails(true); }}
+                                                    key={`${day}-${slot.hour}`}
                                                     className={cn(
-                                                        "flex items-stretch overflow-hidden border-y border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer hover:shadow-md transition-shadow",
-                                                        style.bg
+                                                        "p-2 border-l last:border-l-0 border-b border-slate-100 dark:border-slate-800 min-h-[65px]",
+                                                        isEmpty && "bg-transparent"
                                                     )}
                                                 >
-                                                    <div className={cn("w-12 shrink-0 flex flex-col items-center justify-center py-3 text-white", style.bar)}>
-                                                        <span className="text-[8px] font-black leading-none">{ev.time}</span>
-                                                    </div>
-                                                    <div className="flex-1 p-2.5 min-w-0">
-                                                        <div className="flex items-start justify-between gap-2">
-                                                            <div className="min-w-0">
-                                                                <h3 className="text-[12px] font-black text-slate-900 dark:text-white truncate leading-tight">{ev.studentName}</h3>
-                                                                <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 truncate mt-0.5">{ev.subject} — {ev.teacherName}</p>
-                                                            </div>
-                                                            <div className="flex items-center gap-0.5 shrink-0">
-                                                                <Zap size={10} className="text-amber-500 fill-current" />
-                                                                <span className="text-[10px] font-black text-slate-700 dark:text-slate-300">{ev.studentPoints}</span>
-                                                            </div>
+                                                    {!isEmpty && (
+                                                        <div className="text-[7px] font-bold text-slate-300 text-center">
+                                                            —
                                                         </div>
-                                                    </div>
+                                                    )}
                                                 </div>
                                             );
-                                        })
-                                    ) : (
-                                        <div
-                                            onClick={() => { setSharedEvents(events); setShowSharedModal(true); }}
-                                            className="flex items-stretch overflow-hidden border border-indigo-200 bg-indigo-50 shadow-sm cursor-pointer hover:bg-indigo-100 transition-colors"
-                                        >
-                                            <div className="w-12 shrink-0 bg-indigo-600 flex flex-col items-center justify-center py-3 text-white">
-                                                <span className="text-[8px] font-black leading-none">{events[0].time}</span>
-                                            </div>
-                                            <div className="flex-1 p-2.5 flex items-center justify-between">
-                                                <div className="flex items-center gap-2">
-                                                    <Users size={14} className="text-indigo-600" />
-                                                    <span className="text-[10px] font-black text-indigo-900">يوجد حصص مشتركة</span>
-                                                </div>
-                                                <span className="text-[9px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full">
-                                                    {events.length}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                        {mobileEvents.length === 0 && (
-                            <div className="py-12 flex flex-col items-center gap-2 text-center">
-                                <Calendar size={28} className="text-slate-200" />
-                                <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">لا توجد حصص في {mobileActiveDay}</p>
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Legend */}
+                    <div className="border-t border-slate-200 dark:border-slate-800 p-4 flex flex-wrap items-center gap-4">
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">دليل الألوان:</span>
+                        {ACCENT_COLORS.map((color, idx) => (
+                            <div key={idx} className="flex items-center gap-1.5">
+                                <div className={cn("w-2 h-2 rounded-full", color.bar)} />
+                                <span className="text-[8px] font-black text-slate-400 uppercase">مادة {idx + 1}</span>
                             </div>
-                        )}
+                        ))}
+                        <span className="text-[9px] font-black text-slate-400 uppercase mr-auto">
+                            {filteredEvents.length} حصة
+                        </span>
                     </div>
                 </div>
 
-                {/* ── Details Modal ── */}
-                {showDetails && selectedEvent && (
-                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
-                            {/* Header */}
-                            <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between">
-                                <h3 className="text-sm font-black">تفاصيل الحصة</h3>
-                                <button onClick={() => setShowDetails(false)} className="text-white/70 hover:text-white transition-colors">
-                                    <X size={18} />
-                                </button>
-                            </div>
-                            <div className="p-5 space-y-4">
-                                {/* Student */}
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                                        <User size={18} />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{selectedEvent.studentName}</h4>
-                                        <p className="text-[10px] text-slate-400">{selectedEvent.studentGrade}</p>
-                                    </div>
-                                </div>
-                                {/* Info Grid */}
-                                <div className="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-800/50 p-3">
-                                    {[
-                                        { label: 'المادة', val: selectedEvent.subject },
-                                        { label: 'المعلمة', val: selectedEvent.teacherName },
-                                        { label: 'اليوم', val: selectedEvent.day },
-                                        { label: 'الوقت', val: selectedEvent.time },
-                                    ].map(({ label, val }) => (
-                                        <div key={label}>
-                                            <span className="text-[8px] font-black text-slate-400 uppercase block mb-0.5">{label}</span>
-                                            <p className="text-[11px] font-black text-slate-900 dark:text-white">{val}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                                {/* Actions */}
-                                {currentUser?.role === 'teacher' && (
-                                    <button
-                                        onClick={async () => {
-                                            try {
-                                                const result = await startLiveSession({
-                                                    title: `حصة مباشرة: ${selectedEvent.subject}`,
-                                                    subject: selectedEvent.subject,
-                                                    targetStudentId: selectedEvent.studentId,
-                                                });
-                                                navigate(`/classroom/${result.id}`);
-                                            } catch {
-                                                alert('فشل بدء البث المباشر');
-                                            }
-                                        }}
-                                    >
-                                        <Video size={15} /> بدء الحصة المباشرة
-                                    </button>
-                                )}
-                                <button onClick={() => setShowDetails(false)} className="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 font-black text-[10px] hover:bg-slate-200 transition-colors">
-                                    إغلاق
-                                </button>
-                            </div>
-                        </div>
+                {/* Loading or Empty State */}
+                {loading && (
+                    <div className="flex justify-center py-12">
+                        <Loader2 className="animate-spin text-indigo-600" size={24} />
                     </div>
                 )}
-
-                {/* ── Add Modal ── */}
-                {showAddModal && (
-                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowAddModal(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-sm shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
-                            <div className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-5 py-4 flex items-center justify-between">
-                                <h3 className="text-sm font-black">حجز موعد جديد</h3>
-                                <button onClick={() => setShowAddModal(false)} className="text-white/70 hover:text-white">
-                                    <X size={18} />
-                                </button>
-                            </div>
-                            <form onSubmit={handleQuickEnroll} className="p-5 space-y-3">
-                                <div className="grid grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-800/50 p-3 text-[10px] font-black text-slate-500">
-                                    <div><span className="block mb-0.5 text-[8px] uppercase">اليوم</span><p className="text-slate-900 dark:text-white">{enrollData.day}</p></div>
-                                    <div><span className="block mb-0.5 text-[8px] uppercase">الساعة</span><p className="text-slate-900 dark:text-white">{enrollData.hour}:00</p></div>
-                                    <div><span className="block mb-0.5 text-[8px] uppercase">الفترة</span><p className="text-slate-900 dark:text-white">{enrollData.period === 'am' ? 'ص' : 'م'}</p></div>
-                                </div>
-                                <select
-                                    required
-                                    value={enrollData.studentId}
-                                    onChange={e => setEnrollData({ ...enrollData, studentId: e.target.value })}
-                                    className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 py-2.5 px-3 font-bold text-xs text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
-                                >
-                                    <option value="">-- اختر الطالب --</option>
-                                    {students.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-                                </select>
-                                <input
-                                    type="text"
-                                    placeholder="اسم المادة..."
-                                    value={enrollData.subject}
-                                    onChange={e => setEnrollData({ ...enrollData, subject: e.target.value })}
-                                    className="w-full border border-slate-200 dark:border-slate-700 dark:bg-slate-800 py-2.5 px-3 font-bold text-xs text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/30 outline-none"
-                                />
-                                <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 font-black text-xs transition-colors">
-                                    تأكيد الحجز
-                                </button>
-                                <button type="button" onClick={() => setShowAddModal(false)} className="w-full text-center text-[10px] font-black text-slate-400 hover:text-slate-600 py-1">
-                                    إلغاء
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                )}
-
-                {/* ── Shared Sessions Modal ── */}
-                {showSharedModal && (
-                    <div className="fixed inset-0 z-[10001] flex items-end sm:items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" onClick={() => setShowSharedModal(false)}>
-                        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 w-full sm:max-w-md shadow-xl overflow-hidden mt-20 sm:mt-0" onClick={e => e.stopPropagation()}>
-                            <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 text-white px-5 py-4 flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <Users size={18} />
-                                    <h3 className="text-sm font-black">الحصص المشتركة — {sharedEvents[0]?.time}</h3>
-                                </div>
-                                <button onClick={() => setShowSharedModal(false)} className="text-white/70 hover:text-white">
-                                    <X size={18} />
-                                </button>
-                            </div>
-                            <div className="p-4 bg-slate-50 dark:bg-slate-800/20 max-h-[60vh] overflow-y-auto space-y-3 custom-scrollbar">
-                                {sharedEvents.map(ev => {
-                                    const style = getTeacherStyle(ev.teacherName);
-                                    return (
-                                        <div
-                                            key={ev.id}
-                                            onClick={() => { setSelectedEvent(ev); setShowDetails(true); setShowSharedModal(false); }}
-                                            className={cn(
-                                                "flex items-stretch bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition-all group",
-                                            )}
-                                        >
-                                            <div className={cn("w-1.5 shrink-0", style.bar)} />
-                                            <div className="flex-1 p-3">
-                                                <div className="flex justify-between items-start">
-                                                    <div>
-                                                        <h4 className="text-sm font-black text-slate-900 dark:text-white">{ev.studentName}</h4>
-                                                        <p className="text-[10px] font-bold text-slate-500">{ev.subject} — {ev.teacherName}</p>
-                                                    </div>
-                                                    <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-800 px-2 py-1">
-                                                        <Zap size={10} className="text-amber-500 fill-current" />
-                                                        <span className="text-[10px] font-black">{ev.studentPoints}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            <div className="p-4 border-t border-slate-100 dark:border-slate-800">
-                                <button onClick={() => setShowSharedModal(false)} className="w-full bg-slate-900 text-white py-2.5 font-black text-[10px] uppercase tracking-widest">
-                                    إغلاق
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
             </div>
+
+            {/* Event Details Modal */}
+            {showDetails && selectedEvent && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-950/40" onClick={() => setShowDetails(false)}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between mb-5">
+                            <h3 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight">تفاصيل الحصة</h3>
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl hover:bg-slate-200 transition-all">
+                                <X size={14} />
+                            </button>
+                        </div>
+                        <div className="space-y-4">
+                            <div>
+                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">الطالب</span>
+                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
+                            </div>
+                            <div>
+                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">المعلمة</span>
+                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.teacherName}</p>
+                            </div>
+                            <div>
+                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">المادة</span>
+                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.subject}</p>
+                            </div>
+                            <div>
+                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">الموعد</span>
+                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.day} - {selectedEvent.time}</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 mt-6">
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        const res = await startLiveSession(selectedEvent.studentId, selectedEvent.studentName, selectedEvent.subject);
+                                        if (res?.id) navigate(`/classroom/${res.id}`);
+                                    } catch { setShowDetails(false); }
+                                }}
+                                className="flex-1 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-black rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-lg flex items-center justify-center gap-2"
+                            >
+                                <Video size={14} />
+                                بدء بث مباشر
+                            </button>
+                            <button
+                                onClick={() => navigate(`/students`)}
+                                className="flex-1 h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-black rounded-xl hover:bg-slate-200 transition-all border border-slate-200 dark:border-slate-700"
+                            >
+                                عرض الطالب
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Shared Link Modal */}
+            {showSharedModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-950/40" onClick={() => setShowSharedModal(false)}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between mb-5">
+                            <h3 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight">مشاركة الجدول</h3>
+                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl hover:bg-slate-200 transition-all">
+                                <X size={14} />
+                            </button>
+                        </div>
+                        <p className="text-xs font-bold text-slate-500 mb-4">يمكنك نسخ الرابط ومشاركته مع أولياء الأمور</p>
+                        <div className="flex gap-2">
+                            <input
+                                type="text"
+                                readOnly
+                                value={sharedLink}
+                                className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white"
+                            />
+                            <button
+                                onClick={() => { navigator.clipboard.writeText(sharedLink); setShowSharedModal(false); }}
+                                className="h-10 px-4 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-black rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-lg"
+                            >
+                                نسخ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

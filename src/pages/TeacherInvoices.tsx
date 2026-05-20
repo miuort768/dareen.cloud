@@ -418,21 +418,23 @@ export const TeacherInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
             {/* ── Header ── */}
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
                         <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">فواتير المعلمات</h1>
-                        <p className="text-[10px] text-slate-400">إدارة رواتب ومستحقات الكادر التعليمي</p>
+                        <h1 className="text-sm font-bold text-white">فواتير المعلمات</h1>
+                        <p className="text-[10px] text-indigo-200/80">إدارة رواتب ومستحقات الكادر التعليمي</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700">
-                    <Sparkles size={12} className="text-amber-400" />
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                    <Sparkles size={12} className="text-amber-300" />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي الرواتب
                 </div>
             </div>
@@ -729,6 +731,7 @@ export const TeacherInvoices = () => {
                 message={confirmModal.message}
                 isDestructive={confirmModal.isDestructive}
             />
+            </div>
         </div>
     );
 };

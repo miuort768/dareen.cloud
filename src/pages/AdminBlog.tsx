@@ -115,7 +115,9 @@ export const AdminBlog = () => {
     );
 
     return (
-        <div className="space-y-6 animate-fade-in">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-6 animate-fade-in">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-black text-slate-900 dark:text-white">إدارة المدونة التعليمية</h1>
@@ -123,7 +125,7 @@ export const AdminBlog = () => {
                 </div>
                 <button
                     onClick={() => handleOpenModal()}
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white font-black rounded-none hover:bg-red-700 transition-all shadow-lg shadow-red-600/20"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-700 text-white font-black rounded-xl hover:from-red-700 hover:to-rose-800 transition-all shadow-lg shadow-red-600/20"
                 >
                     <Plus size={20} />
                     <span>مقال جديد</span>
@@ -406,6 +408,7 @@ export const AdminBlog = () => {
                     </div>
                 </div>
             )}
+            </div>
         </div>
     );
 };

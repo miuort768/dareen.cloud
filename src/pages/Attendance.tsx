@@ -179,7 +179,9 @@ export const Attendance = () => {
     const isTeacher = currentUser?.role === 'teacher';
 
     return (
-        <div className="space-y-4 pb-20 min-h-full bg-[#f1f5f9] dark:bg-[#020617] md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
             
             <AttendanceHeader
                 date={date}
@@ -273,7 +275,7 @@ export const Attendance = () => {
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden rounded-none">
+                        <SectionCard className="p-0 overflow-hidden rounded-2xl">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
                                 <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" />
                                 <div className="relative w-full md:w-[400px]">
@@ -481,6 +483,7 @@ export const Attendance = () => {
                     }}
                 />
             )}
+            </div>
         </div>
     );
 };

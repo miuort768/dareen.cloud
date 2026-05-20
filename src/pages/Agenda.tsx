@@ -122,7 +122,9 @@ export const Agenda = () => {
     }
 
     return (
-        <div className="space-y-6 pb-32 min-h-full md:animate-in md:fade-in md:duration-700">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+    <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+    <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
             <PageHeader
                 title="أجندة الحصص اليومية"
                 subtitle="متابعة وتنفيذ الحصص المجدولة لليوم"
@@ -160,7 +162,7 @@ export const Agenda = () => {
                         placeholder="بحث في الأجندة..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-bold focus:ring-2 ring-amber-500 rounded-none dark:text-white"
+                        className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-bold focus:ring-2 ring-amber-500 rounded-xl dark:text-white"
                     />
                 </div>
             </div>
@@ -170,7 +172,7 @@ export const Agenda = () => {
                 {scheduledAppointments.length > 0 ? (
                     scheduledAppointments.map((app) => (
                         <div key={app.id} className={cn(
-                            "relative group bg-white dark:bg-gray-900 border-2 transition-all overflow-hidden rounded-none shadow-sm hover:shadow-xl",
+                            "relative group bg-white dark:bg-gray-900 border-2 transition-all overflow-hidden rounded-2xl shadow-sm hover:shadow-xl",
                             app.isDone ? "border-emerald-100 dark:border-emerald-900/30" : "border-gray-100 dark:border-gray-800 hover:border-amber-500"
                         )}>
                             {/* Status Stripe */}
@@ -183,7 +185,7 @@ export const Agenda = () => {
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-center gap-3">
                                         <div className={cn(
-                                            "w-12 h-12 flex items-center justify-center font-black text-lg rounded-none transition-colors",
+                                            "w-12 h-12 flex items-center justify-center font-black text-lg rounded-xl transition-colors",
                                             app.isDone ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
                                         )}>
                                             {app.studentName.charAt(0)}
@@ -262,6 +264,7 @@ export const Agenda = () => {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     );
 };

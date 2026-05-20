@@ -14,7 +14,7 @@ import { PageLoader } from '../../../components/ui/PageLoader';
 import { SuccessModal } from '../../../shared/components/SuccessModal';
 
 // Feature Components
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Presentation } from 'lucide-react';
 import { TeacherStats } from '../components/TeacherStats';
 import { TeacherToolbar } from '../components/TeacherToolbar';
 import { TeacherForm } from '../components/TeacherForm';
@@ -279,147 +279,148 @@ export const Teachers = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
-            {/* Header Section */}
-            <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-8 flex flex-row md:flex-row items-center justify-between gap-4 border-b border-white/5">
-                {/* Geometric Background Element */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#5c59f2]/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
-                
-                <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
+
+                {/* Header Section */}
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10 backdrop-blur-md flex items-center justify-center">
+                            <Presentation size={24} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tighter">إدارة المعلمات</h1>
+                            <p className="text-xs md:text-sm text-slate-300/80 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
+                            <div className="hidden md:flex items-center gap-3 mt-2">
+                                <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</span>
+                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
+                                <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5 rounded-lg">مزامنة نشطة</span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div className="flex flex-col">
-                            <h1 className="text-lg md:text-2xl font-black text-white tracking-tighter">أهلاً بعودتك</h1>
-                            <p className="text-xs md:text-sm font-light text-slate-300">شريك النجاح</p>
-                        </div>
-                        <div className="hidden md:flex items-center gap-3 mt-1.5">
-                             <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</p>
-                             <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.5)]"></span>
-                             <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5">مزامنة نشطة</span>
-                        </div>
+
+                    <div className="relative z-10 flex items-center gap-3 no-print">
+                        <button
+                            onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
+                            className={cn(
+                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95",
+                                showAddForm
+                                ? "bg-rose-500 text-white hover:bg-rose-600"
+                                : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 shadow-indigo-500/20"
+                            )}
+                        >
+                            {showAddForm ? <X size={16} /> : <Plus size={16} />}
+                            <span className="hidden md:inline">{showAddForm ? 'إلغاء العملية' : 'إضافة معلمة جديدة'}</span>
+                        </button>
                     </div>
                 </div>
 
-                <div className="relative z-10 flex items-center gap-3 no-print">
-                    <button
-                        onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
-                        className={cn(
-                            "h-10 md:h-11 px-3 md:px-8 flex items-center justify-center gap-3 text-[11px] font-black uppercase tracking-widest rounded-none transition-all shadow-xl active:scale-95",
-                            showAddForm 
-                            ? "bg-rose-500 text-white hover:bg-rose-600" 
-                            : "bg-[#5c59f2] text-white hover:bg-indigo-700 shadow-indigo-500/20"
-                        )}
-                    >
-                        {showAddForm ? <X size={16} /> : <Plus size={16} />}
-                        <span className="hidden md:inline">{showAddForm ? 'إلغاء العملية' : 'إضافة معلمة جديدة'}</span>
-                    </button>
-                </div>
-            </div>
+                <div className="py-6 space-y-6">
+                    <TeacherStats
+                        totalTeachers={teachers.length}
+                        totalStudents={totalStudentsCount}
+                        uniqueSubjects={uniqueSubjects}
+                        averagePrice={averagePrice}
+                    />
 
-            <div className="py-6 space-y-6">
-                <TeacherStats
-                    totalTeachers={teachers.length}
-                    totalStudents={totalStudentsCount}
-                    uniqueSubjects={uniqueSubjects}
-                    averagePrice={averagePrice}
-                />
+                    <TeacherToolbar
+                        searchTerm={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        showAddForm={showAddForm}
+                        onToggleAddForm={() => {
+                            setShowAddForm(!showAddForm);
+                            if (showAddForm) setEditId(null);
+                        }}
+                        onImport={() => fileInputRef.current?.click()}
+                        onExport={handleExport}
+                        onDeleteAll={handleDeleteAll}
+                    />
 
-                <TeacherToolbar
-                    searchTerm={searchTerm}
-                    onSearchChange={setSearchTerm}
-                    showAddForm={showAddForm}
-                    onToggleAddForm={() => {
-                        setShowAddForm(!showAddForm);
-                        if (showAddForm) setEditId(null);
-                    }}
-                    onImport={() => fileInputRef.current?.click()}
-                    onExport={handleExport}
-                    onDeleteAll={handleDeleteAll}
-                />
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".json"
+                        className="hidden"
+                        onChange={handleImportFile}
+                    />
 
-                <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json"
-                    className="hidden"
-                    onChange={handleImportFile}
-                />
-
-                {showAddForm && (
-                    <div className="px-0">
-                        <TeacherForm
-                            onSubmit={handleAddTeacher}
-                            initialData={editId ? teachers.find(t => t.id === editId) : null}
-                            onCancel={() => { setShowAddForm(false); setEditId(null); }}
-                        />
-                    </div>
-                )}
-
-                {!showDetails ? (
-                    <div className="px-0 animate-in fade-in duration-300">
-                        <TeacherTable
-                            teachers={filteredTeachers}
-                            onEdit={handleEditTeacher}
-                            onDelete={setDeletingTeacherId}
-                            onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
-                            onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-                            selectedId={selectedTeacher?.id}
-                            studentCounts={studentCounts}
-                        />
-                    </div>
-                ) : (
-                    <div className="px-0 animate-in slide-in-from-right-8 duration-500">
-                        {selectedTeacher && (
-                            <TeacherDetails
-                                teacher={selectedTeacher}
-                                onClose={() => setShowDetails(false)}
-                                students={students}
-                                sessions={sessions}
-                                onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
-                                onDeleteSession={async (id) => {
-                                    await api.delete(`/sessions/${id}`);
-                                    queryClient.invalidateQueries({ queryKey: ['sessions'] });
-                                }}
-                                onSendNotification={(t) => setNotifyingTeacher(t)}
-                                isTeacherView={isTeacher}
+                    {showAddForm && (
+                        <div className="px-0">
+                            <TeacherForm
+                                onSubmit={handleAddTeacher}
+                                initialData={editId ? teachers.find(t => t.id === editId) : null}
+                                onCancel={() => { setShowAddForm(false); setEditId(null); }}
                             />
-                        )}
-                    </div>
-                )}
+                        </div>
+                    )}
+
+                    {!showDetails ? (
+                        <div className="px-0 animate-in fade-in duration-300">
+                            <TeacherTable
+                                teachers={filteredTeachers}
+                                onEdit={handleEditTeacher}
+                                onDelete={setDeletingTeacherId}
+                                onSelect={(teacher) => { setSelectedTeacher(teacher); setShowDetails(true); }}
+                                onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
+                                selectedId={selectedTeacher?.id}
+                                studentCounts={studentCounts}
+                            />
+                        </div>
+                    ) : (
+                        <div className="px-0 animate-in slide-in-from-right-8 duration-500">
+                            {selectedTeacher && (
+                                <TeacherDetails
+                                    teacher={selectedTeacher}
+                                    onClose={() => setShowDetails(false)}
+                                    students={students}
+                                    sessions={sessions}
+                                    onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                    onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t })}
+                                    onDeleteSession={async (id) => {
+                                        await api.delete(`/sessions/${id}`);
+                                        queryClient.invalidateQueries({ queryKey: ['sessions'] });
+                                    }}
+                                    onSendNotification={(t) => setNotifyingTeacher(t)}
+                                    isTeacherView={isTeacher}
+                                />
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                <ConfirmModal
+                    isOpen={!!deletingTeacherId}
+                    title="حذف معلمة"
+                    message="سيتم حذف كافة البيانات المتعلقة بهذه المعلمة. هل أنت متأكد؟"
+                    onConfirm={handleDeleteTeacher}
+                    onClose={() => setDeletingTeacherId(null)}
+                />
+
+                <SecureAttendanceModal
+                    isOpen={!!secureModalData}
+                    onClose={() => setSecureModalData(null)}
+                    onConfirm={handleConfirmLog}
+                    studentName={secureModalData?.student?.name || ''}
+                    date={logDate}
+                />
+
+                <SendNotificationModal
+                    isOpen={!!notifyingTeacher}
+                    onClose={() => setNotifyingTeacher(null)}
+                    onSend={handleSendTeacherNotification}
+                    recipientName={notifyingTeacher?.name || ''}
+                />
+
+                <SuccessModal
+                    isOpen={successModalData.isOpen}
+                    title={successModalData.title}
+                    message={successModalData.message}
+                    onClose={() => setSuccessModalData({ ...successModalData, isOpen: false })}
+                />
             </div>
-
-            <ConfirmModal
-                isOpen={!!deletingTeacherId}
-                title="حذف معلمة"
-                message="سيتم حذف كافة البيانات المتعلقة بهذه المعلمة. هل أنت متأكد؟"
-                onConfirm={handleDeleteTeacher}
-                onClose={() => setDeletingTeacherId(null)}
-            />
-
-            <SecureAttendanceModal
-                isOpen={!!secureModalData}
-                onClose={() => setSecureModalData(null)}
-                onConfirm={handleConfirmLog}
-                studentName={secureModalData?.student?.name || ''}
-                date={logDate}
-            />
-
-            <SendNotificationModal
-                isOpen={!!notifyingTeacher}
-                onClose={() => setNotifyingTeacher(null)}
-                onSend={handleSendTeacherNotification}
-                recipientName={notifyingTeacher?.name || ''}
-            />
-
-            <SuccessModal
-                isOpen={successModalData.isOpen}
-                title={successModalData.title}
-                message={successModalData.message}
-                onClose={() => setSuccessModalData({ ...successModalData, isOpen: false })}
-            />
         </div>
     );
 };

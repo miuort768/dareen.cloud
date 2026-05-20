@@ -82,41 +82,45 @@ export const Header = () => {
 
     return (
         <header className={cn(
-            "h-[60px] lg:h-[75px] bg-white dark:bg-slate-900 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 flex items-center justify-between transition-all duration-500 z-[9999]",
-            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1 rounded-none lg:rounded-2xl border border-slate-200 dark:border-white/10 px-4 md:px-8 max-w-full shadow-sm shadow-black/5 dark:shadow-2xl dark:shadow-black/20"
+            "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-[9999]",
+            "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
+            "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl",
+            "rounded-2xl border border-slate-200/50 dark:border-white/10",
+            "px-4 md:px-6 max-w-full",
+            "shadow-lg shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/20"
         )}>
 
             {/* Left Section: Branding & Title */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 flex items-center justify-center shadow-sm rounded-none border border-slate-200 dark:border-white/20 bg-white dark:bg-white transform lg:-rotate-3 overflow-hidden">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/10 border border-slate-200 dark:border-white/20 bg-white dark:bg-white overflow-hidden">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
 
-                {title && (
-                    <div className="min-w-0 overflow-hidden pr-1.5 flex flex-col gap-0.5 justify-center">
-                        <h1 className={cn(
-                            "text-[14px] md:text-xl font-black text-slate-800 dark:text-white truncate tracking-tight leading-none",
-                            (title === 'الجداول الدراسية' || title === 'الحضور والغياب') && "hidden md:block"
-                        )}>
-                            {title}
-                        </h1>
-                        <p className="text-[8px] md:text-[10px] font-bold text-slate-400 dark:text-white/60 uppercase tracking-widest leading-none m-0">
-                            دارين للتعليم والتدريب
-                        </p>
-                    </div>
-                )}
+                <div className="hidden md:flex items-center gap-3">
+                    <div className="w-px h-8 bg-slate-200 dark:bg-white/10" />
+                    {title && (
+                        <div className="min-w-0">
+                            <h1 className="text-base md:text-lg font-black text-slate-800 dark:text-white truncate tracking-tight leading-none">
+                                {title}
+                            </h1>
+                            <p className="text-[8px] md:text-[9px] font-bold text-slate-400 dark:text-white/50 uppercase tracking-widest leading-none mt-0.5">
+                                دارين للتعليم والتدريب
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Right Actions - Fixed Layout */}
-            <div className="flex items-center gap-0.5 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-none transition-colors shrink-0"
+                    className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors shrink-0"
                 >
-                    <Sun size={20} />
+                    <Sun size={18} />
                 </button>
 
                 {/* Notifications */}
@@ -126,13 +130,13 @@ export const Header = () => {
 
                 <Link 
                     to={currentUser?.role === 'admin' ? '/settings' : '/profile'} 
-                    className="flex items-center pr-3 border-r border-slate-200 dark:border-white/20 shrink-0 group transition-all"
+                    className="flex items-center pr-2 border-r border-slate-200 dark:border-white/20 shrink-0 group transition-all"
                 >
-                    <div className="w-10 h-10 bg-slate-100 dark:bg-slate-900/40 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_15px_rgba(52,211,153,0.3)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
+                    <div className="w-9 h-9 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
                             <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full object-cover" />
                         ) : (
-                            <User size={20} className="text-slate-600 dark:text-emerald-400" />
+                            <User size={18} className="text-slate-500 dark:text-emerald-400" />
                         )}
                     </div>
                 </Link>

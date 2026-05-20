@@ -125,10 +125,12 @@ export const Tasks = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto space-y-8 pb-32 min-h-full md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
             
             {/* ── Header Canvas (Premium Royal Purple) ── */}
-            <div className="relative overflow-hidden bg-slate-900 dark:bg-black rounded-none border-b-4 border-indigo-600 p-8 md:p-12 text-center group">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
@@ -174,7 +176,7 @@ export const Tasks = () => {
                             <stat.icon size={100} />
                         </div>
                         <div className="relative z-10">
-                            <div className={cn("w-10 h-10 rounded-none flex items-center justify-center mb-4 border", stat.border, stat.bg)}>
+                            <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-4 border", stat.border, stat.bg)}>
                                 <stat.icon size={18} className={stat.color} />
                             </div>
                             <h3 className="text-3xl font-black text-slate-800 dark:text-white tracking-tighter mb-1">{stat.value}</h3>
@@ -304,7 +306,7 @@ export const Tasks = () => {
                     })
                 ) : (
                     <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 dark:border-slate-800">
-                        <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
+                            <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
                             <ClipboardList size={32} className="text-indigo-500" />
                         </div>
                         <h2 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tighter mb-2">السجلات فارغة</h2>
@@ -316,7 +318,7 @@ export const Tasks = () => {
             {/* ── Premium Add Modal ── */}
             {showAddForm && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-2xl bg-slate-950/60 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-slate-900 rounded-none border-t-8 border-indigo-600 w-full max-w-xl shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl border-t-8 border-indigo-600 w-full max-w-xl shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
                         <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 bg-indigo-600 text-white flex items-center justify-center">
@@ -390,6 +392,7 @@ export const Tasks = () => {
                     </div>
                 </div>
             )}
+            </div>
         </div>
     );
 };

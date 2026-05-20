@@ -177,7 +177,9 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="min-h-full bg-[#f8faff] dark:bg-slate-950 px-2 md:px-8 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6 animate-in fade-in duration-700" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6 animate-in fade-in duration-700">
             
             {/* ═══════════════ HEADER ═══════════════ */}
             <div className="flex justify-between items-center bg-emerald-500 dark:bg-rose-500 p-4 rounded-3xl shadow-lg border-b-4 border-emerald-600 dark:border-rose-600 transition-colors duration-500">
@@ -393,6 +395,7 @@ export const ParentDashboard = () => {
                     </div>
                     تواصل معنا
                 </a>
+            </div>
             </div>
 
         </div>

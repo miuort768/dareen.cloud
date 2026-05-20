@@ -27,182 +27,97 @@ export const Finance = () => {
     const isProfit = state.netProfit >= 0;
 
     return (
-        <div className="min-h-full bg-[#f1f5f9] dark:bg-[#020617] pb-20 font-sans" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
-            {/* ── Header ── */}
-            <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5">
-                {/* Glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rotate-45 translate-y-[-50%] translate-x-[30%] blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-10 w-48 h-48 bg-emerald-500/10 rotate-12 translate-y-[40%] blur-3xl pointer-events-none" />
-
-                <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <h1 className="text-base md:text-xl font-black text-white uppercase tracking-tighter">الإدارة المالية والحسابات</h1>
-                        <div className="flex items-center gap-2 mt-0.5">
-                            <TrendingUp size={10} className={isProfit ? "text-emerald-400" : "text-rose-400"} />
-                            <span className={cn(
-                                "text-[10px] font-black uppercase tracking-widest",
-                                isProfit ? "text-emerald-400" : "text-rose-400"
-                            )}>
-                                هامش الربح: {state.profitMargin}%
-                            </span>
-                            <span className="w-1 h-1 bg-white/20 rounded-full" />
-                            <span className="text-[10px] text-slate-500 font-bold">مركز التقارير الموحد</span>
+                {/* ── Header ── */}
+                <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-slate-900/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-500/20 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
+                    <div className="relative z-10 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_20px_rgba(52,211,153,0.3)] shrink-0 bg-white/10 backdrop-blur-md flex items-center justify-center">
+                            <span className="text-xl font-black text-white">د</span>
                         </div>
-                    </div>
-                </div>
-
-                <div className="relative z-10 flex items-center gap-2 no-print">
-                    <button
-                        onClick={() => navigate('/monthly-closing')}
-                        className="flex items-center gap-2 h-9 px-4 bg-white/10 hover:bg-white/15 text-white text-[10px] font-black rounded-none border border-white/10 transition-all uppercase tracking-widest"
-                    >
-                        <CalendarCheck size={13} />
-                        <span className="hidden sm:inline">تسوية الشهر</span>
-                    </button>
-                    <button
-                        onClick={() => actions.setShowAddModal(true)}
-                        className="flex items-center gap-2 h-9 px-4 bg-amber-500 hover:bg-amber-600 text-white text-[10px] font-black rounded-none border border-amber-400/50 transition-all uppercase tracking-widest shadow-lg shadow-amber-500/20"
-                    >
-                        <Plus size={13} />
-                        تسجيل معاملة
-                    </button>
-                    <button className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-white/15 text-slate-300 rounded-none border border-white/10 transition-all">
-                        <Download size={14} />
-                    </button>
-                </div>
-            </div>
-
-            <div className="py-5 space-y-4">
-
-                {/* Stats */}
-                <FinanceStats
-                    totalIncome={state.totalIncome}
-                    monthIncome={state.monthIncome}
-                    totalExpenses={state.totalExpenses}
-                    monthExpenses={state.monthExpenses}
-                    totalFixedExpenses={state.totalFixedExpenses}
-                    netProfit={state.netProfit}
-                    monthProfit={state.monthIncome - state.monthExpenses}
-                />
-
-                {/* Fixed Expenses */}
-                <FixedExpensesManager
-                    expenses={state.fixedExpenses}
-                    onUpdateExpense={actions.handleUpdateFixedExpense}
-                    onConvertAll={actions.handleConvertAllFixedExpenses}
-                    onClearAll={actions.handleClearAllFixedExpenses}
-                />
-
-                {/* Charts */}
-                <FinanceCharts
-                    monthlyData={state.monthlyData}
-                    pieData={state.pieData}
-                    totalExpenses={state.totalExpenses}
-                />
-
-                {/* Filter Bar */}
-                <div className="px-0">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden">
-                        {/* Filter Header */}
-                        <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                            <div className="w-7 h-7 bg-indigo-600 rounded-none flex items-center justify-center">
-                                <Search size={13} className="text-white" />
-                            </div>
-                            <p className="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">محرك البحث وتعقب المعاملات</p>
-                        </div>
-                        {/* Filters */}
-                        <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-                            {/* Search */}
-                            <div className="space-y-1">
-                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">البحث</label>
-                                <div className="relative">
-                                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 w-3.5 h-3.5" />
-                                    <input
-                                        type="text"
-                                        placeholder="رقم المعاملة، وصف..."
-                                        value={state.searchTerm}
-                                        onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                        className="w-full pr-9 pl-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-indigo-500 transition-all"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Type Filter */}
-                            <div className="space-y-1">
-                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">نوع العملية</label>
-                                <div className="relative">
-                                    <Filter className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 w-3.5 h-3.5 pointer-events-none" />
-                                    <select
-                                        value={state.filterType}
-                                        onChange={(e) => actions.setFilterType(e.target.value as 'all' | 'income' | 'expense')}
-                                        className="w-full pr-9 pl-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-indigo-500 appearance-none cursor-pointer transition-all"
-                                    >
-                                        <option value="all">كافة المعاملات</option>
-                                        <option value="income">الإيرادات (+)</option>
-                                        <option value="expense">المصروفات (-)</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            {/* Month Filter */}
-                            <div className="space-y-1">
-                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">الفترة الزمنية</label>
-                                <div className="relative">
-                                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 w-3.5 h-3.5 pointer-events-none" />
-                                    <select
-                                        value={state.filterMonth}
-                                        onChange={(e) => actions.setFilterMonth(e.target.value)}
-                                        className="w-full pr-9 pl-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-indigo-500 appearance-none cursor-pointer transition-all"
-                                    >
-                                        <option value="all">السجل الكامل</option>
-                                        {state.uniqueMonths.map((month: string) => (
-                                            <option key={month} value={month}>
-                                                {new Date(month + '-01').toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' })}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Active filters badge */}
-                        {(state.searchTerm || state.filterType !== 'all' || state.filterMonth !== 'all') && (
-                            <div className="px-4 pb-3 flex items-center gap-2">
-                                <span className="text-[9px] font-black text-indigo-600 uppercase tracking-widest">نتائج الفلترة:</span>
-                                <span className="text-[9px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded-none">
-                                    {state.filteredTransactions.length} معاملة
+                        <div>
+                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tighter">الإدارة المالية والحسابات</h1>
+                            <div className="flex items-center gap-2 mt-1">
+                                <TrendingUp size={10} className={isProfit ? "text-emerald-400" : "text-rose-400"} />
+                                <span className={cn("text-[10px] font-black uppercase tracking-widest", isProfit ? "text-emerald-400" : "text-rose-400")}>
+                                    هامش الربح: {state.profitMargin}%
                                 </span>
-                                <button
-                                    onClick={() => { actions.setSearchTerm(''); actions.setFilterType('all'); actions.setFilterMonth('all'); }}
-                                    className="text-[9px] font-black text-rose-500 uppercase tracking-widest hover:underline mr-auto"
-                                >
-                                    مسح الكل ✕
-                                </button>
+                                <span className="w-1 h-1 bg-white/20 rounded-full" />
+                                <span className="text-[10px] text-slate-400 font-bold">مركز التقارير الموحد</span>
                             </div>
-                        )}
+                        </div>
+                    </div>
+
+                    <div className="relative z-10 flex items-center gap-2 no-print">
+                        <button
+                            onClick={() => navigate('/monthly-closing')}
+                            className="flex items-center gap-2 h-9 px-4 bg-white/10 hover:bg-white/15 text-white text-[10px] font-black rounded-xl border border-white/10 transition-all uppercase tracking-widest"
+                        >
+                            <CalendarCheck size={13} />
+                            <span className="hidden sm:inline">تسوية الشهر</span>
+                        </button>
+                        <button
+                            onClick={() => actions.setShowAddModal(true)}
+                            className="flex items-center gap-2 h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-[10px] font-black rounded-xl border border-amber-400/30 transition-all uppercase tracking-widest shadow-lg shadow-amber-500/20"
+                        >
+                            <Plus size={13} />
+                            تسجيل معاملة
+                        </button>
+                        <button className="w-9 h-9 flex items-center justify-center bg-white/10 hover:bg-white/15 text-slate-300 rounded-xl border border-white/10 transition-all">
+                            <Download size={14} />
+                        </button>
                     </div>
                 </div>
 
-                {/* Transactions Log */}
-                <div className="px-0">
+                <div className="py-5 space-y-6">
+                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6">
+                        <FinanceStats
+                            totalIncome={state.totalIncome}
+                            monthIncome={state.monthIncome}
+                            totalExpenses={state.totalExpenses}
+                            monthExpenses={state.monthExpenses}
+                            totalFixedExpenses={state.totalFixedExpenses}
+                            netProfit={state.netProfit}
+                            monthProfit={state.monthIncome - state.monthExpenses}
+                        />
+                    </div>
+
+                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6">
+                        <FixedExpensesManager
+                            expenses={state.fixedExpenses}
+                            onUpdateExpense={actions.handleUpdateFixedExpense}
+                            onConvertAll={actions.handleConvertAllFixedExpenses}
+                            onClearAll={actions.handleClearAllFixedExpenses}
+                        />
+                    </div>
+
+                    <FinanceCharts
+                        monthlyData={state.monthlyData}
+                        isTeacher={false}
+                    />
+
                     <TransactionsLog
+                        searchTerm={state.searchTerm}
+                        onSearchChange={actions.setSearchTerm}
+                        filter={state.filter}
+                        onFilterChange={actions.setFilter}
                         transactions={state.filteredTransactions}
-                        totalCount={state.filteredTransactions.length}
-                        onDeleteAll={actions.handleDeleteAllTransactions}
+                        onDelete={actions.handleDeleteTransaction}
+                        monthIncome={state.monthIncome}
+                        monthExpenses={state.monthExpenses}
                     />
                 </div>
-            </div>
 
-            {/* Add Transaction Modal */}
-            <AddTransactionModal
-                isOpen={state.showAddModal}
-                onClose={() => actions.setShowAddModal(false)}
-                onAdd={actions.handleAddTransaction}
-            />
+                <AddTransactionModal
+                    isOpen={state.showAddModal}
+                    onClose={() => actions.setShowAddModal(false)}
+                    onAdd={actions.handleAddTransaction}
+                />
+            </div>
         </div>
     );
 };

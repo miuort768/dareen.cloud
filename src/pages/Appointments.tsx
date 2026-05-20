@@ -177,10 +177,12 @@ export const Appointments = () => {
     }
 
     return (
-        <div className="space-y-4 pb-20 min-h-full md:animate-in md:fade-in md:duration-700" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
+    <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+    <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
             {/* ─── Modern Header Banner ─── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 px-5 py-7 text-white shadow-lg shadow-indigo-500/20">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1.5px, transparent 0)', backgroundSize: '28px 28px' }} />
                 <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -433,6 +435,7 @@ export const Appointments = () => {
                     )}
                 </AnimatePresence>
             </div>
+        </div>
         </div>
     );
 };
