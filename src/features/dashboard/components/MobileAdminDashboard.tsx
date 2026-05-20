@@ -94,7 +94,7 @@ export const MobileAdminDashboard = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="pb-28 text-right overflow-x-hidden relative bg-gradient-to-b from-slate-50 to-white dark:from-[#020617] dark:to-slate-950"
+            className="pb-4 text-right overflow-x-hidden relative bg-gradient-to-b from-slate-50 to-white dark:from-[#020617] dark:to-slate-950"
             dir="rtl"
         >
 

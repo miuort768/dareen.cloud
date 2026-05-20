@@ -155,7 +155,7 @@ export const Dashboard = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="block md:hidden px-4 pt-4">
+            <div className="block md:hidden px-0 pt-0">
                 <MobileAdminDashboard 
                     stats={stats} 
                     lowBalanceStudents={lowBalanceStudents} 
