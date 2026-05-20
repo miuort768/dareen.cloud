@@ -66,7 +66,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isO
 
     const drawLine = useCallback((x0: number, y0: number, x1: number, y1: number, color: string, size: number, isEraserMode: boolean = false, emit = true) => {
         const canvas = canvasRef.current;
-        if (!canvas) return;
+        if (!canvas || canvas.width === 0 || canvas.height === 0) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 

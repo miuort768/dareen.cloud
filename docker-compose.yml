@@ -4,6 +4,7 @@ services:
       context: .
       args:
         - VITE_API_URL=/api
+        - VITE_LIVEKIT_URL=${VITE_LIVEKIT_URL:-ws://localhost:7880}
     container_name: darin-app
     restart: always
     ports:
@@ -17,6 +18,10 @@ services:
       - DB_PATH=/database/database.sqlite
       - JWT_SECRET=${JWT_SECRET:-d3a8e9b1c7f4e8d2a6b5c4d3e2f1a0b9}
       - FRONTEND_URL=${FRONTEND_URL:-*}
+      - LIVEKIT_API_KEY=devkey
+      - LIVEKIT_API_SECRET=secret
+    depends_on:
+      - livekit
     logging:
       driver: "json-file"
       options:

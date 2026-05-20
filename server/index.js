@@ -35,6 +35,7 @@ const blogRouter = require('./routes/blog');
 const liveRouter = require('./routes/live');
 const trialSessionsRouter = require('./routes/trial_sessions');
 const teacherAvailabilityRouter = require('./routes/teacher_availability');
+const { v4: uuidv4 } = require('uuid');
 
 
 
@@ -515,7 +516,6 @@ async function startServer() {
                 // --- 🔔 Also create a persistent database notification ---
                 try {
                     const db = await getDb();
-                    const { v4: uuidv4 } = require('uuid');
                     
                     // Create notification for student
                     const studentNotifId = uuidv4();
@@ -587,7 +587,7 @@ async function startServer() {
                     );
 
                     for (const session of upcoming) {
-                        const notifId = require('uuid').v4();
+                        const notifId = uuidv4();
                         const title = 'تذكير بالحصة القادمة';
                         const message = `موعد حصة ${session.subject} مع ${session.teacherName} بعد ${minutesBefore} دقيقة`;
 

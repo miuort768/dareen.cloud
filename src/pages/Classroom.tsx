@@ -162,6 +162,7 @@ export const Classroom = () => {
 
         return () => {
             socket.off('whiteboard_state');
+            socket.emit('leave_conversation', roomName);
         };
     }, [roomName]);
 
@@ -217,7 +218,7 @@ export const Classroom = () => {
                 serverUrl={serverUrl}
                 data-lk-theme="default"
                 className="flex-1 flex flex-col overflow-hidden"
-                onDisconnected={handleLeave}
+                onDisconnected={isTeacher ? handleLeave : undefined}
             >
                 <ClassroomTopBar 
                     isTeacher={isTeacher} 

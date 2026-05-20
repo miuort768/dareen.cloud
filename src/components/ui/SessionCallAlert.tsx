@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Video, X, BellRing, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
@@ -6,6 +7,7 @@ import { socketService } from '../../lib/socket';
 
 export const SessionCallAlert = () => {
     const { currentUser } = useApp();
+    const navigate = useNavigate();
     const [callData, setCallData] = useState<any>(null);
     const [show, setShow] = useState(false);
 
@@ -14,7 +16,6 @@ export const SessionCallAlert = () => {
         if (!socket || currentUser?.role !== 'student') return;
 
         const handleInvite = (data: any) => {
-            console.log("📞 [Alert] Session invite", data);
             setCallData(data);
             setShow(true);
             const audio = new Audio('/notification.mp3');
@@ -68,7 +69,7 @@ export const SessionCallAlert = () => {
                                 <button 
                                     onClick={() => {
                                         if (callData?.sessionId) {
-                                            window.location.href = `/classroom/${callData.sessionId}`;
+                                            navigate(`/classroom/${callData.sessionId}`);
                                         }
                                     }}
                                     className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-black text-xs flex items-center justify-center gap-2"

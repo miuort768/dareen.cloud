@@ -442,7 +442,11 @@ export const Schedule = () => {
                             <button
                                 onClick={async () => {
                                     try {
-                                        const res = await startLiveSession(selectedEvent.studentId, selectedEvent.studentName, selectedEvent.subject);
+                                        const res = await startLiveSession({
+                                            title: `حصة مباشرة: ${selectedEvent.studentName}`,
+                                            subject: selectedEvent.subject,
+                                            targetStudentId: selectedEvent.studentId,
+                                        });
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
