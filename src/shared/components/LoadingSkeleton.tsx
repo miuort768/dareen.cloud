@@ -1,4 +1,4 @@
-import { Skeleton } from "./Skeleton";
+import { Skeleton } from "../../components/ui/Skeleton";
 
 export const LoadingSkeleton = ({ type = 'card' }: { type?: 'card' | 'table' | 'stats' | 'chart' }) => {
     if (type === 'stats') {

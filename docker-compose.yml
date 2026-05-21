@@ -16,10 +16,10 @@ services:
       - PORT=3001
       - NODE_ENV=production
       - DB_PATH=/database/database.sqlite
-      - JWT_SECRET=${JWT_SECRET:-d3a8e9b1c7f4e8d2a6b5c4d3e2f1a0b9}
-      - FRONTEND_URL=${FRONTEND_URL:-*}
-      - LIVEKIT_API_KEY=devkey
-      - LIVEKIT_API_SECRET=secret
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
+      - FRONTEND_URL=${FRONTEND_URL:-https://dareen.cloud}
+      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY:?LIVEKIT_API_KEY is required}
+      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET:?LIVEKIT_API_SECRET is required}
     depends_on:
       - livekit
     logging:
@@ -38,8 +38,8 @@ services:
       - "7881:7881"
       - "7882:7882/udp"
     environment:
-      - LIVEKIT_API_KEY=devkey
-      - LIVEKIT_API_SECRET=secret
+      - LIVEKIT_API_KEY=${LIVEKIT_API_KEY:?LIVEKIT_API_KEY is required}
+      - LIVEKIT_API_SECRET=${LIVEKIT_API_SECRET:?LIVEKIT_API_SECRET is required}
 
 volumes:
   app_data:

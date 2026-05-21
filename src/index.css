@@ -579,20 +579,6 @@ html, body {
   }
 
 
-  @keyframes shine {
-    from {
-      transform: translateX(-100%);
-    }
-
-    to {
-      transform: translateX(100%);
-    }
-  }
-
-  .animate-shine {
-    animation: shine 2s infinite;
-  }
-
   /* Premium Table Styles */
   .table-container {
     @apply relative overflow-hidden bg-white border border-gray-200 shadow-xl dark:bg-gray-900 dark:border-gray-800;
@@ -988,13 +974,13 @@ html, body {
   animation: pulse-slow 4s infinite;
 }
 
-@keyframes shine {
+@keyframes shine-effect {
   0% { transform: translateX(-150%) skewX(-25deg); }
   100% { transform: translateX(150%) skewX(-25deg); }
 }
 @media (min-width: 1024px) {
   .animate-shine {
-    animation: shine 3s infinite linear;
+    animation: shine-effect 3s infinite linear;
   }
 }
 

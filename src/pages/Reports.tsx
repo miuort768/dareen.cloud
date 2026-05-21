@@ -1,5 +1,5 @@
 import { Award, CheckCircle2, DollarSign, Target, LayoutDashboard, Users, TrendingUp, Calendar } from 'lucide-react';
-import { Skeleton } from '../shared/components/Skeleton';
+import { Skeleton } from '../components/ui/Skeleton';
 import { useReports } from '../features/reports/hooks/useReports';
 import { ReportsHeader } from '../features/reports/components/ReportsHeader';
 import { AcademicReport } from '../features/reports/components/AcademicReport';

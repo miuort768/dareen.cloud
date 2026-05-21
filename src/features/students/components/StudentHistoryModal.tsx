@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Calendar } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
-import { Skeleton } from '../../../shared/components/Skeleton';
+import { Skeleton } from '../../../components/ui/Skeleton';
 
 interface StudentHistoryModalProps {
     student: {
