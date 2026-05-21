@@ -1,1 +1,1 @@
-export { ParentStudents } from './features/parents/pages/ParentStudentsPage';
+export { ParentStudents } from '../features/parents/pages/ParentStudentsPage';

@@ -1,1 +1,1 @@
-export { Evaluations } from './features/evaluations/pages/EvaluationsPage';
+export { Evaluations } from '../features/evaluations/pages/EvaluationsPage';
