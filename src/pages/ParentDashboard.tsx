@@ -15,7 +15,7 @@ import {
     Clock
 } from 'lucide-react';
 import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -23,7 +23,9 @@ import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
 
 export const ParentDashboard = () => {
-    const { currentUser, adminPhone, logout } = useApp();
+    const currentUser = useCurrentUser();
+    const adminPhone = useAdminPhone();
+    const logout = useLogout();
     const navigate = useNavigate();
     const [children, setChildren] = useState<Record<string, unknown>[]>([]);
     const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);

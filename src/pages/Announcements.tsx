@@ -12,7 +12,7 @@ import {
     ArrowLeftRight
 } from 'lucide-react';
 import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
+import { useShowNotification } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -29,7 +29,7 @@ interface Announcement {
 }
 
 export const Announcements = () => {
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);

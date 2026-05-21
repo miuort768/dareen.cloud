@@ -5,7 +5,7 @@ import {
     Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
-import { useApp } from '../context/AppContext';
+import { useLogin } from '../context/AppContext';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
@@ -17,7 +17,7 @@ export const Login = () => {
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useApp();
+    const login = useLogin();
     const { adminPhone } = useSettingsStore();
     const navigate = useNavigate();
 

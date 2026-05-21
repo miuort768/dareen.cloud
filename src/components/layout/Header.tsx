@@ -2,14 +2,14 @@ import { Sun, User } from 'lucide-react';
 
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useApp } from '../../context/AppContext';
+import { useCurrentUser } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { cn } from '../../lib/utils';
 
 export const Header = () => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
 
 
     const getPageTitle = (path: string) => {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Users, Search, BookOpen, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-import { useApp } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats';
@@ -59,7 +59,10 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
 // ── Main Component ────────────────────────────────────────────────────────────
 
 export const Attendance = () => {
-    const { currentUser, showNotification, whatsappAutoNotify, whatsappTemplate } = useApp();
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
+    const whatsappAutoNotify = useWhatsappAutoNotify();
+    const whatsappTemplate = useWhatsappTemplate();
     const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');

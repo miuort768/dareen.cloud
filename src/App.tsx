@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { PageLoader } from './components/ui/PageLoader';
 
 import { Layout } from './components/layout/Layout';
-import { useApp } from './context/AppContext';
+import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
 
 // Lazy load pages for high performance
@@ -56,7 +56,8 @@ import { useChatSocketInit } from './hooks/useChatSocketInit';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
-  const { isAuthenticated, currentUser } = useApp();
+  const isAuthenticated = useIsAuthenticated();
+  const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -86,7 +87,7 @@ const ProtectedRoute = ({ children, permission }: { children: React.ReactElement
 
 // Component to handle initial dashboard redirect
 const DashboardRedirect = () => {
-  const { currentUser } = useApp();
+  const currentUser = useCurrentUser();
   if (currentUser?.role === 'parent') return <Navigate to="/parent-dashboard" replace />;
   if (currentUser?.role === 'student') return <Navigate to="/student-dashboard" replace />;
   if (currentUser?.role === 'teacher') return <Navigate to="/teacher-dashboard" replace />;
@@ -96,7 +97,11 @@ const DashboardRedirect = () => {
 
 
 function App() {
-  const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
+  const isLoading = useIsLoading();
+  const isSettingsLoading = useIsSettingsLoading();
+  const maintenanceMode = useMaintenanceMode();
+  const currentUser = useCurrentUser();
+  const isAuthenticated = useIsAuthenticated();
   const location = useLocation();
   const navigate = useNavigate();
   const [loadTimeout, setLoadTimeout] = useState(false);

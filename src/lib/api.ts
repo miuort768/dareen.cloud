@@ -6,11 +6,8 @@ type FetchOptions = RequestInit & {
 
 class ApiClient {
     private baseUrl: string;
-    private activeRequests: number;
-
     constructor() {
         this.baseUrl = API_BASE_URL;
-        this.activeRequests = 0;
     }
 
     private getAuthHeader(): Record<string, string> {
@@ -19,11 +16,6 @@ class ApiClient {
     }
 
     private async fetchWithProgress(input: string, init?: RequestInit, timeout = 15000): Promise<Response> {
-        if (this.activeRequests === 0) {
-            // NProgress.start() can be loaded here in the future
-        }
-        this.activeRequests++;
-
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), timeout);
         const combinedInit: RequestInit = {
@@ -35,10 +27,6 @@ class ApiClient {
             return await fetch(input, combinedInit);
         } finally {
             clearTimeout(timer);
-            this.activeRequests = Math.max(0, this.activeRequests - 1);
-            if (this.activeRequests === 0) {
-                // NProgress.done() can be called here in the future
-            }
         }
     }
 

@@ -5,8 +5,14 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
-  plugins: [
-    react(),
+    plugins: [
+    react({
+        // Don't let react-refresh pollute production chunks
+        include: /\.(ts|tsx)$/,
+        babel: {
+            plugins: []
+        }
+    }),
     ViteImageOptimizer({
       jpg: { quality: 80, mozjpeg: true },
       png: { quality: 80, palette: true },
@@ -22,12 +28,15 @@ export default defineConfig({
     }
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['lucide-react', 'framer-motion'],
           query: ['@tanstack/react-query'],
+          charts: ['recharts'],
+          classroom: ['@livekit/components-react', 'livekit-client'],
         }
       }
     }

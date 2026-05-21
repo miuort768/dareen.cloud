@@ -4,7 +4,7 @@ import {
     Activity, CalendarDays, BookOpen, MessageSquare, Star, Award, Clock, X, Trophy, Sparkles, Rocket
 } from 'lucide-react';
 import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser, useAdminPhone } from '../context/AppContext';
 
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -20,7 +20,8 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export const StudentDashboard = () => {
-    const { currentUser, adminPhone } = useApp();
+    const currentUser = useCurrentUser();
+    const adminPhone = useAdminPhone();
     const navigate = useNavigate();
     const [studentData, setStudentData] = useState<Record<string, unknown> | null>(null);
     const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);

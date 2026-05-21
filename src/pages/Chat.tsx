@@ -3,14 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser } from '../context/AppContext';
 import { useChatStore } from '../store/chatStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const {
         conversations,
         availableUsers,

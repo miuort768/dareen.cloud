@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, User, GraduationCap, Users, FileText, Clock, TrendingUp, X, Lock, type LucideIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import { useApp } from '../../context/AppContext';
+import { useCurrentUser } from '../../context/AppContext';
 import { useSharedData } from '../hooks/useSharedData';
 
 interface SearchResult {
@@ -32,7 +32,7 @@ export const QuickSearch = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const isTeacher = currentUser?.role === 'teacher';
 
     useEffect(() => {

@@ -3,7 +3,7 @@ import {
     Settings as SettingsIcon, Palette, Users, Smartphone, Lock,
     Shield, Activity, Sparkles
 } from 'lucide-react';
-import { useApp } from '../../../context/useApp';
+import { useAcademyName, useSetAcademyName, useAcademyLogo, useSetAcademyLogo, useAcademyTagline, useSetAcademyTagline, useAdminPhone, useSetAdminPhone, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useMaintenanceMode, useSetMaintenanceMode, useWhatsappAutoNotify, useSetWhatsappAutoNotify, useWhatsappTemplate, useSetWhatsappTemplate, useDefaultSessionPrice, useSetDefaultSessionPrice, useDefaultTeacherPrice, useSetDefaultTeacherPrice, useCurrencySymbol, useSetCurrencySymbol, useSemesterName, useSetSemesterName, useSemesters, useSetSemesters, useBalanceWarningThreshold, useSetBalanceWarningThreshold, useBackdateLockEnabled, useSetBackdateLockEnabled, useTeacherCommissionType, useSetTeacherCommissionType, useAutoFreezeThreshold, useSetAutoFreezeThreshold, useTelegramHandle, useSetTelegramHandle, useHeroBanners, useSetHeroBanners, useReminderMinutesBefore, useSetReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser } from '../../../context/AppContext';
 import { Skeleton } from '../../../components/ui/Skeleton';
 import { cn } from '../../../lib/utils';
 import { settingsService } from '../services/settingsService';
@@ -22,30 +22,54 @@ import { SuccessToast } from '../components/SuccessToast';
 type TabId = 'general' | 'appearance' | 'users' | 'mobile' | 'policies' | 'advanced' | 'audit';
 
 export const Settings = () => {
-    const {
-        academyName, setAcademyName,
-        academyLogo, setAcademyLogo,
-        academyTagline, setAcademyTagline,
-        adminPhone, setAdminPhone,
-        themeColor, setThemeColor,
-        notificationsEnabled, setNotificationsEnabled,
-        maintenanceMode, setMaintenanceMode,
-        whatsappAutoNotify, setWhatsappAutoNotify,
-        whatsappTemplate, setWhatsappTemplate,
-        defaultSessionPrice, setDefaultSessionPrice,
-        defaultTeacherPrice, setDefaultTeacherPrice,
-        currencySymbol, setCurrencySymbol,
-        semesterName, setSemesterName,
-        semesters, setSemesters,
-        balanceWarningThreshold, setBalanceWarningThreshold,
-        backdateLockEnabled, setBackdateLockEnabled,
-        teacherCommissionType, setTeacherCommissionType,
-        autoFreezeThreshold, setAutoFreezeThreshold,
-        telegramHandle, setTelegramHandle,
-        heroBanners, setHeroBanners,
-        reminderMinutesBefore, setReminderMinutesBefore,
-        user, users, addUser, editUser, deleteUser
-    } = useApp();
+    const academyName = useAcademyName();
+    const setAcademyName = useSetAcademyName();
+    const academyLogo = useAcademyLogo();
+    const setAcademyLogo = useSetAcademyLogo();
+    const academyTagline = useAcademyTagline();
+    const setAcademyTagline = useSetAcademyTagline();
+    const adminPhone = useAdminPhone();
+    const setAdminPhone = useSetAdminPhone();
+    const themeColor = useThemeColor();
+    const setThemeColor = useSetThemeColor();
+    const notificationsEnabled = useNotificationsEnabled();
+    const setNotificationsEnabled = useSetNotificationsEnabled();
+    const maintenanceMode = useMaintenanceMode();
+    const setMaintenanceMode = useSetMaintenanceMode();
+    const whatsappAutoNotify = useWhatsappAutoNotify();
+    const setWhatsappAutoNotify = useSetWhatsappAutoNotify();
+    const whatsappTemplate = useWhatsappTemplate();
+    const setWhatsappTemplate = useSetWhatsappTemplate();
+    const defaultSessionPrice = useDefaultSessionPrice();
+    const setDefaultSessionPrice = useSetDefaultSessionPrice();
+    const defaultTeacherPrice = useDefaultTeacherPrice();
+    const setDefaultTeacherPrice = useSetDefaultTeacherPrice();
+    const currencySymbol = useCurrencySymbol();
+    const setCurrencySymbol = useSetCurrencySymbol();
+    const semesterName = useSemesterName();
+    const setSemesterName = useSetSemesterName();
+    const semesters = useSemesters();
+    const setSemesters = useSetSemesters();
+    const balanceWarningThreshold = useBalanceWarningThreshold();
+    const setBalanceWarningThreshold = useSetBalanceWarningThreshold();
+    const backdateLockEnabled = useBackdateLockEnabled();
+    const setBackdateLockEnabled = useSetBackdateLockEnabled();
+    const teacherCommissionType = useTeacherCommissionType();
+    const setTeacherCommissionType = useSetTeacherCommissionType();
+    const autoFreezeThreshold = useAutoFreezeThreshold();
+    const setAutoFreezeThreshold = useSetAutoFreezeThreshold();
+    const telegramHandle = useTelegramHandle();
+    const setTelegramHandle = useSetTelegramHandle();
+    const heroBanners = useHeroBanners();
+    const setHeroBanners = useSetHeroBanners();
+    const reminderMinutesBefore = useReminderMinutesBefore();
+    const setReminderMinutesBefore = useSetReminderMinutesBefore();
+    const currentUser = useCurrentUser();
+    const user = currentUser || { id: 'guest', name: 'ضيف', username: 'guest' };
+    const users = useUsers();
+    const addUser = useAddUser();
+    const editUser = useEditUser();
+    const deleteUser = useDeleteUser();
 
     const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, User } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useIsAuthenticated, useCurrentUser, useLogout } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { cn } from '../../lib/utils';
 
@@ -9,7 +9,9 @@ export const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { isAuthenticated, currentUser, logout } = useApp();
+    const isAuthenticated = useIsAuthenticated();
+    const currentUser = useCurrentUser();
+    const logout = useLogout();
     const location = useLocation();
 
     const navItems = [

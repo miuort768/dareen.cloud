@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../../../context/AppContext';
+import { useShowNotification, useCurrentUser } from '../../../context/AppContext';
 import { useTeachers } from '../hooks/useTeachers';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
@@ -27,7 +27,8 @@ import type { Teacher, Session, Student, Enrollment } from '../../../types';
 export const Teachers = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const { showNotification, currentUser } = useApp();
+    const showNotification = useShowNotification();
+    const currentUser = useCurrentUser();
     const isTeacher = currentUser?.role === 'teacher';
 
     const {

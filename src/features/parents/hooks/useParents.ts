@@ -3,11 +3,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { parentsService } from '../services/parentsService';
 import type { Parent } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
-import { useApp } from '../../../context/AppContext';
+import { useShowNotification } from '../../../context/AppContext';
 
 export const useParents = () => {
     const queryClient = useQueryClient();
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
 
     // UI Local State
     const [searchTerm, setSearchTerm] = useState('');

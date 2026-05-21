@@ -53,24 +53,16 @@ export const ParentForm: React.FC<ParentFormProps> = ({
 
                 <form onSubmit={onSubmit} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
-                        {/* Name */}
-                        <InputField
-                            label="الاسم الكامل"
-                            icon={User}
-                            required
-                            type="text"
-                            value={formData.name}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, name: e.target.value })}
-
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, phone: e.target.value })}
-
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, email: e.target.value })}
-
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })}
-
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })}
-                            placeholder={isEdit ? "••••••••" : "Create password"}
-                        />
+                        <InputField label="الاسم الكامل" icon={User} required type="text" value={formData.name}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, name: e.target.value })} />
+                        <InputField label="رقم الجوال" icon={User} required type="tel" value={formData.phone}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, phone: e.target.value })} />
+                        <InputField label="البريد الإلكتروني" icon={User} type="email" value={formData.email}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, email: e.target.value })} />
+                        {!isEdit && <InputField label="اسم المستخدم" icon={User} type="text" value={formData.username || ''}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })} />}
+                        {!isEdit && <InputField label="كلمة المرور" icon={User} type="password" placeholder="Create password"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />}
                     </div>
 
                     <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end">

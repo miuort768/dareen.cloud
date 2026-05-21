@@ -11,7 +11,7 @@ import {
 import { cn } from '../../../lib/utils';
 import type { DashboardTask as Task, LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
-import { useApp } from '../../../context/AppContext';
+import { useAdminPhone } from '../../../context/AppContext';
 
 interface OperationsDashboardProps {
     tasks: Task[];
@@ -20,7 +20,7 @@ interface OperationsDashboardProps {
 }
 
 export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: OperationsDashboardProps) => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
 
     return (
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500 pb-10" dir="rtl">

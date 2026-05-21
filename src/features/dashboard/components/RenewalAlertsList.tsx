@@ -2,7 +2,7 @@ import { Phone, UserX, AlertCircle, ChevronLeft } from 'lucide-react';
 import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
-import { useApp } from '../../../context/AppContext';
+import { useAdminPhone } from '../../../context/AppContext';
 
 interface RenewalAlertsListProps {
     stats: Stats;
@@ -10,7 +10,7 @@ interface RenewalAlertsListProps {
 }
 
 export const RenewalAlertsList = ({ stats, lowBalanceStudents }: RenewalAlertsListProps) => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
     return (
         <div className="bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-800 p-6 rounded-none shadow-sm flex flex-col h-full" dir="rtl">
             {/* Header Section */}

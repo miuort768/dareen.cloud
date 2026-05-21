@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle, Sparkles, User, ShieldCheck, Clock, Trash2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../lib/utils';
@@ -84,7 +84,8 @@ const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
 };
 
 export const Forum = () => {
-    const { currentUser, showNotification } = useApp();
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
     const isAdmin = currentUser?.role === 'admin';
     const [searchParams] = useSearchParams();
     const highlightedPostId = searchParams.get('postId');

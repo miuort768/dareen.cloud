@@ -27,21 +27,18 @@ import {
     Clock
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { useApp } from '../../context/AppContext';
+import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
 import { useChatStore } from '../../store/chatStore';
 import { useChat } from '../../hooks/useChat';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 
 export const Sidebar = () => {
-    const {
-        academyName,
-        logout,
-        currentUser,
-        isLoading,
-        sidebarCollapsed: collapsed,
-        setSidebarCollapsed: setCollapsed
-    } = useApp();
+    const academyName = useAcademyName();
+    const logout = useLogout();
+    const currentUser = useCurrentUser();
+    const collapsed = useSidebarCollapsed();
+    const setCollapsed = useSetSidebarCollapsed();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const activeConversationId = useChatStore(s => s.activeConversationId);
     const { totalUnreadCount } = useChat(String(currentUser?.id));
@@ -129,7 +126,7 @@ export const Sidebar = () => {
     });
 
     // Show loading state instead of hiding sidebar completely
-    if (isLoading || !currentUser) {
+    if (!currentUser) {
         return (
             <>
                 {/* Desktop Sidebar - Loading State */}

@@ -3,7 +3,7 @@ import {
     User, Lock, Palette, CheckCircle2, Save, Sparkles, 
     ShieldCheck, UserCog
 } from 'lucide-react';
-import { useApp } from '../context/useApp';
+import { useCurrentUser, useUpdateCurrentUser, useThemeColor, useSetThemeColor, useShowNotification } from '../context/AppContext';
 import type { User } from '../types/auth';
 import { cn } from '../lib/utils';
 import { triggerHaptic } from '../lib/haptics';
@@ -26,7 +26,11 @@ const THEME_COLORS = [
 ];
 
 export const Profile = () => {
-    const { currentUser, updateCurrentUser, themeColor, setThemeColor, showNotification } = useApp();
+    const currentUser = useCurrentUser();
+    const updateCurrentUser = useUpdateCurrentUser();
+    const themeColor = useThemeColor();
+    const setThemeColor = useSetThemeColor();
+    const showNotification = useShowNotification();
     
     const [name, setName] = useState(currentUser?.name || '');
     const [password, setPassword] = useState('');

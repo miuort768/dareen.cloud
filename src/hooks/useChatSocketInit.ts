@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { socketService } from '../lib/socket';
-import { useApp } from '../context/useApp';
+import { useCurrentUser, useIsAuthenticated } from '../context/AppContext';
 import { useChatStore } from '../store/chatStore';
 
 interface ChatMessage {
@@ -23,7 +23,8 @@ interface ChatConversation {
 }
 
 export const useChatSocketInit = () => {
-    const { isAuthenticated, currentUser } = useApp();
+    const isAuthenticated = useIsAuthenticated();
+    const currentUser = useCurrentUser();
     const queryClient = useQueryClient();
     const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
     

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useApp } from '../context/useApp';
+import { useShowNotification } from '../context/AppContext';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen } from 'lucide-react';
 import { api } from '../lib/api';
 
@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 export const AdminBlog = () => {
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');

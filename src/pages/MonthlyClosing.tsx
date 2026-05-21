@@ -5,7 +5,7 @@ import {
     TrendingUp, BarChart3, AlertCircle, Users, Receipt, Wallet, Activity as ActivityIcon
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useApp } from '../context/useApp';
+import { useSemesterName, useSetSemesterName, useSemesters } from '../context/AppContext';
 import { attendanceService } from '../features/attendance/services/attendanceService';
 import { teacherService } from '../features/teachers/services/teacherService';
 import { cn } from '../lib/utils';
@@ -25,7 +25,9 @@ import { StrategicSummary } from './monthly-closing/components/StrategicSummary'
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
 export const MonthlyClosing: React.FC = () => {
-    const { semesterName, setSemesterName, semesters } = useApp();
+    const semesterName = useSemesterName();
+    const setSemesterName = useSetSemesterName();
+    const semesters = useSemesters();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [startDate, setStartDate] = useState(() => {

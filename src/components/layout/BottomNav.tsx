@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Calendar, MessageSquare, User, LayoutDashboard, ClipboardList
 } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
+import { useCurrentUser } from '../../context/AppContext';
 import { useChatStore } from '../../store/chatStore';
 import { cn } from '../../lib/utils';
 import { triggerHaptic } from '../../lib/haptics';
@@ -10,7 +10,7 @@ import { triggerHaptic } from '../../lib/haptics';
 export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
   const activeConversationId = useChatStore(s => s.activeConversationId);
 
   const isChatActive = location.pathname.includes('/chat') && activeConversationId !== null;

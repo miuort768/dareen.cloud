@@ -4,7 +4,7 @@ import {
     BookOpen, Filter, X, CheckCircle2,
     ShieldCheck, Activity, ArrowRight, SlidersHorizontal
 } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser } from '../context/AppContext';
 import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -50,7 +50,7 @@ interface AppointmentEvent {
 const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
 
 export const Appointments = () => {
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');

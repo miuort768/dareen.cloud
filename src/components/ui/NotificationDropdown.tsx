@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../../context/AppContext';
+import { useNotificationsEnabled, useCurrentUser, useShowNotification } from '../../context/AppContext';
 import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
@@ -17,7 +17,9 @@ interface Notification {
 }
 
 export const NotificationDropdown = () => {
-    const { notificationsEnabled, currentUser, showNotification } = useApp();
+    const notificationsEnabled = useNotificationsEnabled();
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>([]);

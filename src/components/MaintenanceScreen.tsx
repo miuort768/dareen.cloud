@@ -1,8 +1,8 @@
-import { useApp } from '../context/AppContext';
+import { useAdminPhone } from '../context/AppContext';
 import { Snowflake } from 'lucide-react';
 
 export const MaintenanceScreen = () => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
 
     return (
         <div className="h-dvh w-full bg-gradient-to-br from-[#020617] via-[#0f172a] to-black flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-sans" dir="rtl">

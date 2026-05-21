@@ -4,7 +4,7 @@ import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, ShieldAlert }
 import { useNavigate, Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
-import { useApp } from '../../../context/AppContext';
+import { useAdminPhone } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import type { DashboardTask as Task, LowBalanceStudent } from '../types';
 
@@ -36,7 +36,7 @@ export const NotificationsCenter = ({
     sessions,
     studentInvoices,
 }: NotificationsCenterProps) => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
     const navigate = useNavigate();
     const [, setDismissedIds] = useState<string[]>([]);
     const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart');

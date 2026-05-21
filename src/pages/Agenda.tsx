@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { cn } from '../lib/utils';
@@ -9,7 +9,8 @@ import type { Student, Session, Enrollment } from '../types';
 
 export const Agenda = () => {
     const queryClient = useQueryClient();
-    const { currentUser, showNotification } = useApp();
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
     const isTeacher = currentUser?.role === 'teacher';
     const teacherName = currentUser?.teacherName || currentUser?.name;
 

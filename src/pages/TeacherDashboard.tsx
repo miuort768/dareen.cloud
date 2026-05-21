@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useApp } from '../context/AppContext';
+import { useCurrentUser } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
@@ -14,7 +14,7 @@ import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
 
 export const TeacherDashboard = () => {
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
 
     const {
         stats,

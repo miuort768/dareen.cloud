@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
-import { useApp } from '../context/useApp';
+import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import {
     type TeacherInvoice,
     type Teacher,
@@ -38,7 +38,8 @@ export const TeacherInvoices = () => {
         return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
     });
     const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
-    const { currentUser, showNotification } = useApp();
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
 
     const isTeacher = currentUser?.role === 'teacher';
     const teacherName = currentUser?.teacherName || currentUser?.name;

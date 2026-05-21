@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlayCircle, Users, Monitor, Loader2, Radio, Plus, AlertCircle } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useApp } from '../../context/useApp';
+import { useCurrentUser } from '../../context/AppContext';
 
 interface LiveSession {
     id: string;
@@ -17,7 +17,7 @@ export const LiveClasses = () => {
     const [loading, setLoading] = useState(true);
     const [starting, setStarting] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const navigate = useNavigate();
 
     const fetchSessions = useCallback(async () => {

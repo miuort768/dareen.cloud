@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { studentService } from '../services/studentService';
-import { useApp } from '../../../context/AppContext';
+import { useShowNotification } from '../../../context/AppContext';
 
 export const useStudents = (searchTerm?: string) => {
     const queryClient = useQueryClient();
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
 
     const studentsQuery = useQuery({
         queryKey: ['students', searchTerm],

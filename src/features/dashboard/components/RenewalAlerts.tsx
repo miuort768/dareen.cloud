@@ -1,7 +1,7 @@
 import { Bell, Phone, TrendingUp } from 'lucide-react';
 import type { LowBalanceStudent, DashboardStats as Stats } from '../types';
 import { cn } from '../../../lib/utils';
-import { useApp } from '../../../context/AppContext';
+import { useAdminPhone } from '../../../context/AppContext';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 
 interface RenewalAlertsProps {
@@ -11,7 +11,7 @@ interface RenewalAlertsProps {
 }
 
 export const RenewalAlerts = ({ stats, lowBalanceStudents, isTeacher }: RenewalAlertsProps) => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
     return (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3 bg-white border border-rose-100 dark:bg-rose-950/20 dark:border-rose-900/30 overflow-hidden shadow-sm relative group rounded-2xl">

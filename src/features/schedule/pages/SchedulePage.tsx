@@ -9,7 +9,7 @@ import {
     Share2,
     Loader2
 } from 'lucide-react';
-import { useApp } from '../../../context/AppContext';
+import { useCurrentUser } from '../../../context/AppContext';
 import { cn } from '../../../lib/utils';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
@@ -86,7 +86,7 @@ const ACCENT_COLORS = [
 ];
 
 export const Schedule = () => {
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');

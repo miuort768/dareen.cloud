@@ -6,7 +6,7 @@ import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import type { DashboardTask as Task, LowBalanceStudent } from '../types';
 import { api } from '../../../lib/api';
-import { useApp } from '../../../context/AppContext';
+import { useAdminPhone } from '../../../context/AppContext';
 
 interface ImportantNotificationsProps {
     tasks: Task[];
@@ -40,7 +40,7 @@ export const ImportantNotifications = ({
     tasks,
     lowBalanceStudents,
 }: ImportantNotificationsProps) => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
     const [dismissedIds, setDismissedIds] = useState<string[]>([]);
 
     useEffect(() => {

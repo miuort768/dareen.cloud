@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Search, X, FileText, Printer, UserPlus, Sparkles, Plus, Trash2 } from 'lucide-react';
-import { useApp } from '../context/AppContext';
+import { useShowNotification } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
 import { api } from '../lib/api';
@@ -51,7 +51,7 @@ export const StudentInvoices = () => {
 
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
     const [previewInvoice, setPreviewInvoice] = useState<StudentInvoice | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);

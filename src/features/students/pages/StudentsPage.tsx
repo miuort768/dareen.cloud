@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useStudents } from '../hooks/useStudents';
 import { useTeachers } from '../../teachers/hooks/useTeachers';
-import { useApp } from '../../../context/AppContext';
+import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import { AlertCircle, Search, TrendingUp } from 'lucide-react';
@@ -33,7 +33,7 @@ interface EnrollmentFormData {
 
 export const Students = () => {
     const queryClient = useQueryClient();
-    const { showNotification } = useApp();
+    const showNotification = useShowNotification();
 
     const [searchTerm, setSearchTerm] = useState('');
     const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents();

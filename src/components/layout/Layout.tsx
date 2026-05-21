@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
-import { useApp } from '../../context/AppContext';
+import { useCurrentUser, useSidebarCollapsed } from '../../context/AppContext';
 import { cn } from '../../lib/utils';
 import { PageLoader } from '../ui/PageLoader';
 import { ErrorBoundary } from '../ErrorBoundary';
@@ -14,7 +14,8 @@ import { BottomNav } from './BottomNav';
 
 export const Layout = () => {
     const location = useLocation();
-    const { currentUser, sidebarCollapsed } = useApp();
+    const currentUser = useCurrentUser();
+    const sidebarCollapsed = useSidebarCollapsed();
     const isChatOnly = currentUser?.role === 'chat_user';
 
     return (

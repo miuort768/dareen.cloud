@@ -13,7 +13,7 @@ import {
     MessageCircle
 } from 'lucide-react';
 import { api } from '../lib/api';
-import { useApp } from '../context/AppContext';
+import { useAdminPhone } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -29,7 +29,7 @@ interface Announcement {
 }
 
 export const ParentAnnouncements = () => {
-    const { adminPhone } = useApp();
+    const adminPhone = useAdminPhone();
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');

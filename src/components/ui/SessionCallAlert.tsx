@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Video, X, BellRing, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useApp } from '../../context/AppContext';
+import { useCurrentUser } from '../../context/AppContext';
 import { socketService } from '../../lib/socket';
 
 interface CallData {
@@ -12,7 +12,7 @@ interface CallData {
 }
 
 export const SessionCallAlert = () => {
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const navigate = useNavigate();
     const [callData, setCallData] = useState<CallData | null>(null);
     const [show, setShow] = useState(false);

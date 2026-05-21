@@ -13,7 +13,7 @@ import { Track, ConnectionState } from 'livekit-client';
 import '@livekit/components-styles';
 
 import { PhoneOff, Loader2, Users, Edit3 } from 'lucide-react';
-import { useApp } from '../context/useApp';
+import { useCurrentUser } from '../context/AppContext';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
 import { Whiteboard } from '../components/ui/Whiteboard';
@@ -125,7 +125,7 @@ const ClassroomVideoLayout = ({ isTeacher }: { isTeacher: boolean }) => {
 
 export const Classroom = () => {
     const { id } = useParams<{ id: string }>();
-    const { currentUser } = useApp();
+    const currentUser = useCurrentUser();
     const navigate = useNavigate();
 
     const [token, setToken] = useState<string | null>(null);

@@ -1,28 +1,27 @@
 import { useState, useRef, useEffect } from 'react';
-import { useApp } from '../../../context/AppContext';
+import { useCurrentUser, useUsers, useAcademyName, useSetAcademyName, useUpdateCurrentUser, useAddUser, useEditUser, useDeleteUser, useThemeColor, useSetThemeColor, useNotificationsEnabled, useSetNotificationsEnabled, useAdminPhone, useSetAdminPhone, useAutoBackup, useSetAutoBackup, useShowNotification } from '../../../context/AppContext';
 import { useDarkMode } from '../../../shared/hooks/useDarkMode';
 import { settingsService } from '../services/settingsService';
 
 export const useSettings = () => {
-    const {
-        user,
-        users,
-        academyName,
-        setAcademyName,
-        updateUser,
-        addUser,
-        editUser,
-        deleteUser,
-        themeColor,
-        setThemeColor,
-        notificationsEnabled,
-        setNotificationsEnabled,
-        adminPhone,
-        setAdminPhone,
-        autoBackup,
-        setAutoBackup,
-        showNotification
-    } = useApp();
+    const currentUser = useCurrentUser();
+    const user = currentUser || { id: 'guest', name: 'ضيف', username: 'guest' };
+    const users = useUsers();
+    const academyName = useAcademyName();
+    const setAcademyName = useSetAcademyName();
+    const updateUser = useUpdateCurrentUser();
+    const addUser = useAddUser();
+    const editUser = useEditUser();
+    const deleteUser = useDeleteUser();
+    const themeColor = useThemeColor();
+    const setThemeColor = useSetThemeColor();
+    const notificationsEnabled = useNotificationsEnabled();
+    const setNotificationsEnabled = useSetNotificationsEnabled();
+    const adminPhone = useAdminPhone();
+    const setAdminPhone = useSetAdminPhone();
+    const autoBackup = useAutoBackup();
+    const setAutoBackup = useSetAutoBackup();
+    const showNotification = useShowNotification();
 
     const [theme, setTheme] = useDarkMode();
     const [loading, setLoading] = useState(true);
