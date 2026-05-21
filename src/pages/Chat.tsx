@@ -152,7 +152,6 @@ export const Chat: React.FC = () => {
         >
             {/* Standard Global Header */}
             <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#5c59f2]/10 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
                 <div className="relative z-10 flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
                         <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
@@ -204,9 +203,6 @@ export const Chat: React.FC = () => {
                     <div className="hidden lg:flex flex-1 flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#020617] relative border-l border-gray-200 dark:border-white/5">
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
                         
-                        {/* Sharp Design Element */}
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-[#5c59f2]/5 rotate-45 -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
-
                         <div className="z-10 text-center">
                             <div className="w-20 h-20 bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-2xl rounded-none">
                                 <img src="/logo.png" alt="Dareen" className="w-12 h-12 object-contain" />

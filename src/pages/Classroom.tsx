@@ -135,7 +135,8 @@ export const Classroom = () => {
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
     const roomName = `live_session_${id}`;
 
-    const serverUrl = import.meta.env.VITE_LIVEKIT_URL || 'ws://localhost:7880';
+    const configuredUrl = import.meta.env.VITE_LIVEKIT_URL;
+    const serverUrl = configuredUrl || `ws://${window.location.hostname}:7880`;
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -180,6 +181,25 @@ export const Classroom = () => {
         navigate(-1);
     }, [isTeacher, roomName, endSessionInDb, navigate]);
 
+    // End session when teacher closes the tab
+    useEffect(() => {
+        if (!isTeacher) return;
+        const handleBeforeUnload = () => {
+            socketService.getSocket().emit('teacher_stopped', { conversationId: roomName });
+            navigator.sendBeacon(`/api/live/end/${id}`, '{}');
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [isTeacher, roomName, id]);
+
+    // Connection timeout: if LiveKit doesn't connect within 20s, show error
+    const [connectionTimeout, setConnectionTimeout] = useState(false);
+    useEffect(() => {
+        if (!token) return;
+        const t = setTimeout(() => setConnectionTimeout(true), 20000);
+        return () => clearTimeout(t);
+    }, [token]);
+
     const toggleWhiteboard = useCallback(() => {
         if (!isTeacher) return;
         setIsWhiteboardOpen(prev => {
@@ -209,6 +229,26 @@ export const Classroom = () => {
         );
     }
 
+    if (connectionTimeout) {
+        return (
+            <div className="fixed inset-0 bg-gray-950 text-white flex flex-col items-center justify-center p-6 text-center" dir="rtl">
+                <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-6">
+                    <span className="text-3xl">🔌</span>
+                </div>
+                <p className="font-black text-xl mb-2">تعذر الاتصال بخادم البث المباشر</p>
+                <p className="text-slate-400 text-sm mb-8 max-w-md">تأكد من أن خادم LiveKit شغال على المنفذ 7880. للدعم الفني، تواصل مع مسؤول النظام.</p>
+                <div className="flex gap-3">
+                    <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-xl font-black text-sm transition-colors">
+                        العودة
+                    </button>
+                    <button onClick={() => window.location.reload()} className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-black text-sm transition-colors">
+                        إعادة المحاولة
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="fixed inset-0 bg-black flex flex-col overflow-hidden" dir="rtl">
             <LiveKitRoom
@@ -218,7 +258,6 @@ export const Classroom = () => {
                 serverUrl={serverUrl}
                 data-lk-theme="default"
                 className="flex-1 flex flex-col overflow-hidden"
-                onDisconnected={isTeacher ? handleLeave : undefined}
             >
                 <ClassroomTopBar 
                     isTeacher={isTeacher} 
