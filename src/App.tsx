@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 
@@ -99,7 +99,17 @@ function App() {
   const { isLoading, isSettingsLoading, maintenanceMode, currentUser, isAuthenticated } = useApp();
   const location = useLocation();
   const navigate = useNavigate();
-  
+  const [loadTimeout, setLoadTimeout] = useState(false);
+
+  // Safety timeout: if loading takes > 30s, show a retry screen
+  useEffect(() => {
+    if (isLoading || isSettingsLoading) {
+      const t = setTimeout(() => setLoadTimeout(true), 30000);
+      return () => clearTimeout(t);
+    }
+    setLoadTimeout(false);
+  }, [isLoading, isSettingsLoading]);
+
   // Initialize Global Socket Listeners for Chat & Live Sessions
   useChatSocketInit();
 
@@ -113,6 +123,27 @@ function App() {
   }, [location.pathname]);
 
   if (isLoading || isSettingsLoading) {
+    if (loadTimeout) {
+      return (
+        <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-slate-950 dark:to-indigo-950 flex items-center justify-center p-6" dir="rtl">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 max-w-md w-full text-center space-y-4">
+            <div className="w-16 h-16 mx-auto bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center">
+              <span className="text-3xl">⏳</span>
+            </div>
+            <h2 className="text-xl font-black text-slate-900 dark:text-white">يستغرق التحميل وقتاً أطول من المعتاد</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
+            <div className="flex gap-3 justify-center pt-2">
+              <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-colors shadow-lg shadow-indigo-600/20">
+                إعادة التحميل
+              </button>
+              <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-colors shadow-lg shadow-red-600/20">
+                مسح التخزين وإعادة التحميل
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return <PageLoader />;
   }
 
