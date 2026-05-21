@@ -1,6 +1,4 @@
 import { Building2, Wallet, Monitor, Lock, CheckCircle2 } from 'lucide-react';
-import { cn } from '../../../lib/utils';
-import { triggerHaptic } from '../../../lib/haptics';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, ToggleRow } from './SettingsUI';
 
 interface GeneralSettingsProps {

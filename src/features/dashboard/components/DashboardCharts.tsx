@@ -58,7 +58,7 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                                                 <p className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{label}</p>
                                             </div>
                                             <div className="space-y-2">
-                                                {payload.map((entry: any, index: number) => (
+                                                {payload.map((entry: { name?: string; value: number; color?: string }, index: number) => (
                                                     <div key={index} className="flex items-center justify-between">
                                                         <div className="flex items-center gap-2">
                                                             <div className="w-2 h-2 rounded-full border border-slate-950/10" style={{ backgroundColor: entry.color }} />

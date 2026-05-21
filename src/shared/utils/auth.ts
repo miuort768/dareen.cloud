@@ -1,7 +1,7 @@
 import { api } from '../../lib/api';
 
 export const authUtils = {
-    login: async (credentials: any) => {
+    login: async (credentials: { username: string; password?: string }) => {
         return api.post('/login', credentials);
     },
 

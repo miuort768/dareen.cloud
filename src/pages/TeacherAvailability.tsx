@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CalendarDays, Clock, CheckCircle2, XCircle, Plus, Save, Search, GraduationCap } from 'lucide-react';
+import { CalendarDays, Clock, CheckCircle2, XCircle, Save, Search } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { PageContainer } from '../components/layout/PageContainer';
@@ -34,7 +34,7 @@ export const TeacherAvailability = () => {
 
   const { data: teachers = [] } = useQuery({
     queryKey: ['teachers'],
-    queryFn: () => api.get<any[]>('/teachers')
+    queryFn: () => api.get<Record<string, unknown>[]>('/teachers')
   });
 
   const { data: allAvailability = [], isLoading } = useQuery({
@@ -48,7 +48,7 @@ export const TeacherAvailability = () => {
       const now = new Date();
       const h = String(now.getHours()).padStart(2, '0');
       const m = String(now.getMinutes()).padStart(2, '0');
-      return api.get<any[]>('/teacher-availability/available-at', { params: { day: String(now.getDay()), time: `${h}:${m}` } });
+      return api.get<Record<string, unknown>[]>('/teacher-availability/available-at', { params: { day: String(now.getDay()), time: `${h}:${m}` } });
     },
     refetchInterval: 60000
   });
@@ -77,7 +77,7 @@ export const TeacherAvailability = () => {
     }
   }, [selectedTeacher, allAvailability]);
 
-  const updateSlot = (dayOfWeek: number, field: keyof Slot, value: any) => {
+  const updateSlot = (dayOfWeek: number, field: keyof Slot, value: string | boolean) => {
     setEditingSlots(prev => prev.map(s => s.dayOfWeek === dayOfWeek ? { ...s, [field]: value } : s));
     setHasChanges(true);
   };
@@ -91,9 +91,9 @@ export const TeacherAvailability = () => {
     }
     setHasChanges(true);
   };
+  const filteredTeachers = Array.isArray(teachers) ? teachers.filter((t: { name: string }) => t.name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
 
-  const filteredTeachers = Array.isArray(teachers) ? teachers.filter((t: any) => t.name.toLowerCase().includes(searchTerm.toLowerCase())) : [];
-  const selTeacher = Array.isArray(teachers) ? teachers.find((t: any) => t.id === selectedTeacher) : null;
+  const selTeacher = Array.isArray(teachers) ? teachers.find((t: { id: string }) => t.id === selectedTeacher) : null;
   const getSlotsForDay = (day: number) => editingSlots.find(s => s.dayOfWeek === day);
 
   return (
@@ -106,7 +106,7 @@ export const TeacherAvailability = () => {
             <p className="text-[11px] font-black uppercase tracking-widest text-white/80">المتاحات الآن</p>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
-            {availableNow.slice(0, 6).map((t: any) => (
+            {availableNow.slice(0, 6).map((t: { id: string; name: string; subject: string; avatar?: string }) => (
               <span key={t.teacherId} className="text-xs font-bold bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">{t.teacherName} ({t.subject})</span>
             ))}
             {availableNow.length > 6 && <span className="text-xs font-bold bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">+{availableNow.length - 6}</span>}
@@ -122,7 +122,7 @@ export const TeacherAvailability = () => {
             <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="بحث عن معلمة..." className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
           </div>
           <div className="space-y-1 max-h-[400px] overflow-y-auto">
-            {filteredTeachers.map((t: any) => (
+            {filteredTeachers.map((t: { id: string; name: string; subject: string }) => (
               <button key={t.id} onClick={() => setSelectedTeacher(t.id)} className={cn("w-full text-right px-3 py-2 rounded-xl text-xs font-bold transition-all", selectedTeacher === t.id ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800' : 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800')}>
                 <span>{t.name}</span>
                 {t.subject && <span className="text-[10px] text-slate-400 mr-2">{t.subject}</span>}

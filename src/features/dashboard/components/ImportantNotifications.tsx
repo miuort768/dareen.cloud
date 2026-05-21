@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { Bell, ListTodo, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
@@ -19,7 +20,7 @@ interface BaseNotification {
     description: string;
     priority: 'high' | 'medium' | 'low';
     actionLabel: string;
-    icon: any;
+    icon: LucideIcon;
     color: string;
 }
 
@@ -90,7 +91,7 @@ export const ImportantNotifications = ({
             icon: ListTodo,
             color: 'amber'
         })) : [])
-    ].sort((a, _) => (a.priority === 'high' ? -1 : 1)) as NotificationItem[];
+    ].sort((a) => (a.priority === 'high' ? -1 : 1)) as NotificationItem[];
 
     const visibleNotifications = Array.isArray(notifications)
         ? notifications.filter(n => !dismissedIds.includes(n.id))

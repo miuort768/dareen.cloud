@@ -25,7 +25,7 @@ export interface DashboardStats {
     weekTotalSessions?: number;
     newBadgesRecommended?: number;
     bestStudentName?: string;
-    todayTimeline?: any[];
+    todayTimeline?: { id: string; studentName: string; time: string; subject: string; status: string }[];
     teacherSessionPrice?: number;
     evaluationsCompleted?: number;
 }
@@ -61,6 +61,6 @@ export interface DashboardData {
     monthlyData: DashboardMonthData[];
     lowBalanceStudents: LowBalanceStudent[];
     tasks: DashboardTask[];
-    topStudents: any[];
-    focusStudents?: any[];
+    topStudents: Record<string, unknown>[];
+    focusStudents?: Record<string, unknown>[];
 }

@@ -114,7 +114,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
 
     fetchSettings: async () => {
         try {
-            const settings = await api.get<any>('/system/public-settings');
+            const settings = await api.get<Record<string, unknown>>('/system/public-settings');
             if (settings) {
                 const updates: Partial<SettingsState> = {};
                 if (settings.academy_name !== undefined && settings.academy_name !== null) updates.academyName = settings.academy_name;
@@ -157,7 +157,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
                     updates.backdateLockEnabled = settings.backdate_lock_enabled === true || settings.backdate_lock_enabled === 'true';
                 }
                 if (settings.teacher_commission_type !== undefined && settings.teacher_commission_type !== null) {
-                    updates.teacherCommissionType = settings.teacher_commission_type as any;
+                    updates.teacherCommissionType = settings.teacher_commission_type as 'percentage' | 'fixed';
                 }
                 if (settings.auto_freeze_threshold !== undefined && settings.auto_freeze_threshold !== null) {
                     updates.autoFreezeThreshold = Number(settings.auto_freeze_threshold);

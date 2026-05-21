@@ -17,7 +17,7 @@ interface ParentDetailsProps {
     onClose: () => void;
 }
 
-const StatCard = ({ label, value, icon: Icon, gradient }: { label: string, value: string | number, icon: any, gradient: string }) => (
+const StatCard = ({ label, value, icon: Icon, gradient }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }>, gradient: string }) => (
     <div className={cn("relative overflow-hidden p-4 rounded-none shadow-sm text-white", gradient)}>
         <div className="absolute -left-2 -bottom-2 opacity-10"><Icon size={48} /></div>
         <div className="flex items-center gap-2 mb-2">

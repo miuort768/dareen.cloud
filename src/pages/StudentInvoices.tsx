@@ -47,7 +47,7 @@ export const StudentInvoices = () => {
     const [isSaving, setIsSaving] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
-    const [allSessions, setAllSessions] = useState<any[]>([]);
+    const [allSessions, setAllSessions] = useState<Record<string, unknown>[]>([]);
 
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -86,11 +86,11 @@ export const StudentInvoices = () => {
             const [invoicesData, studentsData, sessionsData] = await Promise.all([
                 api.get<StudentInvoice[]>('/studentInvoices'),
                 api.get<Student[]>('/students'),
-                api.get<any[]>('/sessions')
+                api.get<Record<string, unknown>[]>('/sessions')
             ]);
-            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as any).data || []);
-            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as any).data || []);
-            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as any).data || []);
+            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as Record<string, unknown>).data as StudentInvoice[] || []);
+            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as Record<string, unknown>).data as Student[] || []);
+            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as Record<string, unknown>).data as Record<string, unknown>[] || []);
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
@@ -156,12 +156,12 @@ export const StudentInvoices = () => {
                 return sum;
             }, 0) || 0;
 
-            const studentSessions = allSessions.filter((sess: any) =>
+            const studentSessions = allSessions.filter((sess: { studentId: string; studentName?: string; status?: string }) =>
                 sess.studentId === studentId &&
                 (sess.status === 'completed' || sess.status === 'cancelled')
             );
 
-            const items = studentSessions.map((sess: any) => ({
+            const items = studentSessions.map((sess: { id: string; date: string; studentName?: string; teacherName?: string; price?: number; subject?: string; status?: string }) => ({
                 description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'حضور' : 'غياب'})`,
                 amount: sess.price || student.sessionPrice || 0,
                 date: sess.date
@@ -211,7 +211,7 @@ export const StudentInvoices = () => {
             fetchData();
             handleCancel();
             showNotification(editingId ? 'تم تحديث الفاتورة بنجاح' : 'تم إصدار الفاتورة بنجاح', 'success');
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error saving invoice:', error);
             const errorMessage = error.response?.data?.error || error.message || 'حدث خطأ أثناء حفظ البيانات';
             showNotification(errorMessage, 'error');
@@ -238,7 +238,7 @@ export const StudentInvoices = () => {
             await api.delete(`/studentInvoices/${deletingId}`);
             fetchData();
             showNotification('تم حذف الفاتورة بنجاح', 'success');
-        } catch (error: any) {
+        } catch (error) {
             console.error('Error deleting invoice:', error);
             showNotification(error.message || 'فشل في حذف الفاتورة', 'error');
         } finally {
@@ -326,7 +326,7 @@ export const StudentInvoices = () => {
                             <InputField
                                 type="select"
                                 value={filterStatus}
-                                onChange={e => setFilterStatus(e.target.value as any)}
+                                onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
                                 className="w-auto min-w-[140px] py-2 text-xs font-bold"
                             >
                                 <option value="all">جميع الحالات</option>

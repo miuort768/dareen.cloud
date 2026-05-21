@@ -12,7 +12,7 @@ interface FinanceStatsProps {
 }
 
 const StatCard = ({ title, value, icon: Icon, gradient, sub, badge }: {
-    title: string; value: string; icon: any; gradient: string; sub?: string; badge?: { label: string; color: string };
+    title: string; value: string; icon: React.ComponentType<{ size?: number }>; gradient: string; sub?: string; badge?: { label: string; color: string };
 }) => (
     <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between shadow-sm text-white", gradient)}>
         {/* BG icon */}

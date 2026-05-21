@@ -8,12 +8,12 @@ import { CHART_COLORS } from '../types';
 import { cn } from '../../../lib/utils';
 
 interface AcademicReportProps {
-    gradeBarData: any[];
-    subjectPieData: any[];
+    gradeBarData: { name: string; count: number }[];
+    subjectPieData: { name: string; value: number }[];
     totalEnrollments: number;
     totalStudents: number;
     uniqueSubjects: number;
-    filteredStudentProgress: any[];
+    filteredStudentProgress: { id: string; name: string; grade: string; subject: string; attendanceRate: number; sessionsCount: number }[];
     studentProgressTotal: number;
     searchTerm: string;
     setSearchTerm: (val: string) => void;
@@ -28,7 +28,7 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
     </div>
 );
 
-const SectionHeader = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
         <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none">
             <Icon size={15} className="text-white" />
@@ -40,7 +40,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: any; label: string; s
     </div>
 );
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; name?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right" dir="rtl">

@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
-import { blogPosts as staticPosts } from '../../data/blogPosts';
+import { blogPosts as staticPosts, type BlogPost as BlogPostType } from '../../data/blogPosts';
 import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
 import DOMPurify from 'dompurify';
@@ -12,13 +12,13 @@ const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
-    const [post, setPost] = useState<any>(null);
+    const [post, setPost] = useState<BlogPostType | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const data = await api.get<any>(`/blog/${slug}`);
+                const data = await api.get<BlogPostType>(`/blog/${slug}`);
                 setPost(data);
             } catch (err) {
                 console.error('Failed to fetch blog post:', err);

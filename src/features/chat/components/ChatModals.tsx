@@ -262,7 +262,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm text-right leading-relaxed">
                             {deleteType === 'all_conversations' 
                                 ? 'سيتم مسح جميع سجلات الدردشة الخاصة بك نهائياً. لا يمكن التراجع عن هذا الإجراء.' 
-                                : `هل أنت متأكد من حذف ${itemToDelete && 'displayName' in itemToDelete ? (itemToDelete as any).displayName : 'هذا العنصر'}؟`}
+                                : `هل أنت متأكد من حذف ${itemToDelete && 'displayName' in itemToDelete ? (itemToDelete as { displayName: string }).displayName : 'هذا العنصر'}؟`}
                         </p>
                         <div className="flex gap-3">
                              <button

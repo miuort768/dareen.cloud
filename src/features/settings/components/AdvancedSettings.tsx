@@ -17,7 +17,7 @@ interface AdvancedSettingsProps {
     setLocalSemesters: (v: string) => void;
     setSemesterName: (v: string) => Promise<void> | void;
     setSemesters: (v: string) => Promise<void> | void;
-    setSecureAction: (action: any) => void;
+    setSecureAction: (action: { type: 'reset' | 'archive'; title: string; description: string; confirmWord: string; actionFn: () => void } | null) => void;
 }
 
 export const AdvancedSettings = ({

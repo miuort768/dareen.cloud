@@ -57,7 +57,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
     const [timerRunning, setTimerRunning] = useState(false);
     const [timerSeconds, setTimerSeconds] = useState(0);
-    const timerIntervalRef = useRef<any>(null);
+    const timerIntervalRef = useRef<ReturnType<typeof setInterval>>(null);
 
     React.useEffect(() => {
         const saved = localStorage.getItem(`active_timer_${student.id}`);
@@ -92,7 +92,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch (e) { /* silent */ }
+            } catch { /* silent */ }
         } else {
             const start = Date.now();
             setTimerSeconds(0);
@@ -111,7 +111,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ studentId: student.id, subject: en.subject })
                 });
-            } catch (e) { /* silent */ }
+            } catch { /* silent */ }
         }
     };
 
@@ -146,7 +146,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 targetStudentId: student.id,
             });
             navigate(`/classroom/${result.id}`);
-        } catch (err: any) {
+        } catch (err) {
             alert(`فشل بدء البث: ${err.message}`);
         }
     };

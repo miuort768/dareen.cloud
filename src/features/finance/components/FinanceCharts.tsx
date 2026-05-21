@@ -27,7 +27,7 @@ const PIE_COLORS = [
 ];
 
 // Custom Tooltip for Area Chart
-const AreaTooltip = ({ active, payload, label }: any) => {
+const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: { name?: string; value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right min-w-[150px]" dir="rtl">

@@ -2,11 +2,20 @@ import React from 'react';
 import { Receipt, Download } from 'lucide-react';
 import { SectionCard, SectionTitle, SecondaryBtn } from './ClosingUI';
 
+interface PayrollItem {
+    id: string;
+    name: string;
+    subject: string;
+    sessionsCount: number;
+    baseAmount: number;
+    totalAmount: number;
+}
+
 interface PayrollTableProps {
-    payrollData: any[];
+    payrollData: PayrollItem[];
     teacherAdjustments: Record<string, number>;
     handleTeacherAdjustment: (teacherId: string, amount: number) => void;
-    setSelectedTeacherForSlip: (item: any) => void;
+    setSelectedTeacherForSlip: (item: PayrollItem) => void;
     startDate: string;
     endDate: string;
 }

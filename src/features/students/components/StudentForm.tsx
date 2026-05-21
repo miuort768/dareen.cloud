@@ -83,12 +83,12 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <FormInput label="الاسم الكامل" icon={UserIcon} value={formData.name} onChange={(val: any) => setFormData({ ...formData, name: val })} required placeholder="مثال: محمد أحمد" />
-                        <FormInput label="المرحلة الدراسية" icon={GraduationCap} value={formData.grade} onChange={(val: any) => setFormData({ ...formData, grade: val })} required placeholder="مثال: الصف الأول" />
-                        <FormInput label="المنهج الدراسي" icon={Tag} value={formData.curriculum} onChange={(val: any) => setFormData({ ...formData, curriculum: val })} placeholder="مثال: المنهج الكويتي" />
-                        <FormInput label="هاتف ولي الأمر" icon={Phone} type="tel" value={formData.parentPhone} onChange={(val: any) => setFormData({ ...formData, parentPhone: val })} required placeholder="05XXXXXXXX" dir="ltr" />
-                        <FormInput label="هاتف الطالب" icon={Phone} type="tel" value={formData.studentPhone} onChange={(val: any) => setFormData({ ...formData, studentPhone: val })} placeholder="05XXXXXXXX" dir="ltr" />
-                        <FormInput label="سعر الحصة الافتراضي" icon={DollarSign} type="number" value={formData.sessionPrice} onChange={(val: any) => setFormData({ ...formData, sessionPrice: val })} required placeholder="0.00" />
+                        <FormInput label="الاسم الكامل" icon={UserIcon} value={formData.name} onChange={(val: string) => setFormData({ ...formData, name: val })} required placeholder="مثال: محمد أحمد" />
+                        <FormInput label="المرحلة الدراسية" icon={GraduationCap} value={formData.grade} onChange={(val: string) => setFormData({ ...formData, grade: val })} required placeholder="مثال: الصف الأول" />
+                        <FormInput label="المنهج الدراسي" icon={Tag} value={formData.curriculum} onChange={(val: string) => setFormData({ ...formData, curriculum: val })} placeholder="مثال: المنهج الكويتي" />
+                        <FormInput label="هاتف ولي الأمر" icon={Phone} type="tel" value={formData.parentPhone} onChange={(val: string) => setFormData({ ...formData, parentPhone: val })} required placeholder="05XXXXXXXX" dir="ltr" />
+                        <FormInput label="هاتف الطالب" icon={Phone} type="tel" value={formData.studentPhone} onChange={(val: string) => setFormData({ ...formData, studentPhone: val })} placeholder="05XXXXXXXX" dir="ltr" />
+                        <FormInput label="سعر الحصة الافتراضي" icon={DollarSign} type="number" value={formData.sessionPrice} onChange={(val: string) => setFormData({ ...formData, sessionPrice: val })} required placeholder="0.00" />
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     );
 };
 
-const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: any) => (
+const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-2">
         <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">{label}</label>
         <div className="relative group">

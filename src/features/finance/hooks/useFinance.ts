@@ -11,7 +11,7 @@ export const useFinance = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState<'all' | 'income' | 'expense'>('all');
     const [filterMonth, setFilterMonth] = useState<string>('all');
-    const [serverStats, setServerStats] = useState<any>(null);
+    const [serverStats, setServerStats] = useState<Record<string, unknown> | null>(null);
     const [loading, setLoading] = useState(true);
     const [showAddModal, setShowAddModal] = useState(false);
 
@@ -96,20 +96,19 @@ export const useFinance = () => {
     };
 
     // Derived Data
-    const now = new Date();
-    const currentMonthStr = now.toISOString().slice(0, 7);
-
-    const isSameMonth = (dateStr: string) => {
-        if (!dateStr) return false;
-        try {
-            const d = new Date(dateStr);
-            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-        } catch (e) {
-            return dateStr.startsWith(currentMonthStr);
-        }
-    };
-
     const stats = useMemo(() => {
+        const now = new Date();
+        const currentMonthStr = now.toISOString().slice(0, 7);
+
+        const isSameMonth = (dateStr: string) => {
+            if (!dateStr) return false;
+            try {
+                const d = new Date(dateStr);
+                return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+            } catch {
+                return dateStr.startsWith(currentMonthStr);
+            }
+        };
         if (serverStats && filterMonth === 'all') {
             return serverStats;
         }
@@ -176,7 +175,7 @@ export const useFinance = () => {
                         amount: Number(s.price) || 0,
                         date: s.date || '',
                         description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
-                        status: s.status === 'completed' ? 'completed' : 'pending' as any
+                        status: s.status === 'completed' ? 'completed' : 'pending' as const
                     });
                     // Labor Cost (Accrued) - Only if completed
                     if (s.status === 'completed') {
@@ -200,7 +199,7 @@ export const useFinance = () => {
                 date: inv.date || '',
                 description: `فاتورة مدفوعة: ${inv.teacher} ${inv.personalExpenses ? `(بعد خصم ${inv.personalExpenses} نثريات)` : ''}`,
                 status: ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()) ? 'completed' : 
-                        ['pending', 'معلقة', 'قيد المعالجة'].includes(inv.status?.toLowerCase()) ? 'pending' : 'cancelled' as any
+                        ['pending', 'معلقة', 'قيد المعالجة'].includes(inv.status?.toLowerCase()) ? 'pending' : 'cancelled' as const
             }))
         ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -246,10 +245,10 @@ export const useFinance = () => {
 
             const inc = allTransactions
                 .filter(t => t.type === 'income' && t.status === 'completed' && isMonth(t.date))
-                .reduce((sum: number, t: any) => sum + t.amount, 0);
+                .reduce((sum: number, t: { amount: number }) => sum + t.amount, 0);
             const exp = allTransactions
                 .filter(t => t.type === 'expense' && t.status === 'completed' && isMonth(t.date))
-                .reduce((sum: number, t: any) => sum + t.amount, 0);
+                .reduce((sum: number, t: { amount: number }) => sum + t.amount, 0);
             return {
                 month: new Date(y, m - 1).toLocaleDateString('ar-EG', { month: 'short' }),
                 income: inc,
@@ -259,7 +258,7 @@ export const useFinance = () => {
 
         const expenseByCategory = allTransactions
             .filter(t => t.type === 'expense' && t.status === 'completed')
-            .reduce((acc: Record<string, number>, t: any) => {
+            .reduce((acc: Record<string, number>, t: { date: string; amount: number }) => {
                 acc[t.category] = (acc[t.category] || 0) + t.amount;
                 return acc;
             }, {} as Record<string, number>);

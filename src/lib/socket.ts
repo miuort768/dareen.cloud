@@ -36,7 +36,7 @@ class SocketService {
             });
         } else {
             // Force reconnect if token changed to ensure server updates rooms
-            const currentToken = (this.socket.auth as any)?.token;
+            const currentToken = (this.socket.auth as { token?: string })?.token;
             if (currentToken !== token) {
                 this.socket.auth = { token: token || 'guest' };
                 if (this.socket.connected) {
@@ -63,7 +63,7 @@ class SocketService {
     getSocket() {
         return this.socket || this.connect() || {
             on: () => { }, off: () => { }, emit: () => { }, id: 'offline'
-        } as any;
+        } as Partial<Socket>;
     }
 
     joinConversation(id: string) {

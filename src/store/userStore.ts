@@ -22,9 +22,9 @@ export const useUserStore = create<UserState>((set, get) => ({
             set({ isLoading: true, error: null });
             const data = await api.get<User[]>('/system/users');
             set({ users: data, isLoading: false });
-        } catch (e: any) {
+        } catch (e) {
             console.error("Error fetching users:", e);
-            set({ error: e.message || 'فشل جلب المستخدمين', isLoading: false });
+            set({ error: e instanceof Error ? e.message : 'فشل جلب المستخدمين', isLoading: false });
         }
     },
 
@@ -33,7 +33,7 @@ export const useUserStore = create<UserState>((set, get) => ({
             const id = `user_${Date.now()}`;
             await api.post('/system/users', { ...newUser, id });
             await get().fetchUsers();
-        } catch (e: any) {
+        } catch (e) {
             console.error("Error adding user:", e);
             throw e;
         }
@@ -51,7 +51,7 @@ export const useUserStore = create<UserState>((set, get) => ({
             set((state) => ({
                 users: state.users.map(u => u.id === id ? updated : u)
             }));
-        } catch (e: any) {
+        } catch (e) {
             console.error("Error editing user:", e);
             throw e;
         }
@@ -63,7 +63,7 @@ export const useUserStore = create<UserState>((set, get) => ({
             set((state) => ({
                 users: state.users.filter(u => u.id !== id)
             }));
-        } catch (e: any) {
+        } catch (e) {
             console.error("Error deleting user:", e);
             throw e;
         }

@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
@@ -10,9 +11,9 @@ import type { DashboardTask as Task, LowBalanceStudent } from '../types';
 interface NotificationsCenterProps {
     tasks: Task[];
     lowBalanceStudents: LowBalanceStudent[];
-    students: any[];
-    sessions: any[];
-    studentInvoices: any[];
+    students: Record<string, unknown>[];
+    sessions: Record<string, unknown>[];
+    studentInvoices: Record<string, unknown>[];
 }
 
 type RoomAlertItem = {
@@ -21,7 +22,7 @@ type RoomAlertItem = {
     title: string;
     description: string;
     priority: string;
-    icon: any;
+    icon: LucideIcon;
     color: string;
     actionLabel: string;
     action?: () => void;
@@ -54,7 +55,7 @@ export const NotificationsCenter = ({
 
     // 1. Smart Alerts Logic
     const smartAlerts = useMemo(() => {
-        const result: any[] = [];
+        const result: { id: string; type: string; title: string; desc: string; action: () => void; color: string; priority: string }[] = [];
         
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
@@ -136,7 +137,7 @@ export const NotificationsCenter = ({
                 icon: Bell,
                 color: 'amber'
             })) : [])
-        ].sort((a, _) => (a.priority === 'high' ? -1 : 1));
+        ].sort((a) => (a.priority === 'high' ? -1 : 1));
 
         return notifications;
     }, [tasks, lowBalanceStudents, adminPhone]);
@@ -199,12 +200,12 @@ export const NotificationsCenter = ({
                             </div>
                         </div>
                         <div className="bg-rose-600 text-white px-3 py-1 rounded-none border border-rose-500/50">
-                            <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter((a: any) => a.priority === 'high').length} تنبيه حرج</span>
+                            <span className="text-[9px] font-black uppercase">{filteredSmartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج</span>
                         </div>
                     </div>
 
                     <div className="space-y-3">
-                        {filteredSmartAlerts.map((alert: any) => (
+                        {filteredSmartAlerts.map((alert) => (
                             <div key={alert.id} className={cn(
                                 "p-4 rounded-xl border flex items-center justify-between group transition-all",
                                 alert.type === 'critical' ? "bg-rose-50/50 dark:bg-rose-500/5 border-rose-200 dark:border-rose-500/30" : 
@@ -260,7 +261,7 @@ export const NotificationsCenter = ({
                     </div>
 
                     <div className="space-y-2 max-h-[440px] overflow-y-auto custom-scrollbar pr-1">
-                        {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert: any) => (
+                        {filteredRoomAlerts.length > 0 ? filteredRoomAlerts.map((alert) => (
                             <div key={alert.id} className="flex items-center justify-between group p-3 border border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-xl hover:border-indigo-600/30">
                                 <div className="flex items-center gap-4 min-w-0">
                                     <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-all flex items-center justify-center border border-slate-100 dark:border-slate-700 rounded-xl">

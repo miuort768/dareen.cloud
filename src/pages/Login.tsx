@@ -67,7 +67,7 @@ export const Login = () => {
             } else {
                 setError('اسم المستخدم أو كلمة المرور غير صحيحة');
             }
-        } catch (err: any) {
+        } catch (err) {
             console.error('Login error detail:', err);
             if (err.message && (err.message.includes('Failed to fetch') || err.message.includes('Network Error'))) {
                 setError('تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت أو إعدادات الرابط.');

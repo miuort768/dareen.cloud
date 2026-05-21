@@ -28,7 +28,7 @@ class ApiClient {
         const timer = setTimeout(() => controller.abort(), timeout);
         const combinedInit: RequestInit = {
             ...init,
-            signal: (init as any)?.signal || controller.signal,
+            signal: (init as RequestInit)?.signal || controller.signal,
         };
 
         try {
@@ -59,7 +59,7 @@ class ApiClient {
             try {
                 const error = await response.json();
                 errorMessage = error.error || error.message || errorMessage;
-            } catch (e) {
+            } catch {
                 errorMessage = response.statusText || errorMessage;
             }
             throw new Error(errorMessage);

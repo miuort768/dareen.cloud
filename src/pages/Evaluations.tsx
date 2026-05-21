@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
     Star, 
     Award, 
@@ -22,11 +22,11 @@ import { format } from 'date-fns';
 
 export const Evaluations = () => {
     const { currentUser } = useApp();
-    const [evaluations, setEvaluations] = useState<any[]>([]);
-    const [students, setStudents] = useState<any[]>([]);
+    const [evaluations, setEvaluations] = useState<Record<string, unknown>[]>([]);
+    const [students, setStudents] = useState<Record<string, unknown>[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [historyModalStudent, setHistoryModalStudent] = useState<any | null>(null);
+    const [historyModalStudent, setHistoryModalStudent] = useState<Record<string, unknown> | null>(null);
     
     const [formData, setFormData] = useState({
         studentId: '',
@@ -38,23 +38,23 @@ export const Evaluations = () => {
 
     const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
 
-    useEffect(() => { fetchData(); }, [currentUser]);
+    useEffect(() => { fetchData(); }, [currentUser, fetchData]);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setIsLoading(true);
             if (currentUser?.role === 'parent') {
-                const myChildren = await api.get<any[]>('/parents/my-children');
+                const myChildren = await api.get<Record<string, unknown>[]>('/parents/my-children');
                 setStudents(myChildren);
-                const evalsPromises = myChildren.map(c => api.get<any[]>(`/evaluations/student/${c.id}`));
+                const evalsPromises = myChildren.map(c => api.get<Record<string, unknown>[]>(`/evaluations/student/${c.id}`));
                 const allEvalsResults = await Promise.all(evalsPromises);
                 setEvaluations(allEvalsResults.flat());
             } else {
-                const studentsRes = await api.get<any[]>('/students');
+                const studentsRes = await api.get<Record<string, unknown>[]>('/students');
                 setStudents(studentsRes);
                 let evalsUrl = '/evaluations';
                 if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
-                const evalsRes = await api.get<any[]>(evalsUrl);
+                const evalsRes = await api.get<Record<string, unknown>[]>(evalsUrl);
                 setEvaluations(evalsRes);
             }
         } catch (error) {
@@ -62,14 +62,14 @@ export const Evaluations = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [currentUser]);
 
     const teacherStudents = useMemo(() => {
         if (!currentUser) return [];
         if (currentUser.role === 'admin') return students;
         if (currentUser.role === 'teacher') {
             return students.filter(s => 
-                s.enrollments?.some((e: any) => 
+                s.enrollments?.some((e: { teacherName: string }) => 
                     e.teacherId === currentUser.id || 
                     e.teacher === (currentUser.teacherName || currentUser.name)
                 )
@@ -78,7 +78,7 @@ export const Evaluations = () => {
         return students;
     }, [students, currentUser]);
 
-    const onSubmit = async (e: any) => {
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const payload = {

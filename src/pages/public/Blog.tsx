@@ -91,6 +91,15 @@ subjectsMap.preparatory = subjectsMap.middle;
 
 type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'terms' | 'subjects' | 'results';
 
+interface GridItem {
+    id: string;
+    name: string;
+    gradient?: string;
+    sub?: string;
+    icon: React.ElementType;
+    [key: string]: unknown;
+}
+
 const classroomsMap: Record<string, Record<string, string[]>> = {
   kuwait: { primary: ['1', '2', '3', '4', '5'], middle: ['6', '7', '8', '9'], secondary: ['10', '11', '12'] },
   qatar: { basic: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], secondary: ['10', '11', '12'] },
@@ -200,7 +209,7 @@ export const Blog = () => {
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                  {gridItems.map((item: any, i: number) => (
+                  {gridItems.map((item: GridItem, i: number) => (
                     <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
                       <button
                         onClick={() => {

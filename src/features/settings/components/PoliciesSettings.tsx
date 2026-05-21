@@ -8,10 +8,10 @@ interface PoliciesSettingsProps {
     setBackdateLockEnabled: (v: boolean) => Promise<void> | void;
     showNotify: (msg: string) => void;
     teacherCommissionType: string;
-    setTeacherCommissionType: (v: any) => Promise<void> | void;
+    setTeacherCommissionType: (v: string) => Promise<void> | void;
     autoFreezeThreshold: number;
     setAutoFreezeThreshold: (v: number) => Promise<void> | void;
-    setSecureAction: (action: any) => void;
+    setSecureAction: (action: { type: 'reset' | 'archive'; title: string; description: string; confirmWord: string; actionFn: () => void } | null) => void;
 }
 
 export const PoliciesSettings = ({
@@ -52,7 +52,7 @@ export const PoliciesSettings = ({
                         ].map(opt => (
                             <button
                                 key={opt.id}
-                                onClick={() => setTeacherCommissionType(opt.id as any).then(() => showNotify(`الحساب: ${opt.label}`))}
+                                onClick={() => { setTeacherCommissionType(opt.id); showNotify(`الحساب: ${opt.label}`); }}
                                 className={cn(
                                     'p-3 rounded-xl border text-right transition-all',
                                     teacherCommissionType === opt.id

@@ -20,7 +20,7 @@ export const Agenda = () => {
         queryKey: ['students'],
         queryFn: async () => {
             const data = await api.get<Student[]>('/students');
-            return Array.isArray(data) ? data : (data as any).data || [];
+            return Array.isArray(data) ? data : (data as Record<string, unknown>).data as Student[] || [];
         }
     });
 
@@ -33,7 +33,7 @@ export const Agenda = () => {
     });
 
     const logAttendanceMutation = useMutation({
-        mutationFn: async (sessionData: any) => {
+        mutationFn: async (sessionData: Record<string, unknown>) => {
             return api.post('/sessions', sessionData);
         },
         onSuccess: () => {
@@ -48,7 +48,7 @@ export const Agenda = () => {
 
     // Extract scheduled slots for the active day
     const scheduledAppointments = useMemo(() => {
-        const list: any[] = [];
+        const list: { id: string; date: string; time: string; title: string; description?: string; type: string; studentName?: string; teacherName?: string }[] = [];
         students.forEach(student => {
             student.enrollments?.forEach((enrollment: Enrollment) => {
                 // If teacher view, only show their students
@@ -94,7 +94,7 @@ export const Agenda = () => {
         });
     }, [students, sessions, activeDay, isTeacher, teacherName, searchTerm]);
 
-    const handleMarkDone = (appointment: any) => {
+    const handleMarkDone = (appointment: { id: string }) => {
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', {
             hour: 'numeric',

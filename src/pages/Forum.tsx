@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle, Sparkles, User, ShieldCheck, Clock, Trash2, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle, Sparkles, User, ShieldCheck, Clock, Trash2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useApp } from '../context/AppContext';
@@ -95,7 +95,7 @@ export const Forum = () => {
     const [commentTexts, setCommentTexts] = useState<Record<string, string>>({});
     const [viewingComments, setViewingComments] = useState<Record<string, boolean>>({});
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             setLoading(true);
             const data = await api.get<Post[]>('/forum');
@@ -106,11 +106,11 @@ export const Forum = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showNotification]);
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [fetchPosts]);
 
     useEffect(() => {
         if (highlightedPostId && !loading) {
@@ -124,7 +124,7 @@ export const Forum = () => {
     const handleCreatePost = async () => {
         if (!newPostContent.trim()) return;
         try {
-            const data = await api.post<any>('/forum', { content: newPostContent });
+            const data = await api.post<Record<string, unknown>>('/forum', { content: newPostContent });
             showNotification(data.message || 'تم نشر المنشور بنجاح', 'success');
             setNewPostContent('');
             fetchPosts();
@@ -136,7 +136,7 @@ export const Forum = () => {
 
     const handleVote = async (postId: string, type: 'upvote' | 'downvote') => {
         try {
-            const data = await api.post<any>(`/forum/${postId}/vote`, { type });
+            const data = await api.post<{ upvotes: number; downvotes: number }>(`/forum/${postId}/vote`, { type });
             setPosts(posts.map((p: Post) => p.id === postId ? { ...p, upvotes: data.upvotes, downvotes: data.downvotes } : p));
         } catch (error) {
             console.error(error);

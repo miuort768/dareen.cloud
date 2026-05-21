@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     Settings as SettingsIcon, Palette, Users, Smartphone, Lock,
     Shield, Activity, Sparkles
@@ -51,7 +51,7 @@ export const Settings = () => {
     const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-    const [auditLogs, setAuditLogs] = useState<any[]>([]);
+    const [auditLogs, setAuditLogs] = useState<{ timestamp: string; username: string; action: string }[]>([]);
 
     const [localAcademyName, setLocalAcademyName] = useState(academyName);
     const [localAcademyLogo, setLocalAcademyLogo] = useState(academyLogo);
@@ -79,7 +79,7 @@ export const Settings = () => {
 
     const [newUser, setNewUser] = useState({ username: '', password: '', permissions: [] as string[] });
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
-    const [showDeleteModal, setShowDeleteModal] = useState<any>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean | { id: string; username: string }>(false);
     const [secureAction, setSecureAction] = useState<{
         type: 'reset' | 'archive'; title: string; description: string;
         confirmWord: string; actionFn: () => void
@@ -103,7 +103,7 @@ export const Settings = () => {
             a.click();
             a.remove();
             showNotify('تم تحميل النسخة الاحتياطية بنجاح');
-        } catch (e: any) {
+        } catch (e) {
             alert('فشل تصدير البيانات: ' + e.message);
         } finally {
             setIsSaving(false);
@@ -125,7 +125,7 @@ export const Settings = () => {
                 await settingsService.restoreBackup(JSON.parse(content));
                 showNotify('تم استيراد البيانات بنجاح! سيتم تحديث الصفحة...');
                 setTimeout(() => window.location.reload(), 2000);
-            } catch (e: any) {
+            } catch (e) {
                 console.error('Import Error:', e);
                 alert(`⚠️ عذراً: فشل الاستيراد - ${e.message}`);
             } finally {
@@ -148,7 +148,7 @@ export const Settings = () => {
                     await settingsService.systemReset();
                     showNotify('تم تصفير النظام بنجاح');
                     window.location.reload();
-                } catch (e: any) { alert(e.message); }
+                } catch (e) { alert(e.message); }
                 finally { setIsSaving(false); }
             }
         });
@@ -165,7 +165,7 @@ export const Settings = () => {
                 try {
                     await settingsService.archiveMonth();
                     showNotify('تمت الأرشفة بنجاح');
-                } catch (e: any) { alert(e.message); }
+                } catch (e) { alert(e.message); }
                 finally { setIsSaving(false); }
             }
         });
@@ -177,7 +177,7 @@ export const Settings = () => {
             if (activeTab === 'audit') fetchLogs();
         }, 300);
         return () => clearTimeout(timer);
-    }, [activeTab]);
+    }, [activeTab, fetchLogs]);
 
     useEffect(() => {
         setLocalAcademyName(academyName);
@@ -208,12 +208,12 @@ export const Settings = () => {
         }
     }, [heroBanners]);
 
-    const fetchLogs = async () => {
+    const fetchLogs = useCallback(async () => {
         try {
             const logs = await settingsService.getAuditLogs();
             setAuditLogs(logs || []);
         } catch (e) { console.error(e); }
-    };
+    }, []);
 
     const showNotify = (msg: string) => {
         setNotificationMessage(msg);
@@ -239,7 +239,7 @@ export const Settings = () => {
                 setAutoFreezeThreshold(Number(localAutoFreeze))
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
-        } catch (e) { alert('خطأ في الحفظ'); }
+        } catch { alert('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 
@@ -254,7 +254,7 @@ export const Settings = () => {
         setNewUser({ username: '', password: '', permissions: [] });
     };
 
-    const TABS: { id: TabId; label: string; icon: any }[] = [
+    const TABS: { id: TabId; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
         { id: 'general', label: 'الإعدادات', icon: SettingsIcon },
         { id: 'appearance', label: 'الهوية', icon: Palette },
         { id: 'users', label: 'المستخدمون', icon: Users },

@@ -10,7 +10,7 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
     </div>
 );
 
-export const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-50 dark:border-slate-800">
         <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
             <Icon size={16} className="text-[#5c59f2]" />
@@ -54,7 +54,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
     </button>
 );
 
-export const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: any, color: string, subValue?: string, bg: string }) => (
+export const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, subValue?: string, bg: string }) => (
     <SectionCard className="p-4 flex flex-col items-center text-center">
         <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", bg)}>
             <Icon size={16} className={color} />

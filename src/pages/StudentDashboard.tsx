@@ -22,9 +22,9 @@ function cn(...inputs: ClassValue[]) {
 export const StudentDashboard = () => {
     const { currentUser, adminPhone } = useApp();
     const navigate = useNavigate();
-    const [studentData, setStudentData] = useState<any>(null);
-    const [sessions, setSessions] = useState<any[]>([]);
-    const [pointLogs, setPointLogs] = useState<any[]>([]);
+    const [studentData, setStudentData] = useState<Record<string, unknown> | null>(null);
+    const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);
+    const [pointLogs, setPointLogs] = useState<Record<string, unknown>[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showBadges, setShowBadges] = useState(false);
 
@@ -92,9 +92,9 @@ export const StudentDashboard = () => {
             try {
                 setIsLoading(true);
                 const [meRes, sessionsRes, logsRes] = await Promise.all([
-                    api.get<any>('/student-portal/me'),
-                    api.get<any[]>('/student-portal/me/sessions'),
-                    api.get<any[]>('/student-portal/me/points-log')
+                    api.get<Record<string, unknown>>('/student-portal/me'),
+                    api.get<Record<string, unknown>[]>('/student-portal/me/sessions'),
+                    api.get<Record<string, unknown>[]>('/student-portal/me/points-log')
                 ]);
                 setStudentData(meRes);
                 setSessions(sessionsRes);
@@ -111,7 +111,7 @@ export const StudentDashboard = () => {
     const stats = useMemo(() => {
         if (!studentData) return { sessionsUsed: 0, sessionsTotal: 0, totalAttendance: 0, totalAbsence: 0, attendanceRate: 0, upcomingSessions: 0 };
         let sessionsUsed = 0, sessionsTotal = 0;
-        (studentData.enrollments || []).forEach((en: any) => {
+        (studentData.enrollments || []).forEach((en: { sessionsUsed?: number; sessionsTotal?: number }) => {
             sessionsUsed += Number(en.sessionsUsed || 0);
             sessionsTotal += Number(en.sessionsTotal || 0);
         });
@@ -132,9 +132,9 @@ export const StudentDashboard = () => {
     const weeklySchedule = useMemo(() => {
         if (!studentData) return [];
         const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-        const scheduleMap: Record<string, any[]> = {};
-        (studentData.enrollments || []).forEach((en: any) => {
-            (en.schedule || []).forEach((slot: any) => {
+        const scheduleMap: Record<string, { subject: string; time: string; period: string; teacher: string }[]> = {};
+        (studentData.enrollments || []).forEach((en: { subject: string; teacher: string; schedule?: { day: string; hour: string; period: string }[] }) => {
+            (en.schedule || []).forEach((slot: { day: string; hour: string; period: string }) => {
                 if (!scheduleMap[slot.day]) scheduleMap[slot.day] = [];
                 scheduleMap[slot.day].push({ subject: en.subject, time: slot.hour, period: slot.period, teacher: en.teacher });
             });
@@ -301,7 +301,7 @@ export const StudentDashboard = () => {
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {(studentData?.enrollments || []).filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
+                            {(studentData?.enrollments || []).filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
                                 <div key={idx} className="bg-white dark:bg-slate-900 border-r-4 border-sky-500 p-4 md:p-6 shadow-sm">
                                     <div className="flex justify-between items-center mb-3">
                                         <span className="px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 text-[8px] font-black uppercase tracking-widest">{en.subject}</span>
@@ -458,8 +458,8 @@ export const StudentDashboard = () => {
     );
 };
 
-const StatCard = ({ icon: Icon, label, value, color }: { icon: any; label: string; value: string | number; color: string }) => {
-    const colors: any = {
+const StatCard = ({ icon: Icon, label, value, color }: { icon: React.ComponentType<{ size?: number }>; label: string; value: string | number; color: string }) => {
+    const colors: Record<string, string> = {
         sky: "border-sky-500 text-sky-600 bg-sky-50 dark:bg-sky-900/10",
         purple: "border-purple-500 text-purple-600 bg-purple-50 dark:bg-purple-900/10",
         slate: "border-slate-500 text-slate-600 bg-slate-50 dark:bg-slate-900/10",

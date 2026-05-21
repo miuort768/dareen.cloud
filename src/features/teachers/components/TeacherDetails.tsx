@@ -150,7 +150,7 @@ export const TeacherDetails = ({
                             return (
                                 <div key={student.id} className={cn(
                                     "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm relative transition-all group",
-                                    (enrollment as any).isFrozen && "opacity-50 grayscale",
+                                    (enrollment as { isFrozen?: boolean }).isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-rose-200 dark:border-rose-900/50" : "hover:border-[var(--primary-color,#5c59f2)]"
                                 )}>
                                     <div className="flex justify-between items-start mb-3">

@@ -10,7 +10,6 @@ import {
     TrendingUp,
     Rocket,
     ClipboardList,
-    Activity,
     Sparkles,
     ShieldCheck,
     ArrowUpRight
@@ -203,7 +202,7 @@ export const Tasks = () => {
                     {['high', 'medium', 'low', 'all'].map(p => (
                         <button 
                             key={p}
-                            onClick={() => setFilterPriority(p as any)}
+                            onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                             className={cn(
                                 "px-6 py-4 border-2 font-black text-[10px] uppercase tracking-[0.2em] transition-all whitespace-nowrap min-w-[100px]",
                                 filterPriority === p 
@@ -355,7 +354,7 @@ export const Tasks = () => {
                                         <select 
                                             className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white cursor-pointer"
                                             value={newTask.priority}
-                                            onChange={e => setNewTask({...newTask, priority: e.target.value as any})}
+                                            onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                         >
                                             <option value="low">هادئ (Low)</option>
                                             <option value="medium">متوسط (Medium)</option>

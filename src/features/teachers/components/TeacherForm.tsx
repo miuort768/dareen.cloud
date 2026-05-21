@@ -97,14 +97,12 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <FormInput label="الاسم الكامل" icon={User} value={formData.name} onChange={(val: any) => setFormData({ ...formData, name: val })} required placeholder="سارة محمد" />
-                        <FormInput label="رقم الهاتف (1)" icon={Phone} type="tel" value={formData.phone1} onChange={(val: any) => setFormData({ ...formData, phone1: val })} required placeholder="05XXXXXXXX" dir="ltr" />
-                        <FormInput label="رقم الهاتف (2)" icon={Phone} type="tel" value={formData.phone2} onChange={(val: any) => setFormData({ ...formData, phone2: val })} placeholder="اختياري" dir="ltr" />
-                        <FormInput label="التخصص" icon={Tag} value={formData.subject} onChange={(val: any) => setFormData({ ...formData, subject: val })} required placeholder="لغة عربية" />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <FormInput label="الرقم القومي / الهوية" icon={Key} value={(formData as any).nationalId || ''} onChange={(val: any) => setFormData({ ...formData, nationalId: val } as any)} placeholder="اختياري" dir="ltr" />
+                        <FormInput label="الاسم الكامل" icon={User} value={formData.name} onChange={(val: string) => setFormData({ ...formData, name: val })} required placeholder="سارة محمد" />
+                        <FormInput label="رقم الهاتف (1)" icon={Phone} type="tel" value={formData.phone1} onChange={(val: string) => setFormData({ ...formData, phone1: val })} required placeholder="05XXXXXXXX" dir="ltr" />
+                        <FormInput label="رقم الهاتف (2)" icon={Phone} type="tel" value={formData.phone2} onChange={(val: string) => setFormData({ ...formData, phone2: val })} placeholder="اختياري" dir="ltr" />
+                        <FormInput label="التخصص" icon={Tag} value={formData.subject} onChange={(val: string) => setFormData({ ...formData, subject: val })} required placeholder="لغة عربية" />
+                        <FormInput label="السعر الافتراضي للحصة" icon={DollarSign} type="number" value={formData.price} onChange={(val: string) => setFormData({ ...formData, price: val })} placeholder="0.00" />
+                        <FormInput label="الرقم القومي / الهوية" icon={Key} value={(formData as { nationalId?: string }).nationalId || ''} onChange={(val: string) => setFormData({ ...formData, nationalId: val })} placeholder="اختياري" dir="ltr" />
                         <div className="space-y-1.5">
                             <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">تعريفة الحصة</label>
                             <div className="relative group">
@@ -189,7 +187,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     );
 };
 
-const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: any) => (
+const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-1.5">
         <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">

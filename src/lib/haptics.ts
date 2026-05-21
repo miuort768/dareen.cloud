@@ -12,7 +12,7 @@ export const triggerHaptic = (intensity: 'light' | 'medium' | 'heavy' = 'light')
         
         // If we had @capacitor/haptics installed, we would call it here:
         // Haptics.impact({ style: ImpactStyle.Light });
-    } catch (e) {
-        // Silently ignore if not supported
-    }
+        } catch {
+            // silently ignore
+        }
 };

@@ -59,7 +59,7 @@ export const LeadTable = ({ filteredLeads, statusConfig, updateMutation, handleM
                                             statusConfig[lead.status].color
                                         )}
                                         value={lead.status}
-                                        onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as any } })}
+                                        onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                     >
                                         {Object.entries(statusConfig).map(([key, value]) => (
                                             <option key={key} value={key}>{value.label}</option>

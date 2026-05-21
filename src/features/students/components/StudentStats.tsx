@@ -8,7 +8,7 @@ interface StudentStatsProps {
     averageSessionsPerStudent: number;
 }
 
-const StatItem = ({ label, value, icon: Icon, color, symbol, bg, borderAccent }: { label: string, value: string | number, icon: any, color: string, symbol: string, bg: string, borderAccent: string }) => (
+const StatItem = ({ label, value, icon: Icon, color, symbol, bg, borderAccent }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, symbol: string, bg: string, borderAccent: string }) => (
     <div className={cn("bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow relative overflow-hidden", borderAccent)}>
         <div className={cn("absolute -right-2 -bottom-4 text-5xl font-black opacity-[0.03] dark:opacity-[0.05] pointer-events-none select-none italic", color)}>
             {value}

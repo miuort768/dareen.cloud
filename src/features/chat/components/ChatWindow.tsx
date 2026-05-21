@@ -47,24 +47,24 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     setTyping,
     markAsRead
 }) => {
-    const virtuosoRef = useRef<any>(null);
+    const virtuosoRef = useRef<{ scrollToIndex: (params: { index: number; behavior?: ScrollBehavior }) => void }>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const typingUsers = useChatStore(s => s.typingUsers);
 
-    const scrollToBottom = () => {
+    const scrollToBottom = useCallback(() => {
         if (filteredMessages.length > 0) {
             virtuosoRef.current?.scrollToIndex({
                 index: filteredMessages.length - 1,
                 behavior: 'smooth'
             });
         }
-    };
+    }, [filteredMessages]);
 
     // Mark as read when conversation is active or new messages arrive
     useEffect(() => {
-        if (selectedConv?.id && (selectedConv as any).unreadCount > 0) {
+        if (selectedConv?.id && 'unreadCount' in selectedConv && selectedConv.unreadCount > 0) {
             markAsRead(selectedConv.id);
         } else if (selectedConv?.id && messages.length > 0) {
             const lastMsg = messages[messages.length - 1];
@@ -72,7 +72,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 markAsRead(selectedConv.id);
             }
         }
-    }, [selectedConv, messages.length, markAsRead, currentUser?.id]);
+    }, [selectedConv, messages, markAsRead, currentUser?.id]);
 
     // Automatically scroll to bottom when messages list size or active conversation changes
     useEffect(() => {
@@ -80,7 +80,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             scrollToBottom();
         }, 150);
         return () => clearTimeout(timer);
-    }, [messages.length, selectedConv.id]);
+    }, [messages.length, selectedConv.id, scrollToBottom]);
 
     const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
@@ -322,20 +322,21 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             if (currentUser && selectedConv.id) {
                                 // Only emit if it's been more than 2s or if it's the first character
                                 const now = Date.now();
-                                const lastSent = (window as any)._lastTypingEmit || 0;
+                                const w = window as { _lastTypingEmit?: number };
+                                const lastSent = w._lastTypingEmit || 0;
                                 if (now - lastSent > 2000 || (val.length > 0 && lastSent === 0)) {
                                     setTyping(selectedConv.id, val.length > 0, currentUser.name);
-                                    (window as any)._lastTypingEmit = val.length > 0 ? now : 0;
+                                    w._lastTypingEmit = val.length > 0 ? now : 0;
                                 } else if (val.length === 0) {
                                     setTyping(selectedConv.id, false, currentUser.name);
-                                    (window as any)._lastTypingEmit = 0;
+                                    w._lastTypingEmit = 0;
                                 }
                             }
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault();
-                                handleSendMessage(e as any);
+                                handleSendMessage(e as unknown as React.FormEvent);
                                 // Reset height
                                 const target = e.target as HTMLTextAreaElement;
                                 target.style.height = 'auto';

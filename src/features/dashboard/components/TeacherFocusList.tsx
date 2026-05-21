@@ -9,7 +9,7 @@ interface FocusStudent {
 
 interface TeacherFocusListProps {
     students: FocusStudent[];
-    onStudentClick?: (student: any) => void;
+    onStudentClick?: (student: FocusStudent) => void;
 }
 
 export const TeacherFocusList = ({ students, onStudentClick }: TeacherFocusListProps) => {

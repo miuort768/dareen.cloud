@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { api } from '../../../lib/api';
 import { attendanceService } from '../services/attendanceService';
-import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser } from '../types';
+import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser, ScheduleSlot } from '../types';
 
 export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
     const [students, setStudents] = useState<Student[]>([]);
@@ -51,7 +51,7 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string) => {
         }
     };
 
-    const updateSchedule = async (student: Student, enrollmentIndex: number, newSchedule: any[]) => {
+    const updateSchedule = async (student: Student, enrollmentIndex: number, newSchedule: ScheduleSlot[]) => {
         try {
             const updatedStudent = { ...student };
             updatedStudent.enrollments[enrollmentIndex].schedule = newSchedule;

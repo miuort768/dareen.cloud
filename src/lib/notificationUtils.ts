@@ -26,11 +26,11 @@ export const sendNativeNotification = async (title: string, options?: Notificati
     }
 
     try {
-        const defaultOptions: any = {
+        const defaultOptions: Record<string, unknown> = {
             icon: '/logo.png',
             badge: '/logo.png',
             silent: false,
-            // @ts-ignore
+            // @ts-expect-error - vibrate not in TS NotificationOptions types
             vibrate: [200, 100, 200], // Mobile vibration pattern
             ...options
         };

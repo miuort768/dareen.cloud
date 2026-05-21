@@ -11,7 +11,7 @@ interface SecureActionModalProps {
     } | null;
     secureInput: string;
     setSecureInput: (v: string) => void;
-    setSecureAction: (v: any) => void;
+    setSecureAction: (v: SecureActionModalProps['secureAction']) => void;
 }
 
 export const SecureActionModal = ({ secureAction, secureInput, setSecureInput, setSecureAction }: SecureActionModalProps) => {

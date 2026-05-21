@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import {
     BarChart3, TrendingUp, LayoutGrid, Database, Activity
 } from 'lucide-react';
@@ -9,9 +10,9 @@ import {
 import { cn } from '../../../lib/utils';
 
 interface AnalyticsDashboardProps {
-    students: any[];
-    sessions: any[];
-    monthlyData: any[];
+    students: Record<string, unknown>[];
+    sessions: Record<string, unknown>[];
+    monthlyData: Record<string, unknown>[];
 }
 
 export const AnalyticsDashboard = ({ students, sessions, monthlyData }: AnalyticsDashboardProps) => {
@@ -212,7 +213,7 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     );
 };
 
-const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, onClick: () => void, icon: any, label: string }) => (
+const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, onClick: () => void, icon: LucideIcon, label: string }) => (
     <button 
         onClick={onClick}
         className={cn(

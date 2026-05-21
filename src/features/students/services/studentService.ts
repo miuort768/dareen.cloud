@@ -3,7 +3,7 @@ import type { Student, StudentInvoice } from '../types';
 
 export const studentService = {
     getAll: async (searchTerm?: string): Promise<Student[]> => {
-        const data = await api.get<any>(`/students${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`);
+        const data = await api.get<Student[] | { data: Student[] }>(`/students${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`);
         return data.data || data; // Handle both paginated and non-paginated fallbacks
     },
 

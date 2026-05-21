@@ -12,7 +12,6 @@ import { StudentQuickBrief } from '../features/dashboard/components/StudentQuick
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
 import { PageLoader } from '../components/ui/PageLoader';
 import { LiveClasses } from '../components/dashboard/LiveClasses';
-import { cn } from '../lib/utils';
 
 export const TeacherDashboard = () => {
     const { currentUser } = useApp();
@@ -25,8 +24,8 @@ export const TeacherDashboard = () => {
         lowBalanceStudents
     } = useDashboardData(currentUser);
 
-    const [briefingStudent, setBriefingStudent] = useState<any | null>(null);
-    const [selectedStudentForReport, setSelectedStudentForReport] = useState<any | null>(null);
+    const [briefingStudent, setBriefingStudent] = useState<Record<string, unknown> | null>(null);
+    const [selectedStudentForReport, setSelectedStudentForReport] = useState<Record<string, unknown> | null>(null);
 
     if (!currentUser || currentUser.role !== 'teacher') {
         return <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" />;

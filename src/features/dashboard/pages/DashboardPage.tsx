@@ -16,7 +16,7 @@ import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
 import { cn } from '../../../lib/utils';
 import { motion } from 'framer-motion';
 
-const Section = ({ id, children, className }: { id?: string; children: React.ReactNode; className?: string }) => (
+const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
     <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

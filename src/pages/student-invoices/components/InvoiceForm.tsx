@@ -42,7 +42,7 @@ interface InvoiceFormProps {
 
 export const InvoiceForm = ({
     showForm, editingId, formData, setFormData,
-    handleSubmit, handleCancel, handleStudentChange, students, isSaving
+    handleSubmit, handleStudentChange, students, isSaving
 }: InvoiceFormProps) => {
     if (!showForm) return null;
 
@@ -92,7 +92,7 @@ export const InvoiceForm = ({
                     <InputField
                         type="select"
                         value={formData.status}
-                        onChange={e => setFormData({ ...formData, status: (e.target as HTMLSelectElement).value as any })}
+                        onChange={e => setFormData({ ...formData, status: (e.target as HTMLSelectElement).value as InvoiceFormData['status'] })}
                     >
                         <option value="pending">معلقة</option>
                         <option value="paid">مدفوعة</option>

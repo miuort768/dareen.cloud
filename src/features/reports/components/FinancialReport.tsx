@@ -9,7 +9,7 @@ interface FinancialReportProps {
     completedSessions: number;
 }
 
-const FinancialCard = ({ title, value, subValue, icon: Icon, color, bg, subColor }: any) => (
+const FinancialCard = ({ title, value, subValue, icon: Icon, color, bg, subColor }: { title: string; value: string; subValue?: string; icon: React.ComponentType<{ size?: number }>; color: string; bg: string; subColor?: string }) => (
     <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
         <div className="flex items-center gap-2 mb-3">
             <div className={cn("p-1.5 rounded-lg", bg)}>

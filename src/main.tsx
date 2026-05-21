@@ -65,10 +65,10 @@ if (savedTheme === 'dark') {
 }
 
 // Global variable to catch PWA install prompt early
-(window as any).deferredPrompt = null;
+(window as unknown as { deferredPrompt: Event | null }).deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
-    (window as any).deferredPrompt = e;
+    (window as unknown as { deferredPrompt: Event | null }).deferredPrompt = e;
 });
 
 // Register Service Worker for notifications

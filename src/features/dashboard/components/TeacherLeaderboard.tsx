@@ -3,8 +3,8 @@ import { getRankByPoints, STUDENT_RANKS } from '../../../shared/utils/ranks';
 import { cn } from '../../../lib/utils';
 
 interface TeacherLeaderboardProps {
-    students: any[];
-    onStudentClick?: (student: any) => void;
+    students: { id: string; name: string; grade?: string; totalPoints?: number }[];
+    onStudentClick?: (student: { id: string; name: string; grade?: string; totalPoints?: number }) => void;
 }
 
 import { RankBadge } from '../../../shared/components/RankBadge';

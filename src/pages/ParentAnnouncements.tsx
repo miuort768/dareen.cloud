@@ -235,7 +235,7 @@ export const ParentAnnouncements = () => {
     );
 };
 
-const FilterButton = ({ label, active, onClick, icon: Icon, activeClass }: any) => (
+const FilterButton = ({ label, active, onClick, icon: Icon, activeClass }: { label: string; active: boolean; onClick: () => void; icon: React.ComponentType<{ size?: number }>; activeClass: string }) => (
     <button
         onClick={onClick}
         className={cn(

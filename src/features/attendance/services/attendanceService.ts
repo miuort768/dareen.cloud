@@ -3,13 +3,13 @@ import type { Session, Student } from '../types';
 
 export const attendanceService = {
     getSessions: async (): Promise<Session[]> => {
-        const data = await api.get<any>('/sessions');
-        return data.data || data; // Handle paginated response
+        const data = await api.get<{ data: Session[] } | Session[]>('/sessions');
+        return Array.isArray(data) ? data : data.data;
     },
 
     getStudents: async (): Promise<Student[]> => {
-        const data = await api.get<any>('/students');
-        return data.data || data;
+        const data = await api.get<{ data: Student[] } | Student[]>('/students');
+        return Array.isArray(data) ? data : data.data;
     },
 
     updateSessionStatus: async (id: string, status: Session['status']): Promise<void> => {

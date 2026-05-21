@@ -20,7 +20,7 @@ interface WhiteboardProps {
     onClose?: () => void;
 }
 
-export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isOpen, onClose }) => {
+export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isOpen }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [penColor, setPenColor] = useState('#EF4444');
     const [penSize, setPenSize] = useState(3);

@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+import type { LucideIcon } from 'lucide-react';
 import { RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
@@ -59,7 +61,7 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
     </div>
 );
 
-export const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
         <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
             <Icon size={16} className="text-[#5c59f2]" />
@@ -165,7 +167,7 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
 
 export const ToggleRow = ({
     icon: Icon, label, sub, checked, onChange
-}: { icon: any; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
+}: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
     <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-3">
             <div className="w-7 h-7 flex items-center justify-center bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">

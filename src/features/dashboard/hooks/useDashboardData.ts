@@ -5,12 +5,12 @@ import type { User } from '../../../types/auth';
 import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense, Enrollment, ScheduleSlot } from '../../../types';
 import type { DashboardStats, DashboardMonthData, LowBalanceStudent, DashboardTask } from '../types';
 
-const getSafeArray = (val: any): any[] => {
+const getSafeArray = (val: unknown): unknown[] => {
     if (!val) return [];
     if (Array.isArray(val)) return val;
     if (val.data && Array.isArray(val.data)) return val.data;
     if (typeof val === 'object') {
-        return (Object.values(val).find(Array.isArray) as any[]) || [];
+        return (Object.values(val).find(Array.isArray) as unknown[]) || [];
     }
     return [];
 };
@@ -29,7 +29,7 @@ export const useDashboardData = (currentUser: User | null) => {
             { queryKey: ['tasks'], queryFn: () => api.get<DashboardTask[]>('/tasks'), staleTime: 1 * 60 * 1000 },
             { queryKey: ['transactions'], queryFn: () => api.get<Transaction[]>('/finance/transactions'), staleTime: 5 * 60 * 1000 },
             { queryKey: ['fixedExpenses'], queryFn: () => api.get<FixedExpense[]>('/finance/fixed-expenses'), staleTime: 5 * 60 * 1000 },
-            { queryKey: ['evaluations'], queryFn: () => api.get<any[]>('/evaluations'), staleTime: 1 * 60 * 1000 },
+            { queryKey: ['evaluations'], queryFn: () => api.get<Record<string, unknown>[]>('/evaluations'), staleTime: 1 * 60 * 1000 },
         ]
     });
 
@@ -61,7 +61,7 @@ export const useDashboardData = (currentUser: User | null) => {
     const processedData = useMemo(() => {
         if (isLoading || !currentUser) return null;
 
-        const getSafeArray = (data: any) => Array.isArray(data) ? data : (data?.data || []);
+        const getSafeArray = (data: unknown) => Array.isArray(data) ? data : ((data as { data?: unknown[] })?.data || []);
 
         const students = getSafeArray(studentsQuery.data);
         const teachers = getSafeArray(teachersQuery.data);
@@ -87,7 +87,7 @@ export const useDashboardData = (currentUser: User | null) => {
             : sessions;
 
         const filteredStudents = isTeacher
-            ? students.filter((s: Student) => s.enrollments?.some((e: any) =>
+            ? students.filter((s: Student) => s.enrollments?.some((e: { teacherId: string }) =>
                 (e.teacher?.trim().toLowerCase() === normalizedCurrentUserTeacherName) ||
                 (e.teacherId && e.teacherId === currentUser.id)
             ))
@@ -227,14 +227,14 @@ export const useDashboardData = (currentUser: User | null) => {
         });
 
         // 6b. Focus List
-        const focusStudentsList: any[] = [];
+        const focusStudentsList: { id: string; name: string; attendanceRate?: number; subject?: string }[] = [];
         if (isTeacher) {
             filteredStudents.forEach((s: Student) => {
                 const stuSessions = filteredSessions.filter((ss: Session) => ss.studentId === s.id);
                 const stuCompleted = stuSessions.filter((ss: Session) => ss.status === 'completed');
                 const attendanceRate = stuSessions.length >= 3 ? (stuCompleted.length / stuSessions.length) : 1;
                 
-                const stuEvals = evaluations.filter((e: any) => e.studentId === s.id && e.teacherId === currentUser.id);
+                const stuEvals = evaluations.filter((e: { studentId: string; teacherId: string }) => e.studentId === s.id && e.teacherId === currentUser.id);
                 const lastEval = [...stuEvals].sort((a,b) => (b.date || '').localeCompare(a.date || ''))[0];
                 const needsEval = stuCompleted.length > 0 && (!lastEval || (now.getTime() - new Date(lastEval.date).getTime()) > 7 * 24 * 60 * 60 * 1000);
 
@@ -285,7 +285,7 @@ export const useDashboardData = (currentUser: User | null) => {
                 weekAgo.setDate(weekAgo.getDate() - 7);
                 return sDate >= weekAgo && s.status === 'completed';
             }).length : undefined,
-            newBadgesRecommended: isTeacher ? (getSafeArray(tasksQuery.data)).filter((t: any) => 
+            newBadgesRecommended: isTeacher ? (getSafeArray(tasksQuery.data) as { teacherId: string; type: string; status?: string }[]).filter((t) => 
                 t.teacherId === currentUser.id && 
                 t.type === 'badge_suggestion' && 
                 ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase())
@@ -314,13 +314,13 @@ export const useDashboardData = (currentUser: User | null) => {
             todaySessions: filteredSessions.filter((s: Session) => s.date === today),
             monthlyData: chartData,
             lowBalanceStudents: lowBalance,
-            tasks: (getSafeArray(tasksQuery.data)).filter((t: any) =>
+            tasks: (getSafeArray(tasksQuery.data) as { status?: string }[]).filter((t) =>
                 ['pending', 'قيد الانتظار', 'جديدة', 'new', 'in-progress', 'جاري التنفيذ', 'جاري'].includes(t.status?.toLowerCase())
             ),
             topStudents: isTeacher ? filteredStudents.sort((a: Student, b: Student) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
             focusStudents: focusStudentsList
         };
-    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data]);
+    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data, evaluationsQuery.data]);
 
 
 

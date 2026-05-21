@@ -27,7 +27,7 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
     </div>
 );
 
-const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3">
         <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
             <Icon size={16} className="text-[#5c59f2]" />

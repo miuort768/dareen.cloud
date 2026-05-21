@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
-  Users, Search, Plus, X, Phone, Clock, CheckCircle2, Trash, AlertTriangle, ArrowLeftRight, GraduationCap, Calendar, BookOpen
+  Search, Plus, X, Phone, Clock, Trash, AlertTriangle, ArrowLeftRight, GraduationCap, Calendar, BookOpen
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -51,7 +51,7 @@ export const TrialSessions = () => {
 
   const { data: teachers = [] } = useQuery({
     queryKey: ['teachers'],
-    queryFn: () => api.get<any[]>('/teachers')
+    queryFn: () => api.get<Record<string, unknown>[]>('/teachers')
   });
 
   const { data: stats } = useQuery({
@@ -60,7 +60,7 @@ export const TrialSessions = () => {
   });
 
   const addMutation = useMutation({
-    mutationFn: (data: any) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
+    mutationFn: (data: Record<string, unknown>) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); }
   });
 
@@ -86,8 +86,6 @@ export const TrialSessions = () => {
     const matchStatus = !filterStatus || t.status === filterStatus;
     return matchSearch && matchStatus;
   });
-
-  const today = new Date().toISOString().split('T')[0];
 
   return (
     <PageContainer title="جلسات المراجعة" subtitle="تسجيل ومتابعة جلسات الطلاب الغير مقيدين" icon={BookOpen}>
@@ -176,7 +174,7 @@ export const TrialSessions = () => {
               <div><label className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">المادة</label><input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/30" /></div>
               <div><label className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">المعلمة</label><select value={form.teacherName} onChange={e => setForm({ ...form, teacherName: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/30">
                 <option value="">اختر معلمة</option>
-                {(Array.isArray(teachers) ? teachers : []).map((t: any) => <option key={t.id} value={t.name}>{t.name}</option>)}
+                {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => <option key={t.id} value={t.name}>{t.name}</option>)}
               </select></div>
               <div><label className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/30" /></div>
               <div><label className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/30" /></div>

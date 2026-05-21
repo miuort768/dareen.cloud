@@ -14,8 +14,8 @@ import { ar } from 'date-fns/locale';
 import { PageLoader } from '../components/ui/PageLoader';
 
 export const ParentAttendance = () => {
-    const [children, setChildren] = useState<any[]>([]);
-    const [sessions, setSessions] = useState<any[]>([]);
+    const [children, setChildren] = useState<Record<string, unknown>[]>([]);
+    const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedChildId, setSelectedChildId] = useState<string | 'all'>('all');
 
@@ -23,10 +23,10 @@ export const ParentAttendance = () => {
         const fetchAttendanceData = async () => {
             try {
                 setIsLoading(true);
-                const students = await api.get<any[]>('/parents/my-children');
+                const students = await api.get<Record<string, unknown>[]>('/parents/my-children');
                 setChildren(students);
 
-                const sessionsPromises = students.map(s => api.get<any[]>(`/parents/child-sessions/${s.id}`));
+                const sessionsPromises = students.map(s => api.get<Record<string, unknown>[]>(`/parents/child-sessions/${s.id}`));
                 const allSessionsResults = await Promise.all(sessionsPromises);
 
                 // Filter only completed or cancelled sessions for attendance history

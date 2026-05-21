@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Search, Filter, Trash, CheckCircle2, Clock, Star, X, Phone, MessageSquare, TrendingUp, UserPlus, Tag, Plus, EyeOff, Eye, AlertTriangle, PhoneCall } from 'lucide-react';
+import { Users, Search, Filter, CheckCircle2, Clock, TrendingUp, Plus, EyeOff, Eye, AlertTriangle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -64,7 +64,7 @@ export const Leads: React.FC = () => {
             setIsAddModalOpen(false);
             formRef.current?.reset();
         },
-        onError: (err: any) => { alert('حدث خطأ أثناء الإضافة: ' + (err?.response?.data?.error || err.message)); }
+        onError: (err: Error & { response?: { data?: { error?: string } } }) => { alert('حدث خطأ أثناء الإضافة: ' + (err?.response?.data?.error || err.message)); }
     });
 
     const updateMutation = useMutation({
@@ -148,7 +148,7 @@ export const Leads: React.FC = () => {
                         <div className="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
                             <div className="flex items-center gap-2 w-full md:w-auto">
                                 <Filter size={14} className="text-emerald-600 hidden md:block" />
-                                <select className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as any)}>
+                                <select className="w-full md:w-auto bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-2.5 rounded-xl text-[11px] font-bold outline-none cursor-pointer focus:border-emerald-500" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as LeadStatus | 'all')}>
                                     <option value="all">كل الحالات</option>
                                     {Object.entries(statusConfig).map(([key, value]) => (<option key={key} value={key}>{value.label}</option>))}
                                 </select>

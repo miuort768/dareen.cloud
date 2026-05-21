@@ -78,7 +78,7 @@ export const useParents = () => {
             }
             setShowAddForm(false);
             setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
-        } catch (error: any) {
+        } catch (error) {
             console.error("Error saving parent", error);
             showNotification(error.response?.data?.details || error.message || 'فشل في حفظ البيانات', 'error');
         }
@@ -89,7 +89,7 @@ export const useParents = () => {
             name: parent.name,
             phone: parent.phone,
             email: parent.email || '',
-            username: (parent as any).username || parent.phone,
+            username: (parent as { username?: string }).username || parent.phone,
             password: ''
         });
         setEditId(parent.id);
@@ -215,7 +215,7 @@ export const useParents = () => {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
             showNotification('تم تصدير بيانات أولياء الأمور بنجاح', 'success');
-        } catch (error) {
+        } catch {
             showNotification('حدث خطأ أثناء تصدير البيانات', 'error');
         }
     };

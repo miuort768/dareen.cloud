@@ -5,17 +5,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { socketService } from '../../lib/socket';
 
+interface CallData {
+    teacherName: string;
+    subject: string;
+    sessionId: string;
+}
+
 export const SessionCallAlert = () => {
     const { currentUser } = useApp();
     const navigate = useNavigate();
-    const [callData, setCallData] = useState<any>(null);
+    const [callData, setCallData] = useState<CallData | null>(null);
     const [show, setShow] = useState(false);
 
     useEffect(() => {
         const socket = socketService.getSocket();
         if (!socket || currentUser?.role !== 'student') return;
 
-        const handleInvite = (data: any) => {
+        const handleInvite = (data: CallData) => {
             setCallData(data);
             setShow(true);
             const audio = new Audio('/notification.mp3');

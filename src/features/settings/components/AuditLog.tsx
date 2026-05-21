@@ -2,7 +2,7 @@ import { Activity, CheckCircle2, RefreshCw } from 'lucide-react';
 import { SectionCard, SecondaryBtn } from './SettingsUI';
 
 interface AuditLogSectionProps {
-    auditLogs: any[];
+    auditLogs: { timestamp: string; username: string; action: string }[];
     fetchLogs: () => void;
 }
 

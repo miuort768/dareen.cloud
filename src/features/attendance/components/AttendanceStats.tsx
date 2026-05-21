@@ -1,4 +1,5 @@
 import React from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { Calendar, Clock, TrendingUp, CheckCircle2, XCircle, Activity } from 'lucide-react';
 import type { AttendanceStats as IStats, TeacherStats as ITeacherStats } from '../types';
 
@@ -8,7 +9,7 @@ interface AttendanceStatsProps {
     isTeacher: boolean;
 }
 
-const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value: number, icon: any, subLabel?: string }) => (
+const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value: number, icon: LucideIcon, subLabel?: string }) => (
     <div className="bg-blue-600 dark:bg-rose-600 p-4 rounded-none flex flex-col items-center text-center transition-colors duration-500">
         <div className="w-10 h-10 rounded-none flex items-center justify-center mb-2 bg-white/20 border border-white/20">
             <Icon size={18} className="text-white" />

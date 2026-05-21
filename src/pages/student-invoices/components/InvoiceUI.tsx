@@ -10,7 +10,7 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
     </div>
 );
 
-export const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
+export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
         <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
             <Icon size={16} className="text-[#5c59f2]" />
@@ -29,10 +29,11 @@ export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const Component = (props as any).type === 'select' ? 'select' : (props as any).type === 'textarea' ? 'textarea' : 'input';
+    const inputProps = props as React.InputHTMLAttributes<HTMLInputElement>;
+    const Component = inputProps.type === 'select' ? 'select' : inputProps.type === 'textarea' ? 'textarea' : 'input';
     return (
         <Component
-            {...props as any}
+            {...inputProps}
             className={cn(
                 'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
                 'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',

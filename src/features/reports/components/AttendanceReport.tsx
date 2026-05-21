@@ -6,38 +6,38 @@ import {
 import { cn } from '../../../lib/utils';
 
 interface AttendanceReportProps {
-    monthlySessionsData: any[];
-    teacherPerformanceData: any[];
+    monthlySessionsData: { month: string; sessions: number; completed: number }[];
+    teacherPerformanceData: { teacher: string; completed: number; cancelled: number }[];
+    totalSessions: number;
+    completedSessions: number;
+    cancelledSessions: number;
+    uniqueTeachers: number;
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden',
-        className
-    )}>
+    <div className={cn('bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800', className)}>
         {children}
     </div>
 );
 
-const SectionHeader = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-        <div className="w-8 h-8 flex items-center justify-center bg-emerald-600 rounded-none">
-            <Icon size={15} className="text-white" />
+const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
+    <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-800">
+        <div className="w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-none text-white">
+            <Icon size={15} />
         </div>
         <div>
-            <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">{label}</p>
-            {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-bold">{sub}</p>}
+            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">{label}</p>
+            {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-medium">{sub}</p>}
         </div>
     </div>
 );
 
-// Custom tooltip for area chart
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right min-w-[140px]" dir="rtl">
                 <p className="text-[10px] font-black text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
-                {payload.map((entry: any, i: number) => (
+                {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
                     <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
                         <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-none" style={{ backgroundColor: entry.stroke || entry.fill }} />

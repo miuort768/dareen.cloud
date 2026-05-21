@@ -11,8 +11,8 @@ interface Activity {
 }
 
 interface RecentActivityFeedProps {
-    sessions: any[];
-    tasks: any[];
+    sessions: { id: string; studentName: string; date?: string; status?: string }[];
+    tasks: { id: string; title: string; dueDate?: string; status?: string }[];
 }
 
 export const RecentActivityFeed = ({ sessions, tasks }: RecentActivityFeedProps) => {

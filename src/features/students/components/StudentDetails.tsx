@@ -13,7 +13,7 @@ import { RankBadge } from '../../../shared/components/RankBadge';
 interface StudentDetailsProps {
     student: Student;
     onClose: () => void;
-    onAddEnrollment: (data: any) => void;
+    onAddEnrollment: (data: Record<string, unknown>) => void;
     onDeleteEnrollment: (index: number) => void;
     onRenewEnrollment: (index: number) => void;
     onSendReminder: (enrollment: Enrollment) => void;

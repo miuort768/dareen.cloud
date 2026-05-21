@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useApp } from '../context/useApp';
 import { Plus, Search, Edit2, Trash2, ExternalLink, Calendar, User, Tag, Image as ImageIcon, Link as LinkIcon, Loader2, Save, X, BookOpen } from 'lucide-react';
 import { api } from '../lib/api';
@@ -34,19 +34,18 @@ export const AdminBlog = () => {
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [fetchPosts]);
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             setLoading(true);
             const data = await api.get<BlogPost[]>('/blog');
             setPosts(data);
-        } catch (err) {
-            showNotification('فشل في جلب المقالات', 'error');
-        } finally {
-            setLoading(false);
+            } catch {
+                setError('حدث خطأ أثناء جلب البيانات');
+                setLoading(false);
         }
-    };
+    }, []);
 
     const handleOpenModal = (post: BlogPost | null = null) => {
         if (post) {
@@ -79,7 +78,7 @@ export const AdminBlog = () => {
             await api.delete(`/blog/${id}`);
             showNotification('تم حذف المقال بنجاح', 'success');
             setPosts(posts.filter(p => p.id !== id));
-        } catch (err) {
+        } catch {
             showNotification('فشل حذف المقال', 'error');
         }
     };
@@ -102,7 +101,7 @@ export const AdminBlog = () => {
             }
             setIsModalOpen(false);
             fetchPosts();
-        } catch (err: any) {
+        } catch (err) {
             showNotification(err.message || 'فشل حفظ المقال', 'error');
         } finally {
             setSubmitting(false);

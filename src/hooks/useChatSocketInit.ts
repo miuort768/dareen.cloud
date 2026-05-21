@@ -4,12 +4,29 @@ import { socketService } from '../lib/socket';
 import { useApp } from '../context/useApp';
 import { useChatStore } from '../store/chatStore';
 
+interface ChatMessage {
+    id: string;
+    conversationId: string;
+    content: string;
+    timestamp: string;
+    senderId: string;
+    senderName: string;
+    [key: string]: unknown;
+}
+
+interface ChatConversation {
+    id: string;
+    lastMessage?: string;
+    lastMessageTime?: string;
+    unreadCount?: number;
+    [key: string]: unknown;
+}
+
 export const useChatSocketInit = () => {
     const { isAuthenticated, currentUser } = useApp();
     const queryClient = useQueryClient();
     const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
     
-    const setTyping = useChatStore(s => s.setTyping);
     const setLiveSession = useChatStore(s => s.setLiveSession);
     const activeConversationId = useChatStore(s => s.activeConversationId);
     // Since activeConversationId from hook can be stale inside socket callbacks, use a ref
@@ -25,6 +42,8 @@ export const useChatSocketInit = () => {
 
         const socket = socketService.connect(currentUserId);
         if (!socket) return;
+
+        const typingTimeouts = typingTimeoutsRef.current;
 
         // --- Notification Audio ---
         let audio: HTMLAudioElement | null = null;
@@ -79,18 +98,18 @@ export const useChatSocketInit = () => {
             }
         };
 
-        const handleNewMessage = (message: any) => {
+        const handleNewMessage = (message: ChatMessage) => {
             // 1. Update messages cache
-            queryClient.setQueryData(['messages', message.conversationId], (old: any) => {
-                const msgs = Array.isArray(old) ? old : [];
-                if (msgs.find((m: any) => m.id === message.id)) return msgs;
+            queryClient.setQueryData(['messages', message.conversationId], (old: unknown) => {
+                const msgs = (Array.isArray(old) ? old : []) as ChatMessage[];
+                if (msgs.find((m: ChatMessage) => m.id === message.id)) return msgs;
                 return [...msgs, message];
             });
 
             // 2. Update conversations cache
-            queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
-                const conversations = Array.isArray(old) ? old : [];
-                const updated = conversations.map((conv: any) => {
+            queryClient.setQueryData(['conversations', currentUserId], (old: unknown) => {
+                const conversations = (Array.isArray(old) ? old : []) as ChatConversation[];
+                const updated = conversations.map((conv: ChatConversation) => {
                     if (conv.id === message.conversationId) {
                         const isCurrentlyActive = activeConvRef.current === message.conversationId;
                         const isFromOthers = String(message.senderId) !== currentUserId;
@@ -104,7 +123,7 @@ export const useChatSocketInit = () => {
                     return conv;
                 });
 
-                return [...updated].sort((a: any, b: any) => {
+                return [...updated].sort((a: ChatConversation, b: ChatConversation) => {
                     const timeA = new Date(a.lastMessageTime || 0).getTime();
                     const timeB = new Date(b.lastMessageTime || 0).getTime();
                     return timeB - timeA;
@@ -124,23 +143,23 @@ export const useChatSocketInit = () => {
                     sendNativeNotification(`رسالة جديدة من ${message.senderName}`, {
                         body: message.content,
                         tag: message.conversationId,
-                        // @ts-ignore
+                        // @ts-expect-error - renotify not in TS NotificationOptions types
                         renotify: true
                     });
                 }
             }
         };
 
-        const handleNewConversation = (conv: any) => {
-            queryClient.setQueryData(['conversations', currentUserId], (old: any) => {
-                const conversations = Array.isArray(old) ? old : [];
-                if (conversations.find((c: any) => c.id === conv.id)) return conversations;
+        const handleNewConversation = (conv: ChatConversation) => {
+            queryClient.setQueryData(['conversations', currentUserId], (old: unknown) => {
+                const conversations = (Array.isArray(old) ? old : []) as ChatConversation[];
+                if (conversations.find((c: ChatConversation) => c.id === conv.id)) return conversations;
                 return [conv, ...conversations];
             });
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
-        const handleSessionInvite = (data: any) => {
+        const handleSessionInvite = (data: Record<string, unknown>) => {
             setLiveSession(data);
         };
 
@@ -161,7 +180,7 @@ export const useChatSocketInit = () => {
             socket.off('session_invite', handleSessionInvite);
             socket.off('session_ended', handleSessionEnded);
             
-            Object.values(typingTimeoutsRef.current).forEach(timeout => clearTimeout(timeout));
+            Object.values(typingTimeouts).forEach(timeout => clearTimeout(timeout));
         };
     }, [isAuthenticated, currentUser, queryClient, setLiveSession]);
 

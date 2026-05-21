@@ -5,16 +5,16 @@ interface ChatState {
     typingUsers: { conversationId: string; userName: string }[];
     activeConversationId: string | null;
     isConnected: boolean;
-    liveSession: any | null;
+    liveSession: Record<string, unknown> | null;
 
     setTyping: (conversationId: string, isTyping: boolean, userName: string, currentUserId?: string) => void;
     setActiveConversationId: (id: string | null) => void;
     setIsConnected: (connected: boolean) => void;
-    setLiveSession: (session: any | null) => void;
+    setLiveSession: (session: Record<string, unknown> | null) => void;
     setTypingUsers: (users: { conversationId: string; userName: string }[]) => void;
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
+export const useChatStore = create<ChatState>((set) => ({
     typingUsers: [],
     activeConversationId: null,
     isConnected: false,

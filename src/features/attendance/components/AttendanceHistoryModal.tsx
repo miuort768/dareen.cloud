@@ -24,34 +24,33 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchHistory = async () => {
+            setLoading(true);
+            try {
+                const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
+                const sessions = Array.isArray(data) ? data : [];
+
+                const studentHistory = sessions.filter(s =>
+                    s.studentId === studentId &&
+                    s.teacherName === teacherName &&
+                    (studentSubject ? s.subject === studentSubject : true) &&
+                    (s.status === 'completed' || s.status === 'cancelled')
+                ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+                setHistory(studentHistory);
+            } catch (error) {
+                console.error("Error fetching attendance history:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         if (isOpen) {
             fetchHistory();
             setEditingSession(null);
             setDeletingId(null);
         }
-    }, [isOpen, studentId, teacherName]);
-
-    const fetchHistory = async () => {
-        setLoading(true);
-        try {
-            const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
-            const sessions = Array.isArray(data) ? data : [];
-
-            // Filter and sort
-            const studentHistory = sessions.filter(s =>
-                s.studentId === studentId &&
-                s.teacherName === teacherName &&
-                (studentSubject ? s.subject === studentSubject : true) &&
-                (s.status === 'completed' || s.status === 'cancelled')
-            ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-            setHistory(studentHistory);
-        } catch (error) {
-            console.error("Error fetching attendance history:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [isOpen, studentId, teacherName, studentSubject]);
 
     const handleDelete = async (id: string) => {
         if (!confirm('هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.')) return;

@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, Bell, MessageCircle, FileText } from 'lucide-react';
+import { ArrowLeft, Bell, MessageCircle, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSettingsStore } from '../../store/settingsStore';
 

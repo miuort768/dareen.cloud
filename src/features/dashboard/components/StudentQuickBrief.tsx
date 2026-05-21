@@ -11,7 +11,7 @@ interface BriefSession {
 interface StudentQuickBriefProps {
     isOpen: boolean;
     onClose: () => void;
-    onGenerateReport?: (student: any) => void;
+    onGenerateReport?: (student: Record<string, unknown>) => void;
     student: {
         id: string;
         name: string;

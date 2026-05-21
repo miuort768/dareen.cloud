@@ -19,7 +19,6 @@ import { ConfirmModal } from '../../../shared/components/ConfirmModal';
 
 // Utils
 import { generateSessionDates } from '../utils/sessionUtils';
-import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 
 // Types
 import type { Student, Enrollment, ScheduleSlot } from '../types';
@@ -34,11 +33,10 @@ interface EnrollmentFormData {
 
 export const Students = () => {
     const queryClient = useQueryClient();
-    const { showNotification, currentUser, adminPhone } = useApp();
-    const isTeacher = currentUser?.role === 'teacher';
+    const { showNotification } = useApp();
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { students: allStudents, isLoading: loadingStudents, createStudent, createStudentAsync, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
+    const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteStudent, deleteAllStudents } = useStudents();
 
     // Instant Local Filtering
     const students = allStudents.filter(student =>
@@ -135,155 +133,6 @@ export const Students = () => {
         }
     };
 
-    const handleFreezeEnrollment = async (enrollmentId: string, isFrozen: boolean, reason?: string) => {
-        if (!selectedStudent) return;
-        try {
-            await api.patch(`/students/${selectedStudent.id}/enrollments/${enrollmentId}/freeze`, {
-                isFrozen,
-                frozenReason: reason || null
-            });
-            queryClient.invalidateQueries({ queryKey: ['students'] });
-            showNotification(isFrozen ? '✅ تم تجميد الاشتراك بنجاح' : '✅ تم تفعيل الاشتراك مجدداً', 'success');
-        } catch (error) {
-            showNotification('فشل تحديث حالة الاشتراك', 'error');
-        }
-    };
-
-    const handleAddSessionsToEnrollment = async (index: number, amount: number) => {
-        if (!selectedStudent) return;
-        const enrollment = selectedStudent.enrollments[index];
-
-        try {
-            const sessionInfos = generateSessionDates(enrollment.schedule, amount);
-            const teacherObj = teachers.find(t => t.name === enrollment.teacher);
-
-            for (const info of sessionInfos) {
-                await api.post('/sessions', {
-                    studentId: selectedStudent.id,
-                    studentName: selectedStudent.name,
-                    teacherId: teacherObj?.id || enrollment.teacherId,
-                    teacherName: enrollment.teacher,
-                    subject: enrollment.subject,
-                    date: info.date.toISOString().split('T')[0],
-                    day: info.slot.day,
-                    time: `${info.slot.hour} ${info.slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
-                    status: 'pending',
-                    price: teacherObj?.price || enrollment.price || 0
-                });
-            }
-
-            const updatedEnrollments = [...selectedStudent.enrollments];
-            updatedEnrollments[index] = {
-                ...enrollment,
-                sessionsTotal: enrollment.sessionsTotal + amount
-            };
-
-            const updatedStudent = { ...selectedStudent, enrollments: updatedEnrollments };
-            updateStudent(updatedStudent);
-            setSelectedStudent(updatedStudent);
-            queryClient.invalidateQueries({ queryKey: ['students'] });
-            showNotification(`تم إضافة ${amount} حصص بنجاح`, 'success');
-        } catch (error) {
-            console.error('Error adding sessions:', error);
-            showNotification('فشل إضافة الحصص', 'error');
-        }
-    };
-
-    const handleExport = () => {
-        try {
-            const dataStr = JSON.stringify(students, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `students_export_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            showNotification('تم تصدير البيانات بنجاح', 'success');
-        } catch (error) {
-            showNotification('فشل تصدير البيانات', 'error');
-        }
-    };
-
-    const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-            try {
-                const content = event.target?.result as string;
-                let parsedData: any[] = [];
-
-                if (file.name.endsWith('.json')) {
-                    const json = JSON.parse(content);
-                    parsedData = Array.isArray(json) ? json : (json.data || json.students || []);
-                } else if (file.name.endsWith('.csv')) {
-                    const lines = content.split('\n');
-                    const headers = lines[0].split(',').map(h => h.trim());
-                    parsedData = lines.slice(1).filter(l => l.trim()).map(line => {
-                        const values = line.split(',').map(v => v.trim());
-                        const obj: Record<string, string> = {};
-                        headers.forEach((header, i) => {
-                            obj[header] = values[i];
-                        });
-                        return obj;
-                    });
-                }
-
-                if (parsedData.length === 0) {
-                    showNotification('لم يتم العثور على بيانات صالحة للاستيراد', 'error');
-                    return;
-                }
-
-                showNotification(`جاري استيراد ${parsedData.length} طالب...`, 'info');
-
-                let success = 0;
-                for (const item of parsedData) {
-                    try {
-                        const studentData = {
-                            name: item.name || item.Name || item['الاسم'] || '',
-                            grade: item.grade || item.Grade || item['الصف'] || '',
-                            parentPhone: item.parentPhone || item.ParentPhone || item['رقم ولي الأمر'] || '',
-                            studentPhone: item.studentPhone || item.StudentPhone || item['رقم الطالب'] || '',
-                            curriculum: item.curriculum || item['المنهج'] || '',
-                            notes: item.notes || item['ملاحظات'] || '',
-                            sessionPrice: Number(item.sessionPrice || item['سعر الحصة'] || 0),
-                            username: item.username || item['اسم المستخدم'] || '',
-                            password: item.password || item['كلمة المرور'] || '',
-                            enrollments: item.enrollments || []
-                        };
-
-                        if (studentData.name) {
-                            await createStudentAsync(studentData as Omit<Student, 'id'>);
-                            await new Promise(resolve => setTimeout(resolve, 50));
-                            success++;
-                        }
-                    } catch (err) {
-                        console.error('Import error for item:', item, err);
-                    }
-                }
-
-                showNotification(`تم استيراد ${success} طالب بنجاح`, 'success');
-                queryClient.invalidateQueries({ queryKey: ['students'] });
-            } catch (error) {
-                console.error('Import process error:', error);
-                showNotification('حدث خطأ أثناء قراءة الملف', 'error');
-            }
-        };
-
-        if (file.name.endsWith('.json')) {
-            reader.readAsText(file);
-        } else if (file.name.endsWith('.csv')) {
-            reader.readAsText(file, 'UTF-8');
-        } else {
-            showNotification('صيغة الملف غير مدعومة. يرجى استخدام JSON أو CSV', 'error');
-        }
-        e.target.value = '';
-    };
-
     if (loading) {
         return <PageLoader />;
     }
@@ -364,15 +213,7 @@ export const Students = () => {
                         totalCount={allStudents.length}
                     />
 
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept=".json"
-                        className="hidden"
-                        onChange={async (e) => {
-                            // ...existing import handler logic would go here
-                        }}
-                    />
+
                 </div>
 
                 {!showDetails ? (

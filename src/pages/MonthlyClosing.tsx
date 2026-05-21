@@ -37,7 +37,7 @@ export const MonthlyClosing: React.FC = () => {
         return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
     });
 
-    const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<any>(null);
+    const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<Record<string, unknown> | null>(null);
     const [teacherAdjustments, setTeacherAdjustments] = useState<Record<string, number>>({});
 
     const handleTeacherAdjustment = (teacherId: string, amount: number) => {
@@ -72,8 +72,8 @@ export const MonthlyClosing: React.FC = () => {
     const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
         queryKey: ['student-invoices-closing'],
         queryFn: async () => {
-            const resp = await api.get<any[]>('/studentInvoices');
-            return Array.isArray(resp) ? resp : (resp as any).data || [];
+            const resp = await api.get<Record<string, unknown>[]>('/studentInvoices');
+            return Array.isArray(resp) ? resp : (resp as Record<string, unknown>).data as Record<string, unknown>[] || [];
         }
     });
 
@@ -138,8 +138,8 @@ export const MonthlyClosing: React.FC = () => {
 
     const totalProjectedIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
     const totalActualCollections = (studentInvoices || [])
-        .filter((inv: any) => inv.date >= startDate && inv.date <= endDate && inv.status === 'paid')
-        .reduce((acc: number, curr: any) => acc + curr.amount, 0);
+        .filter((inv: { date: string; status: string }) => inv.date >= startDate && inv.date <= endDate && inv.status === 'paid')
+        .reduce((acc: number, curr: { amount: number }) => acc + curr.amount, 0);
     const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + curr.totalAmount, 0);
     const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
     const netActualCashFlow = totalActualCollections - totalTeacherPayout;

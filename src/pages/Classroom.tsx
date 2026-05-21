@@ -20,7 +20,7 @@ import { Whiteboard } from '../components/ui/Whiteboard';
 import { cn } from '../lib/utils';
 
 // --- Custom Top Bar Component ---
-const ClassroomTopBar = ({ isTeacher, roomName, onLeave, toggleWhiteboard, isWhiteboardOpen }: any) => {
+const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpen }: { isTeacher: boolean; onLeave: () => void; toggleWhiteboard: () => void; isWhiteboardOpen: boolean }) => {
     const connectionState = useConnectionState();
     const room = useRoomContext();
     const [participantCount, setParticipantCount] = useState(0);
@@ -143,7 +143,7 @@ export const Classroom = () => {
             try {
                 const response = await api.get<{ token: string }>(`/live/token?room=${roomName}`);
                 setToken(response.token);
-            } catch (err: any) {
+            } catch (err) {
                 console.error('Failed to fetch LiveKit token:', err);
                 setError('فشل الحصول على تصريح دخول الغرفة.');
             }

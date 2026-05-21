@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Phone, Mail, Save, ShieldCheck, Key } from 'lucide-react';
+import { User, Save, ShieldCheck } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface ParentFormProps {
@@ -9,7 +9,7 @@ interface ParentFormProps {
     onSubmit: (e: React.FormEvent) => void;
 }
 
-const InputField = ({ label, icon: Icon, ...props }: any) => (
+const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: React.ComponentType<{ size?: number }>; } & Record<string, unknown>) => (
     <div className="space-y-1.5">
         <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">
@@ -60,57 +60,15 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                             required
                             type="text"
                             value={formData.name}
-                            onChange={(e: any) => onChange({ ...formData, name: e.target.value })}
-                            placeholder="مثال: أحمد محمد علي"
-                        />
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, name: e.target.value })}
 
-                        {/* Phone */}
-                        <InputField
-                            label="رقم الجوال"
-                            icon={Phone}
-                            required
-                            type="tel"
-                            dir="ltr"
-                            className="font-mono"
-                            value={formData.phone}
-                            onChange={(e: any) => onChange({ ...formData, phone: e.target.value })}
-                            placeholder="05XXXXXXXX"
-                        />
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, phone: e.target.value })}
 
-                        {/* Email */}
-                        <InputField
-                            label="البريد الإلكتروني"
-                            icon={Mail}
-                            type="email"
-                            dir="ltr"
-                            value={formData.email}
-                            onChange={(e: any) => onChange({ ...formData, email: e.target.value })}
-                            placeholder="example@mail.com"
-                        />
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, email: e.target.value })}
 
-                        {/* Username */}
-                        <InputField
-                            label="اسم المستخدم"
-                            icon={User}
-                            required
-                            type="text"
-                            dir="ltr"
-                            className="font-mono"
-                            value={formData.username || ''}
-                            onChange={(e: any) => onChange({ ...formData, username: e.target.value })}
-                            placeholder="Account handle"
-                        />
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })}
 
-                        {/* Password */}
-                        <InputField
-                            label="كلمة المرور"
-                            icon={Key}
-                            required={!isEdit}
-                            type="password"
-                            dir="ltr"
-                            className="font-mono"
-                            value={formData.password || ''}
-                            onChange={(e: any) => onChange({ ...formData, password: e.target.value })}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })}
                             placeholder={isEdit ? "••••••••" : "Create password"}
                         />
                     </div>

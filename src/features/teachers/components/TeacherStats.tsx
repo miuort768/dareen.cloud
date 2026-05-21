@@ -8,7 +8,7 @@ interface TeacherStatsProps {
     averagePrice: number;
 }
 
-const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: any) => (
+const StatCard = ({ label, value, icon: Icon, color, bg, trend, borderColor }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; color: string; bg: string; trend?: string; borderColor?: string }) => (
     <div className={cn(
         "bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-4 rounded-none shadow-sm relative overflow-hidden transition-all hover:shadow-md group",
         borderColor

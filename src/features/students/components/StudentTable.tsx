@@ -12,7 +12,7 @@ interface StudentTableProps {
     isTeacherView: boolean;
 }
 
-export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete, showDetails: _showDetails, isTeacherView: _isTeacherView }: StudentTableProps) => {
+export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete }: StudentTableProps) => {
     return (
         <div className="w-full">
             {/* Desktop View */}

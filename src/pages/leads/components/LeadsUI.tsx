@@ -28,7 +28,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
     </button>
 );
 
-export const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, value: string | number, icon: any, subValue?: string, bg: string }) => (
+export const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, subValue?: string, bg: string }) => (
     <div className={cn("p-4 rounded-2xl shadow-sm flex flex-col items-center text-center text-white relative overflow-hidden", bg)}>
         <div className="absolute -right-4 -top-4 opacity-10">
             <Icon size={64} />

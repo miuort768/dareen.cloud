@@ -22,7 +22,7 @@ export const Home = () => {
         if (heroBanners) {
             bannersArray = JSON.parse(heroBanners);
         }
-    } catch {}
+    } catch { /* ignore parse error */ }
 
     const reviews = [
         { name: "أم راشد", role: "ولية أمر", content: "مشكورين وايد على جهودكم، عيالي وايد تحسن مستواهم من عقب ما سجلوا معاكم. صراحة فرق كبير بالأداء المدرسي.", avatar: "/images/avatars/mom1.png" },

@@ -3,8 +3,15 @@ import { BarChart3 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { SectionCard, SectionTitle } from './ClosingUI';
 
+interface SubjectData {
+    name: string;
+    profit: number;
+    income: number;
+    sessionsCount: number;
+}
+
 interface SubjectAnalysisProps {
-    subjectAnalysis: any[];
+    subjectAnalysis: SubjectData[];
 }
 
 export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysis }) => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { 
     Users, BookOpen, Calendar, Megaphone, ShieldCheck, 
     Headphones, Bell, FilePlus, UserPlus, TrendingUp, 
-    TrendingDown, Award, Star, Loader2, Sparkles,
+    TrendingDown, Award, Loader2, Sparkles,
     ChevronLeft, Wallet, Clock, Home, Banknote
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +13,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../../../lib/haptics';
 
 interface MobileAdminDashboardProps {
-    stats: any;
-    lowBalanceStudents: any[];
+    stats: Record<string, unknown>;
+    lowBalanceStudents: { id: string; studentName: string; subject: string; remainingSessions: number }[];
     onRefresh?: () => Promise<void> | void;
 }
 
@@ -386,25 +386,8 @@ export const MobileAdminDashboard = ({
     );
 };
 
-const TabButton = ({ label, active, icon: Icon, onClick, badgeCount }: any) => (
-    <button
-        onClick={onClick}
-        className={cn(
-            "flex-1 py-1.5 px-1 flex flex-col items-center justify-center gap-1 transition-all relative",
-            active ? "text-white font-black" : "text-white/60"
-        )}
-    >
-        <Icon size={16} />
-        <span className="text-[9px] font-bold">{label}</span>
-        {badgeCount !== undefined && badgeCount > 0 && (
-            <span className="absolute -top-1 -right-1 min-w-[14px] h-[14px] rounded-full bg-rose-500 text-white font-black text-[8px] flex items-center justify-center px-0.5 border border-white">
-                {badgeCount}
-            </span>
-        )}
-    </button>
-);
 
-const QuickStatCard = ({ icon: Icon, label, value, gradient, onClick }: any) => (
+const QuickStatCard = ({ icon: Icon, label, value, gradient, onClick }: { icon: React.ComponentType<{ size?: number }>; label: string; value: string | number; gradient: string; onClick?: () => void }) => (
     <motion.div
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
@@ -421,7 +404,7 @@ const QuickStatCard = ({ icon: Icon, label, value, gradient, onClick }: any) => 
     </motion.div>
 );
 
-const NavButton = ({ label, subtext, icon: Icon, gradient, onClick }: any) => (
+const NavButton = ({ label, subtext, icon: Icon, gradient, onClick }: { label: string; subtext: string; icon: React.ComponentType<{ size?: number }>; gradient: string; onClick?: () => void }) => (
     <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
@@ -438,7 +421,7 @@ const NavButton = ({ label, subtext, icon: Icon, gradient, onClick }: any) => (
     </motion.button>
 );
 
-const QuickLink = ({ icon: Icon, label, gradient, onClick }: any) => (
+const QuickLink = ({ icon: Icon, label, gradient, onClick }: { icon: React.ComponentType<{ size?: number }>; label: string; gradient: string; onClick?: () => void }) => (
     <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={onClick}

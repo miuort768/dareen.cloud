@@ -1,8 +1,15 @@
 import React from 'react';
 import { SectionCard } from './ClosingUI';
 
+interface TeacherPerf {
+    name: string;
+    total: number;
+    attendanceRate: number;
+    documentationRate: number;
+}
+
 interface TeacherPerformanceProps {
-    teacherPerformance: any[];
+    teacherPerformance: TeacherPerf[];
 }
 
 export const TeacherPerformance: React.FC<TeacherPerformanceProps> = ({ teacherPerformance }) => {

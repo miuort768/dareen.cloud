@@ -2,8 +2,16 @@ import React from 'react';
 import { MessageCircle, Phone, CheckCircle2 } from 'lucide-react';
 import { SectionCard } from './ClosingUI';
 
+interface RenewalItem {
+    studentName: string;
+    subject: string;
+    remaining: number;
+    waLink: string;
+    phone: string;
+}
+
 interface RenewalsCardsProps {
-    renewalsData: any[];
+    renewalsData: RenewalItem[];
 }
 
 export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) => {

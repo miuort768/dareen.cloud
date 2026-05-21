@@ -85,7 +85,7 @@ export const useSettings = () => {
         }
 
         if (editingUserId) {
-            const updates: any = {
+            const updates: Record<string, unknown> = {
                 username: newUserUsername,
                 name: newUserUsername,
                 permissions: newUserPermissions
@@ -115,7 +115,7 @@ export const useSettings = () => {
         setNewUserPermissions([]);
     };
 
-    const startEditingUser = (userToEdit: any) => {
+    const startEditingUser = (userToEdit: { id: string; username: string; permissions?: string[] }) => {
         setEditingUserId(userToEdit.id);
         setNewUserUsername(userToEdit.username);
         setNewUserPassword('');

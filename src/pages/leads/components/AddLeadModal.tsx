@@ -5,7 +5,7 @@ import { PrimaryBtn } from './LeadsUI';
 interface AddLeadModalProps {
     isAddModalOpen: boolean;
     setIsAddModalOpen: (v: boolean) => void;
-    addMutation: { mutate: (data: any) => void; isPending: boolean };
+    addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean };
     formRef: React.RefObject<HTMLFormElement | null>;
 }
 
@@ -33,7 +33,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                         subject: formData.get('subject') as string,
                         curriculum: formData.get('curriculum') as string,
                         status: 'new',
-                        priority: formData.get('priority') as any,
+                        priority: formData.get('priority') as string,
                         notes: formData.get('notes') as string
                     });
                 }}>

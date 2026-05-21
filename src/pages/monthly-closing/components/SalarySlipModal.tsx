@@ -3,7 +3,16 @@ import { Receipt, X, Activity as ActivityIcon, Printer } from 'lucide-react';
 import { SectionTitle, PrimaryBtn, SecondaryBtn } from './ClosingUI';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 
-export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
+interface TeacherSlip {
+    name: string;
+    subject: string;
+    sessionsCount: number;
+    totalAmount: number;
+    sessionsList?: { date: string; studentName: string; teacherPrice?: number }[];
+    price?: number;
+}
+
+export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherSlip | null, month: string, onClose: () => void }) => {
     if (!teacher) return null;
 
     return (
@@ -63,7 +72,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, mon
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                                    {teacher.sessionsList?.slice(0, 10).map((s: any, idx: number) => (
+                                    {teacher.sessionsList?.slice(0, 10).map((s: { date: string; studentName: string; teacherPrice?: number }, idx: number) => (
                                         <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                                             <td className="p-2.5 font-mono text-slate-600 dark:text-slate-400">{s.date}</td>
                                             <td className="p-2.5 font-bold text-slate-700 dark:text-slate-300">{s.studentName}</td>

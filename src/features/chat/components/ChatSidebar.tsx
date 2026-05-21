@@ -21,7 +21,7 @@ interface ChatSidebarProps {
     setShowNewChatModal: (val: boolean) => void;
     setIsEditingGroup: (val: boolean) => void;
     onDeleteAll: () => void;
-    typingUsers: any[];
+    typingUsers: { conversationId: string; userName: string }[];
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({

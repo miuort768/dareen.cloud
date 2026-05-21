@@ -1,16 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-    Calendar, 
     Clock, 
-    User, 
-    Users, 
-    BookOpen, 
     Search,
-    Zap,
-    LayoutGrid,
-    Plus,
-    Printer,
     Video,
     X,
     CalendarDays,
@@ -95,25 +87,13 @@ const ACCENT_COLORS = [
 
 export const Schedule = () => {
     const { currentUser } = useApp();
-    const isTeacher = currentUser?.role === 'teacher';
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
-    const [showSharedModal, setShowSharedModal] = useState(false);
-    const [sharedEvents, setSharedEvents] = useState<ScheduleEvent[]>([]);
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [enrollData, setEnrollData] = useState({
-        studentId: '',
-        day: '',
-        hour: '',
-        period: '',
-        teacherName: currentUser?.teacherName || currentUser?.name || '',
-        subject: ''
-    });
-    const [mobileActiveDay, setMobileActiveDay] = useState<string>('');
     const [sharedLink] = useState(() => window.location.href);
+    const [showSharedModal, setShowSharedModal] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const isToday = (day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
@@ -125,51 +105,18 @@ export const Schedule = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
-        setMobileActiveDay(DAYS_OF_WEEK.includes(today) ? today : 'السبت');
         fetchData();
     }, []);
 
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = await api.get<any>('/students');
+            const data = await api.get<Record<string, unknown>[]>('/students');
             setStudents(Array.isArray(data) ? data : (data.data || []));
         } catch (error) {
             console.error('Error fetching data', error);
         } finally {
             setLoading(false);
-        }
-    };
-
-    const handleQuickEnroll = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!enrollData.studentId) return;
-        try {
-            const student = students.find(s => s.id === enrollData.studentId);
-            if (!student) return;
-            const updatedStudent = { ...student };
-            const teacher = enrollData.teacherName;
-            const enrollmentIndex = updatedStudent.enrollments.findIndex(en => en.teacher === teacher);
-            if (enrollmentIndex >= 0) {
-                updatedStudent.enrollments[enrollmentIndex].schedule.push({
-                    day: enrollData.day, hour: enrollData.hour, period: enrollData.period
-                });
-            } else {
-                updatedStudent.enrollments.push({
-                    teacher,
-                    subject: enrollData.subject || 'مادة عامة',
-                    curr: 'عام',
-                    sessionsTotal: 8,
-                    sessionsUsed: 0,
-                    schedule: [{ day: enrollData.day, hour: enrollData.hour, period: enrollData.period }]
-                });
-            }
-            await api.put(`/students/${student.id}`, updatedStudent);
-            setShowAddModal(false);
-            fetchData();
-        } catch (error) {
-            console.error('Error enrolling', error);
         }
     };
 
@@ -183,7 +130,7 @@ export const Schedule = () => {
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص'].includes(normalizedPeriod);
-                        const sId = student.id || (student as any)._id;
+                        const sId = student.id || (student as Record<string, unknown>)._id as string;
                         return {
                             id: `${sId}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
                             studentId: sId,
@@ -215,20 +162,6 @@ export const Schedule = () => {
             return matchesSearch && matchesDay;
         });
     }, [allEvents, searchTerm, filterDay]);
-
-    const getTeacherStyle = (teacherName: string) => {
-        const index = uniqueTeachers.indexOf(teacherName);
-        return ACCENT_COLORS[index % ACCENT_COLORS.length];
-    };
-
-    const getEventsForSlot = (day: string, hour: number, period: string) => {
-        return filteredEvents.filter(e => e.day === day.trim() && Number(e.hour) === hour && e.period === period.toLowerCase());
-    };
-
-    // Mobile: only show time slots that have events for the active day
-    const mobileEvents = useMemo(() =>
-        filteredEvents.filter(e => e.day === mobileActiveDay)
-    , [filteredEvents, mobileActiveDay]);
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3 md:animate-in md:fade-in">
@@ -303,7 +236,7 @@ export const Schedule = () => {
                                 <div className="p-3 text-[9px] font-black text-slate-400 uppercase tracking-widest border-l border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                                     الوقت
                                 </div>
-                                {DAYS_OF_WEEK.map((day, idx) => (
+                                {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
                                         "p-3 text-[10px] font-black text-center border-l border-slate-100 dark:border-slate-800 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50 uppercase tracking-tight",
                                         isToday(day) ? "text-indigo-600 dark:text-indigo-400" : "text-slate-700 dark:text-slate-300"

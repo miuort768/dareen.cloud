@@ -5,7 +5,7 @@ type Platform = 'android-chrome' | 'ios-safari' | 'windows-edge' | 'mac-safari' 
 
 const detectPlatform = (): Platform => {
     const ua = navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as unknown as { MSStream?: unknown }).MSStream;
     const isAndroid = /Android/.test(ua);
     const isMac = /Macintosh/.test(ua) && !isIOS;
     const isWindows = /Windows/.test(ua);
@@ -24,14 +24,14 @@ const detectPlatform = (): Platform => {
 
 const isStandaloneMode = () =>
     window.matchMedia('(display-mode: standalone)').matches ||
-    (window.navigator as any).standalone === true ||
+    (window.navigator as unknown as { standalone?: boolean }).standalone === true ||
     document.referrer.includes('android-app://');
 
 export const InstallPWA = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [platform, setPlatform] = useState<Platform>('other');
     const [showIOSGuide, setShowIOSGuide] = useState(false);
-    const deferredPromptRef = useRef<any>(null);
+    const deferredPromptRef = useRef<Event | null>(null);
 
     useEffect(() => {
         if (isStandaloneMode()) return;
@@ -40,15 +40,16 @@ export const InstallPWA = () => {
         const detectedPlatform = detectPlatform();
         setPlatform(detectedPlatform);
 
-        if ((window as any).deferredPrompt) {
-            deferredPromptRef.current = (window as any).deferredPrompt;
+        const globalPrompt = (window as unknown as { deferredPrompt?: Event }).deferredPrompt;
+        if (globalPrompt) {
+            deferredPromptRef.current = globalPrompt;
             setIsVisible(true);
         }
 
         const handleBeforeInstall = (e: Event) => {
             e.preventDefault();
             deferredPromptRef.current = e;
-            (window as any).deferredPrompt = e;
+            (window as unknown as { deferredPrompt: Event }).deferredPrompt = e;
             setIsVisible(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstall as EventListener);
@@ -73,15 +74,15 @@ export const InstallPWA = () => {
         }
 
         // Try to get the prompt again from window just in case ref was lost
-        const globalPrompt = (window as any).deferredPrompt;
-        if (globalPrompt) {
-            deferredPromptRef.current = globalPrompt;
+        const globalPrompt2 = (window as unknown as { deferredPrompt?: Event }).deferredPrompt;
+        if (globalPrompt2) {
+            deferredPromptRef.current = globalPrompt2;
         }
 
         // Android / Chrome / Edge: use native prompt
         if (deferredPromptRef.current) {
             try {
-                const promptEvent = deferredPromptRef.current;
+                const promptEvent = deferredPromptRef.current as Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
                 await promptEvent.prompt();
                 const { outcome } = await promptEvent.userChoice;
                 console.log('User response to install prompt:', outcome);
@@ -89,7 +90,7 @@ export const InstallPWA = () => {
                 if (outcome === 'accepted') {
                     setIsVisible(false);
                     localStorage.setItem('pwa_dismissed_permanent', 'true');
-                    (window as any).deferredPrompt = null;
+                    (window as unknown as { deferredPrompt: null }).deferredPrompt = null;
                 }
             } catch (err) {
                 console.error('Install prompt failed:', err);

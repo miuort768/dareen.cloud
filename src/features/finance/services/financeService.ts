@@ -10,7 +10,7 @@ export const financeService = {
             api.get<Teacher[]>('/teachers'),
             api.get<Transaction[]>('/finance/transactions'),
             api.get<FixedExpense[]>('/finance/fixed-expenses'),
-            api.get<any>('/finance/stats')
+            api.get<Record<string, unknown>>('/finance/stats')
         ]);
 
         // Process sessions to include effective price
@@ -49,7 +49,7 @@ export const financeService = {
     },
 
     async getFinanceStats() {
-        return api.get<any>('/finance/stats');
+        return api.get<Record<string, unknown>>('/finance/stats');
     },
 
     async updateFixedExpense(id: number, amount: number) {

@@ -5,8 +5,17 @@ import { SectionCard, SectionTitle } from './ClosingUI';
 import { cn } from '../../../lib/utils';
 import { api } from '../../../lib/api';
 
+interface StudentInvoice {
+    id: string;
+    studentName: string;
+    description?: string;
+    amount: number;
+    date: string;
+    status: string;
+}
+
 interface CollectionsTableProps {
-    studentInvoices: any[];
+    studentInvoices: StudentInvoice[];
     startDate: string;
     endDate: string;
 }
@@ -30,7 +39,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                        {(studentInvoices || []).filter((inv: any) => inv.date >= startDate && inv.date <= endDate).map((item: any) => (
+                        {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
                             <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <span className="block font-bold text-xs text-slate-800 dark:text-white mb-0.5">{item.studentName}</span>

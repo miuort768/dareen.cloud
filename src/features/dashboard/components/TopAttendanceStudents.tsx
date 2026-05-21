@@ -3,8 +3,8 @@ import { cn } from '../../../lib/utils';
 import { useMemo } from 'react';
 
 interface TopAttendanceStudentsProps {
-    sessions: any[];
-    onStudentClick?: (student: any) => void;
+    sessions: { id?: string; status?: string; date?: string; studentId?: string; studentName?: string }[];
+    onStudentClick?: (student: { id?: string; name?: string }) => void;
 }
 
 export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanceStudentsProps) => {

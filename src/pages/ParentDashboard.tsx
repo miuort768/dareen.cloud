@@ -25,9 +25,9 @@ import { LiveClasses } from '../components/dashboard/LiveClasses';
 export const ParentDashboard = () => {
     const { currentUser, adminPhone, logout } = useApp();
     const navigate = useNavigate();
-    const [children, setChildren] = useState<any[]>([]);
-    const [sessions, setSessions] = useState<any[]>([]);
-    const [allPointLogs, setAllPointLogs] = useState<any[]>([]);
+    const [children, setChildren] = useState<Record<string, unknown>[]>([]);
+    const [sessions, setSessions] = useState<Record<string, unknown>[]>([]);
+    const [allPointLogs, setAllPointLogs] = useState<{ id: string; date: string; status: string; points?: number }[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
@@ -36,12 +36,12 @@ export const ParentDashboard = () => {
         const fetchAllData = async () => {
             try {
                 setIsLoading(true);
-                const students = await api.get<any[]>('/parents/my-children');
+                const students = await api.get<Record<string, unknown>[]>('/parents/my-children');
                 setChildren(students);
                 
                 const sessionsPromises = students.map(async s => {
                     try {
-                        return await api.get<any[]>(`/parents/child-sessions/${s.id}`) || [];
+                        return await api.get<Record<string, unknown>[]>(`/parents/child-sessions/${s.id}`) || [];
                     } catch (e) {
                         console.error(`Failed to fetch sessions for child ${s.id}:`, e);
                         return [];
@@ -49,7 +49,7 @@ export const ParentDashboard = () => {
                 });
                 const logsPromises = students.map(async s => {
                     try {
-                        return await api.get<any[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
+                        return await api.get<Record<string, unknown>[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
                     } catch (e) {
                         console.error(`Failed to fetch logs for child ${s.id}:`, e);
                         return [];
@@ -65,7 +65,7 @@ export const ParentDashboard = () => {
                 
                 // Add student name to each log for parent view
                 const flattenedLogs = allLogsResults.map((logs, idx) => 
-                    (Array.isArray(logs) ? logs : []).map((l: any) => ({ ...l, studentName: students[idx].name }))
+                    (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string }) => ({ ...l, studentName: students[idx].name }))
                 ).flat();
                 
                 setAllPointLogs(flattenedLogs.sort((a, b) => {
@@ -85,9 +85,9 @@ export const ParentDashboard = () => {
     }, []);
 
     // ── Active timer for parent (polls every 5s) ──
-    const [activeTimers, setActiveTimers] = useState<any[]>([]);
+    const [activeTimers, setActiveTimers] = useState<Record<string, unknown>[]>([]);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const [_timerTick, setTimerTick] = useState(0);
+    const [, setTimerTick] = useState(0);
 
     useEffect(() => {
         const poll = async () => {
@@ -97,11 +97,11 @@ export const ParentDashboard = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) return;
-                const data: any[] = await res.json();
+                const data: Record<string, unknown>[] = await res.json();
                 setActiveTimers(data);
 
                 // Update children data to get new homework/notes automatically
-                const students = await api.get<any[]>('/parents/my-children');
+                const students = await api.get<Record<string, unknown>[]>('/parents/my-children');
                 setChildren(students);
 
                 if (data.length > 0 && !timerTickRef.current) {
@@ -135,7 +135,7 @@ export const ParentDashboard = () => {
         let sessionsUsed = 0;
         let sessionsTotal = 0;
         children.forEach(c => {
-            (c.enrollments || []).forEach((en: any) => {
+            (c.enrollments || []).forEach((en: { teacherName: string; sessionsTotal: number; sessionsUsed: number; nextSessionNotes?: string; schedule?: { day: string; time: string }[] }) => {
                 sessionsUsed += Number(en.sessionsUsed || 0);
                 sessionsTotal += Number(en.sessionsTotal || 0);
             });
@@ -153,15 +153,15 @@ export const ParentDashboard = () => {
     }, [sessions, children]);
 
     const todayTasks = useMemo(() => {
-        const tasks: any[] = [];
+        const tasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[] = [];
         children.forEach(child => {
-            (child.enrollments || []).forEach((en: any) => {
-                (en.schedule || []).forEach((slot: any) => {
+            (child.enrollments || []).forEach((en: { teacherName?: string; subject?: string; teacher?: string; schedule?: { day: string; hour: string; period: string }[] }) => {
+                (en.schedule || []).forEach((slot: { day: string; hour: string; period: string }) => {
                     if (slot.day === todayArabic) {
                         tasks.push({
                             studentName: child.name,
-                            subject: en.subject,
-                            teacher: en.teacher,
+                            subject: en.subject || en.teacherName || '',
+                            teacher: en.teacher || '',
                             time: slot.hour,
                             period: slot.period
                         });
@@ -205,7 +205,7 @@ export const ParentDashboard = () => {
             {/* ═══════════════ ACTIVE SESSION TIMERS ═══════════════ */}
             {activeTimers.length > 0 && (
                 <div className="space-y-3">
-                    {activeTimers.map((session: any) => {
+                    {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string }) => {
                         const child = children.find(c => c.id === session.studentId);
                         return (
                             <div key={session.id} className="bg-rose-500 dark:bg-blue-600 text-white p-4 rounded-3xl flex items-center justify-between shadow-lg shadow-rose-500/20 dark:shadow-blue-500/20 animate-in slide-in-from-top duration-500">
@@ -248,21 +248,21 @@ export const ParentDashboard = () => {
             </div>
 
             {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
-            {children.some(child => child.enrollments?.some((en: any) => en.nextSessionNotes)) && (
+            {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
                 <div className="bg-white dark:bg-slate-900 p-3 md:p-5 rounded-2xl md:rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-2 mb-3">
                         <MessageSquare className="text-amber-500" size={16} />
                         <h3 className="text-sm md:text-lg font-black text-slate-900 dark:text-white">الواجبات والملاحظات</h3>
                     </div>
                     <div className="space-y-3">
-                        {children.filter(child => child.enrollments?.some((en: any) => en.nextSessionNotes)).map((child) => (
+                        {children.filter(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)).map((child) => (
                             <div key={child.id} className="space-y-1">
                                 <div className="flex items-center gap-2 px-1">
                                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                                     <span className="text-[9px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">{child.name}</span>
                                 </div>
                                 <div className="space-y-2">
-                                    {child.enrollments.filter((en: any) => en.nextSessionNotes).map((en: any, idx: number) => (
+                                    {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
                                         <div key={idx} className="bg-amber-50/30 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100/30 dark:border-amber-900/20">
                                             <div className="flex justify-between items-center mb-1">
                                                 <span className="text-[9px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest">{en.subject}</span>
@@ -402,10 +402,10 @@ export const ParentDashboard = () => {
     );
 };
 
-const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
-    const colors: any = {
+const QuickStatCard = ({ icon: Icon, label, value, color }: { icon: React.ComponentType<{ size?: number }>; label: string; value: string | number; color: string }) => {
+    const colors: Record<string, string> = {
         amber: "bg-amber-50 dark:bg-amber-900/10 text-amber-500 shadow-amber-100 dark:shadow-none",
-        blue: "bg-blue-50 dark:bg-blue-900/10 text-blue-500 shadow-blue-100 dark:shadow-none",
+        blue: "bg-blue-50 dark:bg-blue-900/10 text-amber-500 shadow-blue-100 dark:shadow-none",
         rose: "bg-rose-50 dark:bg-rose-900/10 text-rose-500 shadow-rose-100 dark:shadow-none"
     };
     return (
@@ -419,7 +419,7 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: any) => {
     );
 };
 
-const NavButton = ({ label, icon: Icon, onClick }: any) => (
+const NavButton = ({ label, icon: Icon, onClick }: { label: string; icon: React.ComponentType<{ size?: number }>; onClick?: () => void }) => (
     <button 
         onClick={onClick}
         className="bg-amber-50/50 dark:bg-amber-950/20 p-3 rounded-2xl border border-amber-100/30 dark:border-amber-900/20 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"

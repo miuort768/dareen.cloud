@@ -11,7 +11,7 @@ interface TimelineSession {
 
 interface TeacherSessionTimelineProps {
     sessions: TimelineSession[];
-    onStudentClick?: (student: any) => void;
+    onStudentClick?: (student: { id: string; name: string }) => void;
 }
 
 export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSessionTimelineProps) => {

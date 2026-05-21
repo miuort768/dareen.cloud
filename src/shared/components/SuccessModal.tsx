@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { CheckCircle2, X, Sparkles } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -42,7 +42,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                 };
             }
         }
-    }, [isOpen, autoClose]);
+    }, [isOpen, autoClose, handleClose]);
 
     useEffect(() => {
         return () => {
@@ -51,12 +51,12 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
         };
     }, []);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setIsExiting(true);
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         if (intervalRef.current) clearInterval(intervalRef.current);
         timeoutRef.current = setTimeout(onClose, 350); // Wait for exit transition
-    };
+    }, [onClose]);
 
     if (!isOpen && !isExiting) return null;
 

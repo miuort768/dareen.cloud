@@ -56,9 +56,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             });
 
             return true;
-        } catch (error: any) {
+        } catch (error) {
             console.error("Authentication failed:", error);
-            if (error.message?.includes('Invalid credentials') || error.message?.includes('401')) {
+            if (error instanceof Error && (error.message?.includes('Invalid credentials') || error.message?.includes('401'))) {
                 return false;
             }
             throw error;

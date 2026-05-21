@@ -12,7 +12,7 @@ interface ReportsStatsGridProps {
     monthRevenue: number;
 }
 
-const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: any) => (
+const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: { label: string; value: string | number; icon: React.ComponentType<{ size?: number }>; sub?: string; gradient?: string; accent?: string }) => (
     <div className={cn("relative overflow-hidden rounded-none p-5 flex flex-col justify-between shadow-sm", gradient)}>
         {/* Background icon */}
         <div className="absolute -left-3 -bottom-3 opacity-10">

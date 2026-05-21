@@ -4,17 +4,17 @@ import { cn } from '../../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 
 interface SmartAlertsProps {
-    students: any[];
-    sessions: any[];
-    studentInvoices: any[];
-    lowBalanceStudents: any[];
+    students: Record<string, unknown>[];
+    sessions: Record<string, unknown>[];
+    studentInvoices: Record<string, unknown>[];
+    lowBalanceStudents: { id: string; studentName: string; subject: string; remainingSessions: number }[];
 }
 
 export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStudents }: SmartAlertsProps) => {
     const navigate = useNavigate();
 
     const alerts = useMemo(() => {
-        const result: any[] = [];
+        const result: { id: string; type: string; title: string; desc: string; action: () => void; priority: string }[] = [];
 
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
@@ -87,7 +87,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
         return result;
     }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
-    const colorMap: any = {
+    const colorMap: Record<string, string> = {
         rose: { bg: 'bg-rose-500/5', border: 'border-rose-500/10', icon: 'bg-rose-500 text-white shadow-none', text: 'text-rose-600', sub: 'text-rose-500/70', btn: 'bg-rose-500 text-white' },
         amber: { bg: 'bg-amber-500/5', border: 'border-amber-500/10', icon: 'bg-amber-500 text-white shadow-none', text: 'text-amber-600', sub: 'text-amber-500/70', btn: 'bg-amber-500 text-white' },
         indigo: { bg: 'bg-indigo-500/5', border: 'border-indigo-500/10', icon: 'bg-indigo-500 text-white shadow-none', text: 'text-indigo-600', sub: 'text-indigo-500/70', btn: 'bg-indigo-500 text-white' },

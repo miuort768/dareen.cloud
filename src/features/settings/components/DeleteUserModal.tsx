@@ -2,8 +2,8 @@ import { Trash2 } from 'lucide-react';
 import { SecondaryBtn } from './SettingsUI';
 
 interface DeleteUserModalProps {
-    showDeleteModal: any;
-    setShowDeleteModal: (v: any) => void;
+    showDeleteModal: boolean | { id: string; username: string };
+    setShowDeleteModal: (v: boolean | { id: string; username: string }) => void;
     deleteUser: (id: string) => void;
     showNotify: (msg: string) => void;
 }

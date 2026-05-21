@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
@@ -45,7 +45,7 @@ export const Chat: React.FC = () => {
             // Clear the state so it doesn't re-trigger
             window.history.replaceState({}, document.title);
         }
-    }, [location.state, availableUsers]);
+    }, [location.state, availableUsers, handleCreateDirectChat]);
 
     // Modal States
     const [showNewChatModal, setShowNewChatModal] = useState(false);
@@ -101,7 +101,7 @@ export const Chat: React.FC = () => {
         }
     };
 
-    const handleCreateDirectChat = async (targetUserId: string) => {
+    const handleCreateDirectChat = useCallback(async (targetUserId: string) => {
         try {
             const newConv = await createDirectChat(targetUserId);
             setSelectedConv(newConv);
@@ -110,7 +110,7 @@ export const Chat: React.FC = () => {
         } catch (err) {
             console.error('Failed to create direct chat:', err);
         }
-    };
+    }, [createDirectChat]);
 
     const handleDeleteAllClick = () => {
         setDeleteType('all_conversations');

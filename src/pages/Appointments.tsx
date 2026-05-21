@@ -64,7 +64,7 @@ export const Appointments = () => {
         const checkAndReset = async () => {
             try {
                 if (currentUser?.role === 'admin') {
-                    const settings = await api.get<any>('/system/settings');
+                    const settings = await api.get<Record<string, unknown>>('/system/settings');
                     const lastResetDate = settings?.last_appointment_reset;
                     const todayStr = new Date().toDateString();
                     if (lastResetDate !== todayStr) {
@@ -99,7 +99,7 @@ export const Appointments = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const data = await api.get<any>('/students');
+            const data = await api.get<Record<string, unknown>[]>('/students');
             setStudents(Array.isArray(data) ? data : (data.data || []));
         } catch (error) {
             console.error("Error fetching data", error);

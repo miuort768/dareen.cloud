@@ -24,18 +24,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PageLoader } from '../components/ui/PageLoader';
 // ===== SECTION: Main Component - State & Setup =====
 export const ParentStudents = () => {
-    const [students, setStudents] = useState<any[]>([]);
+    const [students, setStudents] = useState<Record<string, unknown>[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
     // Modal & Session View State
-    const [viewingStudent, setViewingStudent] = useState<any | null>(null);
-    const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<any | null>(null);
-    const [viewingAchievements, setViewingAchievements] = useState<any | null>(null);
-    const [viewingSubject, setViewingSubject] = useState<any | null>(null);
+    const [viewingStudent, setViewingStudent] = useState<Record<string, unknown> | null>(null);
+    const [viewingAttendanceStudent, setViewingAttendanceStudent] = useState<Record<string, unknown> | null>(null);
+    const [viewingAchievements, setViewingAchievements] = useState<Record<string, unknown> | null>(null);
+    const [viewingSubject, setViewingSubject] = useState<Record<string, unknown> | null>(null);
     const [sessionsPage, setSessionsPage] = useState(1);
-    const [childSessions, setChildSessions] = useState<any[]>([]);
-    const [pointLogs, setPointLogs] = useState<any[]>([]);
+    const [childSessions, setChildSessions] = useState<Record<string, unknown>[]>([]);
+    const [pointLogs, setPointLogs] = useState<Record<string, unknown>[]>([]);
     const [isSessionsLoading, setIsSessionsLoading] = useState(false);
     const [sessionsStartDate, setSessionsStartDate] = useState(() => {
         const d = new Date();
@@ -49,7 +49,7 @@ export const ParentStudents = () => {
         const fetchStudents = async () => {
             try {
                 setIsLoading(true);
-                const data = await api.get<any[]>('/parents/my-children');
+                const data = await api.get<Record<string, unknown>[]>('/parents/my-children');
                 setStudents(data);
             } catch (error) {
                 console.error('Error fetching students:', error);
@@ -64,7 +64,7 @@ export const ParentStudents = () => {
     const fetchChildSessions = async (studentId: string) => {
         try {
             setIsSessionsLoading(true);
-            const data = await api.get<any[]>(`/parents/child-sessions/${studentId}`);
+            const data = await api.get<Record<string, unknown>[]>(`/parents/child-sessions/${studentId}`);
             setChildSessions(data);
         } catch (error) {
             console.error('Error fetching sessions:', error);
@@ -73,19 +73,19 @@ export const ParentStudents = () => {
         }
     };
 
-    const handleViewDates = (student: any) => {
+    const handleViewDates = (student: { id: string; name: string; enrollments?: unknown[] }) => {
         setViewingStudent(student);
         setViewingSubject(null);
         setSessionsPage(1);
         fetchChildSessions(student.id);
     };
 
-    const handleViewAttendance = (student: any) => {
+    const handleViewAttendance = (student: { id: string; name: string }) => {
         setViewingAttendanceStudent(student);
         fetchChildSessions(student.id);
     };
 
-    const handleViewAchievements = async (student: any) => {
+    const handleViewAchievements = async (student: { id: string; name: string }) => {
         if (viewingAchievements?.id === student.id) {
             setViewingAchievements(null);
             return;
@@ -93,14 +93,14 @@ export const ParentStudents = () => {
         
         setViewingAchievements(student);
         try {
-            const logs = await api.get<any[]>(`/student-portal/me/points-log?studentId=${student.id}`);
+            const logs = await api.get<Record<string, unknown>[]>(`/student-portal/me/points-log?studentId=${student.id}`);
             setPointLogs(logs);
         } catch (error) {
             console.error('Error fetching student points log', error);
         }
     };
 
-    const filteredStudents = students.filter((s: any) =>
+    const filteredStudents = students.filter((s: { name: string; subject?: string; teacherName?: string }) =>
         (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
@@ -134,7 +134,7 @@ export const ParentStudents = () => {
 
             {/* ===== SECTION: Student Cards Grid ===== */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredStudents.map((student: any) => (
+                {filteredStudents.map((student: { id: string; name: string; subject?: string; teacherName?: string; enrollments?: { sessionsTotal?: number; sessionsUsed?: number; teacherName?: string }[]; attendance?: number; evaluations?: { teacherNote?: string }[] }) => (
                     <div key={student.id} className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden group hover:border-primary-500 transition-all duration-300 flex flex-col">
                         {/* Kid Profile Header */}
                         <div className="bg-gray-900 p-4 md:p-6 relative overflow-hidden">
@@ -172,8 +172,8 @@ export const ParentStudents = () => {
                                     {(() => {
                                         const enrolled = student.enrollments || [];
                                         if (enrolled.length === 0) return '0%';
-                                        const total = enrolled.reduce((sum: number, en: any) => sum + Number(en.sessionsTotal || 0), 0);
-                                        const used = enrolled.reduce((sum: number, en: any) => sum + Number(en.sessionsUsed || 0), 0);
+                                        const total = enrolled.reduce((sum: number, en: { sessionsTotal?: number }) => sum + Number(en.sessionsTotal || 0), 0);
+                                        const used = enrolled.reduce((sum: number, en: { sessionsUsed?: number }) => sum + Number(en.sessionsUsed || 0), 0);
                                         return total > 0 ? `${Math.round((used / total) * 100)}%` : '0%';
                                     })()}
                                 </span>
@@ -187,7 +187,7 @@ export const ParentStudents = () => {
                                 <CheckCircle2 size={12} className="text-gray-300" />
                             </p>
                             <div className="space-y-4">
-                                {(student.enrollments || []).map((en: any, idx: number) => (
+                                {(student.enrollments || []).map((en: { teacherName: string; sessionsTotal?: number; sessionsUsed?: number }, idx: number) => (
                                     <div key={idx} className="bg-gray-50 dark:bg-gray-800/50 p-3 relative overflow-hidden group/item">
                                         <div className="flex justify-between items-start mb-2">
                                             <div>
@@ -343,7 +343,7 @@ export const ParentStudents = () => {
                         <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
                             {!viewingSubject ? (
                                 <div className="grid grid-cols-1 gap-3">
-                                    {(viewingStudent.enrollments || []).map((en: any, idx: number) => (
+                                    {(viewingStudent.enrollments || []).map((en: { teacherName: string; date?: string; sessionsTotal?: number; sessionsUsed?: number }, idx: number) => (
                                         <button
                                             key={idx}
                                             onClick={() => setViewingSubject(en)}
@@ -509,7 +509,7 @@ export const ParentStudents = () => {
                                 </div>
                             ) : (
                                 <>
-                                    {(viewingAttendanceStudent.enrollments || []).map((en: any, idx: number) => {
+                                    {(viewingAttendanceStudent.enrollments || []).map((en: { teacherName: string; sessionsTotal?: number; sessionsUsed?: number; schedule?: unknown[] }, idx: number) => {
                                         const subjectSessions = childSessions.filter(s => s.subject === en.subject);
                                         const attended = subjectSessions.filter(s => s.status === 'completed').length;
                                         const totalRecorded = subjectSessions.length;

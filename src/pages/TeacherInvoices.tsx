@@ -61,17 +61,17 @@ export const TeacherInvoices = () => {
         try {
             setLoading(true);
             const [invData, teaData] = await Promise.all([
-                api.get<any>('/invoices/teacher'),
-                api.get<any[]>('/teachers')
+                api.get<Record<string, unknown>[]>('/invoices/teacher'),
+                api.get<Record<string, unknown>[]>('/teachers')
             ]);
 
-            const formattedData = (Array.isArray(invData) ? invData : (invData.data || [])).map((item: any) => ({
+            const formattedData = (Array.isArray(invData) ? invData : ((invData as Record<string, unknown>).data as Record<string, unknown>[] || [])).map((item: { id: string; teacherName: string; totalAmount: number; paidAmount: number; status: string; date: string; teacherId?: string }) => ({
                 ...item,
                 id: String(item.id)
             })) as TeacherInvoice[];
 
             setInvoices(formattedData);
-            setTeachers(Array.isArray(teaData) ? teaData : (teaData as any).data || []);
+            setTeachers(Array.isArray(teaData) ? teaData : (teaData as Record<string, unknown>).data as Record<string, unknown>[] || []);
         } catch (error) {
             console.error('Error fetching data:', error);
             showNotification('فشل في تحميل البيانات. يرجى المحاولة مرة أخرى.', 'error');
@@ -243,12 +243,12 @@ export const TeacherInvoices = () => {
         try {
             setLoading(true);
             const [teachersList, allSessions] = await Promise.all([
-                api.get<any[]>('/teachers'),
-                api.get<any[]>('/sessions')
+                api.get<Record<string, unknown>[]>('/teachers'),
+                api.get<Record<string, unknown>[]>('/sessions')
             ]);
 
             const currentTeacherNames = new Set(invoices.map(inv => inv.teacher));
-            const teachersToImport = teachersList.filter((t: any) => !currentTeacherNames.has(t.name));
+            const teachersToImport = teachersList.filter((t: { name: string }) => !currentTeacherNames.has(t.name));
 
             if (teachersToImport.length === 0) {
                 setConfirmModal({
@@ -271,12 +271,12 @@ export const TeacherInvoices = () => {
                 onConfirm: async () => {
                     try {
                         setLoading(true);
-                        const importPromises = teachersToImport.map((t: any) => {
-                            const teacherSessions = allSessions.filter((sess: any) =>
+                        const importPromises = teachersToImport.map((t: { id?: string; name: string; subject?: string; price?: number }) => {
+                            const teacherSessions = allSessions.filter((sess: { teacherId?: string; teacherName?: string; status?: string }) =>
                                 (sess.teacherId === t.id || sess.teacherName === t.name) &&
                                 sess.status === 'completed'
                             );
-                            const totalAmount = teacherSessions.reduce((sum: number, sess: any) => sum + (sess.teacherPrice || t.price || 0), 0);
+                            const totalAmount = teacherSessions.reduce((sum: number, sess: { teacherPrice?: number }) => sum + (sess.teacherPrice || t.price || 0), 0);
 
                             return api.post('/invoices/teacher', {
                                 teacherId: t.id || null,

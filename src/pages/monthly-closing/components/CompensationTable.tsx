@@ -2,8 +2,16 @@ import React from 'react';
 import { RefreshCw, CheckCircle2 } from 'lucide-react';
 import { SectionCard, SectionTitle } from './ClosingUI';
 
+interface CompensationSession {
+    needsCompensation?: boolean;
+    status: string;
+    studentName: string;
+    teacherName: string;
+    date: string;
+}
+
 interface CompensationTableProps {
-    filteredSessions: any[];
+    filteredSessions: CompensationSession[];
 }
 
 export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSessions }) => {

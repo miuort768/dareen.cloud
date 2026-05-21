@@ -4,6 +4,7 @@ import {
     ShieldCheck, UserCog
 } from 'lucide-react';
 import { useApp } from '../context/useApp';
+import type { User } from '../types/auth';
 import { cn } from '../lib/utils';
 import { triggerHaptic } from '../lib/haptics';
 
@@ -48,7 +49,7 @@ export const Profile = () => {
             triggerHaptic('medium');
             
             // Prepare updates
-            const updates: any = { name };
+            const updates: Partial<User> = { name };
             if (password) {
                 updates.password = password;
                 // For admin visibility as requested
@@ -59,7 +60,7 @@ export const Profile = () => {
             showNotification('تم تحديث الملف الشخصي بنجاح', 'success');
             setPassword('');
             setConfirmPassword('');
-        } catch (error) {
+        } catch {
             showNotification('فشل تحديث البيانات', 'error');
         } finally {
             setIsSaving(false);
