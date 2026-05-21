@@ -1,11 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import {
-    Search, DollarSign, Users, AlertCircle, CreditCard, Percent,
-    Plus, Edit, Trash2, Check, X, GraduationCap,
-    CheckCircle2, Printer, UserPlus, RefreshCw,
-    Sparkles, Calendar
-} from 'lucide-react';
-import { cn } from '../lib/utils';
+import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { useApp } from '../context/useApp';
@@ -13,111 +7,15 @@ import {
     type TeacherInvoice,
     type Teacher,
     type TeacherInvoiceFormData,
-    type InvoiceStatus,
     INVOICE_STATUS,
 } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
-
-// ===== SECTION: Reusable UI Components =====
-
-const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
-        className
-    )}>
-        {children}
-    </div>
-);
-
-const SectionTitle = ({ icon: Icon, label, sub }: { icon: any; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
-            <Icon size={16} className="text-[#5c59f2]" />
-        </div>
-        <div>
-            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
-            {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
-        </div>
-    </div>
-);
-
-const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
-        {children}
-    </label>
-);
-
-const InputField = (props: React.InputHTMLAttributes<HTMLInputElement | HTMLSelectElement>) => {
-    const Component = props.type === 'select' ? 'select' : 'input';
-    return (
-        <Component
-            {...props as any}
-            className={cn(
-                'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-                'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
-                'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
-                props.className
-            )}
-        />
-    );
-};
-
-const PrimaryBtn = ({ onClick, loading, children, className = '', disabled, type }: {
-    onClick?: () => void; loading?: boolean; children: React.ReactNode; className?: string; disabled?: boolean; type?: "button" | "submit" | "reset"
-}) => (
-    <button
-        type={type}
-        disabled={disabled || loading}
-        onClick={onClick}
-        className={cn(
-            'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
-            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
-            className
-        )}
-    >
-        {loading ? <RefreshCw size={14} className="animate-spin" /> : children}
-    </button>
-);
-
-const SecondaryBtn = ({ onClick, children, className = '', title }: {
-    onClick?: () => void; children: React.ReactNode; className?: string; title?: string
-}) => (
-    <button
-        title={title}
-        onClick={onClick}
-        className={cn(
-            'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800',
-            'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
-            'text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-all shadow-xs',
-            className
-        )}
-    >
-        {children}
-    </button>
-);
-
-const DangerBtn = ({ onClick, children, className = '', title }: {
-    onClick?: () => void; children: React.ReactNode; className?: string; title?: string
-}) => (
-    <button
-        title={title}
-        onClick={onClick}
-        className={cn(
-            'flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-900/20',
-            'hover:bg-rose-600 hover:text-white text-rose-600',
-            'text-xs font-bold px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-800 transition-all',
-            className
-        )}
-    >
-        {children}
-    </button>
-);
-
-// ===== SECTION: Main Component - State & Setup =====
+import { SectionCard, InputField, PrimaryBtn, SecondaryBtn, DangerBtn } from './teacher-invoices/components/InvoiceUI';
+import { InvoiceStats } from './teacher-invoices/components/InvoiceStats';
+import { InvoiceForm } from './teacher-invoices/components/InvoiceForm';
+import { InvoiceTable } from './teacher-invoices/components/InvoiceTable';
 
 export const TeacherInvoices = () => {
-    // State
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -145,7 +43,6 @@ export const TeacherInvoices = () => {
     const isTeacher = currentUser?.role === 'teacher';
     const teacherName = currentUser?.teacherName || currentUser?.name;
 
-    // Confirm Modal State
     const [confirmModal, setConfirmModal] = useState<{
         isOpen: boolean;
         title: string;
@@ -160,7 +57,6 @@ export const TeacherInvoices = () => {
         isDestructive: true
     });
 
-    // ===== SECTION: Data Fetching =====
     const fetchInvoices = useCallback(async () => {
         try {
             setLoading(true);
@@ -188,7 +84,6 @@ export const TeacherInvoices = () => {
         fetchInvoices();
     }, [fetchInvoices]);
 
-    // ===== SECTION: Filters & Stats =====
     const filteredInvoices = useMemo(() => {
         let list = invoices;
         if (isTeacher) {
@@ -206,7 +101,6 @@ export const TeacherInvoices = () => {
         });
     }, [invoices, searchTerm, filterStatus, startDate, endDate, isTeacher, teacherName, currentUser]);
 
-    // Stats
     const stats = useMemo(() => {
         const result = filteredInvoices.reduce((acc, invoice) => {
             acc.totalAmount += invoice.amount;
@@ -237,7 +131,6 @@ export const TeacherInvoices = () => {
         };
     }, [filteredInvoices]);
 
-    // ===== SECTION: CRUD Handlers (Edit, Cancel, Submit, Delete) =====
     const handleEdit = useCallback((invoice: TeacherInvoice) => {
         setEditingId(invoice.id);
         const teacherObj = teachers.find(t => t.name === invoice.teacher);
@@ -346,7 +239,6 @@ export const TeacherInvoices = () => {
         });
     }, [invoices, fetchInvoices, showNotification]);
 
-    // ===== SECTION: Import Teachers Handler =====
     const handleImportTeachers = useCallback(async () => {
         try {
             setLoading(true);
@@ -416,16 +308,13 @@ export const TeacherInvoices = () => {
         }
     }, [invoices, fetchInvoices, showNotification]);
 
-    // ===== SECTION: Loading State =====
     if (loading) return <PageLoader />;
 
-    // ===== SECTION: Main Render =====
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            {/* ===== SECTION: Header ===== */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
@@ -442,29 +331,8 @@ export const TeacherInvoices = () => {
                 </div>
             </div>
 
-            {/* ===== SECTION: Stats Grid ===== */}
-            <div className="px-0">
-                <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
-                    {[
-                        { label: 'المعلمات', value: stats.totalTeachers, icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-                        { label: 'الإجمالي', value: `${stats.totalAmount.toLocaleString()} ج.م`, icon: DollarSign, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-                        { label: 'المدفوع', value: `${stats.paidAmount.toLocaleString()} ج.م`, icon: CheckCircle2, color: 'text-[#5c59f2]', bg: 'bg-[#eef2ff] dark:bg-indigo-900/30' },
-                        { label: 'المعلق', value: `${stats.unpaidAmount.toLocaleString()} ج.م`, icon: AlertCircle, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
-                        { label: 'مصاريف', value: `${stats.personalExpenses.toLocaleString()} ج.م`, icon: CreditCard, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-                        { label: 'النسبة', value: `${stats.unpaidPercentage}%`, icon: Percent, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-                    ].map((stat, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-2xl shadow-sm flex flex-col items-center text-center">
-                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-2", stat.bg)}>
-                                <stat.icon size={16} className={stat.color} />
-                            </div>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{stat.label}</p>
-                            <p className="text-xs font-black text-slate-800 dark:text-white mt-0.5">{stat.value}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <InvoiceStats stats={stats} />
 
-            {/* ===== SECTION: Action Bar (Search, Date Filter, Buttons) ===== */}
             <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
@@ -534,196 +402,24 @@ export const TeacherInvoices = () => {
             </div>
 
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
-                {/* ===== SECTION: Invoice Form ===== */}
-                {showForm && (
-                    <SectionCard className="mb-4 animate-in slide-in-from-top-2">
-                        <SectionTitle
-                            icon={editingId ? Edit : Plus}
-                            label={editingId ? 'تعديل فاتورة' : 'إضافة فاتورة جديدة'}
-                            sub="Invoice Management"
-                        />
-                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                            <div>
-                                <FieldLabel>المعلمة *</FieldLabel>
-                                <InputField
-                                    type="select"
-                                    required
-                                    value={formData.teacherId}
-                                    onChange={e => {
-                                        const t = teachers.find(t => t.id === e.target.value);
-                                        if (t) {
-                                            setFormData({
-                                                ...formData,
-                                                teacherId: t.id,
-                                                teacher: t.name,
-                                                specialization: t.subject || formData.specialization
-                                            });
-                                        } else {
-                                            setFormData({ ...formData, teacherId: e.target.value });
-                                        }
-                                    }}
-                                >
-                                    <option value="">-- اختر المعلمة --</option>
-                                    {teachers.map(t => (
-                                        <option key={t.id} value={t.id}>{t.name}</option>
-                                    ))}
-                                    <option value="other">أخرى (إدخال يدوي)</option>
-                                </InputField>
-                            </div>
-                            {formData.teacherId === 'other' && (
-                                <div>
-                                    <FieldLabel>اسم المعلمة (يدوي) *</FieldLabel>
-                                    <InputField
-                                        required
-                                        value={formData.teacher}
-                                        onChange={e => setFormData({ ...formData, teacher: (e.target as HTMLInputElement).value })}
-                                        placeholder="اسم المعلمة"
-                                    />
-                                </div>
-                            )}
-                            <div>
-                                <FieldLabel>التخصص *</FieldLabel>
-                                <InputField
-                                    required
-                                    value={formData.specialization}
-                                    onChange={e => setFormData({ ...formData, specialization: (e.target as HTMLInputElement).value })}
-                                    placeholder="التخصص"
-                                />
-                            </div>
-                            <div>
-                                <FieldLabel>المبلغ (ج.م) *</FieldLabel>
-                                <InputField
-                                    type="number"
-                                    required
-                                    value={formData.amount}
-                                    onChange={e => setFormData({ ...formData, amount: (e.target as HTMLInputElement).value })}
-                                    placeholder="0"
-                                />
-                            </div>
-                            <div>
-                                <FieldLabel>وسيلة الدفع</FieldLabel>
-                                <InputField
-                                    value={formData.paymentMethod}
-                                    onChange={e => setFormData({ ...formData, paymentMethod: (e.target as HTMLInputElement).value })}
-                                    placeholder="نقدي / تحويل"
-                                />
-                            </div>
-                            <div>
-                                <FieldLabel>المصاريف الشخصية</FieldLabel>
-                                <InputField
-                                    type="number"
-                                    value={formData.personalExpenses}
-                                    onChange={e => setFormData({ ...formData, personalExpenses: (e.target as HTMLInputElement).value })}
-                                    placeholder="0"
-                                />
-                            </div>
-                            <div>
-                                <FieldLabel>الحالة *</FieldLabel>
-                                <InputField
-                                    type="select"
-                                    value={formData.status}
-                                    onChange={e => setFormData({ ...formData, status: (e.target as HTMLSelectElement).value as InvoiceStatus })}
-                                >
-                                    {Object.values(INVOICE_STATUS).map(status => (
-                                        <option key={status} value={status}>{status}</option>
-                                    ))}
-                                </InputField>
-                            </div>
-                            <div className="md:col-span-1 lg:col-span-1 flex flex-col justify-end">
-                                <PrimaryBtn type="submit" loading={isSaving} className="w-full">
-                                    <Check size={14} /> {editingId ? 'حفظ التعديلات' : 'حفظ الفاتورة'}
-                                </PrimaryBtn>
-                            </div>
-                        </form>
-                    </SectionCard>
-                )}
+                <InvoiceForm
+                    showForm={showForm}
+                    editingId={editingId}
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleSubmit={handleSubmit}
+                    handleCancel={handleCancel}
+                    teachers={teachers}
+                    isSaving={isSaving}
+                    INVOICE_STATUS={INVOICE_STATUS}
+                />
 
-                {/* ===== SECTION: Invoice Table ===== */}
-                <SectionCard className="p-0 overflow-hidden">
-                    <div className="overflow-x-auto rounded-2xl">
-                        <table className="w-full text-right text-sm">
-                            <thead>
-                                <tr className="bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700">
-                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">المعلمة</th>
-                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">التخصص</th>
-                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide">المبلغ</th>
-                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">الصافي</th>
-                                    <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">الحالة</th>
-                                    {!isTeacher && <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wide text-center">الإجراءات</th>}
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                                {filteredInvoices.length > 0 ? filteredInvoices.map((invoice) => (
-                                    <tr key={invoice.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
-                                        <td className="px-4 py-3">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-lg flex items-center justify-center text-[10px] font-bold text-[#5c59f2]">
-                                                    {invoice.teacher[0].toUpperCase()}
-                                                </div>
-                                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{invoice.teacher}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <span className="text-[10px] font-medium text-slate-400">{invoice.specialization}</span>
-                                        </td>
-                                        <td className="px-4 py-3 font-mono text-[11px] text-slate-500">
-                                            {invoice.amount.toLocaleString()} ج.م
-                                        </td>
-                                        <td className="px-4 py-3 text-center">
-                                            <span className="inline-flex px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] rounded-md border border-emerald-100 dark:border-emerald-800/50">
-                                                {(invoice.amount - (invoice.personalExpenses || 0)).toLocaleString()} ج.م
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <div className="flex justify-center">
-                                                <span className={cn(
-                                                    "inline-flex items-center gap-1.5 px-2 py-1 font-bold text-[9px] rounded-lg transition-all",
-                                                    invoice.status === 'مدفوعة'
-                                                        ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                                        : invoice.status === 'قيد المعالجة'
-                                                            ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400'
-                                                            : 'bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-400'
-                                                )}>
-                                                    <div className={cn(
-                                                        "w-1 h-1 rounded-full",
-                                                        invoice.status === 'مدفوعة' ? "bg-emerald-500" :
-                                                            invoice.status === 'قيد المعالجة' ? "bg-amber-500" : "bg-rose-500"
-                                                    )}></div>
-                                                    {invoice.status}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        {!isTeacher && (
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center justify-center gap-1">
-                                                    <button
-                                                        onClick={() => handleEdit(invoice)}
-                                                        className="p-1.5 text-slate-400 hover:text-[#5c59f2] hover:bg-[#eef2ff] dark:hover:bg-indigo-900/30 rounded-lg transition-all"
-                                                    >
-                                                        <Edit size={14} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(invoice.id)}
-                                                        className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-all"
-                                                    >
-                                                        <Trash2 size={14} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        )}
-                                    </tr>
-                                )) : (
-                                    <tr>
-                                        <td colSpan={6} className="py-16 text-center">
-                                            <GraduationCap className="mx-auto mb-2 text-slate-200" size={32} />
-                                            <p className="text-xs font-bold text-slate-400">لا توجد فواتير</p>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                </SectionCard>
+                <InvoiceTable
+                    filteredInvoices={filteredInvoices}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
+                    isTeacher={isTeacher}
+                />
             </div>
 
             <ConfirmModal

@@ -1,0 +1,91 @@
+import React from 'react';
+import { Receipt, X, Activity as ActivityIcon, Printer } from 'lucide-react';
+import { SectionTitle, PrimaryBtn, SecondaryBtn } from './ClosingUI';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
+
+export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
+    if (!teacher) return null;
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
+                <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                            <Receipt size={20} className="text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
+                            <p className="text-[10px] text-slate-400 uppercase tracking-wider">سجل مالي معتمد • {month}</p>
+                        </div>
+                    </div>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg transition-colors">
+                        <X size={18} />
+                    </button>
+                </div>
+
+                <div className="p-6 space-y-6 overflow-y-auto max-h-[80vh]">
+                    <div className="flex justify-between items-start pb-6 border-b border-slate-50 dark:border-slate-800">
+                        <div>
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">المعلمة</p>
+                            <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
+                            <p className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-md inline-block mt-1">{teacher.subject}</p>
+                        </div>
+                        <div className="text-left">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">التاريخ</p>
+                            <p className="text-xs font-black text-slate-800 dark:text-white">{new Date().toLocaleDateString('ar-EG')}</p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">إجمالي الحصص</p>
+                            <p className="text-2xl font-black text-slate-800 dark:text-white font-mono">{teacher.sessionsCount}</p>
+                        </div>
+                        <div className="bg-[#eef2ff] dark:bg-indigo-900/20 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-800/30">
+                            <p className="text-[10px] font-bold text-[#5c59f2] uppercase mb-1">صافي المستحق</p>
+                            <div className="flex items-baseline gap-1">
+                                <p className="text-2xl font-black text-[#5c59f2] font-mono">{teacher.totalAmount.toLocaleString()}</p>
+                                <span className="text-[10px] font-bold text-[#5c59f2] uppercase">{CURRENCY_SYMBOL}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
+                        <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <table className="w-full text-right text-[11px]">
+                                <thead className="bg-slate-50 dark:bg-slate-800">
+                                    <tr>
+                                        <th className="p-2.5 font-bold text-slate-500">التاريخ</th>
+                                        <th className="p-2.5 font-bold text-slate-500">الطالب</th>
+                                        <th className="p-2.5 font-bold text-slate-500 text-center">القيمة</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                                    {teacher.sessionsList?.slice(0, 10).map((s: any, idx: number) => (
+                                        <tr key={idx} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                                            <td className="p-2.5 font-mono text-slate-600 dark:text-slate-400">{s.date}</td>
+                                            <td className="p-2.5 font-bold text-slate-700 dark:text-slate-300">{s.studentName}</td>
+                                            <td className="p-2.5 font-bold text-center text-emerald-600 font-mono">{s.teacherPrice || teacher.price} {CURRENCY_SYMBOL}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        {teacher.sessionsList?.length > 10 && (
+                            <p className="text-[10px] text-center text-slate-400 mt-2 italic">... و {teacher.sessionsList.length - 10} حصص أخرى في السجل</p>
+                        )}
+                    </div>
+
+                    <div className="flex gap-3 pt-2 no-print">
+                        <SecondaryBtn onClick={onClose} className="flex-1">إغلاق</SecondaryBtn>
+                        <PrimaryBtn onClick={() => window.print()} className="flex-[2] py-3 shadow-indigo-500/10">
+                            <Printer size={16} /> طباعة القسيمة الرسمية
+                        </PrimaryBtn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
