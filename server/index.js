@@ -1,5 +1,12 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+// JWT_SECRET startup validation
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your-super-secret-jwt-key-change-this-in-production') {
+    console.error('FATAL: JWT_SECRET is not set or is still the default value. Set a strong secret in server/.env');
+    process.exit(1);
+}
+
 const express = require('express');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
@@ -642,6 +649,12 @@ async function startServer() {
 
         process.on('SIGTERM', () => shutdown('SIGTERM'));
         process.on('SIGINT', () => shutdown('SIGINT'));
+        process.on('unhandledRejection', (reason, promise) => {
+            console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+            if (typeof logger !== 'undefined') {
+                logger.error('Unhandled Rejection:', reason);
+            }
+        });
 
     } catch (err) {
         console.error('Failed to start server:', err);

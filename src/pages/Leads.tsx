@@ -26,7 +26,7 @@ import { socketService } from '../lib/socket';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { PageLoader } from '../components/ui/PageLoader';
 
-// ── Reusable Styled Components ──────────────────────────────────────────────
+// ===== SECTION: Reusable UI Components =====
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -73,7 +73,7 @@ const StatItem = ({ title, value, icon: Icon, subValue, bg }: { title: string, v
     </div>
 );
 
-// Custom Confirm Delete Dialog
+// ===== SECTION: ConfirmDeleteModal Component =====
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border border-slate-100 dark:border-slate-800">
@@ -110,6 +110,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
     </div>
 );
 
+// ===== SECTION: Main Component =====
 export const Leads: React.FC = () => {
     const queryClient = useQueryClient();
     const [searchTerm, setSearchTerm] = useState('');
@@ -119,7 +120,7 @@ export const Leads: React.FC = () => {
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
     const formRef = React.useRef<HTMLFormElement>(null);
 
-    // Fetch leads
+    // ===== SECTION: Data Fetching =====
     const { data: leads = [], isLoading } = useQuery({
         queryKey: ['leads'],
         queryFn: crmService.getAll
@@ -130,7 +131,7 @@ export const Leads: React.FC = () => {
         queryFn: crmService.getStats
     });
 
-    // Real-time synchronization via WebSockets
+    // ===== SECTION: Real-time Sync via WebSockets =====
     useEffect(() => {
         const socket = socketService.getSocket();
         
@@ -147,7 +148,7 @@ export const Leads: React.FC = () => {
         };
     }, [queryClient]);
 
-    // Add Mutation
+    // ===== SECTION: Mutations (Add, Update, Delete) =====
     const addMutation = useMutation({
         mutationFn: crmService.add,
         onSuccess: () => {
@@ -179,6 +180,7 @@ export const Leads: React.FC = () => {
         }
     });
 
+    // ===== SECTION: Filtered Leads & Handlers =====
     const filteredLeads = leads.filter(l => {
         if (showLost) return l.status === 'lost';
         const matchesSearch = l.studentName.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -202,15 +204,17 @@ export const Leads: React.FC = () => {
         lost: { label: 'ملغي', color: 'text-rose-600', bg: 'bg-rose-50 dark:bg-rose-900/20' }
     };
 
+    // ===== SECTION: Loading State =====
     if (isLoading) {
         return <PageLoader />;
     }
 
+    // ===== SECTION: Main Render =====
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
-            {/* Header */}
+            {/* ===== SECTION: Header ===== */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
                     <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-white/10 text-teal-100 rounded-xl shadow-inner border border-white/10">
@@ -243,7 +247,7 @@ export const Leads: React.FC = () => {
                 </div>
             </div>
 
-            {/* Quick Stats Bar */}
+            {/* ===== SECTION: Quick Stats Bar ===== */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 py-6">
                 <StatItem 
                     title="إجمالي المهتمين" 
@@ -271,7 +275,7 @@ export const Leads: React.FC = () => {
                 />
             </div>
 
-            {/* Filters & Search */}
+            {/* ===== SECTION: Filters & Search ===== */}
             <div className="px-0 mb-6">
                 <SectionCard className="p-3 flex flex-col md:flex-row gap-3 items-center">
                     <div className="relative flex-1 w-full">
@@ -302,9 +306,9 @@ export const Leads: React.FC = () => {
                 </SectionCard>
             </div>
 
-            {/* Leads Table/Cards */}
+            {/* ===== SECTION: Leads Table (Desktop) & Cards (Mobile) ===== */}
             <div className="px-0">
-                {/* Desktop Table */}
+                {/* ===== SECTION: Desktop Table ===== */}
                 <div className="hidden lg:block overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-rose-600">
@@ -427,7 +431,7 @@ export const Leads: React.FC = () => {
                     )}
                 </div>
 
-                {/* Mobile Cards */}
+                {/* ===== SECTION: Mobile Cards ===== */}
                 <div className="lg:hidden space-y-4">
                     {filteredLeads.length === 0 ? (
                         <div className="py-20 text-center">
@@ -554,7 +558,7 @@ export const Leads: React.FC = () => {
                 </div>
             </div>
 
-            {/* Add Lead Modal */}
+            {/* ===== SECTION: Add Lead Modal ===== */}
             {isAddModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
                     <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
@@ -620,7 +624,7 @@ export const Leads: React.FC = () => {
                 </div>
             )}
 
-            {/* Confirm Delete Modal */}
+            {/* ===== SECTION: Confirm Delete Modal ===== */}
             {confirmLeadId && (
                 <ConfirmDeleteModal
                     onConfirm={handleConfirmDelete}

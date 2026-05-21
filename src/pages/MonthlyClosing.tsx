@@ -17,7 +17,7 @@ import { cn } from '../lib/utils';
 import { CURRENCY_SYMBOL } from '../config/constants';
 import { PageLoader } from '../components/ui/PageLoader';
 
-// ── Reusable Styled Components ──────────────────────────────────────────────
+// ===== SECTION: Reusable UI Components =====
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -83,7 +83,7 @@ const StatItem = ({ title, value, icon: Icon, color, subValue, bg }: { title: st
     </SectionCard>
 );
 
-// --- Salary Slip Modal Component ---
+// ===== SECTION: Salary Slip Modal Component =====
 const SalarySlipModal = ({ teacher, month, onClose }: { teacher: any, month: string, onClose: () => void }) => {
     if (!teacher) return null;
     
@@ -211,7 +211,7 @@ export const MonthlyClosing: React.FC = () => {
         queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
     };
 
-    // Fetch data
+    // ===== SECTION: Data Fetching =====
     const { data: sessions, isLoading: sessionsLoading } = useQuery({
         queryKey: ['sessions-closing'],
         queryFn: attendanceService.getSessions
@@ -239,7 +239,7 @@ export const MonthlyClosing: React.FC = () => {
 
     const filteredSessions = sessions?.filter(s => s.date >= startDate && s.date <= endDate) || [];
 
-    // --- 1. Teacher Payroll Logic ---
+    // ===== SECTION: Teacher Payroll Logic =====
     const payrollData = teachers?.map(teacher => {
         const teacherSessions = filteredSessions.filter(s => 
             s.teacherName?.trim() === teacher.name?.trim() && 
@@ -259,7 +259,7 @@ export const MonthlyClosing: React.FC = () => {
         };
     }).sort((a, b) => b.totalAmount - a.totalAmount) || [];
 
-    // --- 2. Subject Profitability Logic ---
+    // ===== SECTION: Subject Profitability Logic =====
     const subjectsList = Array.from(new Set(filteredSessions.map(s => s.subject))).filter(Boolean);
     const subjectAnalysis = subjectsList.map(subj => {
         const subjectSessions = filteredSessions.filter(s => s.subject === subj && s.status === 'completed');
@@ -275,7 +275,7 @@ export const MonthlyClosing: React.FC = () => {
         };
     }).sort((a, b) => b.profit - a.profit);
 
-    // --- 3. Teacher Performance Logic ---
+    // ===== SECTION: Teacher Performance Logic =====
     const teacherPerformance = teachers?.map(teacher => {
         const teacherMonthSessions = filteredSessions.filter(s => 
             s.teacherName?.trim() === teacher.name?.trim()
@@ -294,7 +294,7 @@ export const MonthlyClosing: React.FC = () => {
         };
     }).sort((a, b) => b.attendanceRate - a.attendanceRate) || [];
 
-    // --- 4. Student Renewals Logic ---
+    // ===== SECTION: Student Renewals Logic =====
     const renewalsData = students?.flatMap(student => 
         (student.enrollments || []).map(enroll => {
             const remaining = enroll.sessionsTotal - enroll.sessionsUsed;
@@ -318,7 +318,7 @@ export const MonthlyClosing: React.FC = () => {
         })
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
 
-    // --- 5. Summary Stats ---
+    // ===== SECTION: Summary Stats Calculation =====
     const totalProjectedIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
     const totalActualCollections = (studentInvoices || [])
         .filter((inv: any) => inv.date >= startDate && inv.date <= endDate && inv.status === 'paid')
@@ -327,15 +327,17 @@ export const MonthlyClosing: React.FC = () => {
     const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
     const netActualCashFlow = totalActualCollections - totalTeacherPayout;
 
+    // ===== SECTION: Loading State =====
     if (isLoading) {
         return <PageLoader />;
     }
 
+    // ===== SECTION: Main Render =====
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #4f46e5 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
-            {/* Header */}
+            {/* ===== SECTION: Header ===== */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-xl">
@@ -389,7 +391,7 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
             </div>
 
-            {/* Stats Grid */}
+            {/* ===== SECTION: Stats Grid ===== */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 px-0 py-4">
                 <StatItem 
                     title="صافي الربح المتوقع" 
@@ -425,7 +427,7 @@ export const MonthlyClosing: React.FC = () => {
                 />
             </div>
 
-            {/* Navigation Tabs */}
+            {/* ===== SECTION: Navigation Tabs ===== */}
             <div className="px-0 mb-4">
                 <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
                     {[
@@ -454,8 +456,9 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
             </div>
 
-            {/* Tab Contents */}
+            {/* ===== SECTION: Tab Contents ===== */}
             <div className="px-0 md:animate-in md:fade-in md:duration-500">
+                {/* ===== SECTION: Tab - Payroll ===== */}
                 {activeTab === 'payroll' && (
                     <SectionCard>
                         <div className="p-4 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
@@ -516,6 +519,7 @@ export const MonthlyClosing: React.FC = () => {
                     </SectionCard>
                 )}
 
+                {/* ===== SECTION: Tab - Collections ===== */}
                 {activeTab === 'collections' && (
                     <SectionCard>
                         <div className="p-4 border-b border-slate-50 dark:border-slate-800">
@@ -565,6 +569,7 @@ export const MonthlyClosing: React.FC = () => {
                     </SectionCard>
                 )}
 
+                {/* ===== SECTION: Tab - Renewals ===== */}
                 {activeTab === 'renewals' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {renewalsData.map((item, idx) => (
@@ -597,6 +602,7 @@ export const MonthlyClosing: React.FC = () => {
                     </div>
                 )}
 
+                {/* ===== SECTION: Tab - Subject Profitability Analysis ===== */}
                 {activeTab === 'analysis' && (
                     <div className="space-y-6">
                         <SectionCard className="p-6">
@@ -637,6 +643,7 @@ export const MonthlyClosing: React.FC = () => {
                     </div>
                 )}
 
+                {/* ===== SECTION: Tab - Teacher Performance ===== */}
                 {activeTab === 'teachers' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {teacherPerformance.map((perf, idx) => (
@@ -665,6 +672,7 @@ export const MonthlyClosing: React.FC = () => {
                     </div>
                 )}
 
+                {/* ===== SECTION: Tab - Compensation ===== */}
                 {activeTab === 'compensation' && (
                     <SectionCard>
                         <div className="p-4 border-b border-slate-50 dark:border-slate-800">
@@ -705,6 +713,7 @@ export const MonthlyClosing: React.FC = () => {
                     </SectionCard>
                 )}
 
+                {/* ===== SECTION: Tab - Strategic Summary ===== */}
                 {activeTab === 'summary' && (
                     <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden border-none rounded-2xl shadow-2xl">
                         {/* Geometric Accents */}
@@ -809,7 +818,7 @@ export const MonthlyClosing: React.FC = () => {
                 )}
             </div>
 
-            {/* Salary Slip Modal */}
+            {/* ===== SECTION: Salary Slip Modal ===== */}
             {selectedTeacherForSlip && (
                 <SalarySlipModal 
                     teacher={selectedTeacherForSlip} 

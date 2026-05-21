@@ -6,30 +6,9 @@ import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts } from '../../data/blogPosts';
 import { Calendar, User, ArrowRight, Share2, Loader2 } from 'lucide-react';
 import { api } from '../../lib/api';
+import DOMPurify from 'dompurify';
 
-const sanitizeHTML = (html: string) => {
-    if (!html) return '';
-    
-    // Strip HTML comments
-    let sanitized = html.replace(/<!--[\s\S]*?-->/g, '');
-    
-    // Strip script tags entirely
-    sanitized = sanitized.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-    
-    // Strip style tags entirely
-    sanitized = sanitized.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
-
-    // Strip inline event handlers (onmouseover, onclick, onerror, etc.)
-    sanitized = sanitized.replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '');
-    
-    // Strip javascript: URI schemes in links or media sources
-    sanitized = sanitized.replace(/(href|src|action)\s*=\s*["']?\s*javascript:[^"'>]*/gi, '');
-    
-    // Strip potentially dangerous tags (iframe, object, embed, frame, applet, meta, link)
-    sanitized = sanitized.replace(/<(iframe|object|embed|frame|frameset|applet|meta|link)[^>]*>([\s\S]*?<\/\1>)?/gi, '');
-
-    return sanitized;
-};
+const sanitizeHTML = (html: string) => DOMPurify.sanitize(html);
 
 export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();

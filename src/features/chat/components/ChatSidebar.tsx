@@ -5,7 +5,7 @@ import {
     Sun, Trash2
 } from 'lucide-react';
 import { NotificationDropdown } from '../../../components/ui/NotificationDropdown';
-import { useDarkMode } from '../../../hooks/useDarkMode';
+import { useDarkMode } from '../../../shared/hooks/useDarkMode';
 
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';

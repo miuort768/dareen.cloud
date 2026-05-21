@@ -10,8 +10,8 @@ const logger = require('../utils/logger');
 const router = express.Router();
 
 const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Relaxed for troubleshooting
+    windowMs: 15 * 60 * 1000,
+    max: 10,
     message: { error: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد 15 دقيقة' }
 });
 

@@ -14,15 +14,19 @@ export const AVAILABLE_PERMISSIONS: Permission[] = [
     { id: 'students', label: 'الطلاب' },
     { id: 'attendance', label: 'الحضور والغياب' },
     { id: 'finance', label: 'المالية العامة' },
-    { id: 'student-invoices', label: 'فواتير الطلاب' },
-    { id: 'teacher-invoices', label: 'فواتير المعلمين' },
+    { id: 'student_invoices', label: 'فواتير الطلاب' },
+    { id: 'teacher_invoices', label: 'فواتير المعلمين' },
     { id: 'reports', label: 'التقارير' },
     { id: 'schedule', label: 'الجدول الدراسي' },
     { id: 'teachers', label: 'المعلمين' },
     { id: 'parents', label: 'أولياء الأمور' },
     { id: 'appointments', label: 'المواعيد' },
     { id: 'settings', label: 'الإعدادات' },
-    { id: 'tasks', label: 'المهام' }, // Added tasks as it was in App.tsx but missing here
+    { id: 'tasks', label: 'المهام' },
+    { id: 'evaluations', label: 'التقييمات والنقاط' },
+    { id: 'trial_sessions', label: 'جلسات المراجعة' },
+    { id: 'teacher_availability', label: 'متاحات المعلمات' },
+    { id: 'announcements', label: 'إدارة الإعلانات' },
 ];
 
 export const THEME_PRESETS: ThemePreset[] = [

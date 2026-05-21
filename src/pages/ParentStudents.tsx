@@ -22,6 +22,7 @@ import { ar } from 'date-fns/locale';
 import { api } from '../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageLoader } from '../components/ui/PageLoader';
+// ===== SECTION: Main Component - State & Setup =====
 export const ParentStudents = () => {
     const [students, setStudents] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,7 @@ export const ParentStudents = () => {
     });
     const [sessionsEndDate, setSessionsEndDate] = useState(new Date().toISOString().split('T')[0]);
 
+    // ===== SECTION: Data Fetching =====
     useEffect(() => {
         const fetchStudents = async () => {
             try {
@@ -58,6 +60,7 @@ export const ParentStudents = () => {
         fetchStudents();
     }, []);
 
+    // ===== SECTION: View Handlers (Dates, Attendance, Achievements) =====
     const fetchChildSessions = async (studentId: string) => {
         try {
             setIsSessionsLoading(true);
@@ -101,13 +104,16 @@ export const ParentStudents = () => {
         (s.name || '').toLowerCase().includes((searchQuery || '').toLowerCase())
     );
 
+    // ===== SECTION: Loading State =====
     if (isLoading) {
         return <PageLoader />;
     }
 
+    // ===== SECTION: Main Render =====
     return (
         <div className="pt-6 md:pt-10 space-y-6 pb-24 md:animate-in md:fade-in md:duration-500" dir="rtl">
 
+            {/* ===== SECTION: Page Header ===== */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4 md:px-0 bg-transparent dark:bg-slate-900/40">
                 <div>
                     <h1 className="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none mb-1">قائمة الأبناء</h1>
@@ -126,6 +132,7 @@ export const ParentStudents = () => {
                 </div>
             </div>
 
+            {/* ===== SECTION: Student Cards Grid ===== */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredStudents.map((student: any) => (
                     <div key={student.id} className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden group hover:border-primary-500 transition-all duration-300 flex flex-col">
@@ -284,7 +291,7 @@ export const ParentStudents = () => {
                 )}
             </div>
 
-            {/* Session Dates Modal - Modern Drill Down View */}
+            {/* ===== SECTION: Session Dates Modal ===== */}
             {viewingStudent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 md:animate-in md:fade-in md:duration-300">
                     <div
@@ -465,7 +472,7 @@ export const ParentStudents = () => {
                 </div>
             )}
 
-            {/* Total Attendance Report Modal */}
+            {/* ===== SECTION: Attendance Report Modal ===== */}
             {viewingAttendanceStudent && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 md:animate-in md:fade-in md:duration-300">
                     <div

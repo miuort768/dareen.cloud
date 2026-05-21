@@ -214,7 +214,7 @@ function App() {
             <Route path="parent-announcements" element={<ProtectedRoute permission="parent_announcements"><ParentAnnouncements /></ProtectedRoute>} />
             <Route path="teachers" element={<ProtectedRoute permission="teachers"><Teachers /></ProtectedRoute>} />
             <Route path="students" element={<ProtectedRoute permission="students"><Students /></ProtectedRoute>} />
-            <Route path="evaluations" element={<ProtectedRoute permission="dashboard"><Evaluations /></ProtectedRoute>} />
+            <Route path="evaluations" element={<ProtectedRoute permission="evaluations"><Evaluations /></ProtectedRoute>} />
             <Route path="parents" element={<ProtectedRoute permission="parents"><Parents /></ProtectedRoute>} />
             <Route path="monthly-closing" element={<ProtectedRoute permission="monthly_closing"><MonthlyClosing /></ProtectedRoute>} />
             <Route path="attendance" element={<ProtectedRoute permission="attendance"><Attendance /></ProtectedRoute>} />
@@ -223,17 +223,17 @@ function App() {
             <Route path="appointments" element={<ProtectedRoute permission="appointments"><Appointments /></ProtectedRoute>} />
             <Route path="finance" element={<ProtectedRoute permission="finance"><Finance /></ProtectedRoute>} />
             <Route path="leads" element={<ProtectedRoute permission="leads"><Leads /></ProtectedRoute>} />
-            <Route path="trial-sessions" element={<ProtectedRoute permission="*"><TrialSessions /></ProtectedRoute>} />
-            <Route path="teacher-availability" element={<ProtectedRoute permission="*"><TeacherAvailability /></ProtectedRoute>} />
-            <Route path="student-invoices" element={<ProtectedRoute permission="student-invoices"><StudentInvoices /></ProtectedRoute>} />
-            <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher-invoices"><TeacherInvoices /></ProtectedRoute>} />
+            <Route path="trial-sessions" element={<ProtectedRoute permission="trial_sessions"><TrialSessions /></ProtectedRoute>} />
+            <Route path="teacher-availability" element={<ProtectedRoute permission="teacher_availability"><TeacherAvailability /></ProtectedRoute>} />
+            <Route path="student-invoices" element={<ProtectedRoute permission="student_invoices"><StudentInvoices /></ProtectedRoute>} />
+            <Route path="teacher-invoices" element={<ProtectedRoute permission="teacher_invoices"><TeacherInvoices /></ProtectedRoute>} />
             <Route path="tasks" element={<ProtectedRoute permission="tasks"><Tasks /></ProtectedRoute>} />
             <Route path="chat" element={<ProtectedRoute permission="chat"><Chat /></ProtectedRoute>} />
             <Route path="reports" element={<ProtectedRoute permission="reports"><Reports /></ProtectedRoute>} />
             <Route path="settings" element={<ProtectedRoute permission="settings"><Settings /></ProtectedRoute>} />
 
             {/* New Announcements Admin Route */}
-            <Route path="announcements" element={<ProtectedRoute permission="*"><Announcements /></ProtectedRoute>} />
+            <Route path="announcements" element={<ProtectedRoute permission="announcements"><Announcements /></ProtectedRoute>} />
 
             <Route path="forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
             

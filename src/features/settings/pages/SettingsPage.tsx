@@ -62,7 +62,7 @@ const THEME_COLORS = [
 
 type TabId = 'general' | 'appearance' | 'users' | 'mobile' | 'policies' | 'advanced' | 'audit';
 
-// ── Reusable sub-components ───────────────────────────────────────────────────
+// ===== SECTION: Reusable UI Components (SectionCard, SectionTitle, Inputs, Buttons, Toggles) =====
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -194,7 +194,7 @@ const ToggleRow = ({
     </div>
 );
 
-// ── Main Settings Component ────────────────────────────────────────────────────
+// ===== SECTION: Main Component - State & Setup =====
 
 export const Settings = () => {
     const {
@@ -267,6 +267,7 @@ export const Settings = () => {
     // Mobile Specific Settings
     const [hapticEnabled, setHapticEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false'); // Default true
 
+    // ===== SECTION: Backup Export/Import Handlers =====
     const handleExportBackup = async () => {
         setIsSaving(true);
         try {
@@ -318,6 +319,7 @@ export const Settings = () => {
         reader.readAsText(file);
     };
 
+    // ===== SECTION: System Reset/Archive Handlers =====
     const triggerReset = () => {
         setSecureAction({
             type: 'reset',
@@ -390,6 +392,7 @@ export const Settings = () => {
         }
     }, [heroBanners]);
 
+    // ===== SECTION: Effects, Save Handlers & Audit =====
     const fetchLogs = async () => {
         try {
             const logs = await settingsService.getAuditLogs();
@@ -425,6 +428,7 @@ export const Settings = () => {
         finally { setIsSaving(false); }
     };
 
+    // ===== SECTION: User Action Handler =====
     const handleUserAction = () => {
         if (!newUser.username) return;
         if (editingUserId) {
@@ -446,6 +450,7 @@ export const Settings = () => {
         { id: 'audit', label: 'السجلات', icon: Activity },
     ];
 
+    // ===== SECTION: Loading State =====
     if (loading) return (
         <div className="p-4 space-y-3">
             <Skeleton className="h-14 rounded-2xl" />
@@ -459,7 +464,7 @@ export const Settings = () => {
     return (
         <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
 
-            {/* ── Header ── */}
+            {/* ===== SECTION: Header ===== */}
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
@@ -476,7 +481,7 @@ export const Settings = () => {
                 </div>
             </div>
 
-            {/* ── Tab Navigation ── */}
+            {/* ===== SECTION: Tab Navigation ===== */}
             <div className="px-0 md:px-0">
                 <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-2 shadow-sm">
                     <div className="flex overflow-x-auto no-scrollbar gap-2 px-0">
@@ -502,7 +507,7 @@ export const Settings = () => {
             {/* ── Tab Content ── */}
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
 
-                {/* ── GENERAL ── */}
+                {/* ===== SECTION: Tab - General Settings ===== */}
                 {activeTab === 'general' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <SectionCard className="rounded-none">
@@ -595,7 +600,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── MOBILE SETTINGS ── */}
+                {/* ===== SECTION: Tab - Mobile Settings ===== */}
                 {activeTab === 'mobile' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <SectionCard className="rounded-none">
@@ -637,7 +642,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── APPEARANCE ── */}
+                {/* ===== SECTION: Tab - Appearance/Branding ===== */}
                 {activeTab === 'appearance' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <SectionCard>
@@ -769,7 +774,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── USERS ── */}
+                {/* ===== SECTION: Tab - Users Management ===== */}
                 {activeTab === 'users' && (
                     <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                         <div className="xl:col-span-2 space-y-3">
@@ -913,7 +918,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── POLICIES ── */}
+                {/* ===== SECTION: Tab - Policies ===== */}
                 {activeTab === 'policies' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <SectionCard>
@@ -1024,7 +1029,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── ADVANCED ── */}
+                {/* ===== SECTION: Tab - Advanced ===== */}
                 {activeTab === 'advanced' && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <SectionCard>
@@ -1124,7 +1129,7 @@ export const Settings = () => {
                     </div>
                 )}
 
-                {/* ── AUDIT ── */}
+                {/* ===== SECTION: Tab - Audit Log ===== */}
                 {activeTab === 'audit' && (
                     <SectionCard>
                         <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
@@ -1196,7 +1201,7 @@ export const Settings = () => {
                 )}
             </div>
 
-            {/* ── Secure Action Modal ── */}
+            {/* ===== SECTION: Secure Action Confirmation Modal ===== */}
             {secureAction && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/50 animate-in fade-in">
                     <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full shadow-2xl border border-rose-100 dark:border-rose-900">
@@ -1237,7 +1242,7 @@ export const Settings = () => {
                 </div>
             )}
 
-            {/* ── Delete User Modal ── */}
+            {/* ===== SECTION: Delete User Modal ===== */}
             {showDeleteModal && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm bg-black/40 animate-in fade-in">
                     <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 dark:border-slate-800">
@@ -1266,6 +1271,7 @@ export const Settings = () => {
                 </div>
             )}
 
+            {/* ===== SECTION: Maintenance Mode Modal ===== */}
             {showMaintenanceModal && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/40 animate-in fade-in">
                     <div className="bg-white dark:bg-slate-900 rounded-none border-4 border-amber-500 max-w-md w-full shadow-[12px_12px_0px_rgba(245,158,11,0.2)] p-0 overflow-hidden">
@@ -1323,7 +1329,7 @@ export const Settings = () => {
                 </div>
             )}
 
-            {/* ── Success Toast ── */}
+            {/* ===== SECTION: Success Toast Notification ===== */}
             {showSuccess && (
                 <div className="fixed bottom-6 left-6 z-[2000] flex items-center gap-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl px-4 py-3 shadow-xl animate-in slide-in-from-bottom-4 duration-300">
                     <div className="w-7 h-7 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center">

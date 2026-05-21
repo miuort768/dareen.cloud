@@ -41,7 +41,7 @@ interface Student {
     }[];
 }
 
-// ── Reusable Styled Components (Matching Settings.tsx) ────────────────────────
+// ===== SECTION: Reusable UI Components =====
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -137,7 +137,7 @@ const DangerBtn = ({ onClick, children, className = '', title }: {
     </button>
 );
 
-// ── Main Component ────────────────────────────────────────────────────────────
+// ===== SECTION: Main Component - State & Setup =====
 
 export const StudentInvoices = () => {
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
@@ -179,6 +179,7 @@ export const StudentInvoices = () => {
         onConfirm: () => { }
     });
 
+    // ===== SECTION: Data Fetching =====
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -201,6 +202,7 @@ export const StudentInvoices = () => {
         fetchData();
     }, []);
 
+    // ===== SECTION: Filtered Invoices Computation =====
     const filteredInvoices = useMemo(() => {
         return invoices.filter(inv => {
             const sName = inv.studentName || '';
@@ -212,6 +214,7 @@ export const StudentInvoices = () => {
         });
     }, [invoices, searchTerm, filterStatus]);
 
+    // ===== SECTION: CRUD Handlers (Edit, Cancel, Submit, Toggle, Delete) =====
     const handleEdit = (invoice: StudentInvoice) => {
         setEditingId(invoice.id);
         setFormData({
@@ -364,6 +367,7 @@ export const StudentInvoices = () => {
         }
     };
 
+    // ===== SECTION: Import Students Handler =====
     const handleImportStudents = async () => {
         try {
             setLoading(true);
@@ -453,21 +457,23 @@ export const StudentInvoices = () => {
         }
     };
 
-    // Stats
+    // ===== SECTION: Stats Computations =====
     const totalRevenue = useMemo(() => invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0), [invoices]);
     const pendingRevenue = useMemo(() => invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0), [invoices]);
     const overdueRevenue = useMemo(() => invoices.filter(i => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0), [invoices]);
     const paidCount = useMemo(() => invoices.filter(i => i.status === 'paid').length, [invoices]);
     const pendingCount = useMemo(() => invoices.filter(i => i.status === 'pending').length, [invoices]);
 
+    // ===== SECTION: Loading State =====
     if (loading) return <PageLoader />;
 
+    // ===== SECTION: Main Render =====
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            {/* ── Header ── */}
+            {/* ===== SECTION: Header ===== */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-xl">
@@ -484,7 +490,7 @@ export const StudentInvoices = () => {
                 </div>
             </div>
 
-            {/* ── Stats Grid ── */}
+            {/* ===== SECTION: Stats Grid ===== */}
             <div className="px-0">
                 <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
                     {[
@@ -506,7 +512,7 @@ export const StudentInvoices = () => {
                 </div>
             </div>
 
-            {/* ── Action Bar ── */}
+            {/* ===== SECTION: Action Bar (Search, Filter, Buttons) ===== */}
             <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
@@ -553,7 +559,7 @@ export const StudentInvoices = () => {
             </div>
 
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
-                {/* ── Form ── */}
+                {/* ===== SECTION: Invoice Form ===== */}
                 {showForm && (
                     <SectionCard className="mb-4 animate-in slide-in-from-top-2">
                         <SectionTitle
@@ -634,7 +640,7 @@ export const StudentInvoices = () => {
                     </SectionCard>
                 )}
 
-                {/* ── Table ── */}
+                {/* ===== SECTION: Invoice Table ===== */}
                 <SectionCard className="p-0 overflow-hidden">
                     <div className="overflow-x-auto rounded-2xl">
                         <table className="w-full text-right text-sm">

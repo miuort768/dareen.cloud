@@ -4,29 +4,100 @@ import { useUIStore } from '../store/uiStore';
 import { useUserStore } from '../store/userStore';
 import type { User } from '../types/auth';
 
-export const useApp = () => {
-    const ui = useUIStore();
-    const auth = useAuthStore();
+/** @deprecated Use individual hooks (useCurrentUser, useSidebarCollapsed, etc.) for better re-render performance */
+export const useCurrentUser = () => useAuthStore(s => s.currentUser);
+export const useIsAuthenticated = () => useAuthStore(s => s.isAuthenticated);
+export const useIsLoading = () => useAuthStore(s => s.isLoading);
+export const useLogin = () => useAuthStore(s => s.login);
+export const useLogout = () => useAuthStore(s => s.logout);
+export const useUpdateCurrentUser = () => useAuthStore(s => s.updateCurrentUser);
+export const useUser = () => useAuthStore(s => s.currentUser || ({ id: 'guest', name: 'ضيف', username: 'guest' } as User));
+
+export const useSidebarCollapsed = () => useUIStore(s => s.sidebarCollapsed);
+export const useSetSidebarCollapsed = () => useUIStore(s => s.setSidebarCollapsed);
+export const useToasts = () => useUIStore(s => s.toasts);
+export const useShowNotification = () => useUIStore(s => s.showNotification);
+export const useRequestDesktopNotifications = () => useUIStore(s => s.requestDesktopNotifications);
+
+export const useAcademyName = () => useSettingsStore(s => s.academyName);
+export const useAcademyLogo = () => useSettingsStore(s => s.academyLogo);
+export const useAcademyTagline = () => useSettingsStore(s => s.academyTagline);
+export const useAcademyAddress = () => useSettingsStore(s => s.academyAddress);
+export const useAdminPhone = () => useSettingsStore(s => s.adminPhone);
+export const useThemeColor = () => useSettingsStore(s => s.themeColor);
+export const useNotificationsEnabled = () => useSettingsStore(s => s.notificationsEnabled);
+export const useAutoBackup = () => useSettingsStore(s => s.autoBackup);
+export const useMaintenanceMode = () => useSettingsStore(s => s.maintenanceMode);
+export const useWhatsappAutoNotify = () => useSettingsStore(s => s.whatsappAutoNotify);
+export const useDefaultSessionPrice = () => useSettingsStore(s => s.defaultSessionPrice);
+export const useDefaultTeacherPrice = () => useSettingsStore(s => s.defaultTeacherPrice);
+export const useCurrencySymbol = () => useSettingsStore(s => s.currencySymbol);
+export const useSemesterName = () => useSettingsStore(s => s.semesterName);
+export const useSemesters = () => useSettingsStore(s => s.semesters);
+export const useWhatsappTemplate = () => useSettingsStore(s => s.whatsappTemplate);
+export const useBalanceWarningThreshold = () => useSettingsStore(s => s.balanceWarningThreshold);
+export const useBackdateLockEnabled = () => useSettingsStore(s => s.backdateLockEnabled);
+export const useTeacherCommissionType = () => useSettingsStore(s => s.teacherCommissionType);
+export const useAutoFreezeThreshold = () => useSettingsStore(s => s.autoFreezeThreshold);
+export const useTelegramHandle = () => useSettingsStore(s => s.telegramHandle);
+export const useHeroBanners = () => useSettingsStore(s => s.heroBanners);
+export const useReminderMinutesBefore = () => useSettingsStore(s => s.reminderMinutesBefore);
+export const useIsSettingsLoading = () => useSettingsStore(s => s.isSettingsLoading);
+export const useSetAcademyName = () => useSettingsStore(s => s.setAcademyName);
+export const useSetAcademyLogo = () => useSettingsStore(s => s.setAcademyLogo);
+export const useSetAcademyTagline = () => useSettingsStore(s => s.setAcademyTagline);
+export const useSetAcademyAddress = () => useSettingsStore(s => s.setAcademyAddress);
+export const useSetAdminPhone = () => useSettingsStore(s => s.setAdminPhone);
+export const useSetThemeColor = () => useSettingsStore(s => s.setThemeColor);
+export const useSetNotificationsEnabled = () => useSettingsStore(s => s.setNotificationsEnabled);
+export const useSetAutoBackup = () => useSettingsStore(s => s.setAutoBackup);
+export const useSetMaintenanceMode = () => useSettingsStore(s => s.setMaintenanceMode);
+export const useSetWhatsappAutoNotify = () => useSettingsStore(s => s.setWhatsappAutoNotify);
+export const useSetDefaultSessionPrice = () => useSettingsStore(s => s.setDefaultSessionPrice);
+export const useSetDefaultTeacherPrice = () => useSettingsStore(s => s.setDefaultTeacherPrice);
+export const useSetCurrencySymbol = () => useSettingsStore(s => s.setCurrencySymbol);
+export const useSetSemesterName = () => useSettingsStore(s => s.setSemesterName);
+export const useSetSemesters = () => useSettingsStore(s => s.setSemesters);
+export const useSetWhatsappTemplate = () => useSettingsStore(s => s.setWhatsappTemplate);
+export const useSetBalanceWarningThreshold = () => useSettingsStore(s => s.setBalanceWarningThreshold);
+export const useSetBackdateLockEnabled = () => useSettingsStore(s => s.setBackdateLockEnabled);
+export const useSetTeacherCommissionType = () => useSettingsStore(s => s.setTeacherCommissionType);
+export const useSetAutoFreezeThreshold = () => useSettingsStore(s => s.setAutoFreezeThreshold);
+export const useSetTelegramHandle = () => useSettingsStore(s => s.setTelegramHandle);
+export const useSetHeroBanners = () => useSettingsStore(s => s.setHeroBanners);
+export const useSetReminderMinutesBefore = () => useSettingsStore(s => s.setReminderMinutesBefore);
+
+export const useUsers = () => useUserStore(s => s.users);
+export const useAddUser = () => useUserStore(s => s.addUser);
+export const useEditUser = () => useUserStore(s => s.editUser);
+export const useDeleteUser = () => useUserStore(s => s.deleteUser);
+export const useRefreshUsers = () => useUserStore(s => s.fetchUsers);
+export const useIsUsersLoading = () => useUserStore(s => s.isLoading);
+
+/** @deprecated Use individual hooks (useCurrentUser, useSidebarCollapsed, etc.) for better re-render performance */
+export function useApp() {
+    const currentUser = useAuthStore(s => s.currentUser);
+    const isAuthenticated = useAuthStore(s => s.isAuthenticated);
+    const isLoading = useAuthStore(s => s.isLoading);
+    const login = useAuthStore(s => s.login);
+    const logout = useAuthStore(s => s.logout);
+    const updateCurrentUser = useAuthStore(s => s.updateCurrentUser);
+
+    const toasts = useUIStore(s => s.toasts);
+    const showNotification = useUIStore(s => s.showNotification);
+    const requestDesktopNotifications = useUIStore(s => s.requestDesktopNotifications);
+    const sidebarCollapsed = useUIStore(s => s.sidebarCollapsed);
+    const setSidebarCollapsed = useUIStore(s => s.setSidebarCollapsed);
+
     const settings = useSettingsStore();
     const users = useUserStore();
 
     return {
-        // UI
-        toasts: ui.toasts,
-        showNotification: ui.showNotification,
-        requestDesktopNotifications: ui.requestDesktopNotifications,
-        sidebarCollapsed: ui.sidebarCollapsed,
-        setSidebarCollapsed: ui.setSidebarCollapsed,
-        // Auth
-        currentUser: auth.currentUser,
-        isAuthenticated: auth.isAuthenticated,
-        isLoading: auth.isLoading,
-        login: auth.login,
-        logout: auth.logout,
-        updateCurrentUser: auth.updateCurrentUser,
-        user: auth.currentUser || ({ id: 'guest', name: 'ضيف', username: 'guest' } as User),
-        updateUser: auth.updateCurrentUser,
-        // Settings
+        toasts, showNotification, requestDesktopNotifications,
+        sidebarCollapsed, setSidebarCollapsed,
+        currentUser, isAuthenticated, isLoading, login, logout, updateCurrentUser,
+        user: currentUser || ({ id: 'guest', name: 'ضيف', username: 'guest' } as User),
+        updateUser: updateCurrentUser,
         academyName: settings.academyName,
         academyLogo: settings.academyLogo,
         academyTagline: settings.academyTagline,
@@ -74,12 +145,11 @@ export const useApp = () => {
         setTelegramHandle: settings.setTelegramHandle,
         setHeroBanners: settings.setHeroBanners,
         setReminderMinutesBefore: settings.setReminderMinutesBefore,
-        // Users
         users: users.users,
         addUser: users.addUser,
         editUser: users.editUser,
         deleteUser: users.deleteUser,
         refreshUsers: users.fetchUsers,
-        isUsersLoading: users.isLoading
+        isUsersLoading: users.isLoading,
     };
-};
+}

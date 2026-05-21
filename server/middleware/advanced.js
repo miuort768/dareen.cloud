@@ -68,18 +68,7 @@ const activityAuditor = (req, res, next) => {
     next();
 };
 
-/**
- * 3. Security Headers (redundant if using helmet, but good for manual control)
- */
-const secureHeaders = (req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';");
-    next();
-};
-
 module.exports = {
     sanitizeInput,
-    activityAuditor,
-    secureHeaders
+    activityAuditor
 };

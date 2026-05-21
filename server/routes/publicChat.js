@@ -2,10 +2,17 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { getDb } = require('../utils/db');
+const rateLimit = require('express-rate-limit');
+
+const publicChatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'طلبات كثيرة جداً، حاول بعد 15 دقيقة' }
+});
 
 // POST /api/public-chat/init
 // Initializes a guest conversation with the main admin
-router.post('/init', async (req, res) => {
+router.post('/init', publicChatLimiter, async (req, res) => {
     try {
         const { name, phone } = req.body || {};
         const db = await getDb();
@@ -35,7 +42,7 @@ router.post('/init', async (req, res) => {
 });
 
 // POST /api/public-chat/message
-router.post('/message', async (req, res) => {
+router.post('/message', publicChatLimiter, async (req, res) => {
     const { guestId, conversationId, text, guestName } = req.body;
     try {
         const db = await getDb();

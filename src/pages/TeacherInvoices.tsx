@@ -18,7 +18,7 @@ import {
 } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
 
-// ── Reusable Styled Components (Matching Settings.tsx) ────────────────────────
+// ===== SECTION: Reusable UI Components =====
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
@@ -114,7 +114,7 @@ const DangerBtn = ({ onClick, children, className = '', title }: {
     </button>
 );
 
-// ── Main Component ────────────────────────────────────────────────────────────
+// ===== SECTION: Main Component - State & Setup =====
 
 export const TeacherInvoices = () => {
     // State
@@ -160,7 +160,7 @@ export const TeacherInvoices = () => {
         isDestructive: true
     });
 
-    // Fetch Data
+    // ===== SECTION: Data Fetching =====
     const fetchInvoices = useCallback(async () => {
         try {
             setLoading(true);
@@ -188,7 +188,7 @@ export const TeacherInvoices = () => {
         fetchInvoices();
     }, [fetchInvoices]);
 
-    // Optimized Filters
+    // ===== SECTION: Filters & Stats =====
     const filteredInvoices = useMemo(() => {
         let list = invoices;
         if (isTeacher) {
@@ -237,7 +237,7 @@ export const TeacherInvoices = () => {
         };
     }, [filteredInvoices]);
 
-    // Handlers
+    // ===== SECTION: CRUD Handlers (Edit, Cancel, Submit, Delete) =====
     const handleEdit = useCallback((invoice: TeacherInvoice) => {
         setEditingId(invoice.id);
         const teacherObj = teachers.find(t => t.name === invoice.teacher);
@@ -346,6 +346,7 @@ export const TeacherInvoices = () => {
         });
     }, [invoices, fetchInvoices, showNotification]);
 
+    // ===== SECTION: Import Teachers Handler =====
     const handleImportTeachers = useCallback(async () => {
         try {
             setLoading(true);
@@ -415,14 +416,16 @@ export const TeacherInvoices = () => {
         }
     }, [invoices, fetchInvoices, showNotification]);
 
+    // ===== SECTION: Loading State =====
     if (loading) return <PageLoader />;
 
+    // ===== SECTION: Main Render =====
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            {/* ── Header ── */}
+            {/* ===== SECTION: Header ===== */}
             <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
@@ -439,7 +442,7 @@ export const TeacherInvoices = () => {
                 </div>
             </div>
 
-            {/* ── Stats Grid ── */}
+            {/* ===== SECTION: Stats Grid ===== */}
             <div className="px-0">
                 <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
                     {[
@@ -461,7 +464,7 @@ export const TeacherInvoices = () => {
                 </div>
             </div>
 
-            {/* ── Action Bar ── */}
+            {/* ===== SECTION: Action Bar (Search, Date Filter, Buttons) ===== */}
             <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
@@ -531,7 +534,7 @@ export const TeacherInvoices = () => {
             </div>
 
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
-                {/* ── Add/Edit Form ── */}
+                {/* ===== SECTION: Invoice Form ===== */}
                 {showForm && (
                     <SectionCard className="mb-4 animate-in slide-in-from-top-2">
                         <SectionTitle
@@ -635,7 +638,7 @@ export const TeacherInvoices = () => {
                     </SectionCard>
                 )}
 
-                {/* ── Table ── */}
+                {/* ===== SECTION: Invoice Table ===== */}
                 <SectionCard className="p-0 overflow-hidden">
                     <div className="overflow-x-auto rounded-2xl">
                         <table className="w-full text-right text-sm">

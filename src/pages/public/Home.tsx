@@ -8,6 +8,7 @@ import { SEO } from '../../components/SEO';
 import { MasarSection } from '../../components/public/MasarSection';
 import { cn } from '../../lib/utils';
 
+// ===== SECTION: Main Component - State & Setup =====
 export const Home = () => {
     const { adminPhone, heroBanners } = useSettingsStore();
     const whatsappNumber = adminPhone.replace(/\D/g, '');
@@ -23,6 +24,7 @@ export const Home = () => {
         // Fallback to empty banners
     }
 
+    // ===== SECTION: Typewriter Effect =====
     useEffect(() => {
         const fullText = "منصة دارين السابعة";
         let i = 0;
@@ -54,6 +56,7 @@ export const Home = () => {
         return () => clearTimeout(timer);
     }, []);
 
+    // ===== SECTION: Reviews Data =====
     const reviews = [
         {
             name: "أم راشد",
@@ -99,6 +102,7 @@ export const Home = () => {
         }
     ];
 
+    // ===== SECTION: Auto-rotate Reviews =====
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % reviews.length);
@@ -118,11 +122,11 @@ export const Home = () => {
             />
             <PublicNavbar />
 
+            {/* ===== SECTION: Hero Section ===== */}
             {/* Blob Backgrounds */}
             <div className="hero-blob bg-indigo-500/10 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block"></div>
             <div className="hero-blob bg-purple-600/10 w-[30rem] h-[30rem] rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2 pointer-events-none hidden md:block"></div>
 
-            {/* Hero Section */}
             <section className="relative pt-28 pb-0 md:pt-32 md:pb-0 h-fit overflow-hidden bg-[rgb(var(--bg-surface))]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
@@ -239,7 +243,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Why Choose Us */}
+            {/* ===== SECTION: Why Choose Us ===== */}
             <section className="pt-8 pb-2 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center mb-2 max-w-5xl mx-auto">
@@ -330,7 +334,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Quran Memorization Section */}
+            {/* ===== SECTION: Quran Memorization ===== */}
             <section className="pt-6 pb-6 relative overflow-hidden bg-[rgb(var(--bg-surface))] transition-colors duration-500">
                 {/* Dashed green lines at top and bottom */}
                 <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-emerald-500/30 z-20"></div>
@@ -440,7 +444,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* How it Works Section - Spacing Optimized */}
+            {/* ===== SECTION: How It Works ===== */}
             <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-slate-950 scroll-mt-32">
                 {/* Modern Mesh Gradient Background */}
                 <div className="absolute inset-0 z-0">
@@ -560,7 +564,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            {/* Testimonials Section - Bento Grid Refinement for Premium Royal Aesthetic */}
+            {/* ===== SECTION: Testimonials ===== */}
             <section className="py-4 md:py-6 bg-[rgb(var(--bg-card))] relative overflow-hidden transition-colors duration-500">
                 {/* Neon Indigo Dashed Lines - Section Boundaries */}
                 <div className="absolute top-0 left-0 w-full h-px border-t border-dashed border-indigo-500/40 z-20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"></div>
@@ -658,9 +662,10 @@ export const Home = () => {
 
 
 
+            {/* ===== SECTION: Masar Section ===== */}
             <MasarSection />
 
-            {/* FAQ Section - Spacing Optimized */}
+            {/* ===== SECTION: FAQ Section ===== */}
             <section className="py-4 md:py-6 bg-[rgb(var(--bg-surface))] relative overflow-hidden transition-colors duration-500" id="faq">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.2]"
                     style={{
@@ -734,6 +739,7 @@ export const Home = () => {
                 </div>
             </section>
 
+            {/* ===== SECTION: Footer ===== */}
             <PublicFooter />
         </div>
     );
