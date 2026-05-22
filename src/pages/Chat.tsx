@@ -1,16 +1,16 @@
-﻿import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
-import { useCurrentUser } from '../context/AppContext';
+import { useAuthStore } from '../store/authStore';
 import { useChatStore } from '../store/chatStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
 
 export const Chat: React.FC = () => {
-    const currentUser = useCurrentUser();
+    const currentUser = useAuthStore(s => s.currentUser);
     const {
         conversations,
         availableUsers,

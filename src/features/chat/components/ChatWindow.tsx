@@ -53,37 +53,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const [searchQuery, setSearchQuery] = useState('');
     const typingUsers = useChatStore(s => s.typingUsers);
 
-    const scrollToBottom = useCallback(() => {
-        if (filteredMessages.length > 0) {
-            virtuosoRef.current?.scrollToIndex({
-                index: filteredMessages.length - 1,
-                behavior: 'smooth'
-            });
-        }
-    }, [filteredMessages]);
-
-    // Mark as read when conversation is active or new messages arrive
-    useEffect(() => {
-        if (selectedConv?.id && 'unreadCount' in selectedConv && selectedConv.unreadCount > 0) {
-            markAsRead(selectedConv.id);
-        } else if (selectedConv?.id && messages.length > 0) {
-            const lastMsg = messages[messages.length - 1];
-            if (lastMsg.senderId !== currentUser?.id) {
-                markAsRead(selectedConv.id);
-            }
-        }
-    }, [selectedConv, messages, markAsRead, currentUser?.id]);
-
-    // Automatically scroll to bottom when messages list size or active conversation changes
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            scrollToBottom();
-        }, 150);
-        return () => clearTimeout(timer);
-    }, [messages.length, selectedConv.id, scrollToBottom]);
-
-    const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
-
     // Safer and more efficient message sorting + Searching
     const filteredMessages = useMemo(() => {
         let list = [...messages].sort((a, b) => {
@@ -100,6 +69,35 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
         return list;
     }, [messages, searchQuery]);
+
+    const scrollToBottom = useCallback(() => {
+        if (filteredMessages.length > 0) {
+            virtuosoRef.current?.scrollToIndex({
+                index: filteredMessages.length - 1,
+                behavior: 'smooth'
+            });
+        }
+    }, [filteredMessages]);
+
+    useEffect(() => {
+        if (selectedConv?.id && 'unreadCount' in selectedConv && selectedConv.unreadCount > 0) {
+            markAsRead(selectedConv.id);
+        } else if (selectedConv?.id && messages.length > 0) {
+            const lastMsg = messages[messages.length - 1];
+            if (lastMsg.senderId !== currentUser?.id) {
+                markAsRead(selectedConv.id);
+            }
+        }
+    }, [selectedConv, messages, markAsRead, currentUser?.id]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            scrollToBottom();
+        }, 150);
+        return () => clearTimeout(timer);
+    }, [messages.length, selectedConv.id, scrollToBottom]);
+
+    const typingInThisConv = typingUsers.filter(u => u.conversationId === selectedConv.id);
 
     return (
         <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] overflow-hidden relative h-full">

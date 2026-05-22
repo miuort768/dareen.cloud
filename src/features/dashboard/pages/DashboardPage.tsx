@@ -1,4 +1,4 @@
-import { useCurrentUser } from '../../../context/AppContext';
+import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { DashboardHeader } from '../components/DashboardHeader';
 import { DashboardStats } from '../components/DashboardStats';
@@ -28,7 +28,7 @@ const Section = ({ children, className }: { children: React.ReactNode; className
 );
 
 export const Dashboard = () => {
-    const currentUser = useCurrentUser();
+    const currentUser = useAuthStore(s => s.currentUser);
 
     const {
         stats,
