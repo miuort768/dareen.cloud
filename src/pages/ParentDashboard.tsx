@@ -180,49 +180,50 @@ export const ParentDashboard = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-amber-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
-            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6 animate-in fade-in duration-700">
+            <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-300/20 dark:bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-orange-300/20 dark:bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-32 space-y-4 md:space-y-6">
             
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="flex justify-between items-center bg-emerald-500 dark:bg-rose-500 p-4 border-b-4 border-emerald-600 dark:border-rose-600 transition-colors duration-500">
+            <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-4 md:p-5 shadow-lg shadow-amber-100/50 dark:shadow-amber-950/30 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white/20 flex items-center justify-center text-white border border-white/20 shadow-sm">
-                        <User size={24} />
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-200 dark:shadow-amber-950">
+                        <User size={22} />
                     </div>
                     <div>
-                        <h1 className="text-base md:text-xl font-medium text-white leading-tight">
+                        <h1 className="text-base md:text-lg font-black text-slate-800 dark:text-white">
                             مرحباً... {(currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0]}
                         </h1>
-                        <p className="text-[11px] md:text-xs font-normal text-white/80">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
+                        <p className="text-[11px] md:text-xs font-medium text-slate-400">لوحة تحكم ولي الأمر • {format(new Date(), 'eeee, d MMMM', { locale: ar })}</p>
                     </div>
                 </div>
                 <button 
                     onClick={logout}
-                    className="w-10 h-10 bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all border border-white/10"
+                    className="w-10 h-10 bg-white/70 dark:bg-slate-800/70 text-slate-500 hover:text-rose-500 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 transition-all hover:bg-rose-50 dark:hover:bg-rose-900/20"
                 >
-                    <LogOut size={20} />
+                    <LogOut size={18} />
                 </button>
             </div>
 
             {/* ═══════════════ ACTIVE SESSION TIMERS ═══════════════ */}
             {activeTimers.length > 0 && (
                 <div className="space-y-3">
-                    {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string }) => {
+                    {activeTimers.map((session: { id: string; studentName: string; teacherName: string; startTime: string; subject: string; studentId?: string; startedAt?: string }) => {
                         const child = children.find(c => c.id === session.studentId);
                         return (
-                            <div key={session.id} className="bg-rose-500 dark:bg-blue-600 text-white p-4 flex items-center justify-between animate-in slide-in-from-top duration-500">
+                            <div key={session.id} className="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-4 rounded-2xl shadow-lg shadow-amber-200 dark:shadow-amber-950 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
+                                    <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center animate-pulse">
                                         <Clock size={20} />
                                     </div>
                                     <div>
-                                        <h3 className="font-medium text-sm">حصة جارية الآن!</h3>
-                                        <p className="text-[10px] font-normal opacity-90">
+                                        <h3 className="font-bold text-sm">حصة جارية الآن!</h3>
+                                        <p className="text-[10px] font-medium opacity-90">
                                             {child?.name || session.studentId} — {session.subject}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="text-2xl font-medium font-mono tracking-widest">
+                                <div className="text-2xl font-bold font-mono tracking-widest">
                                     {formatTime(session.startedAt)}
                                 </div>
                             </div>
@@ -251,7 +252,7 @@ export const ParentDashboard = () => {
 
             {/* ═══════════════ ENROLLMENT NOTES & HOMEWORK ═══════════════ */}
             {children.some(child => child.enrollments?.some((en: { nextSessionNotes?: string }) => en.nextSessionNotes)) && (
-                <div className="bg-white dark:bg-slate-900 p-3 md:p-5 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-4 md:p-5 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30">
                     <div className="flex items-center gap-2 mb-3">
                         <MessageSquare className="text-amber-500" size={16} />
                         <h3 className="text-sm md:text-lg font-medium text-slate-900 dark:text-white">الواجبات والملاحظات</h3>
@@ -265,7 +266,7 @@ export const ParentDashboard = () => {
                                 </div>
                                 <div className="space-y-2">
                                     {child.enrollments.filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
-                                        <div key={idx} className="bg-amber-50/30 dark:bg-amber-900/10 p-3 border border-amber-100/30 dark:border-amber-900/20">
+                                        <div key={idx} className="bg-amber-50 dark:bg-amber-900/10 p-3 rounded-xl border border-amber-100 dark:border-amber-900/20">
                                             <div className="flex justify-between items-center mb-1">
                                                 <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 uppercase tracking-widest">{en.subject}</span>
                                                 <span className="text-[11px] font-normal text-slate-400">{en.teacher}</span>
@@ -281,7 +282,7 @@ export const ParentDashboard = () => {
             )}
 
             {/* ═══════════════ ACADEMIC PROGRESS ═══════════════ */}
-            <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-4 md:p-6 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-5 md:p-6 text-white shadow-lg shadow-amber-200 dark:shadow-amber-950 relative overflow-hidden">
                 <div className="relative z-10">
                     <div className="flex justify-between items-start mb-4">
                         <div>
@@ -317,24 +318,24 @@ export const ParentDashboard = () => {
 
                 <div className="space-y-2">
                     {todayTasks.map((task, idx) => (
-                        <div key={idx} className="bg-white dark:bg-slate-900 p-3 shadow-sm border border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                        <div key={idx} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-xl p-3 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 flex items-center justify-between">
                              <div className="flex items-center gap-2">
-                                <div className="w-9 h-9 bg-amber-50 dark:bg-amber-900/10 text-amber-500 flex items-center justify-center">
+                                <div className="w-9 h-9 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center text-white shadow-sm">
                                     <BookOpen size={16} />
                                 </div>
                                 <div>
-                                    <h4 className="text-[11px] font-medium text-slate-900 dark:text-white">{task.subject}</h4>
-                                    <p className="text-[11px] font-normal text-slate-400">{task.studentName}</p>
+                                    <h4 className="text-[11px] font-bold text-slate-800 dark:text-white">{task.subject}</h4>
+                                    <p className="text-[10px] font-medium text-slate-400">{task.studentName}</p>
                                 </div>
                             </div>
-                            <div className="text-left font-medium text-[10px]">
+                            <div className="text-left font-bold text-[10px] text-slate-500">
                                 {task.time}
                             </div>
                         </div>
                     ))}
                     {todayTasks.length === 0 && (
-                        <div className="py-6 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 opacity-60">
-                            <p className="text-slate-400 font-normal text-[10px]">لا توجد مهام اليوم</p>
+                        <div className="py-6 text-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl">
+                            <p className="text-slate-400 font-medium text-[10px]">لا توجد مهام اليوم</p>
                         </div>
                     )}
                 </div>
@@ -349,16 +350,16 @@ export const ParentDashboard = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {allPointLogs.slice(0, 4).map((log, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-900 p-3 shadow-sm border border-slate-50 dark:border-slate-800 flex items-start gap-3">
-                            <div className="w-8 h-8 bg-amber-50 text-amber-500 flex items-center justify-center shrink-0">
+                        <div key={i} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-xl p-3 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 flex items-start gap-3">
+                            <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center text-white shadow-sm shrink-0">
                                 <Star size={14} fill="currentColor" />
                             </div>
                             <div className="min-w-0 flex-1">
-                                    <p className="text-[11px] font-medium text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-0.5 truncate">{log.studentName}</p>
-                                <h4 className="text-[10px] font-normal text-slate-800 dark:text-slate-200 leading-snug">
+                                <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-0.5 truncate">{log.studentName}</p>
+                                <h4 className="text-[10px] font-medium text-slate-700 dark:text-slate-300 leading-snug">
                                     تلقى {log.amount} نقطة: {log.action}
                                 </h4>
-                                <p className="text-[11px] font-normal text-slate-400 dark:text-slate-500 mt-1 flex items-center gap-1">
+                                <p className="text-[10px] font-medium text-slate-400 dark:text-slate-500 mt-1 flex items-center gap-1">
                                     <Clock size={8} />
                                     {log.timestamp ? (() => {
                                         try {
@@ -373,27 +374,27 @@ export const ParentDashboard = () => {
                         </div>
                     ))}
                     {allPointLogs.length === 0 && (
-                        <div className="col-span-full py-8 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 dark:border-slate-800 opacity-60">
-                            <p className="text-slate-400 dark:text-slate-600 font-normal text-[10px]">لا توجد نشاطات حديثة للأبناء</p>
+                        <div className="col-span-full py-8 text-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl">
+                            <p className="text-slate-400 font-medium text-[10px]">لا توجد نشاطات حديثة للأبناء</p>
                         </div>
                     )}
                 </div>
             </div>
 
             {/* ═══════════════ SUPPORT FOOTER ═══════════════ */}
-            <div className="bg-gradient-to-l from-amber-600 to-amber-500 p-5 text-white flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-                <div className="absolute right-0 bottom-0 w-32 h-32 bg-white/5 blur-2xl -translate-x-1/2 translate-y-1/2" />
-                <div className="text-center md:text-right relative z-10 w-full md:w-auto">
-                    <h4 className="text-sm md:text-lg font-medium mb-0.5">هل تحتاج لمساعدة؟</h4>
-                    <p className="text-[11px] md:text-xs font-normal opacity-80 leading-tight">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
+            <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-5 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-amber-200 dark:shadow-amber-950 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-[50px] pointer-events-none" />
+                <div className="text-center md:text-right relative z-10">
+                    <h4 className="text-sm md:text-lg font-black mb-0.5">هل تحتاج لمساعدة؟</h4>
+                    <p className="text-[11px] font-medium opacity-80">فريق الدعم متاح دائماً لخدمة ولي الأمر</p>
                 </div>
                 <a 
                     href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="bg-white text-amber-600 px-5 py-2 font-medium text-[10px] flex items-center gap-2.5 transition-transform active:scale-95 w-full md:w-auto justify-center"
+                    className="bg-white text-amber-600 px-5 py-3 rounded-xl font-bold text-[10px] flex items-center gap-2.5 transition-all active:scale-95 shadow-lg w-full md:w-auto justify-center"
                 >
-                    <div className="w-6 h-6 bg-amber-600 text-white rounded-md flex items-center justify-center">
-                        <MessageSquare size={12} fill="currentColor" />
+                    <div className="w-6 h-6 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center">
+                        <MessageSquare size={12} />
                     </div>
                     تواصل معنا
                 </a>
@@ -405,18 +406,18 @@ export const ParentDashboard = () => {
 };
 
 const QuickStatCard = ({ icon: Icon, label, value, color }: { icon: React.ComponentType<{ size?: number }>; label: string; value: string | number; color: string }) => {
-    const colors: Record<string, string> = {
-        amber: "bg-amber-50 dark:bg-amber-900/10 text-amber-500 shadow-amber-100 dark:shadow-none",
-        blue: "bg-blue-50 dark:bg-blue-900/10 text-amber-500 shadow-blue-100 dark:shadow-none",
-        rose: "bg-rose-50 dark:bg-rose-900/10 text-rose-500 shadow-rose-100 dark:shadow-none"
+    const gradient: Record<string, string> = {
+        amber: 'from-amber-400 to-orange-500',
+        blue: 'from-blue-400 to-cyan-500',
+        rose: 'from-rose-400 to-pink-500',
     };
     return (
-        <div className="bg-white dark:bg-slate-900 py-2.5 px-1.5 shadow-sm border border-slate-50 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-            <div className={cn("w-7 h-7 rounded-full flex items-center justify-center mb-1", colors[color])}>
-                <Icon size={12} />
+        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl py-3 px-2 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 flex flex-col items-center justify-center text-center">
+            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center mb-1.5 bg-gradient-to-br shadow-sm", gradient[color] || 'from-amber-400 to-orange-500')}>
+                <Icon size={13} className="text-white" />
             </div>
-            <span className="text-sm md:text-lg font-medium text-slate-900 dark:text-white leading-none">{value}</span>
-            <span className="text-[11px] font-normal text-slate-400 dark:text-slate-500 mt-1">{label}</span>
+            <span className="text-sm md:text-lg font-black text-slate-800 dark:text-white leading-none">{value}</span>
+            <span className="text-[10px] font-bold text-slate-400 mt-0.5">{label}</span>
         </div>
     );
 };
@@ -424,11 +425,11 @@ const QuickStatCard = ({ icon: Icon, label, value, color }: { icon: React.Compon
 const NavButton = ({ label, icon: Icon, onClick }: { label: string; icon: React.ComponentType<{ size?: number }>; onClick?: () => void }) => (
     <button 
         onClick={onClick}
-        className="bg-amber-50/50 dark:bg-amber-950/20 p-3 border border-amber-100/30 dark:border-amber-900/20 flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md group"
+        className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 transition-all active:scale-95 hover:bg-white dark:hover:bg-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 group"
     >
-        <div className="w-9 h-9 bg-white dark:bg-slate-900 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm group-hover:scale-110 transition-transform">
-            <Icon size={16} strokeWidth={1.5} />
+        <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition-transform">
+            <Icon size={18} />
         </div>
-        <span className="text-[10px] font-medium text-slate-700 dark:text-slate-400 tracking-tight">{label}</span>
+        <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300">{label}</span>
     </button>
 );

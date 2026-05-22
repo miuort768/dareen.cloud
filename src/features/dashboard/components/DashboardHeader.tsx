@@ -10,7 +10,6 @@ interface DashboardHeaderProps {
 
 export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps) => {
     const [currentTime, setCurrentTime] = useState(new Date());
-    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -19,90 +18,67 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
 
     return (
         <div className={cn(
-            "hidden md:flex relative overflow-hidden",
-            "bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-950",
-            "dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950",
-            "px-8 py-10 flex-col md:flex-row md:items-center justify-between gap-6",
-            "border border-white/5",
-            "before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.1),transparent_70%)] before:pointer-events-none",
-            "transition-all duration-300",
-            isHovered ? "bg-white/10" : ""
-        )} dir="rtl"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        >
-
-            {/* Animated background particles */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute -top-10 -right-10 w-20 h-20 bg-indigo-500/10 rounded-full blur-[50px] animate-[orbit_20s_linear_infinite]"></div>
-                <div className="absolute bottom-10 left-10 w-16 h-16 bg-emerald-500/10 rounded-full blur-[40px] animate-[orbit_15s_linear_infinite_reverse]"></div>
-                <div className="absolute top-1/3 left-1/4 w-12 h-12 bg-rose-500/10 rounded-full blur-[30px] animate-[orbit_12s_linear_infinite]"></div>
-            </div>
+            "hidden md:flex relative overflow-hidden rounded-2xl",
+            "bg-gradient-to-br from-white/80 via-indigo-50/50 to-white/80",
+            "dark:from-slate-900/80 dark:via-indigo-950/30 dark:to-slate-900/80",
+            "border border-indigo-100/50 dark:border-indigo-900/30",
+            "shadow-lg shadow-indigo-100/30 dark:shadow-indigo-950/20",
+            "px-8 py-8 flex-col md:flex-row md:items-center justify-between gap-6"
+        )} dir="rtl">
+            {/* Blur orbs */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-300/20 dark:bg-indigo-500/10 rounded-full blur-[60px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300/20 dark:bg-emerald-500/10 rounded-full blur-[50px] pointer-events-none" />
 
             {/* Identity & Welcome */}
-            <div className="relative z-10 flex items-center gap-6 w-full md:w-auto">
-                <div className="relative w-16 h-16 flex-shrink-0">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 opacity-20 blur-[8px]" />
-                    <div className="relative w-16 h-16 rounded-2xl border-2 border-white/10 bg-white/5 backdrop-blur-lg flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.25)">
-                        <div className="relative z-10">
-                            <span className="text-2xl font-medium text-white/90">د</span>
-                            <div className="absolute -top-2 -right-2 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
-                        </div>
-                    </div>
+            <div className="relative z-10 flex items-center gap-5 w-full md:w-auto">
+                <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-indigo-950 shrink-0">
+                    <span className="text-xl font-black text-white">د</span>
                 </div>
 
                 <div className="text-right">
-                    <div className="flex items-center gap-3 mb-3">
-                        <div className="flex items-center gap-2">
-                            <div className="bg-white/15 text-white border border-white/10 text-[9px] font-medium px-3 py-1.5 uppercase tracking-widest leading-none flex items-center gap-1.5 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-all">
-                                <ShieldCheck size={10} className="text-amber-400" />
-                                {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
-                            </div>
-                            <div className="flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-[8px] font-medium px-2.5 py-1 rounded-lg uppercase tracking-widest border border-emerald-400/20 hover:bg-emerald-500/30 transition-all">
-                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                                <span className="animate-[pulse_2s_ease_in_out_infinite]">نشط</span>
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[9px] font-bold px-2.5 py-1 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                            <ShieldCheck size={10} />
+                            {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
+                        </span>
+                        <span className="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[8px] font-bold px-2 py-0.5 rounded-lg">
+                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                            نشط
+                        </span>
                     </div>
-                    <h1 className="text-3xl font-medium leading-tight tracking-tighter text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-100 via-indigo-200 to-white/20">
+                    <h1 className="text-2xl font-black text-slate-800 dark:text-white leading-tight">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
                     </h1>
-                    <div className="flex items-center gap-4 mt-3">
-                        <div className="flex items-center gap-2 text-white/60">
-                            <Calendar size={12} className="text-amber-400/80" />
-                            <span className="text-xs font-normal tabular-nums tracking-widest">
-                                {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
-                            </span>
-                        </div>
-                        <span className="w-0.5 h-0.5 bg-white/10 rounded-full" />
-                        <div className="flex items-center gap-2 text-white/40 uppercase tracking-widest text-[9px]">
-                            <TrendingUp size={10} className="text-indigo-400/60 animate-[rise_3s_ease_in_out_infinite]" />
-                            <span>النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%</span>
-                        </div>
+                    <div className="flex items-center gap-3 mt-2">
+                        <span className="inline-flex items-center gap-1.5 text-xs text-slate-400">
+                            <Calendar size={12} className="text-amber-500" />
+                            {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
+                        </span>
+                        <span className="w-0.5 h-3 bg-slate-200 dark:bg-slate-700" />
+                        <span className="inline-flex items-center gap-1 text-[9px] text-slate-400">
+                            <TrendingUp size={10} className="text-indigo-400" />
+                            النظام يعمل بكفاءة {Math.floor(Math.random() * 100)}%
+                        </span>
                     </div>
                 </div>
             </div>
 
             {/* Widgets & Support */}
-            <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-4 w-full md:w-auto">
-                {/* Time Widget */}
-                <div className="relative flex items-center gap-3 px-5 h-11 border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 rounded-2xl backdrop-blur-sm shadow-sm hover:shadow-md">
-                    <div className="absolute inset-0 rounded-2xl bg-white/3 opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
-                    <Clock size={16} className="text-amber-400/80" />
-                    <span className="text-xs font-normal tabular-nums tracking-widest">
+            <div className="relative z-10 flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto">
+                <div className="flex items-center gap-2 px-4 h-10 bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                    <Clock size={14} className="text-amber-500" />
+                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300 tabular-nums">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
 
-                {/* Support Button */}
                 <button
                     onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
-                    className="relative flex h-11 px-6 font-normal text-[10px] uppercase tracking-widest flex items-center gap-3 transition-all duration-300 active:scale-[0.97] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white border border-amber-400/30 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-600/25"
+                    className="flex items-center gap-2 h-10 px-5 text-[10px] font-bold uppercase tracking-widest bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl shadow-lg shadow-amber-200 dark:shadow-amber-950 active:scale-[0.97] transition-all"
                 >
-                    <div className="absolute inset-0 rounded-xl bg-white/5 opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
-                    <Headphones size={16} />
-                    <span>الدعم الفني المتقدم</span>
-                    <Sparkles size={12} className="ml-2 text-amber-300/70 animate-[sparkle_2s_ease_in_out_infinite]" />
+                    <Headphones size={14} />
+                    الدعم
+                    <Sparkles size={10} className="text-amber-200" />
                 </button>
             </div>
         </div>

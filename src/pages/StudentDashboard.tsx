@@ -151,38 +151,33 @@ export const StudentDashboard = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-sky-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-sky-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-300/20 dark:bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-300/20 dark:bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-24 space-y-6 md:space-y-8">
-            
-            {/* Premium Background Decorations */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-sky-500/5 dark:bg-sky-500/10 blur-[120px] animate-pulse"></div>
-                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 dark:bg-purple-500/10 blur-[100px]"></div>
-            </div>
 
             {/* ═══════════════ HEADER ═══════════════ */}
-            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-3">
+            <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-5 md:p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                    <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 border border-sky-100 dark:border-sky-500/20 rounded-lg mb-1">
-                        <Sparkles size={10} className="text-sky-600 dark:text-sky-400" />
-                        <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">نظام التفوق</span>
+                    <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-gradient-to-r from-sky-500 to-purple-600 rounded-lg mb-2 shadow-lg shadow-sky-200 dark:shadow-sky-950">
+                        <Sparkles size={10} className="text-white" />
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-white">نظام التفوق</span>
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-medium text-slate-900 dark:text-white tracking-tighter">
-                        مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span> ✨
+                    <h1 className="text-xl md:text-2xl font-black text-slate-800 dark:text-white">
+                        مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span>
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-[10px] md:text-sm font-normal flex items-center gap-1.5">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs font-medium flex items-center gap-1.5">
                         <CalendarDays size={12} className="text-sky-500" />
                         {todayArabic}، {format(new Date(), 'd MMMM', { locale: ar })}
                     </p>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 flex items-center gap-2 shadow-sm">
+                    <div className="bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 px-3 py-2 flex items-center gap-2.5 rounded-xl shadow-sm">
                         <div className="flex flex-col items-end">
-                            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
-                            <span className="text-xs font-medium text-slate-900 dark:text-white">{rank.name}</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
+                            <span className="text-xs font-bold text-slate-800 dark:text-white">{rank.name}</span>
                         </div>
-                        <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-purple-600 flex items-center justify-center text-white shadow-md">
+                        <div className="w-9 h-9 bg-gradient-to-br from-sky-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-sky-200 dark:shadow-sky-950">
                             <Trophy size={16} />
                         </div>
                     </div>
@@ -220,48 +215,47 @@ export const StudentDashboard = () => {
                     
                     <LiveClasses />
 
-                    {/* Next Class - Premium Hero Card */}
+                    {/* Next Class */}
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="group relative overflow-hidden bg-slate-900 dark:bg-sky-950 p-5 md:p-8 border-r-4 md:border-r-8 border-sky-600"
+                        className="group relative overflow-hidden bg-gradient-to-br from-white/80 to-sky-50/80 dark:from-slate-900/80 dark:to-sky-950/30 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-5 md:p-8 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30"
                     >
-                        <Award className="absolute -bottom-6 -left-6 text-white/5 rotate-12" size={120} />
-                        
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-sky-300/20 dark:bg-sky-500/10 rounded-full blur-[60px] pointer-events-none" />
                         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
                             <div className="space-y-3 md:space-y-4">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1 h-5 bg-sky-500"></div>
-                                    <h2 className="text-xs md:text-2xl font-heading font-medium text-white uppercase tracking-tight">الحصة القادمة</h2>
+                                    <div className="w-1 h-6 bg-gradient-to-b from-sky-500 to-purple-600 rounded-full"></div>
+                                    <h2 className="text-sm md:text-xl font-bold text-slate-800 dark:text-white">الحصة القادمة</h2>
                                 </div>
                                 
                                 {todaySchedule.length > 0 ? (
-                                    <div className="space-y-3 md:space-y-5">
+                                    <div className="space-y-3">
                                         <div className="flex flex-col gap-1">
-                                            <h3 className="text-2xl md:text-6xl font-heading font-medium text-white">
+                                            <h3 className="text-2xl md:text-4xl font-black text-slate-800 dark:text-white">
                                                 {todaySchedule[0].slots[0].subject}
                                             </h3>
-                                            <div className="flex items-center gap-2 text-sky-300 font-normal text-xs md:text-lg">
-                                                <Rocket size={14} className="md:size-18" />
+                                            <div className="flex items-center gap-2 text-slate-500 text-xs md:text-sm font-medium">
+                                                <Rocket size={14} className="text-sky-500" />
                                                 <span>مع المعلمة {todaySchedule[0].slots[0].teacher}</span>
                                             </div>
                                         </div>
-                                        <div className="inline-flex items-center gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-sky-500/20 border border-sky-500/30 text-white font-medium text-[10px] md:text-sm uppercase tracking-widest">
-                                            <Clock size={12} className="text-sky-400" />
-                                            اليوم • {todaySchedule[0].slots[0].time} مساءً
+                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-sky-500 to-purple-600 text-white font-bold text-[10px] md:text-xs uppercase rounded-xl shadow-lg shadow-sky-200 dark:shadow-sky-950">
+                                            <Clock size={12} />
+                                            اليوم • {todaySchedule[0].slots[0].time}
                                         </div>
                                     </div>
                                 ) : (
-                                    <p className="text-lg md:text-2xl font-medium text-slate-400">لا توجد حصص مجدولة لليوم</p>
+                                    <p className="text-lg font-bold text-slate-400">لا توجد حصص مجدولة لليوم</p>
                                 )}
                             </div>
 
                             <button 
                                 onClick={() => navigate('/chat')}
-                                className="h-12 w-full md:h-32 md:w-32 bg-sky-600 hover:bg-sky-500 text-white flex flex-row md:flex-col items-center justify-center gap-3 md:gap-2 transition-all active:scale-95"
+                                className="h-11 w-full md:h-28 md:w-28 bg-gradient-to-br from-sky-500 to-purple-600 hover:from-sky-600 hover:to-purple-700 text-white flex flex-row md:flex-col items-center justify-center gap-2 rounded-xl transition-all active:scale-95 shadow-lg shadow-sky-200 dark:shadow-sky-950"
                             >
-                                <MessageSquare size={18} className="md:size-24" />
-                                <span className="text-[10px] font-medium uppercase tracking-widest">المحادثات</span>
+                                <MessageSquare size={18} />
+                                <span className="text-[9px] font-bold uppercase tracking-widest">المحادثات</span>
                             </button>
                         </div>
                     </motion.div>
@@ -275,21 +269,21 @@ export const StudentDashboard = () => {
                     </div>
 
                     {/* Progress & Ranking */}
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 md:p-8 shadow-sm">
-                        <div className="flex flex-row items-end justify-between gap-4 mb-4 md:mb-8">
+                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-5 md:p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30">
+                        <div className="flex flex-row items-end justify-between gap-4 mb-4">
                             <div className="space-y-1">
-                                <h3 className="text-sm md:text-2xl font-heading font-medium text-slate-900 dark:text-white uppercase tracking-tight">مسار التميز</h3>
-                                <p className="text-slate-500 dark:text-slate-400 text-[11px] md:text-sm font-normal">تبقى لك <span className="text-sky-600 dark:text-sky-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
+                                <h3 className="text-sm md:text-xl font-black text-slate-800 dark:text-white">مسار التميز</h3>
+                                <p className="text-slate-500 dark:text-slate-400 text-xs">تبقى لك <span className="text-sky-600 dark:text-sky-400 font-bold">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
                             </div>
-                            <div className="px-3 py-1 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-medium text-[11px] md:text-sm text-sky-600 dark:text-sky-400 tracking-widest uppercase">
+                            <div className="px-4 py-1.5 bg-gradient-to-r from-sky-500 to-purple-600 text-white font-bold text-[10px] rounded-xl shadow-lg shadow-sky-200 dark:shadow-sky-950">
                                 {rank.name}
                             </div>
                         </div>
-                        <div className="relative h-2 md:h-4 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <div className="relative h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                             <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${Math.min((points % 100), 100)}%` }}
-                                className="h-full bg-gradient-to-r from-sky-600 via-purple-600 to-sky-600"
+                                className="h-full bg-gradient-to-r from-sky-500 via-purple-500 to-sky-500 rounded-full"
                             />
                         </div>
                     </div>
@@ -341,8 +335,8 @@ export const StudentDashboard = () => {
                     </div>
 
                     {/* Achievements Summary */}
-                    <div className="bg-slate-900 dark:bg-slate-900 border border-slate-800 p-5 md:p-8 relative overflow-hidden">
-                        <h3 className="text-sm md:text-xl font-heading font-medium text-white uppercase tracking-tight mb-6">إنجازاتك</h3>
+                    <div className="bg-gradient-to-br from-white/80 to-sky-50/80 dark:from-slate-900/80 dark:to-sky-950/20 backdrop-blur-sm border border-white/20 dark:border-slate-700/30 rounded-2xl p-5 md:p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/30 relative overflow-hidden">
+                        <h3 className="text-sm md:text-lg font-black text-slate-800 dark:text-white mb-6">إنجازاتك</h3>
                         <div className="grid grid-cols-3 gap-4">
                             {allBadges.slice(0, 6).map((badge, idx) => {
                                 const isEarned = studentData?.badges && (typeof studentData.badges === 'string' || Array.isArray(studentData.badges)) ? studentData.badges.includes(badge.id) : false;
@@ -389,15 +383,16 @@ export const StudentDashboard = () => {
                     </div>
 
                     {/* Support Block */}
-                    <div className="bg-gradient-to-r from-sky-700 to-purple-800 p-6 md:p-8 relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-sky-500 to-purple-600 rounded-2xl p-6 md:p-8 shadow-lg shadow-sky-200 dark:shadow-sky-950 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-[40px] pointer-events-none" />
                         <div className="relative z-10 space-y-4">
-                            <h4 className="text-lg md:text-2xl font-heading font-medium text-white leading-tight">تحتاج مساعدة؟</h4>
+                            <h4 className="text-lg md:text-xl font-black text-white leading-tight">تحتاج مساعدة؟</h4>
                             <a 
                                 href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2 bg-white text-sky-900 py-3 md:py-4 font-medium text-[10px] md:text-xs uppercase tracking-widest"
+                                className="flex items-center justify-center gap-2 bg-white text-sky-700 py-3 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-lg hover:shadow-xl transition-all active:scale-[0.97]"
                             >
-                                <MessageSquare size={14} fill="currentColor" />
+                                <MessageSquare size={14} />
                                 تواصل الآن
                             </a>
                         </div>
