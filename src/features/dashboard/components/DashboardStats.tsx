@@ -1,4 +1,4 @@
-import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign, Sparkles, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon } from 'lucide-react';
+import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { DashboardStats as Stats } from '../types';
@@ -12,16 +12,12 @@ const StatCard = ({
     title, 
     value, 
     icon: Icon, 
-    gradientClasses, 
-    accentColor,
     unit,
     trendData
 }: { 
     title: string; 
     value: string | number; 
     icon: LucideIcon; 
-    gradientClasses: string; 
-    accentColor?: string;
     unit?: string;
     trendData?: { 
         percentage: number; 
@@ -30,48 +26,41 @@ const StatCard = ({
     };
 }) => (
     <div className={cn(
-        "relative p-6 flex flex-col items-center gap-4",
-        "bg-white dark:bg-slate-900/95",
-        "border border-slate-200/50 dark:border-slate-800/50",
-        "rounded-2xl shadow-inner shadow-[0_0_0px_rgba(99,102,241,0.1)]",
-        "transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:-translate-y-1",
-        "group overflow-hidden backdrop-blur-lg",
-        "bg-clip-padding",
-        "border-transparent"
+        "relative p-5 flex flex-col items-center gap-3",
+        "bg-white dark:bg-slate-900",
+        "border border-slate-200 dark:border-slate-800",
+        "border-0",
+        "transition-all duration-200",
+        "group"
     )}>
-        {/* Holographic accent bar */}
+        {/* Solid accent bar on left */}
         <div className={cn(
-            "absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[hsl(var(--color-primary)/0.4)] to-transparent",
-            "animate-[holoFlow_3s_ease_in_out_infinite]"
+            "absolute top-0 bottom-0 left-0 w-px bg-gradient-to-t from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary))]",
+            // Simpler: solid left border
+            "border-l-2 border-[hsl(var(--color-primary))]"
         )} />
         
-        {/* Background subtle animated icon */}
-        <div className="absolute -bottom-4 -left-4 opacity-[0.02] dark:opacity-[0.04]">
-            <Icon size={72} className="text-slate-900/5 dark:text-white/5 animate-[slowPulse_4s_ease_in_out_infinite]" />
-        </div>
-
-        {/* Premium icon container */}
-        <div className="relative w-14 h-14 flex items-center justify-center shrink-0 mb-2">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent to-transparent backdrop-blur-lg border-2 border-white/10 dark:border-slate-800/10" />
-            <div className="relative w-14 h-14 rounded-2xl flex items-center justify-center">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center">
-                    <div className="w-full h-full rounded-xl bg-gradient-to-br text-white shadow-inner">
-                        <Icon size={24} className="stroke-[2.5]" />
+        {/* Icon container */}
+        <div className="relative w-10 h-10 flex items-center justify-center mb-3">
+            <div className="w-8 h-8 flex items-center justify-center">
+                <div className="w-6 h-6 flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
+                        <Icon size={20} className="stroke-[2]" />
                     </div>
                 </div>
             </div>
         </div>
         
         <div className="flex flex-col items-center min-w-0 relative z-10 w-full">
-            <h4 className="text-[10px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase leading-none mb-2 truncate tracking-tight group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+            <h4 className="text-[9px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase leading-none mb-1.5 truncate tracking-tight">
                 {title}
             </h4>
-            <div className="flex items-baseline gap-2">
-                <span className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none font-[800]">
+            <div className="flex items-baseline gap-1">
+                <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none font-[700]">
                     {value ?? 0}
                 </span>
                 {unit && (
-                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tighter ml-1">
+                    <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tighter ml-0.5">
                         {unit}
                     </span>
                 )}
@@ -79,9 +68,9 @@ const StatCard = ({
             
             {/* Trend indicator */}
             {trendData && (
-                <div className="flex items-center gap-1.5 mt-2 text-[9px] font-medium">
+                <div className="flex items-center gap-1 mt-1 text-[8px] font-medium">
                     <Icon 
-                        size={12} 
+                        size={10} 
                         className={cn(
                             trendData.isPositive ? "text-emerald-500" : "text-rose-500",
                             trendData.isPositive ? TrendingUpIcon : TrendingDownIcon
@@ -92,14 +81,6 @@ const StatCard = ({
                     </span>
                 </div>
             )}
-            
-            {/* Sparkles on hover */}
-            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute -top-2 -left-2 w-4 h-4 bg-white/50 rounded-full animate-[sparklePulse_2s_ease_in_out_infinite]" />
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-white/50 rounded-full animate-[sparklePulse_2s_ease_in_out_infinite]" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 bg-white/50 rounded-full animate-[sparklePulse_2s_ease_in_out_infinite]" />
-                <div className="absolute bottom-2 right-2 w-4 h-4 bg-white/50 rounded-full animate-[sparklePulse_2s_ease_in_out_infinite]" />
-            </div>
         </div>
     </div>
 );
@@ -117,16 +98,12 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
                 title="إجمالي الطلاب" 
                 value={stats.studentsCount} 
                 icon={Users} 
-                gradientClasses="from-[#6366F1] to-[#4F46E5]"
-                accentColor="bg-[#6366F1]"
                 trendData={studentTrend}
             />
             <StatCard 
                 title="الاشتراكات النشطة" 
                 value={stats.totalEnrollments} 
                 icon={BookOpen} 
-                gradientClasses="from-[#10B981] to-[#059669]"
-                accentColor="bg-[#10B981]"
                 trendData={{ percentage: 7, isPositive: true, label: "نشطة" }}
             />
             <StatCard 

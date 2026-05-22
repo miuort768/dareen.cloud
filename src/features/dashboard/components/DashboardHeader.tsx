@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Headphones, Calendar, ShieldCheck, ChevronLeft, Sparkles, TrendingUp } from 'lucide-react';
+import { Clock, Headphones, Calendar, ShieldCheck, Sparkles, TrendingUp } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import { cn } from '../../../lib/utils';
 
@@ -23,10 +23,10 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
             "bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-950",
             "dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950",
             "px-8 py-10 flex-col md:flex-row md:items-center justify-between gap-6",
-            "rounded-3xl shadow-2xl shadow-indigo-600/20 border border-white/5",
+            "border border-white/5",
             "before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.1),transparent_70%)] before:pointer-events-none",
-            "transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-700/25",
-            isHovered ? "hover:shadow-[0_0_40px_rgba(99,102,241,0.4)]" : ""
+            "transition-all duration-300",
+            isHovered ? "bg-white/10" : ""
         )} dir="rtl"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
