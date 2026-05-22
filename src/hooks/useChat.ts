@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
@@ -44,6 +44,11 @@ export const useChat = (userId?: string) => {
     });
 
     const totalUnreadCount = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0);
+    const prevCount = useRef(totalUnreadCount);
+    if (totalUnreadCount !== prevCount.current) {
+        prevCount.current = totalUnreadCount;
+        useChatStore.getState().setTotalUnreadCount(totalUnreadCount);
+    }
 
     // Fetch available users
     const { data: availableUsers = [] } = useQuery<ChatUser[]>({

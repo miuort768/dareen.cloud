@@ -6,12 +6,14 @@ interface ChatState {
     activeConversationId: string | null;
     isConnected: boolean;
     liveSession: Record<string, unknown> | null;
+    totalUnreadCount: number;
 
     setTyping: (conversationId: string, isTyping: boolean, userName: string, currentUserId?: string) => void;
     setActiveConversationId: (id: string | null) => void;
     setIsConnected: (connected: boolean) => void;
     setLiveSession: (session: Record<string, unknown> | null) => void;
     setTypingUsers: (users: { conversationId: string; userName: string }[]) => void;
+    setTotalUnreadCount: (count: number) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -19,6 +21,7 @@ export const useChatStore = create<ChatState>((set) => ({
     activeConversationId: null,
     isConnected: false,
     liveSession: null,
+    totalUnreadCount: 0,
 
     setTyping: (conversationId, isTyping, userName, currentUserId) => {
         const socket = socketService.getSocket();
@@ -41,5 +44,9 @@ export const useChatStore = create<ChatState>((set) => ({
 
     setTypingUsers: (users) => {
         set({ typingUsers: users });
+    },
+
+    setTotalUnreadCount: (count) => {
+        set({ totalUnreadCount: count });
     }
 }));
