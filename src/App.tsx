@@ -5,6 +5,8 @@ import { PageLoader } from './components/ui/PageLoader';
 import { Layout } from './components/layout/Layout';
 import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
+import './store/chatStore';
+import './store/unreadStore';
 
 // Lazy load pages for high performance
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
