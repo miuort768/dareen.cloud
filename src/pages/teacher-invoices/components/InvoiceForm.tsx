@@ -1,5 +1,5 @@
-import { Plus, Edit, Check } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn } from './InvoiceUI';
+import { Plus, Edit, Check, X } from 'lucide-react';
+import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './InvoiceUI';
 
 interface Teacher {
     id: string;
@@ -29,112 +29,128 @@ interface InvoiceFormProps {
     INVOICE_STATUS: Record<string, string>;
 }
 
-export const InvoiceForm = ({
-    showForm, editingId, formData, setFormData,
-    handleSubmit, teachers, isSaving, INVOICE_STATUS
-}: InvoiceFormProps) => {
-    if (!showForm) return null;
+const inputClasses = [
+  'w-full bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700',
+  'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
+  'focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-200/50 dark:focus:ring-emerald-700/50',
+  'transition-all duration-200',
+].join(' ');
 
-    return (
-        <SectionCard className="mb-4 animate-in slide-in-from-top-2">
-            <SectionTitle
-                icon={editingId ? Edit : Plus}
-                label={editingId ? 'تعديل فاتورة' : 'إضافة فاتورة جديدة'}
-                sub="Invoice Management"
+export const InvoiceForm = ({
+  showForm, editingId, formData, setFormData,
+  handleSubmit, handleCancel, teachers, isSaving, INVOICE_STATUS
+}: InvoiceFormProps) => {
+  if (!showForm) return null;
+
+  return (
+    <SectionCard className="mb-4 motion-safe:animate-[fadeIn_0.3s_ease-out]">
+      <div className="flex items-center justify-between mb-1">
+        <SectionTitle
+          icon={editingId ? Edit : Plus}
+          label={editingId ? 'تعديل فاتورة' : 'إضافة فاتورة جديدة'}
+          sub="Invoice Management"
+        />
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all"
+        >
+          <X size={16} />
+        </button>
+      </div>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div>
+          <FieldLabel>المعلمة *</FieldLabel>
+          <select
+            required
+            value={formData.teacherId}
+            onChange={e => {
+              const t = teachers.find(t => t.id === e.target.value);
+              if (t) {
+                setFormData({ ...formData, teacherId: t.id, teacher: t.name, specialization: t.subject || formData.specialization });
+              } else {
+                setFormData({ ...formData, teacherId: e.target.value });
+              }
+            }}
+            className={inputClasses}
+          >
+            <option value="">-- اختر المعلمة --</option>
+            {teachers.map(t => (
+              <option key={t.id} value={t.id}>{t.name}</option>
+            ))}
+            <option value="other">أخرى (إدخال يدوي)</option>
+          </select>
+        </div>
+        {formData.teacherId === 'other' && (
+          <div>
+            <FieldLabel>اسم المعلمة (يدوي) *</FieldLabel>
+            <input
+              required
+              value={formData.teacher}
+              onChange={e => setFormData({ ...formData, teacher: e.target.value })}
+              placeholder="اسم المعلمة"
+              className={inputClasses}
             />
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div>
-                    <FieldLabel>المعلمة *</FieldLabel>
-                    <InputField
-                        type="select"
-                        required
-                        value={formData.teacherId}
-                        onChange={e => {
-                            const t = teachers.find(t => t.id === e.target.value);
-                            if (t) {
-                                setFormData({
-                                    ...formData,
-                                    teacherId: t.id,
-                                    teacher: t.name,
-                                    specialization: t.subject || formData.specialization
-                                });
-                            } else {
-                                setFormData({ ...formData, teacherId: e.target.value });
-                            }
-                        }}
-                    >
-                        <option value="">-- اختر المعلمة --</option>
-                        {teachers.map(t => (
-                            <option key={t.id} value={t.id}>{t.name}</option>
-                        ))}
-                        <option value="other">أخرى (إدخال يدوي)</option>
-                    </InputField>
-                </div>
-                {formData.teacherId === 'other' && (
-                    <div>
-                        <FieldLabel>اسم المعلمة (يدوي) *</FieldLabel>
-                        <InputField
-                            required
-                            value={formData.teacher}
-                            onChange={e => setFormData({ ...formData, teacher: (e.target as HTMLInputElement).value })}
-                            placeholder="اسم المعلمة"
-                        />
-                    </div>
-                )}
-                <div>
-                    <FieldLabel>التخصص *</FieldLabel>
-                    <InputField
-                        required
-                        value={formData.specialization}
-                        onChange={e => setFormData({ ...formData, specialization: (e.target as HTMLInputElement).value })}
-                        placeholder="التخصص"
-                    />
-                </div>
-                <div>
-                    <FieldLabel>المبلغ (ج.م) *</FieldLabel>
-                    <InputField
-                        type="number"
-                        required
-                        value={formData.amount}
-                        onChange={e => setFormData({ ...formData, amount: (e.target as HTMLInputElement).value })}
-                        placeholder="0"
-                    />
-                </div>
-                <div>
-                    <FieldLabel>وسيلة الدفع</FieldLabel>
-                    <InputField
-                        value={formData.paymentMethod}
-                        onChange={e => setFormData({ ...formData, paymentMethod: (e.target as HTMLInputElement).value })}
-                        placeholder="نقدي / تحويل"
-                    />
-                </div>
-                <div>
-                    <FieldLabel>المصاريف الشخصية</FieldLabel>
-                    <InputField
-                        type="number"
-                        value={formData.personalExpenses}
-                        onChange={e => setFormData({ ...formData, personalExpenses: (e.target as HTMLInputElement).value })}
-                        placeholder="0"
-                    />
-                </div>
-                <div>
-                    <FieldLabel>الحالة *</FieldLabel>
-                    <InputField
-                        type="select"
-                        value={formData.status}
-                        onChange={e => setFormData({ ...formData, status: (e.target as HTMLSelectElement).value })}
-                    >
-                        {Object.values(INVOICE_STATUS).map(status => (
-                            <option key={status} value={status}>{status}</option>
-                        ))}
-                    </InputField>
-                </div>
-                <div className="md:col-span-1 lg:col-span-1 flex flex-col justify-end">
-                    <PrimaryBtn type="submit" loading={isSaving} className="w-full">
-                        <Check size={14} /> {editingId ? 'حفظ التعديلات' : 'حفظ الفاتورة'}
-                    </PrimaryBtn>
-                </div>
-            </form>
-        </SectionCard>
-    );
+          </div>
+        )}
+        <div>
+          <FieldLabel>التخصص *</FieldLabel>
+          <input
+            required
+            value={formData.specialization}
+            onChange={e => setFormData({ ...formData, specialization: e.target.value })}
+            placeholder="التخصص"
+            className={inputClasses}
+          />
+        </div>
+        <div>
+          <FieldLabel>المبلغ (ج.م) *</FieldLabel>
+          <input
+            type="number"
+            required
+            value={formData.amount}
+            onChange={e => setFormData({ ...formData, amount: e.target.value })}
+            placeholder="0"
+            className={inputClasses}
+          />
+        </div>
+        <div>
+          <FieldLabel>وسيلة الدفع</FieldLabel>
+          <input
+            value={formData.paymentMethod}
+            onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })}
+            placeholder="نقدي / تحويل"
+            className={inputClasses}
+          />
+        </div>
+        <div>
+          <FieldLabel>المصاريف الشخصية</FieldLabel>
+          <input
+            type="number"
+            value={formData.personalExpenses}
+            onChange={e => setFormData({ ...formData, personalExpenses: e.target.value })}
+            placeholder="0"
+            className={inputClasses}
+          />
+        </div>
+        <div>
+          <FieldLabel>الحالة *</FieldLabel>
+          <select
+            value={formData.status}
+            onChange={e => setFormData({ ...formData, status: e.target.value })}
+            className={inputClasses}
+          >
+            {Object.values(INVOICE_STATUS).map(status => (
+              <option key={status} value={status}>{status}</option>
+            ))}
+          </select>
+        </div>
+        <div className="md:col-span-1 lg:col-span-1 flex flex-col justify-end">
+          <PrimaryBtn type="submit" loading={isSaving} className="w-full">
+            <Check size={14} /> {editingId ? 'حفظ التعديلات' : 'حفظ الفاتورة'}
+          </PrimaryBtn>
+        </div>
+      </form>
+    </SectionCard>
+  );
 };

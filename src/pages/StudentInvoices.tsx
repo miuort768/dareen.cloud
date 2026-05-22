@@ -282,35 +282,36 @@ export const StudentInvoices = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-400/10 dark:bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-none">
-                        <FileText size={18} className="text-indigo-200" />
+                <div className="relative rounded-2xl bg-gradient-to-br from-white/80 via-indigo-50/50 to-white/80 dark:from-slate-900/80 dark:via-indigo-950/30 dark:to-slate-900/80 border border-indigo-100/50 dark:border-indigo-900/30 shadow-lg shadow-indigo-100/30 dark:shadow-indigo-950/20 px-6 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-200/10 dark:via-indigo-500/5 to-transparent" />
+                    <div className="flex items-center gap-3 relative">
+                        <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-indigo-950">
+                            <FileText size={18} className="text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-base font-black text-slate-800 dark:text-white">فواتير وتحصيل الطلاب</h1>
+                            <p className="text-[11px] font-medium text-slate-400">إدارة التدفقات النقدية والمستحقات الدراسية</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-sm font-normal text-white">فواتير وتحصيل الطلاب</h1>
-                        <p className="text-[10px] text-indigo-200/80">إدارة التدفقات النقدية والمستحقات الدراسية</p>
+                    <div className="flex items-center gap-2 text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50/80 dark:bg-indigo-950/50 px-3 py-2 rounded-xl border border-indigo-100 dark:border-indigo-900/50 relative whitespace-nowrap">
+                        <Sparkles size={13} className="text-amber-400" />
+                        {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-normal text-white/70 bg-white/10  px-3 py-1.5 rounded-lg border border-white/10">
-                    <Sparkles size={12} className="text-amber-300" />
-                    {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
-                </div>
-            </div>
 
-            <InvoiceStats
-                totalRevenue={totalRevenue}
-                pendingRevenue={pendingRevenue}
-                overdueRevenue={overdueRevenue}
-                invoicesLength={invoices.length}
-                paidCount={paidCount}
-                pendingCount={pendingCount}
-            />
+                <InvoiceStats
+                    totalRevenue={totalRevenue}
+                    pendingRevenue={pendingRevenue}
+                    overdueRevenue={overdueRevenue}
+                    invoicesLength={invoices.length}
+                    paidCount={paidCount}
+                    pendingCount={pendingCount}
+                />
 
-            <div className="px-0">
                 <SectionCard className="p-3 md:p-3">
                     <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
                         <div className="flex-1 flex gap-3 items-center w-full">
@@ -353,9 +354,7 @@ export const StudentInvoices = () => {
                         </div>
                     </div>
                 </SectionCard>
-            </div>
 
-            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 <InvoiceForm
                     showForm={showForm}
                     editingId={editingId}
@@ -375,41 +374,40 @@ export const StudentInvoices = () => {
                     setPreviewInvoice={setPreviewInvoice}
                     setDeletingId={setDeletingId}
                 />
-            </div>
 
-            <ConfirmModal
-                isOpen={!!deletingId}
-                onClose={() => setDeletingId(null)}
-                onConfirm={confirmDelete}
-                title="حذف الفاتورة"
-                message="هل أنت متأكد من حذف هذه الفاتورة نهائياً؟"
-                isDestructive={true}
-            />
-
-            <ConfirmModal
-                isOpen={deleteAllModalOpen}
-                onClose={() => setDeleteAllModalOpen(false)}
-                onConfirm={handleDeleteAll}
-                title="حذف الكل"
-                message="سيتم حذف جميع فواتير الطلاب تماماً. لا يمكن التراجع."
-                isDestructive={true}
-            />
-
-            <ConfirmModal
-                isOpen={confirmModal.isOpen}
-                onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
-                onConfirm={confirmModal.onConfirm}
-                title={confirmModal.title}
-                message={confirmModal.message}
-            />
-
-            {previewInvoice && (
-                <InvoicePreviewModal
-                    isOpen={!!previewInvoice}
-                    onClose={() => setPreviewInvoice(null)}
-                    invoice={previewInvoice}
+                <ConfirmModal
+                    isOpen={!!deletingId}
+                    onClose={() => setDeletingId(null)}
+                    onConfirm={confirmDelete}
+                    title="حذف الفاتورة"
+                    message="هل أنت متأكد من حذف هذه الفاتورة نهائياً؟"
+                    isDestructive={true}
                 />
-            )}
+
+                <ConfirmModal
+                    isOpen={deleteAllModalOpen}
+                    onClose={() => setDeleteAllModalOpen(false)}
+                    onConfirm={handleDeleteAll}
+                    title="حذف الكل"
+                    message="سيتم حذف جميع فواتير الطلاب تماماً. لا يمكن التراجع."
+                    isDestructive={true}
+                />
+
+                <ConfirmModal
+                    isOpen={confirmModal.isOpen}
+                    onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+                    onConfirm={confirmModal.onConfirm}
+                    title={confirmModal.title}
+                    message={confirmModal.message}
+                />
+
+                {previewInvoice && (
+                    <InvoicePreviewModal
+                        isOpen={!!previewInvoice}
+                        onClose={() => setPreviewInvoice(null)}
+                        invoice={previewInvoice}
+                    />
+                )}
             </div>
         </div>
     );

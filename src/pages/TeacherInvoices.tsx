@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles } from 'lucide-react';
+import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles, GraduationCap } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
@@ -312,22 +312,24 @@ export const TeacherInvoices = () => {
     if (loading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
-            <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-emerald-950/20 font-sans" dir="rtl">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-400/10 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-400/10 dark:bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 ">
-                        <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
+            <div className="relative rounded-2xl bg-gradient-to-br from-white/80 via-emerald-50/50 to-white/80 dark:from-slate-900/80 dark:via-emerald-950/30 dark:to-slate-900/80 border border-emerald-100/50 dark:border-emerald-900/30 shadow-lg shadow-emerald-100/30 dark:shadow-emerald-950/20 px-6 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-200/10 dark:via-emerald-500/5 to-transparent" />
+                <div className="flex items-center gap-3 relative">
+                    <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-violet-500 to-emerald-500 rounded-xl shadow-lg shadow-emerald-200 dark:shadow-emerald-950">
+                        <GraduationCap size={18} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-normal text-white">فواتير المعلمات</h1>
-                        <p className="text-[10px] text-indigo-200/80">إدارة رواتب ومستحقات الكادر التعليمي</p>
+                        <h1 className="text-base font-black text-slate-800 dark:text-white">فواتير المعلمات</h1>
+                        <p className="text-[11px] font-medium text-slate-400">إدارة رواتب ومستحقات الكادر التعليمي</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-normal text-white/70 bg-white/10  px-3 py-1.5 rounded-lg border border-white/10">
-                    <Sparkles size={12} className="text-amber-300" />
+                <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/50 px-3 py-2 rounded-xl border border-emerald-100 dark:border-emerald-900/50 relative whitespace-nowrap">
+                    <Sparkles size={13} className="text-amber-400" />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي الرواتب
                 </div>
             </div>
@@ -402,7 +404,6 @@ export const TeacherInvoices = () => {
                 </SectionCard>
             </div>
 
-            <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 <InvoiceForm
                     showForm={showForm}
                     editingId={editingId}
@@ -421,7 +422,6 @@ export const TeacherInvoices = () => {
                     handleDelete={handleDelete}
                     isTeacher={isTeacher}
                 />
-            </div>
 
             <ConfirmModal
                 isOpen={confirmModal.isOpen}
