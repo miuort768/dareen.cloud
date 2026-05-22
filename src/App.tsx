@@ -1,12 +1,11 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
+import { Chat } from './pages/Chat';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { PageLoader } from './components/ui/PageLoader';
 
 import { Layout } from './components/layout/Layout';
 import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
-import './store/chatStore';
-import './store/unreadStore';
 
 // Lazy load pages for high performance
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
@@ -30,7 +29,7 @@ const Teachers = lazy(() => import('./pages/Teachers').then(m => ({ default: m.T
 const Parents = lazy(() => import('./pages/Parents').then(m => ({ default: m.Parents })));
 const Students = lazy(() => import('./pages/Students').then(m => ({ default: m.Students })));
 const Tasks = lazy(() => import('./pages/Tasks').then(m => ({ default: m.Tasks })));
-const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
+
 const Announcements = lazy(() => import('./pages/Announcements').then(m => ({ default: m.Announcements })));
 const Forum = lazy(() => import('./pages/Forum').then(m => ({ default: m.Forum })));
 const MonthlyClosing = lazy(() => import('./pages/MonthlyClosing').then(m => ({ default: m.MonthlyClosing })));
