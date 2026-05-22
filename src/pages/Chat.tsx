@@ -5,6 +5,7 @@ import { ChatWindow } from '../features/chat/components/ChatWindow';
 import { ChatModals } from '../features/chat/components/ChatModals';
 import { useAuthStore } from '../store/authStore';
 import { useChatStore } from '../store/chatStore';
+import { useUnreadStore } from '../store/unreadStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { cn } from '../lib/utils';
 import type { Conversation, DeleteType, ChatUser } from '../types/chat.types';
@@ -34,7 +35,9 @@ export const Chat: React.FC = () => {
     const location = useLocation();
 
     React.useEffect(() => {
-        setActiveConversationId(selectedConv?.id || null);
+        const id = selectedConv?.id || null;
+        setActiveConversationId(id);
+        useUnreadStore.getState().setActiveConversationId(id);
     }, [selectedConv, setActiveConversationId]);
 
     // Handle "Start Chat With" from other pages

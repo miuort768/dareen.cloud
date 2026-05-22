@@ -29,7 +29,7 @@ import {
 import { cn } from '../../lib/utils';
 import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
 import { X, Menu } from 'lucide-react';
-import { useChatStore } from '../../store/chatStore';
+import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 
 export const Sidebar = () => {
@@ -39,8 +39,8 @@ export const Sidebar = () => {
     const collapsed = useSidebarCollapsed();
     const setCollapsed = useSetSidebarCollapsed();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const activeConversationId = useChatStore(s => s.activeConversationId);
-    const totalUnreadCount = useChatStore(s => s.totalUnreadCount);
+    const activeConversationId = useUnreadStore(s => s.activeConversationId);
+    const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const navigate = useNavigate();
 
     // Persist collapsed state

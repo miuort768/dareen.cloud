@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { socketService } from '../lib/socket';
 import { useChatStore } from '../store/chatStore';
+import { useUnreadStore } from '../store/unreadStore';
 import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types';
 
 // Standalone hook for messages to follow React Rules of Hooks
@@ -48,6 +49,7 @@ export const useChat = (userId?: string) => {
     if (totalUnreadCount !== prevCount.current) {
         prevCount.current = totalUnreadCount;
         useChatStore.getState().setTotalUnreadCount(totalUnreadCount);
+        useUnreadStore.getState().setTotalUnreadCount(totalUnreadCount);
     }
 
     // Fetch available users
