@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+﻿import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer, Sparkles } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
@@ -316,17 +316,17 @@ export const TeacherInvoices = () => {
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 ">
                         <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-white">فواتير المعلمات</h1>
+                        <h1 className="text-sm font-normal text-white">فواتير المعلمات</h1>
                         <p className="text-[10px] text-indigo-200/80">إدارة رواتب ومستحقات الكادر التعليمي</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                <div className="flex items-center gap-2 text-[10px] font-normal text-white/70 bg-white/10  px-3 py-1.5 rounded-lg border border-white/10">
                     <Sparkles size={12} className="text-amber-300" />
                     {stats.totalAmount.toLocaleString()} ج.م إجمالي الرواتب
                 </div>
@@ -347,19 +347,19 @@ export const TeacherInvoices = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
-                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-none border border-slate-200 dark:border-slate-700">
                                 <Calendar size={14} className="text-slate-400" />
                                 <div className="flex items-center gap-1">
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
                                         value={startDate}
                                         onChange={(e) => setStartDate(e.target.value)}
                                     />
                                     <span className="text-[10px] text-slate-400">→</span>
                                     <input 
                                         type="date" 
-                                        className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
+                                        className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer" 
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
                                     />
@@ -370,7 +370,7 @@ export const TeacherInvoices = () => {
                                 type="select"
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value)}
-                                className="w-auto min-w-[140px] py-2 text-xs font-bold"
+                                className="w-auto min-w-[140px] py-2 text-xs font-normal"
                             >
                                 <option value="all">جميع الحالات</option>
                                 {Object.values(INVOICE_STATUS).map(status => (

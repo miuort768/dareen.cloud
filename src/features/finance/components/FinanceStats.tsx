@@ -23,17 +23,17 @@ const StatCard = ({ title, value, icon: Icon, gradient, sub, badge }: {
                 <Icon size={18} className="text-white" />
             </div>
             {badge && (
-                <span className={cn("text-[9px] font-black px-2 py-0.5 rounded-none uppercase tracking-widest", badge.color)}>
+                <span className={cn("text-[9px] font-medium px-2 py-0.5 rounded-none uppercase tracking-widest", badge.color)}>
                     {badge.label}
                 </span>
             )}
         </div>
         {/* Value */}
         <div>
-            <p className="text-2xl font-black font-mono leading-none">{value}</p>
-            <p className="text-[9px] font-black uppercase tracking-widest text-white/60 mt-1">ج.م</p>
-            <p className="text-[10px] font-black uppercase tracking-widest text-white/75 mt-2">{title}</p>
-            {sub && <p className="text-[9px] text-white/50 font-bold mt-0.5">{sub}</p>}
+            <p className="text-2xl font-medium font-mono leading-none">{value}</p>
+            <p className="text-[9px] font-medium uppercase tracking-widest text-white/60 mt-1">ج.م</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest text-white/75 mt-2">{title}</p>
+            {sub && <p className="text-[9px] text-white/50 font-normal mt-0.5">{sub}</p>}
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20" />
     </div>

@@ -126,12 +126,12 @@ export const InstallPWA = () => {
 
     if (showIOSGuide) {
         return (
-            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40 backdrop-blur-sm p-4">
+            <div className="fixed inset-0 z-[600] flex items-end justify-center bg-black/40  p-4">
                 <div className="bg-white border-2 border-gray-950 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full max-w-sm animate-in slide-in-from-bottom-5 fade-in duration-300">
                     <div className="bg-yellow-400 border-b-2 border-gray-950 px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Smartphone size={18} className="text-black" />
-                            <h2 className="font-black text-sm text-black uppercase tracking-tighter text-right">
+                            <h2 className="font-medium text-sm text-black uppercase tracking-tighter text-right">
                                 ثبتي التطبيق
                             </h2>
                         </div>
@@ -143,45 +143,45 @@ export const InstallPWA = () => {
                     <div className="p-4 space-y-3 bg-white text-right">
                         {isIOS ? (
                             <>
-                                <p className="text-[11px] font-bold text-gray-500 mb-3">اتبعي هذه الخطوات في Safari:</p>
+                                <p className="text-[11px] font-normal text-gray-500 mb-3">اتبعي هذه الخطوات في Safari:</p>
                                 <div className="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200">
-                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">1</span>
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-medium shrink-0">1</span>
                                     <div>
-                                        <p className="text-xs font-black text-gray-800 flex items-center gap-1">
+                                        <p className="text-xs font-medium text-gray-800 flex items-center gap-1">
                                             اضغطي على زر المشاركة <Share size={12} className="text-blue-500" />
                                         </p>
                                         <p className="text-[10px] text-gray-500">في أسفل شاشة المتصفح</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200">
-                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">2</span>
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-medium shrink-0">2</span>
                                     <div>
-                                        <p className="text-xs font-black text-gray-800">مرري للأسفل</p>
+                                        <p className="text-xs font-medium text-gray-800">مرري للأسفل</p>
                                         <p className="text-[10px] text-gray-500">في قائمة المشاركة</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200">
-                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">3</span>
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-medium shrink-0">3</span>
                                     <div>
-                                        <p className="text-xs font-black text-gray-800">اضغطي "Add to Home Screen"</p>
+                                        <p className="text-xs font-medium text-gray-800">اضغطي "Add to Home Screen"</p>
                                         <p className="text-[10px] text-gray-500">ثم اضغطي "Add" للتأكيد</p>
                                     </div>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <p className="text-[11px] font-bold text-gray-500 mb-3">اتبع هذا الدليل للتثبيت:</p>
+                                <p className="text-[11px] font-normal text-gray-500 mb-3">اتبع هذا الدليل للتثبيت:</p>
                                 <div className="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200">
-                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-black shrink-0">1</span>
-                                    <p className="text-xs font-black text-gray-800">اضغط على القائمة ثم "Add to Home Screen"</p>
+                                    <span className="w-6 h-6 bg-yellow-400 border border-gray-950 flex items-center justify-center text-[10px] font-medium shrink-0">1</span>
+                                    <p className="text-xs font-medium text-gray-800">اضغط على القائمة ثم "Add to Home Screen"</p>
                                 </div>
                             </>
                         )}
                     </div>
 
                     <div className="flex border-t-2 border-gray-950">
-                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-[10px] font-black text-gray-500 hover:bg-gray-50 transition-colors border-r border-gray-200">عدم التذكير مجدداً</button>
-                        <button onClick={handleDismiss} className="flex-1 py-3 text-[10px] font-black bg-yellow-400 text-black hover:bg-yellow-500 transition-colors">فهمت، شكراً</button>
+                        <button onClick={handleDismissPermanent} className="flex-1 py-3 text-[10px] font-medium text-gray-500 hover:bg-gray-50 transition-colors border-r border-gray-200">عدم التذكير مجدداً</button>
+                        <button onClick={handleDismiss} className="flex-1 py-3 text-[10px] font-medium bg-yellow-400 text-black hover:bg-yellow-500 transition-colors">فهمت، شكراً</button>
                     </div>
                 </div>
             </div>
@@ -192,15 +192,15 @@ export const InstallPWA = () => {
         <div className={`fixed z-[500] animate-in slide-in-from-bottom-5 fade-in duration-500 ${
             isDesktop ? 'bottom-4 right-4' : 'bottom-4 left-3 right-3'
         }`}>
-            <div className={`bg-[#064E3B] border border-white/10 backdrop-blur-md flex items-center gap-3 p-2.5 rounded-[20px] ${
+            <div className={`bg-[#064E3B] border border-white/10  flex items-center gap-3 p-2.5 rounded-[20px] ${
                 isDesktop ? 'max-w-[280px] ml-auto' : ''
             }`}>
-                <div className="w-9 h-9 bg-white/10 text-white flex items-center justify-center rounded-[14px] shrink-0 backdrop-blur-sm border border-white/10">
+                <div className="w-9 h-9 bg-white/10 text-white flex items-center justify-center rounded-[14px] shrink-0  border border-white/10">
                     {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
                 </div>
 
                 <div className="flex-1 min-w-0 text-right">
-                    <h2 className="text-[10px] font-black uppercase text-white leading-tight">ثبتي التطبيق</h2>
+                    <h2 className="text-[10px] font-medium uppercase text-white leading-tight">ثبتي التطبيق</h2>
                     <p className="font-medium text-[9px] text-white/70 truncate mt-0.5">
                         {isIOS || isMacSafari ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}
                     </p>
@@ -209,7 +209,7 @@ export const InstallPWA = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                     <button
                         onClick={handleInstall}
-                        className="px-3 py-1.5 bg-white text-[#064E3B] font-black uppercase text-[9px] rounded-lg hover:bg-gray-100 transition-all flex items-center gap-1.5 active:scale-95"
+                        className="px-3 py-1.5 bg-white text-[#064E3B] font-medium uppercase text-[9px] rounded-lg hover:bg-gray-100 transition-all flex items-center gap-1.5 active:scale-95"
                     >
                         {isIOS || isMacSafari ? <Share size={10} /> : <Download size={10} />}
                         {isIOS || isMacSafari ? 'كيف؟' : 'تثبيت'}

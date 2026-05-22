@@ -20,15 +20,15 @@ const StatCard = ({ label, value, icon: Icon, sub, gradient, accent }: { label: 
         </div>
         {/* Top row */}
         <div className="flex items-start justify-between mb-3">
-            <div className={cn("w-9 h-9 rounded-none flex items-center justify-center bg-white/20 backdrop-blur-sm")}>
+            <div className={cn("w-9 h-9 rounded-none flex items-center justify-center bg-white/20 ")}>
                 <Icon size={18} className="text-white" />
             </div>
-            <span className="text-[9px] font-black text-white/60 uppercase tracking-widest text-left">{sub}</span>
+            <span className="text-[9px] font-medium text-white/60 uppercase tracking-widest text-left">{sub}</span>
         </div>
         {/* Value */}
         <div>
-            <p className="text-2xl font-black text-white font-mono leading-none">{value}</p>
-            <p className="text-[10px] font-bold text-white/70 uppercase tracking-widest mt-1.5">{label}</p>
+            <p className="text-2xl font-medium text-white font-mono leading-none">{value}</p>
+            <p className="text-[10px] font-normal text-white/70 uppercase tracking-widest mt-1.5">{label}</p>
         </div>
         {/* Bottom accent bar */}
         <div className={cn("absolute bottom-0 left-0 right-0 h-0.5 opacity-40", accent)} />
@@ -82,3 +82,4 @@ export const ReportsStatsGrid = ({
         </div>
     );
 };
+

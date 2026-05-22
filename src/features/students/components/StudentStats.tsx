@@ -9,15 +9,15 @@ interface StudentStatsProps {
 }
 
 const StatItem = ({ label, value, icon: Icon, color, symbol, bg, borderAccent }: { label: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, symbol: string, bg: string, borderAccent: string }) => (
-    <div className={cn("bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm flex flex-col items-center text-center hover:shadow-md transition-shadow relative overflow-hidden", borderAccent)}>
-        <div className={cn("absolute -right-2 -bottom-4 text-5xl font-black opacity-[0.03] dark:opacity-[0.05] pointer-events-none select-none italic", color)}>
+    <div className={cn("bg-white dark:bg-slate-900 border-x border-b border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm flex flex-col items-center text-center hover:shadow-sm transition-shadow relative overflow-hidden", borderAccent)}>
+        <div className={cn("absolute -right-2 -bottom-4 text-5xl font-medium opacity-[0.03] dark:opacity-[0.05] pointer-events-none select-none italic", color)}>
             {value}
         </div>
         <div className={cn("w-6 h-6 rounded-none flex items-center justify-center mb-1.5 relative z-10", bg)}>
             <Icon size={12} className={color} />
         </div>
-        <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest relative z-10">{label}</p>
-        <p className={cn("text-sm font-black mt-0.5 relative z-10", color)}>{value} <span className="text-[8px] font-bold text-slate-400">{symbol}</span></p>
+        <p className="text-[8px] font-medium text-slate-400 uppercase tracking-widest relative z-10">{label}</p>
+        <p className={cn("text-sm font-medium mt-0.5 relative z-10", color)}>{value} <span className="text-[8px] font-normal text-slate-400">{symbol}</span></p>
     </div>
 );
 
@@ -63,3 +63,4 @@ export const StudentStats = ({ totalStudents, activeEnrollments, uniqueGrades, a
         </div>
     );
 };
+

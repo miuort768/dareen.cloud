@@ -57,7 +57,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                         />
                     </div>
                     <div className="flex flex-col text-right">
-                        <span className="text-sm font-bold text-[#111b21] dark:text-[#e9edef] leading-tight">واتساب دارين</span>
+                        <span className="text-sm font-normal text-[#111b21] dark:text-[#e9edef] leading-tight">واتساب دارين</span>
                         <span className="text-[10px] font-thin text-[#667781] dark:text-[#8696a0]">تواصل أسهل وأسرع</span>
                     </div>
 
@@ -191,7 +191,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 )}
             </div>
             
-            <div className="bg-white/80 dark:bg-[#111b21]/90 backdrop-blur-md p-3 border-t border-emerald-500/10 text-center sticky bottom-0 z-[100] w-full">
+            <div className="bg-white/80 dark:bg-[#111b21]/90  p-3 border-t border-emerald-500/10 text-center sticky bottom-0 z-[100] w-full">
                 <div className="flex items-center justify-center gap-2 drop-shadow-[0_0_5px_rgba(0,168,132,0.4)]">
                     <ShieldCheck size={14} className="text-[#00a884] animate-pulse" />
                     <span className="text-[10px] text-[#00a884] font-black uppercase tracking-[0.3em]">تواصل آمن ومشفر</span>

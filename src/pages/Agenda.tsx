@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -145,7 +145,7 @@ export const Agenda = () => {
                             key={day}
                             onClick={() => setActiveDay(day)}
                             className={cn(
-                                "px-6 py-2.5 text-xs font-black transition-all whitespace-nowrap border-b-2",
+                                "px-6 py-2.5 text-xs font-medium transition-all whitespace-nowrap border-b-2",
                                 activeDay === day
                                     ? "bg-amber-50 text-amber-700 border-amber-500 dark:bg-amber-900/20"
                                     : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
@@ -163,7 +163,7 @@ export const Agenda = () => {
                         placeholder="بحث في الأجندة..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-bold focus:ring-2 ring-amber-500 rounded-xl dark:text-white"
+                        className="w-full bg-gray-50 dark:bg-gray-800 border-none pr-10 py-3 text-sm font-normal focus:ring-2 ring-amber-500 rounded-none dark:text-white"
                     />
                 </div>
             </div>
@@ -173,7 +173,7 @@ export const Agenda = () => {
                 {scheduledAppointments.length > 0 ? (
                     scheduledAppointments.map((app) => (
                         <div key={app.id} className={cn(
-                            "relative group bg-white dark:bg-gray-900 border-2 transition-all overflow-hidden rounded-2xl shadow-sm hover:shadow-xl",
+                            "relative group bg-white dark:bg-gray-900 border-2 transition-all overflow-hidden rounded-none shadow-sm hover:shadow-sm",
                             app.isDone ? "border-emerald-100 dark:border-emerald-900/30" : "border-gray-100 dark:border-gray-800 hover:border-amber-500"
                         )}>
                             {/* Status Stripe */}
@@ -186,30 +186,30 @@ export const Agenda = () => {
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-center gap-3">
                                         <div className={cn(
-                                            "w-12 h-12 flex items-center justify-center font-black text-lg rounded-xl transition-colors",
+                                            "w-12 h-12 flex items-center justify-center font-medium text-lg rounded-none transition-colors",
                                             app.isDone ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600 dark:bg-amber-900/20"
                                         )}>
                                             {app.studentName.charAt(0)}
                                         </div>
                                         <div>
-                                            <h4 className="font-black text-gray-900 dark:text-white text-base leading-tight">{app.studentName}</h4>
-                                            <p className="text-[10px] font-bold text-gray-400 flex items-center gap-1 uppercase">
+                                            <h4 className="font-medium text-gray-900 dark:text-white text-base leading-tight">{app.studentName}</h4>
+                                            <p className="text-[10px] font-normal text-gray-400 flex items-center gap-1 uppercase">
                                                 {app.studentGrade}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-black text-gray-500 rounded font-mono">
+                                    <div className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-[9px] font-medium text-gray-500 rounded font-mono">
                                         {app.time}
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-xs font-bold text-gray-600 dark:text-gray-400">
+                                    <div className="flex items-center gap-2 text-xs font-normal text-gray-600 dark:text-gray-400">
                                         <BookOpen size={14} className="text-amber-500" />
                                         <span>{app.subject}</span>
                                     </div>
                                     {!isTeacher && (
-                                        <div className="flex items-center gap-2 text-xs font-bold text-gray-500">
+                                        <div className="flex items-center gap-2 text-xs font-normal text-gray-500">
                                             <User size={14} className="text-blue-500" />
                                             <span>أ. {app.teacherName}</span>
                                         </div>
@@ -218,7 +218,7 @@ export const Agenda = () => {
 
                                 {/* Progress for that enrollment */}
                                 <div className="pt-2">
-                                    <div className="flex justify-between items-center mb-1 text-[9px] font-black uppercase tracking-widest text-gray-400">
+                                    <div className="flex justify-between items-center mb-1 text-[9px] font-medium uppercase tracking-widest text-gray-400">
                                         <span>تقدم الطالب</span>
                                         <span>{app.enrollment.sessionsUsed} / {app.enrollment.sessionsTotal}</span>
                                     </div>
@@ -235,7 +235,7 @@ export const Agenda = () => {
 
                                 <div className="pt-2">
                                     {app.isDone ? (
-                                        <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 py-3 flex items-center justify-center gap-2 font-black text-xs uppercase tracking-widest">
+                                        <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest">
                                             <CheckCircle2 size={16} />
                                             تم الإنجاز
                                         </div>
@@ -243,7 +243,7 @@ export const Agenda = () => {
                                         <button
                                             onClick={() => handleMarkDone(app)}
                                             disabled={logAttendanceMutation.isPending}
-                                            className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 flex items-center justify-center gap-2 font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-amber-500/10 active:scale-95 disabled:opacity-50"
+                                            className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 flex items-center justify-center gap-2 font-medium text-xs uppercase tracking-widest transition-all shadow-sm shadow-amber-500/10 active:scale-95 disabled:opacity-50"
                                         >
                                             {logAttendanceMutation.isPending ? 'جاري التسجيل...' : (
                                                 <>
@@ -260,8 +260,8 @@ export const Agenda = () => {
                 ) : (
                     <div className="col-span-full py-24 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
                         <Calendar size={48} className="mx-auto mb-4 text-gray-200" />
-                        <h3 className="text-lg font-black text-gray-400">لا توجد حصص مجدولة لهذا اليوم</h3>
-                        <p className="text-sm text-gray-400 font-bold mt-1 uppercase tracking-widest">يرجى التأكد من الجداول الدراسية</p>
+                        <h3 className="text-lg font-medium text-gray-400">لا توجد حصص مجدولة لهذا اليوم</h3>
+                        <p className="text-sm text-gray-400 font-normal mt-1 uppercase tracking-widest">يرجى التأكد من الجداول الدراسية</p>
                     </div>
                 )}
             </div>

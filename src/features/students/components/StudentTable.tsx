@@ -21,12 +21,12 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                     <table className="w-full text-right border-collapse">
                         <thead className="bg-[var(--primary-color,#5c59f2)]">
                             <tr>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest">توصيف الطالب</th>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">المستوى</th>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">الاشتراكات</th>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">الحصص</th>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">مؤشر التقدم</th>
-                                <th className="px-6 py-3 font-black text-[10px] text-white uppercase tracking-widest text-center">إجراءات</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest">توصيف الطالب</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest text-center">المستوى</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest text-center">الاشتراكات</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest text-center">الحصص</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest text-center">مؤشر التقدم</th>
+                                <th className="px-6 py-3 font-medium text-[10px] text-white uppercase tracking-widest text-center">إجراءات</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -48,29 +48,29 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-xl flex items-center justify-center font-bold text-sm shadow-sm">
+                                                <div className="w-9 h-9 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center font-normal text-sm shadow-sm">
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-xs text-slate-800 dark:text-white leading-tight">{student.name}</p>
+                                                    <p className="font-normal text-xs text-slate-800 dark:text-white leading-tight">{student.name}</p>
                                                     {hasLowBalance && (
-                                                        <span className="text-[9px] font-bold text-rose-500 uppercase tracking-tighter bg-rose-50 px-1 rounded">رصيد منخفض ⚠️</span>
+                                                        <span className="text-[9px] font-normal text-rose-500 uppercase tracking-tighter bg-rose-50 px-1 rounded">رصيد منخفض ⚠️</span>
                                                     )}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                                            <span className="text-[10px] font-normal text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md">
                                                 {student.grade}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="w-7 h-7 inline-flex items-center justify-center bg-indigo-50 text-[#5c59f2] font-bold text-[11px] rounded-lg">
+                                            <span className="w-7 h-7 inline-flex items-center justify-center bg-indigo-50 text-[#5c59f2] font-normal text-[11px] rounded-lg">
                                                 {student.enrollments?.length || 0}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 font-mono">
+                                            <span className="text-[11px] font-normal text-slate-600 dark:text-slate-300 font-mono">
                                                 {totalUsed} <span className="text-slate-300">/</span> {totalExpected}
                                             </span>
                                         </td>
@@ -85,7 +85,7 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                                                         style={{ width: `${progress}%` }}
                                                     ></div>
                                                 </div>
-                                                <span className="text-[10px] font-bold text-slate-400 font-mono">{progress}%</span>
+                                                <span className="text-[10px] font-normal text-slate-400 font-mono">{progress}%</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
@@ -115,18 +115,18 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                             key={student.id} 
                             onClick={() => onSelect(student)} 
                             className={cn(
-                                "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-2xl shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
+                                "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 rounded-none shadow-sm active:scale-[0.98] transition-all relative overflow-hidden",
                                 hasLowBalance ? "border-rose-100" : ""
                             )}
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold text-sm">
+                                    <div className="w-10 h-10 bg-slate-900 text-white rounded-none flex items-center justify-center font-normal text-sm">
                                         {student.name.charAt(0)}
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-bold text-slate-800 dark:text-white leading-tight mb-1">{student.name}</h4>
-                                        <span className="text-[9px] font-bold text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded uppercase">{student.grade}</span>
+                                        <h4 className="text-sm font-normal text-slate-800 dark:text-white leading-tight mb-1">{student.name}</h4>
+                                        <span className="text-[9px] font-normal text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded uppercase">{student.grade}</span>
                                     </div>
                                 </div>
                                 <div className="flex gap-1">
@@ -136,22 +136,22 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
                             </div>
                             
                             <div className="grid grid-cols-3 gap-3 mb-4">
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl text-center">
-                                    <span className="text-[8px] font-bold text-slate-400 block uppercase mb-1 italic tracking-widest">العقود</span>
-                                    <span className="text-xs font-bold text-indigo-500">{student.enrollments?.length || 0}</span>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-none text-center">
+                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">العقود</span>
+                                    <span className="text-xs font-normal text-indigo-500">{student.enrollments?.length || 0}</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl text-center">
-                                    <span className="text-[8px] font-bold text-slate-400 block uppercase mb-1 italic tracking-widest">المستخدم</span>
-                                    <span className="text-xs font-bold text-emerald-500">{totalUsed}</span>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-none text-center">
+                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">المستخدم</span>
+                                    <span className="text-xs font-normal text-emerald-500">{totalUsed}</span>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-xl text-center">
-                                    <span className="text-[8px] font-bold text-slate-400 block uppercase mb-1 italic tracking-widest">الرصيد</span>
-                                    <span className={cn("text-xs font-bold", hasLowBalance ? "text-rose-500" : "text-slate-600")}>{totalExpected - totalUsed}</span>
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-none text-center">
+                                    <span className="text-[8px] font-normal text-slate-400 block uppercase mb-1 italic tracking-widest">الرصيد</span>
+                                    <span className={cn("text-xs font-normal", hasLowBalance ? "text-rose-500" : "text-slate-600")}>{totalExpected - totalUsed}</span>
                                 </div>
                             </div>
 
                             <div className="space-y-1.5">
-                                <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                                <div className="flex justify-between text-[9px] font-normal text-slate-400 uppercase tracking-widest">
                                     <span>معدل الاستهلاك</span>
                                     <span className="font-mono">{progress}%</span>
                                 </div>
@@ -173,9 +173,10 @@ export const StudentTable = ({ students, selectedId, onSelect, onEdit, onDelete 
             {students.length === 0 && (
                 <div className="py-24 text-center opacity-40">
                     <GraduationCap size={48} className="mx-auto mb-4 text-slate-300" />
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[4px]">لا توجد بيانات طلاب حالياً</p>
+                    <p className="text-[10px] font-normal text-slate-400 uppercase tracking-[4px]">لا توجد بيانات طلاب حالياً</p>
                 </div>
             )}
         </div>
     );
 };
+

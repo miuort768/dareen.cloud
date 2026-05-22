@@ -27,7 +27,7 @@ export const PageLoader = () => {
                         <img
                             src="/dareen_logo_new.jpg"
                             alt="Darin Logo"
-                            className="w-full h-full object-contain scale-[1.35] drop-shadow-2xl"
+                            className="w-full h-full object-contain scale-[1.35] drop-shadow-sm"
                         />
                         {/* Internal Glass Reflection */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
@@ -42,10 +42,10 @@ export const PageLoader = () => {
                         transition={{ delay: 0.2 }}
                         className="space-y-1"
                     >
-                        <h2 className="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">
+                        <h2 className="text-3xl md:text-4xl font-heading font-medium text-slate-900 dark:text-white tracking-tighter">
                             دارين <span className="text-indigo-600 dark:text-indigo-400">للتعليم والتدريب</span>
                         </h2>
-                        <p className="text-slate-400 dark:text-slate-500 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">
+                        <p className="text-slate-400 dark:text-slate-500 font-medium text-[10px] md:text-xs tracking-[0.4em] uppercase">
                             Darin of Education & Training
                         </p>
                     </motion.div>
@@ -81,7 +81,7 @@ export const PageLoader = () => {
                         transition={{ delay: 0.4 }}
                         className="flex flex-col items-center gap-2"
                     >
-                        <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 animate-pulse tracking-[0.2em] uppercase">
+                        <span className="text-[10px] font-medium text-indigo-600 dark:text-indigo-400 animate-pulse tracking-[0.2em] uppercase">
                             جاري تهيئة النظام
                         </span>
                         <div className="flex gap-1">

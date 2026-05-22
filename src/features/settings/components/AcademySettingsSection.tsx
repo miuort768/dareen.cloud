@@ -14,18 +14,18 @@ export const AcademySettingsSection = ({
     setAdminPhone
 }: AcademySettingsSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
+        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
                     <Building2 size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg font-normal text-gray-900 dark:text-white">
                     إعدادات الأكاديمية
                 </h2>
             </div>
             <div className="space-y-4">
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
+                    <label className="block text-sm font-normal text-gray-700 mb-2 dark:text-gray-300">
                         اسم الأكاديمية
                     </label>
                     <input
@@ -37,7 +37,7 @@ export const AcademySettingsSection = ({
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
+                    <label className="block text-sm font-normal text-gray-700 mb-2 dark:text-gray-300">
                         رقم هاتف مدير النظام (لاستقبال تنبيهات المعلمين)
                     </label>
                     <input

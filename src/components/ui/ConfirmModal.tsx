@@ -29,12 +29,12 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
             {/* Backdrop with blur */}
             <div
-                className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300"
+                className="fixed inset-0 bg-slate-950/40  animate-in fade-in duration-300"
                 onClick={onClose}
             ></div>
 
             {/* Modal Content */}
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden">
+            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-sm w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden">
                 {/* Accent bar */}
                 <div className={cn(
                     "h-1.5 w-full",
@@ -59,18 +59,18 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             {isDestructive ? <Trash2 size={32} /> : <AlertCircle size={32} />}
                         </div>
 
-                        <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3 uppercase tracking-tight">
+                        <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-3 uppercase tracking-tight">
                             {title}
                         </h3>
 
-                        <p className="text-gray-500 dark:text-gray-400 font-bold text-sm leading-relaxed mb-8">
+                        <p className="text-gray-500 dark:text-gray-400 font-normal text-sm leading-relaxed mb-8">
                             {message}
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-3 w-full">
                             <button
                                 onClick={onClose}
-                                className="flex-1 px-6 h-12 border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-slate-400 font-black text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-gray-800 transition-all rounded-none"
+                                className="flex-1 px-6 h-12 border border-slate-200 dark:border-gray-700 text-slate-600 dark:text-slate-400 font-medium text-sm uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-gray-800 transition-all rounded-none"
                             >
                                 {cancelText}
                             </button>
@@ -80,7 +80,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                                     onClose();
                                 }}
                                 className={cn(
-                                    "flex-1 px-6 h-12 text-white font-black text-sm uppercase tracking-widest shadow-lg transition-all transform hover:-translate-y-1 active:translate-y-0 rounded-none",
+                                    "flex-1 px-6 h-12 text-white font-medium text-sm uppercase tracking-widest shadow-sm transition-all transform hover:-translate-y-1 active:translate-y-0 rounded-none",
                                     isDestructive
                                         ? "bg-red-600 hover:bg-red-700 shadow-red-600/20"
                                         : "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-600/20"

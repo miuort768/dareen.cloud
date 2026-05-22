@@ -34,8 +34,8 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
             <Icon size={15} className="text-white" />
         </div>
         <div>
-            <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">{label}</p>
-            {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-bold">{sub}</p>}
+            <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">{label}</p>
+            {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-normal">{sub}</p>}
         </div>
     </div>
 );
@@ -43,9 +43,9 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; name?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right" dir="rtl">
-                <p className="text-[10px] font-black text-slate-400 uppercase mb-1">{label}</p>
-                <p className="text-lg font-black font-mono">{payload[0].value} <span className="text-[10px] text-slate-400">طالب</span></p>
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right" dir="rtl">
+                <p className="text-[10px] font-medium text-slate-400 uppercase mb-1">{label}</p>
+                <p className="text-lg font-medium font-mono">{payload[0].value} <span className="text-[10px] text-slate-400">طالب</span></p>
             </div>
         );
     }
@@ -100,7 +100,7 @@ export const AcademicReport = ({
                         </ResponsiveContainer>
                     </div>
                     {gradeBarData.length === 0 && (
-                        <div className="h-32 flex items-center justify-center text-slate-300 text-xs font-bold">لا توجد بيانات</div>
+                        <div className="h-32 flex items-center justify-center text-slate-300 text-xs font-normal">لا توجد بيانات</div>
                     )}
                 </SectionCard>
 
@@ -118,11 +118,11 @@ export const AcademicReport = ({
                                         <div className="flex items-center justify-between mb-1">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-2 h-2 rounded-none shrink-0" style={{ backgroundColor: color }} />
-                                                <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate max-w-[120px]">{entry.name}</span>
+                                                <span className="text-[11px] font-normal text-slate-700 dark:text-slate-300 truncate max-w-[120px]">{entry.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[10px] font-black text-slate-500 font-mono">{entry.value}</span>
-                                                <span className="text-[9px] font-black px-1.5 py-0.5 rounded-none text-white" style={{ backgroundColor: color }}>{pct}%</span>
+                                                <span className="text-[10px] font-medium text-slate-500 font-mono">{entry.value}</span>
+                                                <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-none text-white" style={{ backgroundColor: color }}>{pct}%</span>
                                             </div>
                                         </div>
                                         <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-none overflow-hidden">
@@ -134,7 +134,7 @@ export const AcademicReport = ({
                                     </div>
                                 );
                             }) : (
-                            <div className="h-32 flex items-center justify-center text-slate-300 text-xs font-bold">لا توجد بيانات</div>
+                            <div className="h-32 flex items-center justify-center text-slate-300 text-xs font-normal">لا توجد بيانات</div>
                         )}
                     </div>
                 </SectionCard>
@@ -152,8 +152,8 @@ export const AcademicReport = ({
                         <div className="w-7 h-7 bg-white/15 rounded-none flex items-center justify-center mb-2">
                             <item.icon size={14} className="text-white" />
                         </div>
-                        <p className="text-xl font-black font-mono">{item.value}</p>
-                        <p className="text-[9px] font-black uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
+                        <p className="text-xl font-medium font-mono">{item.value}</p>
+                        <p className="text-[9px] font-medium uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
                     </div>
                 ))}
             </div>
@@ -167,8 +167,8 @@ export const AcademicReport = ({
                             <Activity size={15} className="text-white" />
                         </div>
                         <div>
-                            <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">تقرير تقدم الطلاب</p>
-                            <p className="text-[9px] text-slate-400 font-bold mt-0.5">
+                            <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">تقرير تقدم الطلاب</p>
+                            <p className="text-[9px] text-slate-400 font-normal mt-0.5">
                                 {sortedStudents.length} طالب • صفحة {page} من {totalPages}
                             </p>
                         </div>
@@ -180,7 +180,7 @@ export const AcademicReport = ({
                             placeholder="ابحث عن طالب أو صف..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-bold focus:outline-none focus:border-indigo-500 transition-all"
+                            className="w-full pr-9 pl-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-normal focus:outline-none focus:border-indigo-500 transition-all"
                         />
                     </div>
                 </div>
@@ -190,13 +190,13 @@ export const AcademicReport = ({
                     <table className="w-full text-right">
                         <thead>
                             <tr className="bg-slate-900 text-white">
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-left">#</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest">اسم الطالب</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">الصف</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">الاشتراكات</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">المتوقعة</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">المستخدمة</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center w-40">التقدم</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-left">#</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest">اسم الطالب</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">الصف</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">الاشتراكات</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">المتوقعة</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">المستخدمة</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center w-40">التقدم</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -208,30 +208,30 @@ export const AcademicReport = ({
                                 return (
                                     <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td className="px-5 py-3">
-                                            <span className="text-[10px] font-black text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
+                                            <span className="text-[10px] font-medium text-slate-300 font-mono">{String(globalIdx).padStart(2, '0')}</span>
                                         </td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center text-[10px] font-black shrink-0">
+                                                <div className="w-7 h-7 bg-slate-900 dark:bg-slate-800 text-white rounded-none flex items-center justify-center text-[10px] font-medium shrink-0">
                                                     {student.name.charAt(0)}
                                                 </div>
-                                                <span className="text-xs font-bold text-slate-800 dark:text-white">{student.name}</span>
+                                                <span className="text-xs font-normal text-slate-800 dark:text-white">{student.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-3 text-center">
-                                            <span className="inline-flex px-2 py-0.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-[9px] font-black rounded-none border border-indigo-100 dark:border-indigo-800 uppercase">
+                                            <span className="inline-flex px-2 py-0.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-[9px] font-medium rounded-none border border-indigo-100 dark:border-indigo-800 uppercase">
                                                 {student.grade}
                                             </span>
                                         </td>
-                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalEnrollments}</td>
-                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400">{student.totalSessions}</td>
-                                        <td className="px-5 py-3 text-center font-mono font-black text-xs text-emerald-600">{student.usedSessions}</td>
+                                        <td className="px-5 py-3 text-center font-mono font-medium text-xs text-slate-600 dark:text-slate-400">{student.totalEnrollments}</td>
+                                        <td className="px-5 py-3 text-center font-mono font-medium text-xs text-slate-600 dark:text-slate-400">{student.totalSessions}</td>
+                                        <td className="px-5 py-3 text-center font-mono font-medium text-xs text-emerald-600">{student.usedSessions}</td>
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-2.5">
                                                 <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
                                                     <div className={cn("h-full rounded-none transition-all duration-700", progColor)} style={{ width: `${prog}%` }} />
                                                 </div>
-                                                <span className={cn("text-[10px] font-black w-9 text-left", textColor)}>{prog}%</span>
+                                                <span className={cn("text-[10px] font-medium w-9 text-left", textColor)}>{prog}%</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -240,7 +240,7 @@ export const AcademicReport = ({
                                 <tr>
                                     <td colSpan={7} className="px-6 py-16 text-center">
                                         <Users size={36} className="mx-auto mb-2 text-slate-200 dark:text-slate-700" />
-                                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج</p>
+                                        <p className="text-xs font-normal text-slate-400 uppercase tracking-widest">لا توجد نتائج</p>
                                     </td>
                                 </tr>
                             )}
@@ -257,18 +257,18 @@ export const AcademicReport = ({
                         const textColor = prog >= 80 ? 'text-emerald-600' : prog >= 50 ? 'text-amber-600' : 'text-rose-500';
                         return (
                             <div key={student.id} className="p-4 flex items-center gap-3">
-                                <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-black text-sm rounded-none shrink-0 relative">
+                                <div className="w-9 h-9 bg-slate-900 text-white flex items-center justify-center font-medium text-sm rounded-none shrink-0 relative">
                                     {student.name.charAt(0)}
-                                    <span className="absolute -top-1 -right-1 text-[8px] font-black bg-indigo-600 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
+                                    <span className="absolute -top-1 -right-1 text-[8px] font-medium bg-indigo-600 text-white w-4 h-4 flex items-center justify-center rounded-full">{globalIdx}</span>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center justify-between mb-1">
-                                        <p className="text-xs font-bold text-slate-800 dark:text-white truncate">{student.name}</p>
-                                        <span className={cn("text-[10px] font-black ml-2 shrink-0", textColor)}>{prog}%</span>
+                                        <p className="text-xs font-normal text-slate-800 dark:text-white truncate">{student.name}</p>
+                                        <span className={cn("text-[10px] font-medium ml-2 shrink-0", textColor)}>{prog}%</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <span className="text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-none">{student.grade}</span>
-                                        <span className="text-[9px] text-slate-400 font-bold">{student.usedSessions}/{student.totalSessions} حصة</span>
+                                        <span className="text-[9px] font-normal text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-none">{student.grade}</span>
+                                        <span className="text-[9px] text-slate-400 font-normal">{student.usedSessions}/{student.totalSessions} حصة</span>
                                     </div>
                                     <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
                                         <div className={cn("h-full rounded-none", progColor)} style={{ width: `${prog}%` }} />
@@ -279,7 +279,7 @@ export const AcademicReport = ({
                     }) : (
                         <div className="py-12 text-center">
                             <Users size={32} className="mx-auto mb-2 text-slate-200" />
-                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">لا توجد نتائج</p>
+                            <p className="text-xs font-normal text-slate-400 uppercase tracking-widest">لا توجد نتائج</p>
                         </div>
                     )}
                 </div>
@@ -287,7 +287,7 @@ export const AcademicReport = ({
                 {/* Pagination Controls */}
                 {totalPages > 1 && (
                     <div className="flex items-center justify-between px-5 py-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-                        <p className="text-[10px] font-bold text-slate-400">
+                        <p className="text-[10px] font-normal text-slate-400">
                             {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, sortedStudents.length)} من {sortedStudents.length}
                         </p>
                         <div className="flex items-center gap-1">
@@ -303,7 +303,7 @@ export const AcademicReport = ({
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={cn(
-                                        "w-8 h-8 text-[11px] font-black rounded-none border transition-all",
+                                        "w-8 h-8 text-[11px] font-medium rounded-none border transition-all",
                                         page === i + 1
                                             ? "bg-indigo-600 text-white border-indigo-600"
                                             : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400"
@@ -312,7 +312,7 @@ export const AcademicReport = ({
                                     {i + 1}
                                 </button>
                             ))}
-                            {totalPages > 7 && <span className="text-slate-400 text-xs font-bold px-1">...</span>}
+                            {totalPages > 7 && <span className="text-slate-400 text-xs font-normal px-1">...</span>}
                             <button
                                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                 disabled={page === totalPages}
@@ -327,3 +327,4 @@ export const AcademicReport = ({
         </div>
     );
 };
+

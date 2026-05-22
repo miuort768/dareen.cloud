@@ -150,14 +150,14 @@ export const NotificationDropdown = () => {
             >
                 <Bell size={24} className={cn(unreadCount > 0 ? "text-amber-400 animate-pulse" : "text-slate-600 dark:text-white/90")} />
                 {notificationsEnabled && unreadCount > 0 && (
-                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-black flex items-center justify-center border-2 border-white dark:border-rose-600">
+                    <span className="absolute top-1.5 left-1.5 w-5 h-5 bg-red-600 rounded-none text-white text-[10px] font-medium flex items-center justify-center border-2 border-white dark:border-rose-600">
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
             </button>
 
             {isOpen && (
-                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-slate-900/98 backdrop-blur-xl border-2 border-slate-900 dark:border-slate-800 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="fixed md:absolute inset-x-2 md:inset-auto top-[70px] md:top-full md:left-0 md:mt-3 w-auto md:w-[400px] bg-white/95 dark:bg-slate-900/98  border-2 border-slate-900 dark:border-slate-800 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[10000] animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="absolute -top-[10px] left-4 md:left-8 w-4 h-4 bg-white dark:bg-slate-900 border-t-2 border-l-2 border-slate-900 dark:border-slate-800 rotate-45 hidden md:block" />
                     
                     {/* Header */}
@@ -167,9 +167,9 @@ export const NotificationDropdown = () => {
                             <div className="w-8 h-8 bg-indigo-600 rounded-none flex items-center justify-center text-white shadow-[2px_2px_0_rgba(0,0,0,1)]">
                                 <Bell size={16} />
                             </div>
-                            <h3 className="font-black text-xs uppercase tracking-widest text-slate-900 dark:text-white">الإشعارات</h3>
+                            <h3 className="font-medium text-xs uppercase tracking-widest text-slate-900 dark:text-white">الإشعارات</h3>
                             {unreadCount > 0 && (
-                                <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 shadow-[1px_1px_0_rgba(0,0,0,1)]">
+                                <span className="bg-rose-500 text-white text-[9px] font-medium px-2 py-0.5 shadow-[1px_1px_0_rgba(0,0,0,1)]">
                                     {unreadCount} مـهـم
                                 </span>
                             )}
@@ -179,7 +179,7 @@ export const NotificationDropdown = () => {
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllAsRead}
-                                    className="text-[10px] sm:text-xs text-indigo-600 hover:text-indigo-700 font-black dark:text-indigo-400 whitespace-nowrap"
+                                    className="text-[10px] sm:text-xs text-indigo-600 hover:text-indigo-700 font-medium dark:text-indigo-400 whitespace-nowrap"
                                 >
                                     تحديد الكل
                                 </button>
@@ -187,7 +187,7 @@ export const NotificationDropdown = () => {
                             {Array.isArray(notifications) && notifications.length > 0 && (
                                 <button
                                     onClick={clearAll}
-                                    className="text-[10px] sm:text-xs text-red-600 hover:text-red-700 font-black dark:text-red-400 whitespace-nowrap"
+                                    className="text-[10px] sm:text-xs text-red-600 hover:text-red-700 font-medium dark:text-red-400 whitespace-nowrap"
                                 >
                                     حذف الكل
                                 </button>
@@ -202,7 +202,7 @@ export const NotificationDropdown = () => {
                                 <div className="p-1.5 bg-indigo-600 rounded-lg text-white">
                                     <Smartphone size={14} />
                                 </div>
-                                <p className="text-[10px] sm:text-xs font-bold text-indigo-900 dark:text-indigo-300">هل تريد ميزة الإشعارات الفورية؟</p>
+                                <p className="text-[10px] sm:text-xs font-normal text-indigo-900 dark:text-indigo-300">هل تريد ميزة الإشعارات الفورية؟</p>
                             </div>
                             <button
                                 onClick={async () => {
@@ -213,7 +213,7 @@ export const NotificationDropdown = () => {
                                         showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success');
                                     }
                                 }}
-                                className="bg-indigo-600 text-white text-[10px] font-black px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                                className="bg-indigo-600 text-white text-[10px] font-medium px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
                             >
                                 تفعيل الآن
                             </button>
@@ -225,7 +225,7 @@ export const NotificationDropdown = () => {
                         {!notificationsEnabled ? (
                             <div className="p-12 text-center">
                                 <AlertCircle size={48} className="mx-auto mb-3 text-amber-500 opacity-50" />
-                                <p className="text-sm font-bold text-gray-900 dark:text-white mb-1">الإشعارات معطلة</p>
+                                <p className="text-sm font-normal text-gray-900 dark:text-white mb-1">الإشعارات معطلة</p>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">يمكنك تفعيلها من صفحة الإعدادات</p>
                             </div>
                         ) : (Array.isArray(notifications) && notifications.length > 0) ? (
@@ -251,7 +251,7 @@ export const NotificationDropdown = () => {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-start justify-between gap-2">
-                                                <h4 className="font-bold text-[11px] sm:text-sm text-gray-900 dark:text-white">
+                                                <h4 className="font-normal text-[11px] sm:text-sm text-gray-900 dark:text-white">
                                                     {notification.title}
                                                 </h4>
                                                 {!notification.read && (

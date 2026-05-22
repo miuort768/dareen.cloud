@@ -22,7 +22,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                     placeholder="ابحث عن معلمة باسمها أو تخصصها..."
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full pl-6 pr-10 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 rounded-none outline-none text-[11px] font-black uppercase tracking-tight focus:border-[var(--primary-color,#5c59f2)] focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400 placeholder:font-bold"
+                    className="w-full pl-6 pr-10 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 rounded-none outline-none text-[11px] font-medium uppercase tracking-tight focus:border-[var(--primary-color,#5c59f2)] focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400 placeholder:font-normal"
                 />
             </div>
 
@@ -31,7 +31,7 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
                 <button
                     onClick={onToggleAddForm}
                     className={cn(
-                        "h-10 px-6 flex items-center gap-2 text-[11px] font-black uppercase tracking-widest rounded-none transition-all shadow-sm active:scale-95",
+                        "h-10 px-6 flex items-center gap-2 text-[11px] font-medium uppercase tracking-widest rounded-none transition-all shadow-sm active:scale-95",
                         showAddForm 
                         ? "bg-rose-500 text-white hover:bg-rose-600" 
                         : "bg-[var(--primary-color,#5c59f2)] text-white hover:opacity-90 shadow-indigo-500/10"
@@ -56,3 +56,4 @@ export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onTogg
         </div>
     );
 };
+

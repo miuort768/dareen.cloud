@@ -143,7 +143,7 @@ export const Students = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
                 {showAddForm && (
-                    <div className="mb-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6 animate-in slide-in-from-top-4 duration-300">
+                    <div className="mb-6 bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6 animate-in slide-in-from-top-4 duration-300">
                         <StudentForm
                             initialData={editId ? allStudents.find(s => s.id === editId) : null}
                             teachers={teachers}
@@ -153,7 +153,7 @@ export const Students = () => {
                     </div>
                 )}
 
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="relative z-10 w-full">
@@ -171,32 +171,32 @@ export const Students = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-full md:w-64 h-10 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-xs font-bold rounded-xl px-9 focus:outline-none focus:border-indigo-500 transition-all"
+                                className="w-full md:w-64 h-10 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-xs font-normal rounded-none px-9 focus:outline-none focus:border-indigo-500 transition-all"
                             />
                         </div>
                     </div>
                 </div>
 
                 {isDeletingAll && (
-                    <div className="mb-6 bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-800/50 rounded-2xl p-5 flex items-center justify-between">
+                    <div className="mb-6 bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/50 dark:border-rose-800/50 rounded-none p-5 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <AlertCircle size={20} className="text-rose-500" />
-                            <span className="text-sm font-bold text-rose-700 dark:text-rose-300">هل أنت متأكد من حذف جميع الطلاب؟</span>
+                            <span className="text-sm font-normal text-rose-700 dark:text-rose-300">هل أنت متأكد من حذف جميع الطلاب؟</span>
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-9 px-4 bg-rose-600 text-white text-xs font-black rounded-xl hover:bg-rose-700 transition-all">تأكيد الحذف</button>
-                            <button onClick={() => setIsDeletingAll(false)} className="h-9 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-black rounded-xl border border-slate-200 dark:border-slate-700 transition-all">إلغاء</button>
+                            <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-9 px-4 bg-rose-600 text-white text-xs font-medium rounded-none hover:bg-rose-700 transition-all">تأكيد الحذف</button>
+                            <button onClick={() => setIsDeletingAll(false)} className="h-9 px-4 bg-white dark:bg-slate-800 text-slate-700 dark:text-white text-xs font-medium rounded-none border border-slate-200 dark:border-slate-700 transition-all">إلغاء</button>
                         </div>
                     </div>
                 )}
 
                 <div className="py-6 space-y-6">
-                    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6">
+                    <div className="bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 p-5 md:p-6">
                         <div className="flex items-center gap-3 mb-5">
-                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-none flex items-center justify-center shadow-sm shadow-emerald-500/20">
                                 <TrendingUp size={16} />
                             </div>
-                            <h2 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tight">إحصائيات الطلاب</h2>
+                            <h2 className="text-sm font-medium text-slate-800 dark:text-white uppercase tracking-tight">إحصائيات الطلاب</h2>
                         </div>
                         <StudentStats
                             totalStudents={allStudents.length}
@@ -259,3 +259,4 @@ export const Students = () => {
         </div>
     );
 };
+

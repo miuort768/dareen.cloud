@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
     Calendar, RefreshCw, Printer,
     ArrowDownRight,
@@ -152,49 +152,49 @@ export const MonthlyClosing: React.FC = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 font-sans" dir="rtl">
             <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #4f46e5 1px, transparent 0)', backgroundSize: '40px 40px' }} />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-xl">
+                        <div className="w-9 h-9 flex items-center justify-center bg-rose-50 dark:bg-rose-900/30 rounded-none">
                             <ActivityIcon size={18} className="text-rose-500" />
                         </div>
                         <div>
-                            <h1 className="text-sm font-bold text-slate-800 dark:text-white">تقفيل الحسابات والأنشطة المالية</h1>
+                            <h1 className="text-sm font-normal text-slate-800 dark:text-white">تقفيل الحسابات والأنشطة المالية</h1>
                             <p className="text-[10px] text-slate-400 italic">التحليل المالي والختامي للفترة الحالية</p>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 no-print">
-                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-none border border-slate-100 dark:border-slate-700">
                             <Calendar size={14} className="text-slate-400" />
                             <select
                                 value={semesterName}
                                 onChange={(e) => setSemesterName(e.target.value)}
-                                className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none focus:ring-0 cursor-pointer"
+                                className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none focus:ring-0 cursor-pointer"
                             >
                                 {semesterList.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
 
-                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-none border border-slate-100 dark:border-slate-700">
                             <Calendar size={14} className="text-slate-400" />
                             <div className="flex items-center gap-1">
                                 <input
                                     type="date"
-                                    className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+                                    className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
                                     value={startDate}
                                     onChange={(e) => setStartDate(e.target.value)}
                                 />
                                 <span className="text-[10px] text-slate-400">إلى</span>
                                 <input
                                     type="date"
-                                    className="bg-transparent border-none p-0 text-[11px] font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+                                    className="bg-transparent border-none p-0 text-[11px] font-normal text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
                                     value={endDate}
                                     onChange={(e) => setEndDate(e.target.value)}
                                 />
                             </div>
                         </div>
 
-                        <button onClick={handleRefresh} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all">
+                        <button onClick={handleRefresh} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-none transition-all">
                             <RefreshCw size={16} className={cn("text-slate-400", isLoading && "animate-spin")} />
                         </button>
 
@@ -241,7 +241,7 @@ export const MonthlyClosing: React.FC = () => {
                 </div>
 
                 <div className="px-0 mb-4">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
+                    <div className="bg-white dark:bg-slate-900 rounded-none border border-slate-100 dark:border-slate-800 p-1 flex overflow-x-auto no-scrollbar gap-1">
                         {[
                             { id: 'payroll', label: 'الرواتب', icon: Receipt },
                             { id: 'collections', label: 'التحصيلات', icon: Wallet },
@@ -255,7 +255,7 @@ export const MonthlyClosing: React.FC = () => {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as TabType)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-bold transition-all whitespace-nowrap",
+                                    "flex items-center gap-2 px-4 py-2 rounded-none text-[10px] font-normal transition-all whitespace-nowrap",
                                     activeTab === tab.id
                                         ? "bg-[#eef2ff] dark:bg-indigo-900/30 text-[#5c59f2] shadow-sm"
                                         : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"

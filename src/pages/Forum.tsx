@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { MessageSquare, ThumbsUp, Send, MoreHorizontal, AlertTriangle, Sparkles, User, ShieldCheck, Clock, Trash2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api';
@@ -226,14 +226,14 @@ export const Forum = () => {
             <div className="relative z-10">
 
             {/* ── Header ── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-700 dark:to-indigo-900 rounded-none md:rounded-2xl shadow-2xl border border-white/5 px-6 md:px-8 py-6 mx-0 md:mx-6 mt-0 md:mt-6 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-700 dark:from-indigo-700 dark:to-indigo-900 rounded-none md:rounded-none shadow-sm border border-white/5 px-6 md:px-8 py-6 mx-0 md:mx-6 mt-0 md:mt-6 mb-6">
                 <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-400/20 rounded-full blur-[100px] pointer-events-none" />
                 <div className="max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
-                    <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 border border-white/10 shadow-sm">
+                    <div className="w-12 h-12 bg-white/10  rounded-none flex items-center justify-center mb-4 border border-white/10 shadow-sm">
                         <Sparkles size={24} className="text-white" />
                     </div>
-                    <h1 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">منتدى دارين</h1>
-                    <p className="text-xs text-white/80 font-bold uppercase tracking-widest leading-relaxed max-w-md">
+                    <h1 className="text-2xl font-medium text-white uppercase tracking-tighter mb-2">منتدى دارين</h1>
+                    <p className="text-xs text-white/80 font-normal uppercase tracking-widest leading-relaxed max-w-md">
                         مساحتك الخاصة للنقاش، التعلم، ومشاركة المعرفة مع زملائك ومعلميك في بيئة تعليمية آمنة.
                     </p>
                 </div>
@@ -251,7 +251,7 @@ export const Forum = () => {
                             <textarea
                                 value={newPostContent}
                                 onChange={(e) => setNewPostContent(e.target.value)}
-                                className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 min-h-[100px] text-sm font-bold text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400"
+                                className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-4 min-h-[100px] text-sm font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400"
                                 placeholder="ماذا يدور في ذهنك اليوم؟"
                             />
                             <div className="flex justify-between items-center">
@@ -261,7 +261,7 @@ export const Forum = () => {
                                 <button
                                     onClick={handleCreatePost}
                                     disabled={!newPostContent.trim()}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 text-[11px] font-black uppercase tracking-widest disabled:opacity-30 transition-all flex items-center gap-2"
+                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 text-[11px] font-medium uppercase tracking-widest disabled:opacity-30 transition-all flex items-center gap-2"
                                 >
                                     <Send size={14} /> نشر المنشور
                                 </button>
@@ -282,7 +282,7 @@ export const Forum = () => {
                         <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700">
                             <MessageSquare size={24} className="text-slate-300" />
                         </div>
-                        <p className="text-sm font-black text-slate-400 uppercase tracking-widest">لا توجد منشورات حتى الآن</p>
+                        <p className="text-sm font-medium text-slate-400 uppercase tracking-widest">لا توجد منشورات حتى الآن</p>
                     </div>
                 ) : (
                     <div className="space-y-6">
@@ -297,21 +297,21 @@ export const Forum = () => {
                                     className={cn(
                                         "bg-white dark:bg-slate-900 border transition-all duration-500 group",
                                         isHighlighted 
-                                            ? "border-indigo-500 ring-4 ring-indigo-500/5 shadow-xl" 
+                                            ? "border-indigo-500 ring-4 ring-indigo-500/5 shadow-sm" 
                                             : "border-slate-200 dark:border-slate-800 shadow-sm"
                                     )}
                                 >
                                     {/* Post Header */}
                                     <div className="p-4 md:p-6 flex justify-between items-start">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-none border border-indigo-100 dark:border-indigo-800 flex items-center justify-center font-black text-indigo-600 text-xs">
+                                            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-none border border-indigo-100 dark:border-indigo-800 flex items-center justify-center font-medium text-indigo-600 text-xs">
                                                 {post.authorName[0].toUpperCase()}
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-2 mb-0.5">
-                                                    <h4 className="font-black text-slate-800 dark:text-white text-sm tracking-tight">{post.authorName}</h4>
+                                                    <h4 className="font-medium text-slate-800 dark:text-white text-sm tracking-tight">{post.authorName}</h4>
                                                     <span className={cn(
-                                                        "text-[9px] font-black px-1.5 py-0.5 uppercase tracking-tighter",
+                                                        "text-[9px] font-medium px-1.5 py-0.5 uppercase tracking-tighter",
                                                         post.authorRole === 'admin' ? "bg-rose-50 text-rose-600 border border-rose-100" :
                                                         post.authorRole === 'teacher' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" :
                                                         "bg-blue-50 text-blue-600 border border-blue-100"
@@ -353,7 +353,7 @@ export const Forum = () => {
                                         <button 
                                             onClick={() => handleVote(post.id, 'upvote')}
                                             className={cn(
-                                                "flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-black transition-all uppercase tracking-widest active:scale-95",
+                                                "flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium transition-all uppercase tracking-widest active:scale-95",
                                                 isLiked ? "text-indigo-600" : "text-slate-400 hover:text-slate-600"
                                             )}
                                         >
@@ -362,14 +362,14 @@ export const Forum = () => {
                                         </button>
                                         <button 
                                             onClick={() => toggleComments(post.id)}
-                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-black text-slate-400 hover:text-slate-600 transition-all uppercase tracking-widest active:scale-95 border-x border-slate-100 dark:border-slate-800"
+                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-slate-400 hover:text-slate-600 transition-all uppercase tracking-widest active:scale-95 border-x border-slate-100 dark:border-slate-800"
                                         >
                                             <MessageSquare size={16} />
                                             <span>{post.commentCount || 0} تعليق</span>
                                         </button>
                                         <button 
                                             onClick={() => handleReport(post.id)}
-                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-black text-rose-400 hover:text-rose-600 transition-all uppercase tracking-widest active:scale-95"
+                                            className="flex-1 py-3 flex items-center justify-center gap-2.5 text-[11px] font-medium text-rose-400 hover:text-rose-600 transition-all uppercase tracking-widest active:scale-95"
                                         >
                                             <AlertTriangle size={16} />
                                             <span>إبلاغ</span>
@@ -384,13 +384,13 @@ export const Forum = () => {
                                                     <div key={node.comment.id} className="space-y-4">
                                                         {/* Main Comment */}
                                                         <div className="flex gap-4">
-                                                            <div className="w-8 h-8 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-black text-slate-400 text-[10px] shrink-0">
+                                                            <div className="w-8 h-8 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-400 text-[10px] shrink-0">
                                                                 {node.comment.authorName[0].toUpperCase()}
                                                             </div>
                                                             <div className="flex-1">
                                                                 <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-700 relative">
                                                                     <div className="flex justify-between items-center mb-1.5">
-                                                                        <h5 className="text-[11px] font-black text-slate-800 dark:text-white uppercase tracking-tighter">{node.comment.authorName}</h5>
+                                                                        <h5 className="text-[11px] font-medium text-slate-800 dark:text-white uppercase tracking-tighter">{node.comment.authorName}</h5>
                                                                         <span className="text-[9px] text-slate-400 font-medium">{formatDistanceToNow(new Date(node.comment.created_at) > new Date() ? new Date() : new Date(node.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                     </div>
                                                                     <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{node.comment.content}</p>
@@ -403,10 +403,10 @@ export const Forum = () => {
                                                                                 setCommentTexts((prev) => ({ ...prev, [post.id]: newText }));
                                                                                 document.getElementById(`comment-input-${post.id}`)?.focus();
                                                                             }}
-                                                                            className="text-[10px] font-black text-indigo-500 uppercase tracking-widest hover:underline"
+                                                                            className="text-[10px] font-medium text-indigo-500 uppercase tracking-widest hover:underline"
                                                                         >رد</button>
                                                                         {(isAdmin || currentUser?.id === node.comment.authorId) && (
-                                                                            <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-black text-rose-500 uppercase tracking-widest hover:underline">حذف</button>
+                                                                            <button onClick={() => handleDeleteComment(post.id, node.comment.id)} className="text-[10px] font-medium text-rose-500 uppercase tracking-widest hover:underline">حذف</button>
                                                                         )}
                                                                     </div>
                                                                 </div>
@@ -418,17 +418,17 @@ export const Forum = () => {
                                                             <div className="pr-8 md:pr-12 space-y-4 border-r-2 border-slate-50 dark:border-slate-800 mr-4">
                                                                 {node.replies.map((replyNode) => (
                                                                     <div key={replyNode.comment.id} className="flex gap-3">
-                                                                        <div className="w-6 h-6 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-black text-slate-300 text-[8px] shrink-0">
+                                                                        <div className="w-6 h-6 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-300 text-[8px] shrink-0">
                                                                             {replyNode.comment.authorName[0].toUpperCase()}
                                                                         </div>
                                                                         <div className="flex-1 bg-slate-50/50 dark:bg-slate-800/30 p-3 border border-slate-100/50 dark:border-slate-700/50">
                                                                             <div className="flex justify-between items-center mb-1">
-                                                                                <h5 className="text-[10px] font-black text-slate-800 dark:text-white">{replyNode.comment.authorName}</h5>
+                                                                                <h5 className="text-[10px] font-medium text-slate-800 dark:text-white">{replyNode.comment.authorName}</h5>
                                                                                 <span className="text-[8px] text-slate-400">{formatDistanceToNow(new Date(replyNode.comment.created_at) > new Date() ? new Date() : new Date(replyNode.comment.created_at), { addSuffix: true, locale: ar })}</span>
                                                                             </div>
                                                                             <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">{replyNode.comment.content}</p>
                                                                             {(isAdmin || currentUser?.id === replyNode.comment.authorId) && (
-                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-2 text-[9px] font-black text-rose-500 uppercase hover:underline">حذف</button>
+                                                                                <button onClick={() => handleDeleteComment(post.id, replyNode.comment.id)} className="mt-2 text-[9px] font-medium text-rose-500 uppercase hover:underline">حذف</button>
                                                                             )}
                                                                         </div>
                                                                     </div>
@@ -441,7 +441,7 @@ export const Forum = () => {
 
                                             {/* Add Comment Input */}
                                             <div className="flex gap-4 items-center pt-4 border-t border-slate-100 dark:border-slate-800">
-                                                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-black text-slate-400 text-xs shrink-0">
+                                                <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center font-medium text-slate-400 text-xs shrink-0">
                                                     <User size={16} />
                                                 </div>
                                                 <div className="flex-1 relative">
@@ -451,7 +451,7 @@ export const Forum = () => {
                                                         value={commentTexts[post.id] || ''}
                                                         onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                                                         placeholder="شارك برأيك في هذا الموضوع..."
-                                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-12 pr-4 py-3 text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all"
+                                                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pl-12 pr-4 py-3 text-xs font-normal text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 transition-all"
                                                         onKeyDown={(e) => { if(e.key === 'Enter') handleAddComment(post.id); }}
                                                     />
                                                     <button
@@ -471,11 +471,11 @@ export const Forum = () => {
                                         <div className="p-4 bg-amber-50 dark:bg-amber-900/10 border-t border-amber-200 flex justify-between items-center">
                                             <div className="flex items-center gap-2 text-amber-700">
                                                 <AlertTriangle size={14} />
-                                                <span className="text-[10px] font-black uppercase tracking-widest">هذا المنشور بانتظار المراجعة الإدارية</span>
+                                                <span className="text-[10px] font-medium uppercase tracking-widest">هذا المنشور بانتظار المراجعة الإدارية</span>
                                             </div>
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-[9px] font-black uppercase tracking-widest transition-all">موافقة</button>
-                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 text-[9px] font-black uppercase tracking-widest transition-all">رفض</button>
+                                                <button onClick={() => handleUpdateStatus(post.id, 'approved')} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">موافقة</button>
+                                                <button onClick={() => handleDeletePost(post.id)} className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 text-[9px] font-medium uppercase tracking-widest transition-all">رفض</button>
                                             </div>
                                         </div>
                                     )}
@@ -491,10 +491,10 @@ export const Forum = () => {
                 <div className="bg-indigo-600 p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 -translate-y-16 translate-x-16 rotate-45 pointer-events-none"></div>
                     <div className="relative z-10 text-center md:text-right">
-                        <h4 className="text-white font-black text-lg mb-1 uppercase tracking-tighter">هل لديك سؤال تعليمي؟</h4>
+                        <h4 className="text-white font-medium text-lg mb-1 uppercase tracking-tighter">هل لديك سؤال تعليمي؟</h4>
                         <p className="text-indigo-100 text-[11px] font-medium uppercase tracking-widest">اطرح سؤالك هنا وسيتم الإجابة عليه من قبل المعلمين والزملاء</p>
                     </div>
-                    <button className="relative z-10 bg-white text-indigo-600 px-8 py-3 text-[11px] font-black uppercase tracking-widest hover:bg-indigo-50 transition-all shadow-xl shadow-indigo-900/20">
+                    <button className="relative z-10 bg-white text-indigo-600 px-8 py-3 text-[11px] font-medium uppercase tracking-widest hover:bg-indigo-50 transition-all shadow-sm shadow-indigo-900/20">
                         قواعد المنتدى
                     </button>
                 </div>

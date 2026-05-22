@@ -26,7 +26,7 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
             <Icon size={15} />
         </div>
         <div>
-            <p className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">{label}</p>
+            <p className="text-xs font-normal text-slate-700 dark:text-slate-300 uppercase">{label}</p>
             {sub && <p className="text-[9px] text-slate-400 mt-0.5 font-medium">{sub}</p>}
         </div>
     </div>
@@ -35,15 +35,15 @@ const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{
 const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right min-w-[140px]" dir="rtl">
-                <p className="text-[10px] font-black text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right min-w-[140px]" dir="rtl">
+                <p className="text-[10px] font-medium text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
                 {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
                     <div key={i} className="flex items-center justify-between gap-4 mb-1 last:mb-0">
                         <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-none" style={{ backgroundColor: entry.stroke || entry.fill }} />
-                            <span className="text-[10px] text-slate-400 font-bold">{entry.name}</span>
+                            <span className="text-[10px] text-slate-400 font-normal">{entry.name}</span>
                         </div>
-                        <span className="text-sm font-black font-mono">{entry.value}</span>
+                        <span className="text-sm font-medium font-mono">{entry.value}</span>
                     </div>
                 ))}
             </div>
@@ -81,9 +81,9 @@ export const AttendanceReport = ({
                         <div className="w-8 h-8 bg-white/15 rounded-none flex items-center justify-center mb-3">
                             <item.icon size={16} className="text-white" />
                         </div>
-                        <p className="text-xl font-black font-mono">{item.value}</p>
-                        <p className="text-[9px] font-black uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
-                        <p className="text-[8px] text-white/50 font-bold mt-0.5">{item.sub}</p>
+                        <p className="text-xl font-medium font-mono">{item.value}</p>
+                        <p className="text-[9px] font-medium uppercase tracking-widest text-white/70 mt-1">{item.label}</p>
+                        <p className="text-[8px] text-white/50 font-normal mt-0.5">{item.sub}</p>
                     </div>
                 ))}
             </div>
@@ -131,7 +131,7 @@ export const AttendanceReport = ({
                     ].map((l, i) => (
                         <div key={i} className="flex items-center gap-1.5">
                             <div className="w-5 h-0.5 rounded-full" style={{ backgroundColor: l.color }} />
-                            <span className="text-[10px] font-bold text-slate-500">{l.label}</span>
+                            <span className="text-[10px] font-normal text-slate-500">{l.label}</span>
                         </div>
                     ))}
                 </div>
@@ -150,12 +150,12 @@ export const AttendanceReport = ({
                     <table className="w-full text-right">
                         <thead>
                             <tr className="bg-slate-900 text-white">
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-left">#</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest">اسم المعلمة</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">المتوقعة</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">مكتملة</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center">ملغية</th>
-                                <th className="px-5 py-3 text-[9px] font-black uppercase tracking-widest text-center w-44">معدل الحضور</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-left">#</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest">اسم المعلمة</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">المتوقعة</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">مكتملة</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center">ملغية</th>
+                                <th className="px-5 py-3 text-[9px] font-medium uppercase tracking-widest text-center w-44">معدل الحضور</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
@@ -169,21 +169,21 @@ export const AttendanceReport = ({
                                     return (
                                         <tr key={index} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                             <td className="px-5 py-3">
-                                                <span className="text-[10px] font-black text-slate-300 font-mono">
+                                                <span className="text-[10px] font-medium text-slate-300 font-mono">
                                                     {medal || String(index + 1).padStart(2, '0')}
                                                 </span>
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 bg-emerald-600 text-white rounded-none flex items-center justify-center text-xs font-black shrink-0">
+                                                    <div className="w-8 h-8 bg-emerald-600 text-white rounded-none flex items-center justify-center text-xs font-medium shrink-0">
                                                         {teacher.teacher.charAt(0)}
                                                     </div>
-                                                    <span className="text-xs font-bold text-slate-800 dark:text-white">{teacher.teacher}</span>
+                                                    <span className="text-xs font-normal text-slate-800 dark:text-white">{teacher.teacher}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-slate-500">{teacher.total}</td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-emerald-600">{teacher.completed}</td>
-                                            <td className="px-5 py-3 text-center font-mono font-black text-xs text-rose-500">{teacher.cancelled}</td>
+                                            <td className="px-5 py-3 text-center font-mono font-medium text-xs text-slate-500">{teacher.total}</td>
+                                            <td className="px-5 py-3 text-center font-mono font-medium text-xs text-emerald-600">{teacher.completed}</td>
+                                            <td className="px-5 py-3 text-center font-mono font-medium text-xs text-rose-500">{teacher.cancelled}</td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2.5">
                                                     <div className="flex-1 bg-slate-100 dark:bg-slate-700 h-2 rounded-none overflow-hidden">
@@ -192,7 +192,7 @@ export const AttendanceReport = ({
                                                             style={{ width: `${rate}%` }}
                                                         />
                                                     </div>
-                                                    <span className={cn("text-[10px] font-black w-9 text-left", textColor)}>{rate}%</span>
+                                                    <span className={cn("text-[10px] font-medium w-9 text-left", textColor)}>{rate}%</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -213,18 +213,18 @@ export const AttendanceReport = ({
                             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center font-black text-sm rounded-none shrink-0">
+                                    <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center font-medium text-sm rounded-none shrink-0">
                                         {medal || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <p className="text-xs font-bold text-slate-800 dark:text-white truncate">{teacher.teacher}</p>
-                                            <span className={cn("text-[10px] font-black ml-2 shrink-0", textColor)}>{rate}%</span>
+                                            <p className="text-xs font-normal text-slate-800 dark:text-white truncate">{teacher.teacher}</p>
+                                            <span className={cn("text-[10px] font-medium ml-2 shrink-0", textColor)}>{rate}%</span>
                                         </div>
                                         <div className="flex items-center gap-3 mb-1.5">
-                                            <span className="text-[9px] text-emerald-600 font-bold">{teacher.completed} ✓</span>
-                                            <span className="text-[9px] text-rose-500 font-bold">{teacher.cancelled} ✗</span>
-                                            <span className="text-[9px] text-slate-400 font-bold">{teacher.total} إجمالي</span>
+                                            <span className="text-[9px] text-emerald-600 font-normal">{teacher.completed} ✓</span>
+                                            <span className="text-[9px] text-rose-500 font-normal">{teacher.cancelled} ✗</span>
+                                            <span className="text-[9px] text-slate-400 font-normal">{teacher.total} إجمالي</span>
                                         </div>
                                         <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-none overflow-hidden">
                                             <div className={cn("h-full rounded-none", barColor)} style={{ width: `${rate}%` }} />
@@ -238,3 +238,4 @@ export const AttendanceReport = ({
         </div>
     );
 };
+

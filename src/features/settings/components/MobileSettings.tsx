@@ -27,7 +27,7 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
                     }}
                 />
                 <div className="p-4 bg-blue-50 dark:bg-blue-900/10 border-r-4 border-blue-500 rounded-none">
-                    <h4 className="text-xs font-black text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
+                    <h4 className="text-xs font-medium text-blue-800 dark:text-blue-300 mb-1">لماذا تستخدم هذه المميزات؟</h4>
                     <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
                         تفعيل الاهتزاز يجعل التطبيق يشعر وكأنه جزء أصيل من هاتفك، مما يزيد من سهولة الاستخدام اليومي.
                     </p>
@@ -38,9 +38,9 @@ export const MobileSettings = ({ hapticEnabled, setHapticEnabled, showNotify }: 
             <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
                 <Smartphone size={32} className="text-slate-400" />
             </div>
-            <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
+            <h4 className="text-sm font-normal text-slate-800 dark:text-white mb-2">إصدار التطبيق</h4>
             <p className="text-xs text-slate-500 mb-4">V 2.1.0 (Darin Seven Edition)</p>
-            <button className="text-[10px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+            <button className="text-[10px] font-medium text-indigo-600 uppercase tracking-widest hover:underline">
                 التحقق من وجود تحديثات
             </button>
         </SectionCard>

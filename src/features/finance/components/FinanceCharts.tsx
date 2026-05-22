@@ -30,22 +30,22 @@ const PIE_COLORS = [
 const AreaTooltip = ({ active, payload, label }: { active?: boolean; payload?: { name?: string; value: number; color?: string }[]; label?: string }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-2xl border border-white/10 text-right min-w-[150px]" dir="rtl">
-                <p className="text-[10px] font-black text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
+            <div className="bg-slate-900 text-white px-4 py-3 rounded-none shadow-sm border border-white/10 text-right min-w-[150px]" dir="rtl">
+                <p className="text-[10px] font-medium text-slate-400 uppercase mb-2 pb-1 border-b border-white/10">{label}</p>
                 <div className="space-y-1.5">
                     <div className="flex justify-between items-center gap-4">
                         <div className="flex items-center gap-1.5">
                             <TrendingUp size={10} className="text-emerald-400" />
-                            <span className="text-[10px] font-black text-slate-400 uppercase">إيرادات</span>
+                            <span className="text-[10px] font-medium text-slate-400 uppercase">إيرادات</span>
                         </div>
-                        <span className="text-sm font-black font-mono">+{payload[0].value.toLocaleString()}</span>
+                        <span className="text-sm font-medium font-mono">+{payload[0].value.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center gap-4">
                         <div className="flex items-center gap-1.5">
                             <TrendingDown size={10} className="text-rose-400" />
-                            <span className="text-[10px] font-black text-slate-400 uppercase">مصروفات</span>
+                            <span className="text-[10px] font-medium text-slate-400 uppercase">مصروفات</span>
                         </div>
-                        <span className="text-sm font-black font-mono">-{payload[1]?.value.toLocaleString() || 0}</span>
+                        <span className="text-sm font-medium font-mono">-{payload[1]?.value.toLocaleString() || 0}</span>
                     </div>
                 </div>
             </div>
@@ -66,19 +66,19 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                             <Calendar size={15} className="text-white" />
                         </div>
                         <div>
-                            <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">تحليل التدفق النقدي</p>
-                            <p className="text-[9px] text-slate-400 font-bold mt-0.5">مقارنة شهرية للإيرادات والمصاريف</p>
+                            <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">تحليل التدفق النقدي</p>
+                            <p className="text-[9px] text-slate-400 font-normal mt-0.5">مقارنة شهرية للإيرادات والمصاريف</p>
                         </div>
                     </div>
                     
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                             <div className="w-5 h-0.5 bg-emerald-500 rounded-full" />
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">إيرادات</span>
+                            <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">إيرادات</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-5 h-0.5 bg-rose-500 rounded-full" />
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">مصروفات</span>
+                            <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">مصروفات</span>
                         </div>
                     </div>
                 </div>
@@ -114,8 +114,8 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                         <PieChartIcon size={15} className="text-white" />
                     </div>
                     <div>
-                        <p className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">هيكلية المصاريف</p>
-                        <p className="text-[9px] text-slate-400 font-bold mt-0.5">توزيع النفقات حسب الفئة</p>
+                        <p className="text-xs font-medium text-slate-800 dark:text-white uppercase tracking-widest">هيكلية المصاريف</p>
+                        <p className="text-[9px] text-slate-400 font-normal mt-0.5">توزيع النفقات حسب الفئة</p>
                     </div>
                 </div>
 
@@ -134,9 +134,9 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                                             if (active && payload && payload.length) {
                                                 const data = payload[0].payload;
                                                 return (
-                                                    <div className="bg-slate-900 text-white px-3 py-2 rounded-none border border-white/10 shadow-2xl text-right" dir="rtl">
-                                                        <p className="text-[9px] font-black uppercase text-slate-400 mb-1">{data.name}</p>
-                                                        <p className="text-sm font-black font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">ج.م</span></p>
+                                                    <div className="bg-slate-900 text-white px-3 py-2 rounded-none border border-white/10 shadow-sm text-right" dir="rtl">
+                                                        <p className="text-[9px] font-medium uppercase text-slate-400 mb-1">{data.name}</p>
+                                                        <p className="text-sm font-medium font-mono">{data.value.toLocaleString()} <span className="text-[9px] text-slate-400">ج.م</span></p>
                                                     </div>
                                                 );
                                             }
@@ -145,14 +145,14 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                                     </PieChart>
                                 </ResponsiveContainer>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">الإجمالي</p>
-                                    <p className="text-lg font-black text-slate-800 dark:text-white font-mono leading-none">{totalExpenses.toLocaleString()}</p>
+                                    <p className="text-[9px] font-medium text-slate-400 uppercase tracking-tighter">الإجمالي</p>
+                                    <p className="text-lg font-medium text-slate-800 dark:text-white font-mono leading-none">{totalExpenses.toLocaleString()}</p>
                                 </div>
                             </>
                         ) : (
                             <div className="h-full flex flex-col items-center justify-center opacity-20">
                                 <Filter size={32} className="text-slate-400 mb-2" />
-                                <p className="text-[10px] font-black uppercase">لا توجد بيانات</p>
+                                <p className="text-[10px] font-medium uppercase">لا توجد بيانات</p>
                             </div>
                         )}
                     </div>
@@ -163,11 +163,11 @@ export const FinanceCharts = ({ monthlyData, pieData, totalExpenses }: FinanceCh
                             <div key={entry.name} className="flex items-center justify-between group">
                                 <div className="flex items-center gap-2.5">
                                     <div className="w-2.5 h-2.5 rounded-none" style={{ backgroundColor: PIE_COLORS[index % PIE_COLORS.length] }} />
-                                    <span className="text-[10px] font-bold text-slate-600 dark:text-slate-400 truncate max-w-[100px]">{entry.name}</span>
+                                    <span className="text-[10px] font-normal text-slate-600 dark:text-slate-400 truncate max-w-[100px]">{entry.name}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-black text-slate-800 dark:text-white font-mono">{entry.value.toLocaleString()}</span>
-                                    <span className="text-[9px] font-black bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-none text-slate-500">
+                                    <span className="text-[10px] font-medium text-slate-800 dark:text-white font-mono">{entry.value.toLocaleString()}</span>
+                                    <span className="text-[9px] font-medium bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-none text-slate-500">
                                         {((entry.value / totalExpenses) * 100).toFixed(0)}%
                                     </span>
                                 </div>

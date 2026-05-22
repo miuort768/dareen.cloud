@@ -285,20 +285,20 @@ export const Teachers = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
                 {/* Header Section */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10 backdrop-blur-md flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-none overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10  flex items-center justify-center">
                             <Presentation size={24} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tighter">إدارة المعلمات</h1>
+                            <h1 className="text-xl md:text-2xl font-medium text-white leading-tight tracking-tighter">إدارة المعلمات</h1>
                             <p className="text-xs md:text-sm text-slate-300/80 mt-0.5">إدارة بيانات المعلمات ومتابعة الحصص</p>
                             <div className="hidden md:flex items-center gap-3 mt-2">
-                                <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</span>
+                                <span className="text-[10px] text-slate-400 font-medium uppercase tracking-widest">الأقسام الأكاديمية • {teachers.length} معلمة</span>
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                                <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5 rounded-lg">مزامنة نشطة</span>
+                                <span className="text-[9px] font-medium text-emerald-400 uppercase tracking-widest border border-emerald-500/20 px-2 py-0.5 bg-emerald-500/5 rounded-lg">مزامنة نشطة</span>
                             </div>
                         </div>
                     </div>
@@ -307,7 +307,7 @@ export const Teachers = () => {
                         <button
                             onClick={() => { setShowAddForm(!showAddForm); setEditId(null); }}
                             className={cn(
-                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg active:scale-95",
+                                "h-10 md:h-11 px-3 md:px-6 flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-widest rounded-none transition-all shadow-sm active:scale-95",
                                 showAddForm
                                 ? "bg-rose-500 text-white hover:bg-rose-600"
                                 : "bg-gradient-to-r from-indigo-500 to-indigo-600 text-white hover:from-indigo-600 hover:to-indigo-700 shadow-indigo-500/20"
@@ -426,3 +426,4 @@ export const Teachers = () => {
     );
 };
 export default Teachers;
+

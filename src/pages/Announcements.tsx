@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import {
     Megaphone,
     Plus,
@@ -143,33 +143,33 @@ export const Announcements = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
             
             {/* ═══════════════ PREMIUM ANNOUNCEMENTS HEADER ═══════════════ */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6">
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" 
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-500/10 rounded-full blur-[80px]" />
 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-3 md:gap-5">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 shadow-lg">
-                            <div className="w-full h-full bg-slate-900/40 backdrop-blur-md flex items-center justify-center border border-white/20">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-indigo-600 p-0.5 shadow-sm">
+                            <div className="w-full h-full bg-slate-900/40  flex items-center justify-center border border-white/20">
                                 <Megaphone size={18} className="text-white md:size-[24px]" strokeWidth={1.5} />
                             </div>
                         </div>
                         <div>
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="px-2 py-0.5 bg-white/10 backdrop-blur-md text-white text-[8px] font-bold uppercase tracking-widest border border-white/10 italic leading-none">وحدة التحكم المركزية</span>
+                                <span className="px-2 py-0.5 bg-white/10  text-white text-[8px] font-normal uppercase tracking-widest border border-white/10 italic leading-none">وحدة التحكم المركزية</span>
                                 <div className="flex gap-1">
                                     {[1,2,3].map(i => <div key={i} className="w-1 h-1 bg-emerald-500 animate-pulse" style={{ animationDelay: `${i*0.2}s` }} />)}
                                 </div>
                             </div>
-                            <h1 className="text-base md:text-2xl font-black text-white italic tracking-tight uppercase leading-none">النشرة والتعميمات</h1>
+                            <h1 className="text-base md:text-2xl font-medium text-white italic tracking-tight uppercase leading-none">النشرة والتعميمات</h1>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="bg-white/5 border border-white/10 px-3 py-2 flex items-center gap-2 backdrop-blur-xl shrink-0">
-                            <span className="text-lg md:text-xl font-black text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
-                            <span className="text-[6px] md:text-[7px] font-black text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-2 md:pr-3">نشطة<br/>بالمنصـة</span>
+                        <div className="bg-white/5 border border-white/10 px-3 py-2 flex items-center gap-2  shrink-0">
+                            <span className="text-lg md:text-xl font-medium text-white leading-none">{announcements.filter(a => a.isActive).length}</span>
+                            <span className="text-[6px] md:text-[7px] font-medium text-slate-400 uppercase tracking-widest leading-none border-r border-white/10 pr-2 md:pr-3">نشطة<br/>بالمنصـة</span>
                         </div>
                         <button
                             onClick={() => {
@@ -177,10 +177,10 @@ export const Announcements = () => {
                                 setFormData({ title: '', content: '', type: 'general', isActive: true });
                                 setIsModalOpen(true);
                             }}
-                            className="bg-primary-600 text-white h-10 md:h-12 px-4 md:px-6 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-black shadow-lg group"
+                            className="bg-primary-600 text-white h-10 md:h-12 px-4 md:px-6 flex-1 md:flex-none flex items-center justify-center gap-2 md:gap-3 hover:bg-white hover:text-primary-600 transition-all font-medium shadow-sm group"
                         >
                             <Plus size={16} className="md:size-[18px] group-hover:rotate-90 transition-transform" />
-                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-black">إصدار تعميم</span>
+                            <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-medium">إصدار تعميم</span>
                         </button>
                     </div>
                 </div>
@@ -194,7 +194,7 @@ export const Announcements = () => {
                         <div 
                             key={ann.id} 
                             className={cn(
-                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-4 md:p-5 transition-all duration-300 hover:shadow-2xl relative flex flex-col",
+                                "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none p-4 md:p-5 transition-all duration-300 hover:shadow-sm relative flex flex-col",
                                 !ann.isActive && "opacity-60 grayscale border-dashed"
                             )}
                         >
@@ -207,8 +207,8 @@ export const Announcements = () => {
                                             <styles.icon size={18} strokeWidth={1.5} />
                                         </div>
                                         <div>
-                                            <span className={cn("text-[7px] font-black uppercase tracking-widest italic block mb-0.5", styles.color)}>{styles.label}</span>
-                                            <p className="font-bold text-[9px] uppercase text-slate-400">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
+                                            <span className={cn("text-[7px] font-medium uppercase tracking-widest italic block mb-0.5", styles.color)}>{styles.label}</span>
+                                            <p className="font-normal text-[9px] uppercase text-slate-400">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
                                         </div>
                                     </div>
                                     
@@ -229,7 +229,7 @@ export const Announcements = () => {
                                 </div>
 
                                 <div className="space-y-2 md:space-y-3">
-                                    <h3 className="text-sm md:text-[17px] font-black text-slate-900 dark:text-white leading-tight italic tracking-tight uppercase group-hover:text-primary-600 transition-colors">{ann.title}</h3>
+                                    <h3 className="text-sm md:text-[17px] font-medium text-slate-900 dark:text-white leading-tight italic tracking-tight uppercase group-hover:text-primary-600 transition-colors">{ann.title}</h3>
                                     <p className="text-slate-500 dark:text-slate-400 font-medium text-[10px] md:text-[11px] leading-relaxed line-clamp-4 border-r-2 border-slate-100 dark:border-slate-800 pr-2 md:pr-3 italic">
                                         {ann.content}
                                     </p>
@@ -238,7 +238,7 @@ export const Announcements = () => {
 
                             {!ann.isActive && (
                                 <div className="mt-5 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800">
-                                    <span className="text-[7px] font-black text-amber-600 dark:text-amber-500 uppercase italic flex items-center gap-1.5">
+                                    <span className="text-[7px] font-medium text-amber-600 dark:text-amber-500 uppercase italic flex items-center gap-1.5">
                                         <Info size={10} /> مسودة قيد المراجعة
                                     </span>
                                 </div>
@@ -250,19 +250,19 @@ export const Announcements = () => {
                 {announcements.length === 0 && !isLoading && (
                     <div className="col-span-full py-20 bg-slate-50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center opacity-30 text-center">
                         <ArrowLeftRight size={40} className="mb-4 text-slate-400" />
-                        <h3 className="text-lg font-black uppercase italic tracking-widest text-slate-500">سجل الإعلانات فارغ</h3>
+                        <h3 className="text-lg font-medium uppercase italic tracking-widest text-slate-500">سجل الإعلانات فارغ</h3>
                     </div>
                 )}
             </div>
 
             {/* ═══════════════ PREMIUM EDIT MODAL ═══════════════ */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/60 md:animate-in md:fade-in md:duration-300">
-                    <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-2xl overflow-hidden rounded-2xl">
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-slate-950/60 md:animate-in md:fade-in md:duration-300">
+                    <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-white/10 shadow-sm overflow-hidden rounded-none">
                         <div className="p-5 bg-slate-900 text-white flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-3">
                                 <Megaphone className="text-primary-500" size={18} />
-                                <h3 className="font-black text-xs uppercase italic tracking-tight">
+                                <h3 className="font-medium text-xs uppercase italic tracking-tight">
                                     {editingAnnouncement ? 'تحديث البيانات المركزية' : 'إصدار تعميم إداري جديد'}
                                 </h3>
                             </div>
@@ -271,24 +271,24 @@ export const Announcements = () => {
 
                         <form onSubmit={handleSave} className="p-6 md:p-8 space-y-6">
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">اسم التعميم / العنوان</label>
+                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">اسم التعميم / العنوان</label>
                                 <input
                                     required
                                     type="text"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-xs outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all"
                                     placeholder="أدخل عنوان الإعلان..."
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-5">
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">تصنيف البيانات</label>
+                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">تصنيف البيانات</label>
                                     <select
                                         value={formData.type}
                                         onChange={(e) => setFormData({ ...formData, type: e.target.value as AnnouncementType })}
-                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-black text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all cursor-pointer"
+                                        className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-[10px] uppercase outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all cursor-pointer"
                                     >
                                         <option value="general">إعـلان عـام</option>
                                         <option value="urgent">تنبيـه عـاجل</option>
@@ -297,14 +297,14 @@ export const Announcements = () => {
                                     </select>
                                 </div>
                                 <div className="space-y-1.5">
-                                    <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">حالة النشر</label>
+                                    <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">حالة النشر</label>
                                     <div className="flex gap-1 h-11">
                                         <button 
                                             type="button"
                                             onClick={() => setFormData({...formData, isActive: true})}
                                             className={cn(
-                                                "flex-1 font-black text-[8px] uppercase transition-all",
-                                                formData.isActive ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                                "flex-1 font-medium text-[8px] uppercase transition-all",
+                                                formData.isActive ? "bg-emerald-600 text-white shadow-sm shadow-emerald-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
                                             نشر
@@ -313,8 +313,8 @@ export const Announcements = () => {
                                             type="button"
                                             onClick={() => setFormData({...formData, isActive: false})}
                                             className={cn(
-                                                "flex-1 font-black text-[8px] uppercase transition-all",
-                                                !formData.isActive ? "bg-amber-600 text-white shadow-lg shadow-amber-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                                "flex-1 font-medium text-[8px] uppercase transition-all",
+                                                !formData.isActive ? "bg-amber-600 text-white shadow-sm shadow-amber-500/20" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                             )}
                                         >
                                             مسودة
@@ -324,20 +324,20 @@ export const Announcements = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest italic leading-none mb-1">محتوى التعميم</label>
+                                <label className="text-[9px] font-medium text-slate-500 uppercase tracking-widest italic leading-none mb-1">محتوى التعميم</label>
                                 <textarea
                                     required
                                     rows={4}
                                     value={formData.content}
                                     onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-xl dark:text-white transition-all leading-relaxed italic"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border-none font-medium text-xs resize-none outline-none focus:ring-2 ring-primary-500 rounded-none dark:text-white transition-all leading-relaxed italic"
                                     placeholder="اكتب تفاصيل الإعلان هنا..."
                                 />
                             </div>
 
                             <button
                                 type="submit"
-                                className="w-full py-4 bg-slate-900 dark:bg-primary-600 text-white font-black text-[10px] uppercase tracking-[0.2em] hover:bg-black dark:hover:bg-primary-500 transition-all shadow-xl flex items-center justify-center gap-3"
+                                className="w-full py-4 bg-slate-900 dark:bg-primary-600 text-white font-medium text-[10px] uppercase tracking-[0.2em] hover:bg-black dark:hover:bg-primary-500 transition-all shadow-sm flex items-center justify-center gap-3"
                             >
                                 <CheckCircle2 size={18} />
                                 {editingAnnouncement ? 'تحديث السجلات' : 'بث الإعلان'}

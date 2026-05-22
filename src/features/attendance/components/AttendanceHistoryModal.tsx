@@ -95,28 +95,28 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
 
     return (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
-            <div className="bg-white dark:bg-gray-900 w-full max-w-2xl shadow-2xl border-t-8 border-primary-600 animate-in zoom-in-95 max-h-[90vh] flex flex-col">
+            <div className="bg-white dark:bg-gray-900 w-full max-w-2xl shadow-sm border-t-8 border-primary-600 animate-in zoom-in-95 max-h-[90vh] flex flex-col">
                 <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
                     <div>
-                        <h3 className="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+                        <h3 className="text-xl font-medium text-gray-900 dark:text-white flex items-center gap-2">
                             <Clock size={24} className="text-primary-600" />
                             سجل حضور الطالب
                         </h3>
                         <div className="mt-2 text-right">
-                            <p className="text-lg font-black text-gray-800 dark:text-gray-100">{studentName}</p>
+                            <p className="text-lg font-medium text-gray-800 dark:text-gray-100">{studentName}</p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {studentGrade && (
-                                    <span className="text-[10px] bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-0.5 rounded border border-primary-100 dark:border-primary-800 font-bold">
+                                    <span className="text-[10px] bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 px-2 py-0.5 rounded border border-primary-100 dark:border-primary-800 font-normal">
                                         الصف {studentGrade}
                                     </span>
                                 )}
                                 {studentCurriculum && (
-                                    <span className="text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800 font-bold">
+                                    <span className="text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 rounded border border-amber-100 dark:border-amber-800 font-normal">
                                         {studentCurriculum}
                                     </span>
                                 )}
                                 {studentSubject && (
-                                    <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded border border-gray-200 dark:border-gray-700 font-bold">
+                                    <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-2 py-0.5 rounded border border-gray-200 dark:border-gray-700 font-normal">
                                         منهج {studentSubject}
                                     </span>
                                 )}
@@ -195,23 +195,23 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 <div>
                                                     <div className="flex items-center gap-2">
                                                         <Calendar size={14} className="text-gray-400" />
-                                                        <p className="text-sm font-black text-gray-900 dark:text-white">{session.date}</p>
-                                                        <p className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-bold text-gray-500">{session.day}</p>
+                                                        <p className="text-sm font-medium text-gray-900 dark:text-white">{session.date}</p>
+                                                        <p className="text-[10px] bg-gray-100 dark:bg-gray-800 px-2 py-0.5 font-normal text-gray-500">{session.day}</p>
                                                     </div>
-                                                    <p className="text-xs font-bold text-gray-500 mt-0.5">{session.subject} - {session.time}</p>
+                                                    <p className="text-xs font-normal text-gray-500 mt-0.5">{session.subject} - {session.time}</p>
                                                     
                                                     {(session.topics || session.homework) && (
                                                         <div className="mt-3 space-y-2 pb-1">
                                                             {session.topics && (
                                                                 <div className="flex gap-2">
-                                                                    <span className="text-[9px] font-black text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">المنجز</span>
-                                                                    <p className="text-[11px] font-bold text-gray-700 dark:text-gray-300 leading-relaxed border-r-2 border-emerald-100 dark:border-emerald-900/50 pr-2">{session.topics}</p>
+                                                                    <span className="text-[9px] font-medium text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">المنجز</span>
+                                                                    <p className="text-[11px] font-normal text-gray-700 dark:text-gray-300 leading-relaxed border-r-2 border-emerald-100 dark:border-emerald-900/50 pr-2">{session.topics}</p>
                                                                 </div>
                                                             )}
                                                             {session.homework && (
                                                                 <div className="flex gap-2">
-                                                                    <span className="text-[9px] font-black text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">الواجب</span>
-                                                                    <p className="text-[11px] font-bold text-gray-600 dark:text-gray-400 leading-relaxed border-r-2 border-amber-100 dark:border-amber-900/50 pr-2">{session.homework}</p>
+                                                                    <span className="text-[9px] font-medium text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 h-fit whitespace-nowrap uppercase">الواجب</span>
+                                                                    <p className="text-[11px] font-normal text-gray-600 dark:text-gray-400 leading-relaxed border-r-2 border-amber-100 dark:border-amber-900/50 pr-2">{session.homework}</p>
                                                                 </div>
                                                             )}
                                                         </div>
@@ -221,7 +221,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
 
                                             <div className="flex items-center gap-3">
                                                 <span className={cn(
-                                                    "text-[10px] font-black uppercase px-2 py-1",
+                                                    "text-[10px] font-medium uppercase px-2 py-1",
                                                     session.status === 'completed'
                                                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400"
                                                         : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-400"
@@ -255,7 +255,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                     ) : (
                         <div className="py-12 text-center text-gray-400 flex flex-col items-center gap-4">
                             <AlertCircle size={48} className="opacity-20" />
-                            <p className="text-sm font-bold">لا يوجد سجلات حضور أو غياب سابقة لهذا الطالب</p>
+                            <p className="text-sm font-normal">لا يوجد سجلات حضور أو غياب سابقة لهذا الطالب</p>
                         </div>
                     )}
                 </div>
@@ -263,7 +263,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                 <div className="p-6 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/20">
                     <button
                         onClick={onClose}
-                        className="w-full bg-slate-900 text-white font-black py-4 uppercase tracking-widest hover:bg-slate-800 transition-all"
+                        className="w-full bg-slate-900 text-white font-medium py-4 uppercase tracking-widest hover:bg-slate-800 transition-all"
                     >
                         إغلاق
                     </button>

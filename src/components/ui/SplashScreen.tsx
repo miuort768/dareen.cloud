@@ -51,12 +51,12 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
 
         {/* Brand Typography */}
         <div className="text-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both">
-          <h1 className="text-4xl md:text-6xl font-heading font-black text-slate-900 dark:text-white mb-4 tracking-tighter">
+          <h1 className="text-4xl md:text-6xl font-heading font-medium text-slate-900 dark:text-white mb-4 tracking-tighter">
             دارين <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">السابعة</span>
           </h1>
           
           <div className="flex flex-col items-center gap-3">
-            <p className="text-[10px] md:text-xs font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.4em] translate-x-[0.2em]">
+            <p className="text-[10px] md:text-xs font-medium text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.4em] translate-x-[0.2em]">
               للتعليم والتدريب
             </p>
             <div className="flex items-center gap-1">
@@ -73,7 +73,7 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
         <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden border border-white/5">
           <div className="h-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 animate-loading-bar-smooth shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
         </div>
-        <div className="mt-3 flex justify-between items-center text-[8px] font-black text-slate-400 dark:text-slate-600 uppercase tracking-widest px-1">
+        <div className="mt-3 flex justify-between items-center text-[8px] font-medium text-slate-400 dark:text-slate-600 uppercase tracking-widest px-1">
           <span>جاري التحميل</span>
           <span className="animate-pulse">يرجى الانتظار</span>
         </div>

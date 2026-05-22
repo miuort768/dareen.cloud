@@ -192,7 +192,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                     <motion.div 
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#233138] shadow-xl z-[100] py-2 rounded-md"
+                                        className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#233138] shadow-sm z-[100] py-2 rounded-md"
                                     >
                                         <button
                                             onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
@@ -203,7 +203,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         {selectedConv.isGroup && (
                                             <button
                                                 onClick={() => { openGroupSettings(); setShowMoreMenu(false); }}
-                                                className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors font-bold"
+                                                className="w-full text-right px-4 py-3 text-sm text-[#3b4a54] dark:text-[#d1d7db] hover:bg-[#f5f6f6] dark:hover:bg-[#182229] transition-colors font-normal"
                                             >
                                                 تعديل المجموعة
                                             </button>
@@ -256,7 +256,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         : "bg-white dark:bg-[#202c33] rounded-[7.5px] rounded-tl-none ml-2"
                                 )}>
                                     {isGroup && !isMe && (
-                                        <span className="block text-[12.5px] font-bold text-[#e542a3] mb-0.5 text-right">
+                                        <span className="block text-[12.5px] font-normal text-[#e542a3] mb-0.5 text-right">
                                             {msg.senderName}
                                         </span>
                                     )}
@@ -296,7 +296,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-md flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
+                        className="absolute bottom-24 left-6 w-10 h-10 bg-white dark:bg-[#202c33] text-[#54656f] dark:text-[#aebac1] rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-[#f0f2f5] dark:hover:bg-[#2a3942]"
                     >
                         <ArrowDown size={20} />
                     </motion.button>
@@ -343,14 +343,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             }
                         }}
                         placeholder="اكتب رسالة"
-                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
+                        className="w-full bg-white dark:bg-[#2a3942] text-[#111b21] dark:text-[#d1d7db] text-sm md:text-base border-none rounded-none px-4 py-3 focus:ring-1 focus:ring-emerald-500 shadow-sm max-h-32 resize-none text-right scroll-smooth custom-scrollbar relative z-10 overflow-y-auto"
                     />
                 </div>
 
                 <div className="flex items-center justify-center shrink-0">
                     <button
                         onClick={handleSendMessage}
-                        className="bg-[#00a884] text-white p-3.5 rounded-xl hover:bg-[#008f6f] transition-all shadow-[0_2px_4px_rgba(0,0,0,0.1)] active:scale-95 flex items-center justify-center h-[48px] w-[48px]"
+                        className="bg-[#00a884] text-white p-3.5 rounded-none hover:bg-[#008f6f] transition-all shadow-[0_2px_4px_rgba(0,0,0,0.1)] active:scale-95 flex items-center justify-center h-[48px] w-[48px]"
                         title="إرسال"
                     >
                         <Send size={20} className={cn("transition-transform", isSending && "animate-pulse")} />

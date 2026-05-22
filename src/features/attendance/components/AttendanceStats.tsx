@@ -14,10 +14,10 @@ const StatItem = ({ title, value, icon: Icon, subLabel }: { title: string, value
         <div className="w-10 h-10 rounded-none flex items-center justify-center mb-2 bg-white/20 border border-white/20">
             <Icon size={18} className="text-white" />
         </div>
-        <p className="text-[9px] font-black text-white/70 uppercase tracking-widest">{title}</p>
-        <p className="text-xl font-black text-white mt-1 leading-none">
+        <p className="text-[9px] font-medium text-white/70 uppercase tracking-widest">{title}</p>
+        <p className="text-xl font-medium text-white mt-1 leading-none">
             {value} 
-            {subLabel && <span className="text-[10px] font-bold text-white/60 mr-1">{subLabel}</span>}
+            {subLabel && <span className="text-[10px] font-normal text-white/60 mr-1">{subLabel}</span>}
         </p>
     </div>
 );

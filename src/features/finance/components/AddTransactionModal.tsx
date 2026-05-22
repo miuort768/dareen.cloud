@@ -40,18 +40,18 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-2xl rounded-none overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60  animate-in fade-in duration-300" dir="rtl">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-lg shadow-sm rounded-none overflow-hidden border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
                 {/* Header */}
                 <div className="p-6 bg-slate-900 text-white flex justify-between items-center relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-32 h-full bg-white/5 skew-x-[30deg] -translate-x-16"></div>
                     <div className="relative z-10 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#5c59f2] flex items-center justify-center shadow-lg">
+                        <div className="w-10 h-10 bg-[#5c59f2] flex items-center justify-center shadow-sm">
                             <DollarSign size={20} />
                         </div>
                         <div>
-                            <h3 className="text-lg font-black tracking-tighter uppercase italic">تسجيل معاملة مالية</h3>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
+                            <h3 className="text-lg font-medium tracking-tighter uppercase italic">تسجيل معاملة مالية</h3>
+                            <p className="text-[10px] font-normal text-slate-400 uppercase tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
                         </div>
                     </div>
                     <button 
@@ -65,20 +65,20 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                 <Tag size={12} className="text-[#5c59f2]" /> نوع المعاملة
                             </label>
                             <select
                                 value={newTransaction.type}
                                 onChange={e => setNewTransaction({ ...newTransaction, type: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-black focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none appearance-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none appearance-none"
                             >
                                 <option value="income">إيراد مالي (+)</option>
                                 <option value="expense">مصروفات (-)</option>
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                 <DollarSign size={12} className="text-[#5c59f2]" /> المبلغ المستحق
                             </label>
                             <input
@@ -87,7 +87,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                                 step="any"
                                 value={newTransaction.amount}
                                 onChange={e => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-black focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
                                 placeholder="0.00"
                             />
                         </div>
@@ -95,7 +95,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                 <Info size={12} className="text-[#5c59f2]" /> التصنيف الحسابي
                             </label>
                             <input
@@ -103,12 +103,12 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                                 required
                                 value={newTransaction.category}
                                 onChange={e => setNewTransaction({ ...newTransaction, category: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-black focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
                                 placeholder="مثال: إيجار، مكافأة..."
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                 <Calendar size={12} className="text-[#5c59f2]" /> تاريخ المعاملة
                             </label>
                             <input
@@ -116,17 +116,17 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                                 required
                                 value={newTransaction.date}
                                 onChange={e => setNewTransaction({ ...newTransaction, date: e.target.value })}
-                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-black focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
+                                className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
+                        <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">بيان المعاملة / التفاصيل</label>
                         <textarea
                             value={newTransaction.description}
                             onChange={e => setNewTransaction({ ...newTransaction, description: e.target.value })}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-black focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none h-24 resize-none"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border-b-2 border-slate-100 dark:border-slate-700 px-4 py-3 text-sm font-medium focus:border-[#5c59f2] outline-none transition-all dark:text-white rounded-none h-24 resize-none"
                             placeholder="وصف تفصيلي للعملية المالية..."
                         />
                     </div>
@@ -135,13 +135,13 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                         <button 
                             type="button"
                             onClick={onClose}
-                            className="flex-1 px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-black text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200"
+                            className="flex-1 px-6 py-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium text-xs uppercase tracking-[2px] transition-all hover:bg-slate-200"
                         >
                             إلغاء
                         </button>
                         <button 
                             type="submit" 
-                            className="flex-[2] bg-[#5c59f2] text-white font-black py-4 uppercase tracking-[2px] shadow-xl shadow-indigo-100 dark:shadow-none transition-all hover:-translate-y-1 flex items-center justify-center gap-3"
+                            className="flex-[2] bg-[#5c59f2] text-white font-medium py-4 uppercase tracking-[2px] shadow-sm shadow-indigo-100 dark:shadow-none transition-all hover:-translate-y-1 flex items-center justify-center gap-3"
                         >
                             <Save size={18} />
                             تأكيد وحفظ العملية

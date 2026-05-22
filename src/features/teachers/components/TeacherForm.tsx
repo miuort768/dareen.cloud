@@ -63,16 +63,16 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-xl overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
             <div className="bg-slate-950 px-6 py-6 flex items-center justify-between gap-6 border-b border-white/5">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] text-white flex items-center justify-center rounded-none shadow-lg">
+                    <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] text-white flex items-center justify-center rounded-none shadow-sm">
                         {initialData ? <Edit size={20} /> : <Plus size={20} />}
                     </div>
                     <div>
-                        <h3 className="text-sm md:text-lg font-black text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
-                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-0.5">
+                        <h3 className="text-sm md:text-lg font-medium text-white uppercase tracking-tighter">{initialData ? 'تعديل بيانات المعلمة' : 'إدراج معلمة جديدة'}</h3>
+                        <p className="text-[9px] text-slate-500 font-normal uppercase tracking-[0.2em] mt-0.5">
                             {initialData ? 'تحديث السجل الأكاديمي' : 'فتح سجل كادر جديد'}
                         </p>
                     </div>
@@ -93,7 +93,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                         <div className="w-6 h-6 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-none">
                             <Info size={12} className="text-[var(--primary-color,#5c59f2)]" />
                         </div>
-                        <h4 className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest">بيانات التعريف الأساسية</h4>
+                        <h4 className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest">بيانات التعريف الأساسية</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -104,7 +104,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                         <FormInput label="السعر الافتراضي للحصة" icon={DollarSign} type="number" value={formData.price} onChange={(val: string) => setFormData({ ...formData, price: val })} placeholder="0.00" />
                         <FormInput label="الرقم القومي / الهوية" icon={Key} value={(formData as { nationalId?: string }).nationalId || ''} onChange={(val: string) => setFormData({ ...formData, nationalId: val })} placeholder="اختياري" dir="ltr" />
                         <div className="space-y-1.5">
-                            <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">تعريفة الحصة</label>
+                            <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-1">تعريفة الحصة</label>
                             <div className="relative group">
                                 <DollarSign className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
                                 <input
@@ -112,10 +112,10 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                     type="number"
                                     value={formData.price}
                                     onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-none text-[11px] font-black transition-all"
+                                    className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-emerald-500 dark:text-white rounded-none text-[11px] font-medium transition-all"
                                     placeholder="0.00"
                                 />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-black text-emerald-500 uppercase">ج.م</span>
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[8px] font-medium text-emerald-500 uppercase">ج.م</span>
                             </div>
                         </div>
                     </div>
@@ -133,30 +133,30 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                         )}>
                             {enableLogin && <div className="w-1.5 h-1.5 bg-white rounded-none" />}
                         </div>
-                        <span className="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">تفعيل حساب المعلمة على المنصة</span>
+                        <span className="text-[10px] font-medium text-slate-700 dark:text-slate-300 uppercase tracking-widest">تفعيل حساب المعلمة على المنصة</span>
                     </label>
 
                     {enableLogin && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">اسم المستخدم</label>
-                                    <button type="button" onClick={generateUsername} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-black hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">اسم المستخدم</label>
+                                    <button type="button" onClick={generateUsername} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <User className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
                                     <input
                                         value={formData.username}
                                         onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-black font-mono"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-medium font-mono"
                                         placeholder="username"
                                     />
                                 </div>
                             </div>
                             <div className="space-y-1.5">
                                 <div className="flex justify-between items-center px-1">
-                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">كلمة المرور</label>
-                                    <button type="button" onClick={generatePassword} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-black hover:underline uppercase tracking-tighter">توليد تلقائي</button>
+                                    <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">كلمة المرور</label>
+                                    <button type="button" onClick={generatePassword} className="text-[8px] text-[var(--primary-color,#5c59f2)] font-medium hover:underline uppercase tracking-tighter">توليد تلقائي</button>
                                 </div>
                                 <div className="relative">
                                     <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={12} />
@@ -164,7 +164,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                                         type="text"
                                         value={formData.password}
                                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-black font-mono tracking-widest"
+                                        className="w-full pl-4 pr-10 py-2.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] rounded-none text-[11px] font-medium font-mono tracking-widest"
                                         placeholder="password"
                                     />
                                 </div>
@@ -176,7 +176,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
                 <div className="flex items-center justify-end pt-4 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-[var(--primary-color,#5c59f2)] text-white text-[11px] font-black uppercase tracking-[0.2em] hover:opacity-90 rounded-none flex items-center gap-2 shadow-xl active:scale-95 transition-all"
+                        className="px-8 py-3 bg-[var(--primary-color,#5c59f2)] text-white text-[11px] font-medium uppercase tracking-[0.2em] hover:opacity-90 rounded-none flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={14} />
                         {initialData ? 'تحديث البيانات' : 'إتمام الإضافة'}
@@ -189,7 +189,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel }: TeacherFormProp
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-1.5">
-        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mr-1">{label}</label>
+        <label className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mr-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[var(--primary-color,#5c59f2)] transition-colors" size={12} />}
             <input
@@ -199,7 +199,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] dark:text-white rounded-none text-[11px] font-black transition-all",
+                    "w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[var(--primary-color,#5c59f2)] dark:text-white rounded-none text-[11px] font-medium transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}
@@ -208,3 +208,4 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
         </div>
     </div>
 );
+

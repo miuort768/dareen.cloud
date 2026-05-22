@@ -204,9 +204,9 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isO
     if (!isOpen) return null;
 
     return (
-        <div className="absolute inset-0 bg-slate-800/95 backdrop-blur-sm flex flex-col z-20">
+        <div className="absolute inset-0 bg-slate-800/95  flex flex-col z-20">
             {isTeacher && (
-                <div className="h-14 border-b border-white/10 bg-slate-900/90 flex items-center justify-between px-4 shrink-0 shadow-lg relative z-30">
+                <div className="h-14 border-b border-white/10 bg-slate-900/90 flex items-center justify-between px-4 shrink-0 shadow-sm relative z-30">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5 bg-white/5 p-1.5 rounded-lg border border-white/5">
                             {['#EF4444', '#3B82F6', '#10B981', '#FFFFFF'].map(c => (
@@ -241,7 +241,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isO
                                 <button
                                     key={s}
                                     onClick={() => { setPenSize(s); setIsEraser(false); }}
-                                    className={cn("text-[10px] font-bold px-3 py-1.5 rounded-md transition-all",
+                                    className={cn("text-[10px] font-normal px-3 py-1.5 rounded-md transition-all",
                                         penSize === s && !isEraser ? "bg-indigo-500/30 text-indigo-200" : "text-white/60 hover:text-white hover:bg-white/10"
                                     )}
                                 >
@@ -254,7 +254,7 @@ export const Whiteboard: React.FC<WhiteboardProps> = ({ isTeacher, roomName, isO
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => clearCanvas(true)}
-                            className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider"
+                            className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-normal uppercase tracking-wider"
                             title="مسح كامل السبورة"
                         >
                             <Trash2 size={16} /> <span className="hidden sm:inline">مسح الكل</span>

@@ -47,24 +47,24 @@ export const StudentDetails = ({
             <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800" dir="rtl">
                 <button
                     onClick={onClose}
-                    className="absolute left-4 top-4 text-slate-400 hover:text-rose-500 p-2 hover:bg-rose-50 rounded-xl transition-all"
+                    className="absolute left-4 top-4 text-slate-400 hover:text-rose-500 p-2 hover:bg-rose-50 rounded-none transition-all"
                 >
                     <X size={18} />
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-md shrink-0">
+                    <div className="w-12 h-12 bg-slate-900 text-white rounded-none flex items-center justify-center font-normal text-xl shadow-sm shrink-0">
                         {student.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-bold text-base text-slate-800 dark:text-white truncate">{student.name}</h3>
+                            <h3 className="font-normal text-base text-slate-800 dark:text-white truncate">{student.name}</h3>
                             <RankBadge rank={rank} size="sm" />
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">{student.grade}</span>
-                            <span className="text-[10px] font-bold text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded">{points} XP</span>
-                            <button onClick={() => setShowCard(true)} className="text-[10px] font-bold text-slate-400 hover:text-indigo-500 flex items-center gap-1">
+                            <span className="text-[10px] font-normal text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded uppercase">{student.grade}</span>
+                            <span className="text-[10px] font-normal text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded">{points} XP</span>
+                            <button onClick={() => setShowCard(true)} className="text-[10px] font-normal text-slate-400 hover:text-indigo-500 flex items-center gap-1">
                                 <UserCircle2 size={12} />
                                 بطاقة الطالب
                             </button>
@@ -75,21 +75,21 @@ export const StudentDetails = ({
 
             <div className="p-4 space-y-5 overflow-y-auto flex-1 custom-scrollbar" dir="rtl">
                 {/* Points & Rank Panel */}
-                <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
+                <div className="p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-none flex items-center justify-center">
                                 <Trophy size={18} />
                             </div>
                             <div>
-                                <p className="text-[9px] font-bold text-slate-400 uppercase">الرتبة الحالية</p>
-                                <p className="text-sm font-black text-slate-800 dark:text-white">{rank.name}</p>
+                                <p className="text-[9px] font-normal text-slate-400 uppercase">الرتبة الحالية</p>
+                                <p className="text-sm font-medium text-slate-800 dark:text-white">{rank.name}</p>
                             </div>
                         </div>
                         {next && (
                             <div className="text-left">
-                                <p className="text-[9px] font-bold text-slate-400 uppercase">التالي</p>
-                                <p className="text-[11px] font-bold text-indigo-500">{next.name}</p>
+                                <p className="text-[9px] font-normal text-slate-400 uppercase">التالي</p>
+                                <p className="text-[11px] font-normal text-indigo-500">{next.name}</p>
                             </div>
                         )}
                     </div>
@@ -103,7 +103,7 @@ export const StudentDetails = ({
                                     className="h-full bg-indigo-500"
                                 />
                             </div>
-                            <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase">
+                            <div className="flex justify-between text-[9px] font-normal text-slate-400 uppercase">
                                 <span>متبقي {pointsNeeded} XP</span>
                                 <span className="font-mono">{points} / {next.minPoints}</span>
                             </div>
@@ -113,15 +113,15 @@ export const StudentDetails = ({
 
                 {/* Account Details */}
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-transparent">
-                        <p className="text-[9px] font-bold text-slate-400 uppercase mb-1">اسم المستخدم</p>
-                        <p className="text-xs font-bold text-indigo-500 font-mono">@{student.username || '—'}</p>
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-transparent">
+                        <p className="text-[9px] font-normal text-slate-400 uppercase mb-1">اسم المستخدم</p>
+                        <p className="text-xs font-normal text-indigo-500 font-mono">@{student.username || '—'}</p>
                     </div>
-                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-transparent">
-                        <p className="text-[9px] font-bold text-slate-400 uppercase mb-1">حالة المصادقة</p>
+                    <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-transparent">
+                        <p className="text-[9px] font-normal text-slate-400 uppercase mb-1">حالة المصادقة</p>
                         <div className="flex items-center gap-1.5">
                             <div className={cn("w-1.5 h-1.5 rounded-full", student.username ? "bg-emerald-500" : "bg-rose-500")} />
-                            <p className="text-[10px] font-bold text-slate-600">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
+                            <p className="text-[10px] font-normal text-slate-600">{student.username ? 'مفعل' : 'غير مكتمل'}</p>
                         </div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@ export const StudentDetails = ({
                 {/* Enrollments */}
                 <div className="space-y-6">
                     <div className="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
-                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
-                        <span className="text-[9px] font-bold bg-slate-50 text-slate-400 px-2 py-0.5 rounded-md">{student.enrollments.length} برامج</span>
+                        <h4 className="text-[10px] font-normal text-slate-400 uppercase tracking-widest italic">البرامج الأكاديمية النشطة</h4>
+                        <span className="text-[9px] font-normal bg-slate-50 text-slate-400 px-2 py-0.5 rounded-md">{student.enrollments.length} برامج</span>
                     </div>
 
                     <div className="space-y-4">
@@ -142,21 +142,21 @@ export const StudentDetails = ({
 
                             return (
                                 <div key={i} className={cn(
-                                    "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl shadow-sm relative",
+                                    "p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm relative",
                                     en.isFrozen && "opacity-50 grayscale",
                                     isLow ? "border-rose-100" : ""
                                 )}>
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-bold text-xs text-slate-800 dark:text-white">{en.subject}</h5>
-                                                {isLow && <span className="text-[8px] font-bold text-rose-500 bg-rose-50 px-1 rounded animate-pulse">رصيد منخفض</span>}
+                                                <h5 className="font-normal text-xs text-slate-800 dark:text-white">{en.subject}</h5>
+                                                {isLow && <span className="text-[8px] font-normal text-rose-500 bg-rose-50 px-1 rounded animate-pulse">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="w-4 h-4 bg-slate-100 rounded flex items-center justify-center">
                                                     <User size={8} className="text-slate-400" />
                                                 </div>
-                                                <span className="text-[9px] font-bold text-slate-500">{en.teacher}</span>
+                                                <span className="text-[9px] font-normal text-slate-500">{en.teacher}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
@@ -177,7 +177,7 @@ export const StudentDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "w-4 h-4 border flex items-center justify-center rounded-sm text-[7px] font-bold font-mono transition-all",
+                                                        "w-4 h-4 border flex items-center justify-center rounded-sm text-[7px] font-normal font-mono transition-all",
                                                         idx < actualUsed 
                                                             ? "bg-emerald-500 border-emerald-500 text-white" 
                                                             : idx === actualUsed 
@@ -192,7 +192,7 @@ export const StudentDetails = ({
 
                                         <div className="pt-3 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-bold text-slate-400 uppercase mb-1">
+                                                <div className="flex justify-between text-[8px] font-normal text-slate-400 uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span>{progressPercent}%</span>
                                                 </div>
@@ -202,12 +202,12 @@ export const StudentDetails = ({
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="text-center px-2 border-r border-slate-100 dark:border-slate-800">
-                                                    <p className="text-[8px] font-bold text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
-                                                    <p className={cn("text-xs font-black font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
+                                                    <p className="text-[8px] font-normal text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
+                                                    <p className={cn("text-xs font-medium font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
                                                 </div>
                                                 <button 
                                                     onClick={() => setAddingSessionsIndex(addingSessionsIndex === i ? null : i)}
-                                                    className="w-6 h-6 bg-slate-900 text-white rounded text-[10px] font-black flex items-center justify-center hover:bg-indigo-600 active:scale-90 transition-all shadow-sm"
+                                                    className="w-6 h-6 bg-slate-900 text-white rounded text-[10px] font-medium flex items-center justify-center hover:bg-indigo-600 active:scale-90 transition-all shadow-sm"
                                                 >
                                                     <Plus size={12} strokeWidth={3} />
                                                 </button>
@@ -221,7 +221,7 @@ export const StudentDetails = ({
                                                 <button
                                                     key={num}
                                                     onClick={() => { onAddSessions(i, num); setAddingSessionsIndex(null); }}
-                                                    className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-bold text-[10px] font-mono rounded transition-all"
+                                                    className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-normal text-[10px] font-mono rounded transition-all"
                                                 >
                                                     +{num} حصة
                                                 </button>
@@ -234,7 +234,7 @@ export const StudentDetails = ({
                                                         setAddingSessionsIndex(null);
                                                     }
                                                 }}
-                                                className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-bold text-[10px] font-mono rounded transition-all"
+                                                className="flex-1 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 hover:text-white text-slate-600 dark:text-slate-300 font-normal text-[10px] font-mono rounded transition-all"
                                             >
                                                 مخصص
                                             </button>
@@ -251,7 +251,7 @@ export const StudentDetails = ({
                                     <Plus size={14} strokeWidth={2.5} />
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-xs text-slate-800 dark:text-white uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
+                                    <h4 className="font-medium text-xs text-slate-800 dark:text-white uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
                                 </div>
                             </div>
                             <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} />
@@ -265,3 +265,4 @@ export const StudentDetails = ({
         </div>
     );
 };
+

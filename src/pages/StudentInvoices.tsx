@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { Search, X, FileText, Printer, UserPlus, Sparkles, Plus, Trash2 } from 'lucide-react';
 import { useShowNotification } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -285,17 +285,17 @@ export const StudentInvoices = () => {
             <div className="absolute inset-0 opacity-\[0\.03\] dark:opacity-\[0\.05\] opacity-50 pointer-events-none" />
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
 
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-xl">
+                    <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-none">
                         <FileText size={18} className="text-indigo-200" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-white">فواتير وتحصيل الطلاب</h1>
+                        <h1 className="text-sm font-normal text-white">فواتير وتحصيل الطلاب</h1>
                         <p className="text-[10px] text-indigo-200/80">إدارة التدفقات النقدية والمستحقات الدراسية</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                <div className="flex items-center gap-2 text-[10px] font-normal text-white/70 bg-white/10  px-3 py-1.5 rounded-lg border border-white/10">
                     <Sparkles size={12} className="text-amber-300" />
                     {totalRevenue.toLocaleString()} ج.م إجمالي المحصل
                 </div>
@@ -327,7 +327,7 @@ export const StudentInvoices = () => {
                                 type="select"
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value as 'all' | 'paid' | 'pending' | 'overdue')}
-                                className="w-auto min-w-[140px] py-2 text-xs font-bold"
+                                className="w-auto min-w-[140px] py-2 text-xs font-normal"
                             >
                                 <option value="all">جميع الحالات</option>
                                 <option value="paid">مدفوعة</option>

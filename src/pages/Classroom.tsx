@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     LiveKitRoom,
@@ -49,9 +49,9 @@ const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpe
     const { color: statusColor, label: statusLabel } = statusConfig[connectionState] || statusConfig[ConnectionState.Disconnected];
 
     return (
-        <div className="h-14 border-b border-white/10 flex items-center justify-between px-4 bg-gray-900/90 backdrop-blur-xl z-50 shrink-0">
+        <div className="h-14 border-b border-white/10 flex items-center justify-between px-4 bg-gray-900/90  z-50 shrink-0">
             <div className="flex items-center gap-3">
-                <div className={cn('px-3 py-1 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 rounded-sm transition-colors', statusColor)}>
+                <div className={cn('px-3 py-1 text-[10px] font-medium uppercase tracking-widest flex items-center gap-2 rounded-sm transition-colors', statusColor)}>
                     <span className={cn('w-1.5 h-1.5 bg-white rounded-full', connectionState === ConnectionState.Connected && 'animate-pulse')} />
                     {statusLabel}
                 </div>
@@ -66,7 +66,7 @@ const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpe
                 {isTeacher && (
                     <button
                         onClick={toggleWhiteboard}
-                        className={cn("p-2 transition-colors flex items-center gap-1.5 text-xs font-black uppercase px-3 rounded", 
+                        className={cn("p-2 transition-colors flex items-center gap-1.5 text-xs font-medium uppercase px-3 rounded", 
                             isWhiteboardOpen ? "bg-indigo-600 hover:bg-indigo-700 text-white" : "bg-white/10 hover:bg-white/20 text-white"
                         )}
                     >
@@ -74,7 +74,7 @@ const ClassroomTopBar = ({ isTeacher, onLeave, toggleWhiteboard, isWhiteboardOpe
                     </button>
                 )}
                 <button onClick={onLeave}
-                    className="p-2 bg-red-600 hover:bg-red-700 rounded transition-colors flex items-center gap-1.5 text-xs font-black uppercase px-3 text-white"
+                    className="p-2 bg-red-600 hover:bg-red-700 rounded transition-colors flex items-center gap-1.5 text-xs font-medium uppercase px-3 text-white"
                 >
                     <PhoneOff size={16} /> مغادرة
                 </button>
@@ -97,10 +97,10 @@ const ClassroomVideoLayout = ({ isTeacher }: { isTeacher: boolean }) => {
         <div className="flex-1 flex flex-col p-4 gap-4 bg-black">
             <div className="flex-1 flex gap-4 justify-center items-center">
                 {tracks.map((track) => (
-                    <div key={track.participant.identity + track.source} className="w-full h-full max-w-5xl rounded-xl overflow-hidden border border-white/10 relative">
+                    <div key={track.participant.identity + track.source} className="w-full h-full max-w-5xl rounded-none overflow-hidden border border-white/10 relative">
                         <ParticipantTile trackRef={track} />
                         {track.source === Track.Source.ScreenShare && (
-                            <div className="absolute top-4 right-4 bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-black shadow-lg">
+                            <div className="absolute top-4 right-4 bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-medium shadow-sm">
                                 مشاركة شاشة
                             </div>
                         )}
@@ -109,7 +109,7 @@ const ClassroomVideoLayout = ({ isTeacher }: { isTeacher: boolean }) => {
                 {tracks.length === 0 && !isTeacher && (
                     <div className="text-center text-white/50 space-y-4">
                         <Loader2 size={32} className="mx-auto animate-spin" />
-                        <p className="font-bold">بانتظار بث المعلم...</p>
+                        <p className="font-normal">بانتظار بث المعلم...</p>
                     </div>
                 )}
             </div>
@@ -212,8 +212,8 @@ export const Classroom = () => {
     if (error) {
         return (
             <div className="fixed inset-0 bg-gray-950 text-white flex flex-col items-center justify-center p-6 text-center" dir="rtl">
-                <p className="font-black text-red-400 mb-6">{error}</p>
-                <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-lg font-black text-sm transition-colors">
+                <p className="font-medium text-red-400 mb-6">{error}</p>
+                <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-lg font-medium text-sm transition-colors">
                     العودة
                 </button>
             </div>
@@ -224,7 +224,7 @@ export const Classroom = () => {
         return (
             <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center" dir="rtl">
                 <Loader2 size={48} className="animate-spin text-indigo-500 mb-4" />
-                <p className="font-black animate-pulse">جاري الاتصال بالغرفة...</p>
+                <p className="font-medium animate-pulse">جاري الاتصال بالغرفة...</p>
             </div>
         );
     }
@@ -235,13 +235,13 @@ export const Classroom = () => {
                 <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-6">
                     <span className="text-3xl">🔌</span>
                 </div>
-                <p className="font-black text-xl mb-2">تعذر الاتصال بخادم البث المباشر</p>
+                <p className="font-medium text-xl mb-2">تعذر الاتصال بخادم البث المباشر</p>
                 <p className="text-slate-400 text-sm mb-8 max-w-md">تأكد من أن خادم LiveKit شغال على المنفذ 7880. للدعم الفني، تواصل مع مسؤول النظام.</p>
                 <div className="flex gap-3">
-                    <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-xl font-black text-sm transition-colors">
+                    <button onClick={() => navigate(-1)} className="bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-none font-medium text-sm transition-colors">
                         العودة
                     </button>
-                    <button onClick={() => window.location.reload()} className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-black text-sm transition-colors">
+                    <button onClick={() => window.location.reload()} className="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-none font-medium text-sm transition-colors">
                         إعادة المحاولة
                     </button>
                 </div>

@@ -79,8 +79,8 @@ export const ParentStudents = () => {
                 {filteredStudents.length === 0 && (
                     <div className="col-span-full py-20 bg-gray-50 dark:bg-gray-800/20 text-center border border-dashed border-gray-200 dark:border-gray-800 md:animate-in md:slide-in-from-bottom md:duration-700">
                         <Users size={48} className="mx-auto text-gray-300 mb-4" />
-                        <h3 className="text-lg font-black text-gray-400 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
-                        <p className="text-xs text-gray-500 font-bold mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
+                        <h3 className="text-lg font-medium text-gray-400 uppercase tracking-widest">لا يوجد أبناء مسجلين</h3>
+                        <p className="text-xs text-gray-500 font-normal mt-2 italic">يرجى التواصل مع إدارة المعهد في حال وجود أي استفسار.</p>
                     </div>
                 )}
             </div>

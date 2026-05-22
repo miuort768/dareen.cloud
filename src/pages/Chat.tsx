@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+﻿import React, { useState, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ChatSidebar } from '../features/chat/components/ChatSidebar';
 import { ChatWindow } from '../features/chat/components/ChatWindow';
@@ -153,12 +153,12 @@ export const Chat: React.FC = () => {
             {/* Standard Global Header */}
             <div className="relative overflow-hidden bg-slate-950 px-4 md:px-8 py-6 flex-row items-center justify-between gap-4 border-b border-white/5 shrink-0 hidden lg:flex">
                 <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 ">
                         <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <div className="flex flex-col">
-                            <h1 className="text-lg md:text-2xl font-black text-white tracking-tighter uppercase">مركز المحادثات</h1>
+                            <h1 className="text-lg md:text-2xl font-medium text-white tracking-tighter uppercase">مركز المحادثات</h1>
                             <p className="text-xs md:text-sm font-light text-slate-300 uppercase tracking-widest mt-0.5">تواصل آمن ومباشر</p>
                         </div>
                     </div>
@@ -204,13 +204,13 @@ export const Chat: React.FC = () => {
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
                         
                         <div className="z-10 text-center">
-                            <div className="w-20 h-20 bg-white/5 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-2xl rounded-none">
+                            <div className="w-20 h-20 bg-white/5 dark:bg-white/5  border border-gray-200 dark:border-white/10 flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
                                 <img src="/logo.png" alt="Dareen" className="w-12 h-12 object-contain" />
                             </div>
-                            <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
+                            <h2 className="text-3xl font-medium text-slate-900 dark:text-white mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">
                                 <span className="h-[1px] w-8 bg-indigo-500/30"></span>
-                                <p className="text-[10px] text-indigo-500 font-black uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
+                                <p className="text-[10px] text-indigo-500 font-medium uppercase tracking-[0.2em]">تواصل آمن • مشفر</p>
                                 <span className="h-[1px] w-8 bg-indigo-500/30"></span>
                             </div>
                             <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed font-medium">
@@ -220,7 +220,7 @@ export const Chat: React.FC = () => {
                         
                         <div className="absolute bottom-10 flex items-center gap-2 text-slate-400 dark:text-slate-600">
                              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                             <span className="text-[10px] font-black uppercase tracking-widest">النظام متصل وآمن</span>
+                             <span className="text-[10px] font-medium uppercase tracking-widest">النظام متصل وآمن</span>
                         </div>
                     </div>
                 )}

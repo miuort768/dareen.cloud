@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Users, Search, BookOpen, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -20,7 +20,7 @@ import { generateWhatsAppLink } from '../lib/whatsapp';
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-4 md:p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm p-4 md:p-5',
         className
     )}>
         {children}
@@ -29,11 +29,11 @@ const SectionCard = ({ children, className = '' }: { children: React.ReactNode; 
 
 const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
     <div className="flex items-center gap-3">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none">
             <Icon size={16} className="text-[#5c59f2]" />
         </div>
         <div>
-            <p className="text-sm font-bold text-slate-800 dark:text-white leading-none">{label}</p>
+            <p className="text-sm font-normal text-slate-800 dark:text-white leading-none">{label}</p>
             {sub && <p className="text-[10px] text-slate-400 mt-1">{sub}</p>}
         </div>
     </div>
@@ -47,7 +47,7 @@ const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
-            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm',
+            'text-white text-xs font-normal px-4 py-2.5 rounded-none transition-all shadow-sm',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -278,7 +278,7 @@ export const Attendance = () => {
             <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
                 {isTeacher ? (
                     <div className="space-y-4">
-                        <SectionCard className="p-0 overflow-hidden rounded-2xl">
+                        <SectionCard className="p-0 overflow-hidden rounded-none">
                             <div className="px-4 py-2 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800">
                                 <SectionTitle icon={Activity} label="إدارة النشاطات المباشرة" />
                                 <div className="relative w-full md:w-[400px]">
@@ -288,7 +288,7 @@ export const Attendance = () => {
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         placeholder="ابحث عن طالب أو مادة..."
-                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
+                                        className="w-full pr-10 pl-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-medium focus:outline-none focus:border-[#5c59f2] transition-all"
                                     />
                                 </div>
                             </div>
@@ -318,7 +318,7 @@ export const Attendance = () => {
                                     )) : (
                                         <div className="col-span-full py-16 text-center">
                                             <Users className="mx-auto mb-2 text-slate-200" size={32} />
-                                            <p className="text-xs font-bold text-slate-400">لا توجد بيانات مطابقة</p>
+                                            <p className="text-xs font-normal text-slate-400">لا توجد بيانات مطابقة</p>
                                         </div>
                                     )}
                             </div>
@@ -339,15 +339,15 @@ export const Attendance = () => {
                                 <SectionCard key={teacher} className="p-0 overflow-hidden">
                                     <div className="bg-slate-900 px-5 py-3 flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-[#5c59f2] flex items-center justify-center text-white font-bold rounded-lg text-xs">
+                                            <div className="w-8 h-8 bg-[#5c59f2] flex items-center justify-center text-white font-normal rounded-lg text-xs">
                                                 {teacher.charAt(0)}
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-xs text-white">إشراف المعلمة: {teacher}</h3>
-                                                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">كادر تعليمي معتمد</p>
+                                                <h3 className="font-normal text-xs text-white">إشراف المعلمة: {teacher}</h3>
+                                                <p className="text-[9px] text-slate-500 font-normal uppercase tracking-wider">كادر تعليمي معتمد</p>
                                             </div>
                                         </div>
-                                        <div className="text-[9px] font-bold bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
+                                        <div className="text-[9px] font-normal bg-slate-800 text-slate-400 px-3 py-1 rounded-lg border border-slate-700 uppercase">
                                             {filteredTStudents.length} طلاب
                                         </div>
                                     </div>
@@ -373,32 +373,32 @@ export const Attendance = () => {
                                                 );
                                             } else {
                                                 return (
-                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800 rounded-none p-5 space-y-4 flex flex-col justify-between">
                                                         <div className="flex justify-between items-start">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-bold rounded-xl text-sm">
+                                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-800 dark:text-white font-normal rounded-none text-sm">
                                                                     {getGradeDisplay(student.name, student.grade)}
                                                                 </div>
                                                                 <div>
-                                                                    <h4 className="font-bold text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
+                                                                    <h4 className="font-normal text-slate-800 dark:text-white text-xs mb-1">{student.name}</h4>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className="text-[9px] font-bold text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
+                                                                        <span className="text-[9px] font-normal text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-700">
                                                                             {student.grade}
                                                                         </span>
-                                                                        <p className="text-[9px] font-bold text-slate-400 flex items-center gap-1">
+                                                                        <p className="text-[9px] font-normal text-slate-400 flex items-center gap-1">
                                                                             <BookOpen size={10} className="text-[#5c59f2]" />
                                                                             {enrollment.subject}
                                                                         </p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-[8px] font-black bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
+                                                            <div className="text-[8px] font-medium bg-amber-500 text-slate-900 px-2 py-0.5 rounded-md uppercase animate-pulse">
                                                                 انتظار
                                                             </div>
                                                         </div>
 
                                                         <div className="space-y-1.5">
-                                                            <div className="flex justify-between items-center text-[9px] font-bold uppercase text-slate-400">
+                                                            <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
                                                                 <span>الرصيد المتاح</span>
                                                                 <span className="text-slate-800 dark:text-white tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
                                                             </div>
@@ -416,13 +416,13 @@ export const Attendance = () => {
                                                         <div className="grid grid-cols-2 gap-2">
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-[10px] rounded-xl flex items-center justify-center transition-all"
+                                                                className="py-2 bg-emerald-600 text-white hover:bg-emerald-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
                                                                 حضور
                                                             </button>
                                                             <button
                                                                 onClick={() => { setLogDate(date); setSecureModalData({ student, enrollment }); }}
-                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-bold text-[10px] rounded-xl flex items-center justify-center transition-all"
+                                                                className="py-2 bg-rose-600 text-white hover:bg-rose-700 font-normal text-[10px] rounded-none flex items-center justify-center transition-all"
                                                             >
                                                                 غياب
                                                             </button>

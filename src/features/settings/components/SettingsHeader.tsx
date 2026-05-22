@@ -6,11 +6,11 @@ interface SettingsHeaderProps {
 
 export const SettingsHeader = ({ onSave }: SettingsHeaderProps) => {
     return (
-        <div className="bg-primary-600 p-6 shadow-lg transition-colors duration-500">
+        <div className="bg-primary-600 p-6 shadow-sm transition-colors duration-500">
             <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-3 mb-1">
-                        <div className="p-2 bg-white/10 backdrop-blur-sm rounded-none">
+                    <h1 className="text-2xl font-normal text-white flex items-center gap-3 mb-1">
+                        <div className="p-2 bg-white/10  rounded-none">
                             <SettingsIcon size={28} />
                         </div>
                         الإعدادات
@@ -19,7 +19,7 @@ export const SettingsHeader = ({ onSave }: SettingsHeaderProps) => {
                 </div>
                 <button
                     onClick={onSave}
-                    className="bg-white text-primary-600 px-6 py-2.5 rounded-none flex items-center gap-2 hover:bg-white/90 active:bg-white/80 transition-all font-bold shadow-lg transform hover:-translate-y-0.5"
+                    className="bg-white text-primary-600 px-6 py-2.5 rounded-none flex items-center gap-2 hover:bg-white/90 active:bg-white/80 transition-all font-normal shadow-sm transform hover:-translate-y-0.5"
                 >
                     <Save size={18} />
                     <span>حفظ جميع التغييرات</span>

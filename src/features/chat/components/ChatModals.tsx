@@ -70,7 +70,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {/* New Chat / Group Flow Modal */}
             {showNewChatModal && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#111b21] w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-2xl overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-[#111b21] w-full max-w-lg h-full md:h-[650px] md:max-h-[90vh] shadow-sm overflow-hidden flex flex-col md:rounded-lg animate-in zoom-in-95 duration-300">
                     
                     {/* Header - WhatsApp Style */}
                     <div className="bg-[#00a884] text-white p-4 flex items-center gap-4 shrink-0 transition-all">
@@ -78,7 +78,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                             {step === 'info' ? <ChevronLeft size={24} /> : <X size={24} />}
                         </button>
                         <div>
-                            <h3 className="font-bold text-lg leading-tight">
+                            <h3 className="font-normal text-lg leading-tight">
                                 {isEditingGroup ? 'تعديل المجموعة' : (isCreatingGroup ? (step === 'select' ? 'إضافة أعضاء المجموعة' : 'مجموعة جديدة') : 'بدء محادثة')}
                             </h3>
                             {isCreatingGroup && step === 'select' && (
@@ -99,7 +99,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         placeholder="ابحث عن اسم أو رقم..."
                                         className="w-full bg-[#f0f2f5] dark:bg-[#202c33] border-none py-2 pr-10 pl-4 rounded-lg text-sm focus:ring-0 text-right"
                                     />
-                                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold" size={18} />
+                                    <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-normal" size={18} />
                                 </div>
                             </div>
 
@@ -108,7 +108,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 <div className="p-3 border-b border-gray-100 dark:border-gray-800 flex gap-3 overflow-x-auto custom-scrollbar bg-gray-50/50 dark:bg-[#111b21]/50 grow-0 shrink-0 min-h-[85px]">
                                     {selectedUsersObjects.map(user => (
                                         <div key={user.id} className="flex flex-col items-center gap-1 shrink-0 relative px-1">
-                                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center relative shadow-sm text-indigo-600 dark:text-indigo-400 font-black text-xs">
+                                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center relative shadow-sm text-indigo-600 dark:text-indigo-400 font-medium text-xs">
                                                 {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
@@ -117,7 +117,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                     <X size={12} />
                                                 </button>
                                             </div>
-                                            <span className="text-[10px] font-bold text-gray-600 dark:text-gray-400 truncate w-14 text-center">{user.name}</span>
+                                            <span className="text-[10px] font-normal text-gray-600 dark:text-gray-400 truncate w-14 text-center">{user.name}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -130,10 +130,10 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         onClick={() => setIsCreatingGroup(true)}
                                         className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-[#202c33] transition-colors border-b border-gray-50 dark:border-gray-800"
                                     >
-                                        <div className="w-12 h-12 bg-[#00a884] text-white rounded-full flex items-center justify-center shadow-lg">
+                                        <div className="w-12 h-12 bg-[#00a884] text-white rounded-full flex items-center justify-center shadow-sm">
                                             <UsersIcon size={24} />
                                         </div>
-                                        <span className="font-bold text-[#111b21] dark:text-[#e9edef] text-right">إنشاء مجموعة جديدة</span>
+                                        <span className="font-normal text-[#111b21] dark:text-[#e9edef] text-right">إنشاء مجموعة جديدة</span>
                                     </button>
                                 )}
 
@@ -154,11 +154,11 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                             className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-[#202c33] transition-colors border-b border-gray-50 dark:border-gray-800"
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center font-black text-indigo-600 dark:text-indigo-400 shadow-sm transition-all border-2 border-white dark:border-slate-800">
+                                                <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center font-medium text-indigo-600 dark:text-indigo-400 shadow-sm transition-all border-2 border-white dark:border-slate-800">
                                                     {user.name.charAt(0)}
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="font-bold text-base text-[#111b21] dark:text-[#e9edef]">{user.name}</p>
+                                                    <p className="font-normal text-base text-[#111b21] dark:text-[#e9edef]">{user.name}</p>
                                                     <p className="text-xs text-gray-500 dark:text-[#8696a0]">@{user.username}</p>
                                                 </div>
                                             </div>
@@ -179,7 +179,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 <div className="absolute bottom-6 left-6 animate-in slide-in-from-bottom-5 fade-in duration-300">
                                     <button 
                                         onClick={handleNextStep}
-                                        className="bg-[#00a884] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all"
+                                        className="bg-[#00a884] text-white p-4 rounded-full shadow-sm hover:scale-110 active:scale-95 transition-all"
                                     >
                                         <ChevronLeft size={32} />
                                     </button>
@@ -193,10 +193,10 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 <div className="w-40 h-40 bg-[#dfe5e7] dark:bg-[#3b4a54] rounded-full flex items-center justify-center text-[#707c84] dark:text-[#8696a0] relative group cursor-pointer shadow-inner">
                                     <Camera size={48} />
                                     <div className="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <span className="text-white text-xs font-bold uppercase tracking-wider">تغيير الصورة</span>
+                                        <span className="text-white text-xs font-normal uppercase tracking-wider">تغيير الصورة</span>
                                     </div>
                                 </div>
-                                <p className="mt-4 text-xs font-bold text-gray-400 uppercase tracking-widest">أيقونة المجموعة</p>
+                                <p className="mt-4 text-xs font-normal text-gray-400 uppercase tracking-widest">أيقونة المجموعة</p>
                             </div>
 
                             <div className="space-y-6">
@@ -207,10 +207,10 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                         autoFocus
                                         onChange={(e) => setGroupName(e.target.value)}
                                         placeholder="اسم المجموعة..."
-                                        className="w-full bg-transparent border-b-2 border-[#00a884]/30 focus:border-[#00a884] py-3 text-lg font-bold outline-none transition-colors dark:text-white text-right"
+                                        className="w-full bg-transparent border-b-2 border-[#00a884]/30 focus:border-[#00a884] py-3 text-lg font-normal outline-none transition-colors dark:text-white text-right"
                                     />
                                     <div className="flex justify-start mt-1">
-                                        <span className="text-[10px] font-bold text-gray-400">{groupName.length}/25</span>
+                                        <span className="text-[10px] font-normal text-gray-400">{groupName.length}/25</span>
                                     </div>
                                 </div>
 
@@ -218,12 +218,12 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <p className="text-sm text-gray-500 dark:text-[#8696a0] mb-4 text-right">الأعضاء: {selectedUsers.length}</p>
                                     <div className="flex flex-wrap gap-2 justify-end">
                                         {selectedUsersObjects.slice(0, 5).map(u => (
-                                            <span key={u.id} className="bg-gray-100 dark:bg-[#202c33] text-[12px] font-bold px-3 py-1 rounded-full dark:text-gray-300 whitespace-nowrap">
+                                            <span key={u.id} className="bg-gray-100 dark:bg-[#202c33] text-[12px] font-normal px-3 py-1 rounded-full dark:text-gray-300 whitespace-nowrap">
                                                 {u.name}
                                             </span>
                                         ))}
                                         {selectedUsers.length > 5 && (
-                                            <span className="bg-gray-100 dark:bg-[#202c33] text-[12px] font-bold px-3 py-1 rounded-full dark:text-gray-300">
+                                            <span className="bg-gray-100 dark:bg-[#202c33] text-[12px] font-normal px-3 py-1 rounded-full dark:text-gray-300">
                                                 +{selectedUsers.length - 5}
                                             </span>
                                         )}
@@ -236,7 +236,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     onClick={handleCreateConversation}
                                     disabled={!groupName.trim() || isDeleting}
                                     className={cn(
-                                        "w-full bg-[#00a884] text-white py-4 rounded-xl font-bold uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-[#00a884]/20 flex items-center justify-center gap-3",
+                                        "w-full bg-[#00a884] text-white py-4 rounded-none font-normal uppercase tracking-widest transition-all active:scale-95 shadow-sm shadow-[#00a884]/20 flex items-center justify-center gap-3",
                                         (!groupName.trim() || isDeleting) && "opacity-50 grayscale cursor-not-allowed"
                                     )}
                                 >
@@ -255,8 +255,8 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             {/* Delete Confirmation UI */}
             {showDeleteConfirm && (
                 <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="bg-white dark:bg-[#233138] w-full max-w-sm shadow-2xl rounded-lg p-6">
-                        <h3 className="text-xl font-bold text-rose-500 mb-4 text-right">
+                    <div className="bg-white dark:bg-[#233138] w-full max-w-sm shadow-sm rounded-lg p-6">
+                        <h3 className="text-xl font-normal text-rose-500 mb-4 text-right">
                             {deleteType === 'all_conversations' ? 'حذف كافة المحادثات؟' : 'هل تريد الحذف؟'}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm text-right leading-relaxed">
@@ -267,13 +267,13 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                         <div className="flex gap-3">
                              <button
                                 onClick={() => { setShowDeleteConfirm(false); setItemToDelete(null); }}
-                                className="flex-1 bg-gray-100 dark:bg-[#182229] dark:text-white py-3 rounded-lg font-bold"
+                                className="flex-1 bg-gray-100 dark:bg-[#182229] dark:text-white py-3 rounded-lg font-normal"
                             >
                                 إلغاء
                             </button>
                             <button
                                 onClick={handleDeleteAction}
-                                className="flex-1 bg-rose-500 text-white py-3 rounded-lg font-bold"
+                                className="flex-1 bg-rose-500 text-white py-3 rounded-lg font-normal"
                             >
                                 حذف الآن
                             </button>

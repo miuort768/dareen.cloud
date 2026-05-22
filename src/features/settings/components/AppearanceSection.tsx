@@ -16,12 +16,12 @@ export const AppearanceSection = ({
     setThemeColor
 }: AppearanceSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
+        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
                     <Palette size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg font-normal text-gray-900 dark:text-white">
                     المظهر
                 </h2>
             </div>
@@ -31,7 +31,7 @@ export const AppearanceSection = ({
                     <div className="flex items-center gap-3">
                         {theme === 'dark' ? <Moon size={18} className="text-primary-600" /> : <Sun size={18} className="text-amber-500" />}
                         <div>
-                            <p className="font-bold text-sm text-gray-900 dark:text-white">الوضع الداكن</p>
+                            <p className="font-normal text-sm text-gray-900 dark:text-white">الوضع الداكن</p>
                             <p className="text-xs text-gray-500 dark:text-gray-400">تفعيل/إلغاء الوضع الليلي</p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ export const AppearanceSection = ({
 
                 {/* Theme Color Selector */}
                 <div>
-                    <p className="font-bold text-sm text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <p className="font-normal text-sm text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                         <Palette size={14} className="text-primary-500" />
                         سمة الألوان
                     </p>
@@ -64,7 +64,7 @@ export const AppearanceSection = ({
                                 <div className={cn(
                                     "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
                                     themeColor === preset.id
-                                        ? "ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-900 scale-110 shadow-lg shadow-primary-500/20"
+                                        ? "ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-900 scale-110 shadow-sm shadow-primary-500/20"
                                         : "ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-gray-300 dark:hover:ring-gray-600 scale-100"
                                 )}>
                                     <div
@@ -73,7 +73,7 @@ export const AppearanceSection = ({
                                     />
                                 </div>
                                 <span className={cn(
-                                    "text-[10px] font-black tracking-tight transition-colors whitespace-nowrap",
+                                    "text-[10px] font-medium tracking-tight transition-colors whitespace-nowrap",
                                     themeColor === preset.id ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"
                                 )}>
                                     {preset.label}

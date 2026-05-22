@@ -18,28 +18,28 @@ export const UserProfileSection = ({
     setPassword
 }: UserProfileSectionProps) => {
     return (
-        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
+        <section className="bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
                     <User size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg font-normal text-gray-900 dark:text-white">
                     الملف الشخصي
                 </h2>
             </div>
             <div className="space-y-4">
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-2xl font-normal shadow-sm">
                         {name.charAt(0)}
                     </div>
                     <div className="flex-1">
-                        <p className="font-bold text-gray-900 dark:text-white truncate">{name}</p>
+                        <p className="font-normal text-gray-900 dark:text-white truncate">{name}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">مدير النظام</p>
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1.5 dark:text-gray-300">
+                    <label className="block text-xs font-normal text-gray-700 mb-1.5 dark:text-gray-300">
                         الاسم الظاهر
                     </label>
                     <input
@@ -52,7 +52,7 @@ export const UserProfileSection = ({
                 </div>
 
                 <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1.5 dark:text-gray-300">
+                    <label className="block text-xs font-normal text-gray-700 mb-1.5 dark:text-gray-300">
                         اسم المستخدم
                     </label>
                     <input
@@ -64,7 +64,7 @@ export const UserProfileSection = ({
                 </div>
 
                 <div>
-                    <label className="text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-2 dark:text-gray-300">
+                    <label className="text-xs font-normal text-gray-700 mb-1.5 flex items-center gap-2 dark:text-gray-300">
                         <Lock size={12} />
                         كلمة المرور الجديدة
                     </label>

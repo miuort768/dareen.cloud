@@ -45,15 +45,15 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto">
             {/* Backdrop */}
             <div
-                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-300"
+                className="fixed inset-0 bg-slate-950/60  animate-in fade-in duration-300"
                 onClick={onClose}
             ></div>
 
             {/* Modal Content */}
-            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden rounded-lg">
+            <div className="relative bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 shadow-sm w-full max-w-md animate-in zoom-in-95 duration-200 overflow-hidden rounded-lg">
                 {/* Header */}
                 <div className="bg-primary-600 p-4 text-white flex justify-between items-center">
-                    <div className="flex items-center gap-2 font-bold">
+                    <div className="flex items-center gap-2 font-normal">
                         <ShieldCheck size={20} />
                         <span>تسجيل حضور مؤكد</span>
                     </div>
@@ -64,9 +64,9 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
                 <div className="p-6 space-y-6">
                     <div className="text-center">
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-black text-gray-900 dark:text-white">{studentName}</h3>
-                        <p className="text-xs text-primary-600 font-bold mt-1 bg-primary-50 inline-block px-2 py-1 rounded dark:bg-primary-900/20 dark:text-primary-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 font-normal mb-1">تسجيل للطالب</p>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">{studentName}</h3>
+                        <p className="text-xs text-primary-600 font-normal mt-1 bg-primary-50 inline-block px-2 py-1 rounded dark:bg-primary-900/20 dark:text-primary-400">
                             بتاريخ: {date}
                         </p>
                     </div>
@@ -83,7 +83,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             )}
                         >
                             <CheckCircle2 size={24} className={status === 'completed' ? "text-emerald-500" : "text-gray-300"} />
-                            <span className="font-bold text-sm">حضور</span>
+                            <span className="font-normal text-sm">حضور</span>
                         </button>
                         <button
                             onClick={() => setStatus('cancelled')}
@@ -95,13 +95,13 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             )}
                         >
                             <XCircle size={24} className={status === 'cancelled' ? "text-rose-500" : "text-gray-300"} />
-                            <span className="font-bold text-sm">غياب</span>
+                            <span className="font-normal text-sm">غياب</span>
                         </button>
                     </div>
 
                     {/* Password Input */}
                     <div className="space-y-2">
-                        <label className="text-xs font-bold text-gray-600 dark:text-gray-300 flex items-center gap-1">
+                        <label className="text-xs font-normal text-gray-600 dark:text-gray-300 flex items-center gap-1">
                             <Lock size={12} /> كلمة المرور للتأكيد
                         </label>
                         <input
@@ -118,12 +118,12 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             )}
                             autoFocus
                         />
-                        {error && <p className="text-xs text-red-500 font-bold text-center animate-pulse">{error}</p>}
+                        {error && <p className="text-xs text-red-500 font-normal text-center animate-pulse">{error}</p>}
                     </div>
 
                     <button
                         onClick={handleConfirm}
-                        className="w-full bg-primary-600 text-white py-3 rounded-lg font-black shadow-lg shadow-primary-600/20 hover:bg-primary-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+                        className="w-full bg-primary-600 text-white py-3 rounded-lg font-medium shadow-sm shadow-primary-600/20 hover:bg-primary-700 transition-all active:scale-95 flex items-center justify-center gap-2"
                     >
                         تأكيد التسجيل
                     </button>

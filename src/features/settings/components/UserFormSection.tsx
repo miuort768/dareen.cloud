@@ -28,19 +28,19 @@ export const UserFormSection = ({
     formRef
 }: UserFormSectionProps) => {
     return (
-        <section ref={formRef} className={`bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow ${editingUserId ? 'ring-2 ring-primary-500' : ''}`}>
+        <section ref={formRef} className={`bg-white border border-gray-200 p-6 dark:bg-gray-900 dark:border-gray-800 shadow-sm hover:shadow-sm transition-shadow ${editingUserId ? 'ring-2 ring-primary-500' : ''}`}>
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="p-2 bg-primary-100 rounded-none dark:bg-primary-900/30">
                     <UserPlus size={20} className="text-primary-600 dark:text-primary-400" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg font-normal text-gray-900 dark:text-white">
                     {editingUserId ? 'تعديل بيانات المستخدم' : 'إنشاء مستخدم جديد'}
                 </h2>
             </div>
             <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
+                        <label className="block text-sm font-normal text-gray-700 mb-2 dark:text-gray-300">
                             اسم المستخدم
                         </label>
                         <input
@@ -52,7 +52,7 @@ export const UserFormSection = ({
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 dark:text-gray-300">
+                        <label className="block text-sm font-normal text-gray-700 mb-2 dark:text-gray-300">
                             {editingUserId ? 'كلمة المرور الجديدة (اختياري)' : 'كلمة المرور'}
                         </label>
                         <input
@@ -66,7 +66,7 @@ export const UserFormSection = ({
                 </div>
 
                 <div>
-                    <label className="text-sm font-bold text-gray-700 mb-3 dark:text-gray-300 flex items-center gap-2">
+                    <label className="text-sm font-normal text-gray-700 mb-3 dark:text-gray-300 flex items-center gap-2">
                         <Shield size={14} />
                         صلاحيات الوصول
                     </label>
@@ -100,14 +100,14 @@ export const UserFormSection = ({
                     {editingUserId && (
                         <button
                             onClick={onCancel}
-                            className="bg-gray-100 text-gray-600 px-6 py-2.5 rounded-none font-bold hover:bg-gray-200 transition-colors"
+                            className="bg-gray-100 text-gray-600 px-6 py-2.5 rounded-none font-normal hover:bg-gray-200 transition-colors"
                         >
                             إلغاء
                         </button>
                     )}
                     <button
                         onClick={onSubmit}
-                        className="bg-primary-600 text-white px-6 py-2.5 rounded-none font-bold hover:bg-primary-700 transition-colors flex items-center gap-2"
+                        className="bg-primary-600 text-white px-6 py-2.5 rounded-none font-normal hover:bg-primary-700 transition-colors flex items-center gap-2"
                     >
                         <UserPlus size={18} />
                         {editingUserId ? 'حفظ التعديلات' : 'إضافة المستخدم'}

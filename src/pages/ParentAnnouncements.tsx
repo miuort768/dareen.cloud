@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Bell,
@@ -106,12 +106,12 @@ export const ParentAnnouncements = () => {
                 className="relative overflow-hidden bg-indigo-600 dark:bg-indigo-700 rounded-none md:rounded-lg p-8 md:p-14 text-white text-center shadow-[0_0_20px_rgba(79,70,229,0.3)] dark:shadow-[0_0_30px_rgba(79,70,229,0.2)] border border-indigo-400/20"
             >
                 <div className="absolute top-4 right-4 md:top-6 md:right-8">
-                    <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-md text-[8px] md:text-[10px] font-black uppercase tracking-widest border border-white/10">قناة الإعلام المركزي</span>
+                    <span className="px-3 py-1 bg-white/10  rounded-md text-[8px] md:text-[10px] font-medium uppercase tracking-widest border border-white/10">قناة الإعلام المركزي</span>
                 </div>
                 
                 <div className="relative z-10 space-y-2 mt-4 md:mt-0">
-                    <h1 className="text-xl md:text-5xl font-black italic tracking-tighter leading-none">نشرة إعلانات المنصة</h1>
-                    <p className="text-indigo-100/70 text-[8px] md:text-sm font-bold max-w-lg mx-auto leading-relaxed">ابق على اطلاع بأحدث التنبيهات والفعاليات داخل المؤسسة</p>
+                    <h1 className="text-xl md:text-5xl font-medium italic tracking-tighter leading-none">نشرة إعلانات المنصة</h1>
+                    <p className="text-indigo-100/70 text-[8px] md:text-sm font-normal max-w-lg mx-auto leading-relaxed">ابق على اطلاع بأحدث التنبيهات والفعاليات داخل المؤسسة</p>
                 </div>
 
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50" />
@@ -126,7 +126,7 @@ export const ParentAnnouncements = () => {
                         placeholder="ابحث في الأرشيف..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow-sm text-[13px] font-bold focus:outline-none focus:ring-1 focus:ring-indigo-500/20 transition-all placeholder:text-slate-400 dark:text-white"
+                        className="w-full pr-12 pl-6 py-3.5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow-sm text-[13px] font-normal focus:outline-none focus:ring-1 focus:ring-indigo-500/20 transition-all placeholder:text-slate-400 dark:text-white"
                     />
                 </div>
 
@@ -179,11 +179,11 @@ export const ParentAnnouncements = () => {
                             >
                                 {/* Header Info */}
                                 <div className="flex justify-between items-start mb-5">
-                                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-[9px] font-bold">
+                                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-[9px] font-normal">
                                         <Clock size={12} />
                                         {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                                     </div>
-                                    <span className={cn("px-3 py-1 rounded-md text-[9px] font-black flex items-center gap-1.5 shadow-sm", config.tagClass)}>
+                                    <span className={cn("px-3 py-1 rounded-md text-[9px] font-medium flex items-center gap-1.5 shadow-sm", config.tagClass)}>
                                         {ann.type === 'urgent' && <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
                                         {config.label}
                                     </span>
@@ -191,7 +191,7 @@ export const ParentAnnouncements = () => {
 
                                 {/* Content */}
                                 <div className="space-y-2.5 mb-6 px-1 flex-1">
-                                    <h3 className="text-md md:text-xl font-black text-slate-900 dark:text-white leading-tight italic tracking-tight">
+                                    <h3 className="text-md md:text-xl font-medium text-slate-900 dark:text-white leading-tight italic tracking-tight">
                                         {ann.title}
                                     </h3>
                                     <p className="text-[12px] md:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-4">
@@ -205,13 +205,13 @@ export const ParentAnnouncements = () => {
                                         <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-100/50 dark:border-indigo-900/30">
                                             <ShieldCheck size={14} />
                                         </div>
-                                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-black italic">إدارة الأكاديمية</span>
+                                        <span className="text-[9px] text-slate-500 dark:text-slate-400 font-medium italic">إدارة الأكاديمية</span>
                                     </div>
                                     
                                     <a 
                                         href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}?text=${encodeURIComponent(`استفسار بخصوص إعلان: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
-                                        className="bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 px-4 py-1.5 rounded-lg text-[10px] font-black flex items-center gap-2 transition-all hover:bg-indigo-600 hover:text-white hover:border-indigo-600"
+                                        className="bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 px-4 py-1.5 rounded-lg text-[10px] font-medium flex items-center gap-2 transition-all hover:bg-indigo-600 hover:text-white hover:border-indigo-600"
                                     >
                                         <MessageCircle size={14} />
                                         استفسار
@@ -225,8 +225,8 @@ export const ParentAnnouncements = () => {
                 {filteredAnnouncements.length === 0 && (
                     <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-white dark:bg-slate-900 rounded-lg border-2 border-dashed border-slate-100 dark:border-slate-800 p-8">
                         <Bell className="text-slate-200 dark:text-slate-700 mb-3" size={40} strokeWidth={1} />
-                        <h3 className="text-md font-black dark:text-white italic">لا توجد تحديثات جديدة</h3>
-                        <p className="text-[10px] text-slate-400 font-bold mt-1">سوف تظهر الإعلانات الهامة هنا</p>
+                        <h3 className="text-md font-medium dark:text-white italic">لا توجد تحديثات جديدة</h3>
+                        <p className="text-[10px] text-slate-400 font-normal mt-1">سوف تظهر الإعلانات الهامة هنا</p>
                     </div>
                 )}
             </div>
@@ -239,7 +239,7 @@ const FilterButton = ({ label, active, onClick, icon: Icon, activeClass }: { lab
     <button
         onClick={onClick}
         className={cn(
-            "flex items-center justify-between px-4 py-3.5 rounded-lg text-[10px] md:text-xs font-black transition-all border border-transparent shadow-sm",
+            "flex items-center justify-between px-4 py-3.5 rounded-lg text-[10px] md:text-xs font-medium transition-all border border-transparent shadow-sm",
             active 
                 ? activeClass 
                 : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"

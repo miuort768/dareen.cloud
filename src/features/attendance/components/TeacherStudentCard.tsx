@@ -152,7 +152,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-md">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col group transition-all hover:shadow-sm">
             {/* Header Accent */}
             <div className={cn(
                 "h-1.5 w-full bg-slate-100 dark:bg-slate-800 transition-all",
@@ -162,26 +162,26 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             <div className="p-5 flex-1 flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-[10px] font-bold text-[#5c59f2]">
+                        <div className="w-10 h-10 bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none flex items-center justify-center text-[10px] font-normal text-[#5c59f2]">
                             {student.grade?.charAt(0) || student.name.charAt(0)}
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-800 dark:text-white text-sm leading-tight">{student.name}</h4>
+                            <h4 className="font-normal text-slate-800 dark:text-white text-sm leading-tight">{student.name}</h4>
                             <div className="flex items-center gap-2 mt-0.5">
-                                <span className="text-[9px] font-bold text-slate-400 uppercase">{student.grade}</span>
+                                <span className="text-[9px] font-normal text-slate-400 uppercase">{student.grade}</span>
                                 <span className="w-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></span>
                                 <div className="flex items-center gap-1">
                                     <BookOpen size={10} className="text-[#5c59f2]" />
-                                    <span className="text-[9px] font-bold text-slate-400">{en.subject}</span>
+                                    <span className="text-[9px] font-normal text-slate-400">{en.subject}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="text-right">
-                        <span className="text-[10px] font-bold text-slate-400 block mb-0.5">التقدم</span>
+                        <span className="text-[10px] font-normal text-slate-400 block mb-0.5">التقدم</span>
                         <div className="flex items-center justify-end gap-1">
                              <TrendingUp size={12} className={cn(attendancePercent > 85 ? "text-rose-500" : "text-emerald-500")} />
-                             <span className="text-sm font-black text-slate-800 dark:text-white leading-none">{Math.round(attendancePercent)}%</span>
+                             <span className="text-sm font-medium text-slate-800 dark:text-white leading-none">{Math.round(attendancePercent)}%</span>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     <button 
                         onClick={toggleTimer}
                         className={cn(
-                            "flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all",
+                            "flex items-center justify-between px-3 py-2.5 rounded-none border transition-all",
                             timerRunning 
                                 ? "bg-rose-600 border-rose-500 text-white shadow-sm" 
                                 : "bg-slate-900 dark:bg-slate-800 border-slate-800 text-white hover:bg-black"
@@ -199,14 +199,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     >
                         <div className="flex items-center gap-2">
                             <Clock size={14} className={cn(timerRunning && "animate-spin-slow")} />
-                            <span className="text-xs font-bold font-mono">{formatTime(timerSeconds)}</span>
+                            <span className="text-xs font-normal font-mono">{formatTime(timerSeconds)}</span>
                         </div>
-                        <span className="text-[9px] font-bold uppercase">{timerRunning ? 'إنهاء' : 'بدء'}</span>
+                        <span className="text-[9px] font-normal uppercase">{timerRunning ? 'إنهاء' : 'بدء'}</span>
                     </button>
                     
                     <button 
                         onClick={() => onReschedule?.(student, en)}
-                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded-xl font-bold text-[9px] uppercase transition-all"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded-none font-normal text-[9px] uppercase transition-all"
                     >
                         <Calendar size={14} /> إعادة جدولة
                     </button>
@@ -214,13 +214,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                 {/* Progress Bar */}
                 <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-[9px] font-bold uppercase text-slate-400">
+                    <div className="flex justify-between items-center text-[9px] font-normal uppercase text-slate-400">
                         <div className="flex items-center gap-1.5">
                             <Activity size={12} className="text-[#5c59f2]" />
                             <span>تغطية الحصص</span>
                         </div>
                         <div className="flex items-baseline gap-1">
-                            <span className="text-xs text-[#5c59f2] font-black">{actualSessionsUsed}</span>
+                            <span className="text-xs text-[#5c59f2] font-medium">{actualSessionsUsed}</span>
                             <span className="opacity-50">/ {en.sessionsTotal}</span>
                         </div>
                     </div>
@@ -238,13 +238,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 {/* Schedule */}
                 <div className="space-y-2 pt-2 border-t border-slate-50 dark:border-slate-800">
                     <div className="flex items-center justify-between">
-                        <h5 className="text-[9px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
+                        <h5 className="text-[9px] font-normal text-slate-400 uppercase flex items-center gap-1.5">
                             <Clock size={10} className="text-[#5c59f2]" /> الجدول الإسبوعي
                         </h5>
                         <button
                             onClick={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
                             className={cn(
-                                "text-[9px] font-bold px-2 py-0.5 rounded-lg transition-all border",
+                                "text-[9px] font-normal px-2 py-0.5 rounded-lg transition-all border",
                                 isEditing ? "bg-rose-50 text-rose-600 border-rose-100" : "bg-indigo-50 text-indigo-600 border-indigo-100"
                             )}
                         >
@@ -254,7 +254,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
                     <div className="flex flex-wrap gap-1.5">
                         {en.schedule?.length > 0 ? en.schedule.map((slot, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-[9px] font-bold text-slate-600 dark:text-slate-400 rounded-lg">
+                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-[9px] font-normal text-slate-600 dark:text-slate-400 rounded-lg">
                                 <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                                 {isEditing && (
                                     <div className="flex gap-1.5 ms-1.5 ps-1.5 border-r border-slate-200 dark:border-slate-700">
@@ -269,20 +269,20 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                     </div>
 
                     {isEditing && (
-                        <div className="p-3 bg-slate-900 rounded-xl text-white space-y-3 mt-2">
+                        <div className="p-3 bg-slate-900 rounded-none text-white space-y-3 mt-2">
                             <div className="grid grid-cols-2 gap-2">
                                 <div>
-                                    <p className="text-[8px] font-bold text-slate-400 mb-1 uppercase">اليوم</p>
-                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-[10px] font-bold p-1.5 bg-slate-800 border-none rounded-lg outline-none">
+                                    <p className="text-[8px] font-normal text-slate-400 mb-1 uppercase">اليوم</p>
+                                    <select value={tempSlot.day} onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })} className="w-full text-[10px] font-normal p-1.5 bg-slate-800 border-none rounded-lg outline-none">
                                         {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <p className="text-[8px] font-bold text-slate-400 mb-1 uppercase">الساعة</p>
-                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value })} placeholder="مثال: 4" className="w-full text-[10px] font-bold p-1.5 bg-slate-800 border-none rounded-lg outline-none" />
+                                    <p className="text-[8px] font-normal text-slate-400 mb-1 uppercase">الساعة</p>
+                                    <input type="text" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value })} placeholder="مثال: 4" className="w-full text-[10px] font-normal p-1.5 bg-slate-800 border-none rounded-lg outline-none" />
                                 </div>
                             </div>
-                            <button onClick={handleSaveSlot} className="w-full bg-[#5c59f2] text-white font-bold text-[10px] py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <button onClick={handleSaveSlot} className="w-full bg-[#5c59f2] text-white font-normal text-[10px] py-2 rounded-lg hover:bg-indigo-700 transition-colors">
                                 {editSlotIndex !== null ? 'تحديث' : 'إضافة'}
                             </button>
                         </div>
@@ -290,12 +290,12 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </div>
 
                 {/* Notes */}
-                <div className="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/20 p-3 rounded-xl relative">
+                <div className="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/20 p-3 rounded-none relative">
                     <div className="flex items-center justify-between mb-2">
-                        <h5 className="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase flex items-center gap-1.5">
+                        <h5 className="text-[9px] font-normal text-amber-700 dark:text-amber-400 uppercase flex items-center gap-1.5">
                             <MessageSquare size={12} /> ملاحظات
                         </h5>
-                        {isSavingNotes && <span className="text-[8px] font-bold text-amber-600 animate-pulse">جاري الحفظ...</span>}
+                        {isSavingNotes && <span className="text-[8px] font-normal text-amber-600 animate-pulse">جاري الحفظ...</span>}
                     </div>
                     <textarea 
                         value={notes}
@@ -308,7 +308,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 {/* Live Stream Quick Start */}
                 <button 
                     onClick={startLiveStream}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-black text-[10px] uppercase tracking-widest shadow-lg shadow-red-600/20 transition-all active:scale-95 group"
+                    className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-none flex items-center justify-center gap-2 font-medium text-[10px] uppercase tracking-widest shadow-sm shadow-red-600/20 transition-all active:scale-95 group"
                 >
                     <Radio size={14} className="animate-pulse" />
                     <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
@@ -318,7 +318,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 {/* Attendance Footer */}
                 <div className="pt-4 border-t border-slate-50 dark:border-slate-800 space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
-                        <h5 className="text-[9px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
+                        <h5 className="text-[9px] font-normal text-slate-400 uppercase flex items-center gap-1.5">
                             <Activity size={12} className="text-emerald-500" /> التحضير والمتابعة
                         </h5>
                     </div>
@@ -328,17 +328,17 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             type="date" 
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="w-full px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-bold rounded-xl outline-none focus:border-[#5c59f2] transition-all" 
+                            className="w-full px-2 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-normal rounded-none outline-none focus:border-[#5c59f2] transition-all" 
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="w-full bg-rose-600 text-white px-1 py-2 font-bold text-[9px] rounded-xl hover:bg-rose-700 transition-all shadow-sm"
+                            className="w-full bg-rose-600 text-white px-1 py-2 font-normal text-[9px] rounded-none hover:bg-rose-700 transition-all shadow-sm"
                         >
                             السجل
                         </button>
                         <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="w-full bg-emerald-600 text-white px-2 py-2 font-bold text-[10px] rounded-xl hover:bg-emerald-700 transition-all shadow-sm"
+                            className="w-full bg-emerald-600 text-white px-2 py-2 font-normal text-[10px] rounded-none hover:bg-emerald-700 transition-all shadow-sm"
                         >
                             تسجيل
                         </button>

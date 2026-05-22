@@ -65,7 +65,7 @@ export const TeacherDetails = ({
 
     return (
         <div className={cn(
-            "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit rounded-none overflow-hidden shadow-2xl animate-in slide-in-from-left-4 duration-300",
+            "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex flex-col h-fit rounded-none overflow-hidden shadow-sm animate-in slide-in-from-left-4 duration-300",
             "fixed inset-0 z-[100] m-4 lg:m-0 lg:static lg:h-fit lg:sticky lg:top-4"
         )} dir="rtl">
             {/* Header Section */}
@@ -78,15 +78,15 @@ export const TeacherDetails = ({
                 </button>
 
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[var(--primary-color,#5c59f2)] text-white rounded-xl flex items-center justify-center font-black text-xl shadow-lg shrink-0">
+                    <div className="w-12 h-12 bg-[var(--primary-color,#5c59f2)] text-white rounded-none flex items-center justify-center font-medium text-xl shadow-sm shrink-0">
                         {teacher.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-black text-lg text-white truncate uppercase tracking-tighter">{teacher.name}</h3>
+                            <h3 className="font-medium text-lg text-white truncate uppercase tracking-tighter">{teacher.name}</h3>
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-[9px] font-black text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-none uppercase tracking-widest">{teacher.subject}</span>
+                            <span className="text-[9px] font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-none uppercase tracking-widest">{teacher.subject}</span>
                             {!isTeacherView && (
                                 <div className="flex items-center gap-1 mr-auto">
                                     <button onClick={() => onSendNotification(teacher)} className="p-2 text-amber-500 hover:bg-amber-500/10 rounded-none transition-all"><Bell size={16} strokeWidth={2.5} /></button>
@@ -104,15 +104,15 @@ export const TeacherDetails = ({
                     <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
                     <div className="flex justify-between items-start mb-4">
                         <div>
-                            <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
+                            <p className="text-[8px] font-medium text-slate-400 uppercase tracking-[0.2em] mb-1">الإنتاجية (الحالية)</p>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-2xl font-black text-slate-800 dark:text-white italic tracking-tighter">{monthlySessions}</span>
-                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">جلسة منجزة</span>
+                                <span className="text-2xl font-medium text-slate-800 dark:text-white italic tracking-tighter">{monthlySessions}</span>
+                                <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">جلسة منجزة</span>
                             </div>
                         </div>
                         <div className={cn(
-                            "flex items-center gap-1 px-2.5 py-1 rounded-none text-[10px] font-black uppercase tracking-tighter",
-                            performanceChange >= 0 ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "bg-rose-500 text-white shadow-lg shadow-rose-500/20"
+                            "flex items-center gap-1 px-2.5 py-1 rounded-none text-[10px] font-medium uppercase tracking-tighter",
+                            performanceChange >= 0 ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20" : "bg-rose-500 text-white shadow-sm shadow-rose-500/20"
                         )}>
                             <TrendingUp size={10} className={performanceChange < 0 ? "rotate-180" : ""} />
                             {performanceChange > 0 ? `+${performanceChange}%` : `${performanceChange}%`}
@@ -131,12 +131,12 @@ export const TeacherDetails = ({
                 <div className="space-y-4">
                     <div className="flex items-stretch h-9 shadow-sm w-fit group cursor-default">
                         <div className="bg-white dark:bg-slate-800 px-4 flex items-center justify-center border-y border-r border-slate-200 dark:border-slate-700 rounded-none min-w-[44px] transition-colors group-hover:border-slate-300 dark:group-hover:border-slate-600">
-                            <span className="text-xs font-black text-[var(--primary-color,#5c59f2)]">{enrolledStudents.length}</span>
+                            <span className="text-xs font-medium text-[var(--primary-color,#5c59f2)]">{enrolledStudents.length}</span>
                         </div>
                         <div className="bg-slate-900 text-white px-4 flex items-center justify-center rounded-none relative overflow-hidden transition-all group-hover:bg-slate-800">
                             {/* Decorative Accent */}
                             <div className="absolute top-0 right-0 w-1 h-full bg-[var(--primary-color,#5c59f2)]"></div>
-                            <h4 className="text-[10px] text-white font-black uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
+                            <h4 className="text-[10px] text-white font-medium uppercase tracking-[0.15em] z-10">الطلاب المسجلون</h4>
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -156,12 +156,12 @@ export const TeacherDetails = ({
                                     <div className="flex justify-between items-start mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h5 className="font-black text-xs text-slate-800 dark:text-white uppercase">{student.name}</h5>
-                                                {isLow && <span className="text-[8px] font-black text-rose-500 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 px-1.5 py-0.5 rounded-none animate-pulse uppercase">رصيد منخفض</span>}
+                                                <h5 className="font-medium text-xs text-slate-800 dark:text-white uppercase">{student.name}</h5>
+                                                {isLow && <span className="text-[8px] font-medium text-rose-500 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 px-1.5 py-0.5 rounded-none animate-pulse uppercase">رصيد منخفض</span>}
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[9px] font-black text-slate-400 uppercase bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-100 dark:border-slate-700">{student.grade}</span>
-                                                <span className="text-[9px] font-black text-slate-500 uppercase">{enrollment.subject}</span>
+                                                <span className="text-[9px] font-medium text-slate-400 uppercase bg-slate-50 dark:bg-slate-800 px-1.5 py-0.5 rounded-none border border-slate-100 dark:border-slate-700">{student.grade}</span>
+                                                <span className="text-[9px] font-medium text-slate-500 uppercase">{enrollment.subject}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -190,7 +190,7 @@ export const TeacherDetails = ({
                                                 <div 
                                                     key={idx} 
                                                     className={cn(
-                                                        "w-4 h-4 border flex items-center justify-center rounded-none text-[7px] font-black font-mono transition-all",
+                                                        "w-4 h-4 border flex items-center justify-center rounded-none text-[7px] font-medium font-mono transition-all",
                                                         idx < actualUsed 
                                                             ? "bg-emerald-500 border-emerald-600 text-white shadow-sm" 
                                                             : idx === actualUsed 
@@ -205,7 +205,7 @@ export const TeacherDetails = ({
 
                                         <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                                             <div className="flex-1 max-w-[120px]">
-                                                <div className="flex justify-between text-[8px] font-black text-slate-400 uppercase mb-1">
+                                                <div className="flex justify-between text-[8px] font-medium text-slate-400 uppercase mb-1">
                                                     <span>الإنجاز</span>
                                                     <span className="tabular-nums">{progressPercent}%</span>
                                                 </div>
@@ -214,8 +214,8 @@ export const TeacherDetails = ({
                                                 </div>
                                             </div>
                                             <div className="text-center px-2">
-                                                <p className="text-[8px] font-black text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
-                                                <p className={cn("text-xs font-black font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
+                                                <p className="text-[8px] font-medium text-slate-400 uppercase leading-none mb-0.5">الرصيد</p>
+                                                <p className={cn("text-xs font-medium font-mono", isLow ? "text-rose-500" : "text-emerald-500")}>{remaining}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -236,8 +236,8 @@ export const TeacherDetails = ({
                                 <Clock size={18} />
                             </div>
                             <div className="text-right">
-                                <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-widest">سجل النشاطات المفصل</p>
-                                <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
+                                <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-widest">سجل النشاطات المفصل</p>
+                                <p className="text-[8px] font-medium text-slate-400 uppercase tracking-widest mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
                         <CheckCircle2 size={16} className="text-slate-300 group-hover:text-[var(--primary-color,#5c59f2)]" />
@@ -250,16 +250,16 @@ export const TeacherDetails = ({
             {/* Detailed Activity Modal */}
             {showActivityModal && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl">
-                    <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setShowActivityModal(false)}></div>
-                    <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl w-full max-w-4xl h-full max-h-[85vh] flex flex-col rounded-none overflow-hidden animate-in zoom-in-95">
+                    <div className="fixed inset-0 bg-slate-950/60 " onClick={() => setShowActivityModal(false)}></div>
+                    <div className="relative bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm w-full max-w-4xl h-full max-h-[85vh] flex flex-col rounded-none overflow-hidden animate-in zoom-in-95">
                         <div className="p-4 bg-slate-950 text-white flex items-center justify-between border-b border-white/5">
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] flex items-center justify-center rounded-none shadow-xl">
+                                <div className="w-10 h-10 bg-[var(--primary-color,#5c59f2)] flex items-center justify-center rounded-none shadow-sm">
                                     <Clock size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-black uppercase tracking-tighter text-white">سجل نشاطات المعلمة</h3>
-                                    <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">{teacher.name}</p>
+                                    <h3 className="text-lg font-medium uppercase tracking-tighter text-white">سجل نشاطات المعلمة</h3>
+                                    <p className="text-[9px] text-slate-400 font-medium uppercase tracking-widest">{teacher.name}</p>
                                 </div>
                             </div>
                             <button onClick={() => setShowActivityModal(false)} className="w-8 h-8 flex items-center justify-center bg-white/5 hover:bg-rose-500 transition-all">
@@ -270,7 +270,7 @@ export const TeacherDetails = ({
                         <div className="flex-1 overflow-y-auto p-4 bg-slate-50 dark:bg-slate-950/50">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                                 {teacherSessions.map(session => (
-                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                                    <div key={session.id} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-none shadow-sm hover:shadow-sm transition-all group relative overflow-hidden">
                                         <div className={cn(
                                             "absolute top-0 right-0 w-1 h-full",
                                             session.status === 'completed' ? "bg-emerald-500" : "bg-rose-500"
@@ -282,14 +282,14 @@ export const TeacherDetails = ({
                                                     <Calendar size={12} />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase tracking-tight truncate">{session.studentName}</p>
-                                                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{session.date}</p>
+                                                    <p className="text-[10px] font-medium text-slate-800 dark:text-white uppercase tracking-tight truncate">{session.studentName}</p>
+                                                    <p className="text-[7px] font-medium text-slate-400 uppercase tracking-widest">{session.date}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         
                                         <div className="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-800">
-                                            <div className="flex items-center gap-1.5 text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                                            <div className="flex items-center gap-1.5 text-[8px] font-medium text-slate-400 uppercase tracking-widest">
                                                 <Clock size={8} /> {session.time}
                                             </div>
                                             {!isTeacherView && (
@@ -304,7 +304,7 @@ export const TeacherDetails = ({
                             {teacherSessions.length === 0 && (
                                 <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
                                     <Clock size={48} className="mb-4" />
-                                    <p className="text-xs font-black uppercase tracking-[0.3em]">لا توجد نشاطات مسجلة</p>
+                                    <p className="text-xs font-medium uppercase tracking-[0.3em]">لا توجد نشاطات مسجلة</p>
                                 </div>
                             )}
                         </div>
@@ -314,3 +314,4 @@ export const TeacherDetails = ({
         </div>
     );
 };
+

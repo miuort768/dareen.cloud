@@ -54,7 +54,7 @@ export const THEME_COLORS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-5',
+        'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm p-5',
         className
     )}>
         {children}
@@ -63,18 +63,18 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-xl">
+        <div className="w-8 h-8 flex items-center justify-center bg-[#eef2ff] dark:bg-indigo-900/30 rounded-none">
             <Icon size={16} className="text-[#5c59f2]" />
         </div>
         <div>
-            <p className="text-sm font-bold text-slate-800 dark:text-white">{label}</p>
+            <p className="text-sm font-normal text-slate-800 dark:text-white">{label}</p>
             {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
         </div>
     </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+    <label className="block text-[11px] font-normal text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
         {children}
     </label>
 );
@@ -84,7 +84,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
         {...props}
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
+            'rounded-none px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white',
             'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
             props.className
         )}
@@ -96,7 +96,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
         {...props}
         className={cn(
             'w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700',
-            'rounded-xl px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white resize-none',
+            'rounded-none px-3 py-2.5 text-sm font-medium text-slate-800 dark:text-white resize-none',
             'focus:outline-none focus:border-[#5c59f2] focus:ring-2 focus:ring-[#5c59f2]/10 transition-all',
             props.className
         )}
@@ -125,7 +125,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-[#5c59f2] hover:bg-indigo-700',
-            'text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all',
+            'text-white text-xs font-normal px-4 py-2.5 rounded-none transition-all',
             className
         )}
     >
@@ -141,7 +141,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800',
             'hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300',
-            'text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 transition-all',
+            'text-xs font-normal px-4 py-2.5 rounded-none border border-slate-200 dark:border-slate-700 transition-all',
             className
         )}
     >
@@ -157,7 +157,7 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 bg-rose-50 dark:bg-rose-900/20',
             'hover:bg-rose-600 hover:text-white text-rose-600',
-            'text-xs font-bold px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-800 transition-all',
+            'text-xs font-normal px-4 py-2.5 rounded-none border border-rose-200 dark:border-rose-800 transition-all',
             className
         )}
     >
@@ -168,13 +168,13 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
 export const ToggleRow = ({
     icon: Icon, label, sub, checked, onChange
 }: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
-    <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+    <div className="flex items-center justify-between py-3 px-4 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-3">
             <div className="w-7 h-7 flex items-center justify-center bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
                 <Icon size={14} className="text-slate-400" />
             </div>
             <div>
-                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{label}</p>
+                <p className="text-xs font-normal text-slate-700 dark:text-slate-200">{label}</p>
                 {sub && <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>}
             </div>
         </div>

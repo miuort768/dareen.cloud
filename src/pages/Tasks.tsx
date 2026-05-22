@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import {
     CheckCircle2, 
     Plus, 
@@ -129,7 +129,7 @@ export const Tasks = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 space-y-4">
             
             {/* ── Header Canvas (Premium Royal Purple) ── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 {/* Decorative Background Elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
@@ -138,19 +138,19 @@ export const Tasks = () => {
                 <div className="relative z-10 flex flex-col items-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-6">
                         <Sparkles size={12} className="text-indigo-400" />
-                        <span className="text-[9px] font-black text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
+                        <span className="text-[9px] font-medium text-indigo-400 uppercase tracking-widest">Premium Command Center</span>
                     </div>
                     
-                    <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-2xl">
+                    <h1 className="text-3xl md:text-5xl font-medium text-white uppercase tracking-tighter mb-4 drop-shadow-sm">
                         غرفة العمليات المركزية
                     </h1>
-                    <p className="text-[11px] md:text-sm font-bold text-slate-400 uppercase tracking-widest mb-10 max-w-lg leading-relaxed">
+                    <p className="text-[11px] md:text-sm font-normal text-slate-400 uppercase tracking-widest mb-10 max-w-lg leading-relaxed">
                         تحليل متقدم وإدارة ذكية لكافة مهام <span className="text-indigo-500">دارين السابعة</span>
                     </p>
 
                     <button
                         onClick={() => setShowAddForm(true)}
-                        className="group relative inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-4 font-black text-[11px] md:text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
+                        className="group relative inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-4 font-medium text-[11px] md:text-xs uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(79,70,229,0.3)]"
                     >
                         <Plus size={16} className="group-hover:rotate-90 transition-transform duration-500" />
                         تسجيل مهمة جديدة
@@ -175,11 +175,11 @@ export const Tasks = () => {
                             <stat.icon size={100} />
                         </div>
                         <div className="relative z-10">
-                            <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-4 border", stat.border, stat.bg)}>
+                            <div className={cn("w-10 h-10 rounded-none flex items-center justify-center mb-4 border", stat.border, stat.bg)}>
                                 <stat.icon size={18} className={stat.color} />
                             </div>
-                            <h3 className="text-3xl font-black text-slate-800 dark:text-white tracking-tighter mb-1">{stat.value}</h3>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                            <h3 className="text-3xl font-medium text-slate-800 dark:text-white tracking-tighter mb-1">{stat.value}</h3>
+                            <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{stat.label}</p>
                         </div>
                     </div>
                 ))}
@@ -194,7 +194,7 @@ export const Tasks = () => {
                         placeholder="ابحث في أرشيف العمليات..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 py-4 px-6 pr-14 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-widest"
+                        className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 py-4 px-6 pr-14 text-xs font-normal text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-400 placeholder:uppercase placeholder:tracking-widest"
                     />
                 </div>
 
@@ -204,9 +204,9 @@ export const Tasks = () => {
                             key={p}
                             onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
                             className={cn(
-                                "px-6 py-4 border-2 font-black text-[10px] uppercase tracking-[0.2em] transition-all whitespace-nowrap min-w-[100px]",
+                                "px-6 py-4 border-2 font-medium text-[10px] uppercase tracking-[0.2em] transition-all whitespace-nowrap min-w-[100px]",
                                 filterPriority === p 
-                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-xl shadow-indigo-500/20" 
+                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-500/20" 
                                     : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-indigo-200 dark:hover:border-indigo-900"
                             )}
                         >
@@ -244,19 +244,19 @@ export const Tasks = () => {
                                         <div className="flex items-center gap-2">
                                             {isCompleted && <CheckCircle2 size={16} className="text-emerald-500" />}
                                             <h3 className={cn(
-                                                "text-lg font-black tracking-tight text-slate-800 dark:text-slate-100",
+                                                "text-lg font-medium tracking-tight text-slate-800 dark:text-slate-100",
                                                 isCompleted && "line-through opacity-50"
                                             )}>
                                                 {task.title}
                                             </h3>
                                         </div>
-                                        <div className="flex items-center gap-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                        <div className="flex items-center gap-3 text-[10px] font-medium text-slate-400 uppercase tracking-widest">
                                             <Calendar size={14} className="text-indigo-500" />
                                             <span>Deadline: {task.dueDate}</span>
                                         </div>
                                     </div>
                                     <div className={cn(
-                                        "px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border",
+                                        "px-3 py-1.5 text-[9px] font-medium uppercase tracking-widest border",
                                         task.priority === 'high' ? "text-rose-600 border-rose-200 bg-rose-50 dark:bg-rose-900/10 dark:border-rose-900/30" : 
                                         task.priority === 'medium' ? "text-amber-600 border-amber-200 bg-amber-50 dark:bg-amber-900/10 dark:border-amber-900/30" : 
                                         "text-indigo-600 border-indigo-200 bg-indigo-50 dark:bg-indigo-900/10 dark:border-indigo-900/30"
@@ -276,7 +276,7 @@ export const Tasks = () => {
                                             <button 
                                                 onClick={() => updateTaskStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')}
                                                 className={cn(
-                                                    "group flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all",
+                                                    "group flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] transition-all",
                                                     task.status === 'pending' ? "text-indigo-500 hover:text-indigo-600" : "text-emerald-500 hover:text-emerald-600"
                                                 )}
                                             >
@@ -287,7 +287,7 @@ export const Tasks = () => {
                                         ) : (
                                             <button 
                                                 onClick={() => updateTaskStatus(task.id, 'pending')}
-                                                className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors"
+                                                className="text-[10px] font-medium text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors"
                                             >
                                                 إعادة فتح السجل
                                             </button>
@@ -305,11 +305,11 @@ export const Tasks = () => {
                     })
                 ) : (
                     <div className="col-span-full py-20 text-center bg-white dark:bg-slate-900 border-2 border-dashed border-slate-100 dark:border-slate-800">
-                            <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
+                            <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-none flex items-center justify-center mx-auto mb-6 border border-indigo-100 dark:border-indigo-800">
                             <ClipboardList size={32} className="text-indigo-500" />
                         </div>
-                        <h2 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tighter mb-2">السجلات فارغة</h2>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">غرفة العمليات جاهزة لاستقبال مهام جديدة</p>
+                        <h2 className="text-xl font-medium text-slate-800 dark:text-white uppercase tracking-tighter mb-2">السجلات فارغة</h2>
+                        <p className="text-[10px] text-slate-400 font-normal uppercase tracking-widest">غرفة العمليات جاهزة لاستقبال مهام جديدة</p>
                     </div>
                 )}
             </div>
@@ -317,15 +317,15 @@ export const Tasks = () => {
             {/* ── Premium Add Modal ── */}
             {showAddForm && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-2xl bg-slate-950/60 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-slate-900 rounded-2xl border-t-8 border-indigo-600 w-full max-w-xl shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
+                    <div className="bg-white dark:bg-slate-900 rounded-none border-t-8 border-indigo-600 w-full max-w-xl shadow-[20px_20px_0px_rgba(79,70,229,0.1)] overflow-hidden">
                         <div className="p-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 bg-indigo-600 text-white flex items-center justify-center">
                                     <Plus size={20} />
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tighter">إنشاء عملية جديدة</h3>
-                                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">New Operation Protocol</p>
+                                    <h3 className="text-lg font-medium text-slate-800 dark:text-white uppercase tracking-tighter">إنشاء عملية جديدة</h3>
+                                    <p className="text-[9px] text-slate-400 font-normal uppercase tracking-[0.2em]">New Operation Protocol</p>
                                 </div>
                             </div>
                             <button onClick={() => setShowAddForm(false)} className="text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors">
@@ -336,13 +336,13 @@ export const Tasks = () => {
                         <form onSubmit={handleAddTask} className="p-10 space-y-8">
                             <div className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
                                         <Sparkles size={12} className="text-indigo-500" /> مسمى العملية
                                     </label>
                                     <input 
                                         required
                                         type="text" 
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-sm font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-600 transition-all"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-sm font-normal text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-600 transition-all"
                                         value={newTask.title}
                                         onChange={e => setNewTask({...newTask, title: e.target.value})}
                                     />
@@ -350,9 +350,9 @@ export const Tasks = () => {
 
                                 <div className="grid grid-cols-2 gap-8">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">مستوى الخطورة</label>
+                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">مستوى الخطورة</label>
                                         <select 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white cursor-pointer"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white cursor-pointer"
                                             value={newTask.priority}
                                             onChange={e => setNewTask({...newTask, priority: e.target.value as 'high' | 'medium' | 'low'})}
                                         >
@@ -362,10 +362,10 @@ export const Tasks = () => {
                                         </select>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">تاريخ الاستحقاق</label>
+                                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest">تاريخ الاستحقاق</label>
                                         <input 
                                             type="date" 
-                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white"
+                                            className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white"
                                             value={newTask.dueDate}
                                             onChange={e => setNewTask({...newTask, dueDate: e.target.value})}
                                         />
@@ -373,18 +373,18 @@ export const Tasks = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest flex items-center gap-2">
                                         <ShieldCheck size={12} className="text-indigo-500" /> تفاصيل البروتوكول
                                     </label>
                                     <textarea 
-                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-bold text-slate-800 dark:text-white h-32 resize-none"
+                                        className="w-full bg-slate-50 dark:bg-slate-800 border-none py-4 px-6 text-xs font-normal text-slate-800 dark:text-white h-32 resize-none"
                                         value={newTask.description}
                                         onChange={e => setNewTask({...newTask, description: e.target.value})}
                                     ></textarea>
                                 </div>
                             </div>
 
-                            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 font-black text-xs uppercase tracking-[0.3em] transition-all shadow-xl shadow-indigo-500/20 active:scale-95">
+                            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 font-medium text-xs uppercase tracking-[0.3em] transition-all shadow-sm shadow-indigo-500/20 active:scale-95">
                                 تأكيد إطلاق العملية
                             </button>
                         </form>

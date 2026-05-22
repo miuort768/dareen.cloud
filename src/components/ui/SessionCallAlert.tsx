@@ -56,7 +56,7 @@ export const SessionCallAlert = () => {
                     <div className="bg-primary-600 p-3 flex justify-between items-center border-b-2 border-gray-950">
                         <div className="flex items-center gap-2 text-white">
                             <BellRing size={20} className="animate-bounce" />
-                            <span className="font-black italic text-sm">تنبيه حصة مباشرة!</span>
+                            <span className="font-medium italic text-sm">تنبيه حصة مباشرة!</span>
                         </div>
                         <button onClick={() => setShow(false)} className="text-white hover:rotate-90 transition-transform">
                             <X size={20} />
@@ -68,8 +68,8 @@ export const SessionCallAlert = () => {
                             <Video size={32} />
                         </div>
                         <div className="flex-1 text-right">
-                            <h4 className="font-black text-gray-950 text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
-                            <p className="text-[10px] text-gray-500 font-bold mb-4 uppercase tracking-tighter">الحصة: {callData.subject}</p>
+                            <h4 className="font-medium text-gray-950 text-base mb-1">المعلمة {callData.teacherName} بانتظارك!</h4>
+                            <p className="text-[10px] text-gray-500 font-normal mb-4 uppercase tracking-tighter">الحصة: {callData.subject}</p>
                             
                             <div className="flex gap-2">
                                 <button 
@@ -78,13 +78,13 @@ export const SessionCallAlert = () => {
                                             navigate(`/classroom/${callData.sessionId}`);
                                         }
                                     }}
-                                    className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-black text-xs flex items-center justify-center gap-2"
+                                    className="flex-1 bg-primary-600 text-white py-2 px-4 border-2 border-gray-950 shadow-[4px_4px_0px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all font-medium text-xs flex items-center justify-center gap-2"
                                 >
                                     انضم الآن <ArrowRight size={14} />
                                 </button>
                                 <button 
                                     onClick={() => setShow(false)}
-                                    className="px-4 py-2 border-2 border-gray-950 font-bold text-xs hover:bg-gray-50 transition-colors"
+                                    className="px-4 py-2 border-2 border-gray-950 font-normal text-xs hover:bg-gray-50 transition-colors"
                                 >
                                     لاحقاً
                                 </button>

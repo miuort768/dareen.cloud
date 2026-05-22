@@ -166,7 +166,7 @@ export const Schedule = () => {
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3 md:animate-in md:fade-in">
             <div className="w-8 h-8 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
-            <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">جاري تحميل الجدول...</p>
+            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest">جاري تحميل الجدول...</p>
         </div>
     );
 
@@ -176,15 +176,15 @@ export const Schedule = () => {
             <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6">
 
                 {/* Header */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-2xl shadow-2xl shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 dark:from-slate-950 dark:via-indigo-950 dark:to-slate-950 rounded-none shadow-sm shadow-indigo-500/15 border border-white/5 px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
                     <div className="relative z-10 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10 backdrop-blur-md flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-none overflow-hidden border-2 border-white/20 shadow-[0_0_20px_rgba(99,102,241,0.3)] shrink-0 bg-white/10  flex items-center justify-center">
                             <CalendarDays size={24} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl md:text-2xl font-black text-white leading-tight tracking-tighter">الجداول الدراسية</h1>
+                            <h1 className="text-xl md:text-2xl font-medium text-white leading-tight tracking-tighter">الجداول الدراسية</h1>
                             <p className="text-xs md:text-sm text-slate-300/80 mt-0.5">جدول الحصص الأسبوعي</p>
                         </div>
                     </div>
@@ -198,7 +198,7 @@ export const Schedule = () => {
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="w-40 h-9 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-[10px] font-bold rounded-xl px-8 focus:outline-none focus:border-indigo-500 transition-all"
+                                className="w-40 h-9 bg-white/10 border border-white/10 text-white placeholder:text-white/40 text-[10px] font-normal rounded-none px-8 focus:outline-none focus:border-indigo-500 transition-all"
                             />
                         </div>
 
@@ -206,7 +206,7 @@ export const Schedule = () => {
                         <select
                             value={filterDay}
                             onChange={e => setFilterDay(e.target.value)}
-                            className="h-9 px-3 bg-white/10 border border-white/10 text-white text-[10px] font-black rounded-xl focus:outline-none focus:border-indigo-500 transition-all uppercase tracking-widest"
+                            className="h-9 px-3 bg-white/10 border border-white/10 text-white text-[10px] font-medium rounded-none focus:outline-none focus:border-indigo-500 transition-all uppercase tracking-widest"
                         >
                             <option value="all" className="text-slate-900">كل الأيام</option>
                             {DAYS_OF_WEEK.map(day => (
@@ -216,7 +216,7 @@ export const Schedule = () => {
 
                         <button
                             onClick={() => setShowSharedModal(true)}
-                            className="h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-black rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg shadow-amber-500/20 border border-amber-400/30 flex items-center gap-2 uppercase tracking-widest"
+                            className="h-9 px-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-medium rounded-none hover:from-amber-600 hover:to-amber-700 transition-all shadow-sm shadow-amber-500/20 border border-amber-400/30 flex items-center gap-2 uppercase tracking-widest"
                         >
                             <Share2 size={13} />
                             مشاركة
@@ -228,17 +228,17 @@ export const Schedule = () => {
                 <LiveClasses />
 
                 {/* Schedule Grid */}
-                <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mt-6">
+                <div className="bg-white/80 dark:bg-slate-900/80  border border-slate-200/50 dark:border-slate-800/50 rounded-none shadow-sm shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mt-6">
                     <div className="overflow-x-auto custom-scrollbar">
                         <div className="min-w-[900px]">
                             {/* Grid Header: Days */}
                             <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-slate-200 dark:border-slate-800">
-                                <div className="p-3 text-[9px] font-black text-slate-400 uppercase tracking-widest border-l border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div className="p-3 text-[9px] font-medium text-slate-400 uppercase tracking-widest border-l border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                                     الوقت
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => (
                                     <div key={day} className={cn(
-                                        "p-3 text-[10px] font-black text-center border-l border-slate-100 dark:border-slate-800 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50 uppercase tracking-tight",
+                                        "p-3 text-[10px] font-medium text-center border-l border-slate-100 dark:border-slate-800 last:border-l-0 bg-slate-50/50 dark:bg-slate-900/50 uppercase tracking-tight",
                                         isToday(day) ? "text-indigo-600 dark:text-indigo-400" : "text-slate-700 dark:text-slate-300"
                                     )}>
                                         <span>{day}</span>
@@ -259,7 +259,7 @@ export const Schedule = () => {
                                         "grid grid-cols-[80px_repeat(7,1fr)]",
                                         slotIdx % 2 === 0 ? "bg-white dark:bg-slate-900/40" : "bg-slate-50/50 dark:bg-slate-950/30"
                                     )}>
-                                        <div className="p-2 text-[9px] font-black text-slate-400 border-l border-b border-slate-100 dark:border-slate-800 flex items-center justify-center h-full">
+                                        <div className="p-2 text-[9px] font-medium text-slate-400 border-l border-b border-slate-100 dark:border-slate-800 flex items-center justify-center h-full">
                                             <Clock size={10} className="ml-1 inline" />
                                             {slot.label}
                                         </div>
@@ -277,7 +277,7 @@ export const Schedule = () => {
                                                         key={`${day}-${slot.hour}`}
                                                         onClick={() => { setSelectedEvent(event); setShowDetails(true); }}
                                                         className={cn(
-                                                            "p-1.5 border-l last:border-l-0 border-b border-slate-100 dark:border-slate-800 cursor-pointer transition-all hover:z-10 hover:shadow-lg hover:-translate-y-0.5 relative group min-h-[65px]",
+                                                            "p-1.5 border-l last:border-l-0 border-b border-slate-100 dark:border-slate-800 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[65px]",
                                                             bg
                                                         )}
                                                     >
@@ -287,11 +287,11 @@ export const Schedule = () => {
                                                         <div className="flex items-start gap-1.5 h-full">
                                                             <div className={cn("w-1 h-full rounded-full shrink-0 mt-0.5", bar)} />
                                                             <div className="min-w-0 flex-1">
-                                                                <p className={cn("text-[9px] font-black leading-tight mb-0.5 truncate", text)}>
+                                                                <p className={cn("text-[9px] font-medium leading-tight mb-0.5 truncate", text)}>
                                                                     {event.studentName}
                                                                 </p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.subject}</p>
-                                                                <p className="text-[7px] font-bold text-slate-400 truncate">{event.teacherName}</p>
+                                                                <p className="text-[7px] font-normal text-slate-400 truncate">{event.subject}</p>
+                                                                <p className="text-[7px] font-normal text-slate-400 truncate">{event.teacherName}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,7 +307,7 @@ export const Schedule = () => {
                                                     )}
                                                 >
                                                     {!isEmpty && (
-                                                        <div className="text-[7px] font-bold text-slate-300 text-center">
+                                                        <div className="text-[7px] font-normal text-slate-300 text-center">
                                                             —
                                                         </div>
                                                     )}
@@ -322,14 +322,14 @@ export const Schedule = () => {
 
                     {/* Legend */}
                     <div className="border-t border-slate-200 dark:border-slate-800 p-4 flex flex-wrap items-center gap-4">
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">دليل الألوان:</span>
+                        <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">دليل الألوان:</span>
                         {ACCENT_COLORS.map((color, idx) => (
                             <div key={idx} className="flex items-center gap-1.5">
                                 <div className={cn("w-2 h-2 rounded-full", color.bar)} />
-                                <span className="text-[8px] font-black text-slate-400 uppercase">مادة {idx + 1}</span>
+                                <span className="text-[8px] font-medium text-slate-400 uppercase">مادة {idx + 1}</span>
                             </div>
                         ))}
-                        <span className="text-[9px] font-black text-slate-400 uppercase mr-auto">
+                        <span className="text-[9px] font-medium text-slate-400 uppercase mr-auto">
                             {filteredEvents.length} حصة
                         </span>
                     </div>
@@ -345,30 +345,30 @@ export const Schedule = () => {
 
             {/* Event Details Modal */}
             {showDetails && selectedEvent && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-950/40" onClick={() => setShowDetails(false)}>
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4  bg-slate-950/40" onClick={() => setShowDetails(false)}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none p-6 max-w-sm w-full shadow-sm" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between mb-5">
-                            <h3 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight">تفاصيل الحصة</h3>
-                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl hover:bg-slate-200 transition-all">
+                            <h3 className="font-medium text-slate-900 dark:text-white text-sm uppercase tracking-tight">تفاصيل الحصة</h3>
+                            <button onClick={() => setShowDetails(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-none hover:bg-slate-200 transition-all">
                                 <X size={14} />
                             </button>
                         </div>
                         <div className="space-y-4">
                             <div>
-                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">الطالب</span>
-                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
+                                <span className="text-[9px] font-medium text-slate-400 uppercase block mb-1">الطالب</span>
+                                <p className="font-medium text-slate-900 dark:text-white">{selectedEvent.studentName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">المعلمة</span>
-                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.teacherName}</p>
+                                <span className="text-[9px] font-medium text-slate-400 uppercase block mb-1">المعلمة</span>
+                                <p className="font-medium text-slate-900 dark:text-white">{selectedEvent.teacherName}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">المادة</span>
-                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.subject}</p>
+                                <span className="text-[9px] font-medium text-slate-400 uppercase block mb-1">المادة</span>
+                                <p className="font-medium text-slate-900 dark:text-white">{selectedEvent.subject}</p>
                             </div>
                             <div>
-                                <span className="text-[9px] font-black text-slate-400 uppercase block mb-1">الموعد</span>
-                                <p className="font-black text-slate-900 dark:text-white">{selectedEvent.day} - {selectedEvent.time}</p>
+                                <span className="text-[9px] font-medium text-slate-400 uppercase block mb-1">الموعد</span>
+                                <p className="font-medium text-slate-900 dark:text-white">{selectedEvent.day} - {selectedEvent.time}</p>
                             </div>
                         </div>
                         <div className="flex gap-2 mt-6">
@@ -383,14 +383,14 @@ export const Schedule = () => {
                                         if (res?.id) navigate(`/classroom/${res.id}`);
                                     } catch { setShowDetails(false); }
                                 }}
-                                className="flex-1 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-black rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-lg flex items-center justify-center gap-2"
+                                className="flex-1 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-medium rounded-none hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-sm flex items-center justify-center gap-2"
                             >
                                 <Video size={14} />
                                 بدء بث مباشر
                             </button>
                             <button
                                 onClick={() => navigate(`/students`)}
-                                className="flex-1 h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-black rounded-xl hover:bg-slate-200 transition-all border border-slate-200 dark:border-slate-700"
+                                className="flex-1 h-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white text-[10px] font-medium rounded-none hover:bg-slate-200 transition-all border border-slate-200 dark:border-slate-700"
                             >
                                 عرض الطالب
                             </button>
@@ -401,25 +401,25 @@ export const Schedule = () => {
 
             {/* Shared Link Modal */}
             {showSharedModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm bg-slate-950/40" onClick={() => setShowSharedModal(false)}>
-                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4  bg-slate-950/40" onClick={() => setShowSharedModal(false)}>
+                    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-none p-6 max-w-md w-full shadow-sm" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between mb-5">
-                            <h3 className="font-black text-slate-900 dark:text-white text-sm uppercase tracking-tight">مشاركة الجدول</h3>
-                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl hover:bg-slate-200 transition-all">
+                            <h3 className="font-medium text-slate-900 dark:text-white text-sm uppercase tracking-tight">مشاركة الجدول</h3>
+                            <button onClick={() => setShowSharedModal(false)} className="w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-none hover:bg-slate-200 transition-all">
                                 <X size={14} />
                             </button>
                         </div>
-                        <p className="text-xs font-bold text-slate-500 mb-4">يمكنك نسخ الرابط ومشاركته مع أولياء الأمور</p>
+                        <p className="text-xs font-normal text-slate-500 mb-4">يمكنك نسخ الرابط ومشاركته مع أولياء الأمور</p>
                         <div className="flex gap-2">
                             <input
                                 type="text"
                                 readOnly
                                 value={sharedLink}
-                                className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white"
+                                className="flex-1 h-10 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-normal text-slate-900 dark:text-white"
                             />
                             <button
                                 onClick={() => { navigator.clipboard.writeText(sharedLink); setShowSharedModal(false); }}
-                                className="h-10 px-4 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-black rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-lg"
+                                className="h-10 px-4 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-[10px] font-medium rounded-none hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-sm"
                             >
                                 نسخ
                             </button>

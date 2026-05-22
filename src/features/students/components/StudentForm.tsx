@@ -47,16 +47,16 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-none shadow-sm overflow-hidden animate-in slide-in-from-top-4 duration-500" dir="rtl">
             {/* Header Section */}
             <div className="bg-slate-900 dark:bg-black px-6 py-8 flex items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#5c59f2] text-white flex items-center justify-center rounded-2xl shadow-lg">
+                    <div className="w-12 h-12 bg-[#5c59f2] text-white flex items-center justify-center rounded-none shadow-sm">
                         {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-white tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
-                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
+                        <h3 className="text-xl font-normal text-white tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
+                        <p className="text-[10px] text-slate-400 font-normal uppercase tracking-widest mt-1">
                             {initialData ? 'أرشفة وتحديث السجل' : 'فتح سجل أكاديمي جديد'}
                         </p>
                     </div>
@@ -65,7 +65,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <button 
                         type="button" 
                         onClick={onCancel}
-                        className="w-10 h-10 flex items-center justify-center text-slate-400 hover:bg-white/10 rounded-xl transition-all"
+                        className="w-10 h-10 flex items-center justify-center text-slate-400 hover:bg-white/10 rounded-none transition-all"
                     >
                         <X size={20} />
                     </button>
@@ -76,10 +76,10 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3 pb-3 border-b border-slate-50 dark:border-slate-800">
-                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
+                        <div className="w-8 h-8 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/30 rounded-none">
                             <Info size={16} className="text-[#5c59f2]" />
                         </div>
-                        <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-tight">بيانات التعريف الأساسية</h4>
+                        <h4 className="text-xs font-normal text-slate-800 dark:text-white uppercase tracking-tight">بيانات التعريف الأساسية</h4>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -93,36 +93,36 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 </div>
 
                 {/* Platform Access Section */}
-                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-transparent">
+                <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-none border border-transparent">
                     <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 rounded-xl">
+                        <div className="w-8 h-8 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 rounded-none">
                             <Shield size={16} className="text-emerald-500" />
                         </div>
-                        <h4 className="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-tight">إدارة الوصول للمنصة</h4>
+                        <h4 className="text-xs font-normal text-slate-800 dark:text-white uppercase tracking-tight">إدارة الوصول للمنصة</h4>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">اسم المستخدم</label>
+                            <label className="text-[10px] font-normal text-slate-400 uppercase mr-1">اسم المستخدم</label>
                             <div className="relative">
                                 <UserIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
                                 <input
                                     value={formData.username}
                                     onChange={e => setFormData({ ...formData, username: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-xl text-xs font-bold font-mono"
+                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-none text-xs font-normal font-mono"
                                     placeholder="اسم مستخدم فريد"
                                 />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">كلمة المرور</label>
+                            <label className="text-[10px] font-normal text-slate-400 uppercase mr-1">كلمة المرور</label>
                             <div className="relative">
                                 <Key className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300" size={14} />
                                 <input
                                     type="password"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-xl text-xs font-bold font-mono tracking-widest"
+                                    className="w-full pl-4 pr-10 py-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] rounded-none text-xs font-normal font-mono tracking-widest"
                                     placeholder={initialData ? "••••••••" : "كلمة مرور قوية"}
                                 />
                             </div>
@@ -134,12 +134,12 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="space-y-2">
                     <div className="flex items-center gap-3 mb-2">
                         <FileText size={14} className="text-slate-400" />
-                        <label className="text-[10px] font-bold text-slate-400 uppercase">ملاحظات أكاديمية</label>
+                        <label className="text-[10px] font-normal text-slate-400 uppercase">ملاحظات أكاديمية</label>
                     </div>
                     <textarea
                         value={formData.notes}
                         onChange={e => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] dark:text-white rounded-2xl text-xs font-bold min-h-[120px] transition-all"
+                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] dark:text-white rounded-none text-xs font-normal min-h-[120px] transition-all"
                         placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
                     />
                 </div>
@@ -147,7 +147,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 <div className="flex items-center justify-end pt-6 border-t border-slate-50 dark:border-slate-800">
                     <button
                         type="submit"
-                        className="px-10 py-3 bg-[#5c59f2] text-white text-[11px] font-bold uppercase tracking-widest hover:bg-indigo-700 rounded-xl flex items-center gap-2 shadow-sm active:scale-95 transition-all"
+                        className="px-10 py-3 bg-[#5c59f2] text-white text-[11px] font-normal uppercase tracking-widest hover:bg-indigo-700 rounded-none flex items-center gap-2 shadow-sm active:scale-95 transition-all"
                     >
                         <Save size={16} />
                         {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}
@@ -160,7 +160,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
 
 const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, type = "text", dir = "rtl" }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; type?: string; dir?: string }) => (
     <div className="space-y-2">
-        <label className="text-[10px] font-bold text-slate-400 uppercase mr-1">{label}</label>
+        <label className="text-[10px] font-normal text-slate-400 uppercase mr-1">{label}</label>
         <div className="relative group">
             {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#5c59f2] transition-colors" size={14} />}
             <input
@@ -170,7 +170,7 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 className={cn(
-                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] dark:text-white rounded-xl text-xs font-bold transition-all",
+                    "w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 focus:outline-none focus:border-[#5c59f2] dark:text-white rounded-none text-xs font-normal transition-all",
                     Icon && "pr-10",
                     dir === 'ltr' && "font-mono"
                 )}
@@ -179,3 +179,4 @@ const FormInput = ({ label, icon: Icon, placeholder, value, onChange, required, 
         </div>
     </div>
 );
+
