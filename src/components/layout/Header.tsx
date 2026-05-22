@@ -1,5 +1,5 @@
 import { Sun, User } from 'lucide-react';
-
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
@@ -10,13 +10,28 @@ export const Header = () => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
+    const [headerVisible, setHeaderVisible] = useState(true);
+    const lastScrollY = useRef(0);
 
+    useEffect(() => {
+        // Hide header on scroll down (mobile only), show on scroll up
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > 60) {
+                setHeaderVisible(currentScrollY < lastScrollY.current);
+            } else {
+                setHeaderVisible(true);
+            }
+            lastScrollY.current = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const getPageTitle = (path: string) => {
-        // Extract base path to handle nested routes like /students/123
         const basePath = '/' + path.split('/')[1];
 
-        // Handle generic dashboard paths
         if (basePath === '/' || basePath === '/dashboard' || basePath === '/admin-dashboard' || basePath === '/teacher-dashboard' || basePath === '/student-dashboard') {
             return { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب.' };
         }
@@ -86,10 +101,10 @@ export const Header = () => {
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
             "bg-white dark:bg-slate-900",
             "border-b border-slate-200 dark:border-slate-800",
-            "px-4 md:px-6 max-w-full"
+            "px-4 md:px-6 max-w-full",
+            "md:translate-y-0",
+            headerVisible ? "translate-y-0" : "-translate-y-full md:translate-y-0"
         )}>
-
-            {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
                     <div className="w-10 h-10 flex items-center justify-center border border-slate-300 dark:border-slate-700 bg-white dark:bg-white overflow-hidden">
@@ -112,9 +127,7 @@ export const Header = () => {
                 </div>
             </div>
 
-            {/* Right Actions - Fixed Layout */}
             <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors shrink-0"
@@ -122,13 +135,12 @@ export const Header = () => {
                     <Sun size={18} />
                 </button>
 
-                {/* Notifications */}
                 <div className="shrink-0">
                     <NotificationDropdown />
                 </div>
 
-                <Link 
-                    to={currentUser?.role === 'admin' ? '/settings' : '/profile'} 
+                <Link
+                    to={currentUser?.role === 'admin' ? '/settings' : '/profile'}
                     className="flex items-center pr-2 border-r border-slate-200 dark:border-white/20 shrink-0 group transition-all"
                 >
                     <div className="w-9 h-9 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
