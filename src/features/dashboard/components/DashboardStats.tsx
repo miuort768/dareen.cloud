@@ -52,15 +52,15 @@ const StatCard = ({
         </div>
         
         <div className="flex flex-col items-center min-w-0 relative z-10 w-full">
-            <h4 className="text-[9px] md:text-xs font-black text-slate-400 dark:text-slate-500 uppercase leading-none mb-1.5 truncate tracking-tight">
+            <h4 className="text-[9px] md:text-xs font-medium text-slate-400 dark:text-slate-500 uppercase leading-none mb-1.5 truncate tracking-tight">
                 {title}
             </h4>
             <div className="flex items-baseline gap-1">
-                <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none font-[700]">
+                <span className="text-2xl md:text-3xl font-medium text-slate-900 dark:text-white tabular-nums tracking-tighter leading-none font-[700]">
                     {value ?? 0}
                 </span>
                 {unit && (
-                    <span className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tighter ml-0.5">
+                    <span className="text-[9px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-tighter ml-0.5">
                         {unit}
                     </span>
                 )}
@@ -76,7 +76,7 @@ const StatCard = ({
                             trendData.isPositive ? TrendingUpIcon : TrendingDownIcon
                         )}
                     />
-                    <span className={`text-${trendData.isPositive ? 'emerald-500' : 'rose-500'} font-black`}>
+                    <span className={`text-${trendData.isPositive ? 'emerald-500' : 'rose-500'} font-medium`}>
                         {trendData.percentage}% {trendData.label}
                     </span>
                 </div>

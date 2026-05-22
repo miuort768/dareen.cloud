@@ -16,7 +16,7 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
                         <PieChart size={24} />
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">تحليل النشاط</h3>
+                        <h3 className="text-xl font-normal text-slate-900 dark:text-white">تحليل النشاط</h3>
                         <p className="text-sm font-medium text-gray-400">إحصائيات الإنجاز الشهري</p>
                     </div>
                 </div>
@@ -25,12 +25,12 @@ export const SessionAnalysis = ({ stats, monthlyData }: SessionAnalysisProps) =>
             <div className="flex-1 flex flex-col justify-between pt-2">
                 <div className="grid grid-cols-2 gap-6 mb-8">
                     <div className="p-6 bg-slate-50/50 dark:bg-slate-800/50 rounded-[2rem] border border-slate-100 dark:border-slate-800 transition-all hover:border-indigo-200">
-                        <p className="text-xs font-bold text-slate-500 uppercase mb-2 tracking-widest">إجمالي الحصص</p>
-                        <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter tabular-nums">{stats.totalSessions}</p>
+                        <p className="text-xs font-normal text-slate-500 uppercase mb-2 tracking-widest">إجمالي الحصص</p>
+                        <p className="text-3xl font-medium text-slate-900 dark:text-white tracking-tighter tabular-nums">{stats.totalSessions}</p>
                     </div>
                     <div className="p-6 bg-emerald-500/5 rounded-[2rem] border border-emerald-500/10 transition-all hover:border-emerald-200">
-                        <p className="text-xs font-bold text-emerald-600 uppercase mb-2 tracking-widest">إجمالي المنجز</p>
-                        <p className="text-3xl font-black text-emerald-600 tracking-tighter tabular-nums">{stats.completedSessions}</p>
+                        <p className="text-xs font-normal text-emerald-600 uppercase mb-2 tracking-widest">إجمالي المنجز</p>
+                        <p className="text-3xl font-medium text-emerald-600 tracking-tighter tabular-nums">{stats.completedSessions}</p>
                     </div>
                 </div>
 

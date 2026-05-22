@@ -105,10 +105,10 @@ export const ImportantNotifications = ({
                         <Bell size={16} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">غرفة التنبيهات</h3>
+                        <h3 className="text-sm font-normal text-slate-900 dark:text-white uppercase tracking-tight">غرفة التنبيهات</h3>
                     </div>
                 </div>
-                <div className="text-[10px] font-black text-slate-400 border border-slate-100 dark:border-slate-800 px-2 py-0.5">
+                <div className="text-[10px] font-medium text-slate-400 border border-slate-100 dark:border-slate-800 px-2 py-0.5">
                     {visibleNotifications.length} حرجة
                 </div>
             </div>
@@ -124,18 +124,18 @@ export const ImportantNotifications = ({
                                 <note.icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-slate-800 dark:text-white text-[11px] mb-1 truncate pr-4">
+                                <h4 className="font-normal text-slate-800 dark:text-white text-[11px] mb-1 truncate pr-4">
                                     {note.title}
                                 </h4>
                                 <p className="text-[9px] text-slate-500 dark:text-slate-400 leading-none">{note.description}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 {'action' in note && note.action ? (
-                                    <button onClick={note.action} className="text-[9px] font-bold text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
+                                    <button onClick={note.action} className="text-[9px] font-normal text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
                                         {note.actionLabel}
                                     </button>
                                 ) : 'link' in note && note.link ? (
-                                    <Link to={note.link} className="text-[9px] font-bold text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
+                                    <Link to={note.link} className="text-[9px] font-normal text-indigo-600 border border-indigo-100 px-2 py-1 hover:bg-indigo-50">
                                         {note.actionLabel}
                                     </Link>
                                 ) : null}
@@ -147,7 +147,7 @@ export const ImportantNotifications = ({
                     ))
                 ) : (
                     <div className="py-10 text-center border border-dashed border-slate-200">
-                        <p className="text-[10px] font-bold text-slate-400">لا توجد تنبيهات نشطة</p>
+                        <p className="text-[10px] font-normal text-slate-400">لا توجد تنبيهات نشطة</p>
                     </div>
                 )}
             </div>

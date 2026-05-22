@@ -19,16 +19,16 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-6 text-white/80">
                     <Sparkles size={20} className="text-yellow-400" />
-                    <h3 className="font-black text-xs uppercase tracking-tighter">حصاد الأسبوع التعليمي</h3>
+                    <h3 className="font-medium text-xs uppercase tracking-tighter">حصاد الأسبوع التعليمي</h3>
                 </div>
 
                 <div className="mb-8">
-                    <p className="text-[10px] font-black text-white/60 mb-2 uppercase tracking-widest leading-none">نقاط مهنية جديدة (آخر ٧ أيام)</p>
+                    <p className="text-[10px] font-medium text-white/60 mb-2 uppercase tracking-widest leading-none">نقاط مهنية جديدة (آخر ٧ أيام)</p>
                     <div className="flex items-baseline gap-2">
-                        <h2 className="text-5xl font-black tracking-tighter leading-none italic animate-pulse">
+                        <h2 className="text-5xl font-medium tracking-tighter leading-none italic animate-pulse">
                             +{stats.weekTotalSessions * 5}
                         </h2>
-                        <span className="text-xl font-bold opacity-30">PT</span>
+                        <span className="text-xl font-normal opacity-30">PT</span>
                     </div>
                 </div>
 
@@ -36,22 +36,22 @@ export const TeacherWeeklySummary = ({ stats }: TeacherWeeklySummaryProps) => {
                     <div className="flex items-center justify-between p-3 bg-white text-gray-950 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2">
                             <BookOpen size={14} className="text-primary-600" />
-                            <span className="text-[10px] font-black uppercase">الحصص المنجزة</span>
+                            <span className="text-[10px] font-medium uppercase">الحصص المنجزة</span>
                         </div>
-                        <span className="font-mono font-black text-lg">{stats.weekTotalSessions}</span>
+                        <span className="font-mono font-medium text-lg">{stats.weekTotalSessions}</span>
                     </div>
 
                     <div className="flex items-center justify-between p-3 bg-white text-gray-950 border-2 border-gray-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
                         <div className="flex items-center gap-2">
                             <Star size={14} className="text-yellow-500" />
-                            <span className="text-[10px] font-black uppercase">توصيات أوسمة</span>
+                            <span className="text-[10px] font-medium uppercase">توصيات أوسمة</span>
                         </div>
-                        <span className="font-mono font-black text-lg">{stats.newBadgesRecommended}</span>
+                        <span className="font-mono font-medium text-lg">{stats.newBadgesRecommended}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/20 text-[9px] font-black uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
+            <div className="mt-8 pt-4 border-t-2 border-white/20 text-[9px] font-medium uppercase tracking-widest text-white/60 flex items-center gap-2 italic">
                 <TrendingUp size={12} />
                 <span>أداء متميز هذا الأسبوع! بطل مجموعتك هو: <span className="text-white">{stats.bestStudentName || 'قيد التحديد'}</span></span>
             </div>

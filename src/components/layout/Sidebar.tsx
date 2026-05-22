@@ -145,7 +145,7 @@ export const Sidebar = () => {
                                 <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
                             </div>
                             <span className={cn(
-                                "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
+                                "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                                 collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                             )}>
                                 دارين السابعة
@@ -179,7 +179,7 @@ export const Sidebar = () => {
                             <img src="/dareen_logo_new.jpg" alt="Logo" className="w-full h-full object-contain" />
                         </div>
                         <span className={cn(
-                            "font-black text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
+                            "font-medium text-lg text-gray-950 transition-all duration-300 dark:text-gray-100 uppercase tracking-tighter",
                             collapsed ? "w-0 opacity-0 overflow-hidden" : "w-auto opacity-100 pl-3"
                         )}>
                             نظام دارين السابعة
@@ -196,7 +196,7 @@ export const Sidebar = () => {
                             className={({ isActive }) => cn(
                                 "flex items-center gap-2.5 px-3 py-1.5 rounded-none transition-all duration-200 group relative text-[13px]",
                                 isActive
-                                    ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/50 dark:text-primary-400"
+                                    ? "bg-primary-50 text-primary-700 font-normal dark:bg-primary-900/50 dark:text-primary-400"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200",
                                 collapsed && "justify-center py-1"
                             )}
@@ -209,13 +209,13 @@ export const Sidebar = () => {
                                     strokeWidth={collapsed ? 2.5 : 2}
                                 />
                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[9px] font-black rounded-full animate-pulse shadow-sm border border-white dark:border-slate-950">
+                                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 flex items-center justify-center bg-rose-500 text-white text-[9px] font-medium rounded-full animate-pulse shadow-sm border border-white dark:border-slate-950">
                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                     </span>
                                 )}
                             </div>
                             <span className={cn(
-                                "whitespace-nowrap transition-all duration-300 font-bold",
+                                "whitespace-nowrap transition-all duration-300 font-normal",
                                 collapsed ? "w-0 opacity-0 hidden" : "w-auto opacity-100"
                             )}>
                                 {item.name}
@@ -286,7 +286,7 @@ export const Sidebar = () => {
                         {({ isActive }) => (
                             <div className="flex items-center gap-2 relative">
                                 <span className={cn(
-                                    "text-xs font-black whitespace-nowrap overflow-hidden transition-all duration-500",
+                                    "text-xs font-medium whitespace-nowrap overflow-hidden transition-all duration-500",
                                     isActive ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0"
                                 )}>
                                     {item.name}
@@ -297,7 +297,7 @@ export const Sidebar = () => {
 
                                     {/* Notification Badge for Chat */}
                                     {item.id === 'chat' && totalUnreadCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-[10px] font-black flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
+                                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-rose-500 text-white text-[10px] font-medium flex items-center justify-center rounded-full ring-2 ring-white dark:ring-gray-950 shadow-sm md:animate-pulse">
                                             {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                                         </span>
                                     )}
@@ -336,8 +336,8 @@ export const Sidebar = () => {
                         <div className="flex items-center gap-3">
                             <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                             <div>
-                                <h2 className="text-base font-black text-gray-900 dark:text-white leading-tight">{academyName}</h2>
-                                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">قائمة الوصول السريع</p>
+                                <h2 className="text-base font-medium text-gray-900 dark:text-white leading-tight">{academyName}</h2>
+                                <p className="text-[10px] text-gray-500 dark:text-gray-400 font-normal uppercase tracking-widest">قائمة الوصول السريع</p>
                             </div>
                         </div>
                         <button
@@ -358,7 +358,7 @@ export const Sidebar = () => {
                                     className={({ isActive }) => cn(
                                         "flex items-center gap-2 py-1.5 px-2.5 rounded-xl transition-all duration-200",
                                         isActive
-                                            ? "bg-primary-50 text-primary-700 font-bold dark:bg-primary-900/20 dark:text-primary-400 shadow-sm border border-primary-100 dark:border-primary-900/30"
+                                            ? "bg-primary-50 text-primary-700 font-normal dark:bg-primary-900/20 dark:text-primary-400 shadow-sm border border-primary-100 dark:border-primary-900/30"
                                             : "bg-gray-50/50 text-gray-600 hover:bg-gray-50 dark:bg-gray-900/30 dark:text-gray-400"
                                     )}
                                 >
@@ -370,12 +370,12 @@ export const Sidebar = () => {
                                             )}>
                                                 <item.icon size={14} />
                                                 {item.id === 'chat' && totalUnreadCount > 0 && (
-                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-rose-500 text-white text-[8px] font-black rounded-full shadow-sm border border-white dark:border-gray-950">
+                                                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 flex items-center justify-center bg-rose-500 text-white text-[8px] font-medium rounded-full shadow-sm border border-white dark:border-gray-950">
                                                         {totalUnreadCount > 9 ? '9+' : totalUnreadCount}
                                                     </span>
                                                 )}
                                             </div>
-                                            <span className="text-[11px] font-bold tracking-tight truncate">{item.name}</span>
+                                            <span className="text-[11px] font-normal tracking-tight truncate">{item.name}</span>
                                         </>
                                     )}
                                 </NavLink>
@@ -388,7 +388,7 @@ export const Sidebar = () => {
                                     handleLogout();
                                     setMobileMenuOpen(false);
                                 }}
-                                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-none bg-red-600 text-white font-bold hover:bg-red-700 transition-colors shadow-md"
+                                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-none bg-red-600 text-white font-normal hover:bg-red-700 transition-colors shadow-md"
                             >
                                 <LogOut size={16} />
                                 <span className="uppercase tracking-widest text-[10px]">تسجيل الخروج</span>

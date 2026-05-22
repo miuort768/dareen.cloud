@@ -52,10 +52,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                     <div>
                         <div className="flex items-center gap-2 mb-1">
                             <div className={cn("w-2 h-2", colorMap[color])}></div>
-                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">بوابة الأكاديمية الإلكترونية</span>
+                            <span className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">بوابة الأكاديمية الإلكترونية</span>
                         </div>
-                        <h1 className="text-xl md:text-2xl font-black text-gray-950 mb-1 tracking-tighter uppercase leading-none">{title}</h1>
-                        {subtitle && <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest italic">{subtitle}</p>}
+                        <h1 className="text-xl md:text-2xl font-medium text-gray-950 mb-1 tracking-tighter uppercase leading-none">{title}</h1>
+                        {subtitle && <p className="text-[9px] font-medium text-gray-400 uppercase tracking-widest italic">{subtitle}</p>}
                     </div>
                 </div>
 
@@ -65,8 +65,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                             "px-4 py-2 border-2 border-gray-950 flex flex-col items-center min-w-[100px] shadow-[2px_2px_0px_0px_black]",
                             lightColorMap[color]
                         )}>
-                            <p className="text-[9px] font-black uppercase tracking-widest leading-none mb-1 opacity-60">{stat.label}</p>
-                            <p className="text-xl font-black leading-none">{stat.value}</p>
+                            <p className="text-[9px] font-medium uppercase tracking-widest leading-none mb-1 opacity-60">{stat.label}</p>
+                            <p className="text-xl font-medium leading-none">{stat.value}</p>
                         </div>
                     ))}
                     {actions && <div className="flex gap-4">{actions}</div>}

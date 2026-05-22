@@ -76,7 +76,7 @@ export const Dashboard = () => {
                             <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             </div>
-                            <h2 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tight">الإجراءات السريعة</h2>
+                            <h2 className="text-sm font-medium text-slate-800 dark:text-white uppercase tracking-tight">الإجراءات السريعة</h2>
                         </div>
                         <QuickActionsHub />
                     </div>
@@ -89,7 +89,7 @@ export const Dashboard = () => {
                             <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                             </div>
-                            <h2 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tight">مؤشرات الأداء الرئيسية</h2>
+                            <h2 className="text-sm font-medium text-slate-800 dark:text-white uppercase tracking-tight">مؤشرات الأداء الرئيسية</h2>
                         </div>
                         <DashboardStats stats={stats} isTeacher={false} />
                     </div>

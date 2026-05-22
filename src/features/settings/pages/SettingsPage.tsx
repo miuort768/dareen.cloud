@@ -290,11 +290,11 @@ export const Settings = () => {
 
     if (loading) return (
         <div className="p-4 space-y-3">
-            <Skeleton className="h-14 rounded-2xl" />
+            <Skeleton className="h-14" />
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-10 rounded-xl" />)}
+                {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-10" />)}
             </div>
-            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64" />
         </div>
     );
 
@@ -378,15 +378,15 @@ export const Settings = () => {
         <div className="space-y-4 pb-24 min-h-full bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20 md:animate-in md:fade-in md:duration-700 font-sans" dir="rtl">
             <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-0 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5 backdrop-blur-md">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-400/30 shadow-[0_0_15px_rgba(52,211,153,0.3)] shrink-0 bg-white/5">
                         <img src="/chat-avatar.jpg" alt="Logo" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-slate-800 dark:text-white">إعدادات النظام</h1>
+                        <h1 className="text-sm font-normal text-slate-800 dark:text-white">إعدادات النظام</h1>
                         <p className="text-[10px] text-slate-400">إدارة السياسات والهوية والصلاحيات</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-700">
+                <div className="flex items-center gap-2 text-[10px] font-normal text-slate-400 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-100 dark:border-slate-700">
                     <Sparkles size={12} className="text-amber-400" />
                     {activeTab && TABS.find(t => t.id === activeTab)?.label}
                 </div>
@@ -399,9 +399,9 @@ export const Settings = () => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                'flex items-center gap-2 px-4 py-3 rounded-xl text-[13px] font-black whitespace-nowrap transition-all uppercase tracking-tight',
+                                'flex items-center gap-2 px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-all uppercase tracking-tight',
                                 activeTab === tab.id
-                                    ? 'bg-[#5c59f2] text-white shadow-md transform scale-105 z-10'
+                                    ? 'bg-[#5c59f2] text-white transform scale-105 z-10'
                                     : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 bg-slate-50/50 dark:bg-slate-800/50'
                             )}
                         >

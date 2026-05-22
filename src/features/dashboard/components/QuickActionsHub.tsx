@@ -52,8 +52,8 @@ export const QuickActionsHub = () => {
                         "group relative overflow-hidden",
                         "bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-900/90",
                         "border border-slate-200 dark:border-slate-800",
-                        "rounded-2xl p-5",
-                        "transition-all duration-300 hover:shadow-lg active:scale-[0.98]",
+                        "p-5",
+                        "transition-all duration-300 hover:shadow-sm active:scale-[0.98]",
                         "hover:border-transparent",
                         action.shadow
                     )}
@@ -68,8 +68,8 @@ export const QuickActionsHub = () => {
                     {/* Content */}
                     <div className="relative z-10 flex flex-col gap-4">
                         <div className={cn(
-                            "w-11 h-11 rounded-xl flex items-center justify-center",
-                            "bg-gradient-to-br text-white shadow-lg",
+                            "w-11 h-11 flex items-center justify-center",
+                            "bg-gradient-to-br text-white shadow-sm",
                             action.gradient,
                             "transition-all duration-300 group-hover:scale-110 group-hover:rotate-3",
                             action.shadow
@@ -79,14 +79,14 @@ export const QuickActionsHub = () => {
 
                         <div>
                             <h3 className={cn(
-                                "font-black text-sm md:text-base leading-tight tracking-tight truncate",
+                                "font-medium text-sm md:text-base leading-tight tracking-tight truncate",
                                 "text-slate-900 dark:text-white",
                                 "transition-colors duration-300 group-hover:text-white"
                             )}>
                                 {action.title}
                             </h3>
                             <p className={cn(
-                                "text-[10px] font-bold mt-1",
+                                "text-[10px] font-normal mt-1",
                                 "text-slate-400 dark:text-slate-500",
                                 "transition-colors duration-300 group-hover:text-white/70"
                             )}>
@@ -95,7 +95,7 @@ export const QuickActionsHub = () => {
                         </div>
 
                         <div className={cn(
-                            "flex items-center gap-1 text-[9px] font-black uppercase tracking-widest",
+                            "flex items-center gap-1 text-[9px] font-medium uppercase tracking-widest",
                             "text-slate-300 dark:text-slate-600",
                             "transition-all duration-300 group-hover:text-white/50"
                         )}>

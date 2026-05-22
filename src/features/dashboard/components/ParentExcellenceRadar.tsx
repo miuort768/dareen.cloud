@@ -24,7 +24,7 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-6">
                     <Trophy size={20} className="text-yellow-400 animate-pulse" />
-                    <h3 className="font-black text-xs uppercase tracking-[0.2em] italic">رادار التميز الأسبوعي (Excellence Radar)</h3>
+                    <h3 className="font-medium text-xs uppercase tracking-[0.2em] italic">رادار التميز الأسبوعي (Excellence Radar)</h3>
                 </div>
 
                 <div className="space-y-6">
@@ -35,20 +35,20 @@ export const ParentExcellenceRadar = ({ achievements }: ParentExcellenceRadarPro
                                     <Star size={24} className="text-yellow-400 fill-current" />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-black uppercase tracking-tighter text-white/90">{ach.studentName}</h4>
-                                    <p className="text-[10px] font-bold text-yellow-400 uppercase leading-none mt-1">{ach.achievement}</p>
+                                    <h4 className="text-sm font-medium uppercase tracking-tighter text-white/90">{ach.studentName}</h4>
+                                    <p className="text-[10px] font-normal text-yellow-400 uppercase leading-none mt-1">{ach.achievement}</p>
                                 </div>
                             </div>
                             <div className="text-right">
-                                <span className="text-2xl font-black italic tracking-tighter">+{ach.points}</span>
-                                <p className="text-[8px] font-black uppercase opacity-40 tracking-widest leading-none">نقطة ذكاء</p>
+                                <span className="text-2xl font-medium italic tracking-tighter">+{ach.points}</span>
+                                <p className="text-[8px] font-medium uppercase opacity-40 tracking-widest leading-none">نقطة ذكاء</p>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-[9px] font-black uppercase tracking-widest text-white/40">
+            <div className="mt-8 pt-4 border-t-2 border-white/10 flex items-center justify-between text-[9px] font-medium uppercase tracking-widest text-white/40">
                 <span>تم التحديث: اليوم</span>
                 <div className="flex items-center gap-1 group-hover:text-yellow-400 transition-colors cursor-pointer">
                     عرض كافة الإنجازات <ChevronLeft size={12} />

@@ -156,8 +156,8 @@ export const StudentDashboard = () => {
             
             {/* Premium Background Decorations */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-sky-500/5 dark:bg-sky-500/10 rounded-full blur-[120px] animate-pulse"></div>
-                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[100px]"></div>
+                <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-sky-500/5 dark:bg-sky-500/10 blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-500/5 dark:bg-purple-500/10 blur-[100px]"></div>
             </div>
 
             {/* ═══════════════ HEADER ═══════════════ */}
@@ -165,12 +165,12 @@ export const StudentDashboard = () => {
                 <div className="space-y-1">
                     <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 border border-sky-100 dark:border-sky-500/20 rounded-lg mb-1">
                         <Sparkles size={10} className="text-sky-600 dark:text-sky-400" />
-                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">نظام التفوق</span>
+                        <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">نظام التفوق</span>
                     </div>
-                    <h1 className="text-2xl md:text-5xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">
+                    <h1 className="text-2xl md:text-3xl font-medium text-slate-900 dark:text-white tracking-tighter">
                         مرحباً، <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-purple-600">{studentData?.name?.split(' ')[0]}</span> ✨
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-[10px] md:text-sm font-bold flex items-center gap-1.5">
+                    <p className="text-slate-500 dark:text-slate-400 text-[10px] md:text-sm font-normal flex items-center gap-1.5">
                         <CalendarDays size={12} className="text-sky-500" />
                         {todayArabic}، {format(new Date(), 'd MMMM', { locale: ar })}
                     </p>
@@ -179,10 +179,10 @@ export const StudentDashboard = () => {
                 <div className="flex items-center gap-2">
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 flex items-center gap-2 shadow-sm">
                         <div className="flex flex-col items-end">
-                            <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
-                            <span className="text-xs font-black text-slate-900 dark:text-white">{rank.name}</span>
+                            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-widest leading-none">اللقب</span>
+                            <span className="text-xs font-medium text-slate-900 dark:text-white">{rank.name}</span>
                         </div>
-                        <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-md">
+                        <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-purple-600 flex items-center justify-center text-white shadow-md">
                             <Trophy size={16} />
                         </div>
                     </div>
@@ -191,21 +191,21 @@ export const StudentDashboard = () => {
 
             {/* ═══════════════ ACTIVE TIMER ═══════════════ */}
             {activeTimer && (
-                <div className="relative z-10 bg-sky-600 dark:bg-sky-500 text-white p-4 md:p-6 border-b-2 md:border-b-4 border-sky-900 dark:border-sky-700 shadow-xl flex flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
+                <div className="relative z-10 bg-sky-600 dark:bg-sky-500 text-white p-4 md:p-6 border-b-2 md:border-b-4 border-sky-900 dark:border-sky-700 flex flex-row items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
                     <div className="flex items-center gap-3 md:gap-5">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 flex items-center justify-center animate-pulse">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 border border-white/30 flex items-center justify-center animate-pulse">
                             <Clock size={20} className="md:hidden" />
                             <Clock size={28} className="hidden md:block" />
                         </div>
                         <div>
-                            <h3 className="font-heading font-black text-sm md:text-xl leading-none mb-1">الحصة مبدوءة!</h3>
-                            <p className="text-[10px] md:text-xs font-bold opacity-80 truncate max-w-[120px] md:max-w-none">
+                            <h3 className="font-heading font-medium text-sm md:text-xl leading-none mb-1">الحصة مبدوءة!</h3>
+                            <p className="text-[10px] md:text-xs font-normal opacity-80 truncate max-w-[120px] md:max-w-none">
                                 {activeTimer.subject}
                             </p>
                         </div>
                     </div>
                     <div className="flex flex-col items-end">
-                        <div className="text-2xl md:text-5xl font-heading font-black tracking-tighter tabular-nums">
+                        <div className="text-2xl md:text-5xl font-heading font-medium tracking-tighter tabular-nums">
                             {formatTime(activeTimer.seconds)}
                         </div>
                     </div>
@@ -224,7 +224,7 @@ export const StudentDashboard = () => {
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="group relative overflow-hidden bg-slate-900 dark:bg-sky-950 p-5 md:p-8 border-r-4 md:border-r-8 border-sky-600 shadow-2xl"
+                        className="group relative overflow-hidden bg-slate-900 dark:bg-sky-950 p-5 md:p-8 border-r-4 md:border-r-8 border-sky-600"
                     >
                         <Award className="absolute -bottom-6 -left-6 text-white/5 rotate-12" size={120} />
                         
@@ -232,36 +232,36 @@ export const StudentDashboard = () => {
                             <div className="space-y-3 md:space-y-4">
                                 <div className="flex items-center gap-2">
                                     <div className="w-1 h-5 bg-sky-500"></div>
-                                    <h2 className="text-xs md:text-2xl font-heading font-black text-white uppercase tracking-tight">الحصة القادمة</h2>
+                                    <h2 className="text-xs md:text-2xl font-heading font-medium text-white uppercase tracking-tight">الحصة القادمة</h2>
                                 </div>
                                 
                                 {todaySchedule.length > 0 ? (
                                     <div className="space-y-3 md:space-y-5">
                                         <div className="flex flex-col gap-1">
-                                            <h3 className="text-2xl md:text-6xl font-heading font-black text-white">
+                                            <h3 className="text-2xl md:text-6xl font-heading font-medium text-white">
                                                 {todaySchedule[0].slots[0].subject}
                                             </h3>
-                                            <div className="flex items-center gap-2 text-sky-300 font-bold text-xs md:text-lg">
+                                            <div className="flex items-center gap-2 text-sky-300 font-normal text-xs md:text-lg">
                                                 <Rocket size={14} className="md:size-18" />
                                                 <span>مع المعلمة {todaySchedule[0].slots[0].teacher}</span>
                                             </div>
                                         </div>
-                                        <div className="inline-flex items-center gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-sky-500/20 border border-sky-500/30 backdrop-blur-md text-white font-black text-[10px] md:text-sm uppercase tracking-widest">
+                                        <div className="inline-flex items-center gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-sky-500/20 border border-sky-500/30 text-white font-medium text-[10px] md:text-sm uppercase tracking-widest">
                                             <Clock size={12} className="text-sky-400" />
                                             اليوم • {todaySchedule[0].slots[0].time} مساءً
                                         </div>
                                     </div>
                                 ) : (
-                                    <p className="text-lg md:text-2xl font-black text-slate-400">لا توجد حصص مجدولة لليوم</p>
+                                    <p className="text-lg md:text-2xl font-medium text-slate-400">لا توجد حصص مجدولة لليوم</p>
                                 )}
                             </div>
 
                             <button 
                                 onClick={() => navigate('/chat')}
-                                className="h-12 w-full md:h-32 md:w-32 bg-sky-600 hover:bg-sky-500 text-white flex flex-row md:flex-col items-center justify-center gap-3 md:gap-2 transition-all active:scale-95 shadow-xl"
+                                className="h-12 w-full md:h-32 md:w-32 bg-sky-600 hover:bg-sky-500 text-white flex flex-row md:flex-col items-center justify-center gap-3 md:gap-2 transition-all active:scale-95"
                             >
                                 <MessageSquare size={18} className="md:size-24" />
-                                <span className="text-[10px] font-black uppercase tracking-widest">المحادثات</span>
+                                <span className="text-[10px] font-medium uppercase tracking-widest">المحادثات</span>
                             </button>
                         </div>
                     </motion.div>
@@ -278,10 +278,10 @@ export const StudentDashboard = () => {
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 md:p-8 shadow-sm">
                         <div className="flex flex-row items-end justify-between gap-4 mb-4 md:mb-8">
                             <div className="space-y-1">
-                                <h3 className="text-sm md:text-2xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">مسار التميز</h3>
-                                <p className="text-slate-500 dark:text-slate-400 text-[9px] md:text-sm font-bold">تبقى لك <span className="text-sky-600 dark:text-sky-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
+                                <h3 className="text-sm md:text-2xl font-heading font-medium text-slate-900 dark:text-white uppercase tracking-tight">مسار التميز</h3>
+                                <p className="text-slate-500 dark:text-slate-400 text-[11px] md:text-sm font-normal">تبقى لك <span className="text-sky-600 dark:text-sky-400">{(Math.floor(points / 100) + 1) * 100 - points} نقطة</span></p>
                             </div>
-                            <div className="px-3 py-1 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-black text-[9px] md:text-sm text-sky-600 dark:text-sky-400 tracking-widest uppercase">
+                            <div className="px-3 py-1 md:px-6 md:py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 font-medium text-[11px] md:text-sm text-sky-600 dark:text-sky-400 tracking-widest uppercase">
                                 {rank.name}
                             </div>
                         </div>
@@ -298,17 +298,17 @@ export const StudentDashboard = () => {
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
                             <div className="w-1 h-5 bg-purple-600"></div>
-                            <h3 className="text-sm md:text-2xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">الواجبات والملاحظات</h3>
+                            <h3 className="text-sm md:text-2xl font-heading font-medium text-slate-900 dark:text-white uppercase tracking-tight">الواجبات والملاحظات</h3>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {(studentData?.enrollments || []).filter((en: { nextSessionNotes?: string }) => en.nextSessionNotes).map((en: { nextSessionNotes?: string; teacherName: string }, idx: number) => (
                                 <div key={idx} className="bg-white dark:bg-slate-900 border-r-4 border-sky-500 p-4 md:p-6 shadow-sm">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 text-[8px] font-black uppercase tracking-widest">{en.subject}</span>
-                                        <span className="text-[9px] font-bold text-slate-400">المعلمة: {en.teacher}</span>
+                                        <span className="px-2 py-0.5 bg-sky-50 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 text-[11px] font-medium uppercase tracking-widest">{en.subject}</span>
+                                        <span className="text-[11px] font-normal text-slate-400">المعلمة: {en.teacher}</span>
                                     </div>
-                                    <p className="text-xs font-bold text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
+                                    <p className="text-xs font-normal text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{en.nextSessionNotes}</p>
                                 </div>
                             ))}
                         </div>
@@ -324,40 +324,40 @@ export const StudentDashboard = () => {
                             onClick={() => setShowBadges(!showBadges)}
                             className="h-24 md:h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 shadow-sm"
                         >
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-sky-50 dark:bg-sky-900/10 text-sky-600 dark:text-sky-400 flex items-center justify-center rounded-xl">
+                            <div className="w-8 h-8 md:w-12 md:h-12 bg-sky-50 dark:bg-sky-900/10 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                                 <Award size={18} className="md:size-24" />
                             </div>
-                            <span className="text-[8px] md:text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">الأوسمة</span>
+                            <span className="text-[11px] font-medium text-slate-900 dark:text-white uppercase tracking-widest">الأوسمة</span>
                         </button>
                         <button 
                             onClick={() => navigate('/forum')}
                             className="h-24 md:h-32 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2 shadow-sm"
                         >
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-purple-50 dark:bg-purple-900/10 text-purple-600 dark:text-purple-400 flex items-center justify-center rounded-xl">
+                            <div className="w-8 h-8 md:w-12 md:h-12 bg-purple-50 dark:bg-purple-900/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                                 <MessageSquare size={18} className="md:size-24" />
                             </div>
-                            <span className="text-[8px] md:text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest">المنتدى</span>
+                            <span className="text-[11px] font-medium text-slate-900 dark:text-white uppercase tracking-widest">المنتدى</span>
                         </button>
                     </div>
 
                     {/* Achievements Summary */}
-                    <div className="bg-slate-900 dark:bg-slate-900 border border-slate-800 p-5 md:p-8 shadow-2xl relative overflow-hidden">
-                        <h3 className="text-sm md:text-xl font-heading font-black text-white uppercase tracking-tight mb-6">إنجازاتك</h3>
+                    <div className="bg-slate-900 dark:bg-slate-900 border border-slate-800 p-5 md:p-8 relative overflow-hidden">
+                        <h3 className="text-sm md:text-xl font-heading font-medium text-white uppercase tracking-tight mb-6">إنجازاتك</h3>
                         <div className="grid grid-cols-3 gap-4">
                             {allBadges.slice(0, 6).map((badge, idx) => {
                                 const isEarned = studentData?.badges && (typeof studentData.badges === 'string' || Array.isArray(studentData.badges)) ? studentData.badges.includes(badge.id) : false;
                                 return (
                                     <div key={idx} className="flex flex-col items-center gap-2">
                                         <div className={cn(
-                                            "w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all",
+                                            "w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-all",
                                             isEarned 
-                                                ? `bg-gradient-to-br ${badge.color} shadow-lg scale-105` 
-                                                : "bg-slate-800 grayscale opacity-20"
+                                                ? `bg-gradient-to-br ${badge.color} scale-105` 
+                                                : "bg-slate-800"
                                         )}>
                                             <badge.icon size={20} className={isEarned ? "text-white" : "text-slate-500"} />
                                         </div>
                                         <span className={cn(
-                                            "text-[7px] font-black text-center uppercase tracking-tighter",
+                                            "text-[11px] font-medium text-center uppercase tracking-tighter",
                                             isEarned ? "text-white" : "text-slate-600"
                                         )}>
                                             {badge.name}
@@ -370,7 +370,7 @@ export const StudentDashboard = () => {
 
                     {/* Activity Feed */}
                     <div className="space-y-4">
-                        <h3 className="text-sm md:text-xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">النشاطات</h3>
+                        <h3 className="text-sm md:text-xl font-heading font-medium text-slate-900 dark:text-white uppercase tracking-tight">النشاطات</h3>
                         <div className="space-y-3">
                             {pointLogs.slice(0, 3).map((log, i) => (
                                 <div key={i} className="bg-white dark:bg-slate-900 p-3 md:p-5 border-l-4 border-emerald-500 shadow-sm">
@@ -379,8 +379,8 @@ export const StudentDashboard = () => {
                                             <Star size={14} fill="currentColor" />
                                         </div>
                                         <div>
-                                            <h4 className="text-[10px] md:text-xs font-black text-slate-900 dark:text-slate-100 leading-tight">+{log.amount} نقطة</h4>
-                                            <p className="text-[8px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 truncate max-w-[150px]">{log.action}</p>
+                                            <h4 className="text-[10px] md:text-xs font-medium text-slate-900 dark:text-slate-100 leading-tight">+{log.amount} نقطة</h4>
+                                            <p className="text-[11px] font-normal text-slate-500 dark:text-slate-400 truncate max-w-[150px]">{log.action}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -389,13 +389,13 @@ export const StudentDashboard = () => {
                     </div>
 
                     {/* Support Block */}
-                    <div className="bg-gradient-to-r from-sky-700 to-purple-800 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                    <div className="bg-gradient-to-r from-sky-700 to-purple-800 p-6 md:p-8 relative overflow-hidden">
                         <div className="relative z-10 space-y-4">
-                            <h4 className="text-lg md:text-2xl font-heading font-black text-white leading-tight">تحتاج مساعدة؟</h4>
+                            <h4 className="text-lg md:text-2xl font-heading font-medium text-white leading-tight">تحتاج مساعدة؟</h4>
                             <a 
                                 href={`https://wa.me/${adminPhone?.replace(/\D/g, '').replace(/^0/, '20')}`}
                                 target="_blank" rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2 bg-white text-sky-900 py-3 md:py-4 font-black text-[10px] md:text-xs uppercase tracking-widest shadow-xl"
+                                className="flex items-center justify-center gap-2 bg-white text-sky-900 py-3 md:py-4 font-medium text-[10px] md:text-xs uppercase tracking-widest"
                             >
                                 <MessageSquare size={14} fill="currentColor" />
                                 تواصل الآن
@@ -414,16 +414,16 @@ export const StudentDashboard = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setShowBadges(false)}
-                            className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+                            className="absolute inset-0 bg-slate-950/80"
                         />
                         <motion.div 
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            className="relative w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden"
+                            className="relative w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden"
                         >
                             <div className="bg-slate-900 p-5 md:p-8 text-white flex justify-between items-center">
-                                <h2 className="text-xl md:text-3xl font-heading font-black italic tracking-tighter">قاعة المشاهير</h2>
+                                <h2 className="text-xl md:text-3xl font-heading font-medium italic tracking-tighter">قاعة المشاهير</h2>
                                 <button onClick={() => setShowBadges(false)} className="w-10 h-10 bg-slate-800 flex items-center justify-center">
                                     <X size={20} />
                                 </button>
@@ -434,13 +434,13 @@ export const StudentDashboard = () => {
                                     return (
                                         <div key={idx} className="flex flex-col items-center gap-2 md:gap-4 text-center">
                                             <div className={cn(
-                                                "w-16 h-16 md:w-24 md:h-24 rounded-xl flex items-center justify-center transition-all",
-                                                isEarned ? `bg-gradient-to-br ${badge.color} shadow-lg scale-105` : "bg-slate-100 dark:bg-slate-800 grayscale opacity-20"
+                                                "w-16 h-16 md:w-24 md:h-24 flex items-center justify-center transition-all",
+                                                isEarned ? `bg-gradient-to-br ${badge.color} scale-105` : "bg-slate-100 dark:bg-slate-800"
                                             )}>
                                                 <badge.icon size={28} className={isEarned ? "text-white" : "text-slate-400"} />
                                             </div>
                                             <span className={cn(
-                                                "text-[8px] md:text-xs font-black uppercase tracking-widest block",
+                                                "text-[11px] md:text-xs font-medium uppercase tracking-widest block",
                                                 isEarned ? "text-slate-900 dark:text-white" : "text-slate-400"
                                             )}>
                                                 {badge.name}
@@ -471,8 +471,8 @@ const StatCard = ({ icon: Icon, label, value, color }: { icon: React.ComponentTy
             <div className="w-6 h-6 md:w-10 md:h-10 flex items-center justify-center mb-1.5 md:mb-3">
                 <Icon size={18} className="md:size-24" />
             </div>
-            <span className="text-lg md:text-2xl font-heading font-black text-slate-900 dark:text-white leading-none">{value}</span>
-            <span className="text-[7px] md:text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-widest leading-none">{label}</span>
+            <span className="text-lg md:text-2xl font-heading font-medium text-slate-900 dark:text-white leading-none">{value}</span>
+            <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase mt-1 tracking-widest leading-none">{label}</span>
         </div>
     );
 };

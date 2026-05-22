@@ -65,8 +65,8 @@ export const LiveClasses = () => {
                         <Radio size={18} />
                     </div>
                     <div>
-                        <h3 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">غرفة البث المباشر</h3>
-                        <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">مركز التفاعل المباشر</p>
+                        <h3 className="font-medium text-sm text-slate-900 dark:text-white uppercase tracking-tight">غرفة البث المباشر</h3>
+                        <p className="text-[9px] font-medium text-slate-400 uppercase mt-0.5">مركز التفاعل المباشر</p>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@ export const LiveClasses = () => {
                     <button
                         onClick={startNewSession}
                         disabled={starting}
-                        className="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 py-2 text-[10px] font-black uppercase border border-red-500/30 rounded-xl hover:from-red-600 hover:to-red-700 transition-all active:scale-[0.98] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-red-500/20"
+                        className="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 py-2 text-[10px] font-medium uppercase border border-red-500/30 rounded-xl hover:from-red-600 hover:to-red-700 transition-all active:scale-[0.98] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-red-500/20"
                     >
                         {starting ? (
                             <><Loader2 size={13} className="animate-spin" /> جاري البدء...</>
@@ -87,7 +87,7 @@ export const LiveClasses = () => {
 
             {/* Error message */}
             {error && (
-                <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 p-3 text-red-700 dark:text-red-400 text-xs font-bold rounded-xl">
+                <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 p-3 text-red-700 dark:text-red-400 text-xs font-normal rounded-xl">
                     <AlertCircle size={14} className="shrink-0" />
                     {error}
                 </div>
@@ -101,7 +101,7 @@ export const LiveClasses = () => {
             ) : sessions.length === 0 ? (
                 <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-dashed border-slate-300 dark:border-slate-700 p-10 text-center rounded-2xl transition-all">
                     <Monitor size={36} className="mx-auto text-slate-300 mb-3" />
-                    <p className="text-slate-500 font-black text-[11px] uppercase tracking-widest">لا يوجد بث مباشر متاح حالياً</p>
+                    <p className="text-slate-500 font-medium text-[11px] uppercase tracking-widest">لا يوجد بث مباشر متاح حالياً</p>
                     {isTeacher && (
                         <p className="text-slate-400 text-[10px] mt-2">اضغط "بدء بث جديد" لبدء حصة مباشرة</p>
                     )}
@@ -114,17 +114,17 @@ export const LiveClasses = () => {
                             <div className="absolute top-4 left-4">
                                 <div className="flex items-center gap-1.5 bg-gradient-to-r from-red-500 to-red-600 text-white px-2.5 py-1 rounded-lg shadow-lg shadow-red-500/20">
                                     <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                                    <span className="text-[8px] font-black uppercase">مباشر</span>
+                                    <span className="text-[8px] font-medium uppercase">مباشر</span>
                                 </div>
                             </div>
 
                             <div className="mt-2">
-                                <h4 className="font-black text-sm text-slate-900 dark:text-white mb-1 line-clamp-1 uppercase tracking-tight">
+                                <h4 className="font-medium text-sm text-slate-900 dark:text-white mb-1 line-clamp-1 uppercase tracking-tight">
                                     {session.title}
                                 </h4>
                                 <div className="flex items-center gap-2 text-slate-500 mb-6">
                                     <Users size={12} className="text-red-500" />
-                                    <span className="text-[10px] font-bold">{session.teacherName}</span>
+                                    <span className="text-[10px] font-normal">{session.teacherName}</span>
                                     {session.subject && (
                                         <span className="text-[10px] text-slate-400">— {session.subject}</span>
                                     )}
@@ -133,7 +133,7 @@ export const LiveClasses = () => {
 
                             <button
                                 onClick={() => navigate(`/classroom/${session.id}`)}
-                                className="w-full bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 text-white py-3 text-[10px] font-black uppercase rounded-xl flex items-center justify-center gap-2 hover:from-red-500 hover:to-red-600 transition-all shadow-lg"
+                                className="w-full bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 text-white py-3 text-[10px] font-medium uppercase rounded-xl flex items-center justify-center gap-2 hover:from-red-500 hover:to-red-600 transition-all shadow-lg"
                             >
                                 <PlayCircle size={16} />
                                 دخول البث الآن

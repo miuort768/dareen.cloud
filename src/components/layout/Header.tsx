@@ -84,16 +84,15 @@ export const Header = () => {
         <header className={cn(
             "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-[9999]",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
-            "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl",
-            "rounded-2xl border border-slate-200/50 dark:border-white/10",
-            "px-4 md:px-6 max-w-full",
-            "shadow-lg shadow-slate-200/50 dark:shadow-2xl dark:shadow-black/20"
+            "bg-white dark:bg-slate-900",
+            "border-b border-slate-200 dark:border-slate-800",
+            "px-4 md:px-6 max-w-full"
         )}>
 
             {/* Left Section: Branding & Title */}
             <div className="flex items-center gap-3 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/10 border border-slate-200 dark:border-white/20 bg-white dark:bg-white overflow-hidden">
+                    <div className="w-10 h-10 flex items-center justify-center border border-slate-300 dark:border-slate-700 bg-white dark:bg-white overflow-hidden">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
@@ -102,10 +101,10 @@ export const Header = () => {
                     <div className="w-px h-8 bg-slate-200 dark:bg-white/10" />
                     {title && (
                         <div className="min-w-0">
-                            <h1 className="text-base md:text-lg font-black text-slate-800 dark:text-white truncate tracking-tight leading-none">
+                            <h1 className="text-base md:text-lg font-medium text-slate-800 dark:text-white truncate tracking-tight leading-none">
                                 {title}
                             </h1>
-                            <p className="text-[8px] md:text-[9px] font-bold text-slate-400 dark:text-white/50 uppercase tracking-widest leading-none mt-0.5">
+                            <p className="text-[10px] font-normal text-slate-400 dark:text-white/50 uppercase tracking-widest leading-none mt-0.5">
                                 دارين للتعليم والتدريب
                             </p>
                         </div>
@@ -118,7 +117,7 @@ export const Header = () => {
                 {/* Theme Toggle */}
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors shrink-0"
+                    className="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-white/70 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors shrink-0"
                 >
                     <Sun size={18} />
                 </button>

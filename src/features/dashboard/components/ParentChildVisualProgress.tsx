@@ -32,12 +32,12 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                         {/* Header: Level & Points */}
                         <div className="flex items-center justify-between mb-6">
                             <div className="space-y-1">
-                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">مستوى الطالب</p>
-                                <h4 className={cn("text-sm font-black uppercase tracking-tighter italic", level.color)}>{level.name}</h4>
+                                <p className="text-[10px] font-medium text-gray-400 uppercase tracking-widest leading-none">مستوى الطالب</p>
+                                <h4 className={cn("text-sm font-medium uppercase tracking-tighter italic", level.color)}>{level.name}</h4>
                             </div>
                             <div className="text-right flex items-center gap-2">
                                 <TrendingUp size={16} className="text-primary-600" />
-                                <span className="text-2xl font-black italic tracking-tighter">{child.totalPoints || 0}</span>
+                                <span className="text-2xl font-medium italic tracking-tighter">{child.totalPoints || 0}</span>
                             </div>
                         </div>
 
@@ -52,24 +52,24 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                 ></div>
                             </div>
                             {level.next && (
-                                <p className="text-[9px] font-black text-gray-400 text-center uppercase tracking-widest">متبقي {level.next - child.totalPoints} نقطة للمستوى التالي!</p>
+                                <p className="text-[9px] font-medium text-gray-400 text-center uppercase tracking-widest">متبقي {level.next - child.totalPoints} نقطة للمستوى التالي!</p>
                             )}
                         </div>
 
                         {/* Badges Section (Suggestion 3) */}
                         <div className="space-y-4 mb-8">
-                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b-2 border-gray-100 dark:border-gray-800 pb-2">معرض الأوسمة (Badge Wall)</p>
+                            <p className="text-[10px] font-medium text-gray-400 uppercase tracking-widest border-b-2 border-gray-100 dark:border-gray-800 pb-2">معرض الأوسمة (Badge Wall)</p>
                             <div className="flex flex-wrap gap-3">
                                 {child.badges && child.badges.length > 0 ? child.badges.map((badge, idx) => (
                                     <div key={idx} className="p-2 bg-gray-950 text-white border-2 border-white/20 hover:scale-110 transition-transform cursor-help group/badge relative">
                                         <Award size={18} className="text-yellow-400" />
-                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-950 text-[8px] font-black uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-950 text-[8px] font-medium uppercase whitespace-nowrap opacity-0 group-hover/badge:opacity-100 transition-opacity">
                                             {badge}
                                         </div>
                                     </div>
                                 )) : (
                                     <div className="p-4 border-2 border-dashed border-gray-200 dark:border-gray-800 flex items-center justify-center w-full">
-                                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest italic">لا يوجد أوسمة بعد</p>
+                                        <p className="text-[10px] font-medium text-gray-300 uppercase tracking-widest italic">لا يوجد أوسمة بعد</p>
                                     </div>
                                 )}
                             </div>
@@ -82,15 +82,15 @@ export const ParentChildVisualProgress = ({ childrenProfiles }: { childrenProfil
                                     <Star size={18} className="fill-current" />
                                 </div>
                                 <div>
-                                    <h5 className="text-[10px] font-black text-gray-900 dark:text-white leading-none mb-1 uppercase tracking-tighter">{child.teacherName}</h5>
-                                    <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest leading-none">آخر تقييم: ممتاز</p>
+                                    <h5 className="text-[10px] font-medium text-gray-900 dark:text-white leading-none mb-1 uppercase tracking-tighter">{child.teacherName}</h5>
+                                    <p className="text-[9px] font-medium text-emerald-600 uppercase tracking-widest leading-none">آخر تقييم: ممتاز</p>
                                 </div>
                             </div>
                             <a 
                                 href={`https://wa.me/${child.adminPhone?.replace(/\D/g, '')}?text=${encodeURIComponent(`شكراً جزيلاً للمعلمة ${child.teacherName} على جهودها الرائعة مع ${child.name}. وجدنا تقريرها متميزاً جداً!`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-5 py-2.5 bg-emerald-500 text-gray-950 border-2 border-gray-950 font-black text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
+                                className="px-5 py-2.5 bg-emerald-500 text-gray-950 border-2 border-gray-950 font-medium text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center gap-2 group/btn"
                             >
                                 <Heart size={14} className="group-hover/btn:scale-125 transition-transform text-rose-600 fill-current" />
                                 شكراً معلمي

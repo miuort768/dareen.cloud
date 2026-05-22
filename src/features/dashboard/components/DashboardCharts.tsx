@@ -11,15 +11,15 @@ interface DashboardChartsProps {
 export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps) => {
 
     return (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-5 overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 overflow-hidden">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
+                        <div className="w-10 h-10 bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center border border-white/10 shadow-sm">
                         <BarChart2 size={20} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل الأداء</h3>
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-tight mt-0.5">نظرة عامة على أداء المؤسسة</p>
+                        <h3 className="text-sm font-medium text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل الأداء</h3>
+                        <p className="text-[9px] font-medium text-slate-400 uppercase tracking-tight mt-0.5">نظرة عامة على أداء المؤسسة</p>
                     </div>
                 </div>
                 
@@ -52,19 +52,19 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
                             content={({ active, payload, label }) => {
                                 if (active && payload && payload.length) {
                                     return (
-                                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 rounded-xl shadow-xl min-w-[160px]" dir="rtl">
+                                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 min-w-[160px]" dir="rtl">
                                             <div className="flex items-center gap-2 mb-2.5 border-b border-slate-100 dark:border-slate-700 pb-2">
                                                 <Target size={12} className="text-indigo-600" />
-                                                <p className="text-[11px] font-black text-slate-900 dark:text-white uppercase">{label}</p>
+                                                <p className="text-[11px] font-medium text-slate-900 dark:text-white uppercase">{label}</p>
                                             </div>
                                             <div className="space-y-2">
                                                 {payload.map((entry: { name?: string; value: number; color?: string }, index: number) => (
                                                     <div key={index} className="flex items-center justify-between">
                                                         <div className="flex items-center gap-2">
                                                             <div className="w-2 h-2 rounded-full border border-slate-950/10" style={{ backgroundColor: entry.color }} />
-                                                            <span className="text-[10px] font-black text-slate-500 uppercase">{entry.name}</span>
+                                                            <span className="text-[10px] font-medium text-slate-500 uppercase">{entry.name}</span>
                                                         </div>
-                                                        <span className="text-[11px] font-black text-slate-900 dark:text-white tabular-nums">
+                                                        <span className="text-[11px] font-medium text-slate-900 dark:text-white tabular-nums">
                                                             {entry.value.toLocaleString()}
                                                         </span>
                                                     </div>
@@ -87,9 +87,9 @@ export const DashboardCharts = ({ isTeacher, monthlyData }: DashboardChartsProps
 };
 
 const LegendItem = ({ color, label }: { color: string, label: string }) => (
-    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 transition-all hover:border-indigo-500/50">
+    <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 border border-slate-200 dark:border-slate-700 transition-all hover:border-indigo-500/50">
         <div className={cn("w-2 h-2 rounded-full", color)} />
-        <span className="text-[9px] font-black text-slate-900 dark:text-slate-400 uppercase">{label}</span>
+        <span className="text-[9px] font-medium text-slate-900 dark:text-slate-400 uppercase">{label}</span>
     </div>
 );
 

@@ -18,22 +18,22 @@ export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableP
                         <CalendarCheck size={22} className="text-white" />
                     </div>
                     <div>
-                        <h3 className="font-black text-gray-900 dark:text-white text-sm tracking-tight uppercase">جدول حصص اليوم</h3>
-                        <p className="text-[10px] font-black text-primary-600 uppercase tracking-widest opacity-80">أجندتك التعليمية ليوم {new Date().toLocaleDateString('ar-EG', { weekday: 'long' })}</p>
+                        <h3 className="font-medium text-gray-900 dark:text-white text-sm tracking-tight uppercase">جدول حصص اليوم</h3>
+                        <p className="text-[10px] font-medium text-primary-600 uppercase tracking-widest opacity-80">أجندتك التعليمية ليوم {new Date().toLocaleDateString('ar-EG', { weekday: 'long' })}</p>
                     </div>
                 </div>
-                <Link to="/attendance" className="bg-white dark:bg-gray-800 border border-primary-200 text-primary-600 px-4 py-2 text-[10px] font-black uppercase hover:bg-primary-50 transition-all">إدارة كل الحضور</Link>
+                <Link to="/attendance" className="bg-white dark:bg-gray-800 border border-primary-200 text-primary-600 px-4 py-2 text-[10px] font-medium uppercase hover:bg-primary-50 transition-all">إدارة كل الحضور</Link>
             </div>
 
             <div className="p-0 overflow-x-auto">
                 <table className="w-full">
                     <thead>
                         <tr className="bg-gray-50/50 dark:bg-gray-800/30 border-b border-gray-100 dark:border-gray-800">
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الوقت</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الطالب</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">المادة</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الحالة</th>
-                            <th className="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">الإجراءات السريعة</th>
+                            <th className="px-6 py-4 text-[10px] font-medium text-gray-400 uppercase tracking-widest text-center">الوقت</th>
+                            <th className="px-6 py-4 text-[10px] font-medium text-gray-400 uppercase tracking-widest text-center">الطالب</th>
+                            <th className="px-6 py-4 text-[10px] font-medium text-gray-400 uppercase tracking-widest text-center">المادة</th>
+                            <th className="px-6 py-4 text-[10px] font-medium text-gray-400 uppercase tracking-widest text-center">الحالة</th>
+                            <th className="px-6 py-4 text-[10px] font-medium text-gray-400 uppercase tracking-widest text-center">الإجراءات السريعة</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,17 +41,17 @@ export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableP
                             todaySessions.map((session, idx) => (
                                 <tr key={idx} className="hover:bg-primary-50/20 transition-colors border-b last:border-0 border-gray-50 dark:border-gray-800/50 text-center">
                                     <td className="px-6 py-4">
-                                        <span className="font-mono font-black text-primary-600 text-xs">{session.time}</span>
+                                        <span className="font-mono font-medium text-primary-600 text-xs">{session.time}</span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="font-black text-gray-900 dark:text-white text-xs">{session.studentName}</span>
+                                        <span className="font-medium text-gray-900 dark:text-white text-xs">{session.studentName}</span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 text-[10px] font-bold uppercase">{session.subject}</span>
+                                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 text-[10px] font-normal uppercase">{session.subject}</span>
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={cn(
-                                            "px-3 py-1 text-[10px] font-black uppercase border",
+                                            "px-3 py-1 text-[10px] font-medium uppercase border",
                                             session.status === 'completed' ? "bg-emerald-50 text-emerald-600 border-emerald-100" :
                                                 session.status === 'cancelled' ? "bg-rose-50 text-rose-600 border-rose-100" :
                                                     "bg-blue-50 text-blue-600 border-blue-100"
@@ -95,7 +95,7 @@ export const AgendaTable = ({ todaySessions, updateSessionStatus }: AgendaTableP
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={5} className="px-6 py-12 text-center text-xs font-black text-gray-400 opacity-30 uppercase tracking-widest">لا توجد حصص مجدولة لليوم</td>
+                                <td colSpan={5} className="px-6 py-12 text-center text-xs font-medium text-gray-400 opacity-30 uppercase tracking-widest">لا توجد حصص مجدولة لليوم</td>
                             </tr>
                         )}
                     </tbody>

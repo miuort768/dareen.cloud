@@ -25,7 +25,7 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
             
             <div className="flex items-center gap-2 mb-6 text-gray-950 dark:text-white">
                 <Target size={20} className="text-primary-600" />
-                <h3 className="font-black text-xs uppercase tracking-tighter">أهداف المكافآت المهنية (KPIs)</h3>
+                <h3 className="font-medium text-xs uppercase tracking-tighter">أهداف المكافآت المهنية (KPIs)</h3>
             </div>
 
             <div className="space-y-6">
@@ -42,9 +42,9 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                                     )}>
                                         {goal.icon}
                                     </div>
-                                    <span className="text-[10px] font-black text-gray-900 dark:text-white uppercase">{goal.name}</span>
+                                    <span className="text-[10px] font-medium text-gray-900 dark:text-white uppercase">{goal.name}</span>
                                 </div>
-                                <div className="text-[10px] font-black">
+                                <div className="text-[10px] font-medium">
                                     <span className={cn(isAchieved ? "text-emerald-600" : "text-primary-600")}>{goal.value}{goal.unit}</span>
                                     <span className="text-gray-300 mx-1">/</span>
                                     <span className="text-gray-400">{goal.goal}{goal.unit}</span>
@@ -68,13 +68,13 @@ export const TeacherRewardsKPIs = ({ stats }: TeacherRewardsKPIsProps) => {
                 <div className="flex items-center gap-3">
                     <Award size={20} className="text-yellow-400 animate-bounce" />
                     <div>
-                        <p className="text-[9px] font-black text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
-                        <h4 className="text-xs font-black uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
+                        <p className="text-[9px] font-medium text-white/60 leading-none mb-1 uppercase tracking-widest">المكافأة الموالية</p>
+                        <h4 className="text-xs font-medium uppercase tracking-tighter">{next ? next.name : 'أعلى رتبة (لورد مطلق)'}</h4>
                     </div>
                 </div>
                 <div className="text-right">
-                    <p className="text-[8px] font-black opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
-                    <p className="text-lg font-black tracking-tighter italic">{next ? pointsNeeded : 'MAX'}</p>
+                    <p className="text-[8px] font-medium opacity-30 uppercase tracking-widest leading-none">نقاط متبقية</p>
+                    <p className="text-lg font-medium tracking-tighter italic">{next ? pointsNeeded : 'MAX'}</p>
                 </div>
             </div>
         </div>

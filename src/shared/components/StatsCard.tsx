@@ -38,13 +38,13 @@ export const StatsCard = ({ title, value, icon: Icon, trend, trendUp, color = 'b
 
                 {/* Content */}
                 <div className="min-w-0 flex-1">
-                    <p className="text-[9px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-tighter leading-none mb-1 truncate">{title}</p>
-                    <h3 className="text-sm font-black text-gray-950 dark:text-white tracking-tight tabular-nums leading-none truncate">
+                    <p className="text-[9px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-tighter leading-none mb-1 truncate">{title}</p>
+                    <h3 className="text-sm font-medium text-gray-950 dark:text-white tracking-tight tabular-nums leading-none truncate">
                         {value}
                     </h3>
                     {trend && (
                         <p className={cn(
-                            "text-[8px] font-black mt-1 leading-none uppercase italic",
+                            "text-[8px] font-medium mt-1 leading-none uppercase italic",
                             trendUp ? "text-emerald-500" : "text-rose-500"
                         )}>
                             {trend}

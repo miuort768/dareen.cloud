@@ -66,7 +66,7 @@ export const BottomNav = () => {
                 />
               </div>
               <span className={cn(
-                "text-[10px] font-black tracking-tight transition-all duration-200",
+                "text-[10px] font-medium tracking-tight transition-all duration-200",
                 isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"
               )}>
                 {item.label}

@@ -53,18 +53,18 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
     return (
         <div className="w-full space-y-6" dir="rtl">
             {/* Header / Tabs - Soft Modern style */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
                 <div className="flex items-center gap-4 px-1">
-                    <div className="w-12 h-12 bg-slate-950 dark:bg-white text-white dark:text-slate-950 rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
+                    <div className="w-12 h-12 bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center border border-white/10 shadow-sm">
                         <Database size={24} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل البيانات</h3>
-                        <p className="text-[9px] font-black text-slate-400 mt-0.5 uppercase tracking-tight">وحدة ذكاء الأعمال</p>
+                        <h3 className="text-sm font-medium text-slate-900 dark:text-white leading-tight uppercase tracking-tight">مركز تحليل البيانات</h3>
+                        <p className="text-[9px] font-medium text-slate-400 mt-0.5 uppercase tracking-tight">وحدة ذكاء الأعمال</p>
                     </div>
                 </div>
 
-                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div className="flex bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700">
                     <TabButton 
                         active={activeTab === 'commitment'} 
                         onClick={() => setActiveTab('commitment')} 
@@ -83,21 +83,21 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
                 {/* Evolution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
-                    activeTab !== 'commitment' && "hidden lg:block opacity-40 grayscale"
+                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
+                    activeTab !== 'commitment' && "hidden lg:block"
                 )}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-emerald-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
+                            <div className="w-10 h-10 bg-emerald-600 text-white flex items-center justify-center border border-white/10 shadow-sm">
                                 <TrendingUp size={20} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">التحليل التحصيلي</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">التقدم الأكاديمي</p>
+                                <h4 className="font-medium text-slate-900 dark:text-white text-xs uppercase tracking-tight">التحليل التحصيلي</h4>
+                                <p className="text-[8px] font-medium text-slate-400 uppercase mt-0.5">التقدم الأكاديمي</p>
                             </div>
                         </div>
                         <div className="bg-emerald-600 text-white px-3 py-1 rounded-none border border-emerald-500/50 shadow-sm">
-                            <span className="text-[10px] font-black tabular-nums uppercase">{overallRate}% إجمالي</span>
+                            <span className="text-[10px] font-medium tabular-nums uppercase">{overallRate}% إجمالي</span>
                         </div>
                     </div>
 
@@ -153,21 +153,21 @@ export const AnalyticsDashboard = ({ students, sessions, monthlyData }: Analytic
 
                 {/* Distribution Section */}
                 <div className={cn(
-                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
-                    activeTab !== 'database' && "hidden lg:block opacity-40 grayscale"
+                    "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 md:p-8 shadow-sm transition-all relative overflow-hidden", 
+                    activeTab !== 'database' && "hidden lg:block"
                 )}>
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center border border-white/10 shadow-sm">
+                            <div className="w-10 h-10 bg-indigo-600 text-white flex items-center justify-center border border-white/10 shadow-sm">
                                 <BarChart3 size={20} />
                             </div>
                             <div>
-                                <h4 className="font-black text-slate-900 dark:text-white text-xs uppercase tracking-tight">خارطة توزيع المناهج</h4>
-                                <p className="text-[8px] font-black text-slate-400 uppercase mt-0.5">تحليلات المناهج</p>
+                                <h4 className="font-medium text-slate-900 dark:text-white text-xs uppercase tracking-tight">خارطة توزيع المناهج</h4>
+                                <p className="text-[8px] font-medium text-slate-400 uppercase mt-0.5">تحليلات المناهج</p>
                             </div>
                         </div>
                         <div className="bg-indigo-600 text-white px-3 py-1 rounded-none border border-indigo-500/50 shadow-sm">
-                            <span className="text-[10px] font-black tabular-nums uppercase">{students.length} مستخدم</span>
+                            <span className="text-[10px] font-medium tabular-nums uppercase">{students.length} مستخدم</span>
                         </div>
                     </div>
 
@@ -217,7 +217,7 @@ const TabButton = ({ active, onClick, icon: Icon, label }: { active: boolean, on
     <button 
         onClick={onClick}
         className={cn(
-            "flex-1 px-6 py-2 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+            "flex-1 px-6 py-2 font-medium text-[9px] uppercase tracking-widest transition-all flex items-center justify-center gap-2",
             active ? "bg-white dark:bg-slate-900 text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
         )}
     >

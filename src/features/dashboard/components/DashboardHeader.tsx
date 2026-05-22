@@ -45,7 +45,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 opacity-20 blur-[8px]" />
                     <div className="relative w-16 h-16 rounded-2xl border-2 border-white/10 bg-white/5 backdrop-blur-lg flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.25)">
                         <div className="relative z-10">
-                            <span className="text-2xl font-black text-white/90">د</span>
+                            <span className="text-2xl font-medium text-white/90">د</span>
                             <div className="absolute -top-2 -right-2 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
                         </div>
                     </div>
@@ -54,23 +54,23 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 <div className="text-right">
                     <div className="flex items-center gap-3 mb-3">
                         <div className="flex items-center gap-2">
-                            <div className="bg-white/15 text-white border border-white/10 text-[9px] font-black px-3 py-1.5 uppercase tracking-widest leading-none flex items-center gap-1.5 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-all">
+                            <div className="bg-white/15 text-white border border-white/10 text-[9px] font-medium px-3 py-1.5 uppercase tracking-widest leading-none flex items-center gap-1.5 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-all">
                                 <ShieldCheck size={10} className="text-amber-400" />
                                 {isTeacher ? 'معلم معتمد' : 'مدير النظام'}
                             </div>
-                            <div className="flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-[8px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest border border-emerald-400/20 hover:bg-emerald-500/30 transition-all">
+                            <div className="flex items-center gap-1.5 bg-emerald-500/20 text-emerald-300 text-[8px] font-medium px-2.5 py-1 rounded-lg uppercase tracking-widest border border-emerald-400/20 hover:bg-emerald-500/30 transition-all">
                                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
                                 <span className="animate-[pulse_2s_ease_in_out_infinite]">نشط</span>
                             </div>
                         </div>
                     </div>
-                    <h1 className="text-3xl font-black leading-tight tracking-tighter text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-100 via-indigo-200 to-white/20">
+                    <h1 className="text-3xl font-medium leading-tight tracking-tighter text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-100 via-indigo-200 to-white/20">
                         {isTeacher ? `أهلاً بك، أ. ${currentUser?.name || ''}` : 'المنصة الذكية لإدارة المعاهد'}
                     </h1>
                     <div className="flex items-center gap-4 mt-3">
                         <div className="flex items-center gap-2 text-white/60">
                             <Calendar size={12} className="text-amber-400/80" />
-                            <span className="text-xs font-bold tabular-nums tracking-widest">
+                            <span className="text-xs font-normal tabular-nums tracking-widest">
                                 {new Intl.DateTimeFormat('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())}
                             </span>
                         </div>
@@ -89,7 +89,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 <div className="relative flex items-center gap-3 px-5 h-11 border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 rounded-2xl backdrop-blur-sm shadow-sm hover:shadow-md">
                     <div className="absolute inset-0 rounded-2xl bg-white/3 opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
                     <Clock size={16} className="text-amber-400/80" />
-                    <span className="text-xs font-bold tabular-nums tracking-widest">
+                    <span className="text-xs font-normal tabular-nums tracking-widest">
                         {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </span>
                 </div>
@@ -97,7 +97,7 @@ export const DashboardHeader = ({ isTeacher, currentUser }: DashboardHeaderProps
                 {/* Support Button */}
                 <button
                     onClick={() => window.open('https://wa.me/message/DAREEN', '_blank')}
-                    className="relative flex h-11 px-6 font-bold text-[10px] uppercase tracking-widest flex items-center gap-3 transition-all duration-300 active:scale-[0.97] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white border border-amber-400/30 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-600/25"
+                    className="relative flex h-11 px-6 font-normal text-[10px] uppercase tracking-widest flex items-center gap-3 transition-all duration-300 active:scale-[0.97] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white border border-amber-400/30 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-2xl hover:shadow-amber-600/25"
                 >
                     <div className="absolute inset-0 rounded-xl bg-white/5 opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
                     <Headphones size={16} />

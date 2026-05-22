@@ -70,7 +70,7 @@ export const ModernAnnouncements: React.FC = () => {
     };
 
     return (
-        <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 overflow-hidden mb-6 transition-all duration-300 h-full" dir="rtl">
+        <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden mb-6 transition-all duration-300 h-full" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div 
@@ -80,10 +80,10 @@ export const ModernAnnouncements: React.FC = () => {
                         type.bg
                     )}
                 >
-                    <div className="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-center shadow-sm">
+                    <div className="w-10 h-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center shadow-sm">
                         <type.icon size={20} className={type.color} />
                     </div>
-                    <span className={cn("text-[9px] font-black uppercase tracking-tight leading-none text-center", type.color)}>
+                    <span className={cn("text-[9px] font-medium uppercase tracking-tight leading-none text-center", type.color)}>
                         {type.label}
                     </span>
                 </div>
@@ -93,9 +93,9 @@ export const ModernAnnouncements: React.FC = () => {
                     onClick={() => setShowAcknowledge(true)}
                     className="flex-1 p-6 md:p-8 relative cursor-pointer group"
                 >
-                    <div className="absolute top-4 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950 rounded-full">
+                    <div className="absolute top-4 left-6 flex items-center gap-1.5 px-2 py-0.5 bg-slate-950 text-white dark:bg-white dark:text-slate-950">
                         <Sparkles size={10} className="text-amber-400" />
-                        <span className="text-[8px] font-black uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
+                        <span className="text-[8px] font-medium uppercase tracking-tight">إعلان {currentIndex + 1} / {announcements.length}</span>
                     </div>
 
                     <AnimatePresence mode="wait">
@@ -107,10 +107,10 @@ export const ModernAnnouncements: React.FC = () => {
                             transition={{ duration: 0.3 }}
                             className="pr-1 mt-4"
                         >
-                            <h4 className="text-slate-900 dark:text-white font-black text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
+                            <h4 className="text-slate-900 dark:text-white font-medium text-lg md:text-xl mb-3 leading-tight uppercase tracking-tight">
                                 {current.title}
                             </h4>
-                            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm leading-relaxed font-bold line-clamp-2">
+                            <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm leading-relaxed font-normal line-clamp-2">
                                 {current.content}
                             </p>
                         </motion.div>
@@ -119,8 +119,8 @@ export const ModernAnnouncements: React.FC = () => {
                     {/* Navigation */}
                     {announcements.length > 1 && (
                         <div className="absolute bottom-4 left-6 flex gap-2" onClick={e => e.stopPropagation()}>
-                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all rounded-lg"><ChevronRight size={16} /></button>
-                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all rounded-lg"><ChevronLeft size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"><ChevronRight size={16} /></button>
+                            <button onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"><ChevronLeft size={16} /></button>
                         </div>
                     )}
                 </div>
@@ -138,25 +138,25 @@ export const ModernAnnouncements: React.FC = () => {
             {/* Acknowledgment Modal */}
             <AnimatePresence>
                 {showAcknowledge && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 backdrop-blur-sm bg-slate-950/40">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-950/40">
                         <motion.div 
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 md:p-10 max-w-lg w-full shadow-2xl rounded-3xl"
+                            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6 md:p-10 max-w-lg w-full"
                         >
                             <div className="flex items-center gap-5 mb-8">
-                                <div className={cn("w-16 h-16 border border-white/10 flex items-center justify-center shadow-sm rounded-2xl", type.bg)}>
+                                <div className={cn("w-16 h-16 border border-white/10 flex items-center justify-center shadow-sm", type.bg)}>
                                     <type.icon size={28} className={type.color} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">تأكيد القراءة</h3>
-                                    <p className="text-[9px] font-black text-slate-400 uppercase mt-0.5">إشعار الامتثال الهام</p>
+                                    <h3 className="text-xl font-medium text-slate-900 dark:text-white leading-tight uppercase tracking-tight">تأكيد القراءة</h3>
+                                    <p className="text-[9px] font-medium text-slate-400 uppercase mt-0.5">إشعار الامتثال الهام</p>
                                 </div>
                             </div>
 
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-5 md:p-8 mb-8 border-r-4 border-indigo-600 rounded-xl">
-                                <p className="text-base font-bold text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                            <div className="bg-slate-50 dark:bg-slate-800/50 p-5 md:p-8 mb-8 border-r-4 border-indigo-600">
+                                <p className="text-base font-normal text-slate-700 dark:text-slate-300 leading-relaxed italic">
                                     "{current.content}"
                                 </p>
                             </div>
@@ -164,14 +164,14 @@ export const ModernAnnouncements: React.FC = () => {
                             <div className="grid grid-cols-2 gap-3">
                                 <button 
                                     onClick={handleDismiss}
-                                    className="h-12 bg-indigo-600 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-indigo-700 rounded-xl transition-all shadow-sm active:scale-[0.98]"
+                                    className="h-12 bg-indigo-600 text-white font-medium text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all shadow-sm active:scale-[0.98]"
                                 >
                                     <Check size={16} />
                                     موافق، تم الاطلاع
                                 </button>
                                 <button 
                                     onClick={() => setShowAcknowledge(false)}
-                                    className="h-12 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-50 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-sm active:scale-[0.98]"
+                                    className="h-12 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-50 border border-slate-200 dark:border-slate-700 transition-all shadow-sm active:scale-[0.98]"
                                 >
                                     <X size={16} />
                                     إغلاق

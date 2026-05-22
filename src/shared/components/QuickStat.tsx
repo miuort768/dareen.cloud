@@ -33,11 +33,11 @@ export const QuickStat = ({ title, value, icon: Icon, color, trend }: QuickStatP
                     <Icon size={20} />
                 </div>
                 <div className="flex-1 text-center">
-                    <p className="text-xs text-gray-500 font-bold whitespace-nowrap dark:text-gray-400 mb-0.5">{title}</p>
+                    <p className="text-xs text-gray-500 font-normal whitespace-nowrap dark:text-gray-400 mb-0.5">{title}</p>
                     <div className="flex items-center justify-center gap-2">
-                        <h3 className="text-xs font-bold text-gray-900 dark:text-white">{value}</h3>
+                        <h3 className="text-xs font-normal text-gray-900 dark:text-white">{value}</h3>
                         {trend && (
-                            <span className={`text-xs font-bold ${trend.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                            <span className={`text-xs font-normal ${trend.isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                                 {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
                             </span>
                         )}

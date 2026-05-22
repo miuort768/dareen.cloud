@@ -102,7 +102,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                         <Zap size={16} />
                     </div>
                     <div>
-                        <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-tight">إخطارات ذكية</h4>
+                        <h4 className="text-sm font-normal text-slate-900 dark:text-white uppercase tracking-tight">إخطارات ذكية</h4>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ export const SmartAlerts = ({ students, sessions, studentInvoices, lowBalanceStu
                                 <Icon size={14} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className={cn("font-bold text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
+                                <p className={cn("font-normal text-[11px] tracking-tight truncate", c.text)}>{alert.title}</p>
                                 <p className={cn("text-[9px] font-medium leading-none mt-1", c.sub)}>{alert.desc}</p>
                             </div>
                             {alert.action && (

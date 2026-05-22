@@ -48,8 +48,8 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <Trophy size={20} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">الأكثر حضوراً</h3>
-                        <p className="text-[9px] font-black text-amber-500 mt-0.5 uppercase tracking-tight flex items-center gap-1.5">
+                        <h3 className="text-sm font-medium text-slate-900 dark:text-white uppercase tracking-tight leading-tight">الأكثر حضوراً</h3>
+                        <p className="text-[9px] font-medium text-amber-500 mt-0.5 uppercase tracking-tight flex items-center gap-1.5">
                             قادة الحضور والالتزام
                         </p>
                     </div>
@@ -74,7 +74,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                         <User size={18} />
                                     </div>
                                     <div className={cn(
-                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-black border border-slate-200 dark:border-slate-700 shadow-sm",
+                                        "absolute -top-1.5 -right-1.5 w-5 h-5 rounded-none flex items-center justify-center text-[9px] font-medium border border-slate-200 dark:border-slate-700 shadow-sm",
                                         i === 0 ? "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/30" :
                                         i === 1 ? "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500" :
                                         i === 2 ? "bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-500/20 dark:text-orange-400 dark:border-orange-500/30" : "bg-white text-slate-500 dark:bg-slate-800 dark:text-slate-400"
@@ -83,14 +83,14 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="font-black text-xs text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
-                                    <p className="text-[8px] font-bold text-slate-400 uppercase mt-0.5">أداء متميز</p>
+                                    <h4 className="font-medium text-xs text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors uppercase tracking-tight truncate">{stu.name}</h4>
+                                    <p className="text-[8px] font-normal text-slate-400 uppercase mt-0.5">أداء متميز</p>
                                 </div>
                             </div>
                             
                             <div className="text-left">
-                                <div className="text-xl font-black text-slate-900 dark:text-white tabular-nums leading-none">{stu.count}</div>
-                                <div className="text-[8px] font-black text-amber-500 uppercase mt-1">حصة</div>
+                                <div className="text-xl font-medium text-slate-900 dark:text-white tabular-nums leading-none">{stu.count}</div>
+                                <div className="text-[8px] font-medium text-amber-500 uppercase mt-1">حصة</div>
                             </div>
                         </div>
                     ))
@@ -99,7 +99,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-none flex items-center justify-center mb-4">
                             <User size={24} className="text-slate-300" />
                         </div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase">لا توجد سجلات حالياً</p>
+                        <p className="text-[9px] font-medium text-slate-400 uppercase">لا توجد سجلات حالياً</p>
                     </div>
                 )}
             </div>
@@ -108,8 +108,8 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             <div className="mt-6">
                 <div className="bg-indigo-600 dark:bg-indigo-750 border border-indigo-500 rounded-none p-4 text-white flex items-center justify-between shadow-sm transition-transform hover:translate-y-[-2px]">
                     <div>
-                        <h4 className="text-[9px] font-black uppercase opacity-80 mb-0.5">إجمالي حصص الشهر</h4>
-                        <p className="text-xl font-black tabular-nums leading-none">{totalMonthSessions}</p>
+                        <h4 className="text-[9px] font-medium uppercase opacity-80 mb-0.5">إجمالي حصص الشهر</h4>
+                        <p className="text-xl font-medium tabular-nums leading-none">{totalMonthSessions}</p>
                     </div>
                     <div className="w-9 h-9 bg-white/10 rounded-none flex items-center justify-center border border-white/20">
                         <TrendingUp size={18} />

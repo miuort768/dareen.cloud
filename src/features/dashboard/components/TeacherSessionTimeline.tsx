@@ -28,13 +28,13 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                         <Clock size={20} />
                     </div>
                     <div>
-                        <h3 className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">الجدول الزمني</h3>
-                        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-black mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
+                        <h3 className="font-medium text-sm text-slate-900 dark:text-white uppercase tracking-tight">الجدول الزمني</h3>
+                        <p className="text-[9px] text-slate-400 dark:text-slate-500 font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
                 <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500 text-white border border-emerald-450 rounded-none shadow-sm">
                     <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                    <span className="text-[9px] font-black uppercase">LIVE NOW</span>
+                    <span className="text-[9px] font-medium uppercase">LIVE NOW</span>
                 </div>
             </div>
 
@@ -55,13 +55,13 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                                     ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-500/30"
                                     : isCancelled
                                     ? "bg-rose-50 dark:bg-rose-950/20 border-rose-500/30"
-                                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 hover:shadow-md hover:-translate-y-1"
+                                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 hover:-translate-y-1"
                             )}
                         >
                             {/* Time + status icon */}
                             <div className="flex items-center justify-between mb-4">
                                 <div className={cn(
-                                    "px-2 py-0.5 rounded-none text-[10px] font-black tabular-nums border",
+                                    "px-2 py-0.5 rounded-none text-[10px] font-medium tabular-nums border",
                                     isCompleted 
                                         ? "bg-emerald-500 text-white border-emerald-400" 
                                         : isCancelled 
@@ -76,7 +76,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                             </div>
 
                             {/* Student name */}
-                            <h4 className="text-xs font-black text-slate-900 dark:text-white truncate mb-1 uppercase tracking-tight">
+                            <h4 className="text-xs font-medium text-slate-900 dark:text-white truncate mb-1 uppercase tracking-tight">
                                 {session.studentName}
                             </h4>
 
@@ -86,7 +86,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                                     "w-1.5 h-1.5 rounded-none border border-slate-300 dark:border-slate-700",
                                     isCompleted ? "bg-emerald-600" : isCancelled ? "bg-rose-600" : "bg-indigo-600"
                                 )} />
-                                <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate uppercase">
+                                <p className="text-[9px] font-normal text-slate-500 dark:text-slate-400 truncate uppercase">
                                     {session.subject}
                                 </p>
                             </div>
@@ -94,7 +94,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
                             {/* Status label */}
                             <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
                                 <span className={cn(
-                                    "text-[9px] font-black uppercase",
+                                    "text-[9px] font-medium uppercase",
                                     isCompleted ? "text-emerald-600" : isCancelled ? "text-rose-600" : "text-indigo-600"
                                 )}>
                                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
@@ -104,11 +104,11 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick }: TeacherSess
 
                             {/* Hover play overlay */}
                             {isOngoing && (
-                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-750/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10 shadow-lg">
+                                <button className="absolute inset-2 bg-indigo-600/95 dark:bg-indigo-750/95 text-white rounded-none border border-indigo-500 dark:border-indigo-400 flex flex-col items-center justify-center opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
                                     <div className="w-9 h-9 bg-white text-indigo-600 rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-sm">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
-                                    <span className="font-black text-[9px] uppercase">بدء الحصة</span>
+                                    <span className="font-medium text-[9px] uppercase">بدء الحصة</span>
                                 </button>
                             )}
                         </div>
