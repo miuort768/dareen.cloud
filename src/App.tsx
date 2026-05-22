@@ -8,6 +8,7 @@ import { InstallPWA } from './components/ui/InstallPWA';
 
 // Lazy load pages for high performance
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
+const SocketInitLayer = lazy(() => import('./components/ui/SocketInitLayer').then(m => ({ default: m.SocketInitLayer })));
 const Home = lazy(() => import('./pages/public/Home').then(m => ({ default: m.Home })));
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const Settings = lazy(() => import('./pages/Settings'));
@@ -50,9 +51,6 @@ import { FloatingActions } from './components/public/FloatingActions';
 const Classroom = lazy(() => import('./pages/Classroom').then(m => ({ default: m.Classroom })));
 
 
-
-
-import { useChatSocketInit } from './hooks/useChatSocketInit';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -115,8 +113,7 @@ function App() {
     setLoadTimeout(false);
   }, [isLoading, isSettingsLoading]);
 
-  // Initialize Global Socket Listeners for Chat & Live Sessions
-  useChatSocketInit();
+
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') || localStorage.getItem('public-theme');
@@ -185,6 +182,9 @@ function App() {
       {['/', '/courses', '/about', '/contact', '/books'].includes(location.pathname) || location.pathname.startsWith('/books/') ? (
         <FloatingActions />
       ) : null}
+      <Suspense fallback={null}>
+        <SocketInitLayer />
+      </Suspense>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Public Routes */}
