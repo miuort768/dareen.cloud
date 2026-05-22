@@ -17,6 +17,13 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const duration = 3000; // 3 seconds auto-close
 
+    const handleClose = useCallback(() => {
+        setIsExiting(true);
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        timeoutRef.current = setTimeout(onClose, 350); // Wait for exit transition
+    }, [onClose]);
+
     useEffect(() => {
         if (isOpen) {
             setIsExiting(false);
@@ -50,13 +57,6 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
     }, []);
-
-    const handleClose = useCallback(() => {
-        setIsExiting(true);
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        timeoutRef.current = setTimeout(onClose, 350); // Wait for exit transition
-    }, [onClose]);
 
     if (!isOpen && !isExiting) return null;
 

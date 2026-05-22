@@ -114,6 +114,13 @@ export const Settings = () => {
 
     const [hapticEnabled, setHapticEnabled] = useState(() => localStorage.getItem('haptic_enabled') !== 'false');
 
+    const fetchLogs = useCallback(async () => {
+        try {
+            const logs = await settingsService.getAuditLogs();
+            setAuditLogs(logs || []);
+        } catch (e) { console.error(e); }
+    }, []);
+
     const handleExportBackup = async () => {
         setIsSaving(true);
         try {
@@ -231,13 +238,6 @@ export const Settings = () => {
             /* keep existing if parse fails */
         }
     }, [heroBanners]);
-
-    const fetchLogs = useCallback(async () => {
-        try {
-            const logs = await settingsService.getAuditLogs();
-            setAuditLogs(logs || []);
-        } catch (e) { console.error(e); }
-    }, []);
 
     const showNotify = (msg: string) => {
         setNotificationMessage(msg);

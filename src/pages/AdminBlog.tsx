@@ -32,10 +32,6 @@ export const AdminBlog = () => {
     const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
     const [submitting, setSubmitting] = useState(false);
 
-    useEffect(() => {
-        fetchPosts();
-    }, [fetchPosts]);
-
     const fetchPosts = useCallback(async () => {
         try {
             setLoading(true);
@@ -46,6 +42,10 @@ export const AdminBlog = () => {
                 setLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        fetchPosts();
+    }, [fetchPosts]);
 
     const handleOpenModal = (post: BlogPost | null = null) => {
         if (post) {
