@@ -40,16 +40,6 @@ export const Chat: React.FC = () => {
         useUnreadStore.getState().setActiveConversationId(id);
     }, [selectedConv, setActiveConversationId]);
 
-    // Handle "Start Chat With" from other pages
-    React.useEffect(() => {
-        const targetUserId = location.state?.startChatWith;
-        if (targetUserId && availableUsers.length > 0) {
-            handleCreateDirectChat(targetUserId);
-            // Clear the state so it doesn't re-trigger
-            window.history.replaceState({}, document.title);
-        }
-    }, [location.state, availableUsers, handleCreateDirectChat]);
-
     // Modal States
     const [showNewChatModal, setShowNewChatModal] = useState(false);
     const [isEditingGroup, setIsEditingGroup] = useState(false);
@@ -114,6 +104,16 @@ export const Chat: React.FC = () => {
             console.error('Failed to create direct chat:', err);
         }
     }, [createDirectChat]);
+
+    // Handle "Start Chat With" from other pages
+    React.useEffect(() => {
+        const targetUserId = location.state?.startChatWith;
+        if (targetUserId && availableUsers.length > 0) {
+            handleCreateDirectChat(targetUserId);
+            // Clear the state so it doesn't re-trigger
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state, availableUsers, handleCreateDirectChat]);
 
     const handleDeleteAllClick = () => {
         setDeleteType('all_conversations');
