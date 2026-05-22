@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import { api } from '../lib/api';
 
 interface SettingsState {
@@ -277,9 +277,9 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     }
 }));
 
-// Auto-fetch settings on store initialization
+// Auto-fetch settings on store initialization (deferred to avoid TDZ issues)
 if (typeof window !== 'undefined') {
-    useSettingsStore.getState().fetchSettings();
+    queueMicrotask(() => useSettingsStore.getState().fetchSettings());
 }
 
 // Initialize theme color on load

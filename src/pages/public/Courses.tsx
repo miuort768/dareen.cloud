@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { Search, Users, Sparkles, LayoutGrid, BookOpen, Globe, Languages, Target, Star, MessageCircle } from 'lucide-react';
+import { Search, Users, Sparkles, LayoutGrid, BookOpen, Globe, Languages, Target, Star, MessageCircle, GraduationCap } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 

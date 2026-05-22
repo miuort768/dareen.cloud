@@ -124,9 +124,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
 }));
 
-// Auto-verify token on store initialization
+// Auto-verify token on store initialization (deferred to avoid TDZ issues)
 if (typeof window !== 'undefined') {
-    useAuthStore.getState().verifyToken();
+    queueMicrotask(() => useAuthStore.getState().verifyToken());
 }
 
 // Setup global auth logout event listener
