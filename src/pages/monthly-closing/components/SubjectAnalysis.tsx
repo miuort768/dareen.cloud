@@ -42,7 +42,7 @@ export const SubjectAnalysis: React.FC<SubjectAnalysisProps> = ({ subjectAnalysi
                                 <span className="text-slate-400">صافي الربح</span>
                                 <span className="font-bold text-indigo-600">{subj.profit.toLocaleString()} ج.م</span>
                             </div>
-                            <div className="h-1 bg-slate-50 dark:bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-1 bg-slate-50 dark:bg-slate-800 overflow-hidden">
                                 <div className="h-full bg-indigo-500" style={{ width: `${Math.min(100, (subj.profit/subj.income)*100)}%` }} />
                             </div>
                             <div className="flex justify-between items-center text-[9px] text-slate-400 mt-1">

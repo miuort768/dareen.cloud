@@ -11,7 +11,7 @@ interface StrategicSummaryProps {
 
 export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout }) => {
     return (
-        <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden border-none rounded-2xl shadow-2xl">
+        <SectionCard className="p-12 bg-slate-950 text-white relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-indigo-500/5 -rotate-12 translate-y-1/3 -translate-x-1/4 blur-2xl pointer-events-none"></div>
             <div className="absolute top-20 left-10 w-40 h-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent rotate-45 pointer-events-none"></div>

@@ -57,7 +57,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 rounded-lg font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 text-white",
+                                            "px-3 py-1 font-bold text-[9px] uppercase transition-all shadow-sm active:scale-95 text-white",
                                             item.status === 'paid' ? "bg-emerald-600" : "bg-rose-600"
                                         )}
                                     >

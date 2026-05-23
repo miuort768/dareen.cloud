@@ -45,7 +45,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white font-bold text-[10px] rounded-lg">
+                                        <div className="w-8 h-8 bg-slate-900 dark:bg-slate-800 flex items-center justify-center text-white font-bold text-[10px]">
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>
@@ -61,7 +61,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                         type="number"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-1 text-center font-bold text-[10px] outline-none focus:border-[#5c59f2]"
+                                        className="w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 text-center font-bold text-[10px] outline-none focus:border-[#5c59f2]"
                                         placeholder="0"
                                     />
                                 </td>

@@ -17,10 +17,10 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" dir="rtl">
-            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-2xl w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-lg w-full max-w-xl overflow-hidden md:animate-in md:zoom-in-95 md:duration-200">
                 <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                        <div className="w-10 h-10 bg-indigo-600 flex items-center justify-center">
                             <Receipt size={20} className="text-white" />
                         </div>
                         <div>
@@ -28,7 +28,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <p className="text-[10px] text-slate-400 uppercase tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 rounded-lg transition-colors">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-slate-800 transition-colors">
                         <X size={18} />
                     </button>
                 </div>
@@ -38,7 +38,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                         <div>
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">المعلمة</p>
                             <h3 className="text-lg font-black text-slate-800 dark:text-white">{teacher.name}</h3>
-                            <p className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-md inline-block mt-1">{teacher.subject}</p>
+                            <p className="text-[10px] font-bold text-[#5c59f2] bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 inline-block mt-1">{teacher.subject}</p>
                         </div>
                         <div className="text-left">
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">التاريخ</p>
@@ -47,11 +47,11 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+                        <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-700">
                             <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">إجمالي الحصص</p>
                             <p className="text-2xl font-black text-slate-800 dark:text-white font-mono">{teacher.sessionsCount}</p>
                         </div>
-                        <div className="bg-[#eef2ff] dark:bg-indigo-900/20 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-800/30">
+                        <div className="bg-[#eef2ff] dark:bg-indigo-900/20 p-4 border border-indigo-100 dark:border-indigo-800/30">
                             <p className="text-[10px] font-bold text-[#5c59f2] uppercase mb-1">صافي المستحق</p>
                             <div className="flex items-baseline gap-1">
                                 <p className="text-2xl font-black text-[#5c59f2] font-mono">{teacher.totalAmount.toLocaleString()}</p>
@@ -62,7 +62,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
 
                     <div>
                         <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
-                        <div className="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                        <div className="border border-slate-100 dark:border-slate-800 overflow-hidden">
                             <table className="w-full text-right text-[11px]">
                                 <thead className="bg-slate-50 dark:bg-slate-800">
                                     <tr>

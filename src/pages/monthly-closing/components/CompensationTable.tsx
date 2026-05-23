@@ -39,7 +39,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                                 <td className="px-4 py-4 text-xs font-bold text-slate-600 dark:text-slate-400">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-[10px] text-rose-500">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
-                                    <div className="inline-block px-2 py-0.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-[9px] font-bold rounded-md">تعويض معلق</div>
+                                    <div className="inline-block px-2 py-0.5 bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-[9px] font-bold">تعويض معلق</div>
                                 </td>
                             </tr>
                         ))}
