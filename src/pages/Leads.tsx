@@ -116,14 +116,14 @@ export const Leads: React.FC = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 dark:from-[#020617] dark:via-slate-950 dark:to-indigo-950/20" dir="rtl">
             <div className="relative z-10 mx-auto px-2 md:px-4">
                 {/* Header */}
-                <div className="bg-[#172554] border border-[#1e3a5f]/60 shadow-lg shadow-black/20 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div className="bg-gradient-to-br from-rose-500 to-red-500 border border-rose-400/40 shadow-lg shadow-rose-200/30 px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 flex items-center justify-center bg-blue-600 text-white">
+                        <div className="w-12 h-12 flex items-center justify-center bg-white/20 text-white">
                             <Users size={22} />
                         </div>
                         <div>
                             <h1 className="text-lg font-bold text-white leading-tight">العملاء المحتملين</h1>
-                            <p className="text-[10px] text-blue-200/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
+                            <p className="text-[10px] text-rose-100/70 font-medium leading-none mt-1">إدارة طلبات التسجيل والمهتمين</p>
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
