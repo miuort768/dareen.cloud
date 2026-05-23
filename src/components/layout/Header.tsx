@@ -99,30 +99,30 @@ export const Header = () => {
         <header className={cn(
             "h-[60px] lg:h-[75px] flex items-center justify-between transition-all duration-500 z-[9999]",
             "sticky top-0 lg:top-2 mx-auto w-full lg:w-[96%] mb-0.5 lg:mb-1",
-            "bg-gradient-to-r from-amber-50/90 via-white/90 to-orange-50/90",
-            "dark:from-indigo-950/90 dark:via-slate-900/90 dark:to-[#0f0b2e]/90",
-            "backdrop-blur-md border-b border-amber-200/50 dark:border-indigo-800/40",
-            "shadow-sm shadow-amber-100/30 dark:shadow-indigo-950/30",
+            "bg-[#172554]/95",
+            "dark:bg-[#172554]/95",
+            "backdrop-blur-md border-b border-[#1e3a5f]/50 dark:border-[#1e3a5f]/50",
+            "shadow-sm shadow-black/10",
             "px-4 md:px-6 max-w-full",
             "md:translate-y-0 rounded-b-xl lg:rounded-xl",
-            "md:top-2 md:border md:border-amber-200/40 md:dark:border-indigo-800/30",
+            "md:top-2 md:border md:border-[#1e3a5f]/40 md:dark:border-[#1e3a5f]/40",
             headerVisible ? "translate-y-0" : "-translate-y-full md:translate-y-0"
         )}>
             <div className="flex items-center gap-3 flex-1 min-w-0">
                 <Link to="/" className="shrink-0">
-                    <div className="w-10 h-10 flex items-center justify-center border border-amber-300 dark:border-indigo-600 bg-white dark:bg-white overflow-hidden rounded-lg shadow-sm shadow-amber-200/30 dark:shadow-indigo-900/30">
+                    <div className="w-10 h-10 flex items-center justify-center border border-[#3b5b8c] bg-white overflow-hidden rounded-lg shadow-sm shadow-black/20">
                         <img src="/dareen_logo_new.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                     </div>
                 </Link>
 
                 <div className="hidden md:flex items-center gap-3">
-                    <div className="w-px h-8 bg-amber-200/60 dark:bg-indigo-700/50" />
+                    <div className="w-px h-8 bg-white/20" />
                     {title && (
                         <div className="min-w-0">
-                            <h1 className="text-base md:text-lg font-medium bg-gradient-to-l from-amber-700 to-orange-600 dark:from-indigo-200 dark:to-violet-200 bg-clip-text text-transparent truncate tracking-tight leading-none">
+                            <h1 className="text-base md:text-lg font-medium text-white truncate tracking-tight leading-none">
                                 {title}
                             </h1>
-                            <p className="text-[10px] font-normal text-amber-600/70 dark:text-indigo-300/60 uppercase tracking-widest leading-none mt-0.5">
+                            <p className="text-[10px] font-normal text-blue-200/70 uppercase tracking-widest leading-none mt-0.5">
                                 دارين للتعليم والتدريب
                             </p>
                         </div>
@@ -133,7 +133,7 @@ export const Header = () => {
             <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 <button
                     onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="w-9 h-9 flex items-center justify-center text-amber-600 dark:text-indigo-300 hover:bg-amber-100/50 dark:hover:bg-indigo-800/40 transition-colors shrink-0"
+                    className="w-9 h-9 flex items-center justify-center text-blue-200 hover:bg-white/10 transition-colors shrink-0"
                 >
                     <Sun size={18} />
                 </button>
@@ -144,7 +144,7 @@ export const Header = () => {
 
                 <Link
                     to={currentUser?.role === 'admin' ? '/settings' : '/profile'}
-                    className="flex items-center pr-2 border-r border-amber-200/60 dark:border-indigo-700/50 shrink-0 group transition-all"
+                    className="flex items-center pr-2 border-r border-white/20 shrink-0 group transition-all"
                 >
                     <div className="w-9 h-9 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-600 dark:text-white rounded-full shrink-0 border-2 border-emerald-400/30 dark:border-emerald-400/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] group-hover:scale-105 group-active:scale-95 transition-all overflow-hidden">
                         {currentUser?.avatar ? (
